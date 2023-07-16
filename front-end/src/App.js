@@ -8,7 +8,7 @@ import Login from './components/loginForm/Login.js';
 function App() {
   return (
     <>
-      <AppHeader fixed="top" />
+      <AppHeader />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

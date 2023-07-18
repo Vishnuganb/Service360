@@ -17,24 +17,24 @@ function ServiceProviderHeader() {
                     <img src={logo} alt="Service 360 Logo" className="logo" />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav className="me-auto">
-                        <Nav.Link href="/job">Jobs</Nav.Link>
-                        <Nav.Link href="#service">Vacancies</Nav.Link>
-                        <Nav.Link href="#contact">Blogs</Nav.Link>
+                        <Nav.Link href="#jobs" className='fw-bold navLink'>Jobs</Nav.Link>
+                        <Nav.Link href="#vacancies" className='fw-bold navLink'>Vacancies</Nav.Link>
+                        <Nav.Link href="#blogs" className='fw-bold navLink'>Blogs</Nav.Link>
 
-                        <Nav.Link href="#contact" className='d-lg-inline d-sm-none d-md-none d-none'><img src={bell} alt="Notifications" className='bell' /></Nav.Link>
-                        <Nav.Link href="#contact" className='d-lg-inline d-sm-none d-md-none d-none'><img src={chat} alt="Chat" className='chat' /></Nav.Link>
+                        <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
+                        <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
-                        <Nav.Link href="#service" className="d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
-                        <Nav.Link href="#contact" className="d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
+                        <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
+                        <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
 
-                        <NavDropdown title="Pranavan" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#" className="no-hover">View Profile</NavDropdown.Item>
+                        <NavDropdown title="Pranavan" className='fw-bold' id="basic-nav-dropdown">
+                            <NavDropdown.Item href="#" className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#advertiser" className="no-hover">FAQ</NavDropdown.Item>
+                            <NavDropdown.Item href="#" className="fw-bold no-hover">FAQ</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#advertiser" className="no-hover">Logout</NavDropdown.Item>
+                            <NavDropdown.Item href="#" className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
                         <img src={profileIcon} alt="Profile" className="profileIcon" />
                     </Nav>

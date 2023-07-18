@@ -1,0 +1,40 @@
+.nav-pills li a:hover{
+    background-color: #643A3A;
+}
+
+span{
+    font-size:1.1rem;
+}
+
+.sub-item-nav{
+    font-size:1.1rem;
+}
+
+.sidebar-content {
+    width: 100%; /* Set a default width */
+  }
+  
+  @media only screen and  (max-width: 992px) {
+    .submenu-active .sidebar-content {
+      width: 250px; /* Set the fixed width for larger screens */
+    }
+  }
+
+  .custom-dropdown .dropdown-toggle::after {
+    border-top-color: transparent;
+    display: none;
+  }
+  
+  .custom-dropdown .bi-file-earmark-post {
+    color: white; 
+    margin-left: -15px;
+  }
+
+  .custom-dropdown .bi-house {
+    color: white; 
+    margin-left: -15px;
+  }
+
+  .navbar-collapse a.active {
+    background:#643A3A;
+  }

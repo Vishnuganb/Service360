@@ -6,9 +6,6 @@
 }
 
 .navbar-brand {
-  color: #f64b4b;
-  text-transform: uppercase;
-  font-weight: 600;
   height: auto;
   padding: 0;
   font-size: 23px;
@@ -20,7 +17,7 @@
 }
 
 .navbar-collapse .navbar-nav {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
 }
 
@@ -29,7 +26,6 @@
 }
 
 .navbar-collapse a {
-  color: #4d4d4d;
   position: relative;
 }
 
@@ -39,8 +35,6 @@
   color: #f64b4b;
 }
 
-
-
 .navbar-collapse a:hover:before,
 .navbar-collapse a.active:before {
   right: 7px;
@@ -48,36 +42,39 @@
   opacity: 1;
 }
 
-.navbar-collapse a:before {
-  content: "";
-  background: #f64b4b;
-  height: 1px;
-  position: absolute;
-  bottom: 7px;
-  left: -20px;
-  right: 100%;
-  transition: all 0.3s linear;
-  -webkit-transition: all 0.3s linear;
-  opacity: 0;
-}
+@media (min-width: 992px) {
+  .navbar-collapse a:before {
+    content: "";
+    background: #292d32;
+    height: 1px;
+    position: absolute;
+    bottom: 7px;
+    left: -20px;
+    right: 100%;
+    transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    opacity: 0;
+  }
 
-.dropdown-menu a.dropdown-item:hover {
-  background-color: transparent !important;
-}
+  .navbar-collapse .dropdown-menu a:before {
+    content: none;
+  }
 
-.navLink {
-  display: flex;
-  gap: 50px;
-  justify-content: space-between;
-  text-decoration: none;
-  color: #000;
-  font-size: 1.4rem;
-  cursor: pointer;
+  .navLink {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #000;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
 }
 
 .navLink .nav-link {
   color: #000;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .logo {

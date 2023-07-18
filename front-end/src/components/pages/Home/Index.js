@@ -1,15 +1,24 @@
 import React from 'react';
-import '../../../style/Home.scss'
+import '../../../style/Home.css'
 import GetYourService from './GetYourService';
-import JoinServices from './JoinServices';
-import NeedToBeDone from './NeedToBeDone';
+import AppServices from './Services';
+import AnimationRevealPage from '../../../helpers/AnimationRevealPage';
+import AppBlog from './Blog';
+import AppBanner from './Banner';
+import AppContact from './Contact';
 
 function Index() {
     return (
         <>
-            <GetYourService />
-            <JoinServices />
-            <NeedToBeDone />
+
+            <AnimationRevealPage>
+                <AppBanner />
+                <GetYourService />
+                <AppServices />
+                <AppBlog />
+                <AppContact />
+            </AnimationRevealPage>
+
         </>
     );
 }

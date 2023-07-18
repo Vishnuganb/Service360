@@ -31,8 +31,8 @@ export default function App() {
         <footer className='text-center text-lg-start text-muted' style={{ background:'#818181'}}>
 
             <section className='' style={{ background: '#818181' }}>
-                <Container className='text-center text-md-start mt-5'>
-                    <Row className='mt-3'>
+                <Container className='text-center text-md-start'>
+                    <Row className=''>
                         
                         <Col md={2} lg={4} xl={3} className='mx-auto mb-4 mt-4' >
                             <h6 className='text-uppercase fw-bold mb-4'>Quick Links</h6>

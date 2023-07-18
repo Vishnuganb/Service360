@@ -2,6 +2,21 @@
     background-color: #643A3A;
 }
 
+@media only screen and (max-width: 992px) {
+  .nav-pills li a:hover{
+    padding-left: 16px;
+    width: 65px;
+  }
+
+  #nav-single-element{
+    padding-left: 5px;
+  }
+
+  #basic-nav-dropdown:hover{
+    width: 0px;
+  }
+}
+
 span{
     font-size:1.1rem;
 }
@@ -16,13 +31,14 @@ span{
   
   @media only screen and  (max-width: 992px) {
     .submenu-active .sidebar-content {
-      width: 250px; /* Set the fixed width for larger screens */
+      width: 250px; 
     }
   }
 
   .custom-dropdown .dropdown-toggle::after {
-    border-top-color: transparent;
-    display: none;
+    /* border-top-color: transparent; */
+    /* display: none; */
+    color:white;
   }
   
   .custom-dropdown .bi-file-earmark-post {
@@ -35,6 +51,13 @@ span{
     margin-left: -15px;
   }
 
-  .navbar-collapse a.active {
-    background:#643A3A;
+  .nav-pills {
+    --bs-nav-pills-link-active-bg: transparent;
+    margin-right:1.5px;
+  }
+
+  @media only screen and  (max-width: 992px) {
+      .nav-pills {
+        margin-right:-25px;
+      }
   }

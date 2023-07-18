@@ -12,13 +12,13 @@ function ServiceProviderSideBar(){
     return(
         <div className="container-fluid">
             <div className="row">
-                <div className="bg-secondary col-auto col-md-2.5 min-vh-100 d-sm-inline d-flex justify-content-between flex-column">
+                <div className="bg-dark col-auto col-md-2.5 min-vh-100 d-sm-inline d-flex justify-content-between flex-column">
                     <div className="sidebar-content">  
                         <ul className="nav nav-pills flex-column" id="parentM">
 
                             <li className="nav-item text-white fs-4 mt-3 py-2 py-sm-0">
                                 <a href="#" class="nav-link text-white">
-                                    <i className="bi bi-speedometer2 "></i>
+                                    <i className="bi bi-speedometer2 " id="nav-single-element"></i>
                                     <span className="ms-3 d-none d-lg-inline ">Dashboard</span>
                                 </a>
                             </li>
@@ -47,13 +47,13 @@ function ServiceProviderSideBar(){
 
                             <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                 <a href="#" class="nav-link text-white fs-5">
-                                    <i className="bi bi-calendar-week"></i>
+                                    <i className="bi bi-calendar-week" id="nav-single-element"></i>
                                     <span className="ms-3 d-none d-lg-inline">Availability Calendar</span>
                                 </a>
                             </li>
 
                             <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
-                                <a href="#submenu-2" class="nav-link text-white fs-5" data-bs-toggle="collapse" aria-current="page">
+                                <a href="#submenu-2" class="nav-link sub-sec text-white fs-5" data-bs-toggle="collapse" aria-current="page">
                                     <i className="bi bi-file-earmark-post  d-none d-lg-inline d-sm-none d-md-none"></i>
                                     <span className="ms-3 d-none d-lg-inline d-sm-none d-md-none">Blogs</span>
                                     <i className="bi bi-caret-down-fill ms-2 d-none d-lg-inline d-sm-none d-md-none"></i>
@@ -78,7 +78,7 @@ function ServiceProviderSideBar(){
 
                             <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                 <a href="#" class="nav-link text-white fs-5">
-                                    <i className="bi bi-calendar2-plus"></i>
+                                    <i className="bi bi-calendar2-plus " id="nav-single-element"></i>
                                     <span className="ms-3 d-none d-lg-inline">Create Sessions</span>
                                 </a>
                             </li>

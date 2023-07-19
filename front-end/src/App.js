@@ -4,6 +4,8 @@ import AppHeader from './components/layout/header.js';
 import AppFooter from './components/layout/footer.js';
 import Home from './components/pages/Home/Index.js';
 import Login from './components/loginForm/Login.js';
+import AdsPage from './components/pages/advertiser/AdsHome.js';
+
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="Login" element={<Login />} />
+          <Route path='AdsPage' element={<AdsPage/>}/>
         </Routes>
       </BrowserRouter>
       <AppFooter />

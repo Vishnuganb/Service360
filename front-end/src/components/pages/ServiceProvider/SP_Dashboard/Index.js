@@ -6,9 +6,7 @@ import SP_Sidebar from '../../../layout/ServiceProviderSidebar.js';
 function Index(){
     return(
         <>
-           <SP_Header/>
            <SP_Sidebar/>
-           <AppFooter/>
         </>
     );
 }

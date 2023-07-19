@@ -8,16 +8,26 @@ import AdsPage from './components/pages/advertiser/AdsHome.js';
           
 import SP_Dashboard  from './components/pages/ServiceProvider/SP_Dashboard/Index.js';
 import RootLayout from './components/layout/RootLayout.js';
+import SpLayout from './components/layout/SpLayout.js'
+import AdvertiserLayout from './components/layout/AdvertiserLayout.js'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<RootLayout />} >
-      <Route index element={<Home />} />
-      <Route path='Login' element={<Login />} />
-      <Route path="ServiceProviderDashboard" element={<SP_Dashboard />} />
-      <Route path='AdsPage' element={<AdsPage/>}/>
 
-    </Route>
+    <>
+      <Route path='/' element={<RootLayout />} >
+        <Route index element={<Home />} />
+        <Route path='Login' element={<Login />} />
+      </Route>
+      <Route path="/ServiceProvider" element={<SpLayout/>}>
+        <Route path="ServiceProviderDashboard" element={<SP_Dashboard />} />
+      </Route>
+      <Route path="/Advertiser" element={<AdvertiserLayout/>}>
+        <Route path="AdsPage" element={<AdsPage />} />
+      </Route>
+
+    </>
   )
 );
 

@@ -6,6 +6,7 @@ import AnimationRevealPage from '../../../helpers/AnimationRevealPage';
 import AppBlog from './Blog';
 import AppBanner from './Banner';
 import AppContact from './Contact';
+import AppAbout from './About';
 
 function Index() {
     return (
@@ -16,6 +17,7 @@ function Index() {
                 <GetYourService />
                 <AppServices />
                 <AppBlog />
+                <AppAbout />
                 <AppContact />
             </AnimationRevealPage>
 

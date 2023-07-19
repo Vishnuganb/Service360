@@ -8,13 +8,13 @@ import logo from '../../assets/images/header/Frame 2.png';
 
 function AppHeader1() {
     return (
-        <Navbar expand="lg" bg="light" className="navbar">
+        <Navbar expand="lg" bg="light">
             <Container>
                 <Navbar.Brand href="#home">
                     <img src={logo} alt="Service 360 Logo" className="logo" />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end '>
+                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav>
                         <Nav.Link href="/" className='fw-bold navLink'>Home</Nav.Link>
                         <Nav.Link href="/job" className='fw-bold navLink'>Job</Nav.Link>

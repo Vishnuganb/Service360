@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/login.jpeg'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -9,6 +9,8 @@ const Login = () => {
     const login = (email, password) => {
     }
 
+    const navigate = useNavigate();
+
     const [isPasswordHidden, setIsPasswordHidden] = useState(true)
 
     const [passwordType, setPasswordType] = useState('password')
@@ -16,6 +18,8 @@ const Login = () => {
     const [email, setEmail] = useState('')
 
     const [password, setPassword] = useState('')
+
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const showHidePassword = () => {
 
@@ -92,7 +96,6 @@ const Login = () => {
                                                         placeholder="service360@gmail.com"
                                                         value={email}
                                                         onChange={(e) => setEmail(e.target.value)}
-                                                        /*aria-label="Username" aria-describedby="basic-addon1"*/
                                                         autoFocus
                                                         required
                                                     />
@@ -159,7 +162,7 @@ const Login = () => {
 
                                             <div className="text-center">
 
-                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="Camera" />
+                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" />
 
                                             </div>
 

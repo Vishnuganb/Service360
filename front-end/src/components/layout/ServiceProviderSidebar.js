@@ -10,9 +10,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function ServiceProviderSideBar(){
     return(
-        <div className="container-fluid-lg">
+        <div className="container-fluid-lg ps-2">
             <div className="row">
-                <div className="side-bar-sub-container bg-dark col-auto col-md-2.5 min-vh-100 d-sm-inline d-flex justify-content-between flex-column">
+                <div className="side-bar-sub-container col-auto col-md-2.5 min-vh-100 d-sm-inline d-flex justify-content-between flex-column">
                     <div className="sidebar-content">  
                         <ul className="nav nav-pills flex-column" id="parentM">
 

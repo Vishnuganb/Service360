@@ -1,5 +1,5 @@
 .nav-pills li a:hover{
-    background-color: #643A3A;
+    background-color: #303841;
 }
 
 @media only screen and (max-width: 992px) {
@@ -18,11 +18,13 @@
 }
 
 span{
-    font-size:1.1rem;
+    font-size:1rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .sub-item-nav{
-    font-size:1.1rem;
+    font-size:1rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .sidebar-content {
@@ -63,6 +65,6 @@ span{
   }
 
 
-  /* .side-bar-sub-container{
-    background-color: #2C313E;
-  } */
+  .side-bar-sub-container{
+    background-color: #29435cf0;
+  }

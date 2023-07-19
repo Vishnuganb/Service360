@@ -27,6 +27,8 @@
   
   .navbar-collapse a {
     position: relative;
+    font-family: 'Montserrat', sans-serif;
+    
   }
   
   .navbar-collapse a:hover,
@@ -67,6 +69,7 @@
     color: #000;
     font-size: 1rem;
     cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
   }
   
   .navLink .nav-link {

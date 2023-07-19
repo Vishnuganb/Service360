@@ -36,7 +36,7 @@ export default function AppBlog() {
         <section id="blog" className="block blog-block">
             <div className="title-holder">
                 <h2>Latest from blog</h2>
-                <div className="subtitle">Get our latest news from blog</div>
+                <div className="subtitle">Discover insightful blogs uploaded by service providers</div>
             </div>
             <Container fluid>
                 <Row>

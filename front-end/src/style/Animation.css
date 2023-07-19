@@ -1,0 +1,21 @@
+/* YourComponent.css */
+
+.container-wrapper-lg {
+  /* Styles for screens larger than 992px */
+  display: none; /* Hide by default */
+}
+
+.container-wrapper-sm {
+  /* Styles for screens smaller than 992px */
+  display: block; /* Show by default */
+}
+
+@media (min-width: 992px) {
+  .container-wrapper-lg {
+    display: block; /* Show for screens larger than 992px */
+  }
+
+  .container-wrapper-sm {
+    display: none; /* Hide for screens larger than 992px */
+  }
+}

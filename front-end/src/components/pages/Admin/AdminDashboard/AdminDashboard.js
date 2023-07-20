@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthData } from '../../../ContextFiles/Authentication/AuthWrapper'
+import { AuthData } from '../../../../ContextFiles/Authentication/AuthWrapper'
 
 export default function Dashboard() {
     const {user} =AuthData();

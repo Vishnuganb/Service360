@@ -20,15 +20,14 @@ function AppHeader1() {
                         <Nav.Link href="/job" className='fw-bold navLink'>Job</Nav.Link>
                         <Nav.Link href="#service" className='fw-bold navLink'>Services</Nav.Link>
                         <Nav.Link href="/about" className='fw-bold navLink'>About</Nav.Link>
-                        <Nav.Link href="#blog" className='fw-bold navLink'>Blog</Nav.Link>
                         <Nav.Link href="#contact" className='fw-bold navLink'>Contact</Nav.Link>
                         <Nav.Link href="/login" className='fw-bold navLink'>Login</Nav.Link>
-                        <NavDropdown className='fw-bold' title="Signup" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/customer" className="fw-bold">Customer</NavDropdown.Item>
+                        <NavDropdown className='fw-bold' title="Sign Up" id="basic-nav-dropdown">
+                            <NavDropdown.Item  to="/customer" className="fw-bold">Customer</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/serviceProvider" className="fw-bold">Service Provider</NavDropdown.Item>
+                            <NavDropdown.Item to="/serviceProvider" className="fw-bold">Service Provider</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/advertiser" className="fw-bold">Advertiser</NavDropdown.Item>
+                            <NavDropdown.Item to="/advertiser" className="fw-bold">Advertiser</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

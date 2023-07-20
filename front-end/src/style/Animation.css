@@ -1,21 +1,20 @@
-/* YourComponent.css */
+/* It Used in Animation Reveal.js in helpers folder */
 
 .container-wrapper-lg {
-  /* Styles for screens larger than 992px */
-  display: none; /* Hide by default */
+  display: none;
 }
 
 .container-wrapper-sm {
-  /* Styles for screens smaller than 992px */
-  display: block; /* Show by default */
+  
+  display: block; 
 }
 
 @media (min-width: 992px) {
   .container-wrapper-lg {
-    display: block; /* Show for screens larger than 992px */
+    display: block;
   }
 
   .container-wrapper-sm {
-    display: none; /* Hide for screens larger than 992px */
+    display: none; 
   }
 }

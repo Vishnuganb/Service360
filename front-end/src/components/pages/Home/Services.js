@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Card, Col } from 'react-bootstrap';
+import { Row, Card} from 'react-bootstrap';
 import image1 from './../../../assets/images/home/AC-Repair.jpeg';
 import image2 from './../../../assets/images/home/ElectricalWiring.jpeg';
 import image3 from './../../../assets/images/home/plumbing.jpeg';

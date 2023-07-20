@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import ServiceProviderHeader from './ServiceProviderHeader';
 import AppFooter from './footer';
 
-const AdvertiserLayout = () => {
+const AdminLayout = () => {
     return (
         <>
             <ServiceProviderHeader />
@@ -13,4 +13,4 @@ const AdvertiserLayout = () => {
     )
 }
 
-export default AdvertiserLayout
+export default AdminLayout

@@ -14,6 +14,8 @@ import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
 import AdSignUp from './components/loginForm/AdvertiserSignUP.js';
 import CustSignUp from './components/loginForm/CustomerSignUP.js';
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
+import CustomerLayout from './components/layout/CustomerLayout.js';
+import CustomerDashboard from './components/pages/Customer/CustomerDashboard.js';
 
 
 
@@ -39,6 +41,10 @@ const router = createBrowserRouter(
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="AdsPage" element={<AdsPage />} />
+      </Route>
+
+      <Route path="/Customer" element={<CustomerLayout/>}>
+        <Route path="CustomerDashboard" element={<CustomerDashboard />} />
       </Route>
 
       <Route path="*" element={<Layout404><PageNotFound /></Layout404>} />

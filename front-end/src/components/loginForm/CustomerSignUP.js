@@ -20,6 +20,8 @@ const CustomerSignUP = () => {
 
     const [email, setEmail] = useState('')
 
+    const [address, setAddress] = useState('')
+
     const [password, setPassword] = useState('')
 
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -34,7 +36,7 @@ const CustomerSignUP = () => {
 
     const [errorMessageStatus, setErrorMessageStatus] = useState(false)
 
-    const errorMessage = 'Password requires to have one lower case, one uppercase, one number, one symbol and be minimum of 8 characters in lengths';
+    const errorMessage = 'Password requires to have atleast one lower case, one uppercase, one number, one symbol and be minimum of 8 characters in lengths';
 
     const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(false)
 
@@ -111,7 +113,7 @@ const CustomerSignUP = () => {
 
     const createUser = () => {
 
-        signUp({ email, password, firstName, lastName, nicNumber, contactNumber })
+        signUp({ email, password, firstName, lastName, nicNumber, contactNumber, address })
 
     }
 
@@ -200,27 +202,12 @@ const CustomerSignUP = () => {
                                                     </div>
                                                 </div>
 
-                                                {
 
-                                                    emailStatus && <div className="mx-2 bg-success my-0">
-
-                                                        <p className="d-flex justify-content-center"> {emailErrorMessage} </p>
-
-                                                    </div>
-
-                                                }
-
-                                                {
-
-                                                    !emailStatus && <div className="mx-2 bg-warning my-0">
-
-                                                        <p className="d-flex justify-content-center"> {emailErrorMessage} </p>
-
-                                                    </div>
-
-                                                }
-
-
+                                                {!emailStatus && emailErrorMessage && (
+                                                    <Alert variant="warning" className="my-0 mb-1 rounded" dismissible>
+                                                        {emailErrorMessage}
+                                                    </Alert>
+                                                )}
 
                                                 <div className="justify-content-between mb-3 d-flex">
                                                     <div className='me-0 col-sm-6'>
@@ -229,7 +216,6 @@ const CustomerSignUP = () => {
                                                             placeholder="First Name"
                                                             value={firstName}
                                                             onChange={(e) => setFirstName(e.target.value)}
-                                                            autoFocus
                                                             required
                                                         />
                                                     </div>
@@ -278,9 +264,8 @@ const CustomerSignUP = () => {
                                                     <div className="align-items-center">
                                                         <input type="text" className="form-control"
                                                             placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
-                                                            value={email}
-                                                            onChange={(e) => validateEmail(e.target.value)}
-                                                            autoFocus
+                                                            value={address}
+                                                            onChange={(e) => setAddress(e.target.value)}
                                                             required
                                                         />
                                                     </div>
@@ -338,15 +323,15 @@ const CustomerSignUP = () => {
                                                 </div>
 
                                                 {errorMessageStatus && (
-                                                    <Alert variant="warning" className="my-0 p-2 rounded">
-                                                        <strong>Warning</strong>
+                                                    <Alert variant="info" className="my-0 p-2 mb-2 rounded" dismissible>
+                                                        <strong>info</strong>
                                                         <p className="d-flex justify-content-center"></p>{errorMessage}
                                                     </Alert>
                                                 )}
 
                                                 { confirmPasswordStatus && (
-                                                    <Alert variant="danger" className="my-0 p-2 rounded">
-                                                        <strong>Sucess</strong>
+                                                    <Alert variant="danger" className="my-0 p-2 mb-2 rounded" dismissible>
+                                                        <strong>Error</strong>
                                                         <p className="d-flex justify-content-center"></p>{confirmPasswordErrorMessage}
                                                     </Alert>
                                                 )}

@@ -1,15 +1,23 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Container } from 'react-bootstrap';
 import ServiceProviderHeader from './ServiceProviderHeader';
 import AppFooter from './footer';
+import ServiceProviderSideBar from './ServiceProviderSidebar';
+import '../../style/ServiceProvider/SpLayout.css'
 
 const SpLayout = () => {
     return (
         <>
-            <ServiceProviderHeader />
-            <Outlet />
-            <AppFooter />
+            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <ServiceProviderHeader />
+                <div style={{ flex: 1, display: 'flex' }}>
+                    <ServiceProviderSideBar />
+                    <div className="classoutlet" style={{ flex: 1 }}>
+                    <Outlet />
+                    </div>
+                </div>
+                <AppFooter />
+                </div>
         </>
     )
 }

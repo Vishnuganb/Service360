@@ -2,3 +2,11 @@
   margin: 0;
   font-family: 'Roboto';
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  scrollbar-width: none;
+}

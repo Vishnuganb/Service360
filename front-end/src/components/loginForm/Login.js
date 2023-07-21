@@ -5,6 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import styled from 'styled-components';
 import { Modal} from 'react-bootstrap';
 import '../../style/Login.css'
+import image from '../../assets/images/header/Background.png'
 
 
 const Login = () => {
@@ -79,9 +80,7 @@ const Login = () => {
 
     return (
 
-        <div className="h-100">
-
-            {/*<ReactLinkContextProvider>*/}
+        <div className="h-100" style={{ backgroundImage: `url(${image})` }}>
 
             <section className="h-100">
 
@@ -111,7 +110,7 @@ const Login = () => {
                                                 </div>
 
                                                 <div className="d-flex pb-3">
-                                                    <h1 className="fw-bold px-4">Sign in</h1>
+                                                    <h1 className="fw-bold px-4">SignIn</h1>
                                                 </div>
 
                                             </div>
@@ -122,12 +121,8 @@ const Login = () => {
                                                     <div className="mb-3">
                                                         <p className="mb-0">Enter your email address</p>
                                                         <div className="input-group align-items-center">
-                                                            <span className="input-group-text">
-                                                                <i className="bi bi-envelope-fill"></i>
-                                                            </span>
-
                                                             <input
-                                                                type={email}
+                                                                type="email"
                                                                 className="form-control"
                                                                 placeholder="service360@gmail.com"
                                                                 value={email}
@@ -138,13 +133,10 @@ const Login = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="mb-3">
-                                                        <p className="mb-0">Enter your password</p>
-                                                        <div className="input-group align-items-center">
-                                                            <span className="input-group-text">
-                                                                <i className="bi bi-lock-fill"></i>
-                                                            </span>
 
+                                                    <div className="input-group mb-3">
+                                                        <p className="mb-0">Enter your password</p>
+                                                        <div className="input-group ">
                                                             <input
                                                                 type={passwordType}
                                                                 className="form-control"
@@ -152,26 +144,19 @@ const Login = () => {
                                                                 value={password}
                                                                 onChange={(e) => setPassword(e.target.value)}
                                                                 required
-                                                                style={{ height: "37px", maxWidth: "calc(100% - 68px)" }}
                                                             />
 
-                                                            <div
-                                                                className="input-group-prepend d-flex"
-                                                                style={{
-                                                                    background: "var(--bs-tertiary-bg)",
-                                                                    border: "var(--bs-border-width) solid var(--bs-border-color)",
-                                                                }}
-                                                            >
+                                                            <span className="input-group-text">
+                                                               
                                                                 <button
                                                                     className="btn btn-outline-dark border-0 focus-visible" // Add focus-visible class here
                                                                     type="button"
                                                                     id="button-addon1"
                                                                     onClick={showHidePassword}
-                                                                    style={{ position: "relative", top: "-1px", left: "-1px" }} // Add positioning to the eye icon
                                                                 >
                                                                     {isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
                                                                 </button>
-                                                            </div>
+                                                            </span>
                                                         </div>
                                                     </div>
 

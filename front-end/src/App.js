@@ -12,6 +12,7 @@ import SpLayout from './components/layout/SpLayout.js'
 import AdvertiserLayout from './components/layout/AdvertiserLayout.js'
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 
 
 const router = createBrowserRouter(
@@ -31,7 +32,9 @@ const router = createBrowserRouter(
       <Route path="/Customer" element={<CustomerLayout />}>
         <Route path="CustomerDashboard" element={<CustomerDashboard />} />
       </Route>
-
+      <Route path="/Customer" element={<CustomerLayout />}>
+      <Route path="PostVacancyForm" element={<PostVacancyForm />} />
+      </Route>
 
     </>
   )

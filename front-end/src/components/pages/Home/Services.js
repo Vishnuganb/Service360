@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Card, Col } from 'react-bootstrap';
+import { Row, Card} from 'react-bootstrap';
 import image1 from './../../../assets/images/home/AC-Repair.jpeg';
 import image2 from './../../../assets/images/home/ElectricalWiring.jpeg';
 import image3 from './../../../assets/images/home/plumbing.jpeg';
@@ -12,6 +12,8 @@ import image9 from './../../../assets/images/home/Iron-Work.jpeg';
 import image10 from './../../../assets/images/home/Cctv.jpeg';
 import image11 from './../../../assets/images/home/Fire-Alarm.jpeg';
 import image12 from './../../../assets/images/home/video-Sur.jpeg';
+
+import BgImage from './../../../assets/images/header/Background.png';
 
 const servicesData = [
     { id: 1, image: image1, text: 'AC Repair' },
@@ -30,7 +32,7 @@ const servicesData = [
 
 function AppServices() {
     return (
-        <section id="service" className="block service-block m-5">
+        <section id="service" className="block service-block m-5" style={{backgroundImage:`url(${BgImage})`}}>
             <div className="title-holder">
                 <h2>What do you need to be done</h2>
                 <div className="subtitle">Connect with Trusted Service Providers</div>

@@ -5,29 +5,30 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../../assets/images/header/Frame 2.png';
+import { Link } from 'react-router-dom';
 
 function AppHeader1() {
     return (
         <Navbar expand="lg" bg="light">
             <Container>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand as={Link} to="/">
                     <img src={logo} alt="Service 360 Logo" className="logo" />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav>
-                        <Nav.Link href="/" className='fw-bold navLink'>Home</Nav.Link>
-                        <Nav.Link href="/job" className='fw-bold navLink'>Job</Nav.Link>
-                        <Nav.Link href="#service" className='fw-bold navLink'>Services</Nav.Link>
-                        <Nav.Link href="/about" className='fw-bold navLink'>About</Nav.Link>
-                        <Nav.Link href="#contact" className='fw-bold navLink'>Contact</Nav.Link>
-                        <Nav.Link href="/login" className='fw-bold navLink'>Login</Nav.Link>
-                        <NavDropdown className='fw-bold' title="Sign Up" id="basic-nav-dropdown">
-                            <NavDropdown.Item  to="/customer" className="fw-bold">Customer</NavDropdown.Item>
+                        <Nav.Link as={Link}  to="/" className='fw-bold navLink'>Home</Nav.Link>
+                        <Nav.Link as={Link} to="/job" className='fw-bold navLink'>Job</Nav.Link>
+                        <Nav.Link as={Link} to="#service" className='fw-bold navLink'>Services</Nav.Link>
+                        <Nav.Link as={Link} to="#about" className='fw-bold navLink'>About</Nav.Link>
+                        <Nav.Link as={Link} to="#contact" className='fw-bold navLink'>Contact</Nav.Link>
+                        <Nav.Link as={Link} to="login" className='fw-bold navLink'>Login</Nav.Link>
+                        <NavDropdown className='fw-bold' title="SignUp" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link}  to="custSignUp" className="fw-bold">Customer</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item to="/serviceProvider" className="fw-bold">Service Provider</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="SpSignUp" className="fw-bold">Service Provider</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item to="/advertiser" className="fw-bold">Advertiser</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="AdSignUp" className="fw-bold">Advertiser</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

@@ -10,8 +10,13 @@ import AdvertiserLayout from './components/layout/AdvertiserLayout.js';
 import AdminLayout from './components/layout/AdminLayout.js';
 import Layout404 from './components/layout/Layout404.js';
 import PageNotFound from './components/pages/PageNotFound.js';
-
-
+import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
+import AdSignUp from './components/loginForm/AdvertiserSignUP.js';
+import CustSignUp from './components/loginForm/CustomerSignUP.js';
+import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
+import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
+import CustomerLayout from './components/layout/CustomerLayout.js';
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 
 
 const router = createBrowserRouter(
@@ -19,11 +24,14 @@ const router = createBrowserRouter(
     <>
       <Route path='/' element={<RootLayout />}>
         <Route index element={<Home />} />
-        <Route path='Login' element={<Login />} />
+        <Route path='login' element={<Login />} />
+        <Route path='custSignUp' element={<CustSignUp />} />
+        <Route path='SpSignUp' element={<SpSignUp />} />
+        <Route path='AdSignUp' element={<AdSignUp />} />
       </Route>
 
       <Route path="/Admin" element={<AdminLayout />}>
-        <Route path="AdminDashboard" element={<SP_Dashboard />} />
+        <Route path="AdminDashboard" element={<AdminDashboard /> } />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -32,6 +40,12 @@ const router = createBrowserRouter(
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="AdsPage" element={<AdsPage />} />
+      </Route>
+      <Route path="/Customer" element={<CustomerLayout />}>
+        <Route path="CustomerDashboard" element={<CustomerDashboard />} />
+      </Route>
+      <Route path="/Customer" element={<CustomerLayout />}>
+      <Route path="PostVacancyForm" element={<PostVacancyForm />} />
       </Route>
 
       <Route path="*" element={<Layout404><PageNotFound /></Layout404>} />

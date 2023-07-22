@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import { ReactComponent as SvgDotPatternIcon } from '../../../assets/images/home/dot-pattern.svg';
 import tw from "twin.macro";
+import BgImage from './../../../assets/images/header/Background.png';
 
 const aboutData = [
     {
@@ -43,7 +44,7 @@ const DecoratorBlob2 = tw(SvgDotPatternIcon)`relative top-0 right-0 w-32 h-32 mt
 
 export default function AppAbout() {
     return (
-        <section className="block about-block">
+        <section className="block about-block" style={{backgroundImage:`url(${BgImage})`}}>
 
             <div className="title-holder">
                 <h2>Customers Says About Us</h2>

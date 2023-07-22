@@ -13,6 +13,8 @@ import image10 from './../../../assets/images/home/Cctv.jpeg';
 import image11 from './../../../assets/images/home/Fire-Alarm.jpeg';
 import image12 from './../../../assets/images/home/video-Sur.jpeg';
 
+import BgImage from './../../../assets/images/header/Background.png';
+
 const servicesData = [
     { id: 1, image: image1, text: 'AC Repair' },
     { id: 2, image: image2, text: 'Electrical Wiring' },
@@ -30,7 +32,7 @@ const servicesData = [
 
 function AppServices() {
     return (
-        <section id="service" className="block service-block m-5">
+        <section id="service" className="block service-block m-5" style={{backgroundImage:`url(${BgImage})`}}>
             <div className="title-holder">
                 <h2>What do you need to be done</h2>
                 <div className="subtitle">Connect with Trusted Service Providers</div>

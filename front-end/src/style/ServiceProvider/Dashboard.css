@@ -8,18 +8,36 @@
 
 .card{
     transition: transform .3s; 
-    border-radius: 8px;
+    border-radius: 2px;
     margin-bottom: 5px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
+.dashboard-button-1{
+    background: linear-gradient(45deg,#4099ff,#73b4ff);
+}
 
+.dashboard-button-2{
+    background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+}
 
+.dashboard-button-3{
+    background: linear-gradient(45deg,#FFB64D,#ffcb80);
+}
+
+.dashboard-button-4{
+    background: linear-gradient(45deg,#FF5370,#ff869a);
+}
 
 .card:hover{
     transform: scale(1.02);
     z-index: 2;
-    border: 0.2px solid #29435cf0;
+    border: 0.1px solid #29435cf0;
+}
+
+.card-body-container{
+    font-size: 1.1rem;
+    font-family: 'Open Sans', sans-serif;           /*NEW FONT ADDED*/
 }
 
 /* < 540px */
@@ -27,6 +45,12 @@
     .card{
         width: 100%;
         
+    }
+
+    .card i{
+        font-size:2rem;
+        position: relative;
+        left: 60px;
     }
 }
 
@@ -37,6 +61,11 @@
         width: 50%;
         
     }
+
+    .card i{
+        font-size:1.4rem;
+        display: block;
+    }
 }
 
 /* > 992px */
@@ -44,6 +73,13 @@
     .card{
         width: 25%;
 
+    }
+
+
+    .card i{
+        font-size:2rem;
+        position: relative;
+        left: 55px;
     }
 } 
 

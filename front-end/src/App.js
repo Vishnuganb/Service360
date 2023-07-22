@@ -10,8 +10,7 @@ import AdvertiserLayout from './components/layout/AdvertiserLayout.js';
 import AdminLayout from './components/layout/AdminLayout.js';
 import Layout404 from './components/layout/Layout404.js';
 import PageNotFound from './components/pages/PageNotFound.js';
-import CustomerLayout from './components/layout/CustomerLayout.js';
-import CustomerDashboard from './components/pages/Customer/CustomerDashboard.js';
+
 
 
 
@@ -33,10 +32,6 @@ const router = createBrowserRouter(
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="AdsPage" element={<AdsPage />} />
-      </Route>
-
-      <Route path="/Customer" element={<CustomerLayout/>}>
-        <Route path="CustomerDashboard" element={<CustomerDashboard />} />
       </Route>
 
       <Route path="*" element={<Layout404><PageNotFound /></Layout404>} />

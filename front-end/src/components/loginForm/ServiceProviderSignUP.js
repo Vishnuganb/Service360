@@ -1,348 +1,380 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom";
-import loginPhoto from '../../assets/images/home/customerSignUP.png'
-import styled from 'styled-components';
-import validator from "validator";
-import '../../style/Login.css'
-import { Alert } from 'react-bootstrap';
-import image from '../../assets/images/header/Background.png'
+import React, { useState, useRef, useEffect } from 'react';
+import image from '../../assets/images/header/Background.png';
+import loginPhoto from '../../assets/images/home/SpSignUP.jpeg';
+import validator from 'validator';
 
+import Step1 from './Step1';
+import Step2 from './Step2';
 
 const ServiceProviderSignUP = () => {
+    const [step, setStep] = useState(1);
 
-    // first form state variables
-    const [email, setEmail] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [nicNumber, setNicNumber] = useState('')
-    const [emailErrorMessage, setEmailErrorMessage] = useState('')
-    const [showSecondForm, setShowSecondForm] = useState(false);
-    const [address, setAddress] = useState('')
+    // Step 1 state variables and handlers
+    const [step1Data, setStep1Data] = useState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        nicNumber: '',
+        contactNumber: '',
+        address: '',
+        emailStatus: false,
+        emailErrorMessage: '',
+        firstNameErrorMessage: '',
+        lastNameErrorMessage: '',
+        nicNumberErrorMessage: '',
+        contactNumberErrorMessage: '',
+        addressErrorMessage: '',
+    });
 
-    // validate email function
-    const validateEmail = (emailInputValue) => {
+    const handleStep1Change = (field, value) => {
+        setStep1Data((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+    };
 
-        setEmail(emailInputValue)
+    // Step 2 state variables and handlers
+    const [step2Data, setStep2Data] = useState({
+        password: '',
+        confirmPassword: '',
+        errorMessage: 'Password requires to have at least one lowercase, one uppercase, one number, one symbol, and be a minimum of 8 characters in length',
+        isPasswordHidden: true,
+        errorMessageStatus: false,
+        confirmPasswordStatus: false,
+        confirmPasswordErrorMessage: '',
+        passwordType: 'password',
+        passwordErrorMessage: '',
+        category1Value: '',
+        category2Value: '',
+        selectedFiles: [],
+        selectedFileCount: 0,
+        fileErrorMessage: '',
+    });
 
-        if (validator.isEmail(emailInputValue)) {
-
-            setEmailStatus(true)
-            setEmailErrorMessage('valid email')
-        }
-        else {
-
-            setEmailStatus(false)
-            setEmailErrorMessage('Invalid email')
-        }
-
-    }
-
-    // Next button click handler for the first form
-    const handleNextClick = () => {
-        // Implement any necessary validations before proceeding to the second form
-        if (validator.isEmail(email)) {
-            setShowSecondForm(true);
+    const handleStep2Change = (field, value) => {
+        if (field === 'category1') {
+            // If the service category dropdown changes, reset the specific category dropdown
+            setStep2Data((prevData) => ({
+                ...prevData,
+                category1Value: value,
+                category2Value: '', // Reset category2Value
+            }));
+        } else if (field === 'category2') {
+            setStep2Data((prevData) => ({
+                ...prevData,
+                category2Value: value,
+            }));
         } else {
-            // Show an error message if the email is not valid
-            setEmailErrorMessage('Invalid email');
+            setStep2Data((prevData) => ({
+                ...prevData,
+                [field]: value,
+            }));
         }
     };
 
-    // second form state variables
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [errorMessageStatus, setErrorMessageStatus] = useState(false)
-    const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(false)
-    const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = useState('')
-
-    // Validate password function
-    const validatePassword = (passwordInputValue) => {
-
+    const handlePasswordValidation = (passwordInputValue) => {
         if (validator.isStrongPassword(passwordInputValue, {
-
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1
-
-        })) setErrorMessageStatus(false)
-        else setErrorMessageStatus(true)
-
-        setPassword(passwordInputValue)
-
+            minLength: 8, minLowercase: 1, minUppercase: 1,
+            minNumbers: 1, minSymbols: 1
+        })) {
+            setStep2Data((prevData) => ({
+                ...prevData,
+                password: passwordInputValue,
+                errorMessageStatus: false
+            }));
+        } else {
+            setStep2Data((prevData) => ({
+                ...prevData,
+                password: passwordInputValue,
+                errorMessageStatus: true
+            }));
+        }
     };
 
-    // Validate confirm password function
     const validateConfirmPassword = (confirmPasswordInputValue) => {
+        const { password } = step2Data;
 
         if (password === confirmPasswordInputValue) {
-
-            setConfirmPasswordErrorMessage('Password matches')
-            setConfirmPasswordStatus(false)
-
+            setStep2Data((prevData) => ({
+                ...prevData,
+                confirmPassword: confirmPasswordInputValue,
+                confirmPasswordErrorMessage: '',
+            }))
         } else {
+            setStep2Data((prevData) => ({
+                ...prevData,
+                confirmPassword: confirmPasswordInputValue,
+                confirmPasswordErrorMessage: 'Passwords do not match',
+            }));
+        }
+    };
 
-            setConfirmPasswordErrorMessage('Passwords does not match')
-            setConfirmPasswordStatus(true)
+    const fileInputRef = useRef(null); // Ref to access the file input element
 
+    useEffect(() => {
+        // Update the input field value whenever the selectedFileCount changes
+        if (fileInputRef.current) {
+            fileInputRef.current.value = step2Data.selectedFileCount > 0 ? `${step2Data.selectedFileCount}` : '';
+        }
+    }, [step2Data.selectedFileCount]); // Update the dependency
+
+    const handleStep2ShowHidePassword = () => {
+        setStep2Data((prevData) => ({
+            ...prevData,
+            passwordType: prevData.isPasswordHidden ? 'text' : 'password',
+            isPasswordHidden: !prevData.isPasswordHidden,
+        }));
+    };
+
+    const setSelectedFileCount = (count) => {
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedFileCount: count,
+        }));
+    };
+
+    const handleFileInputChange = (event) => {
+        const files = event.target.files;
+        const fileListArray = [...files];
+
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedFiles: fileListArray,
+            selectedFileCount: fileListArray.length, // Update the selected file count
+        }));
+    };
+
+    const handleRemoveFile = (index) => {
+        // Remove the selected file from the array
+        const updatedFiles = step2Data.selectedFiles.filter((_, i) => i !== index);
+
+        // Update the selected file count using setSelectedFileCount
+        setSelectedFileCount(updatedFiles.length);
+
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedFiles: updatedFiles,
+        }));
+
+        // Reset the file input value to trigger the change event
+        if (fileInputRef.current) {
+            if (updatedFiles.length === 0) {
+                // If all files are removed, set the file input value to an empty string
+                fileInputRef.current.value = '';
+            } else {
+                // Otherwise, set the file input value to display the number of selected files
+                fileInputRef.current.value = `${updatedFiles.length} files selected`;
+            }
+        }
+    };
+
+
+
+    const handleStep2PreviousClick = () => {
+        setStep(1);
+    };
+
+    const handleStep2Submit = () => {
+
+        const { password, confirmPassword, category1Value, category2Value, selectedFiles } = step2Data;
+
+        let isError = false;
+        let passwordErrorMessage = '';
+        let confirmPasswordErrorMessage = '';
+        let serviceErrorMessage = '';
+        let categoryErrorMessage = '';
+        let fileErrorMessage = '';
+
+
+        if (password.trim() === '') {
+            isError = true;
+            passwordErrorMessage = 'Password is required';
         }
 
-        setConfirmPassword(confirmPasswordInputValue)
+        if (confirmPassword.trim() === '') {
+            isError = true;
+            confirmPasswordErrorMessage = 'Confirm password is required';
+        }
+
+        if (password !== confirmPassword) {
+            isError = true;
+            confirmPasswordErrorMessage = 'Passwords do not match';
+        }
+
+        if (category1Value === '') {
+            isError = true;
+            serviceErrorMessage = 'Select the service';
+        }
+
+        if (category2Value === '') {
+            isError = true;
+            categoryErrorMessage = 'Service category is required';
+        }
+
+        if (selectedFiles.length === 0) {
+            isError = true;
+            fileErrorMessage = 'Select at least one file';
+        }
+
+        setStep2Data((prevData) => ({
+            ...prevData,
+            passwordErrorMessage,
+            confirmPasswordErrorMessage,
+            serviceErrorMessage,
+            categoryErrorMessage,
+            fileErrorMessage,
+        }));
+
+        if(!isError) {
+            console.log('Form submitted!');
+        }
 
     };
 
-    // Submit form function
-    const handleSubmit = () => {
-        console.log('Form submitted!');
+    const handleStep1NextClick = () => {
+        const { email, firstName, lastName, nicNumber, contactNumber, address } = step1Data;
+
+        let isError = false;
+        let emailErrorMessage = '';
+        let firstNameErrorMessage = '';
+        let lastNameErrorMessage = '';
+        let nicNumberErrorMessage = '';
+        let contactNumberErrorMessage = '';
+        let addressErrorMessage = '';
+
+        if (!validator.isEmail(email)) {
+            isError = true;
+            emailErrorMessage = 'Invalid email';
+        }
+
+        if (email.trim() === '') {
+            isError = true;
+            emailErrorMessage = 'email is required';
+        }
+
+        if (!validator.isAlpha(firstName)) {
+            isError = true;
+            firstNameErrorMessage = 'Should contain only letters';
+        }
+
+        if (!validator.isAlpha(lastName)) {
+            isError = true;
+            lastNameErrorMessage = 'Should contain only letters';
+        }
+
+        if (!validator.isNumeric(contactNumber)) {
+            isError = true;
+            contactNumberErrorMessage = 'Should contain only digits';
+        }
+
+        if (contactNumber.length !== 10) {
+            isError = true;
+            contactNumberErrorMessage = 'Should be exactly 10 digits';
+        }
+
+        if (!/^\d+[A-Za-z]?$/.test(nicNumber) & nicNumber.length < 9) {
+            isError = true;
+            nicNumberErrorMessage = 'Invalid NIC number';
+        }
+
+        if (firstName.trim() === '') {
+            isError = true;
+            firstNameErrorMessage = 'First name is required';
+        }
+
+        if (lastName.trim() === '') {
+            isError = true;
+            lastNameErrorMessage = 'Last name is required';
+        }
+
+        if (nicNumber.trim() === '') {
+            isError = true;
+            nicNumberErrorMessage = 'NIC is required';
+        }
+
+        if (contactNumber.trim() === '') {
+            isError = true;
+            contactNumberErrorMessage = 'Contact number is required';
+        }
+
+        if (address.trim() === '') {
+            isError = true;
+            addressErrorMessage = 'Address is required';
+        }
+
+        if (!isError) {
+            setStep(2);
+        }
+
+        setStep1Data((prevData) => ({
+            ...prevData,
+            emailErrorMessage,
+            firstNameErrorMessage,
+            lastNameErrorMessage,
+            nicNumberErrorMessage,
+            contactNumberErrorMessage,
+            addressErrorMessage,
+        }));
     };
-
-    const { LoginLink } = ''
-
-    const { signUp } = ''
-
-    const [isPasswordHidden, setIsPasswordHidden] = useState(true)
-
-    const [passwordType, setPasswordType] = useState('')
-
-    const [contactNumber, setContactNumber] = useState('')
-
-    const errorMessage = 'Password requires to have one lower case, one uppercase, one number, one symbol and be minimum of 8 characters in lengths';
-
-    const [emailStatus, setEmailStatus] = useState(false)
-
-    const showHidePassword = () => {
-
-        if (isPasswordHidden) {
-            setPasswordType('text')
-            setIsPasswordHidden(false)
-
-        }
-        else {
-
-            setPasswordType('password')
-            setIsPasswordHidden(true)
-
-        }
-
-    }
-
-    const createUser = () => {
-
-        signUp({ email, password, firstName, lastName, nicNumber, contactNumber, address })
-
-    }
-
-    const customFontStyle = {
-        fontFamily: "Roboto",
-        color: '#9F390D' // Replace 'Your_Custom_Font' with the font name you want to use
-    };
-
-    const StyledButton = styled.button`
-        background-color: #292D32;
-        width: 30%;
-        @media (max-width: 768px) {
-            width: 50%; 
-            margin-top: 1rem; 
-        }
-        &:hover {
-            background: #fff;
-            border-color: #2596be;
-            color: #9f390d;
-        }
-    `;
-
-    const StyledButton2 = styled.button`
-        background-color: #292D32;
-        width: 30%;
-        @media (max-width: 768px) {
-            width: 100%; 
-            margin-top: 1rem; 
-        }
-        &:hover {
-            background: #fff;
-            border-color: #2596be;
-            color: #9f390d;
-        }
-    `;
 
     return (
-
         <div className="h-100" style={{ backgroundImage: `url(${image})` }}>
-
             <section className="h-100">
-
                 <div className="container h-100">
-
                     <div className="row d-flex justify-content-center align-items-center h-100">
-
-                        <div className="col-lg-10 offset-sm-2 offset-xl-0 my-lg-1 py-lg-1 my-xl-0 py-xl-0">
-
+                        <div className="col-xl-10 offset-sm-2 offset-lg-4 offset-xl-0 my-lg-1 py-lg-1 my-xl-0 py-xl-0">
                             <div className="rounded-3 text-black my-lg my-xl-0 py-xl-0">
-
                                 <div className="row g-0">
 
-                                    <div className="col-xl-6">
-
-                                        <div className="card-body  p-md-1 mx-md-2 mt-5 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
-                                            style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius: '1rem' }}>
-
-                                            <div className="mb-0 p-0">
-
-                                                <div className="d-flex justify-content-between">
-
-                                                    <p className='pt-4 px-4 flex-wrap fs-5'>
-                                                        welcome to <span className="fs-2 fw-bold pb-2" style={customFontStyle}>Service360</span>
-                                                    </p>
-
-                                                </div>
-
-                                                <div className="d-flex pb-1">
-                                                    <h1 className="fw-bold px-4">SignUp</h1>
-                                                </div>
-
+                                    <div className='col-xl-6'>
+                                    <div className="p-md-1 mx-xs-2 my-5 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
+                                            style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius: '1rem', objectFit:'cover' }}>
+                                        <div className="mb-0 p-0">
+                                            <div className="d-flex justify-content-between">
+                                                <p className='pt-4 px-4 flex-wrap fs-5'>
+                                                    welcome to <span className="fs-2 fw-bold pb-2" style={{ fontFamily: 'Roboto', color: '#9F390D' }}>Service360</span>
+                                                </p>
                                             </div>
-
-                                            <form className="my-2 mx-4" onSubmit={handleSubmit}>
-
-                                                <div className="mb-2">
-                                                    <p className="mb-0">Enter your email address</p>
-                                                    <div className="align-items-center">
-                                                        <input type="email" className="form-control"
-                                                            placeholder="Service360@gmail.com"
-                                                            value={email}
-                                                            onChange={(e) => validateEmail(e.target.value)}
-                                                            autoFocus
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                {!emailStatus && emailErrorMessage && (
-                                                    <Alert variant="warning" className="my-0 mb-1 rounded" dismissible>
-                                                        {emailErrorMessage}
-                                                    </Alert>
-                                                )}
-
-                                                <div className="justify-content-between mb-3 d-flex">
-                                                    <div className='me-0 col-sm-6'>
-                                                        <p className="mb-0">FirstName</p>
-                                                        <input type="text" className="form-control"
-                                                            placeholder="First Name"
-                                                            value={firstName}
-                                                            onChange={(e) => setFirstName(e.target.value)}
-                                                            required
-                                                        />
-                                                    </div>
-
-                                                    <div className='col-sm-5'>
-                                                        <p className="mb-0">LastName</p>
-                                                        <input type="text" className="form-control"
-                                                            placeholder="Last Name"
-                                                            value={lastName}
-                                                            onChange={(e) => setLastName(e.target.value)}
-                                                            required
-                                                        />
-                                                    </div>
-
-                                                </div>
-
-                                                <div className="justify-content-between mb-3 d-flex ">
-                                                    <div className='me-0 col-sm-5 col-sm-6'>
-                                                        <label className="mb-0">NIC Number</label>
-                                                        <div className="input-group ">
-                                                            <input type="text" className="form-control"
-                                                                placeholder="Enter NIC number"
-                                                                value={nicNumber}
-                                                                onChange={(e) => setNicNumber(e.target.value)}
-                                                                required
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className='col-sm-5 col-lg-5'>
-                                                        <label className="mb-0">Contact Number</label>
-                                                        <div className="input-group">
-                                                            <input type="text" className="form-control"
-                                                                placeholder="0771234567"
-                                                                value={contactNumber}
-                                                                onChange={(e) => setContactNumber(e.target.value)}
-                                                                required
-                                                                maxLength={10}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="mb-3">
-                                                    <p className="mb-0">Enter your Current Address</p>
-                                                    <div className="align-items-center">
-                                                        <input type="text" className="form-control"
-                                                            placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
-                                                            value={address}
-                                                            onChange={(e) => setAddress(e.target.value)}
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="text-center">
-
-                                                    <div className="d-flex align-items-center justify-content-between pb-4">
-
-                                                        <p> Have an account? <Link className="text-primary" to={LoginLink}> Login </Link>  </p>
-
-                                                        <StyledButton className="btn btn-dark btn-block" type="button" onClick={handleNextClick}>
-
-                                                            Next
-
-                                                        </StyledButton>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </form>
-
-
-                                            <div>
-
+                                            <div className="d-flex pb-1">
+                                                <h1 className="fw-bold px-4">SignUp</h1>
                                             </div>
-
                                         </div>
-
+                                        {/* Step 1 */}
+                                        {step === 1 && (
+                                            <Step1
+                                                data={step1Data} // Change "data" to "step1Data"
+                                                handleChange={handleStep1Change}
+                                                handleNextClick={handleStep1NextClick}
+                                            />
+                                        )}
+                                        {/* Step 2 */}
+                                        {step === 2 && (
+                                            <Step2
+                                                data={step2Data}
+                                                handleChange={handleStep2Change}
+                                                handleShowHidePassword={handleStep2ShowHidePassword}
+                                                handlePreviousClick={handleStep2PreviousClick}
+                                                handleSubmit={handleStep2Submit}
+                                                handlePasswordValidation={handlePasswordValidation}
+                                                validateConfirmPassword={validateConfirmPassword}
+                                                handleFileInputChange={handleFileInputChange}
+                                                handleRemoveFile={handleRemoveFile}
+                                                // fileInputRef={fileInputRef}
+                                            />
+                                        )}
+                                        </div>
                                     </div>
 
-                                    <div className="col-xl-6 d-xl-flex d-none py-5" style={{ backgroundImage: `url(${image})` }}>
-
-                                        <div className="d-lg-flex d-none" style={{ backgroundImage: `url(${image})` }}>
-
-                                            <div className="text-center">
-
-                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" />
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+                                    <div className="col-xl-6 my-5 justify-content-center align-items-center rounded" style={{ background: `url(${loginPhoto})`,objectFit:'cover' }} />
 
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </section>
-
         </div>
+    );
+};
 
-    )
-
-}
-
-export default ServiceProviderSignUP
+export default ServiceProviderSignUP;

@@ -13,11 +13,9 @@ import PageNotFound from './components/pages/PageNotFound.js';
 import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
 import CustSignUp from './components/loginForm/CustomerSignUP.js';
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
+import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
-import CustomerDashboard from './components/pages/Customer/CustomerDashboard.js';
-
-
-
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +37,12 @@ const router = createBrowserRouter(
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="AdsPage" element={<AdsPage />} />
+      </Route>
+      <Route path="/Customer" element={<CustomerLayout />}>
+        <Route path="CustomerDashboard" element={<CustomerDashboard />} />
+      </Route>
+      <Route path="/Customer" element={<CustomerLayout />}>
+      <Route path="PostVacancyForm" element={<PostVacancyForm />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout/>}>

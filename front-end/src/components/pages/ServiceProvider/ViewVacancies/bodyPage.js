@@ -1,17 +1,17 @@
-import '../../../../style/ServiceProvider/ViewJobs.css'
+import '../../../../style/ServiceProvider/ViewVacancies.css'
 import Pagination from 'react-bootstrap/Pagination';
-import JobCard from './jobCard';
+import VacancyCard from './vacancyCard';
 import Row from 'react-bootstrap/esm/Row';
 
 function bodyPage() {
 
     return (
-          <div className="bodyPageContainer">
+          <div className="bodyPageContainer-vacancy">
                     <Row id='bodyPageRow1'>
-                        <div className="jobCardContainer">
-                            <JobCard/>
-                            <JobCard/>
-                            <JobCard/>
+                        <div className="vacancyCardContainer">
+                            <VacancyCard/>
+                            <VacancyCard/>
+                            <VacancyCard/>
                         </div>
                     </Row>
                     <Row id='bodyPageRow2'>

@@ -9,6 +9,7 @@ import AdsPage from './components/pages/advertiser/AdsHome.js';
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
+import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 
 
 import RootLayout from './components/layout/RootLayout.js';
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route path="Dashboard" element={<SpDashboard />} />
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
+        <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
       </Route>
       <Route path="/Advertiser" element={<AdvertiserLayout/>}>
         <Route path="AdsPage" element={<AdsPage />} />

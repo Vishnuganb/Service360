@@ -17,6 +17,7 @@ import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
+import Searchserviceprovider from './components/pages/Customer/Searchserviceprovider.js';
 
 
 const router = createBrowserRouter(
@@ -41,13 +42,19 @@ const router = createBrowserRouter(
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="AdsPage" element={<AdsPage />} />
       </Route>
+
       <Route path="/Customer" element={<CustomerLayout />}>
         <Route path="CustomerDashboard" element={<CustomerDashboard />} />
       </Route>
+
       <Route path="/Customer" element={<CustomerLayout />}>
       <Route path="PostVacancyForm" element={<PostVacancyForm />} />
       </Route>
 
+      <Route path="/Customer" element={<CustomerLayout />}>
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+      </Route>
+      
       <Route path="*" element={<Layout404><PageNotFound /></Layout404>} />
       
     </>

@@ -7,7 +7,7 @@ function Overview() {
   return (
     <>
         <Row>
-            <Card className="dashboard-button-1 ">
+            <Card className="card-sp-dashboard dashboard-button-1 ">
                 <Card.Body>
                 <Card.Title>24</Card.Title>
                 <Card.Text className="card-body-container">
@@ -16,7 +16,7 @@ function Overview() {
                 </Card.Text>
                 </Card.Body>
             </Card>
-            <Card className="dashboard-button-2">
+            <Card className="card-sp-dashboard dashboard-button-2">
                 <Card.Body>
                 <Card.Title>3</Card.Title>
                 <Card.Text className="card-body-container">
@@ -25,7 +25,7 @@ function Overview() {
                 </Card.Text>
                 </Card.Body>
             </Card>
-            <Card className="dashboard-button-3">
+            <Card className="card-sp-dashboard dashboard-button-3">
                 <Card.Body>
                 <Card.Title>2</Card.Title>
                 <Card.Text className="card-body-container">
@@ -34,7 +34,7 @@ function Overview() {
                 </Card.Text>
                 </Card.Body>
             </Card>
-            <Card className="dashboard-button-4">
+            <Card className="card-sp-dashboard dashboard-button-4">
                 <Card.Body>
                 <Card.Title>14</Card.Title>
                 <Card.Text className="card-body-container">

@@ -16,6 +16,7 @@ import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
+import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,7 +25,8 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path='login' element={<Login />} />
         <Route path='custSignUp' element={<CustSignUp />} />
-        <Route path='SpSignUp' element={<SpSignUp />} />
+        <Route path='spSignUp' element={<SpSignUp />} />
+        <Route path='adSignUp' element={<AdvertiserSignUp />} />
       </Route>
 
       <Route path="/Admin" element={<AdminLayout />}>

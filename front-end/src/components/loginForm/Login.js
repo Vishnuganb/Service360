@@ -10,9 +10,6 @@ import image from '../../assets/images/header/Background.png'
 
 const Login = () => {
 
-    const login = (email, password) => {
-    }
-
     const navigate = useNavigate();
 
     const [isPasswordHidden, setIsPasswordHidden] = useState(true)
@@ -24,6 +21,21 @@ const Login = () => {
     const [password, setPassword] = useState('')
 
     const [errorMessage, setErrorMessage] = useState(null)
+
+    const login = (email, password) => {
+
+        let isError = false
+
+        if (email === '' || password === '') {
+            isError = true
+            setErrorMessage('Please fill in all the fields')
+        } 
+        
+        if (!isError) {
+            navigate('/')
+        } 
+
+    }
 
     const showHidePassword = () => {
 
@@ -47,32 +59,32 @@ const Login = () => {
     };
 
     const StyledButton = styled.button`
-  background-color: #292D32;
-  width: 70%;
-  @media (max-width: 768px) {
-    width: 100%; 
-    margin-top: 1rem; 
-  }
-  &:hover {
-    background: #fff;
-    border-color: #2596be;
-    color: #9f390d;
-  }
-`;
+        background-color: #292D32;
+        width: 70%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+    }
+    `;
     
     const StyledButton2 = styled.button`
-  background-color: #292D32;
-  width: 30%;
-  @media (max-width: 768px) {
-    width: 100%; 
-    margin-top: 1rem; 
-  }
-  &:hover {
-    background: #fff;
-    border-color: #2596be;
-    color: #9f390d;
-  }
-`;
+        background-color: #292D32;
+        width: 30%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+        }
+    `;
 
     const [showModal, setShowModal] = useState(false);
 
@@ -131,8 +143,8 @@ const Login = () => {
                                                                 required
                                                             />
                                                         </div>
-                                                    </div>
 
+                                                    </div>
 
                                                     <div className="input-group mb-3">
                                                         <p className="mb-0">Enter your password</p>
@@ -145,9 +157,7 @@ const Login = () => {
                                                                 onChange={(e) => setPassword(e.target.value)}
                                                                 required
                                                             />
-
                                                             <span className="input-group-text">
-                                                               
                                                                 <button
                                                                     className="btn btn-outline-dark border-0 focus-visible" // Add focus-visible class here
                                                                     type="button"
@@ -156,9 +166,11 @@ const Login = () => {
                                                                 >
                                                                     {isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
                                                                 </button>
-                                                            </span>
+                                                            </span>  
                                                         </div>
+                                                        {errorMessage && <p className="text-danger p-0 m-0">{errorMessage}</p>}
                                                     </div>
+                                                    
 
                                                 </div>
 

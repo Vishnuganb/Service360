@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Alert } from 'react-bootstrap';
 
@@ -50,8 +50,12 @@ const serviceCategories = {
     ],
 };
 
-const Step2 = ({
+const AdStep2 = ({
     data: {
+        shopName,
+        ownerName,
+        shopNameErrorMessage,
+        ownerNameErrorMessage,
         password,
         passwordType,
         isPasswordHidden,
@@ -60,10 +64,6 @@ const Step2 = ({
         confirmPassword,
         errorMessage,
         passwordErrorMessage,
-        category1Value,
-        category2Value,
-        serviceErrorMessage,
-        categoryErrorMessage,
         selectedFiles,
         selectedFileCount,
         fileErrorMessage
@@ -79,69 +79,39 @@ const Step2 = ({
     // fileInputRef
 }) => {
 
-    const handleServiceCategoryChange = (e) => {
-        const selectedService = e.target.value;
-        handleChange('category1', selectedService);
-
-        // Reset category2Value when the service category changes
-        if (selectedService === 'default') {
-            handleChange('category2', '');
-        } else {
-            handleChange('category2', serviceCategories[selectedService][0]);
-        }
-    };
-
     return (
         <form className="my-2 mx-4">
 
-            <div className="mb-3 d-flex justify-content-between">
-                <div className='me-xs-3 col-4 me-sm-0'>
-                    <p className="mb-0">Select Service</p>
-                    <select
-                        className="form-select"
-                        value={category1Value}
-                        onChange={(e) => handleChange('category1', e.target.value)} // Use handleCategory1Change here
+            <div className="justify-content-between mb-3 d-flex">
+                <div className='me-xs-3 col-xs-6 me-sm-0'>
+                    <p className="mb-0">Shop Name</p>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Shop Name"
+                        value={shopName}
+                        onChange={(e) => handleChange('shopName', e.target.value)}
                         required
-                    >
-                        <option value="default">Select a service</option>
-                        <option value="home">Home</option>
-                        <option value="construction">Construction</option>
-                        <option value="security">Security</option>
-                    </select>
-                    {serviceErrorMessage && <p className="text-danger p-0 m-0">{serviceErrorMessage}</p>}
+                    />
+                    {shopNameErrorMessage && <p className="text-danger p-0 m-0">{shopNameErrorMessage}</p>}
                 </div>
 
-                <div className="col-7">
-                    <p className="mb-0">Select Category</p>
-                    <select
-                        className="form-select"
-                        value={category2Value}
-                        onChange={(e) => handleChange('category2', e.target.value)}
+                <div className='col-xs-5'>
+                    <p className="mb-0">Owner Name</p>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Owner Name"
+                        value={ownerName}
+                        onChange={(e) => handleChange('ownerName', e.target.value)}
                         required
-                    >
-                        {category1Value === 'default' ? (
-                            <option value="">Please select a service first</option>
-                        ) : (
-                            serviceCategories[category1Value] ? (
-                                <>
-                                    <option value="">Select a category</option>
-                                    {serviceCategories[category1Value].map((category) => (
-                                        <option key={category} value={category}>
-                                            {category}
-                                        </option>
-                                    ))}
-                                </>
-                            ) : (
-                                <option value="">Select the service first</option>
-                            )
-                        )}
-                    </select>
-                    {categoryErrorMessage && <p className="text-danger p-0 m-0">{categoryErrorMessage}</p>}
-                </div>     
+                    />
+                    {ownerNameErrorMessage && <p className="text-danger p-0 m-0">{ownerNameErrorMessage}</p>}
+                </div>
             </div>
 
             <div className="mb-3">
-                <p className="mb-0">Upload Qualification Certificates or Files</p>
+                <p className="mb-0">Upload Bussiness Registration and Municipal Licenses</p>
                 <input
                     // ref={fileInputRef}
                     type="file"
@@ -244,4 +214,4 @@ const Step2 = ({
     );
 };
 
-export default Step2;
+export default AdStep2;

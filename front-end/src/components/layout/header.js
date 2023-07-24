@@ -26,9 +26,9 @@ function AppHeader1() {
                         <NavDropdown className='fw-bold' title="SignUp" id="basic-nav-dropdown">
                             <NavDropdown.Item as={Link}  to="custSignUp" className="fw-bold">Customer</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item as={Link} to="SpSignUp" className="fw-bold">Service Provider</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="spSignUp" className="fw-bold">Service Provider</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item as={Link} to="AdSignUp" className="fw-bold">Advertiser</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="adSignUp" className="fw-bold">Advertiser</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

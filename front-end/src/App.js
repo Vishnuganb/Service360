@@ -10,7 +10,7 @@ import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.j
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
-
+import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js'
@@ -30,6 +30,7 @@ const router = createBrowserRouter(
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
+        <Route path="MyServices" element={<SpServices />} />
       </Route>
       <Route path="/Advertiser" element={<AdvertiserLayout/>}>
         <Route path="AdsPage" element={<AdsPage />} />

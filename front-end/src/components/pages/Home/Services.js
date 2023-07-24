@@ -1,7 +1,5 @@
 import React from 'react';
-import { Container, Row, Card } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import { Row, Card} from 'react-bootstrap';
 import image1 from './../../../assets/images/home/AC-Repair.jpeg';
 import image2 from './../../../assets/images/home/ElectricalWiring.jpeg';
 import image3 from './../../../assets/images/home/plumbing.jpeg';
@@ -15,104 +13,51 @@ import image10 from './../../../assets/images/home/Cctv.jpeg';
 import image11 from './../../../assets/images/home/Fire-Alarm.jpeg';
 import image12 from './../../../assets/images/home/video-Sur.jpeg';
 
+import BgImage from './../../../assets/images/header/Background.png';
+
+const servicesData = [
+    { id: 1, image: image1, text: 'AC Repair' },
+    { id: 2, image: image2, text: 'Electrical Wiring' },
+    { id: 3, image: image3, text: 'Plumbing' },
+    { id: 4, image: image4, text: 'Tiles Fitting' },
+    { id: 5, image: image5, text: 'Carpentry' },
+    { id: 6, image: image6, text: 'Painting' },
+    { id: 7, image: image7, text: 'Masonry' },
+    { id: 8, image: image8, text: 'Glass&Aluminum' },
+    { id: 9, image: image9, text: 'Iron Works' },
+    { id: 10, image: image10, text: 'CCTV Repair' },
+    { id: 11, image: image11, text: 'Fire Alarm' },
+    { id: 12, image: image12, text: 'VideoSurveillance' },
+];
 
 function AppServices() {
     return (
-        <section id="service" className="block service-block m-5">
-
+        <section id="service" className="block service-block m-5" style={{backgroundImage:`url(${BgImage})`}}>
             <div className="title-holder">
                 <h2>What do you need to be done</h2>
                 <div className="subtitle">Connect with Trusted Service Providers</div>
             </div>
 
             <Row className="cardflex">
-
-                <Card className="card">
-                    <Card.Img src={image1} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>AC Repair</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image2} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>ElectricalWiring</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image3} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Plumbing</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image4} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Tiles Fitting</Card.Text>
-                    </Card.Body>
-                </Card>
-                <Card className="card">
-                    <Card.Img src={image5} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Carpentry</Card.Text>
-                    </Card.Body>
-                </Card>
-                <Card className="card">
-                    <Card.Img src={image6} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Painting</Card.Text>
-                    </Card.Body>
-                </Card>
-
+                {servicesData.slice(0, 6).map((service) => (
+                    <Card className="card" key={service.id}>
+                        <Card.Img src={service.image} variant="top" alt="home" />
+                        <Card.Body>
+                            <Card.Text>{service.text}</Card.Text>
+                        </Card.Body>
+                    </Card>
+                ))}
             </Row>
 
             <Row className="cardflex">
-
-                <Card className="card">
-                    <Card.Img src={image7} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Masonry</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image8} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Glass&Aluminum</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image9} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Iron Works</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image10} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>CCTV Repair</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image11} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>Fire Alarm</Card.Text>
-                    </Card.Body>
-                </Card>
-
-                <Card className="card">
-                    <Card.Img src={image12} variant='top' alt="home" />
-                    <Card.Body>
-                        <Card.Text>VideoSurveillance</Card.Text>
-                    </Card.Body>
-                </Card>
-
+                {servicesData.slice(6, 12).map((service) => (
+                    <Card className="card" key={service.id}>
+                        <Card.Img src={service.image} variant="top" alt="home" />
+                        <Card.Body>
+                            <Card.Text>{service.text}</Card.Text>
+                        </Card.Body>
+                    </Card>
+                ))}
             </Row>
 
         </section>
@@ -120,4 +65,3 @@ function AppServices() {
 }
 
 export default AppServices;
-

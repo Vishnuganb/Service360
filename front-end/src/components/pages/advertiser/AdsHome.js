@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../../../style/advertiser/AdsHome.css'
+import '../../../style/Advertiser/AdsHome.css'
 
 const AdsPage = () => {
     return (

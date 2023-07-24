@@ -10,7 +10,7 @@ function BasicExample() {
   return (
     <>
      <Row>
-            <Card className="card dashboard-pages">
+            <Card className="dashboard-pages">
                 <img className="card-img-top" src={profile_img_2} alt="my profile"/>
                 <Card.Body>
                   <Card.Text>

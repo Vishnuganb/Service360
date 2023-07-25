@@ -53,7 +53,7 @@ export default function AppAbout() {
 
             <Container className="py-5 h-100">
                 <Row className="justify-content-center align-items-center h-100">
-                    <Col xl="10">
+                    <Col className="xl-10">
                         <Card>                        
                             <Card.Body className="py-3">
                                 <Carousel controls indicators>

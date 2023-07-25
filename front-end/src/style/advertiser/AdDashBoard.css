@@ -1,0 +1,79 @@
+.AdPageHeading{
+    margin-top: 1em;
+    font-weight: bolder;
+}
+
+.adDashCountDiv{
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color:#ffffff;
+    /* height: 10em; */
+    /* padding: 0.6em; */
+   
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+
+.AdCountCol{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* padding: 0.5em; */
+
+
+    border-right: 1px groove rgb(61, 58, 58);
+}
+
+.AdCountlast{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+
+.AdTotal{ 
+
+    font-size: 2em;
+
+}
+
+.adNo,.adRejNo{
+
+    font-weight: bolder;
+    font-size: 4em;
+
+}
+
+.adRejNo{
+    color: #9F390D;
+}
+
+.PostAd{
+    all: unset;
+    color: #ffffff;
+    padding: 1em;
+    font-size: large;
+    font-weight: bolder;
+    border-radius: 0.5em;
+    background-color: #292D32;
+}
+
+.PostAd:hover{
+    color:#292D32 ;
+    background-color: #ffffff;
+    border: 2px solid #292D32;
+}
+
+.rejectP{
+    font-weight: bold;
+    /* font-size: ; */
+    color: #9F390D;
+}
+
+.AdVrifiedP{
+    color: #048a2c;
+    margin-left: 0.5em;
+    /* text-align: right; */
+    /* font-size: xx-small; */
+}

@@ -2,6 +2,9 @@ import React from "react";
 import { Card, Col, Container, Row, Carousel } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
+import { ReactComponent as SvgDotPatternIcon } from '../../../assets/images/home/dot-pattern.svg';
+import tw from "twin.macro";
+import BgImage from './../../../assets/images/header/Background.png';
 
 const aboutData = [
     {
@@ -36,35 +39,38 @@ const aboutData = [
     },
 ]
 
+const DecoratorBlob1 = tw(SvgDotPatternIcon)`relative bottom-0 left-0 w-32 h-32 mb-0 ml-0 transform -translate-x-1/2 translate-y-1/2 fill-current text-gray-500 opacity-50`
+const DecoratorBlob2 = tw(SvgDotPatternIcon)`relative top-0 right-0 w-32 h-32 mt-16 mr-6 transform translate-x-1/2 -translate-y-1/2 fill-current text-gray-500 opacity-50`
+
 export default function AppAbout() {
     return (
-        <section className="block about-block">
+        <section className="block about-block" style={{backgroundImage:`url(${BgImage})`}}>
 
             <div className="title-holder">
-                <h2>What Customers Says About</h2>
+                <h2>Customers Says About Us</h2>
                 <div className="subtitle">Discover insightful blogs uploaded by service providers</div>
             </div>
 
             <Container className="py-5 h-100">
                 <Row className="justify-content-center align-items-center h-100">
-                    <Col xl="10">
-                        <Card>
-                            <Card.Body className="py-5">
+                    <Col className="xl-10">
+                        <Card>                        
+                            <Card.Body className="py-3">
                                 <Carousel controls indicators>
                                     {
                                         aboutData.map((item) => {
                                             return (
-                                                <Carousel.Item key={item.id}>
+                                                <Carousel.Item key={item.id}>                                                
                                                     <Row className="justify-content-center">
                                                         <Col md="8" lg="9" xl="8">
                                                             <div className="d-flex">
                                                                 <div className="flex-shrink-0">
                                                                     <img
-                                                                        src= {item.image}
+                                                                        src={item.image}
                                                                         className="rounded-circle mb-4 mb-lg-0 shadow-2 d-none d-lg-block"
                                                                         alt="Customers"
-                                                                        width="90"
-                                                                        height="90"
+                                                                        width="100"
+                                                                        height="100"
                                                                     />
                                                                 </div>
                                                                 <div className="flex-grow-1 ms-4 ps-3">
@@ -78,7 +84,7 @@ export default function AppAbout() {
                                                                                 {item.review}
                                                                             </span>
                                                                         </p>
-                                                                        <footer className="blockquote-footer mb-0">
+                                                                        <footer className="blockquote-footer mb-3">
                                                                             {item.name} {" "}
                                                                             <cite title="Source Title">{item.city}</cite>
                                                                         </footer>
@@ -86,14 +92,17 @@ export default function AppAbout() {
                                                                 </div>
                                                             </div>
                                                         </Col>
+                                                        <DecoratorBlob2 />
+                                                        <DecoratorBlob1 />
                                                     </Row>
                                                 </Carousel.Item>
                                             )
                                         })
                                     }
                                 </Carousel>
-                            </Card.Body>
+                            </Card.Body>  
                         </Card>
+                        
                     </Col>
                 </Row>
             </Container>

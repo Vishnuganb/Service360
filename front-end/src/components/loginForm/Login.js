@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/login.jpeg'
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import styled from 'styled-components';
+import { Modal} from 'react-bootstrap';
+import '../../style/Login.css'
+import image from '../../assets/images/header/Background.png'
 
 
 const Login = () => {
-
-    const login = (email, password) => {
-    }
 
     const navigate = useNavigate();
 
@@ -20,6 +21,21 @@ const Login = () => {
     const [password, setPassword] = useState('')
 
     const [errorMessage, setErrorMessage] = useState(null)
+
+    const login = (email, password) => {
+
+        let isError = false
+
+        if (email === '' || password === '') {
+            isError = true
+            setErrorMessage('Please fill in all the fields')
+        } 
+        
+        if (!isError) {
+            navigate('/')
+        } 
+
+    }
 
     const showHidePassword = () => {
 
@@ -37,11 +53,46 @@ const Login = () => {
 
     }
 
+    const customFontStyle = {
+        fontFamily: "Roboto",
+        color: '#9F390D' // Replace 'Your_Custom_Font' with the font name you want to use
+    };
+
+    const StyledButton = styled.button`
+        background-color: #292D32;
+        width: 70%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+    }
+    `;
+    
+    const StyledButton2 = styled.button`
+        background-color: #292D32;
+        width: 30%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+        }
+    `;
+
+    const [showModal, setShowModal] = useState(false);
+
+    const toggleModal = () => setShowModal(!showModal);
+
     return (
 
-        <div className="h-100">
-
-            {/*<ReactLinkContextProvider>*/}
+        <div className="h-100" style={{ backgroundImage: `url(${image})` }}>
 
             <section className="h-100">
 
@@ -58,95 +109,132 @@ const Login = () => {
                                     <div className="col-lg-6">
 
                                         <div className="card-body  p-md-1 mx-md-4 mt-4 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
-                                            style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius:'1rem' }}>
+                                            style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius: '1rem' }}>
 
                                             <div className="mb-0 p-0">
 
                                                 <div className="d-flex justify-content-between">
 
                                                     <p className='pt-4 px-4 flex-wrap fs-5'>
-                                                        welcome to <br></br> <span className="fs-4 fw-bold pb-2" style={{ color: '#9F390D' }}>Service360</span>
-                                                    </p>
-
-                                                    <p className='pt-4 px-4 flex-wrap' style={{ color: '#8D8D8D' }}> No account? <br></br>
-                                                        <span className="fs-6 pb-2" style={{ color: '#9F390D' }}>Signup</span>
+                                                        welcome to <span className="fs-2 fw-bold pb-2" style={customFontStyle}>Service360</span>
                                                     </p>
 
                                                 </div>
 
                                                 <div className="d-flex pb-3">
-                                                    <h1 className="fw-bold px-4">Sign in</h1>
+                                                    <h1 className="fw-bold px-4">SignIn</h1>
                                                 </div>
 
                                             </div>
 
-                                            
-
                                             <form action="" className="my-2 mx-4">
 
-                                                <p className='mb-0'> Enter your email address </p>
-                                                <div className="input-group mb-3 align-items-center">
-                                                    <span className="input-group-text">
+                                                <div>
+                                                    <div className="mb-3">
+                                                        <p className="mb-0">Enter your email address</p>
+                                                        <div className="input-group align-items-center">
+                                                            <input
+                                                                type="email"
+                                                                className="form-control"
+                                                                placeholder="service360@gmail.com"
+                                                                value={email}
+                                                                onChange={(e) => setEmail(e.target.value)}
+                                                                autoFocus
+                                                                required
+                                                            />
+                                                        </div>
 
-                                                        <i className="bi bi-envelope-fill"></i>
-
-                                                    </span>
-                                                    
-                                                    <input type="email" className="form-control"
-                                                        placeholder="service360@gmail.com"
-                                                        value={email}
-                                                        onChange={(e) => setEmail(e.target.value)}
-                                                        autoFocus
-                                                        required
-                                                    />
-                                                </div>
-
-                                                <p className='mb-0'> Enter your password </p>
-                                                <div className="input-group mb-3 align-items-center">
-
-                                                    <span className="input-group-text">
-                                                        <i className="bi bi-lock-fill"></i>
-                                                    </span>
-
-                                                    <input type={passwordType} className="form-control"
-                                                        placeholder="Enter password"
-                                                        value={password}
-                                                        onChange={(e) => setPassword(e.target.value)}
-                                                        required
-                                                    />
-
-                                                    <span className="input-group-prepend"
-                                                        style={{ background: "var(--bs-tertiary-bg)", border: "var(--bs-border-width) solid var(--bs-border-color)" }}>
-                                                        <button className="btn btn-outline-dark border-0"
-                                                            type="button"
-                                                            id="button-addon1" onClick={showHidePassword}>
-                                                            {isPasswordHidden && <i className="bi bi-eye-slash-fill"></i>}
-                                                            {!isPasswordHidden && <i className="bi bi-eye-fill"></i>}
-                                                        </button>
-                                                    </span>
-                                                    
-
-                                                </div>
-                                                
-                                                <Link className="text-primary" style={{textDecoration:'none'}}>Forgot password</Link>
-
-                                                <div className="text-center">
-                                                    <div className="d-flex align-items-center justify-content-end pb-4">
-
-                                                        <button className="btn btn-dark btn-block" style={{ backgroundColor: '#643A3A', width: '10rem' }}
-                                                            type="button" onClick={() => login(email, password)}>
-
-                                                            Sign in
-
-                                                        </button>
-                                                        
                                                     </div>
 
+                                                    <div className="input-group mb-3">
+                                                        <p className="mb-0">Enter your password</p>
+                                                        <div className="input-group ">
+                                                            <input
+                                                                type={passwordType}
+                                                                className="form-control"
+                                                                placeholder="Enter password"
+                                                                value={password}
+                                                                onChange={(e) => setPassword(e.target.value)}
+                                                                required
+                                                            />
+                                                            <span className="input-group-text">
+                                                                <button
+                                                                    className="btn btn-outline-dark border-0 focus-visible" // Add focus-visible class here
+                                                                    type="button"
+                                                                    id="button-addon1"
+                                                                    onClick={showHidePassword}
+                                                                >
+                                                                    {isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
+                                                                </button>
+                                                            </span>  
+                                                        </div>
+                                                        {errorMessage && <p className="text-danger p-0 m-0">{errorMessage}</p>}
+                                                    </div>
                                                     
+
+                                                </div>
+
+                                                <div className="d-flex align-items-center justify-content-center pb-4">
+                                                    <StyledButton
+                                                        className="btn btn-dark btn-block"
+                                                        type="button"
+                                                        onClick={() => login(email, password)}
+                                                    >
+                                                        Sign in
+                                                    </StyledButton>
+                                                </div>
+
+                                                <div>
+                                                    {/* Your other content here */}
+                                                    <div className="d-flex justify-content-between mb-3">
+                                                        <Link className="text-primary mb-2 font-medium-bold" style={{ textDecoration: 'none' }}>
+                                                            Forgot password?
+                                                        </Link>
+                                                        <Link
+                                                            className="text-primary font-medium-bold"
+                                                            style={{ textDecoration: 'none' }}
+                                                            onClick={toggleModal}
+                                                        >
+                                                            Don't have an account?
+                                                        </Link>
+                                                    </div>
+
+                                                    <Modal show={showModal} onHide={toggleModal}>
+                                                        <Modal.Header closeButton style={{ background: '#292D32', color: '#fff' }}>
+                                                            <Modal.Title>Sign Up As</Modal.Title>
+                                                        </Modal.Header>
+                                                        <Modal.Body>
+                                                            <div className="d-flex flex-column justify-content-between mb-3">
+                                                                <Link
+                                                                    className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
+                                                                    style={{ textDecoration: 'none', background: '#f2f2f2', color: '#000' }}
+                                                                >
+                                                                    Customer
+                                                                </Link>
+                                                                <Link
+                                                                    className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
+                                                                    style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
+                                                                >
+                                                                    Service Provider
+                                                                </Link>
+                                                                <Link
+                                                                    className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
+                                                                    style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
+                                                                >
+                                                                    Advertiser
+                                                                </Link>
+                                                            </div>
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <StyledButton2 variant="secondary" onClick={toggleModal} className="btn btn-dark btn-block">
+                                                                Close
+                                                            </StyledButton2>
+                                                        </Modal.Footer>
+                                                    </Modal>
+
                                                 </div>
 
                                             </form>
-
 
                                             <div>
 
@@ -178,13 +266,13 @@ const Login = () => {
 
                     </div>
 
-                </div>
+                </div >
 
-            </section>
+            </section >
 
             {/*</ReactLinkContextProvider>*/}
 
-        </div>
+        </div >
 
 
     )

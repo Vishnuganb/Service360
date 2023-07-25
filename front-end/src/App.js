@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Home from './components/pages/Home/Index.js';
-import Login from './components/loginForm/Login.js';
+import Login from './components/loginForm/LoginContextProviderInterface.js';
 import AdsPage from './components/pages/advertiser/AdsHome.js';
 import SP_Dashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import RootLayout from './components/layout/RootLayout.js';
@@ -24,9 +24,9 @@ const router = createBrowserRouter(
       <Route path='/' element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path='login' element={<Login />} />
-        <Route path='custSignUp' element={<CustSignUp />} />
-        <Route path='spSignUp' element={<SpSignUp />} />
-        <Route path='adSignUp' element={<AdvertiserSignUp />} />
+        <Route path='/signup/customer' element={<CustSignUp />} />
+        <Route path='/signup/serviceProvider' element={<SpSignUp />} />
+        <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
       </Route>
 
       <Route path="/Admin" element={<AdminLayout />}>

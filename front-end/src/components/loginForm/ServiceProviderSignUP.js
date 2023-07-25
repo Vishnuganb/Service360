@@ -49,6 +49,9 @@ const ServiceProviderSignUP = () => {
         selectedFiles: [],
         selectedFileCount: 0,
         fileErrorMessage: '',
+        gramaniladahriFile: null,
+        selectedServices: [],
+        selectedCategories: [],
     });
 
     const handleStep2Change = (field, value) => {
@@ -107,6 +110,44 @@ const ServiceProviderSignUP = () => {
                 confirmPasswordErrorMessage: 'Passwords do not match',
             }));
         }
+    };
+
+    const handleGramaniladahriFileChange = (e) => {
+        const file = e.target.files[0];
+        setStep2Data((prevData) => ({
+            ...prevData,
+            gramaniladahriFile: file,
+        }));
+    };
+
+    const handleServiceCategoryChange = (e) => {
+        const selectedService = e.target.value;
+
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedServices: [...prevData.selectedServices, selectedService],
+        }));
+    };
+
+    const handleCategory2Change = (category) => {
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedCategories: [...prevData.selectedCategories, category],
+        }));
+    };
+
+    const handleRemoveService = (service) => {
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedServices: prevData.selectedServices.filter((selected) => selected !== service),
+        }));
+    };
+
+    const handleRemoveCategory = (category) => {
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedCategories: prevData.selectedCategories.filter((selected) => selected !== category),
+        }));
     };
 
     const fileInputRef = useRef(null); // Ref to access the file input element
@@ -176,7 +217,7 @@ const ServiceProviderSignUP = () => {
 
     const handleStep2Submit = () => {
 
-        const { password, confirmPassword, category1Value, category2Value, selectedFiles } = step2Data;
+        const { password, confirmPassword, gramaniladahriFile, selectedServices, selectedCategories } = step2Data;
 
         let isError = false;
         let passwordErrorMessage = '';
@@ -184,7 +225,6 @@ const ServiceProviderSignUP = () => {
         let serviceErrorMessage = '';
         let categoryErrorMessage = '';
         let fileErrorMessage = '';
-
 
         if (password.trim() === '') {
             isError = true;
@@ -201,19 +241,23 @@ const ServiceProviderSignUP = () => {
             confirmPasswordErrorMessage = 'Passwords do not match';
         }
 
-        if (category1Value === '') {
+        if (!gramaniladahriFile || gramaniladahriFile.length === 0) {
             isError = true;
-            serviceErrorMessage = 'Select the service';
+            fileErrorMessage = 'Upload the certified document';
         }
 
-        if (category2Value === '') {
+        if (selectedServices.length === 0) {
             isError = true;
-            categoryErrorMessage = 'Service category is required';
+            serviceErrorMessage = 'Select the service(S) you provide';
         }
 
-        if (selectedFiles.length === 0) {
+        if (selectedCategories.length === 0) {
             isError = true;
-            fileErrorMessage = 'Select at least one file';
+        }
+
+        if (selectedServices.length > 0 || selectedCategories.length === 0) {
+            isError = true;
+            categoryErrorMessage = 'Select the category(S) you provide';
         }
 
         setStep2Data((prevData) => ({
@@ -267,9 +311,9 @@ const ServiceProviderSignUP = () => {
             contactNumberErrorMessage = 'Should contain only digits';
         }
 
-        if (contactNumber.length !== 10) {
+        if (!/^\d{9}(\d{3}[vV])?$/.test(nicNumber)) {
             isError = true;
-            contactNumberErrorMessage = 'Should be exactly 10 digits';
+            nicNumberErrorMessage = 'Invalid NIC number';
         }
 
         if (!/^\d+[A-Za-z]?$/.test(nicNumber) & nicNumber.length < 9) {
@@ -295,6 +339,11 @@ const ServiceProviderSignUP = () => {
         if (contactNumber.trim() === '') {
             isError = true;
             contactNumberErrorMessage = 'Contact number is required';
+        }
+
+        if (contactNumber.length !== 10) {
+            isError = true;
+            contactNumberErrorMessage = 'Invalid contact number';
         }
 
         if (address.trim() === '') {
@@ -359,7 +408,11 @@ const ServiceProviderSignUP = () => {
                                                 validateConfirmPassword={validateConfirmPassword}
                                                 handleFileInputChange={handleFileInputChange}
                                                 handleRemoveFile={handleRemoveFile}
-                                                // fileInputRef={fileInputRef}
+                                                handleGramaniladahriFileChange={handleGramaniladahriFileChange}
+                                                handleServiceCategoryChange={handleServiceCategoryChange}
+                                                handleCategory2Change={handleCategory2Change}
+                                                handleRemoveService={handleRemoveService}
+                                                handleRemoveCategory={handleRemoveCategory}
                                             />
                                         )}
                                         </div>

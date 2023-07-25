@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import image from '../../assets/images/header/Background.png';
-import loginPhoto from '../../assets/images/home/Registerhere.png';
+import loginPhoto from '../../assets/images/home/Advertiser.jpeg';
 import validator from 'validator';
 
 import Step1 from './AdStep1';
@@ -16,14 +16,14 @@ const ServiceProviderSignUP = () => {
         lastName: '',
         nicNumber: '',
         contactNumber: '',
-        address: '',
+        shopName: '',
+        shopNameErrorMessage: '',
         emailStatus: false,
         emailErrorMessage: '',
         firstNameErrorMessage: '',
         lastNameErrorMessage: '',
         nicNumberErrorMessage: '',
         contactNumberErrorMessage: '',
-        addressErrorMessage: '',
     });
 
     const handleStep1Change = (field, value) => {
@@ -35,10 +35,8 @@ const ServiceProviderSignUP = () => {
 
     // Step 2 state variables and handlers
     const [step2Data, setStep2Data] = useState({
-        shopName: '',
-        ownerName: '',
-        shopNameErrorMessage: '',
-        ownerNameErrorMessage: '',
+        address: '',
+        addressErrorMessage: '',
         password: '',
         confirmPassword: '',
         errorMessage: 'Password requires to have at least one lowercase, one uppercase, one number, one symbol, and be a minimum of 8 characters in length',
@@ -166,13 +164,13 @@ const ServiceProviderSignUP = () => {
 
     const handleStep2Submit = () => {
 
-        const { shopName, ownerName, password, confirmPassword, selectedFiles } = step2Data;
+        const { password, confirmPassword, selectedFiles, address } = step2Data;
 
         let isError = false;
         let passwordErrorMessage = '';
         let confirmPasswordErrorMessage = '';
-        let shopNameErrorMessage = '';
-        let ownerNameErrorMessage = '';
+        let addressErrorMessage = '';
+        
         let fileErrorMessage = '';
 
 
@@ -184,27 +182,7 @@ const ServiceProviderSignUP = () => {
         if (confirmPassword.trim() === '') {
             isError = true;
             confirmPasswordErrorMessage = 'Confirm password is required';
-        }
-
-        if (!validator.isAlpha(shopName)) {
-            isError = true;
-            shopNameErrorMessage = 'Should contain only letters';
-        }
-
-        if (!validator.isAlpha(ownerName)) {
-            isError = true;
-            ownerNameErrorMessage = 'Should contain only letters';
-        }
-
-        if (shopName.trim() === '') {
-            isError = true;
-            shopNameErrorMessage = 'Shop name is required';
-        }
-
-        if (ownerName.trim() === '') {
-            isError = true;
-            ownerNameErrorMessage = 'Owner name is required';
-        }
+        }    
 
         if (password !== confirmPassword) {
             isError = true;
@@ -216,13 +194,17 @@ const ServiceProviderSignUP = () => {
             fileErrorMessage = 'Select at least one file';
         }
 
+        if (address.trim() === '') {
+            isError = true;
+            addressErrorMessage = 'Address is required';
+        }
+
         setStep2Data((prevData) => ({
             ...prevData,
             passwordErrorMessage,
             confirmPasswordErrorMessage,
-            shopNameErrorMessage,
-            ownerNameErrorMessage,
             fileErrorMessage,
+            addressErrorMessage,
         }));
 
         if (!isError) {
@@ -232,7 +214,7 @@ const ServiceProviderSignUP = () => {
     };
 
     const handleStep1NextClick = () => {
-        const { email, firstName, lastName, nicNumber, contactNumber, address } = step1Data;
+        const { email, firstName, lastName, nicNumber, contactNumber,shopName } = step1Data;
 
         let isError = false;
         let emailErrorMessage = '';
@@ -240,7 +222,7 @@ const ServiceProviderSignUP = () => {
         let lastNameErrorMessage = '';
         let nicNumberErrorMessage = '';
         let contactNumberErrorMessage = '';
-        let addressErrorMessage = '';
+        let shopNameErrorMessage = '';
 
         if (!validator.isEmail(email)) {
             isError = true;
@@ -267,12 +249,22 @@ const ServiceProviderSignUP = () => {
             contactNumberErrorMessage = 'Should contain only digits';
         }
 
-        if (contactNumber.length !== 10) {
+        if (!validator.isAlpha(shopName)) {
             isError = true;
-            contactNumberErrorMessage = 'Should be exactly 10 digits';
+            shopNameErrorMessage = 'Should contain only letters';
         }
 
-        if (!/^\d+[A-Za-z]?$/.test(nicNumber) & nicNumber.length < 9) {
+        if (shopName.trim() === '') {
+            isError = true;
+            shopNameErrorMessage = 'Shop name is required';
+        }
+
+        if (contactNumber.length !== 10) {
+            isError = true;
+            contactNumberErrorMessage = 'Invalid contact number';
+        }
+
+        if (!/^\d{9}(\d{3}[vV])?$/.test(nicNumber)) {
             isError = true;
             nicNumberErrorMessage = 'Invalid NIC number';
         }
@@ -297,11 +289,6 @@ const ServiceProviderSignUP = () => {
             contactNumberErrorMessage = 'Contact number is required';
         }
 
-        if (address.trim() === '') {
-            isError = true;
-            addressErrorMessage = 'Address is required';
-        }
-
         if (!isError) {
             setStep(2);
         }
@@ -313,7 +300,7 @@ const ServiceProviderSignUP = () => {
             lastNameErrorMessage,
             nicNumberErrorMessage,
             contactNumberErrorMessage,
-            addressErrorMessage,
+            shopNameErrorMessage,
         }));
     };
 

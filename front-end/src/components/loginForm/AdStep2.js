@@ -52,10 +52,8 @@ const serviceCategories = {
 
 const AdStep2 = ({
     data: {
-        shopName,
-        ownerName,
-        shopNameErrorMessage,
-        ownerNameErrorMessage,
+        address,
+        addressErrorMessage,
         password,
         passwordType,
         isPasswordHidden,
@@ -82,33 +80,21 @@ const AdStep2 = ({
     return (
         <form className="my-2 mx-4">
 
-            <div className="justify-content-between mb-3 d-flex">
-                <div className='me-xs-3 col-xs-6 me-sm-0'>
-                    <p className="mb-0">Shop Name</p>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Shop Name"
-                        value={shopName}
-                        onChange={(e) => handleChange('shopName', e.target.value)}
-                        required
-                    />
-                    {shopNameErrorMessage && <p className="text-danger p-0 m-0">{shopNameErrorMessage}</p>}
+                <div className="mb-3">
+                    <p className="mb-0">Enter your shop Address</p>
+                    <div className="align-items-center">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
+                            value={address}
+                            onChange={(e) => handleChange('address', e.target.value)}
+                            required
+                        />
+                        {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
+                    </div>
                 </div>
 
-                <div className='col-xs-5'>
-                    <p className="mb-0">Owner Name</p>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Owner Name"
-                        value={ownerName}
-                        onChange={(e) => handleChange('ownerName', e.target.value)}
-                        required
-                    />
-                    {ownerNameErrorMessage && <p className="text-danger p-0 m-0">{ownerNameErrorMessage}</p>}
-                </div>
-            </div>
 
             <div className="mb-3">
                 <p className="mb-0">Upload Bussiness Registration and Municipal Licenses</p>

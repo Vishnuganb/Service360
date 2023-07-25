@@ -11,7 +11,7 @@ import AdDashbord from './components/pages/advertiser/AdDashboard.js';
           
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
+import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
 
@@ -36,50 +36,43 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="Login" element={<Login />} />
       </Route>
-      <Route path="/ServiceProvider" element={<SpLayout />}>
-        <Route path="ServiceProviderDashboard" element={<SP_Dashboard />} />
-      </Route>
+
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
+        <Route path="Ads" element={<AdsPage />} />
+        <Route path="Dashboard" element={<AdDashbord />} />
       </Route>
 
-      <Route path="/Advertiser" element={<AdvertiserLayout />}>
-        <Route path="Ads" element={<AdsPage />} />
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="custSignUp" element={<CustSignUp />} />
+        <Route path="spSignUp" element={<SpSignUp />} />
+        <Route path="adSignUp" element={<AdvertiserSignUp />} />
+      </Route>
 
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="custSignUp" element={<CustSignUp />} />
-          <Route path="spSignUp" element={<SpSignUp />} />
-          <Route path="adSignUp" element={<AdvertiserSignUp />} />
-        </Route>
+      <Route path="/Admin" element={<AdminLayout />}>
+        <Route path="AdminDashboard" element={<AdminDashboard />} />
+      </Route>
 
-        <Route path="/Admin" element={<AdminLayout />}>
-          <Route path="AdminDashboard" element={<AdminDashboard />} />
-        </Route>
+      <Route path="/ServiceProvider" element={<SpLayout />}>
+        <Route path="Dashboard" element={<SpDashboard />} />
+        <Route path="ViewJobs" element={<SpViewJobs />} />
+        <Route path="ViewVacancies" element={<SpViewVacancies />} />
+        <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
+        <Route path="MyServices" element={<SpServices />} />
+      </Route>
 
-        <Route path="/ServiceProvider" element={<SpLayout />}>
-          <Route path="Dashboard" element={<SpDashboard />} />
-          <Route path="ViewJobs" element={<SpViewJobs />} />
-          <Route path="ViewVacancies" element={<SpViewVacancies />} />
-          <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
-          <Route path="MyServices" element={<SpServices />} />
-        </Route>
-
-        <Route path="/Customer" element={<CustomerLayout />}>
-          <Route path="CustomerDashboard" element={<CustomerDashboard />} />
-          <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        </Route>
-
-        <Route path="/Advertiser" element={<AdvertiserLayout />}>
-          <Route path="Dashboard" element={<AdDashbord />} />
-        </Route>
+      <Route path="/Customer" element={<CustomerLayout />}>
+        <Route path="CustomerDashboard" element={<CustomerDashboard />} />
+        <Route path="PostVacancyForm" element={<PostVacancyForm />} />
       </Route>
 
       <Route
         path="*"
         element={
           <Layout404>
+            {" "}
             <PageNotFound />
           </Layout404>
         }

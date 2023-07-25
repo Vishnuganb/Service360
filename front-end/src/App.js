@@ -29,8 +29,8 @@ const router = createBrowserRouter(
         <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
       </Route>
 
-      <Route path="/Admin" element={<AdminLayout />}>
-        <Route path="AdminDashboard" element={<AdminDashboard /> } />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route path="dashboard" element={<AdminDashboard /> } />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

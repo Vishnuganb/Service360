@@ -8,12 +8,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-function ServiceProviderSideBar(){
-    return(
+function ServiceProviderSideBar() {
+    return (
         <div className="container-fluid-4 ps-2 m-0">
             <div className="row h-100">
                 <div className="side-bar-sub-container col-auto col-md-2.5 min-vh-100 d-sm-inline d-flex justify-content-between flex-column">
-                    <div className="sidebar-content">  
+                    <div className="sidebar-content">
                         <ul className="nav nav-pills flex-column" id="parentM">
 
                             <li className="nav-item text-white fs-4 mt-4 py-2 py-sm-1">
@@ -57,7 +57,7 @@ function ServiceProviderSideBar(){
                                     <i className="bi bi-file-earmark-post  d-none d-lg-inline d-sm-none d-md-none"></i>
                                     <span className="ms-3 d-none d-lg-inline d-sm-none d-md-none">Blogs</span>
                                     <i className="bi bi-caret-down-fill ms-2 d-none d-lg-inline d-sm-none d-md-none"></i>
-                                    
+
                                     <NavDropdown title={<><i className="bi bi-file-earmark-post"></i></>} id="basic-nav-dropdown" className="dropdown-icon d-md-inline d-sm-inline d-lg-none custom-dropdown">
                                         <NavDropdown.Item href="#Customer" className="no-hover">Create a Blog</NavDropdown.Item>
                                         <NavDropdown.Divider />
@@ -72,7 +72,7 @@ function ServiceProviderSideBar(){
                                     <li className="nav-item fs-5 d-none d-lg-inline d-sm-none d-md-none">
                                         <a className="nav-link nav-link-sidebar text-white sub-item-nav ms-4" href="#">My Blogs</a>
                                     </li>
-                                    
+
                                 </ul>
                             </li>
 

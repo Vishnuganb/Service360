@@ -23,13 +23,13 @@ const AdStep1 = ({
         lastName,
         nicNumber,
         contactNumber,
-        address,
+        shopName,
+        shopNameErrorMessage,
         emailErrorMessage,
         firstNameErrorMessage,
         lastNameErrorMessage,
         nicNumberErrorMessage,
         contactNumberErrorMessage,
-        addressErrorMessage
     },
     handleChange,
     handleNextClick,
@@ -61,7 +61,7 @@ const AdStep1 = ({
 
             <div className="justify-content-between mb-3 d-flex">
                 <div className='me-xs-3 col-xs-6 me-sm-0'>
-                    <p className="mb-0">FirstName</p>
+                    <p className="mb-0">First Name</p>
                     <input
                         type="text"
                         className="form-control"
@@ -74,7 +74,7 @@ const AdStep1 = ({
                 </div>
 
                 <div className='col-xs-5'>
-                    <p className="mb-0">LastName</p>
+                    <p className="mb-0">Last Name</p>
                     <input
                         type="text"
                         className="form-control"
@@ -116,28 +116,26 @@ const AdStep1 = ({
                 </div>
             </div>
 
-            <div className="mb-3">
-                <p className="mb-0">Enter your Current shop Address</p>
-                <div className="align-items-center">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
-                        value={address}
-                        onChange={(e) => handleChange('address', e.target.value)}
-                        required
-                    />
-                    {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
-                </div>
+            <div className='mb-3'>
+                <p className="mb-0">Shop Name</p>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Shop Name"
+                    value={shopName}
+                    onChange={(e) => handleChange('shopName', e.target.value)}
+                    required
+                />
+                {shopNameErrorMessage && <p className="text-danger p-0 m-0">{shopNameErrorMessage}</p>}
             </div>
 
             <div className="text-center">
-                <div className="d-flex align-items-center justify-content-between pb-4">
-                    <p> Have an account? <Link className="text-primary" to={LoginLink}> Login </Link> </p>
+                <div className="d-flex align-items-center justify-content-center justify-content-xl-end pb-4">
                     <StyledButton className="btn btn-dark btn-block" type="button" onClick={handleNextClick}>
                         Next
                     </StyledButton>
                 </div>
+                <p> Have an account? <Link className="text-primary" to="/login"> Login </Link> </p>
             </div>
         </form>
     );

@@ -1,12 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Home from './components/pages/Home/Index.js';
-import Login from './components/loginForm/Login.js';
-import AdsPage from './components/pages/advertiser/AdsHome.js';
-          
+
+import Login from './components/loginForm/LoginContextProviderInterface.js';
+
+import CreateAd from './components/pages/advertiser/CreateAd.js';
+import AdsPage from './components/pages/advertiser/AdsPage.js';
+import AdDashbord from './components/pages/advertiser/AdDashboard.js';
+
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
+import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
 
@@ -27,19 +31,25 @@ import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path='/' element={<RootLayout />}>
+      <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path='login' element={<Login />} />
-        <Route path='custSignUp' element={<CustSignUp />} />
-        <Route path='spSignUp' element={<SpSignUp />} />
-        <Route path='adSignUp' element={<AdvertiserSignUp />} />
+        <Route path='/signup/customer' element={<CustSignUp />} />
+        <Route path='/signup/serviceProvider' element={<SpSignUp />} />
+        <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
       </Route>
 
-      <Route path="/Admin" element={<AdminLayout />}>
-        <Route path="AdminDashboard" element={<AdminDashboard /> } />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route path="dashboard" element={<AdminDashboard /> } />
       </Route>
 
-      <Route path="/ServiceProvider" element={<SpLayout/>}>
+      <Route path="/Advertiser" element={<AdvertiserLayout />}>
+        <Route path="CreateAd" element={<CreateAd />} />
+        <Route path="Ads" element={<AdsPage />} />
+        <Route path="Dashboard" element={<AdDashbord />} />
+      </Route>
+
+      <Route path="/ServiceProvider" element={<SpLayout />}>
         <Route path="Dashboard" element={<SpDashboard />} />
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
@@ -47,16 +57,20 @@ const router = createBrowserRouter(
         <Route path="MyServices" element={<SpServices />} />
       </Route>
 
-      <Route path="/Advertiser" element={<AdvertiserLayout />}>
-        <Route path="AdsPage" element={<AdsPage />} />
-      </Route>
-      
       <Route path="/Customer" element={<CustomerLayout />}>
         <Route path="CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
       </Route>
 
-      <Route path="*" element={<Layout404><PageNotFound /></Layout404>} />
+      <Route
+        path="*"
+        element={
+          <Layout404>
+            {" "}
+            <PageNotFound />
+          </Layout404>
+        }
+      />
     </>
   )
 );

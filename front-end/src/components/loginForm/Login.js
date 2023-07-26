@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/login.jpeg'
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -6,11 +6,16 @@ import styled from 'styled-components';
 import { Modal} from 'react-bootstrap';
 import '../../style/Login.css'
 import image from '../../assets/images/header/Background.png'
+import { ReactLinkContext } from "../../ContextFiles/ReactLinkContext";
 
 
 const Login = () => {
 
     const navigate = useNavigate();
+
+    const { CustomerSignUpLink, ServiceProviderSignUpLink, AdvertiserSignUpLink } = useContext(ReactLinkContext)
+
+    const { ResetPasswordLink: forgotPasswordLink } = useContext(ReactLinkContext)
 
     const [isPasswordHidden, setIsPasswordHidden] = useState(true)
 
@@ -187,7 +192,11 @@ const Login = () => {
                                                 <div>
                                                     {/* Your other content here */}
                                                     <div className="d-flex justify-content-between mb-3">
-                                                        <Link className="text-primary mb-2 font-medium-bold" style={{ textDecoration: 'none' }}>
+                                                        <Link
+                                                            className="text-primary mb-2 font-medium-bold"
+                                                            style={{ textDecoration: 'none' }}
+                                                            to = { forgotPasswordLink}
+                                                        >
                                                             Forgot password?
                                                         </Link>
                                                         <Link
@@ -206,18 +215,21 @@ const Login = () => {
                                                         <Modal.Body>
                                                             <div className="d-flex flex-column justify-content-between mb-3">
                                                                 <Link
+                                                                    to= {CustomerSignUpLink}
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', background: '#f2f2f2', color: '#000' }}
                                                                 >
                                                                     Customer
                                                                 </Link>
                                                                 <Link
+                                                                    to= {ServiceProviderSignUpLink} 
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
                                                                 >
                                                                     Service Provider
                                                                 </Link>
                                                                 <Link
+                                                                    to= {AdvertiserSignUpLink} 
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
                                                                 >

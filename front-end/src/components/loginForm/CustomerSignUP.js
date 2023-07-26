@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/customerSignUP.png'
 import styled from 'styled-components';
@@ -146,10 +146,10 @@ const CustomerSignUP = () => {
         
         if (data.contactNumber.length !== 10) {
             isError = true;
-            contactNumberErrorMessage = 'Should be exactly 10 digits';
+            contactNumberErrorMessage = 'Invalid contact number';
         }
 
-        if (!/^\d+[A-Za-z]?$/.test(data.nicNumber) & data.nicNumber.length < 9) {
+        if (!/^\d{9}(\d{3}[vV])?$/.test(data.nicNumber)) {
             isError = true;
             nicNumberErrorMessage = 'Invalid NIC number';
         }
@@ -273,7 +273,7 @@ const CustomerSignUP = () => {
 
                                                 <div className="justify-content-between mb-3 d-flex">
                                                     <div className='me-0 col-sm-6'>
-                                                        <p className="mb-0">FirstName</p>
+                                                        <p className="mb-0">First Name</p>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -286,7 +286,7 @@ const CustomerSignUP = () => {
                                                     </div>
 
                                                     <div className='col-sm-5'>
-                                                        <p className="mb-0">LastName</p>
+                                                        <p className="mb-0">Last Name</p>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -328,7 +328,7 @@ const CustomerSignUP = () => {
                                                 </div>
 
                                                 <div className="mb-3">
-                                                    <p className="mb-0">Enter your Current Address</p>
+                                                    <p className="mb-0">Enter your Residential Address</p>
                                                     <div className="align-items-center">
                                                         <input
                                                             type="text"
@@ -369,7 +369,7 @@ const CustomerSignUP = () => {
                                                     </div>
 
                                                     <div>
-                                                        <p className="mb-0">Retype Password</p>
+                                                        <p className="mb-0">Confirm Password</p>
                                                         <div className="input-group">
                                                             <input
                                                                 type={data.passwordType}
@@ -413,15 +413,12 @@ const CustomerSignUP = () => {
 
                                                     </div>
 
-                                                    <p> Have an account? <Link className="text-primary" to={LoginLink}> Login </Link>  </p>
+                                                    <p> Have an account? <Link className="text-primary" to="/login"> Login </Link>  </p>
 
                                                 </div>
 
-
-
                                             </form>
-
-
+                                            
                                             <div>
 
                                             </div>

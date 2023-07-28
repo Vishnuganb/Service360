@@ -7,6 +7,7 @@ import Login from './components/loginForm/LoginContextProviderInterface.js';
 import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
+import ViewAd from './components/pages/advertiser/ViewAd.js';
 
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -28,10 +29,15 @@ import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
+
 import PostVacancyFormIndex from './components/pages/Customer/PostVacancyFormIndex.js';
 import OngoingProject from './components/pages/Customer/CustomerDashboard/OngoingProject.js';
 import Quotation from './components/pages/Customer/Quotation.js'
 import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
+
+
+import Forum from './components/pages/Forum/Forum.js';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,7 +57,9 @@ const router = createBrowserRouter(
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
         <Route path="Ads" element={<AdsPage />} />
+        <Route path='View' element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
+        <Route path='Forum' element={<Forum />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>

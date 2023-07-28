@@ -1,0 +1,39 @@
+@media (max-width: 768px) {
+    .AdsSearchRow{
+        display: grid;
+    }
+
+    .forumImage{
+        display: none;
+    }
+
+    .forumFotter{
+        display: flex;
+    }
+    .EmptyColForum{
+        display: none;
+    }
+
+}
+
+.AdCategeroy{
+    all:unset;
+    background-color: #dbdbdb;
+    padding: 0.2em;
+    border-radius: 0.6em;
+}
+
+
+.SingleForumCont{
+    padding: 0.5em;
+}
+
+.SingleForumCont:hover{
+    scale: 1.01;
+
+}
+
+.ForumDiv{
+    display: grid;
+    gap: 1em;
+}

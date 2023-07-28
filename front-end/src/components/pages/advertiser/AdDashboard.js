@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+
 
 import "../../../style/advertiser/AdIndex.css";
 
@@ -16,7 +16,7 @@ const AdSampleCont = ({ profileIcon, adImage, adName, price, location }) => {
       <div className="AdSampleCont">
         <div className="AdHeader">
           <div>
-            <img src={profileIcon} roundedCircle className="AdProfilePic" />
+            <img src={profileIcon} alt="Profile" roundedCircle className="AdProfilePic" />
           </div>
           <div className="namediv">
             <p>Adam </p>
@@ -28,7 +28,7 @@ const AdSampleCont = ({ profileIcon, adImage, adName, price, location }) => {
         </div>
 
         <div>
-          <img src={adImage} rounded />
+          <img src={adImage} alt="Item" rounded />
         </div>
 
         <div>
@@ -59,7 +59,7 @@ const VerifiedAdCont = ({ profileIcon, adImage, adName, price, location }) => {
       <div className="AdSampleCont">
         <div className="AdHeader">
           <div>
-            <img src={profileIcon} roundedCircle className="AdProfilePic" />
+            <img src={profileIcon} alt="Profile" roundedCircle className="AdProfilePic" />
           </div>
           <div className="namediv">
             <p>Adam </p>
@@ -72,7 +72,7 @@ const VerifiedAdCont = ({ profileIcon, adImage, adName, price, location }) => {
         </div>
 
         <div>
-          <img src={adImage} rounded />
+          <img src={adImage} alt="Item" rounded />
         </div>
 
         <div>
@@ -103,7 +103,7 @@ const RejectAdCont = ({ profileIcon, adImage, adName, price, location }) => {
       <div className="AdSampleCont">
         <div className="AdHeader">
           <div>
-            <img src={profileIcon} roundedCircle className="AdProfilePic" />
+            <img src={profileIcon} alt="Profile" roundedCircle className="AdProfilePic" />
           </div>
           <div className="namediv">
             <p>Adam</p>
@@ -115,7 +115,7 @@ const RejectAdCont = ({ profileIcon, adImage, adName, price, location }) => {
         </div>
 
         <div>
-          <img src={adImage} rounded />
+          <img src={adImage}  alt="Item "rounded />
         </div>
 
         <div>
@@ -242,11 +242,14 @@ const AdDashbord = () => {
   return (
     <Container>
       <h1 className="AdPageHeading">Your Ads</h1>
+      
       <Row className="adDashCountDiv">
+        
         <Col className="AdCountCol">
           <p className="AdTotal">Total</p>
           <p className="adNo">10</p>
         </Col>
+        
 
         <Col className="AdCountCol">
           <p className="AdTotal">Verified</p>

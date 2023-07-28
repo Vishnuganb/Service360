@@ -10,7 +10,7 @@ import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
+import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
 

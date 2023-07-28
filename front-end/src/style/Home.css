@@ -514,7 +514,7 @@ textarea {
 @media (max-width: 1023px) {
   body {
     font-size: 12px;
-    line-height: 20px;
+    /* line-height: 20px; */
   }
 
   h1 {
@@ -571,7 +571,7 @@ textarea {
 @media (max-width: 767px) {
   body {
     font-size: 12px;
-    line-height: 18px;
+    /* line-height: 18px; */
   }
 
   h1 {

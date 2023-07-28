@@ -15,7 +15,7 @@ function bodyPage() {
                         </div>
                     </Row>
                     <Row id='bodyPageRow2'>
-                        <div className="paginationContainer">
+                        <div className="paginationContainer-vacancies">
                             <Pagination className='pagination-element'>
                                 <Pagination.First />
                                 <Pagination.Prev />

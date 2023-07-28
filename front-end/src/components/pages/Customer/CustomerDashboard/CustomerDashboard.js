@@ -10,9 +10,8 @@ import profile_img_2 from '../../../../assets/images/Customer/projects.jpg'
 const CustomerDashboard = () => {
     return (
         <div className="row">
-            <div className='col-4'></div>
 
-            <div className="col-6 custdash">
+            <div className="col custdash">
                 <div className="row"><h4>Welcome back, Tharsana!</h4>
                     <Row>
                         <Card className="card-cus-dashboard dashboard-button-1 ">

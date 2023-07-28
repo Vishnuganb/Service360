@@ -1,10 +1,9 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import ServiceProviderHeader from './ServiceProviderHeader';
 import AppFooter from './footer';
 import CustomerSideBar from './CustomerSidebar';
 import CustomerHeader from './CustomerHeader';
-
+import '../../style/ServiceProvider/SpLayout.css';
 
 const CustomerLayout = () => {
     return (

@@ -1,13 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import '../../../style/Customer/PostVacancyForm.css';
-import DatePicker from "react-datepicker";
-import '../../layout/FileUploadCustomer';
 import FileUpload from '../../layout/FileUploadCustomer';
-import ResponsiveCalendar from '../../layout/ResponsiveCalendar';
 
 
 
@@ -16,9 +10,7 @@ const PostVacancyForm = () => {
         
         <Container name="viewport" content="width=device-width, initial-scale=1.0">
             <div className="row">
-                <div className='col-4'></div>
-                <div className="col-6">
-                    <div className="row">
+                <div className="col">
 
                         <div className="card_2" >
                             <p> <a href="#" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></a>
@@ -175,7 +167,7 @@ const PostVacancyForm = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                
             </div>        
 <br></br><br></br>
         </Container>

@@ -1,10 +1,14 @@
 import React from 'react';
-import SpSidebar from '../../../layout/ServiceProviderSidebar.js';
+import Cards from './cards.js';
+import Analysis from './AnalysisSp.js'
+import Overview from './overview.js';
 
 function Index(){
     return(
         <>
-           <SpSidebar/>
+            <Overview/>
+            <Analysis/>
+            <Cards/>
         </>
     );
 }

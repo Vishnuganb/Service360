@@ -16,7 +16,7 @@
     width: 0px;
   }
 
-  .nav-link {
+  .nav-link-sidebar {
     transition: none; 
   }
 
@@ -76,5 +76,5 @@ span{
 
 
   .side-bar-sub-container{
-    background-color: #29435cf0;
-  }  
+    background-color: #282b3d;
+  }

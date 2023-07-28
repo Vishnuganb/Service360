@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/customerSignUP.png'
 import styled from 'styled-components';
@@ -7,122 +7,12 @@ import '../../style/Login.css'
 import { Alert } from 'react-bootstrap';
 import image from '../../assets/images/header/Background.png'
 
+const customFontStyle = {
+    fontFamily: "Roboto",
+    color: '#9F390D' // Replace 'Your_Custom_Font' with the font name you want to use
+};
 
-const CustomerSignUP = () => {
-
-    const { LoginLink } = ''
-
-    const { signUp } = ''
-
-    const [isPasswordHidden, setIsPasswordHidden] = useState(true)
-
-    const [passwordType, setPasswordType] = useState('password')
-
-    const [email, setEmail] = useState('')
-
-    const [address, setAddress] = useState('')
-
-    const [password, setPassword] = useState('')
-
-    const [confirmPassword, setConfirmPassword] = useState('')
-
-    const [firstName, setFirstName] = useState('')
-
-    const [lastName, setLastName] = useState('')
-
-    const [nicNumber, setNicNumber] = useState('')
-
-    const [contactNumber, setContactNumber] = useState('')
-
-    const [errorMessageStatus, setErrorMessageStatus] = useState(false)
-
-    const errorMessage = 'Password requires to have atleast one lower case, one uppercase, one number, one symbol and be minimum of 8 characters in lengths';
-
-    const [confirmPasswordStatus, setConfirmPasswordStatus] = useState(false)
-
-    const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = useState('')
-
-    const [emailStatus, setEmailStatus] = useState(false)
-
-    const [emailErrorMessage, setEmailErrorMessage] = useState('')
-
-    const showHidePassword = () => {
-
-        if (isPasswordHidden) {
-            setPasswordType('text')
-            setIsPasswordHidden(false)
-
-        }
-        else {
-
-            setPasswordType('password')
-            setIsPasswordHidden(true)
-
-        }
-
-    }
-
-    const validatePassword = (passwordInputValue) => {
-
-        if (validator.isStrongPassword(passwordInputValue, {
-
-            minLength: 8, minLowercase: 1, minUppercase: 1,
-            minNumbers: 1, minSymbols: 1
-
-        })) setErrorMessageStatus(false)
-        else setErrorMessageStatus(true)
-
-        setPassword(passwordInputValue)
-
-    }
-
-    const validateConfirmPassword = (confirmPasswordInputValue) => {
-
-        if (password === confirmPasswordInputValue) {
-
-            setConfirmPasswordErrorMessage('Password matches')
-            setConfirmPasswordStatus(false)
-
-        } else {
-
-            setConfirmPasswordErrorMessage('Passwords does not match')
-            setConfirmPasswordStatus(true)
-
-        }
-
-        setConfirmPassword(confirmPasswordInputValue)
-
-    }
-
-    const validateEmail = (emailInputValue) => {
-
-        setEmail(emailInputValue)
-
-        if (validator.isEmail(emailInputValue)) {
-
-            setEmailStatus(true)
-            setEmailErrorMessage('valid email')
-        }
-        else {
-
-            setEmailStatus(false)
-            setEmailErrorMessage('Invalid email')
-        }
-
-    }
-
-    const createUser = () => {
-
-        signUp({ email, password, firstName, lastName, nicNumber, contactNumber, address })
-
-    }
-
-    const customFontStyle = {
-        fontFamily: "Roboto",
-        color: '#9F390D' // Replace 'Your_Custom_Font' with the font name you want to use
-    };
-
-    const StyledButton = styled.button`
+const StyledButton = styled.button`
         background-color: #292D32;
         width: 70%;
         @media (max-width: 768px) {
@@ -136,7 +26,7 @@ const CustomerSignUP = () => {
         }
     `;
 
-    const StyledButton2 = styled.button`
+const StyledButton2 = styled.button`
         background-color: #292D32;
         width: 30%;
         @media (max-width: 768px) {
@@ -150,6 +40,182 @@ const CustomerSignUP = () => {
         }
     `;
 
+
+const CustomerSignUP = () => {
+
+    const { LoginLink } = ''
+
+    const { signUp } = ''
+
+    const [data, setdata] = useState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        nicNumber: '',
+        contactNumber: '',
+        address: '',
+        password: '',
+        confirmPassword: '',
+        confirmPasswordErrorMessage: '',
+        emailStatus: false,
+        passwordType: 'password',
+        isPasswordHidden: true,
+        errorMessageStatus: false,
+        confirmPasswordStatus: false,
+        emailErrorMessage: '',
+        firstNameErrorMessage: '',
+        lastNameErrorMessage: '',
+        nicNumberErrorMessage: '',
+        contactNumberErrorMessage: '',
+        addressErrorMessage: '',
+        firstNameErrorMessage: '',
+        lastNameErrorMessage: '',
+        nicNumberErrorMessage: '',
+        contactNumberErrorMessage: '',
+        addressErrorMessage: '',
+        passwordErrorMessage: '',
+    });
+
+    const errorMessage = 'Password requires to have atleast one lower case, one uppercase, one number, one symbol and be minimum of 8 characters in lengths';
+
+    const showHidePassword = () => {
+        if (data.isPasswordHidden) {
+            setdata({ ...data, passwordType: 'text', isPasswordHidden: false });
+        } else {
+            setdata({ ...data, passwordType: 'password', isPasswordHidden: true });
+        }
+    };
+
+    const validatePassword = (passwordInputValue) => {
+        if (validator.isStrongPassword(passwordInputValue, {
+            minLength: 8, minLowercase: 1, minUppercase: 1,
+            minNumbers: 1, minSymbols: 1
+        })) {
+            setdata({ ...data, password: passwordInputValue, errorMessageStatus: false });
+        } else {
+            setdata({ ...data, password: passwordInputValue, errorMessageStatus: true });
+        }
+    };
+
+    const validateConfirmPassword = (confirmPasswordInputValue) => {
+        if (data.password === confirmPasswordInputValue) {
+            setdata({ ...data, confirmPassword: confirmPasswordInputValue, confirmPasswordErrorMessage: 'Password matches', confirmPasswordStatus: false });
+        } else {
+            setdata({ ...data, confirmPassword: confirmPasswordInputValue, confirmPasswordErrorMessage: 'Passwords do not match', confirmPasswordStatus: true });
+        }
+    };
+
+    const validateEmail = (emailInputValue) => {
+        if (validator.isEmail(emailInputValue)) {
+            setdata({ ...data, email: emailInputValue, emailStatus: true, emailErrorMessage: ''});
+        } else {
+            setdata({ ...data, email: emailInputValue, emailStatus: false, emailErrorMessage: 'Invalid email' });
+        }
+    };
+
+    const createUser = () => {
+        let isError = false;
+        let emailErrorMessage = '';
+        let firstNameErrorMessage = '';
+        let lastNameErrorMessage = '';
+        let nicNumberErrorMessage = '';
+        let contactNumberErrorMessage = '';
+        let addressErrorMessage = '';
+        let passwordErrorMessage = '';
+        let confirmPasswordErrorMessage = '';
+
+        if (data.email.trim() === '') {
+            isError = true;
+            emailErrorMessage = 'Email is required';
+        }
+
+        if (!validator.isAlpha(data.firstName)) {
+            isError = true;
+            firstNameErrorMessage = 'Should contain only letters';
+        }
+
+        if (!validator.isAlpha(data.lastName)) {
+            isError = true;
+            lastNameErrorMessage = 'Should contain only letters';
+        }
+
+        if (!validator.isNumeric(data.contactNumber)) {
+            isError = true;
+            contactNumberErrorMessage = 'Should contain only digits';
+        }
+        
+        if (data.contactNumber.length !== 10) {
+            isError = true;
+            contactNumberErrorMessage = 'Invalid contact number';
+        }
+
+        if (!/^\d{9}(\d{3}[vV])?$/.test(data.nicNumber)) {
+            isError = true;
+            nicNumberErrorMessage = 'Invalid NIC number';
+        }
+
+
+        if (data.firstName.trim() === '') {
+            isError = true;
+            firstNameErrorMessage = 'First name is required';
+        }
+
+        if (data.lastName.trim() === '') {
+            isError = true;
+            lastNameErrorMessage = 'Last name is required';
+        }
+
+        if (data.nicNumber.trim() === '') {
+            isError = true;
+            nicNumberErrorMessage = 'NIC is required';
+        }
+
+        if (data.contactNumber.trim() === '') {
+            isError = true;
+            contactNumberErrorMessage = 'Contact number is required';
+        }
+
+        if (data.address.trim() === '') {
+            isError = true;
+            addressErrorMessage = 'Address is required';
+        }
+
+        if (data.password.trim() === '') {
+            isError = true;
+            passwordErrorMessage = 'Password is required';
+        }
+
+        if (data.confirmPassword.trim() === '') {
+            isError = true;
+            confirmPasswordErrorMessage = 'Confirm password is required';
+        }
+
+        // Set error messages in the state
+        setdata({
+            ...data,
+            emailErrorMessage,
+            firstNameErrorMessage,
+            lastNameErrorMessage,
+            nicNumberErrorMessage,
+            contactNumberErrorMessage,
+            addressErrorMessage,
+            passwordErrorMessage,
+            confirmPasswordErrorMessage,
+        });
+
+        if (!isError) {
+            signUp({
+                email: data.email,
+                password: data.password,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                nicNumber: data.nicNumber,
+                contactNumber: data.contactNumber,
+                address: data.address,
+            });
+        }
+    };
+
     return (
 
         <div className="h-100" style={{ backgroundImage: `url(${image})` }}>
@@ -160,7 +226,7 @@ const CustomerSignUP = () => {
 
                     <div className="row d-flex justify-content-center align-items-center h-100">
 
-                        <div className="col-xl-10 offset-sm-2 offset-lg-0 my-lg-1 py-lg-1 my-xl-0 py-xl-0">
+                        <div className="col-xl-10 offset-sm-2 offset-lg-4 offset-xl-0 my-lg-1 py-lg-1 my-xl-0 py-xl-0">
 
                             <div className="rounded-3 text-black my-lg my-xl-0 py-xl-0">
 
@@ -168,7 +234,7 @@ const CustomerSignUP = () => {
 
                                     <div className="col-xl-6">
 
-                                        <div className="card-body  p-md-1 mx-md-2 mt-5 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
+                                        <div className="p-md-1 mx-md-2 my-5 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
                                             style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius: '1rem' }}>
 
                                             <div className="mb-0 p-0">
@@ -192,98 +258,102 @@ const CustomerSignUP = () => {
                                                 <div className="mb-2">
                                                     <p className="mb-0">Enter your email address</p>
                                                     <div className="align-items-center">
-                                                        <input type="email" className="form-control"
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
                                                             placeholder="Service360@gmail.com"
-                                                            value={email}
+                                                            value={data.email}
                                                             onChange={(e) => validateEmail(e.target.value)}
                                                             autoFocus
                                                             required
                                                         />
+                                                        {data.emailErrorMessage && <p className="text-danger p-0 m-0">{data.emailErrorMessage}</p>}
                                                     </div>
                                                 </div>
 
-
-                                                {!emailStatus && emailErrorMessage && (
-                                                    <Alert variant="warning" className="my-0 mb-1 rounded" dismissible>
-                                                        {emailErrorMessage}
-                                                    </Alert>
-                                                )}
-
                                                 <div className="justify-content-between mb-3 d-flex">
                                                     <div className='me-0 col-sm-6'>
-                                                        <p className="mb-0">FirstName</p>
-                                                        <input type="text" className="form-control"
+                                                        <p className="mb-0">First Name</p>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
                                                             placeholder="First Name"
-                                                            value={firstName}
-                                                            onChange={(e) => setFirstName(e.target.value)}
+                                                            value={data.firstName}
+                                                            onChange={(e) => setdata({ ...data, firstName: e.target.value })}
                                                             required
                                                         />
+                                                        {data.firstNameErrorMessage && <p className="text-danger p-0 m-0">{data.firstNameErrorMessage}</p>}
                                                     </div>
 
                                                     <div className='col-sm-5'>
-                                                        <p className="mb-0">LastName</p>
-                                                        <input type="text" className="form-control"
+                                                        <p className="mb-0">Last Name</p>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
                                                             placeholder="Last Name"
-                                                            value={lastName}
-                                                            onChange={(e) => setLastName(e.target.value)}
+                                                            value={data.lastName}
+                                                            onChange={(e) => setdata({ ...data, lastName: e.target.value })}
                                                             required
                                                         />
+                                                        {data.lastNameErrorMessage && <p className="text-danger p-0 m-0">{data.lastNameErrorMessage}</p>}
                                                     </div>
 
                                                 </div>
 
                                                 <div className="justify-content-between mb-3 d-flex ">
-                                                    <div className='me-0 col-sm-5 col-sm-6'> 
-                                                        <label className="mb-0">NIC Number</label>
-                                                        <div className="input-group ">
-                                                            <input type="text" className="form-control"
-                                                                placeholder="Enter NIC number"
-                                                                value={nicNumber}
-                                                                onChange={(e) => setNicNumber(e.target.value)}
-                                                                required
-                                                            />
-                                                        </div>
+                                                    <div className='me-0 col-sm-5 col-sm-6'>
+                                                        <p className="mb-0">NIC Number</p>
+                                                        <input type="text" className="form-control"
+                                                            placeholder="Enter NIC number"
+                                                            value={data.nicNumber}
+                                                            onChange={(e) => setdata({ ...data, nicNumber: e.target.value })}
+                                                            required
+                                                        />
+                                                        {data.nicNumberErrorMessage && <p className="text-danger p-0 m-0">{data.nicNumberErrorMessage}</p>}
                                                     </div>
 
                                                     <div className='col-sm-5 col-lg-5'>
-                                                        <label className="mb-0">Contact Number</label>
-                                                        <div className="input-group">
-                                                            <input type="text" className="form-control"
-                                                                placeholder="0771234567"
-                                                                value={contactNumber}
-                                                                onChange={(e) => setContactNumber(e.target.value)}
-                                                                required
-                                                                maxLength={10}
-                                                            />
-                                                        </div>
+                                                        <p className="mb-0">Contact Number</p>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder="0771234567"
+                                                            value={data.contactNumber}
+                                                            onChange={(e) => setdata({ ...data, contactNumber: e.target.value })}
+                                                            required
+                                                            maxLength={10}
+                                                        />
+                                                        {data.contactNumberErrorMessage && <p className="text-danger p-0 m-0">{data.contactNumberErrorMessage}</p>}
                                                     </div>
                                                 </div>
 
                                                 <div className="mb-3">
-                                                    <p className="mb-0">Enter your Current Address</p>
+                                                    <p className="mb-0">Enter your Residential Address</p>
                                                     <div className="align-items-center">
-                                                        <input type="text" className="form-control"
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
                                                             placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
-                                                            value={address}
-                                                            onChange={(e) => setAddress(e.target.value)}
+                                                            value={data.address}
+                                                            onChange={(e) => setdata({ ...data, address: e.target.value })}
                                                             required
                                                         />
+                                                        {data.addressErrorMessage && <p className="text-danger p-0 m-0">{data.addressErrorMessage}</p>}
                                                     </div>
                                                 </div>
-
 
                                                 <div className="mb-3 d-flex justify-content-between">
                                                     <div className='me-3'>
                                                         <p className="mb-0">Enter your Password</p>
                                                         <div className="input-group">
                                                             <input
-                                                                type={passwordType}
+                                                                type={data.passwordType}
                                                                 className="form-control"
                                                                 placeholder="Enter password"
-                                                                value={password}
+                                                                value={data.password}
                                                                 onChange={(e) => validatePassword(e.target.value)}
                                                                 required
-                                                            />
+                                                            />  
                                                             <span className="input-group-text">
                                                                 <button
                                                                     className="btn btn-outline-dark border-0"
@@ -291,20 +361,21 @@ const CustomerSignUP = () => {
                                                                     id="button-addon1"
                                                                     onClick={showHidePassword}
                                                                 >
-                                                                    {isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
+                                                                    {data.isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
                                                                 </button>
                                                             </span>
                                                         </div>
+                                                        {data.passwordErrorMessage && <p className="text-danger p-0 m-0">{data.passwordErrorMessage}</p>}
                                                     </div>
 
                                                     <div>
-                                                        <p className="mb-0">Retype Password</p>
+                                                        <p className="mb-0">Confirm Password</p>
                                                         <div className="input-group">
                                                             <input
-                                                                type={passwordType}
+                                                                type={data.passwordType}
                                                                 className="form-control"
                                                                 placeholder="Confirm password"
-                                                                value={confirmPassword}
+                                                                value={data.confirmPassword}
                                                                 onChange={(e) => validateConfirmPassword(e.target.value)}
                                                                 required
                                                             />
@@ -312,27 +383,21 @@ const CustomerSignUP = () => {
                                                                 <button
                                                                     className="btn btn-outline-dark border-0"
                                                                     type="button"
-                                                                    id="button-addon1"
+                                                                    id="button-addon2"
                                                                     onClick={showHidePassword}
                                                                 >
-                                                                    {isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
+                                                                    {data.isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
                                                                 </button>
                                                             </span>
                                                         </div>
+                                                        {data.confirmPasswordErrorMessage && <p className="text-danger p-0 m-0">{data.confirmPasswordErrorMessage}</p>}
                                                     </div>
                                                 </div>
 
-                                                {errorMessageStatus && (
+                                                {data.errorMessageStatus && (
                                                     <Alert variant="info" className="my-0 p-2 mb-2 rounded" dismissible>
                                                         <strong>info</strong>
-                                                        <p className="d-flex justify-content-center"></p>{errorMessage}
-                                                    </Alert>
-                                                )}
-
-                                                { confirmPasswordStatus && (
-                                                    <Alert variant="danger" className="my-0 p-2 mb-2 rounded" dismissible>
-                                                        <strong>Error</strong>
-                                                        <p className="d-flex justify-content-center"></p>{confirmPasswordErrorMessage}
+                                                        <p className="d-flex justify-content-center">{errorMessage}</p>
                                                     </Alert>
                                                 )}
 
@@ -348,15 +413,12 @@ const CustomerSignUP = () => {
 
                                                     </div>
 
-                                                    <p> Have an account? <Link className="text-primary" to={LoginLink}> Login </Link>  </p>
+                                                    <p> Have an account? <Link className="text-primary" to="/login"> Login </Link>  </p>
 
                                                 </div>
 
-
-
                                             </form>
-
-
+                                            
                                             <div>
 
                                             </div>
@@ -365,19 +427,7 @@ const CustomerSignUP = () => {
 
                                     </div>
 
-                                    <div className="col-xl-6 d-xl-flex d-none py-5" style={{ backgroundImage: `url(${image})` }}>
-
-                                        <div className="d-lg-flex d-none" style={{ backgroundImage: `url(${image})` }}>
-
-                                            <div className="text-center">
-
-                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" />
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+                                    <div className="col-xl-6 my-5 justify-content-center align-items-center rounded" style={{ background: `url(${loginPhoto})`, objectFit: 'cover' }} />
 
                                 </div>
 

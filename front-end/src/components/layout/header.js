@@ -24,11 +24,11 @@ function AppHeader1() {
                         <Nav.Link as={Link} to="#contact" className='fw-bold navLink'>Contact</Nav.Link>
                         <Nav.Link as={Link} to="login" className='fw-bold navLink'>Login</Nav.Link>
                         <NavDropdown className='fw-bold' title="SignUp" id="basic-nav-dropdown">
-                            <NavDropdown.Item as={Link}  to="custSignUp" className="fw-bold">Customer</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/signup/customer" className="fw-bold">Customer</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item as={Link} to="SpSignUp" className="fw-bold">Service Provider</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/signup/serviceProvider" className="fw-bold">Service Provider</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item as={Link} to="AdSignUp" className="fw-bold">Advertiser</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/signup/advertiser" className="fw-bold">Advertiser</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

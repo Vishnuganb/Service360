@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/esm/Row';
 function bodyPage() {
 
     return (
-          <div className="bodyPageContainer">
+          <div className="bodyPageContainer-jobs">
                     <Row id='bodyPageRow1'>
                         <div className="jobCardContainer">
                             <JobCard/>
@@ -15,7 +15,7 @@ function bodyPage() {
                         </div>
                     </Row>
                     <Row id='bodyPageRow2'>
-                        <div className="paginationContainer">
+                        <div className="paginationContainer-jobs">
                             <Pagination className='pagination-element'>
                                 <Pagination.First />
                                 <Pagination.Prev />

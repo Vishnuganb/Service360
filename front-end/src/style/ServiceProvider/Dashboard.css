@@ -14,19 +14,19 @@
 }
 
 .dashboard-button-1{
-    background: linear-gradient(45deg,#4099ff,#73b4ff);
+    background: #83CEE0;
 }
 
 .dashboard-button-2{
-    background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+    background: #8ed4da;
 }
 
 .dashboard-button-3{
-    background: linear-gradient(45deg,#FFB64D,#ffcb80);
+    background: #83CEE0;
 }
 
 .dashboard-button-4{
-    background: linear-gradient(45deg,#FF5370,#ff869a);
+    background: #ACDBDF;
 }
 
 .card-sp-dashboard:hover{

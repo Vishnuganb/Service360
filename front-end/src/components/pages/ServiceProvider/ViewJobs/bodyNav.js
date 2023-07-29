@@ -10,13 +10,13 @@ function bodyNav() {
 
   return (
     <Navbar expand="lg md sm" className="bg-body-tertiary">
-      <Container fluid>
+      <Container>
         <Navbar.Collapse className="body-nav-container" id="navbarScroll">
           <Form className="nav-search">
             <Form.Control
               type="search"
               placeholder=""
-              className="me-2"
+              className=""
               aria-label="Search"
             />
             <Button id="view-jobs-button">Search</Button>

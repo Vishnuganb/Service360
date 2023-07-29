@@ -514,7 +514,7 @@ textarea:focus {
 @media (max-width: 1023px) {
   #home body {
     font-size: 12px;
-    line-height: 20px;
+    /* line-height: 20px; */
   }
 
   #home h1 {
@@ -571,7 +571,7 @@ textarea:focus {
 @media (max-width: 767px) {
   #home body {
     font-size: 12px;
-    line-height: 18px;
+    /* line-height: 18px; */
   }
 
   #home h1 {

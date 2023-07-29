@@ -19,7 +19,7 @@ function Analysis() {
                 // width={600}
                 options={{
                   maintainAspectRatio:false,
-                //   responsive:false,
+                  // responsive:false,
                 }}
             />  
           </div>

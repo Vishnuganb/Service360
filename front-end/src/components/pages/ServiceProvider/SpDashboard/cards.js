@@ -32,7 +32,7 @@ function BasicExample() {
                 <img className="card-img-top" src={blog_img} alt="my blogs"/>
                 <Card.Body>
                   <Card.Text>
-                      My Blogs
+                      My Calendar
                       <a href="#myBlogs"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
                   </Card.Text>
                 </Card.Body>

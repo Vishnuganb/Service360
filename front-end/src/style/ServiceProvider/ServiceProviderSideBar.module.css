@@ -1,0 +1,13 @@
+.containerFluid4 {
+    width: 250px;
+}
+
+.containerFluid4.smallScreen {
+    width: 60px;
+}
+
+@media (max-width: 991.98px) {
+    .containerFluid4 {
+        width: 60px;
+    }
+}

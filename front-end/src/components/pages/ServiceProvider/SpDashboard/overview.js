@@ -38,7 +38,7 @@ function Overview() {
                 <Card.Body>
                 <Card.Title>14</Card.Title>
                 <Card.Text className="card-body-container">
-                    Reviews
+                    Ratings
                     <i className="bi bi-pass"></i>
                 </Card.Text>
                 </Card.Body>

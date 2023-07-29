@@ -23,6 +23,7 @@
     "feather-icons": "^4.29.0",
     "framer-motion": "^10.13.0",
     "jquery": "^3.7.0",
+    "mdbreact": "^5.2.0",
     "popper.js": "^1.16.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",

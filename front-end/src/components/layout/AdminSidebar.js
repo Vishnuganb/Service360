@@ -46,19 +46,19 @@ function AdminSideBar() {
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                                 <Link to="#submenu-1"
-                                    className={`nav-link nav-link-sidebar text-white d-none ${isOpen ? "d-lg-inline" : "d-none"}`}
+                                    className={`nav-link nav-link-sidebar text-white d-none ${isOpen ? "d-lg-block" : "d-none"}`}
                                     data-bs-toggle="collapse"
                                     aria-current="page"
                                 >
                                     <i className={`bi bi-people d-none ${isOpen ? "d-lg-inline" : "d-none"}`}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Users</span>
-                                    <i className={`bi bi-chevron-down ms-2 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}></i>
+                                    <i className={`bi bi-chevron-down ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"} custom-icon-size`}></i>
                                 </Link>
 
                                 <NavDropdown
                                     title={<> <i className="bi bi-people ps-3"></i> </> }
                                     id="basic-nav-dropdown"
-                                    className={`navlink dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
+                                    className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
                                 >
                                     <NavDropdown.Item as={Link} to="/admin/customers" className="no-hover"> Customers </NavDropdown.Item>
                                     <NavDropdown.Divider />

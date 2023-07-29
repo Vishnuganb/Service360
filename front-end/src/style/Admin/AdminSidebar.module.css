@@ -3,11 +3,11 @@
 }
 
 .containerFluid4.smallScreen {
-  width: 40px;
+  width: 70px;
 }
 
 @media (max-width: 991.98px) {
   .containerFluid4 {
-    width: 40px;
+    width: 60px;
   }
 }

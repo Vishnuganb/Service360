@@ -23,7 +23,7 @@
   box-shadow: 2px 0px 4px 0px #888888;
 }
 
-#home html {
+html {
   box-sizing: border-box;
   height: -webkit-fill-available;
   overflow-x: hidden;
@@ -42,7 +42,7 @@
   padding: 0;
 }
 
-#home body {
+body {
   color: #333;
   background: #fff;
   font: 16px/1.6 "Muli", sans-serif;
@@ -54,7 +54,7 @@
   flex-direction: column;
 }
 
-#home img {
+img {
   max-width: 100%;
   height: auto;
   vertical-align: top;

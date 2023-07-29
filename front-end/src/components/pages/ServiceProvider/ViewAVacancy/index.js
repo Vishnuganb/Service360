@@ -1,7 +1,13 @@
-import React from 'react'
+import React from 'react';
+import VacancyDetails from './vacancyDetails';
+import "../../../../style/ServiceProvider/ViewAVacancy.css";
 
-export default function index() {
+function Index() {
   return (
-    <div>index</div>
-  )
+    <>
+        <VacancyDetails/>
+    </>
+  );
 }
+
+export default Index;

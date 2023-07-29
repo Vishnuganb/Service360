@@ -13,6 +13,8 @@ import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
+import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
+import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -55,6 +57,8 @@ const router = createBrowserRouter(
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
+        <Route path="ViewAJob" element={<SpViewAJob />} />
+        <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>

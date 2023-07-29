@@ -37,6 +37,8 @@ import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 
 
 import Forum from './components/pages/Forum/Forum.js';
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
+import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 
 
 const router = createBrowserRouter(
@@ -68,7 +70,9 @@ const router = createBrowserRouter(
         <Route path="OngoingProject" element={<OngoingProject />} />
         <Route path="Quotation" element={<Quotation/>} />
         <Route path="ViewVacancy" element={<ViewVacancy/>} />
-        </Route>
+        <Route path="PostVacancyForm" element={<PostVacancyForm />} />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+      </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
         <Route path="Dashboard" element={<SpDashboard />} />
@@ -87,7 +91,7 @@ const router = createBrowserRouter(
           </Layout404>
         }
       />
-    </>
+     </>
   )
 );
 

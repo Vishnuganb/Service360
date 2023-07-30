@@ -209,7 +209,7 @@ const Login = () => {
                                                     </div>
 
                                                     <Modal show={showModal} onHide={toggleModal}>
-                                                        <Modal.Header closeButton style={{ background: '#292D32', color: '#fff' }}>
+                                                        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
                                                             <Modal.Title>Sign Up As</Modal.Title>
                                                         </Modal.Header>
                                                         <Modal.Body>

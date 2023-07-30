@@ -5,7 +5,7 @@
   background: #f2f2f2;
   border-radius: 15px;
 }
-.cardflex {
+#home .cardflex {
   margin-top: 20px;
   margin-bottom: 30px;
   display: flex;
@@ -13,7 +13,7 @@
   gap: 20px;
   justify-content: center;
 }
-.cardflex .card {
+#home .cardflex .card {
   padding: 10px;
   display: flex;
   flex-direction: column;

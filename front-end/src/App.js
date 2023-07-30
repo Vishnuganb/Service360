@@ -3,6 +3,10 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Home from './components/pages/Home/Index.js';
 
 import Login from './components/loginForm/LoginContextProviderInterface.js';
+import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
+import CustSignUp from './components/loginForm/CustomerSignUP.js';
+import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
+import ViewServices from './components/pages/User/ViewServices.js';
 
 import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
@@ -22,11 +26,9 @@ import AdminLayout from './components/layout/AdminLayout.js';
 import Layout404 from './components/layout/Layout404.js';
 import PageNotFound from './components/pages/PageNotFound.js';
 
-import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
-import CustSignUp from './components/loginForm/CustomerSignUP.js';
-import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
-
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
+import AdminServices from './components/pages/Admin/AdminServices/AdminServices.js';
+
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
 
@@ -44,6 +46,7 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
+        <Route path='services' element={<ViewServices />} />
         <Route path='login' element={<Login />} />
         <Route path='/signup/customer' element={<CustSignUp />} />
         <Route path='/signup/serviceProvider' element={<SpSignUp />} />
@@ -51,7 +54,8 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="dashboard" element={<AdminDashboard /> } />
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="services" element={<AdminServices />} />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>

@@ -16,11 +16,11 @@ function AdminSideBar() {
     
 
     return (
-        <div className={`${styles.containerFluid4} ps-2 m-0 ${isOpen ? styles.largeScreen : styles.smallScreen}`}>
+        <div className={`${styles.containerFluid4} ps-2 m-0 d-flex ${isOpen ? styles.largeScreen : styles.smallScreen}`}>
             <div className="row h-100">
-                <div className="side-bar-sub-container col-auto col-md-2.5 min-vh-100 d-xs-inline d-flex justify-content-between flex-column" style={{ backgroundImage: `url(${Image})`}}>
+                <div className={`side-bar-sub-container col-auto col-md-2.5 min-vh-100 d-xs-inline justify-content-between`} style={{ backgroundImage: `url(${Image})`}}>
                     <div className="sidebar-content">
-                        <ul className="nav nav-pills flex-column" id="parentM">
+                        <ul className={`nav nav-pills flex-column`} id="parentM">
 
                             <li className={`fs-4 mt-3 py-2 d-flex d-none d-lg-inline ${isOpen ? "align-self-end" : "mx-3"}`} onClick={toggle}
                                 style={{

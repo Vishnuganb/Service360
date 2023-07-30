@@ -72,7 +72,7 @@
     vertical-align: middle;
     font-weight: 500;
     color: #333;
-    font-size:1.1rem;
+    /* font-size:1.1rem; */
     font-family: 'Montserrat', sans-serif;
     color:white;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(130deg, #054f77 20%, #4a7fa2 77.5%);
@@ -85,7 +85,7 @@
     vertical-align: middle;
     font-weight: 400;
     color: #333;
-    font-size:1rem;
+    /* font-size:1rem; */
     font-family: 'Montserrat', sans-serif;
 }
 

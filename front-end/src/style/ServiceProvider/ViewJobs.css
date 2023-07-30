@@ -75,6 +75,10 @@
     margin-bottom: 15px;
 }
 
+.custom-pagination-job .page-link {
+    color: #292D32;
+}
+
 @media only screen and (max-width:566px){       /* PROBLEM */
     .paginationContainer-jobs {
         display: none;

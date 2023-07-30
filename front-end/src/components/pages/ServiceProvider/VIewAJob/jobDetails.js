@@ -19,13 +19,13 @@ function jobDetails() {
         </div>
         <div
           className="jobDetails-username mb-1"
-          style={{ fontSize:"18px",fontFamily: "'Montserrat', sans-serif" }}
+          style={{ fontSize:"18px",fontFamily: "'Rubik', sans-serif" }}
         >
           Umai Vanan
         </div>
         <div
           className="jobDetails-ratings mb-1"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          style={{ fontFamily: "'Rubik', sans-serif" }}
         >
           <i class="bi bi-star-fill"></i>
           <i class="bi bi-star-fill"></i>
@@ -34,7 +34,7 @@ function jobDetails() {
         </div>
         <div
           className="jobDetails-ratings-count"
-          style={{ fontFamily: "'Montserrat', sans-serif" }}
+          style={{ fontFamily: "'Rubik', sans-serif" }}
         >
           (for 5 jobs)
         </div>

@@ -17,13 +17,13 @@ function vacancyDetails() {
           </div>
           <div
             className="vacancyDetails-username mb-1"
-            style={{ fontSize:"18px",fontFamily: "'Montserrat', sans-serif" }}
+            style={{ fontSize:"18px",fontFamily: "'Rubik', sans-serif" }}
           >
             Aptinex
           </div>
           <div
             className="vacancyDetails-ratings mb-1"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            style={{ fontFamily: "'Rubik', sans-serif" }}
           >
             <i class="bi bi-star-fill"></i>
             <i class="bi bi-star-fill"></i>
@@ -32,7 +32,7 @@ function vacancyDetails() {
           </div>
           <div
             className="vacancyDetails-ratings-count"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            style={{ fontFamily: "'Rubik', sans-serif" }}
           >
             (for 8 vacancies)
           </div>
@@ -40,7 +40,7 @@ function vacancyDetails() {
           <div>
             <button
               className="vacancyDetails-apply-btn mt-2 mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              style={{ fontFamily: "'Rubik', sans-serif" }}
             >
               Apply
             </button>

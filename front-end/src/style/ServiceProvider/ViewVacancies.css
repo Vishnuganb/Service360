@@ -225,3 +225,7 @@
 .vacancy-card-footer-btn:hover{
     color: #5f7085;
 }
+
+.custom-pagination-vacancy .page-link {
+    color: #292D32;
+}

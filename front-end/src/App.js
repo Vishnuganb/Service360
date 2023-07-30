@@ -15,9 +15,12 @@ import ViewAd from './components/pages/advertiser/ViewAd.js';
 
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/index.js';
+import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
+import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
+import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
+import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js'
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -39,6 +42,8 @@ import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 
 
 import Forum from './components/pages/Forum/Forum.js';
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
+import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 
 
 const router = createBrowserRouter(
@@ -72,7 +77,9 @@ const router = createBrowserRouter(
         <Route path="OngoingProject" element={<OngoingProject />} />
         <Route path="Quotation" element={<Quotation/>} />
         <Route path="ViewVacancy" element={<ViewVacancy/>} />
-        </Route>
+        <Route path="PostVacancyForm" element={<PostVacancyForm />} />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+      </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
         <Route path="Dashboard" element={<SpDashboard />} />
@@ -80,6 +87,9 @@ const router = createBrowserRouter(
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
+        <Route path="ViewAJob" element={<SpViewAJob />} />
+        <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
+        <Route path="AddNewServices" element={<SpAddNewServices />} />
       </Route>
 
       <Route
@@ -91,7 +101,7 @@ const router = createBrowserRouter(
           </Layout404>
         }
       />
-    </>
+     </>
   )
 );
 

@@ -82,3 +82,7 @@
     box-shadow: none;
 }
 
+.service-block .card-text{
+  font-family: 'Rubik', sans-serif;
+}
+

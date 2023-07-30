@@ -15,11 +15,11 @@ import ViewAd from './components/pages/advertiser/ViewAd.js';
 
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/Index.js';
+import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
-import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/index.js';
+import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js'
 
 import RootLayout from './components/layout/RootLayout.js';

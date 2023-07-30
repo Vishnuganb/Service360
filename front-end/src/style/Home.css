@@ -5,7 +5,8 @@
   background: #f2f2f2;
   border-radius: 15px;
 }
-#home .cardflex {
+
+#home.cardflex {
   margin-top: 20px;
   margin-bottom: 30px;
   display: flex;
@@ -13,7 +14,8 @@
   gap: 20px;
   justify-content: center;
 }
-#home .cardflex .card {
+
+#home.cardflex .card {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -45,7 +47,7 @@ html {
 body {
   color: #333;
   background: #fff;
-  font: 16px/1.6 "Muli", sans-serif;
+  font: 16px/1.6 "Rubik", sans-serif;
   min-width: 320px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -66,8 +68,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Muli", sans-serif;
-  font-weight: 400;
+  font-family: "Rubik", sans-serif;
+  font-weight: 600;
   margin: 0 0 20px;
   color: inherit;
 }
@@ -148,7 +150,7 @@ ul,
 
 .content-block ul li:before {
   content: "\f101";
-  font-family: "fontawesome";
+  font-family: "Rubik", sans-serif;
   position: absolute;
   top: 0;
   left: 0;
@@ -602,10 +604,6 @@ textarea:focus {
 
   .block {
     padding: 40px 0 10px;
-  }
-
-  .hero-block .carousel-caption {
-    display: none;
   }
 
   .hero-block .carousel-control {

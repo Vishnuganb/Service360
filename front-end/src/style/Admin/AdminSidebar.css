@@ -21,14 +21,14 @@
   }
 }
 
-/* span {
+span {
   font-size: 1rem;
-  font-family: "Montserrat", sans-serif;
-} */
+  font-family: "Rubik", sans-serif;
+}
 
 .sub-item-nav {
-  /* font-size: 1rem; */
-  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .sidebar-content {

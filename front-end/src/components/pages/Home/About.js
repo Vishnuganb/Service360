@@ -92,8 +92,8 @@ export default function AppAbout() {
                                                                 </div>
                                                             </div>
                                                         </Col>
-                                                        <DecoratorBlob2 />
-                                                        <DecoratorBlob1 />
+                                                        <DecoratorBlob2 className="d-none d-md-block" />
+                                                        <DecoratorBlob1 className="d-none d-lg-block" />
                                                     </Row>
                                                 </Carousel.Item>
                                             )

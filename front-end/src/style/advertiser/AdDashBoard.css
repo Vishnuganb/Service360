@@ -2,7 +2,26 @@
     margin-top: 1em;
     font-weight: bolder;
 }
+@media (max-width: 768px) {
+    .adDashCountDiv{
+        display: grid;
+        border-right: none;
+        border-bottom: 1px groove rgb(61, 58, 58); 
+        /* flex-direction: row; */
+        /* justify-content: center; */
+        /* align-items: center; */
+    }
 
+    .AdsRow{
+
+    }
+}
+
+.AdsRow{
+    display: grid;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
 .adDashCountDiv{
     margin-top: 2em;
     margin-bottom: 2em;

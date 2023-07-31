@@ -18,7 +18,12 @@ const CreateAd = () => {
           <div className="AdSampleCont">
             <div className="AdHeader">
               <div>
-                <img src={profileIcon} roundedCircle className="AdProfilePic" />
+                <img
+                  src={profileIcon}
+                  alt="Profile of Advertiser"
+                  roundedCircle
+                  className="AdProfilePic"
+                />
               </div>
 
               <div className="namediv">
@@ -31,7 +36,7 @@ const CreateAd = () => {
             </div>
 
             <div>
-              <img src={adImage} rounded />
+              <img src={adImage} alt="Item" rounded />
             </div>
 
             <div>
@@ -89,6 +94,32 @@ const CreateAd = () => {
               </Form.Group>
 
               <Form.Group className="mb-3">
+                <Form.Label>Are you providing Warranty?</Form.Label>
+                <Form.Select >
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Warranty Months</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter warranty months"
+                />
+              </Form.Group>
+
+              {/* Description */}
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>Description/Specification</Form.Label>
+                <Form.Control as="textarea" rows={3} />
+              </Form.Group>
+
+              {/* Area */}
+              <Form.Group className="mb-3">
                 <Form.Label htmlFor="area">Area</Form.Label>
                 <Form.Select id="disabledSelect">
                   <option value="Ampara">Ampara</option>
@@ -119,6 +150,7 @@ const CreateAd = () => {
                 </Form.Select>
               </Form.Group>
 
+              {/* Delivery Option */}
               <Form.Group className="mb-3">
                 <Form.Label>Delivery Option</Form.Label>
                 <Form.Select>

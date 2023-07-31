@@ -15,7 +15,7 @@ const AdSampleCont = ({ profileIcon, adImage, adName, price, location }) => {
       <div className="AdSampleCont">
         <div className="AdHeader">
           <div>
-            <img src={profileIcon} roundedCircle className="AdProfilePic" />
+            <img src={profileIcon} alt="Profile" roundedCircle className="AdProfilePic" />
           </div>
           <div className="namediv">
             <p>Adam</p>
@@ -27,7 +27,7 @@ const AdSampleCont = ({ profileIcon, adImage, adName, price, location }) => {
         </div>
 
         <div>
-          <img src={adImage} rounded />
+          <img src={adImage} alt="Item" rounded />
         </div>
 
         <div>
@@ -100,8 +100,13 @@ const AdsPage = () => {
       price: 16000,
       location: "Colombo",
     },
-
-  
+    {
+      profileIcon: profileIcon,
+      adImage: adImage,
+      adName: "Ideal Driller",
+      price: 16000,
+      location: "Colombo",
+    },
   ];
 
   return (
@@ -150,5 +155,6 @@ const AdsPage = () => {
     </Container>
   );
 };
+
 
 export default AdsPage;

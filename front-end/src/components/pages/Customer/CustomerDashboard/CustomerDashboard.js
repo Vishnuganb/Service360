@@ -1,8 +1,6 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import Card from "react-bootstrap/Card";
 import { Row } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
 import '../../../../style/Customer/CustomerDashboard.css'
 import ResponsiveCalendar from '../../../layout/ResponsiveCalendar';
 import profile_img_2 from '../../../../assets/images/Customer/projects.jpg'
@@ -11,8 +9,8 @@ const CustomerDashboard = () => {
     return (
         <div className="row">
 
-            <div className="col custdash">
-                <div className="row"><h4>Welcome back, Tharsana!</h4>
+            <div className="col-8">
+                <h4>Welcome back, Tharsana!</h4>
                     <Row>
                         <Card className="card-cus-dashboard dashboard-button-1 ">
                             <Card.Body>
@@ -85,8 +83,6 @@ const CustomerDashboard = () => {
 
                 <br></br>
             </div>
-
-        </div>
 
     );
 };

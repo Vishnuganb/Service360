@@ -40,6 +40,7 @@ import PostVacancyFormIndex from './components/pages/Customer/PostVacancyFormInd
 import OngoingProject from './components/pages/Customer/CustomerDashboard/OngoingProject.js';
 import Quotation from './components/pages/Customer/Quotation.js'
 import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
+import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP.js';
 
 
 import Forum from './components/pages/Forum/Forum.js';
@@ -77,8 +78,9 @@ const router = createBrowserRouter(
         <Route path="CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
         <Route path="OngoingProject" element={<OngoingProject />} />
-        <Route path="Quotation" element={<Quotation />} />
-        <Route path="ViewVacancy" element={<ViewVacancy />} />
+        <Route path="Quotation" element={<Quotation/>} />
+        <Route path="ViewVacancy" element={<ViewVacancy/>} />
+        <Route path="SocialShareSP" element={<SocialShareSP />}/>
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
         <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
       </Route>

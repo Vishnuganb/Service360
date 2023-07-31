@@ -58,6 +58,22 @@ function CustomerSideBar() {
                 </Link>
               </li>
 
+              <li className="nav-item text-white fs-4 mt-2 py-2 py-xs-1">
+                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                  <i
+                    className="bi bi-house "
+                    id="nav-single-element"
+                  ></i>
+                  <span
+                    className={`ms-3 d-none ${
+                      isOpen ? "d-lg-inline" : "d-none"
+                    }`}
+                  >
+                    Services
+                  </span>
+                </Link>
+              </li>
+
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-1"
@@ -66,7 +82,7 @@ function CustomerSideBar() {
                   aria-current="page"
                 >
                   <i
-                    className={`bi bi-house d-none ${
+                    className={`bi bi-file-post-fill d-none ${
                       isOpen ? "d-lg-inline" : "d-none"
                     }`}
                   ></i>
@@ -75,7 +91,7 @@ function CustomerSideBar() {
                       isOpen ? "d-lg-inline" : "d-none"
                     }`}
                   >
-                    My Projects
+                     Vacancies 
                   </span>
                   <i
                     className={`bi bi-chevron-down ms-2 d-none ${
@@ -86,7 +102,7 @@ function CustomerSideBar() {
                   <NavDropdown
                     title={
                       <>
-                        <i className="bi bi-house"></i>
+                        <i className="bi bi-file-post-fill"></i>
                       </>
                     }
                     id="basic-nav-dropdown"
@@ -95,15 +111,23 @@ function CustomerSideBar() {
                     }`}
                   >
                     <NavDropdown.Item href="#Customer" className="no-hover">
-                      My Jobs
+                    Post Vacancies
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item
-                      href="#serviceProvider"
+                      href="#"
                       className="no-hover"
                     >
-                      My Vacancies
+                      End Vacancies
                     </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item
+                      href="#"
+                      className="no-hover"
+                    >
+                      Response Vacancies
+                    </NavDropdown.Item>
+
                   </NavDropdown>
                 </Link>
                 <ul
@@ -120,13 +144,19 @@ function CustomerSideBar() {
                       to="#"
                       className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
                     >
-                      Jobs
+                      Post Vacancies
                     </Link>
                     <Link
                       to="#"
                       className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
                     >
-                      Vacancies
+                      End Vacancies
+                    </Link>
+                    <Link
+                      to="#"
+                      className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
+                    >
+                      Responses
                     </Link>
                   </li>
                 </ul>
@@ -138,7 +168,7 @@ function CustomerSideBar() {
                   className="nav-link nav-link-sidebar text-white fs-5"
                 >
                   <i
-                    className="bi bi-calendar-week"
+                    className="bi bi-receipt"
                     id="nav-single-element"
                   ></i>
                   <span
@@ -146,83 +176,9 @@ function CustomerSideBar() {
                       isOpen ? "d-lg-inline" : "d-none"
                     }`}
                   >
-                    Availability Calendar
+                    Quotations
                   </span>
                 </Link>
-              </li>
-
-              <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                <Link
-                  to="#submenu-2"
-                  className="nav-link nav-link-sidebar sub-sec text-white fs-5"
-                  data-bs-toggle="collapse"
-                  aria-current="page"
-                >
-                  <i
-                    className={`bi bi-file-earmark-post d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  ></i>
-                  <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    Blogs
-                  </span>
-                  <i
-                    className={`bi bi-chevron-down ms-2 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  ></i>
-
-                  <NavDropdown
-                    title={
-                      <>
-                        <i className="bi bi-file-earmark-post"></i>
-                      </>
-                    }
-                    id="basic-nav-dropdown"
-                    className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${
-                      isOpen ? " d-lg-none" : "d-lg-inline"
-                    }`}
-                  >
-                    <NavDropdown.Item href="#Customer" className="no-hover">
-                      Create a Blog
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item
-                      href="#serviceProvider"
-                      className="no-hover"
-                    >
-                      My Blogs
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </Link>
-                <ul
-                  className="nav collapse ms-4.5 flex-column"
-                  id="submenu-2"
-                  data-bs-parent="#parentM"
-                >
-                  <li
-                    className={`nav-item fs-5 ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    <Link
-                      to="#"
-                      className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
-                    >
-                      Create a Blog
-                    </Link>
-                    <Link
-                      to="#"
-                      className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
-                    >
-                      My Blogs
-                    </Link>
-                  </li>
-                </ul>
               </li>
 
               <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
@@ -231,7 +187,7 @@ function CustomerSideBar() {
                   className="nav-link nav-link-sidebar text-white fs-5"
                 >
                   <i
-                    className="bi bi-calendar2-plus "
+                    className="fa-solid fa-people-group"
                     id="nav-single-element"
                   ></i>
                   <span
@@ -239,7 +195,27 @@ function CustomerSideBar() {
                       isOpen ? "d-lg-inline" : "d-none"
                     }`}
                   >
-                    Create Session
+                    Forum
+                  </span>
+                </Link>
+              </li>
+
+
+              <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
+                <Link
+                  to="#"
+                  className="nav-link nav-link-sidebar text-white fs-5"
+                >
+                  <i
+                    className="bi bi-file-earmark-text "
+                    id="nav-single-element"
+                  ></i>
+                  <span
+                    className={`ms-3 d-none ${
+                      isOpen ? "d-lg-inline" : "d-none"
+                    }`}
+                  >
+                    Complaints
                   </span>
                 </Link>
               </li>

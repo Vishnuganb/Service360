@@ -7,15 +7,16 @@ import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
 import CustSignUp from './components/loginForm/CustomerSignUP.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
+import ServicePage from './components/pages/User/ServicePage.js';
 
 import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
 
-import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
-import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/index.js';
+import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
+import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
+import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
 import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/index.js';
@@ -51,7 +52,8 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
-        <Route path='services' element={<ViewServices />} />
+        <Route path="/services" element={<ViewServices/>} />
+        <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path='login' element={<Login />} />
         <Route path='/signup/customer' element={<CustSignUp />} />
         <Route path='/signup/serviceProvider' element={<SpSignUp />} />
@@ -75,8 +77,8 @@ const router = createBrowserRouter(
         <Route path="CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
         <Route path="OngoingProject" element={<OngoingProject />} />
-        <Route path="Quotation" element={<Quotation/>} />
-        <Route path="ViewVacancy" element={<ViewVacancy/>} />
+        <Route path="Quotation" element={<Quotation />} />
+        <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
         <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
       </Route>
@@ -101,7 +103,7 @@ const router = createBrowserRouter(
           </Layout404>
         }
       />
-     </>
+    </>
   )
 );
 

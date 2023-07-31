@@ -1,71 +1,92 @@
-import React from 'react';
-import { Row, Card, Col} from 'react-bootstrap';
-import image1 from '../../../assets/images/home/AC-Repair.jpeg'
-import image2 from '../../../assets/images/home/ElectricalWiring.jpeg';
-import image3 from '../../../assets/images/home/plumbing.jpeg';
-import image4 from '../../../assets/images/home/Tiles_Fitting.jpeg';
-import image5 from '../../../assets/images/home/carpentry.jpeg';
-
-
+import React, { useState } from 'react';
+import { Row, Card, Col } from 'react-bootstrap';
 import BgImage from '../../../assets/images/header/Background.png';
 import '../../../style/User/ViewServices.css';
+import { Link } from 'react-router-dom';
+
+import ACRepairImage from '../../../assets/images/home/AC-Repair.jpeg';
+import ElectricalWiringImage from '../../../assets/images/home/ElectricalWiring.jpeg';
+import PlumbingImage from '../../../assets/images/home/plumbing.jpeg';
+import TilesFittingImage from '../../../assets/images/home/Tiles_Fitting.jpeg';
+import CarpentryImage from '../../../assets/images/home/carpentry.jpeg';
+import Painting from '../../../assets/images/home/painting.jpeg';
+import Masonry from '../../../assets/images/home/masonry.jpeg';
+import GlassAluminum from '../../../assets/images/home/Glass-Aluminum.jpeg';
+import IronWork from '../../../assets/images/home/Iron-Work.jpeg';
+import Cctv from '../../../assets/images/home/Cctv.jpeg';
+import FireAlarm from '../../../assets/images/home/Fire-Alarm.jpeg';
+import VideoSurvilence from '../../../assets/images/home/video-Sur.jpeg';
+import SofaCleaning from '../../../assets/images/home/SofaCleaning.jpeg';
+import CarpetCleaning from '../../../assets/images/home/CarpetCleaning.jpeg';
+
+import InteriorImage from '../../../assets/images/home/interior.jpeg';
+import ElectricalImage from '../../../assets/images/home/Electrical.jpeg';
+import ConstructionImage from '../../../assets/images/home/construction.jpeg';
+import SecurityImage from '../../../assets/images/home/security.jpeg';
+import CleaningImage from '../../../assets/images/home/cleaning.jpeg';
 
 
-const servicesData = [
-    { id: 1, image: image1, text: 'AC Repair', category: 'Electrical & Plumbing' },
-    { id: 2, image: image2, text: 'Electrical Wiring', category: 'Electrical & Plumbing' },
-    { id: 3, image: image3, text: 'Plumbing', category: 'Electrical & Plumbing' },
-    { id: 4, image: image4, text: 'Tiles Fitting', category: 'Construction' },
-    { id: 5, image: image5, text: 'Carpentry', category: 'Interior Works' },
-];
-
-const serviceCategories = {
-    "Interior Works": [
-        "Carpentry",
-        "Painting",
-    ],
-    "Electrical & Plumbing": [
-        "AC Repair",
-        "Electrical Wiring",
-        "Plumbing",
-    ],
-    "Construction": [
-        "Masonry",
-        "Tiles Fitting",
-        "Iron Works"
-    ],
-    "Security": [
-        "CCTV Repair",
-        "Fire Alarm",
-        "Video Surveillance",
-    ],
-    "cleaning": [
-        "Sofa cleaning",
-        "Carpet cleaning",
-    ],
+export const serviceCategories = {
+    "Interior Works": {
+        image: InteriorImage,
+        services: [
+            { id: 1, image: CarpentryImage, service: 'Carpentry' },
+            { id: 2, image: Painting, service: 'Painting' },
+        ],
+    },
+    "Electrical & Plumbing": {
+        image: ElectricalImage,
+        services: [
+            { id: 1, image: ACRepairImage, service: 'AC Repair' },
+            { id: 2, image: ElectricalWiringImage, service: 'Electrical Wiring' },
+            { id: 3, image: PlumbingImage, service: 'Plumbing' },
+        ],
+    },
+    "Construction": {
+        image: ConstructionImage,
+        services: [
+            { id: 1, image: Masonry, service: 'Masonry' },
+            { id: 2, image: TilesFittingImage, service: 'Tiles Fitting' },
+            { id: 3, image: IronWork, service: 'Iron Works' },
+            { id: 4, image: GlassAluminum, service: 'Glass Aluminum' },
+        ],
+    },
+    "Security": {
+        image: SecurityImage,
+        services: [
+            { id: 1, image: Cctv, service: 'CCTV Repair' },
+            { id: 2, image: FireAlarm, service: 'Fire Alarm' },
+            { id: 3, image: VideoSurvilence, service: 'Video Surveillance' },
+        ],
+    },
+    "Cleaning": {
+        image: CleaningImage,
+        services: [
+            { id: 1, image: SofaCleaning, service: 'Sofa cleaning' },
+            { id: 2, image: CarpetCleaning, service: 'Carpet cleaning' },
+        ],
+    },
 };
 
 
 
 function ViewServices() {
-
     return (
         <section id="service" className="block service" style={{ backgroundImage: `url(${BgImage})` }}>
-
             <Row className="cardflex">
-                {servicesData.map((service) => (
-                    <Col key={service.id} xs={5} sm={3} md={3} lg={3}>
-                        <Card className="card d-flex flex-column justify-content-center">
-                            <Card.Img src={service.image} variant="top" alt="home" />
-                            <Card.Body>
-                                <Card.Text>{service.text}</Card.Text>
-                            </Card.Body>
-                        </Card>
+                {Object.keys(serviceCategories).map((category) => (
+                    <Col key={category} xs={5} sm={3} md={3} lg={3}>
+                        <Link to={`/services/${category}`}>
+                            <Card className="card d-flex flex-column justify-content-center">
+                                <Card.Img src={serviceCategories[category].image} variant="top" alt={category} />
+                                <Card.Body>
+                                    <Card.Text>{category}</Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Link>
                     </Col>
                 ))}
             </Row>
-
-
         </section>
     );
 }

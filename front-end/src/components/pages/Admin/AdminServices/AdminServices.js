@@ -101,7 +101,7 @@ function AdminServices() {
         searchTerm: '',
     });
 
-    const cardsPerPage = 8;
+    const cardsPerPage = 9;
     const totalPages = Math.ceil(servicesData.length / cardsPerPage);
     const startIndex = (data.currentPage - 1) * cardsPerPage; // 
     const endIndex = startIndex + cardsPerPage;
@@ -173,7 +173,7 @@ function AdminServices() {
 
         const totalPages = Math.ceil(searchedServices.length / cardsPerPage);
 
-        // When the selected category or search term changes, update the displayed services based on the filter
+
         setData((prevState) => ({
             ...prevState,
             totalPages,
@@ -277,7 +277,7 @@ function AdminServices() {
 
             <Row className="cardflex">
                 {data.displayedServices && data.displayedServices.map((service) => (
-                    <Col key={service.id} xs={12} sm={6} md={3} lg={2}>
+                    <Col key={service.id} xs={12} sm={6} md={3} lg={3}>
                         <Card className="card">
                             <Card.Img src={service.image} variant="top" alt="home" />
                             <Card.Body>
@@ -343,9 +343,9 @@ function AdminServices() {
                             {data.imageErrorMessage && <p className="text-danger p-0 m-0">{data.imageErrorMessage}</p>}
                         </Form.Group>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleModalClose}>
+                            <StyledButton2 variant="secondary" onClick={handleModalClose}>
                                 Cancel
-                            </Button>
+                            </StyledButton2>
                             <StyledButton2 variant="primary" type="submit" className="btn btn-dark btn-block" onClick={handleFormSubmit}>
                                 Submit
                             </StyledButton2>

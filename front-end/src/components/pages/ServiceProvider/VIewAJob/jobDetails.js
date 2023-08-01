@@ -38,6 +38,16 @@ function jobDetails() {
         >
           (for 5 jobs)
         </div>
+
+        <div>
+            <button
+              className="jobDetails-apply-btn btn btn-primary mt-2 mb-4"
+              style={{ fontFamily: "'Rubik', sans-serif" }}
+            >
+              Apply
+            </button>
+          </div>
+
       </Col>
       <Col className="jobDetails-details-container col-12 col-lg-10 d-flex flex-column">
         <div className="jobDetails-status-container mb-2">

@@ -19,7 +19,7 @@ function bodyNav() {
               className=""
               aria-label="Search"
             />
-            <Button id="view-jobs-button">Search</Button>
+            <Button className="viewJobs-nav-button">Search</Button>
           </Form>
           <Nav
             className="mx-3 my-2 my-lg-0"

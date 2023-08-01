@@ -27,10 +27,8 @@ function serviceHead() {
           </Col>
           <Col className="my-serivice-head-container-col-2">
             <button
-              className="btn my-serivice-head-container-col-2-btn"
+              className="btn btn-primary my-serivice-head-container-col-2-btn"
               style={{
-                backgroundColor: "#292D32",
-                color: "white",
                 borderRadius: "10px",
               }}
             >

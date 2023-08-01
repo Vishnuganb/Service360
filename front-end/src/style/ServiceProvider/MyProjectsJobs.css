@@ -1,110 +1,55 @@
-/* bodyNav */
-
-#navbarScroll{
+.MyProjectsNav-Row{
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
     width: 100%;
-    display: flex;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 0 0 1px #e6e6e6;
 }
 
-.nav-search{
-    position: relative;
-    left: 6px;
-    display: flex;
+@media only screen and (min-width: 996px) {
+    .MyProjects-top-nav{
+        height:47px;
+    }
 }
 
-.viewJobs-nav-button{
+.MyProjectsNav-button{
     position: relative;
     left: -12px;
     padding: 10px;
     font-size: 15px;
     border-radius: 0px 8px 8px 0px;
     cursor: pointer;
-  }
+}
 
-@media only screen and (min-width:623px) and (max-width: 1100px){
-    #navbarScroll{
-        justify-content: space-between;
-        display: block;
+@media only screen and (max-width: 552px) {
+    .MyProjectsSearch{
+        width: 100%;
     }
-
-    #nav-filter{
-        display: flex;
-        flex-direction: row;
+    .MyProjectsNav-button{
+        left: -5px;
     }
-
-    #navbarScrollingDropdown{
-        margin-right: 25px;
+    .MyProjectsNav-search{
+        position: relative;
+        left:5px;
     }
 }
 
-@media screen and (width < 623px) {
-    .nav-search {
-        left: 10px;
-        display: flex;
-    }
-}
-
-@media only screen and (max-width: 1100px){
-    #navbarScroll{
-        justify-content: space-between;
-        display: block;
-    }
-}
-
-
-
-/* bodyPage */
-
-.bodyPageContainer-jobs{
+#navbar-filter{
     display: flex;
-    flex-direction: column;
-    max-width: 100%;
-    margin-top:40px;
-    margin-bottom:30px;
-    padding-bottom: 10px;
-    border-radius: 10px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-}
-
-.paginationContainer-jobs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.custom-pagination-job .page-link {
-    color: #292D32;
-}
-
-@media only screen and (max-width:566px){       /* PROBLEM */
-    .paginationContainer-jobs {
-        display: none;
-    }
-}
-
-.jobCardContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.pagination-element{
-    font-size: 20px;
-    color: #5f7085;
-    cursor: pointer;
-    
+    flex-direction: row;
 }
 
 
 
 
+/* my-jobCard */
 
-
-/* jobCard */
-
-.single-job-card{
+.single-my-job-card{
     display: flex;
     flex-direction: column;
     border-radius: 4px;
@@ -116,27 +61,27 @@
     transition: transform .3s;
 }
 
-.single-job-card:hover{
+.single-my-job-card:hover{
     transform: scale(1.005);
     z-index: 2;
     border: 0.2px solid #29435cf0;
 }
 
-.job-card-avatar{
+.my-job-card-avatar{
     width: 65px;
     height: 40px;
     border-radius: 20px;
 }
 
 @media only screen and (max-width: 465px){          
-    .job-card-avatar{
+    .my-job-card-avatar{
         width: 85px;
         height: 30px;
         border-radius: 20px;
     }
 }
 
-.job-card-header{
+.my-job-card-header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -144,28 +89,28 @@
     margin-bottom: 15px;
 }
 
-.job-card-title{
+.my-job-card-title{
     font-size: 18px;
     font-weight: 600;
     margin-top: 1px;
     margin-bottom: 2px;
 }
 
-.job-card-date{
+.my-job-card-date{
     font-size: 14px;
     font-weight: 400;
     color: #5f7085;
     margin-bottom: 0px;
 }
 
-.job-card-viewmore{
+.my-job-card-viewmore{
     font-size: 14px;
     font-weight: 400;
     color: #5f7085;
     margin-bottom: 0px;
 }
 
-.job-card-header i{
+.my-job-card-header i{
     font-size: 14px;
     font-weight: 400;
     color: #5f7085;
@@ -177,7 +122,7 @@
 }
 
 
-.job-card-body{
+.my-job-card-body{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -185,7 +130,7 @@
     margin-bottom: 15px;
 }
 
-.single-job-status{
+.single-my-job-status{
     font-size: 16px;
     font-weight: 400;
     padding: 4px 6px;
@@ -193,27 +138,27 @@
     border-radius: 8px;
 }
 
-.single-job-title{
+.single-my-job-title{
     font-size: 22px;
     font-weight: 900;
 }
 
-.sinlge-job-sub-info{
+.sinlge-my-job-sub-info{
     font-size: 15px;
     font-weight: 900;
 }
 
-.job-location-info{
+.my-job-location-info{
     font-size: 15px;
     font-weight: 500;
 }
 
-.single-job-description{
+.single-my-job-description{
     font-size: 17px;
     font-weight: 900;
 }
 
-.job-card-footer{
+.my-job-card-footer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -224,7 +169,7 @@
 }
 
 @media only screen and (max-width: 590px){
-    .job-card-footer{
+    .my-job-card-footer{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -234,7 +179,7 @@
     }
 }
 
-.job-card-footer-btn{
+.my-job-card-footer-btn{
     display: flex;
     flex-direction: row;
     color: black;
@@ -244,6 +189,6 @@
     margin: auto;
 }
 
-.job-card-footer-btn:hover{
+.my-job-card-footer-btn:hover{
     color: #5f7085;
 }

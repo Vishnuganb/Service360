@@ -39,7 +39,7 @@ function vacancyDetails() {
 
           <div>
             <button
-              className="vacancyDetails-apply-btn mt-2 mb-4"
+              className="vacancyDetails-apply-btn btn btn-primary mt-2 mb-4"
               style={{ fontFamily: "'Rubik', sans-serif" }}
             >
               Apply

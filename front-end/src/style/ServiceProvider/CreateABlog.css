@@ -1,0 +1,9 @@
+@media only screen and (max-width:420px) {
+    .CreateBlog-button-container{
+        flex-direction: column !important;
+    }
+    .CreateBlog-cancel{
+        width: 100% !important;
+        margin-top: 5px;
+    }
+}

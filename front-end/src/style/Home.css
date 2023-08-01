@@ -45,7 +45,7 @@ html {
 body {
   color: #333;
   background: #fff;
-  font: 16px/1.6 "Muli", sans-serif;
+  font: 16px/1.6 'Rubik', sans-serif;
   min-width: 320px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -66,7 +66,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Muli", sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-weight: 400;
   margin: 0 0 20px;
   color: inherit;

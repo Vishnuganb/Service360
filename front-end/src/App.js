@@ -21,6 +21,8 @@ import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.j
 import SpCreateTrainingSession from './components/pages/ServiceProvider/CreateTrainingSession/Index.js';
 import SpMyProjectsJobsApplied from './components/pages/ServiceProvider/MyProjectsJobsApplied/Index.js';
 import SpMyProjectsJobsInvites from './components/pages/ServiceProvider/MyProjectsJobsInvites/Index.js';
+import SpMyProjectsVacanciesApplied from './components/pages/ServiceProvider/MyProjectsVacanciesApplied/Index.js';
+import SpMyProjectsVacanciesInvites from './components/pages/ServiceProvider/MyProjectsVacanciesInvites/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -94,6 +96,8 @@ const router = createBrowserRouter(
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
         <Route path="MyProjectsJobsApplied" element={<SpMyProjectsJobsApplied/>} />
         <Route path="MyProjectsJobsInvites" element={<SpMyProjectsJobsInvites/>} />
+        <Route path="MyProjectsVacanciesApplied" element={<SpMyProjectsVacanciesApplied/>} />
+        <Route path="MyProjectsVacanciesInvites" element={<SpMyProjectsVacanciesInvites/>} />
       </Route>
 
       <Route

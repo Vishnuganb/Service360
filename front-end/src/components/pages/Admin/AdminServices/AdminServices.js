@@ -277,8 +277,8 @@ function AdminServices() {
 
             <Row className="cardflex">
                 {data.displayedServices && data.displayedServices.map((service) => (
-                    <Col key={service.id} xs={12} sm={6} md={3} lg={3}>
-                        <Card className="card">
+                    <Col key={service.id} xs={8} sm={6} md={4} lg={3} xl={3}>
+                        <Card className="card d-flex flex-column align-items-center justify-content-center h-100">
                             <Card.Img src={service.image} variant="top" alt="home" />
                             <Card.Body>
                                 <Card.Text>{service.text}</Card.Text>

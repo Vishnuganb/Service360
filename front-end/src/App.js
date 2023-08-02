@@ -33,6 +33,7 @@ import PageNotFound from './components/pages/PageNotFound.js';
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
 import AdminServices from './components/pages/Admin/AdminServices/AdminServices.js';
 import AdminServiceProvider from './components/pages/Admin/AdminUsers/AdminServiceProviders.js';
+import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -65,6 +66,7 @@ const router = createBrowserRouter(
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
+        <Route path="customers" element={<AdminCustomers />} />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>

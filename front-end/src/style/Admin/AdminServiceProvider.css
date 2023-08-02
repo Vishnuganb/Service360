@@ -218,3 +218,39 @@
   margin-bottom: 5px;
 }
 
+/* AdminCustomer.css */
+
+/* Small devices (landscape phones) */
+@media (max-width: 576px) {
+  .custom-table td,
+  .custom-table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .custom-table td,
+  .custom-table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 769px) {
+  .custom-table td,
+  .custom-table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+}
+
+

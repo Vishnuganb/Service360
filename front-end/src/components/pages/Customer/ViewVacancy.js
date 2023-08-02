@@ -1,220 +1,322 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react'
+import { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
-import * as Icon from 'react-bootstrap-icons';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import Pagination from 'react-bootstrap/Pagination';
 
-import { MDBDataTableV5, MDBTable } from 'mdbreact';
 
-const tabledata = {
-    columns: [
-        {
-            label: 'Date',
-            field: 'date',
-            sort: 'asc',
-            width: 150
-        },
-        {
-            label: 'Category',
-            field: 'category',
-            sort: 'asc',
-            width: 150
-        },
-        {
-            label: 'Service provider',
-            field: 'service_provider',
-            sort: 'asc',
-            width: 100
-        },
-        {
-            label: 'Status',
-            field: 'status',
-            sort: 'asc',
-            width: 100
-        },
+const Accept = () => {
+    const [show, setShow] = useState(false);
+  
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+  
+    return (
+      <>
+        <Button variant="btn btn-viewvacancy-form-t" style={{
+          width: '16%',
+          height: '38px',
+          border: '1px solid #ced4da',
+          fontSize: '14px',
+          padding: '0 8px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          fontWeight: '500',
+          textTransform: 'none',
+          background: 'black',
+          '@media (max-width: 768px)': {
+            width: '100%', 
+          }
+        }} onClick={handleShow} >
+        <i className="my-customer-table-icon bi bi-pen h5"></i>
+        </Button>
+  
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Accept Application</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <center><p>You are accepting this Application</p></center>
+          </Modal.Body>
+          <Modal.Footer>
+          <Button variant="btn btn-viewvacancy-form-a" style={{
+          width: '15%',
+          height: '38px',
+          border: '1px solid #ced4da',
+          fontSize: '14px',
+          padding: '0 8px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          fontWeight: '500',
+          textTransform: 'none',
+          background: 'black',
+          '@media (max-width: 768px)': {
+            width: '70%', 
+          }
+        }} onClick={handleClose}>
+              Accept
+            </Button>
+            <Button variant="btn btn-viewvacancy-form-r"  style={{
+          width: '15%',
+          height: '38px',
+          border: '1px solid #ced4da',
+          fontSize: '14px',
+          padding: '0 8px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          fontWeight: '500',
+          textTransform: 'none',
+          background: 'rgb(126, 123, 123)',
+          '@media (max-width: 768px)': {
+            width: '70%', 
+          }
+        }} onClick={handleClose}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  };
+  
+  
+const Reject = () => {
+    const [show, setShow] = useState(false);
+  
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+  
+    return (
+      <>
+        <Button variant="btn btn-viewvacancy-form-t" style={{
+          width: '16%',
+          height: '38px',
+          border: '1px solid #ced4da',
+          fontSize: '14px',
+          padding: '0 8px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          fontWeight: '500',
+          textTransform: 'none',
+          background: 'black',
+          '@media (max-width: 768px)': {
+            width: '100%', 
+          }
+        }} onClick={handleShow} >
+        <i className="my-customer-table-icon bi bi-trash h5"></i>
+        </Button>
+  
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Reject Application</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <center><p>You are Rejecting this Application</p></center>
+          </Modal.Body>
+          <Modal.Footer>
+          <Button variant="btn btn-viewvacancy-form-a"  style={{
+          width: '15%',
+          height: '38px',
+          border: '1px solid #ced4da',
+          fontSize: '14px',
+          padding: '0 8px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          fontWeight: '500',
+          textTransform: 'none',
+          background: 'black',
+          '@media (max-width: 768px)': {
+            width: '60%', 
+          }
+        }} onClick={handleClose}>
+              Reject
+            </Button>
+            <Button variant="btn btn-viewvacancy-form-r"  style={{
+          width: '15%',
+          height: '38px',
+          border: '1px solid #ced4da',
+          fontSize: '14px',
+          padding: '0 8px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          fontWeight: '500',
+          textTransform: 'none',
+          background: 'rgb(126, 123, 123)',
+          '@media (max-width: 768px)': {
+            width: '60%', 
+          }
+        }} onClick={handleClose}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  };
+  
 
-        {
-            label: '  ',
-            field: 'action',
-            sort: 'NONE',
-            width: 100
-        }
-    ],
-    rows: [
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Pending',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-        {
-            date: '27/07/2023',
-            category: 'Ac Repair',
-            service_provider: 'Vinoth Kumar',
-            status: 'Checked',
-            // status: <div className='completed d-flex gap-2 align-items-center'><i class="bi bi-circle-fill tag-icon"></i><p className='m-0'>Completed</p></div>,
-            action: <div className='d-flex gap-2 align-items-center'><Icon.EyeFill /><i class="bi bi-check-circle-fill"></i><i class="bi bi-file-excel-fill"></i></div>
-        },
-    ]
-};
-
-const ViewVacancy = () => (
-    <>
-        <div className="row">
-            <div className='col-md-4'></div>
-
-            <div className="col-md-7">
-                <div className="row"></div>
-                <div className="vacancy-container background-total accordion bg-white rounded-3 mb-4 me-3">
-                    <div className="col-12 d-flex flex-row justify-content-between">
-                        <div className='d-flex flex-row gap-4 p-3 '>
-                            <p className="text-dark fs-6 fw-bold vacancytext">Vacancies Responses </p>
-                            {/* <p className="fs-3 fw-bold Cabin-text" style={{ color: "#A2A3B1" }}>Responses</p> */}
-                        </div>
-                        <div>
-                        </div>
+export default function ViewVacancy() {
+    return (
+        <>
+            <div className="vacancy-container background-total accordion bg-white rounded-3 mb-4 me-3">
+                <div className="col d-flex flex-row justify-content-between">
+                    <div className='d-flex flex-row gap-4 p-3 '>
+                        <p className="text-dark fs-4 fw-bold vacancytext">Vacancies Responses </p>
                     </div>
-                    <div className='p-4'>
-
-                        <MDBDataTableV5 responsive
-                            striped
-                            bordered
-                            small
-                            searching={true}
-                            sortable={true}
-                            data={tabledata}
-                            exportToCSV={true}
-                            paging={true}
-    
-                            // Add the 'options' prop for customizing search position
-                            options={{
-                                searchTop: true, // Show search bar at the top of the table
-
-                                
-                            }}
-
-                        />
-                    </div>
-
                 </div>
-            </div></div>
+                <Form className="nav-search col-4"  >
+                    <Form.Control
+                        type="search"
+                        placeholder=""
+                        className=""
+                        aria-label="Search"
+                    />
+                    <Button id="view-jobs-button">Search</Button>
+                </Form>
+            </div>
 
-    </>
-)
+            <div className="my-customer-table-container col-11">
+                <Table className="my-customer-table" striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th className="my-customer-table-th-1">Date</th>
+                            <th className="my-customer-table-th-1">Service Category</th>
+                            {/* <th className="my-customer-table-th-2">Service Provider</th> */}
+                            <th className="my-customer-table-th-2">Status</th>
+                            <th className="my-customer-table-th-2">Action</th>
 
-export default ViewVacancy;
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>27/07/2023</td>
+                            <td>Ac Repair</td>
+                            <td>Pending</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+                                  <Accept />
+                                  &nbsp; &nbsp; 
+                                <Reject />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>26/07/2023</td>
+                            <td>Ac Repair</td>
+                            <td>Checked</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+                                <Accept />
+                                 &nbsp; &nbsp; 
+                                <Reject />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>26/07/2023</td>
+                            <td>Ac Repair</td>
+                            <td>Rejected</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>25/07/2023</td>
+                            <td>Tile fitting</td>
+                            <td>Accepted</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>25/07/2023</td>
+                            <td>Tile fitting</td>
+                        
+                            <td>Rejected</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>25/07/2023</td>
+                            <td>Tile fitting</td>
+                            <td>Rejected</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>24/07/2023</td>
+                            <td>Tile fitting</td>
+                            <td>Rejected</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>24/07/2023</td>
+                            <td>Plumbing</td>
+                            <td>Accepted</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>23/07/2023</td>
+                            <td>Plumbing</td>
+                            <td>Rejected</td>
+                            <td>
+                                <Button variant="primary" className="my-customer-table-btn">
+                                    <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+                                </Button>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </Table>
+
+            </div>
+            <br></br>
+            <Row id='bodyPageRow2'>
+                <div className="paginationContainer-jobs" >
+                    <Pagination className='pagination-element'>
+                        <Pagination.First />
+                        <Pagination.Prev />
+                        <Pagination.Item active>{1}</Pagination.Item>
+                        <Pagination.Item>{2}</Pagination.Item>
+                        <Pagination.Item>{3}</Pagination.Item>
+                        <Pagination.Item>{4}</Pagination.Item>
+                        <Pagination.Item>{5}</Pagination.Item>
+                        <Pagination.Ellipsis />
+                        <Pagination.Next />
+                        <Pagination.Last />
+                    </Pagination>
+                </div>
+            </Row>
+        </>
+    );
+}

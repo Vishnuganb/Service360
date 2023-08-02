@@ -28,27 +28,31 @@ const ViewAd = () => {
 
   return (
     <Container>
-      <div className="shadow-lg p-3 mb-5 bg-white rounded">
-        <div className="AdHeader">
-          <div>
-            <img
-              src={profileIcon}
-              alt="Profile"
-              roundedCircle
-              className="AdProfilePic"
-            />
-          </div>
-          <div className="namediv">
-            <p>Adam</p>
-            <p className="AdVrifiedP"> Verified</p>
-          </div>
-        </div>
-        <div className="d-flex justify-content-center">
-          <h1 className="AdSlideHeading">Ideal Driller</h1>
-        </div>
+      <Row className="shadow-lg p-3 mb-5 bg-white rounded">
+        <Row>
+          <Col md="auto" className="d-flex align-items-center ">
+            <div>
+              <img
+                src={profileIcon}
+                alt="Profile of Advertiser"
+                roundedCircle
+                className="AdProfilePic"
+              />
+            </div>
+            <div className="namediv">
+              <p>Adam</p>
+            </div>
+          </Col>
+        </Row>
 
-        <div className="d-flex justify-content-center" style={{ gap: "1em" }}>
-          <div className="w-25 p-3">
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <h1 className="AdSlideHeading">Ideal Driller</h1>
+          </Col>
+        </Row>
+
+        <Row className="AdsViewCont">
+          <Col className="AdViewImage">
             <Image
               src={selectedImage}
               alt="Main image"
@@ -64,15 +68,15 @@ const ViewAd = () => {
                       src={image}
                       alt={`Gallery image ${index + 1}`}
                       thumbnail
+                      fluid
                       onClick={() => handleImageClick(image)}
                     />
                   </Col>
                 ))}
               </Row>
             </Container>
-          </div>
-
-          <div className="w-50 p-3">
+          </Col>
+          <Col>
             <p>
               The New Listing Digital Drill Angle Machine Cordless Hammer Set
               Electric Specification 24V Cordless Power Drills
@@ -82,43 +86,41 @@ const ViewAd = () => {
             <p> Warranty: 12 Months</p>
             <p> Delivery: Free Delivery</p>
             <h1 className="AdPrice text-center">32000 LKR</h1>
-            <div className="d-flex justify-content-center">
-              {/* <button className="AdSlideButton">Order Now</button> */}
-            </div>
-          </div>
+          </Col>
+          <Col>
+            <Col className="shadow p-3 mb-5 bg-white border rounded ">
+              <h2 className="text-center">Emereld Electrical</h2>
 
-          <div className="shadow p-3 mb-5 bg-white rounded ">
-            <h2 className="text-center">Emereld Electrical</h2>
+              <Row className="d-flex justify-content-center border-bottom">
+                <Col className="col-4">Owner Name </Col>
+                <Col className="col-6">Adam Robert</Col>
+              </Row>
+              <br />
+              <Row className="d-flex justify-content-center border-bottom">
+                <Col className="col-4">Mobile No </Col>
+                <Col className="col-6">0778964983</Col>
+              </Row>
+              <br />
+              <Row className="d-flex justify-content-center border-bottom">
+                <Col className="col-4 align-self-center">Address </Col>
+                <Col className="col-6">
+                  No 132, Marain Drive, Bambalapittiya, Colombo
+                </Col>
+              </Row>
+              <br />
+              <br />
 
-            <div className="d-flex justify-content-center border-bottom">
-              <Col className="col-4">Owner Name </Col>
-              <Col className="col-6">Adam Robert</Col>
-            </div>
-            <br />
-            <div className="d-flex justify-content-center border-bottom">
-              <Col className="col-4">Mobile No </Col>
-              <Col className="col-6">0778964983</Col>
-            </div>
-            <br />
-            <div className="d-flex justify-content-center border-bottom">
-              <Col className="col-4 align-self-center">Address </Col>
-              <Col className="col-6">
-                No 132, Marain Drive, Bambalapittiya, Colombo
-              </Col>
-            </div>
-            <br />
-            <br />
+              <Row className="d-flex justify-content-center">
+                <button className="AdSlideButton">Chat</button>
+              </Row>
+            </Col>
+          </Col>
+        </Row>
+      </Row>
 
-            <div className="d-flex justify-content-center">
-              <button className="AdSlideButton">Chat</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
+      <Row>
         <h1>Related Ads</h1>
-      </div>
+      </Row>
     </Container>
   );
 };

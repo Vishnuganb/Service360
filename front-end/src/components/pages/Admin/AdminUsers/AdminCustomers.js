@@ -27,8 +27,6 @@ function AdminCustomer() {
             email: 'john.doe@example.com',
             address: '123 Main Street, City',
             registeredDate: '2023-08-01',
-            service: 'Carpentry',
-            category: 'Interior Works',
             image: person1,
             status: 'Pending',
             uploadedFiles: [
@@ -45,8 +43,6 @@ function AdminCustomer() {
             email: 'jane.smith@example.com',
             address: '456 Oak Avenue, Town',
             registeredDate: '2023-08-02',
-            service: 'AC Repair',
-            category: 'Electrical & Plumbing',
             image: person2,
             status: 'Accepted',
             uploadedFiles: [
@@ -63,8 +59,6 @@ function AdminCustomer() {
             email: 'mike.johnson@example.com',
             address: '789 Maple Lane, Village',
             registeredDate: '2023-08-03',
-            service: 'Masonry',
-            category: 'Construction',
             image: person3,
             status: 'Rejected',
             uploadedFiles: [
@@ -81,8 +75,6 @@ function AdminCustomer() {
             email: 'de.silva@example.com',
             address: '101 Pine Street, City',
             registeredDate: '2023-08-04',
-            service: 'CCTV Repair',
-            category: 'Security',
             image: person2,
             status: 'Pending',
             uploadedFiles: [
@@ -99,8 +91,6 @@ function AdminCustomer() {
             email: 'kumar.sangakkara@example.com',
             address: '222 Oak Road, Town',
             registeredDate: '2023-08-05',
-            service: 'Sofa cleaning',
-            category: 'cleaning',
             image: person3,
             status: 'Accepted',
             uploadedFiles: [
@@ -117,8 +107,6 @@ function AdminCustomer() {
             email: 'mike.johnson@example.com',
             address: '333 Maple Street, Village',
             registeredDate: '2023-08-06',
-            service: 'Painting',
-            category: 'Interior Works',
             image: person1,
             status: 'Rejected',
             uploadedFiles: [
@@ -135,8 +123,6 @@ function AdminCustomer() {
             email: 'saman.perera@example.com',
             address: '444 Pine Avenue, City',
             registeredDate: '2023-08-07',
-            service: 'Electrical Wiring',
-            category: 'Electrical & Plumbing',
             image: person3,
             status: 'Pending',
             uploadedFiles: [
@@ -153,8 +139,6 @@ function AdminCustomer() {
             email: 'susantha.villergers@example.com',
             address: '555 Oak Lane, Town',
             registeredDate: '2023-08-08',
-            service: 'Tiles Fitting',
-            category: 'Construction',
             image: person1,
             status: 'Accepted',
             uploadedFiles: [
@@ -171,8 +155,6 @@ function AdminCustomer() {
             email: 'william.wiliamson@example.com',
             address: '666 Maple Road, Village',
             registeredDate: '2023-08-09',
-            service: 'Fire Alarm',
-            category: 'Security',
             image: person2,
             status: 'Rejected',
             uploadedFiles: [
@@ -189,8 +171,6 @@ function AdminCustomer() {
             email: 'john.doe@example.com',
             address: '777 Main Street, City',
             registeredDate: '2023-08-10',
-            service: 'Carpentry',
-            category: 'Interior Works',
             image: person1,
             status: 'Pending',
             uploadedFiles: [
@@ -207,8 +187,6 @@ function AdminCustomer() {
             email: 'jane.smith@example.com',
             address: '888 Oak Avenue, Town',
             registeredDate: '2023-08-11',
-            service: 'AC Repair',
-            category: 'Electrical & Plumbing',
             image: person2,
             status: 'Accepted',
             uploadedFiles: [
@@ -225,8 +203,6 @@ function AdminCustomer() {
             email: 'mike.johnson@example.com',
             address: '999 Maple Lane, Village',
             registeredDate: '2023-08-12',
-            service: 'Masonry',
-            category: 'Construction',
             image: person3,
             status: 'Rejected',
             uploadedFiles: [
@@ -243,8 +219,6 @@ function AdminCustomer() {
             email: 'de.silva@example.com',
             address: '1010 Pine Street, City',
             registeredDate: '2023-08-13',
-            service: 'CCTV Repair',
-            category: 'Security',
             image: person2,
             status: 'Pending',
             uploadedFiles: [
@@ -261,8 +235,6 @@ function AdminCustomer() {
             email: 'kumar.sangakkara@example.com',
             address: '111 Oak Road, Town',
             registeredDate: '2023-08-14',
-            service: 'Sofa cleaning',
-            category: 'cleaning',
             image: person3,
             status: 'Accepted',
             uploadedFiles: [
@@ -279,8 +251,6 @@ function AdminCustomer() {
             email: 'mike.johnson@example.com',
             address: '1212 Maple Street, Village',
             registeredDate: '2023-08-15',
-            service: 'Painting',
-            category: 'Interior Works',
             image: person1,
             status: 'Rejected',
             uploadedFiles: [
@@ -297,8 +267,6 @@ function AdminCustomer() {
             email: 'saman.perera@example.com',
             address: '1313 Pine Avenue, City',
             registeredDate: '2023-08-16',
-            service: 'Electrical Wiring',
-            category: 'Electrical & Plumbing',
             image: person3,
             status: 'Pending',
             uploadedFiles: [
@@ -315,8 +283,6 @@ function AdminCustomer() {
             email: 'susantha.villergers@example.com',
             address: '1414 Oak Lane, Town',
             registeredDate: '2023-08-17',
-            service: 'Tiles Fitting',
-            category: 'Construction',
             image: person1,
             status: 'Accepted',
             uploadedFiles: [
@@ -333,8 +299,6 @@ function AdminCustomer() {
             email: 'william.wiliamson@example.com',
             address: '1515 Maple Road, Village',
             registeredDate: '2023-08-18',
-            service: 'Fire Alarm',
-            category: 'Security',
             image: person2,
             status: 'Rejected',
             uploadedFiles: [
@@ -411,7 +375,7 @@ function AdminCustomer() {
 
         <section id="service-page" className="block serviceProvider p-5" style={{ backgroundImage: `url(${BgImage})` }} >
 
-            <h2 className="ms-5 fw-bold align-self-start d-none d-md-inline">Customers</h2>
+            <h2 className="ms-5 fw-bold align-self-start">Customers</h2>
 
             <div className="d-flex justify-content-end w-100">
                 <div className='me-xs-2 col-xs-2 col-md-3 m-3'>

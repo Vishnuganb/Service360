@@ -48,7 +48,7 @@
   justify-content: center;
 }
 
-@media (max-width: 576px) {
+@media (min-width: 0px) {
   .serviceProvider .card {
     padding: 10px;
     display: flex;
@@ -57,6 +57,10 @@
     width: 150px;
     height: 300px;
     box-shadow: 2px 0px 4px 0px #888888;
+  }
+  .serviceProvider h2 {
+    font-size: 20px;
+    font-weight: normal;
   }
 }
 
@@ -70,6 +74,12 @@
     height: 280px;
     box-shadow: 2px 0px 4px 0px #888888;
   }
+
+  .serviceProvider h2 {
+    font-size: 38px;
+    font-weight: normal;
+  }
+
 }
 
 @media (min-width: 768px) {
@@ -85,6 +95,11 @@
   .serviceProvider .card:hover {
     transform: scale(1.05);
     cursor: pointer;
+  }
+
+    .serviceProvider h2 {
+    font-size: 38px;
+    font-weight: normal;
   }
 }
 
@@ -113,6 +128,15 @@
 
   .btn-effect2 {
     width: 100px;
+  }
+
+  .serviceProvider h2 {
+    font-size: 38px;
+    font-weight: bold;
+  }
+
+  .serviceProvider .card-body{
+    width: 265px
   }
 
 }
@@ -218,9 +242,6 @@
   margin-bottom: 5px;
 }
 
-/* AdminCustomer.css */
-
-/* Small devices (landscape phones) */
 @media (max-width: 576px) {
   .custom-table td,
   .custom-table th {
@@ -231,7 +252,7 @@
   }
 }
 
-/* Medium devices (tablets) */
+
 @media (min-width: 577px) and (max-width: 768px) {
   .custom-table td,
   .custom-table th {
@@ -242,7 +263,7 @@
   }
 }
 
-/* Large devices (desktops) */
+
 @media (min-width: 769px) {
   .custom-table td,
   .custom-table th {

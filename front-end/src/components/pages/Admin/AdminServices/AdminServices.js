@@ -221,7 +221,7 @@ function AdminServices() {
 
 
     return (
-        <section id="service" className="block service-block" style={{ backgroundImage: `url(${BgImage})` }}>
+        <section id="service" className="block service-block p-5" style={{ backgroundImage: `url(${BgImage})` }}>
             <h2 className='ms-5 fw-bold align-self-start '>Services</h2>
             <div className="d-flex align-items-center  w-100">
                 <div className='me-xs-2 col-xs-2 col-md-3 m-3'>

@@ -29,7 +29,7 @@ function MyProjectsBody(){
                 </Pagination>
             </div>
         </Row>
-</div>
+        </div>
     );
 }
 

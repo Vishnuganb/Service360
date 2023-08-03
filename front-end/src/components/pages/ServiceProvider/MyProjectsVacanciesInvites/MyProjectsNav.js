@@ -23,7 +23,7 @@ function MyProjectsNav(){
                         <Form.Control className="MyProjectsNav-search" type="search" aria-label="Search"/>
                         <Button className="MyProjectsNav-button">Search</Button>
                     </Form>
-                    <Nav
+                    {/* <Nav
                         className="mx-3"
                         style={{ maxHeight: '100px'}}
                         id="nav-filter"
@@ -33,7 +33,7 @@ function MyProjectsNav(){
                             <NavDropdown.Item href="#action4">Accepted</NavDropdown.Item>
                             <NavDropdown.Item href="#action4">Completed</NavDropdown.Item>
                         </NavDropdown>
-                    </Nav>
+                    </Nav> */}
                 </Navbar>
             </Row>
         </div>

@@ -23,6 +23,12 @@ import SpMyProjectsJobsApplied from './components/pages/ServiceProvider/MyProjec
 import SpMyProjectsJobsInvites from './components/pages/ServiceProvider/MyProjectsJobsInvites/Index.js';
 import SpMyProjectsVacanciesApplied from './components/pages/ServiceProvider/MyProjectsVacanciesApplied/Index.js';
 import SpMyProjectsVacanciesInvites from './components/pages/ServiceProvider/MyProjectsVacanciesInvites/Index.js';
+import SpViewTrainingSessions from './components/pages/ServiceProvider/ViewTrainingSessions/Index.js';
+import SpViewATrainingSession from './components/pages/ServiceProvider/ViewATrainingSession/Index.js';
+import SpMyProjectJobsStates from './components/pages/ServiceProvider/MyProjectJobsStates.js';
+import SpAcceptedJob from './components/pages/ServiceProvider/AcceptedJob/Index.js';
+import SpAcceptedVacancy from './components/pages/ServiceProvider/AcceptedVacancy/Index.js';
+import SpStartJob from './components/pages/ServiceProvider/StartJob/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -98,6 +104,12 @@ const router = createBrowserRouter(
         <Route path="MyProjectsJobsInvites" element={<SpMyProjectsJobsInvites/>} />
         <Route path="MyProjectsVacanciesApplied" element={<SpMyProjectsVacanciesApplied/>} />
         <Route path="MyProjectsVacanciesInvites" element={<SpMyProjectsVacanciesInvites/>} />
+        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
+        <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
+        <Route path="MyProjectJobsStates" element={<SpMyProjectJobsStates/>} />
+        <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
+        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
+        <Route path="StartJob" element={<SpStartJob/>} />
       </Route>
 
       <Route

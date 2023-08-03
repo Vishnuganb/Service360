@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Tab, Tabs, Modal, Button } from 'react-bootstrap';
+import { Card, Tab, Tabs, Modal, Button, Form } from 'react-bootstrap';
 import '../../../../style/Admin/AdminServiceProvider.css';
 import BgImage from '../../../../assets/images/header/Background.png';
 import PopupBgImage from '../../../../assets/images/header/popupBg.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 import person1 from '../../../../assets/images/home/Customer_1.png';
@@ -16,6 +15,10 @@ import { set } from 'lodash';
 const searchInputStyle = {
     height: '38px',
 };
+
+const StyledModalFooter = styled(Modal.Footer)`
+        justify-content: flex-end;
+    `;
 
 function AdminServiceProvider() {
 
@@ -371,6 +374,9 @@ function AdminServiceProvider() {
         cardsPerPage: 3,
         showAcceptConfirmation: false,
         showRejectConfirmation: false,
+        enable: true,
+        rejectReason: '',
+        rejectReasonErrorMessage: '',
     });
 
     // const cardsPerPage = data.windowWidth <= 768 ? 3 : 6;
@@ -386,6 +392,7 @@ function AdminServiceProvider() {
             return serviceProvidersData.filter((provider) => provider.category === category);
         }
     };
+
 
     const handlePageChange = (page) => {
         const startIndex = (page - 1) * data.cardsPerPage;
@@ -487,8 +494,20 @@ function AdminServiceProvider() {
         setData({ ...data, showAcceptConfirmation: false });
     };
 
-    const handleRejectProvider = () => {
-        setData({ ...data, showRejectConfirmation: false });
+    const handleRejectProvider = (rejectReason) => {
+        let isError = false;
+        let rejectReasonErrorMessage = '';
+
+        if (rejectReason === '') {
+            isError = true;
+            rejectReasonErrorMessage = 'Please enter a reason for rejection.';
+        }
+
+        setData({ ...data, rejectReasonErrorMessage });
+
+        if(!isError){
+            setData({ ...data, showRejectConfirmation: false, rejectReason });
+        }
     };
 
     const handleShowDetails = (provider) => {
@@ -611,7 +630,7 @@ function AdminServiceProvider() {
                     <Button className='btn-effect2' onClick={() => setData({ ...data, showAcceptConfirmation: false })}>
                         No
                     </Button>
-                    <Button className='btn-effect' style={{ marginLeft: '10px'}} onClick={handleAcceptProvider}>
+                    <Button className='btn-effect' style={{ marginLeft: '10px' }} onClick={handleAcceptProvider}>
                         Yes
                     </Button>
                 </Modal.Footer>
@@ -627,13 +646,16 @@ function AdminServiceProvider() {
                             <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
                         </div>
                         <p className='fw-bold pt-4'>Are you sure you want to Reject this service provider?</p>
+                        <p>If you select "Yes," please enter the reason for rejection.<span style={{color: 'red' }}>*</span></p>
+                        <input type="text" value={data.rejectReason} onChange={(e) => setData({ ...data, rejectReason: e.target.value })} placeholder="Enter Reject Reason" />
+                        {data.rejectReasonErrorMessage && <p className="text-danger p-0 m-0">{data.rejectReasonErrorMessage}</p>}
                     </Modal.Body>
                 )}
                 <Modal.Footer>
-                    <Button className='btn-effect2' onClick={() => setData({ ...data, showRejectConfirmation: false })}>
+                    <Button className='btn-effect3' onClick={() => setData({ ...data, showRejectConfirmation: false })}>
                         No
                     </Button>
-                    <Button className='btn-effect' style={{ marginLeft: '10px' }} onClick={handleRejectProvider}>
+                    <Button className='btn-effect' style={{ marginLeft: '10px' }} onClick={() => handleRejectProvider(data.rejectReason)}>
                         Yes
                     </Button>
                 </Modal.Footer>
@@ -700,16 +722,41 @@ function AdminServiceProvider() {
                         </div>
                     </Modal.Body>
                 )}
-                <Modal.Footer>
+                <StyledModalFooter>
                     {data.activeTab === 'Accepted' && (
-                        <Button className="btn-effect">
+                        <>
+
+                            <Form.Check
+                                type="radio"
+                                name="enableDisableRadio"
+                                id="enableRadio"
+                                label="Enable"
+                                checked={data.enable}
+                                onChange={() => setData({ ...data, enable: true })}
+                                className='ms-0 me-1 custom-radio'
+                            />
+                            <Form.Check
+                                type="radio"
+                                name="enableDisableRadio"
+                                id="disableRadio"
+                                label="Disable"
+                                checked={!data.enable}
+                                onChange={() => setData({ ...data, enable: false })}
+                                className='ms-0 me-5 custom-radio'
+                            />
+
+                        </>
+                    )}
+                    <div className="col-sm-6 d-flex justify-content-end align-items-end m-0">
+                        <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showServiceModal: false })}>
+                            Cancel
+                        </Button>
+                        <Button type="submit" className="btn-effect">
                             More Info
                         </Button>
-                    )}
-                    <Button className="btn-effect" onClick={() => setData({ ...data, showDetailsModal: false })}>
-                        Cancel
-                    </Button>
-                </Modal.Footer>
+                    </div>
+                </StyledModalFooter>
+
             </Modal>
         </div>
     );

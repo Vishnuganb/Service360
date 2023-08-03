@@ -81,7 +81,7 @@ const AdStep2 = ({
         <form className="my-2 mx-4">
 
                 <div className="mb-3">
-                    <p className="mb-0">Enter your shop Address</p>
+                <p className="mb-0">Enter your shop Address<span style={{ color: 'red' }}>*</span></p>
                     <div className="align-items-center">
                         <input
                             type="text"
@@ -97,7 +97,7 @@ const AdStep2 = ({
 
 
             <div className="mb-3">
-                <p className="mb-0">Upload Bussiness Registration and Municipal Licenses</p>
+                <p className="mb-0">Upload Bussiness Registration and Municipal Licenses<span style={{ color: 'red' }}>*</span></p>
                 <input
                     // ref={fileInputRef}
                     type="file"
@@ -129,7 +129,7 @@ const AdStep2 = ({
 
             <div className="mb-3 d-flex justify-content-between">
                 <div className='me-3'>
-                    <p className="mb-0">Enter your Password</p>
+                    <p className="mb-0">Enter your Password<span style={{ color: 'red' }}>*</span></p>
                     <div className="input-group">
                         <input
                             type={passwordType}
@@ -154,7 +154,7 @@ const AdStep2 = ({
                 </div>
 
                 <div>
-                    <p className="mb-0">Retype Password</p>
+                    <p className="mb-0">Confirm Password<span style={{ color: 'red' }}>*</span></p>
                     <div className="input-group">
                         <input
                             type={passwordType}

@@ -22,7 +22,6 @@ import styled from 'styled-components';
 import { set } from 'lodash';
 
 
-
 const servicesData = [
     { id: 1, image: image1, text: 'AC Repair', category: 'Electrical & Plumbing' },
     { id: 2, image: image2, text: 'Electrical Wiring', category: 'Electrical & Plumbing' },
@@ -79,10 +78,13 @@ const StyledButton2 = styled(Button)`
         }
     `;
 
+const StyledModalFooter = styled(Modal.Footer)`
+        justify-content: flex-start;
+    `;
+
 const searchInputStyle = {
     height: '38px',
 };
-
 
 function AdminServices() {
 
@@ -91,14 +93,22 @@ function AdminServices() {
         service: '',
         image: null,
         selectedCategory: 'default',
+        selectedNewCategory: 'default',
+        selectedEditCategory: 'default',
         currentPage: 1,
         showModal: false,
         serviceCategoryErrorMessage: '',
         serviceErrorMessage: '',
         imageErrorMessage: '',
+        editserviceCategoryErrorMessage: '',
+        editserviceErrorMessage: '',
+        editimageErrorMessage: '',
         filteredServices: [],
         totalPages: 1,
         searchTerm: '',
+        selectedService: null,
+        showServiceModal: false,
+        enable: true,
     });
 
     const cardsPerPage = 9;
@@ -142,11 +152,40 @@ function AdminServices() {
     // Function to handle input field changes in the modal
     const handleNewServiceChange = (e) => {
         const { name, value } = e.target;
-        setData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-        console.log(data.selectedCategory);
+
+        if (value === "new") {
+            setData((prevState) => ({
+                ...prevState,
+                selectedNewCategory: 'new',
+            }));
+        } else {
+            setData((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+    };
+
+    const handleEditServiceChange = (e, selectedService, previousCategory) => {
+        const { name, value } = e.target;
+
+        console.log('Selected service:', selectedService);
+        console.log('Previous category:', previousCategory);
+
+        if (name === 'selectedEditCategory') {
+            const updatedService = { ...selectedService, category: null };
+
+            setData((prevState) => ({
+                ...prevState,
+                selectedService: updatedService,
+                selectedEditCategory: value,
+            }));
+        } else {
+            setData((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
     };
 
     // Function to handle image file selection
@@ -182,7 +221,6 @@ function AdminServices() {
         }));
     }, [data.selectedCategory, data.searchTerm]);
 
-
     // Function to handle form submission
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -192,7 +230,7 @@ function AdminServices() {
         let serviceErrorMessage = '';
         let imageErrorMessage = '';
 
-        if (data.category === 'default') {
+        if (data.selectedNewCategory === 'default') {
             isError = true;
             serviceCategoryErrorMessage = 'Please select a service category';
         }
@@ -219,10 +257,81 @@ function AdminServices() {
         }
     };
 
+    const handleServiceFormSubmit = (e) => {
+        e.preventDefault();
+
+        let isError = false;
+        let editserviceCategoryErrorMessage = '';
+        let editserviceErrorMessage = '';
+        let editimageErrorMessage = '';
+
+        if (data.selectedNewCategory === 'default') {
+            isError = true;
+            editserviceCategoryErrorMessage = 'Please select a service category';
+        }
+
+        if (data.service.trim() === '') {
+            isError = true;
+            editserviceErrorMessage = 'Please enter a service name';
+        }
+
+        if (data.image === null) {
+            isError = true;
+            editimageErrorMessage = 'Please select an image';
+        }
+
+        setData({
+            ...data,
+            editserviceCategoryErrorMessage,
+            editserviceErrorMessage,
+            editimageErrorMessage,
+        });
+
+        if (!isError) {
+
+            if (data.selectedService) {
+                const updatedService = {
+                    ...data.selectedService,
+                    category: data.selectedNewCategory,
+                    text: data.service,
+                    image: data.image ? URL.createObjectURL(data.image) : data.selectedService.image,
+                };
+
+
+                const updatedServicesData = servicesData.map((service) => (
+                    service.id === data.selectedService.id ? updatedService : service
+                ));
+
+                setData({
+                    ...data,
+                    showModal: false,
+                    showServiceModal: false,
+                    selectedService: null,
+                    data: updatedServicesData,
+                });
+            } else {
+
+                const newService = {
+                    id: servicesData.length + 1,
+                    category: data.selectedNewCategory,
+                    text: data.service,
+                    image: data.image ? URL.createObjectURL(data.image) : null,
+                };
+
+                setData({
+                    ...data,
+                    showModal: false,
+                    showServiceModal: false,
+                    selectedService: null,
+                    data: [...servicesData, newService],
+                });
+            }
+        }
+    };
 
     return (
         <section id="service" className="block service-block p-5" style={{ backgroundImage: `url(${BgImage})` }}>
-            <h2 className='ms-5 fw-bold align-self-start '>Services</h2>
+            <h2 className='ms-5 fw-bold align-self-start'>Services</h2>
             <div className="d-flex align-items-center  w-100">
                 <div className='me-xs-2 col-xs-2 col-md-3 m-3'>
                     <div className="input-group">
@@ -278,7 +387,9 @@ function AdminServices() {
             <Row className="cardflex">
                 {data.displayedServices && data.displayedServices.map((service) => (
                     <Col key={service.id} xs={8} sm={6} md={4} lg={3} xl={3}>
-                        <Card className="card d-flex flex-column align-items-center justify-content-center h-100">
+                        <Card className="card d-flex flex-column align-items-center justify-content-center h-100" onClick={() => (
+                            setData({ ...data, selectedService: service, showServiceModal: true })
+                        )}>
                             <Card.Img src={service.image} variant="top" alt="home" />
                             <Card.Body>
                                 <Card.Text>{service.text}</Card.Text>
@@ -301,18 +412,113 @@ function AdminServices() {
                 ))}
             </div>
 
-            <Modal show={data.showModal} onHide={handleModalClose}>
+            <Modal show={data.showServiceModal} onHide={() => setData({ ...data, showServiceModal: false })} centered>
+                <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+                    <Modal.Title>{data.selectedService ? 'Edit Service' : 'Add New Service'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ backgroundImage: `url(${BgImage})` }}>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Current Image</Form.Label>
+                            {data.selectedService ? (
+                                <img
+                                    src={data.selectedService.image}
+                                    alt="Current Service"
+                                    style={{ width: '100%', maxHeight: '100px', objectFit: 'contain' }}
+                                    className='rounded'
+                                />
+                            ) : (
+                                <p>No image selected.</p>
+                            )}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Choose a New Image</Form.Label>
+                            <Form.Control type="file" name="image" onChange={handleImageChange} required />
+                            {data.editimageErrorMessage && <p className="text-danger p-0 m-0">{data.editimageErrorMessage}</p>}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Change the Service Category</Form.Label>
+                            <select
+                                className='form-select'
+                                name="selectedEditCategory"
+                                value={data.selectedService ? data.selectedService.category : data.category}
+                                onChange={(e) => handleEditServiceChange(e, data.selectedService, data.selectedService ? data.selectedService.category : data.category)}
+                                required
+                            >
+                                <option value="default">Select a Service Category</option>
+                                {Object.keys(serviceCategories).map((category) => (
+                                    <option key={category} value={category}>
+                                        {category}
+                                    </option>
+                                ))}
+                            </select>
+
+                            {data.editserviceCategoryErrorMessage && <p className="text-danger p-0 m-0">{data.editserviceCategoryErrorMessage}</p>}
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Change Service Name</Form.Label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="service"
+                                value={data.selectedService ? data.selectedService.text : data.service}
+                                onChange={handleEditServiceChange}
+                                required
+                            />
+                            {data.editserviceErrorMessage && <p className="text-danger p-0 m-0">{data.editserviceErrorMessage}</p>}
+                        </Form.Group>
+
+                        <StyledModalFooter>
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-sm-6 d-flex justify-content-start align-items-center">
+                                        <Form.Check
+                                            type="radio"
+                                            name="enableDisableRadio"
+                                            id="enableRadio"
+                                            label="Enable"
+                                            checked={data.enable}
+                                            onChange={() => setData({ ...data, enable: true })}
+                                            className='ms-0 me-1 custom-radio'
+                                        />
+                                        <Form.Check
+                                            type="radio"
+                                            name="enableDisableRadio"
+                                            id="disableRadio"
+                                            label="Disable"
+                                            checked={!data.enable}
+                                            onChange={() => setData({ ...data, enable: false })}
+                                            className='ms-0 me-1 custom-radio'
+                                        />
+                                    </div>
+                                    <div className="col-sm-6 d-flex justify-content-center align-items-center m-0">
+                                        <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showServiceModal: false })}>
+                                            Cancel
+                                        </Button>
+                                        <Button type="submit" className="btn-effect" onClick={handleServiceFormSubmit}>
+                                            Submit
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </StyledModalFooter>
+
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            <Modal show={data.showModal} onHide={handleModalClose} centered>
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
                     <Modal.Title>Add New Service</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ backgroundImage: `url(${BgImage})` }}>
                     <Form>
                         <Form.Group className="mb-3">
-                            <Form.Label>Select the Service</Form.Label>
+                            <Form.Label>Select the Service Category<span style={{color: 'red' }}>*</span></Form.Label>
                             <select
-                                className='form-select'
-                                name="category"
-                                value={data.category}
+                                className="form-select"
+                                name="selectedNewCategory"
+                                value={data.selectedNewCategory}
                                 onChange={handleNewServiceChange}
                                 required
                             >
@@ -322,11 +528,26 @@ function AdminServices() {
                                         {service}
                                     </option>
                                 ))}
+                                <option value="new">Add New Category</option>
                             </select>
                             {data.serviceCategoryErrorMessage && <p className="text-danger p-0 m-0">{data.serviceCategoryErrorMessage}</p>}
                         </Form.Group>
+                        {data.selectedNewCategory === "new" && (
+                            <div className="mb-3">
+                                <label htmlFor="newCategory">New Category Name<span style={{color: 'red' }}>*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="newCategory"
+                                    name="selectedNewCategory"
+                                    value={data.category}
+                                    onChange={handleNewServiceChange}
+                                    required
+                                />
+                            </div>
+                        )}
                         <Form.Group className="mb-3">
-                            <Form.Label>Service Name</Form.Label>
+                            <Form.Label>Service Name<span style={{ color: 'red' }}>*</span></Form.Label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -338,11 +559,11 @@ function AdminServices() {
                             {data.serviceErrorMessage && <p className="text-danger p-0 m-0">{data.serviceErrorMessage}</p>}
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Choose an Image</Form.Label>
+                            <Form.Label>Choose an Image<span style={{ color: 'red' }}>*</span></Form.Label>
                             <Form.Control type="file" name="image" onChange={handleImageChange} required />
                             {data.imageErrorMessage && <p className="text-danger p-0 m-0">{data.imageErrorMessage}</p>}
                         </Form.Group>
-                        <Modal.Footer>
+                        <Modal.Footer >
                             <StyledButton2 variant="secondary" onClick={handleModalClose}>
                                 Cancel
                             </StyledButton2>

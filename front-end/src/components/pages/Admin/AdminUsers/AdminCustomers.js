@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Table, Container } from 'react-bootstrap';
+import { Modal, Button, Table, Container, Form } from 'react-bootstrap';
 import '../../../../style/Admin/AdminServiceProvider.css';
 import BgImage from '../../../../assets/images/header/Background.png';
 import PopupBgImage from '../../../../assets/images/header/popupBg.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import person1 from '../../../../assets/images/home/Customer_1.png';
 import person2 from '../../../../assets/images/home/Customer_2.png';
 import person3 from '../../../../assets/images/home/Customer_3.png';
+import styled from 'styled-components';
 import { set } from 'lodash';
 
-const searchInputStyle = {
-    height: '38px',
-};
+
+
+const StyledModalFooter = styled(Modal.Footer)`
+        justify-content: flex-start;
+    `;
 
 function AdminCustomer() {
 
@@ -323,6 +329,9 @@ function AdminCustomer() {
         displayedServices: [],
         showDetailsModal: false,
         selectedCustomer: null,
+        enable: true,
+        fromDate: null,
+        toDate: null,
     });
 
     const cardsPerPage = 9;
@@ -335,32 +344,37 @@ function AdminCustomer() {
         }));
     };
 
-
     useEffect(() => {
-        const searchedServices =
-            data.searchTerm.trim() === ''
-                ? customersData
-                : customersData.filter((customer) => (
-                    customer.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    customer.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    customer.contactNumber.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    customer.nic.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    customer.email.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    customer.address.toLowerCase().includes(data.searchTerm.toLowerCase())
-                )
+        const searchedServices = data.searchTerm.trim() === '' ? customersData : customersData.filter((customer) => (
+            customer.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+            customer.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+            customer.contactNumber.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+            customer.nic.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+            customer.email.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+            customer.address.toLowerCase().includes(data.searchTerm.toLowerCase())
+        ));
 
-                );
+        // Step 3: Apply the date filtering
+        const fromDateObj = data.fromDate ? new Date(data.fromDate) : null;
+        const toDateObj = data.toDate ? new Date(data.toDate) : null;
+        const filteredServices = searchedServices.filter((customer) => {
+            const registeredDateObj = new Date(customer.registeredDate);
+            return (
+                (!fromDateObj || registeredDateObj >= fromDateObj) &&
+                (!toDateObj || registeredDateObj <= toDateObj)
+            );
+        });
 
-        const totalPages = Math.ceil(searchedServices.length / cardsPerPage);
+        const totalPages = Math.ceil(filteredServices.length / cardsPerPage);
         setData((prevState) => ({
             ...prevState,
             totalPages,
-            displayedServices: searchedServices.slice(
+            displayedServices: filteredServices.slice(
                 (data.currentPage - 1) * cardsPerPage,
                 data.currentPage * cardsPerPage
             ),
         }));
-    }, [data.searchTerm, data.currentPage]);
+    }, [data.searchTerm, data.currentPage, data.fromDate, data.toDate]);
 
     const handlePageChange = (page) => {
         setData((prevState) => ({ ...prevState, currentPage: page }));
@@ -373,12 +387,44 @@ function AdminCustomer() {
 
     return (
 
-        <section id="service-page" className="block serviceProvider p-5" style={{ backgroundImage: `url(${BgImage})` }} >
+        <section id="service-page" className="block serviceProvider py-3" style={{ backgroundImage: `url(${BgImage})` }} >
 
             <h2 className="ms-5 fw-bold align-self-start">Customers</h2>
 
-            <div className="d-flex justify-content-end w-100">
-                <div className='me-xs-2 col-xs-2 col-md-3 m-3'>
+            <div className="d-flex justify-content-center w-100">
+
+                <div className='col-xs-3 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 me-0 date-picker-container'>
+                    <div className="input-group m-0">
+                        <DatePicker
+                            selected={data.fromDate}
+                            onChange={date => setData((prevState) => ({ ...prevState, fromDate: date }))}
+                            className="form-control date-picker-input"
+                            placeholderText="From Date"
+                            dateFormat="yyyy-MM-dd"
+                            isClearable
+                        />
+                        <span className="input-group-text">
+                            <i class="bi bi-calendar2-week"></i>
+                        </span>
+                    </div>
+                </div>
+                <div className='me-xs-2 col-xs-2 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 date-picker-container'>
+                    <div className="input-group">
+                        <DatePicker
+                            selected={data.toDate}
+                            onChange={date => setData((prevState) => ({ ...prevState, toDate: date }))}
+                            className="form-control date-picker-input"
+                            placeholderText="To Date"
+                            dateFormat="yyyy-MM-dd"
+                            isClearable
+                        />
+                        <span className="input-group-text">
+                            <i class="bi bi-calendar2-week"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div className='col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-2 m-3 me-xs-5'>
                     <div className="input-group">
                         <input
                             type="text"
@@ -386,17 +432,17 @@ function AdminCustomer() {
                             placeholder="Search"
                             value={data.searchTerm}
                             onChange={handleSearchChange}
-                            style={searchInputStyle}
                         />
                         <span className="input-group-text">
                             <FontAwesomeIcon icon={faSearch} />
                         </span>
                     </div>
                 </div>
+
             </div>
 
-            <div className="mt-4 d-flex flex-column w-100">
-                <Container fluid className="table-responsive">
+            <div className="mt-4 d-flex flex-column w-100" style={{width:'100%'}}>
+                <Container className="table-responsive">
                     <Table striped bordered hover size="sm" className="custom-table">
                         <thead className='text-center'>
                             <tr>
@@ -484,16 +530,40 @@ function AdminCustomer() {
                         </div>
                     </Modal.Body>
                 )}
-                <Modal.Footer>
-
-                    <Button className="btn-effect2">
-                        More Info
-                    </Button>
-
-                    <Button className="btn-effect" onClick={() => setData({ ...data, showDetailsModal: false })}>
-                        Cancel
-                    </Button>
-                </Modal.Footer>
+                <StyledModalFooter>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-6 d-flex justify-content-start align-items-center">
+                                <Form.Check
+                                    type="radio"
+                                    name="enableDisableRadio"
+                                    id="enableRadio"
+                                    label="Enable"
+                                    checked={data.enable}
+                                    onChange={() => setData({ ...data, enable: true })}
+                                    className='ms-0 me-1 custom-radio'
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    name="enableDisableRadio"
+                                    id="disableRadio"
+                                    label="Disable"
+                                    checked={!data.enable}
+                                    onChange={() => setData({ ...data, enable: false })}
+                                    className='ms-0 me-1 custom-radio'
+                                />
+                            </div>
+                            <div className="col-sm-6 d-flex justify-content-center align-items-center m-0">
+                                <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showServiceModal: false })}>
+                                    Cancel
+                                </Button>
+                                <Button className="btn-effect">
+                                    More Info
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </StyledModalFooter>
             </Modal>
         </section>
 

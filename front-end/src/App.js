@@ -35,6 +35,7 @@ import AdminServices from './components/pages/Admin/AdminServices/AdminServices.
 import AdminServiceProvider from './components/pages/Admin/AdminUsers/AdminServiceProviders.js';
 import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.js';
 import AdminAdvertisers from './components/pages/Admin/AdminUsers/AdminAdvertisers.js';
+import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -70,6 +71,7 @@ const router = createBrowserRouter(
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
         <Route path="customers" element={<AdminCustomers />} />
         <Route path="advertisers" element={<AdminAdvertisers />} />
+        <Route path="reviews" element={<AdminReviews />} />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>

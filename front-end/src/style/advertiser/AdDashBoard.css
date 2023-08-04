@@ -51,6 +51,10 @@
     padding: 2em;
 }
 
+.adNo:hover, .adRejNo:hover{
+    scale: 1.1;
+}
+
 .AdTotal{ 
 
     font-size: 2em;
@@ -79,18 +83,6 @@
     text-align: center;
     border-radius: 0.5em;
    
-   
-   
-   
-    /* all: unset;
-    color: #ffffff;
-    font-size: large;
-    text-align: center;
-    height: 3em;
-    width: 7em;
-    font-weight: bolder;
-    border-radius: 0.5em;
-    background-color: #292D32; */
 }
 
 .PostAd:hover{
@@ -107,7 +99,8 @@
 
 .AdVrifiedP{
     color: #048a2c;
-    margin-left: 0.5em;
+    width: fit-content;
+    /* margin-left: 0.5em; */
     /* text-align: right; */
     /* font-size: xx-small; */
 }

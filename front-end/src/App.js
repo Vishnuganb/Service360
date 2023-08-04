@@ -13,6 +13,10 @@ import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
+import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
+import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
+import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
+import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -57,12 +61,12 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
-        <Route path="/services" element={<ViewServices/>} />
+        <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
-        <Route path='login' element={<Login />} />
-        <Route path='/signup/customer' element={<CustSignUp />} />
-        <Route path='/signup/serviceProvider' element={<SpSignUp />} />
-        <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
+        <Route path="login" element={<Login />} />
+        <Route path="/signup/customer" element={<CustSignUp />} />
+        <Route path="/signup/serviceProvider" element={<SpSignUp />} />
+        <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
@@ -77,20 +81,27 @@ const router = createBrowserRouter(
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
         <Route path="Ads" element={<AdsPage />} />
-        <Route path='View' element={<ViewAd />} />
+        <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path='Forum' element={<Forum />} />
+        <Route path="Forum" element={<Forum />} />
+        <Route path="VerifiedAds" element={<VerifiedAds />} />
+        <Route path="RejectedAds" element={<RejectedAds />} />
+        <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
         <Route path="CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
         <Route path="OngoingProject" element={<OngoingProject />} />
-        <Route path="Quotation" element={<Quotation/>} />
-        <Route path="ViewVacancy" element={<ViewVacancy/>} />
-        <Route path="SocialShareSP" element={<SocialShareSP />}/>
+        <Route path="Quotation" element={<Quotation />} />
+        <Route path="ViewVacancy" element={<ViewVacancy />} />
+        <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+        <Route
+          path="Searchserviceprovider"
+          element={<Searchserviceprovider />}
+        />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

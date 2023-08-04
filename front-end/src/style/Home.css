@@ -29,7 +29,6 @@ html {
   box-sizing: border-box;
   height: -webkit-fill-available;
   overflow-x: hidden;
-  height: 100%;
 }
 
 *,
@@ -48,7 +47,6 @@ body {
   color: #333;
   background: #fff;
   font: 16px/1.6 "Rubik", sans-serif;
-  min-width: 320px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
@@ -130,7 +128,7 @@ ul,
 
 #wrapper {
   overflow: hidden;
-  width: 100%;
+  /* width: 100%; */
   position: relative;
 }
 

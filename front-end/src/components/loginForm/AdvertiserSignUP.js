@@ -264,7 +264,7 @@ const ServiceProviderSignUP = () => {
             contactNumberErrorMessage = 'Invalid contact number';
         }
 
-        if (!/^\d{9}(\d{3}[vV])?$/.test(nicNumber)) {
+        if (!/^(\d{9}[vV]|\d{12})$/.test(nicNumber)) {
             isError = true;
             nicNumberErrorMessage = 'Invalid NIC number';
         }

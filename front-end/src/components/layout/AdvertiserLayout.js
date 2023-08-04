@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import AdvertiserHeader from './AdvertiserHeader';
 import AdvertiserSidebar from './AdvertiserSidebar';
 import AppFooter from './footer';
+import "../../style/ServiceProvider/SpLayout.css";
 
 const AdvertiserLayout = () => {
     return (
@@ -15,9 +16,9 @@ const AdvertiserLayout = () => {
           }}
         >
           <AdvertiserHeader />
-          <div style={{ flex: 1, display: "flex" }}>
+          <div style={{ display: 'flex', flex:1 }}>
             <AdvertiserSidebar />
-            <div className="classoutlet" style={{ flex: 1 }}>
+            <div className="classoutlet" style={{ flex: 1, overflow:'auto' }}>
               <Outlet />
             </div>
           </div>

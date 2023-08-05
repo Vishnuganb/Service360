@@ -83,11 +83,9 @@ const router = createBrowserRouter(
         <Route path="Ads" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path="Forum" element={<Forum />} />
         <Route path="VerifiedAds" element={<VerifiedAds />} />
         <Route path="RejectedAds" element={<RejectedAds />} />
         <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
-        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -113,6 +111,9 @@ const router = createBrowserRouter(
         <Route path="ViewAJob" element={<SpViewAJob />} />
         <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
+
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route

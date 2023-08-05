@@ -23,23 +23,23 @@
 
 span {
   font-size: 1rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 .sub-item-nav {
   font-size: 1rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .sidebar-content {
   width: 100%; /* Set a default width */
 }
 
-@media only screen and (max-width: 992px) {
+/* @media only screen and (max-width: 992px) {
   .submenu-active .sidebar-content {
     width: 250px;
   }
-}
+} */
 
 .custom-icon-size {
   font-size: 80%;

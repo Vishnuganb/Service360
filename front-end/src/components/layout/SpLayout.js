@@ -17,7 +17,7 @@ const SpLayout = () => {
                     </div>
                 </div>
                 <AppFooter />
-                </div>
+            </div>
         </>
     )
 }

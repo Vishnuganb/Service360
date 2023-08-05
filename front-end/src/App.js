@@ -13,10 +13,12 @@ import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
+import AdvertiserProfile from'./components/pages/User/Advertiser/EditProfile.js';
 import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
 import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
 import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
+
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -27,6 +29,7 @@ import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/index.js';
 import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js'
 
+
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
 import AdvertiserLayout from './components/layout/AdvertiserLayout.js';
@@ -35,6 +38,7 @@ import Layout404 from './components/layout/Layout404.js';
 import PageNotFound from './components/pages/PageNotFound.js';
 
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
+import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
 import AdminServices from './components/pages/Admin/AdminServices/AdminServices.js';
 import AdminServiceProvider from './components/pages/Admin/AdminUsers/AdminServiceProviders.js';
 import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.js';
@@ -43,7 +47,7 @@ import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js'
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
-
+import CustomerProfile from './components/pages/User/Customer/EditProfile.js';
 import PostVacancyFormIndex from './components/pages/Customer/PostVacancyFormIndex.js';
 import OngoingProject from './components/pages/Customer/CustomerDashboard/OngoingProject.js';
 import Quotation from './components/pages/Customer/Quotation.js'
@@ -53,7 +57,7 @@ import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP
 
 import Forum from './components/pages/Forum/Forum.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
-import Searchserviceprovider from './components/pages/Customer/Searchserviceprovider.js';
+import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import ViewAservice from './components/pages/User/ViewAservice.js';
 import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js';
 import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
@@ -81,6 +85,7 @@ const router = createBrowserRouter(
         <Route path="customers" element={<AdminCustomers />} />
         <Route path="advertisers" element={<AdminAdvertisers />} />
         <Route path="reviews" element={<AdminReviews />} />
+        <Route path="history" element={<ViewHistory /> } />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>

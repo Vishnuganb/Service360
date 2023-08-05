@@ -149,11 +149,10 @@ const CustomerSignUP = () => {
             contactNumberErrorMessage = 'Invalid contact number';
         }
 
-        if (!/^\d{9}(\d{3}[vV])?$/.test(data.nicNumber)) {
+        if (!/^(\d{9}[vV]|\d{12})$/.test(data.nicNumber)) {
             isError = true;
             nicNumberErrorMessage = 'Invalid NIC number';
         }
-
 
         if (data.firstName.trim() === '') {
             isError = true;
@@ -256,7 +255,7 @@ const CustomerSignUP = () => {
                                             <form action="" className="my-2 mx-4">
 
                                                 <div className="mb-2">
-                                                    <p className="mb-0">Enter your email address</p>
+                                                    <p className="mb-0">Enter your email address<span style={{ color: 'red' }}>*</span></p>
                                                     <div className="align-items-center">
                                                         <input
                                                             type="email"
@@ -273,7 +272,7 @@ const CustomerSignUP = () => {
 
                                                 <div className="justify-content-between mb-3 d-flex">
                                                     <div className='me-0 col-sm-6'>
-                                                        <p className="mb-0">First Name</p>
+                                                        <p className="mb-0">First Name<span style={{ color: 'red' }}>*</span></p>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -286,7 +285,7 @@ const CustomerSignUP = () => {
                                                     </div>
 
                                                     <div className='col-sm-5'>
-                                                        <p className="mb-0">Last Name</p>
+                                                        <p className="mb-0">Last Name<span style={{ color: 'red' }}>*</span></p>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -302,7 +301,7 @@ const CustomerSignUP = () => {
 
                                                 <div className="justify-content-between mb-3 d-flex ">
                                                     <div className='me-0 col-sm-5 col-sm-6'>
-                                                        <p className="mb-0">NIC Number</p>
+                                                        <p className="mb-0">NIC Number<span style={{ color: 'red' }}>*</span></p>
                                                         <input type="text" className="form-control"
                                                             placeholder="Enter NIC number"
                                                             value={data.nicNumber}
@@ -328,7 +327,7 @@ const CustomerSignUP = () => {
                                                 </div>
 
                                                 <div className="mb-3">
-                                                    <p className="mb-0">Enter your Residential Address</p>
+                                                    <p className="mb-0">Enter your Residential Address<span style={{ color: 'red' }}>*</span></p>
                                                     <div className="align-items-center">
                                                         <input
                                                             type="text"
@@ -344,7 +343,7 @@ const CustomerSignUP = () => {
 
                                                 <div className="mb-3 d-flex justify-content-between">
                                                     <div className='me-3'>
-                                                        <p className="mb-0">Enter your Password</p>
+                                                        <p className="mb-0">Enter your Password<span style={{ color: 'red' }}>*</span></p>
                                                         <div className="input-group">
                                                             <input
                                                                 type={data.passwordType}
@@ -369,7 +368,7 @@ const CustomerSignUP = () => {
                                                     </div>
 
                                                     <div>
-                                                        <p className="mb-0">Confirm Password</p>
+                                                        <p className="mb-0">Confirm Password<span style={{ color: 'red' }}>*</span></p>
                                                         <div className="input-group">
                                                             <input
                                                                 type={data.passwordType}

@@ -2,44 +2,44 @@
   padding: 20px 0;
 }
 
-.review-block {
+.dashboard-block {
   background: #f2f2f2;
   border-radius: 15px;
 }
 
-.review-block .row {
+.dashboard-block .row {
   margin-bottom: 50px;
 }
 
-.review-block .row:last-child {
+.dashboard-block .row:last-child {
   margin-bottom: 0;
 }
 
-.review-block .holder {
+.dashboard-block .holder {
   background: #fff;
   padding: 15px;
   transition: box-shadow 0.3s linear;
 }
 
-.review-block .holder:hover {
+.dashboard-block .holder:hover {
   box-shadow: 0 0 30px 0 #d9d9d9;
 }
 
-.review-block .card {
+.dashboard-block .card {
   border: 0;
 }
 
-.review-block .card-body {
+.dashboard-block .card-body {
   padding: 0;
 }
 
-.review-block img {
+.dashboard-block img {
   height: 90px;
   width: 90px;
   margin: 0 0 15px;
 }
 
-.review-block .cardflex {
+.dashboard-block .cardflex {
   margin-top: 20px;
   margin-bottom: 30px;
   display: flex;
@@ -48,24 +48,13 @@
   justify-content: center;
 }
 
-@media (min-width: 0px) {
-  .review-block .card {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 150px;
-    height: 300px;
-    box-shadow: 2px 0px 4px 0px #888888;
-  }
-  .review-block h2 {
-    font-size: 20px;
-    font-weight: normal;
-  }
+.pie-chart-container {
+  width: 100%;
+  height: 300px;
 }
 
-@media (min-width: 576px) {
-  .review-block .card {
+@media only screen and (max-width: 576px) {
+  .dashboard-block .card {
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -75,50 +64,74 @@
     box-shadow: 2px 0px 4px 0px #888888;
   }
 
-  .review-block h2 {
+  .dashboard-block h2 {
+    font-size: 38px;
+    font-weight: normal;
+  }
+
+  .pie-chart-container {
+    height: 250px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px){
+  .dashboard-block .card {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    box-shadow: 2px 0px 4px 0px #888888;
+  }
+  .dashboard-block .card:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+  }
+
+  .dashboard-block h2 {
     font-size: 38px;
     font-weight: normal;
   }
 }
 
-@media (min-width: 768px) {
-  .review-block .card {
+@media only screen and (min-width: 768px) and (max-width: 991px){
+  .dashboard-block .card {
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
-    height: 390px;
+    width: 100%;
+    height: auto;
     box-shadow: 2px 0px 4px 0px #888888;
   }
-  .review-block .card:hover {
+  .dashboard-block .card:hover {
     transform: scale(1.01);
     cursor: pointer;
   }
 
-  .review-block h2 {
+  .dashboard-block h2 {
     font-size: 38px;
     font-weight: normal;
   }
 }
 
 @media (min-width: 992px) {
-  .review-block .card {
+  .dashboard-block .card {
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
-    height: auto;
+    width: 100%;
+    height: 100%;
     box-shadow: 2px 0px 4px 0px #888888;
-    margin-bottom: 10px;
   }
-  .review-block .card:hover {
+  .dashboard-block .card:hover {
     transform: scale(1.02);
     cursor: pointer;
   }
 
-  .review-block .btn {
+  .dashboard-block .btn {
     width: 250px;
   }
 
@@ -130,12 +143,12 @@
     width: 100px;
   }
 
-  .review-block h2 {
+  .dashboard-block h2 {
     font-size: 38px;
     font-weight: bold;
   }
 
-  .review-block .card-body {
+  .dashboard-block .card-body {
     width: 100%;
   }
   .btn-effect3 {
@@ -147,13 +160,13 @@
   }
 }
 
-.review-block .btn {
+.dashboard-block .btn {
   background: #292d32;
   margin-bottom: 10px;
   color: #fff;
 }
 
-.review-block .btn:hover {
+.dashboard-block .btn:hover {
   background: #fff;
   border-color: #2596be;
   color: #9f390d;
@@ -229,5 +242,39 @@
   border-color: #2596be;
   color: #9f390d;
 }
+
+.chart-title {
+  text-align: start;
+  margin-bottom: 20px;
+}
+
+.dashboard-container {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.donut-value {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.custom-table-style,
+.custom-table-style > thead > tr > th,
+.custom-table-style > tbody > tr,
+.custom-table-style > tbody > tr > td {
+  background-color: transparent !important;
+}
+
+/* .hoverable-row:hover {
+  background-color: #f1f1f1; 
+  cursor: pointer; 
+}
+
+.custom-table-style tbody tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+} */
 
 

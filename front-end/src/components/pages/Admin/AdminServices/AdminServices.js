@@ -332,7 +332,7 @@ function AdminServices() {
     return (
         <section id="service" className="block service-block p-5" style={{ backgroundImage: `url(${BgImage})` }}>
             <h2 className='ms-5 fw-bold align-self-start'>Services</h2>
-            <div className="d-flex align-items-center  w-100">
+            <div className="d-flex align-items-center justify-content-center w-100">
                 <div className='me-xs-2 col-xs-2 col-md-3 m-3'>
                     <div className="input-group">
                         <select
@@ -366,21 +366,23 @@ function AdminServices() {
                         </span>
                     </div>
                 </div>
-
-                <button
-                    className="btn btn-primary me-2 d-block d-md-none"
-                    onClick={handleModalOpen}
-                >
-                    <FontAwesomeIcon icon={faPlus} />
-                </button>
-                <Button
-                    variant="primary"
-                    onClick={handleModalOpen}
-                    className="ms-auto me-xs-1 me-md-5 d-none d-md-block"
-                    style={searchInputStyle}
-                >
-                    Add New Service
-                </Button>
+ 
+                <div className='me-xs-2 col-xs-2 col-md-3 m-3 d-flex justify-content-start align-items-start'>
+                    <button
+                        className="btn btn-primary me-2 d-block d-md-none"
+                        onClick={handleModalOpen}
+                    >
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                    <Button
+                        variant="primary"
+                        onClick={handleModalOpen}
+                        className="me-xs-1 ms-4 d-none d-md-block"
+                        style={searchInputStyle}
+                    >
+                        Add New Service
+                    </Button>
+                </div>
 
             </div>
 
@@ -514,7 +516,7 @@ function AdminServices() {
                 <Modal.Body style={{ backgroundImage: `url(${BgImage})` }}>
                     <Form>
                         <Form.Group className="mb-3">
-                            <Form.Label>Select the Service Category<span style={{color: 'red' }}>*</span></Form.Label>
+                            <Form.Label>Select the Service Category<span style={{ color: 'red' }}>*</span></Form.Label>
                             <select
                                 className="form-select"
                                 name="selectedNewCategory"
@@ -534,7 +536,7 @@ function AdminServices() {
                         </Form.Group>
                         {data.selectedNewCategory === "new" && (
                             <div className="mb-3">
-                                <label htmlFor="newCategory">New Category Name<span style={{color: 'red' }}>*</span></label>
+                                <label htmlFor="newCategory">New Category Name<span style={{ color: 'red' }}>*</span></label>
                                 <input
                                     type="text"
                                     className="form-control"

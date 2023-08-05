@@ -754,7 +754,7 @@ function AdminServiceProvider() {
                         </>
                     )}
                     <div className="col-sm-6 d-flex justify-content-end align-items-end m-0">
-                        <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showServiceModal: false })}>
+                        <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showDetailsModal: false })}>
                             Cancel
                         </Button>
                         <Button type="submit" className="btn-effect">

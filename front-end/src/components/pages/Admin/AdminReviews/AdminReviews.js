@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Tab, Tabs } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
@@ -128,7 +128,7 @@ const reviewData = [
     },
 ]
 
-export default function AppReviews() {
+export default function AdminReviews() {
     const [data, setData] = useState({
         currentPage: 1,
         showModal: false,
@@ -166,7 +166,7 @@ export default function AppReviews() {
                 review.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
                 review.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
                 review.address.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                review.date.toLowerCase().includes(data.searchTerm.toLowerCase()) 
+                review.date.toLowerCase().includes(data.searchTerm.toLowerCase())
             )
         );
 
@@ -216,7 +216,7 @@ export default function AppReviews() {
 
             const updatedReviewData = reviewData.filter((review) => review.id !== reviewId);
             //const displayedAllReviews = getDisplayedReviews(updatedReviewData, data.currentPage, data.reviewsPerPage);
-            
+
             setData((prevState) => ({
                 ...prevState,
                 // displayedReviews: displayedAllReviews,
@@ -239,7 +239,7 @@ export default function AppReviews() {
         const reviewToReassign = data.selectedReviews.find((review) => review.id === reviewId);
 
         if (reviewToReassign) {
-            
+
             reviewToReassign.status = 'All';
 
             const updatedSelectedReviews = data.selectedReviews.filter((review) => review.id !== reviewId);
@@ -280,22 +280,24 @@ export default function AppReviews() {
 
                 <h2 className='ms-5 fw-bold align-self-start'>System Reviews</h2>
 
-                <div className="d-flex justify-content-end  w-100">
-                    <div className='col-xs-2 col-sm-5 col-md-3 col-lg-3 col-xl-2 mx-5'>
-                        <div className="input-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search Reviews"
-                                value={data.searchTerm}
-                                onChange={handleSearchChange}
-                            />
-                            <span className="input-group-text">
-                                <FontAwesomeIcon icon={faSearch} />
-                            </span>
+                {data.activeTab === "All" && (
+                    <div className="d-flex justify-content-end  w-100">
+                        <div className='col-xs-2 col-sm-5 col-md-3 col-lg-3 col-xl-2 mx-5'>
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Reviews"
+                                    value={data.searchTerm}
+                                    onChange={handleSearchChange}
+                                />
+                                <span className="input-group-text">
+                                    <FontAwesomeIcon icon={faSearch} />
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
                     {data.displayedReviews && data.displayedReviews.map((review) => (
@@ -324,7 +326,7 @@ export default function AppReviews() {
                                             </p>
                                             <footer className="blockquote-footer mb-3">
                                                 {review.firstName}{review.lastName} {" "}
-                                                
+
                                             </footer>
                                         </blockquote>
 
@@ -334,7 +336,7 @@ export default function AppReviews() {
                                                 onClick={() => handleAssign(review.id)}
                                                 disabled={data.selectedReviews.length >= 3}
                                             >
-                                                Assign 
+                                                Assign
                                             </button>
                                         )}
                                         {data.activeTab === "Selected" && (
@@ -356,7 +358,7 @@ export default function AppReviews() {
                     {Array.from({ length: data.totalPages }, (_, index) => (
                         <button
                             key={index + 1}
-                            className={`page-link ${data.currentPage === index + 1 ? "active" : "" }`}
+                            className={`page-link ${data.currentPage === index + 1 ? "active" : ""}`}
                             style={{ backgroundColor: '#292D32', color: '#fff' }}
                             onClick={() => handlePageChange(index + 1)}
                         >

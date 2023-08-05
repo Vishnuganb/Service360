@@ -5,7 +5,7 @@ import TrainingRegistration from "./trainingRegistration";
 
 function Index(){
     return(
-        <div className="ms-lg-4 me-lg-5 border rounded px-md-5 px-sm-3 px-2 pb-4">
+        <div className="index-container ms-lg-4 me-lg-5 border rounded px-md-5 px-sm-3 px-2 pb-4">
             <TrainingDetails/>
             <TrainingRegistration/>
         </div>

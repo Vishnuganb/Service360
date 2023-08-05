@@ -2,7 +2,7 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
-
+import Button from "react-bootstrap/Button";
 
 function commentSection() {
     return(
@@ -10,7 +10,7 @@ function commentSection() {
             <Col className="commentSection-col-container col-12 col-lg-10 col-md-10 col-sm-11 mt-3">
                 <Row className="my-3">
                     <input type="text" className="commentSection-comment-input" placeholder="Write a comment ..." style={{borderRadius:"10px",border:"1px solid black"}}/>
-                    <button className="commentSection-comment-btn btn btn-primary col-md-1 col-3 mt-2 ms-auto me-1" >Post</button>
+                    <Button className="commentSection-comment-btn btn-ServiceProvider-2 col-md-1 col-3 mt-2 ms-auto me-1" >Post</Button>
                 </Row>
                 
                 <Row>

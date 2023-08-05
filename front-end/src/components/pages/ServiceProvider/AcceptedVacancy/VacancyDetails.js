@@ -105,13 +105,13 @@ function vacancyDetails() {
         </Row>
         <span>Todo List</span>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button variant="primary" >Start Todo List</Button>
-                <Button variant="primary" className="AcceptedJobDetails-start ms-auto">View Todo List</Button>
+                <Button className="btn-ServiceProvider-1">Start Todo List</Button>
+                <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
         </div>
         <hr/>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button variant="primary" >Schedule Project</Button>
-                <Button variant="primary" className="AcceptedJobDetails-start ms-auto">Start Project</Button>
+                <Button className="btn-ServiceProvider-1">Schedule Project</Button>
+                <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Project</Button>
         </div>
       </div>
     );

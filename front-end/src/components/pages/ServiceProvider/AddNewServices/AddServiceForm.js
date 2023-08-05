@@ -22,10 +22,10 @@ function AddServiceForm(){
                     <Form>                    
                         <Form.Group className="mt-4 mb-3 custom-checkbox" controlId="formBasicCheckbox">    {/* deleted the d-flex flex-wrap*/}
                             <Row>
-                                <Col className="col-sm-2 col-12 mb-2">
+                                <Col className="col-md-2 col-12 mb-2">
                                     Interior Works
                                 </Col>
-                                <Col className="col-sm-10 col-12">
+                                <Col className="col-md-10 col-12">
                                     <Form.Check className="me-3 custom-font" type="checkbox" label="Carpentry" />
                                     <Form.Check className="me-3 custom-font" type="checkbox" label="Painting" />
                                 </Col>
@@ -34,10 +34,10 @@ function AddServiceForm(){
                             <hr className="AddServiceForm-hr" />
 
                             <Row>
-                                <Col className="col-sm-2 col-12 mb-2">
+                                <Col className="col-md-2 col-12 mb-2">
                                     Electrical & Plumbing
                                 </Col>
-                                <Col className="col-sm-10 col-12">
+                                <Col className="col-md-10 col-12">
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Ac Repair" />
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Electrical Wiring" />
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Plumbing" />
@@ -47,10 +47,10 @@ function AddServiceForm(){
                             <hr className="AddServiceForm-hr" />
 
                             <Row>
-                                <Col className="col-sm-2 col-12 mb-2">
+                                <Col className="col-md-2 col-12 mb-2">
                                     Construction
                                 </Col>
-                                <Col className="col-sm-10 col-12">
+                                <Col className="col-md-10 col-12">
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Masonry" />
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Tiles Fitting" />
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Glass & Aluminium" />
@@ -61,10 +61,10 @@ function AddServiceForm(){
                             <hr className="AddServiceForm-hr" />
 
                             <Row>
-                                <Col className="col-sm-2 col-12 mb-2">
+                                <Col className="col-md-2 col-12 mb-2">
                                     Security
                                 </Col>
-                                <Col className="col-sm-10 col-12">
+                                <Col className="col-md-10 col-12">
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="CCTV Systems Repair" />
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Fire Alarm Systems Repair" />
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Video Surveillance Systems Repair" />
@@ -74,10 +74,10 @@ function AddServiceForm(){
                             <hr className="AddServiceForm-hr" />
 
                             <Row>
-                                <Col className="col-sm-2 col-12 mb-2">
+                                <Col className="col-md-2 col-12 mb-2">
                                     Cleaning
                                 </Col>
-                                <Col className="col-sm-10 col-12">
+                                <Col className="col-md-10 col-12">
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Sofa Cleaning" />
                                 <Form.Check className="me-3 custom-font" type="checkbox" label="Carpet Cleaning" />
                                 </Col>
@@ -121,8 +121,8 @@ function AddServiceForm(){
                         </Form.Group>
 
                         <div className="AddNewService-button-container d-flex flex-row">
-                            <Button variant="primary" type="submit">Submit</Button>
-                            <Button variant="primary" className="AddServiceForm-cancel ms-auto">Cancel</Button>
+                            <Button className="btn-ServiceProvider-1" type="submit">Submit</Button>
+                            <Button className="btn-ServiceProvider-2 AddServiceForm-cancel ms-auto">Cancel</Button>
                         </div>
                     </Form>
                </Row>

@@ -10,7 +10,7 @@ const subscribedJobCategories = [
 
 function CreateBlogForm() {
     return (
-        <div className="ms-lg-4 me-lg-5">
+        <div className="ms-lg-4 me-lg-4">
             <span style={{fontSize:"28px",fontWeight:"bold"}}>Create a Blog</span>
             
             <Form className="mt-4">    
@@ -42,8 +42,8 @@ function CreateBlogForm() {
                 </Form.Group>
 
                 <div className="CreateBlog-button-container d-flex flex-row">
-                    <Button variant="primary" type="submit">Publish</Button>
-                    <Button variant="primary" className="CreateBlog-cancel ms-auto">Cancel</Button>
+                    <Button className="btn-ServiceProvider-1" type="submit">Publish</Button>
+                    <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>
         </div>

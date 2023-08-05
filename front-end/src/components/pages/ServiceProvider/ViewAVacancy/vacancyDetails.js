@@ -2,6 +2,7 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
+import Button from "react-bootstrap/Button";
 
 function vacancyDetails() {
     return (
@@ -38,12 +39,12 @@ function vacancyDetails() {
           </div>
 
           <div>
-            <button
-              className="vacancyDetails-apply-btn btn btn-primary mt-2 mb-4"
+            <Button
+              className="vacancyDetails-apply-btn btn-ServiceProvider-1 mt-2 mb-4"
               style={{ fontFamily: "'Rubik', sans-serif" }}
             >
               Apply
-            </button>
+            </Button>
           </div>
         </Col>
 

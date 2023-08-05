@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/esm/Row';
 function bodyPage() {
 
     return (
-          <div className="bodyPageContainer-vacancy">
+          <div className="bodyPageContainer-vacancy index-container">
                     <Row id='bodyPageRow1'>
                         <div className="vacancyCardContainer">
                             <VacancyCard/>

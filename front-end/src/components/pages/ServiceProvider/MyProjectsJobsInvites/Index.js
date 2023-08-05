@@ -5,10 +5,10 @@ import '../../../../style/ServiceProvider/MyProjectsJobs.css';
 
 function Index(){
     return(
-        <>
+        <div>
             <MyProjectsNav/>
             <MyProjectsBody/>
-        </>
+        </div>
     );
 }
 

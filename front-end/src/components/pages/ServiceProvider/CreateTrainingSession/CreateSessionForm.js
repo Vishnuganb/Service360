@@ -10,7 +10,7 @@ const subscribedJobCategories = [
 
 function CreateSessionForm() {
     return(
-        <div className="ms-lg-4 me-lg-5">
+        <div className="ms-lg-4 me-lg-4">
             <span style={{fontSize:"28px",fontWeight:"bold"}}>Create a Training Session</span>
 
             <Form className="mt-4">    
@@ -42,13 +42,13 @@ function CreateSessionForm() {
                     </Form.Group>
 
                     <Form.Group className="mb-3 ms-md-4 col-md-2" controlId="formBasicTime">
-                        <Form.Label>Time</Form.Label>
+                        <Form.Label>Start Time</Form.Label>
                         <Form.Control type="time" placeholder="Select the starting time of the training session" />
                     </Form.Group>
 
-                    <Form.Group className="mb-3 ms-md-4 col-md-4" controlId="formBasicDuration">
-                        <Form.Label>Duration (in hours)</Form.Label>
-                        <Form.Control type="number" min="1" placeholder="Enter the duration of the training session" />
+                    <Form.Group className="mb-3 ms-md-4 col-md-2" controlId="formBasicDuration">
+                        <Form.Label>End Time</Form.Label>
+                        <Form.Control type="time" placeholder="Select the ending time of the training session" />
                     </Form.Group>
                 </div>
 
@@ -69,8 +69,8 @@ function CreateSessionForm() {
                 </Form.Group>
 
                 <div className="CreateBlog-button-container d-flex flex-row">
-                    <Button variant="primary" type="submit">Create</Button>
-                    <Button variant="primary" className="CreateBlog-cancel ms-auto">Cancel</Button>
+                    <Button className="btn-ServiceProvider-1" type="submit">Create</Button>
+                    <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>
         </div>

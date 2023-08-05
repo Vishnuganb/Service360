@@ -143,8 +143,8 @@ function AcceptedJobDetails() {
         </Row>
         <span>Todo List</span>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button variant="primary" >Start Todo List</Button>
-                <Button variant="primary" className="AcceptedJobDetails-start ms-auto">View Todo List</Button>
+                <Button className="btn-ServiceProvider-1">Start Todo List</Button>
+                <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
         </div>
         <hr/>
         <span>Quatation</span>
@@ -153,15 +153,18 @@ function AcceptedJobDetails() {
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                         <Form.Control type="file" placeholder="Password" /> 
                     </Form.Group>
-                    <Button className="AcceptedJobDetails-start" variant="primary" type="submit">
+                    <Form.Text className="text-muted d-block mb-3">
+                      Visit the <a href="https://www.example.com/quotation">quotation website</a> to create a quotation.
+                    </Form.Text>
+                    <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
                         Send Quotation
                     </Button>
                 </Form>
         </div>
         <hr/>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button variant="primary" onClick={handleShow}>Schedule Visitation</Button>
-                <Button variant="primary" className="AcceptedJobDetails-start ms-auto">Start Job</Button>
+                <Button className="btn-ServiceProvider-1" onClick={handleShow}>Schedule Visitation</Button>
+                <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
         </div>
 
 

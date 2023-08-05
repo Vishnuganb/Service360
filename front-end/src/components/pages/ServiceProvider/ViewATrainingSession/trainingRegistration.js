@@ -28,8 +28,8 @@ function Index(){
                     <label class="form-check-label" for="exampleCheck1">I have verified the event name, venue and time before proceeding my payment.</label>
                 </div>
                 <div className="ViewATraining-button-container mt-4 d-flex flex-row">
-                    <Button variant="primary" type="submit">Pay Now</Button>
-                    <Button variant="primary" className="ViewATraining-cancel ms-auto">Back</Button>
+                    <Button className="btn-ServiceProvider-1" type="submit">Pay Now</Button>
+                    <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto">Back</Button>
                 </div>
             </Form>
         </div>

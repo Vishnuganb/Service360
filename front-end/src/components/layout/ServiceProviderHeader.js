@@ -31,8 +31,6 @@ function ServiceProviderHeader() {
                         <NavDropdown title="Pranavan" className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item href="#" className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#" className="fw-bold no-hover">FAQ</NavDropdown.Item>
-                            <NavDropdown.Divider />
                             <NavDropdown.Item href="#" className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
                         <img src={profileIcon} alt="Profile" className="profileIcon" />

@@ -69,7 +69,7 @@ function ServiceTable() {
       </div>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Edit Service</Modal.Title>
         </Modal.Header>
 
@@ -111,10 +111,10 @@ function ServiceTable() {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className='btn-ServiceProvider-2' onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button className='btn-ServiceProvider-1' onClick={handleClose}>
             Save Changes
           </Button>
         </Modal.Footer>

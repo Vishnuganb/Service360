@@ -73,6 +73,14 @@ export const serviceCategories = {
 function ViewServices() {
     return (
         <section id="service" className="block service" style={{ backgroundImage: `url(${BgImage})` }}>
+
+            <div className="title-holder">
+                <h2>What do you need to be done</h2>
+                <div className="subtitle" style={{ color:"	#5A5A5A"}}>Need your services done quickly and efficiently ? <br></br>
+                    Look no further! Explore a wide variety of services
+                    offered by professionals who can deliver exceptional results. </div>
+            </div>
+
             <Row className="cardflex">
                 {Object.keys(serviceCategories).map((category) => (
                     <Col key={category} xs={5} sm={3} md={3} lg={3}>

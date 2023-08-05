@@ -13,6 +13,10 @@ import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
+import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
+import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
+import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
+import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -32,6 +36,10 @@ import PageNotFound from './components/pages/PageNotFound.js';
 
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
 import AdminServices from './components/pages/Admin/AdminServices/AdminServices.js';
+import AdminServiceProvider from './components/pages/Admin/AdminUsers/AdminServiceProviders.js';
+import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.js';
+import AdminAdvertisers from './components/pages/Admin/AdminUsers/AdminAdvertisers.js';
+import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -57,7 +65,7 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
-        <Route path="/services" element={<ViewServices/>} />
+        <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
         <Route path='login' element={<Login />} />
@@ -69,23 +77,31 @@ const router = createBrowserRouter(
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
+        <Route path="serviceProviders" element={<AdminServiceProvider />} />
+        <Route path="customers" element={<AdminCustomers />} />
+        <Route path="advertisers" element={<AdminAdvertisers />} />
+        <Route path="reviews" element={<AdminReviews />} />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
         <Route path="Ads" element={<AdsPage />} />
-        <Route path='View' element={<ViewAd />} />
+        <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path='Forum' element={<Forum />} />
+        <Route path="Forum" element={<Forum />} />
+        <Route path="VerifiedAds" element={<VerifiedAds />} />
+        <Route path="RejectedAds" element={<RejectedAds />} />
+        <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
         <Route path="CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
         <Route path="OngoingProject" element={<OngoingProject />} />
-        <Route path="Quotation" element={<Quotation/>} />
-        <Route path="ViewVacancy" element={<ViewVacancy/>} />
-        <Route path="SocialShareSP" element={<SocialShareSP />}/>
+        <Route path="Quotation" element={<Quotation />} />
+        <Route path="ViewVacancy" element={<ViewVacancy />} />
+        <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
         <Route path="Searchserviceprovider" element={<Searchserviceprovider/>} />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />

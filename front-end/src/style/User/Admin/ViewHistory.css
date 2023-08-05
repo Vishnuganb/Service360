@@ -1,0 +1,17 @@
+.topActivity{
+    display: flex; 
+    flex-direction: row;
+ 
+ }
+ 
+ .Activity{
+     margin-top: 50px;
+     margin-bottom:  50px; 
+     font-size: 50px;
+ }
+ 
+ .Date{
+     margin-top: 70px;
+     margin-bottom:  50px; 
+     margin-left: 150px;
+ }

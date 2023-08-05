@@ -8,12 +8,14 @@ import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
+import AdvertiserProfile from'./components/pages/User/Advertiser/EditProfile.js';
 
 import SpDashboard  from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs  from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies  from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
+// import SpProfile from './components/pages/User/SeviceProvider/EditProfile.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -27,8 +29,11 @@ import CustSignUp from './components/loginForm/CustomerSignUP.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 
 import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
+import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
+
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
+import CustomerProfile from './components/pages/User/Customer/EditProfile.js';
 
 import PostVacancyFormIndex from './components/pages/Customer/PostVacancyFormIndex.js';
 import OngoingProject from './components/pages/Customer/CustomerDashboard/OngoingProject.js';
@@ -54,6 +59,7 @@ const router = createBrowserRouter(
 
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="dashboard" element={<AdminDashboard /> } />
+        <Route path="history" element={<ViewHistory /> } />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
@@ -62,6 +68,7 @@ const router = createBrowserRouter(
         <Route path='View' element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
         <Route path='Forum' element={<Forum />} />
+        <Route path='AdProfile' element={<AdvertiserProfile/>} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -72,6 +79,7 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy/>} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
         <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+        <Route path="EditProfile" element={<CustomerProfile/>}/>     
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -80,6 +88,7 @@ const router = createBrowserRouter(
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
+        {/* <Route path="EditProfile" element={<SpProfile/>} /> */}
       </Route>
 
       <Route

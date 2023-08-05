@@ -3,8 +3,17 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
-function vacancyDetails() {
+
+function VacancyDetails() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div>
         <Row className="AcceptedvacancyDetails-Col-container mb-4">
@@ -110,12 +119,48 @@ function vacancyDetails() {
         </div>
         <hr/>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button className="btn-ServiceProvider-1">Schedule Project</Button>
+                <Button className="btn-ServiceProvider-1" onClick={handleShow}>Schedule Project</Button>
                 <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Project</Button>
         </div>
-      </div>
+
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff'}}>
+          <Modal.Title>Schedule Visitation</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Date</Form.Label>
+              <Form.Control className='mb-2' type="date" placeholder="" autoFocus />
+
+              <Form.Label>Start Time</Form.Label>
+              <Form.Control className='mb-2' type="time" placeholder="" autoFocus/>
+              
+              <Form.Label>End Time</Form.Label>
+              <Form.Control className='mb-2' type="time" placeholder="" autoFocus/>
+
+              <Form.Label>Description</Form.Label>
+              <Form.Control className='mb-2' type="text" placeholder="" autoFocus/>
+
+            </Form.Group>
+
+          </Form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button className='btn-ServiceProvider-2' onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button className='btn-ServiceProvider-1' onClick={handleClose}>
+            Schedule
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      </div>      
     );
   }
   
-  export default vacancyDetails;
+  export default VacancyDetails;
   

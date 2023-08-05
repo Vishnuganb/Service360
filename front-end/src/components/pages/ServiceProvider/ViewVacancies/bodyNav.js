@@ -9,7 +9,7 @@ import '../../../../style/ServiceProvider/ViewVacancies.css'
 function bodyNav() {
 
   return (
-    <Navbar expand="lg md sm" className="bg-body-tertiary">
+    <Navbar expand="lg md sm" className="bg-body-tertiary ms-lg-4 me-lg-4">
       <Container fluid>
         <Navbar.Collapse className="body-nav-container" id="navbarScroll">
           <Form className="nav-search">

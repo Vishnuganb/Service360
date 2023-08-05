@@ -29,6 +29,8 @@ import SpMyProjectJobsStates from './components/pages/ServiceProvider/MyProjectJ
 import SpAcceptedJob from './components/pages/ServiceProvider/AcceptedJob/Index.js';
 import SpAcceptedVacancy from './components/pages/ServiceProvider/AcceptedVacancy/Index.js';
 import SpStartJob from './components/pages/ServiceProvider/StartJob/Index.js';
+import SpAvailabilityCalendar from './components/pages/ServiceProvider/AvailabilityCalendar/Index.js';
+import SpMyTrainingSessions from './components/pages/ServiceProvider/MyTrainingSessions/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -110,6 +112,8 @@ const router = createBrowserRouter(
         <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
         <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
         <Route path="StartJob" element={<SpStartJob/>} />
+        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
+        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
       </Route>
 
       <Route

@@ -154,7 +154,7 @@ function AcceptedJobDetails() {
                         <Form.Control type="file" placeholder="Password" /> 
                     </Form.Group>
                     <Form.Text className="text-muted d-block mb-3">
-                      Visit the <a href="https://www.example.com/quotation">quotation website</a> to create a quotation.
+                      Visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
                     </Form.Text>
                     <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
                         Send Quotation
@@ -169,7 +169,7 @@ function AcceptedJobDetails() {
 
 
         <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff'}}>
           <Modal.Title>Schedule Visitation</Modal.Title>
         </Modal.Header>
 
@@ -194,10 +194,10 @@ function AcceptedJobDetails() {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className='btn-ServiceProvider-2' onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button className='btn-ServiceProvider-1' onClick={handleClose}>
             Schedule
           </Button>
         </Modal.Footer>

@@ -45,8 +45,12 @@ import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP
 
 import Forum from './components/pages/Forum/Forum.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
-import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
-
+import Searchserviceprovider from './components/pages/Customer/Searchserviceprovider.js';
+import ViewAservice from './components/pages/User/ViewAservice.js';
+import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js';
+import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
+import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.js';
+import CustomerComplaints from './components/pages/Customer/Complaints.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -55,6 +59,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="/services" element={<ViewServices/>} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
+        <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
         <Route path='login' element={<Login />} />
         <Route path='/signup/customer' element={<CustSignUp />} />
         <Route path='/signup/serviceProvider' element={<SpSignUp />} />
@@ -82,7 +87,11 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy/>} />
         <Route path="SocialShareSP" element={<SocialShareSP />}/>
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider/>} />
+        <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
+        <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
+        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

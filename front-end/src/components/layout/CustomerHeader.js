@@ -8,6 +8,8 @@ import logo from '../../assets/images/header/Frame 2.png';
 import bell from '../../assets/images/header/bell.png';
 import chat from '../../assets/images/header/chat.png';
 import profileIcon from '../../assets/images/header/user.jpg';
+import { Link } from 'react-router-dom';
+
 
 function CustomerHeader() {
     return (
@@ -30,9 +32,7 @@ function CustomerHeader() {
                         <NavDropdown title="Tharsana" className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item href="#" className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#" className="fw-bold no-hover">FAQ</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#" className="fw-bold no-hover">Logout</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="#" className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
                         <img src={profileIcon} alt="Profile" className="profileIcon" />
                     </Nav>

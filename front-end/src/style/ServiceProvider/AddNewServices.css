@@ -15,13 +15,13 @@
 
 @media only screen and (min-width:576px){
     .AddServiceForm-Head-Title{
-        font-size:25px;
+        font-size:27px;
         font-weight:600;
     }
 
     .AddServiceForm-Head-SubTitle{
         color:white;
-        font-size:20px;
+        font-size:17.5px;
         border-radius: 10px;
         background:#59789a;
     }
@@ -55,3 +55,7 @@
         margin-top: 5px;
     }
 }
+
+/* .AddServiceForm-hr{
+    width:20%;
+} */

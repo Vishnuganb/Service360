@@ -25,7 +25,7 @@ import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
 import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
@@ -51,13 +51,13 @@ import AdminLayout from './components/layout/AdminLayout.js';
 import Layout404 from './components/layout/Layout404.js';
 import PageNotFound from './components/pages/PageNotFound.js';
 
-import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
-import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
+import AdminDashboard from './components/pages/Admin/AdminDashboard/AdminDashboard.js';
 import AdminServices from './components/pages/Admin/AdminServices/AdminServices.js';
 import AdminServiceProvider from './components/pages/Admin/AdminUsers/AdminServiceProviders.js';
 import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.js';
 import AdminAdvertisers from './components/pages/Admin/AdminUsers/AdminAdvertisers.js';
 import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js';
+import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';

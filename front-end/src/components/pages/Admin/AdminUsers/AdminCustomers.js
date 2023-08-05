@@ -477,7 +477,6 @@ function AdminCustomer() {
             </div>
 
 
-
             <div className="pagination justify-content-center">
                 {Array.from({ length: data.totalPages }, (_, index) => (
                     <button

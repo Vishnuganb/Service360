@@ -28,7 +28,7 @@ const ViewAd = () => {
 
   return (
     <Container>
-      <Row className="shadow-lg p-3 mb-5 bg-white rounded">
+      <Row className="shadow-lg p-3 mb-5 bg-white border rounded">
         <Row>
           <Col md="auto" className="d-flex align-items-center ">
             <div>

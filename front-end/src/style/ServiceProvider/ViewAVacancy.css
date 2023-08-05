@@ -51,15 +51,6 @@
 }
 
 .vacancyDetails-apply-btn{
-    background-color: #292D32;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
     font-size: 1.1rem;
     cursor: pointer;
-}
-
-.vacancyDetails-apply-btn:hover{
-    background-color: #5d6d89;
 }

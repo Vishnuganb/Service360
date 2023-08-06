@@ -354,7 +354,6 @@ function AdminCustomer() {
             customer.address.toLowerCase().includes(data.searchTerm.toLowerCase())
         ));
 
-        // Step 3: Apply the date filtering
         const fromDateObj = data.fromDate ? new Date(data.fromDate) : null;
         const toDateObj = data.toDate ? new Date(data.toDate) : null;
         const filteredServices = searchedServices.filter((customer) => {

@@ -401,7 +401,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="row w-100">
+        <div className="row w-100 mb-1">
 
           <div className="col-xs-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
             <Card style={{ backgroundImage: `url(${BgImage2})`, flex: 1 }} >
@@ -489,7 +489,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="dashboard-container align-items-center justify-content-center w-100 mt-0" style={{ backgroundImage: `url(${BgImage})` }}>
+        <div className="dashboard-container align-items-center justify-content-center w-100 mt-4" style={{ backgroundImage: `url(${BgImage})` }}>
 
           <div className="d-flex justify-content-between w-100 align-items-center">
             <div className="d-flex align-items-center">

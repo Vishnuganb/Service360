@@ -57,6 +57,7 @@ import AdminServiceProvider from './components/pages/Admin/AdminUsers/AdminServi
 import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.js';
 import AdminAdvertisers from './components/pages/Admin/AdminUsers/AdminAdvertisers.js';
 import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js';
+import AdminComplaints from './components/pages/Admin/AdminComplaints/AdminComplaints.js';
 import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
@@ -93,12 +94,13 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route index path="dashboard" element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
         <Route path="customers" element={<AdminCustomers />} />
         <Route path="advertisers" element={<AdminAdvertisers />} />
         <Route path="reviews" element={<AdminReviews />} />
+        <Route path="complaints" element={<AdminComplaints />} />
         <Route path="history" element={<ViewHistory /> } />
       </Route>
 

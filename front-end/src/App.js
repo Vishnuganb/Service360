@@ -58,6 +58,8 @@ import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.j
 import AdminAdvertisers from './components/pages/Admin/AdminUsers/AdminAdvertisers.js';
 import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js';
 import AdminComplaints from './components/pages/Admin/AdminComplaints/AdminComplaints.js';
+import AdminReport from './components/pages/Admin/AdminReport/AdminReport.js';
+import AdminAdvertisements from './components/pages/Admin/AdminAdvertisements/AdminAdvertisements.js';
 import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
@@ -101,6 +103,8 @@ const router = createBrowserRouter(
         <Route path="advertisers" element={<AdminAdvertisers />} />
         <Route path="reviews" element={<AdminReviews />} />
         <Route path="complaints" element={<AdminComplaints />} />
+        <Route path="report" element={<AdminReport />} />
+        <Route path="advertisements" element={<AdminAdvertisements />} />
         <Route path="history" element={<ViewHistory /> } />
       </Route>
 

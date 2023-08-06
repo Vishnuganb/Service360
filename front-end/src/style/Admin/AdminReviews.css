@@ -138,7 +138,8 @@
   .review-block .card-body {
     width: 100%;
   }
-  .btn-effect3 {
+
+  .review-block .btn-effect3 {
     width: 100px;
     height: 38px;
     border: none;

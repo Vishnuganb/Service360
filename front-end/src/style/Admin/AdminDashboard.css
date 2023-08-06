@@ -151,25 +151,14 @@
   .dashboard-block .card-body {
     width: 100%;
   }
+
   .btn-effect3 {
     width: 100px;
-    height: 38px;
+    height: 47px;
     border: none;
     border-color: none;
     border-radius: 5px;
   }
-}
-
-.dashboard-block .btn {
-  background: #292d32;
-  margin-bottom: 10px;
-  color: #fff;
-}
-
-.dashboard-block .btn:hover {
-  background: #fff;
-  border-color: #2596be;
-  color: #9f390d;
 }
 
 .title-hold {

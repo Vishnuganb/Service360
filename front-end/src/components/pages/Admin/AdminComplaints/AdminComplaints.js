@@ -472,8 +472,8 @@ function AdminComplaints() {
 
     };
 
-    const handleShowDetails = (provider) => {
-        setData({ ...data, showDetailsModal: true, selectedUser: provider });
+    const handleShowDetails = (user) => {
+        setData({ ...data, showDetailsModal: true, selectedUser: user });
     };
 
     const handleTabChange = (tab) => {
@@ -618,9 +618,10 @@ function AdminComplaints() {
                                         <div>{data.selectedUser.description}</div>
                                     </div>
                                     <div className="mt-2">
-                                        <textarea value={data.reply} onChange={handleReplyChange} className="form-control" placeholder="Reply to the complaint..."
+                                        <textarea value={data.reply} onChange={handleReplyChange} className="form-control" placeholder="Reply to the complaint..." 
                                             rows={6}
-                                            style= {{resize: 'vertical', height: '100px'}}
+                                            style={{ resize: 'vertical', height: '100px' }}
+                                            autoFocus
                                         />
                                         {data.replyErrorMessage && <p className="text-danger p-0 m-0">{data.replyErrorMessage}</p>}
                                     </div>
@@ -635,7 +636,7 @@ function AdminComplaints() {
                                     More Info
                                 </Button>
                                 <div className="col-sm-6 d-flex justify-content-center align-items-center m-0">
-                                    <Button className="btn-effect2 me-2" onClick={() => setData({ ...data, showServiceModal: false })}>
+                                    <Button className="btn-effect2 me-2" onClick={() => setData({ ...data, showDetailsModal: false })}>
                                         Cancel
                                     </Button>
                                     <Button className="btn-effect" onClick={handleSubmitReply}>

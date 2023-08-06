@@ -4,7 +4,7 @@ import BgImage from '../../../../assets/images/header/Background.png';
 import BgImage2 from '../../../../assets/images/header/footer.png';
 import PopupBgImage from '../../../../assets/images/header/popupBg.png';
 import '../../../../style/Admin/AdminDashboard.css';
-import { BarChart, Bar, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,} from 'recharts';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -199,17 +199,6 @@ const AdminDashboard = () => {
     setView(e.target.value);
   };
 
-  const handleFromDateChange = (date) => {
-    setData((prevState) => ({ ...prevState, fromDate: date }));
-  };
-
-  const handleToDateChange = (date) => {
-    setData((prevState) => ({ ...prevState, toDate: date }));
-  };
-
-  const handleDateChange = (ranges) => {
-    setDateRange([ranges.selection]);
-  };
 
   const COLORS = ['#8884d8', '#1f285a', '#687699', '#292D32'];
 
@@ -227,14 +216,7 @@ const AdminDashboard = () => {
     );
   };
 
-  const filteredData = view === 'daily' ? generateDailyData() : generateMonthlyData();
-  const startDate = dateRange[0].startDate;
-  const endDate = dateRange[0].endDate;
-
-  const chartData = filteredData.filter((item) => {
-    const date = new Date(item.day);
-    return date >= startDate && date <= endDate;
-  });
+  const chartData = view === 'daily' ? generateDailyData() : generateMonthlyData();
 
   const gradientOffset = () => {
     const dataMax = Math.max(...chartData.map((item) => item.customers));
@@ -272,41 +254,6 @@ const AdminDashboard = () => {
   return (
     <div>
       <section className="block dashboard-block" style={{ backgroundImage: `url(${BgImage})` }}>
-
-        <div className="d-flex w-100">
-          <div className='col-xs-3 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 me-0 date-picker-container'>
-            <div className="input-group m-0">
-              <DatePicker
-                selected={data.fromDate}
-                onChange={handleFromDateChange}
-                className="form-control date-picker-input"
-                placeholderText="From Date"
-                dateFormat="yyyy-MM-dd"
-                isClearable
-              />
-              <span className="input-group-text">
-                <i className="bi bi-calendar2-week"></i>
-              </span>
-            </div>
-          </div>
-
-          <div className='me-xs-2 col-xs-2 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 date-picker-container'>
-            <div className="input-group">
-              <DatePicker
-                selected={data.toDate}
-                onChange={handleToDateChange}
-                className="form-control date-picker-input"
-                placeholderText="To Date"
-                dateFormat="yyyy-MM-dd"
-                isClearable
-              />
-              <span className="input-group-text">
-                <i className="bi bi-calendar2-week"></i>
-              </span>
-            </div>
-          </div>
-
-        </div>
 
         <div className="dashboard-container align-items-center justify-content-center w-100" style={{ backgroundImage: `url(${BgImage})` }}>
 
@@ -489,7 +436,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="dashboard-container align-items-center justify-content-center w-100 mt-4" style={{ backgroundImage: `url(${BgImage})` }}>
+        <div className="dashboard-container align-items-center justify-content-center w-100 mt-" style={{ backgroundImage: `url(${BgImage})` }}>
 
           <div className="d-flex justify-content-between w-100 align-items-center">
             <div className="d-flex align-items-center">

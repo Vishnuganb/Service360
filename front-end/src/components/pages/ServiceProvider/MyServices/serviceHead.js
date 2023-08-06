@@ -4,12 +4,12 @@ import Button from 'react-bootstrap/Button';
 
 function serviceHead() {
   return (
-    <>
+    <div className='ms-lg-2 me-lg-2'>
       <div className="my-serivice-head-container">
         <Row>
           <Col className="my-serivice-head-container-col-1">
             <span
-              className="my-serivice-head-container-col-1-span"
+              className="my-serivice-head-container-col-1-span ms-2"
               style={{ fontWeight: "600" }}
             >
               My Services
@@ -23,12 +23,12 @@ function serviceHead() {
                 borderRadius: "10px",
               }}
             >
-              3
+              4
             </span>
           </Col>
           <Col className="my-serivice-head-container-col-2">
             <Button
-              className="btn-ServiceProvider-2 my-serivice-head-container-col-2-btn"
+              className="btn-ServiceProvider-2 my-serivice-head-container-col-2-btn me-3"
               style={{
                 borderRadius: "10px",
               }}
@@ -39,7 +39,7 @@ function serviceHead() {
           </Col>
         </Row>
       </div>
-    </>
+    </div>
   );
 }
 

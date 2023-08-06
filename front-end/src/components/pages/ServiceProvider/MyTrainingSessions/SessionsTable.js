@@ -188,7 +188,7 @@ function MyTrainingSessions() {
       
 
       {/* Body Nav */}
-      <Navbar className="mt-3 ms-2 me-2">
+      <Navbar className="mt-4 ms-2 me-2">
         <div className='training-nav-container d-flex flex-row col-12'>
                 <div className='d-flex flex-row'>
                         {/* Search Input */}

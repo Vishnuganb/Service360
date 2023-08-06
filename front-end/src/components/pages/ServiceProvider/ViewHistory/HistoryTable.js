@@ -194,7 +194,7 @@ function HistoryTable() {
       
 
       {/* Body Nav */}
-      <Navbar className="mt-3 ms-2 me-2">
+      <Navbar className="mt-4 ms-2 me-2">
         <div className='history-nav-container d-flex flex-row col-12'>
                 <div className='history-nav-datepicker-container-1 d-flex flex-row ms-sm-auto'>
                         {/* Date Picker */}

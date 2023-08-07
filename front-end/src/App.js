@@ -17,6 +17,7 @@ import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
 import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
 import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
+import About from './components/pages/User/About/Index.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -67,6 +68,7 @@ const router = createBrowserRouter(
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
         <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
+        <Route path="/About" element={<About />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>

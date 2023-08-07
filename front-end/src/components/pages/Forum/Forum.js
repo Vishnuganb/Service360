@@ -72,9 +72,11 @@ function Forum() {
   ];
 
   return (
-    <Container style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <div>
-        <h1>Forum</h1>
+    <Container>
+      <div style={{ backgroundImage: `url(${backgroundImage})` }} className="p-4">
+        <div>
+          <h1>Forum</h1>
+        </div>
         <div className="d-flex justify-content-center">
           <button className="PostAd" onClick={() => setModalShow(true)}>
             Ask Question
@@ -86,14 +88,11 @@ function Forum() {
           <ForumSearch />
         </div>
       </div>
-      <div className="ForumDiv">
+      <div className="ForumDiv p-3">
+        <h3>368 Questions</h3>
         {posts.map((post, index) => (
           <Link to="/ServiceProvider/ViewThread">
-            <ForumPost
-              key={index}
-              {...post}
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            />
+            <ForumPost key={index} {...post} />
           </Link>
         ))}
       </div>

@@ -18,6 +18,8 @@ import Ans2 from "../../../../assets/images/forum/Ans2.png";
 import Ans3 from "../../../../assets/images/forum/Ans3.jpg";
 import Ans4 from "../../../../assets/images/forum/Ans4.jpeg";
 
+import "../../../../style/advertiser/AdIndex.css";
+
 const ViewThread = () => {
   const [AnsModalShow, setAnsModalShow] = useState(false);
   const AnsImages1 = [Ans1, Ans2];

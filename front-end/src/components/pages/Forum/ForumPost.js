@@ -22,7 +22,7 @@ const ForumPost = ({
   return (
     <div
       className="border rounded shadow-sm d-flex SingleForumCont"
-      
+      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <Row>
         <Col xs={2} md={2} className="forumImage">

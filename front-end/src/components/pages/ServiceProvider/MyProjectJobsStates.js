@@ -8,7 +8,7 @@ import Pending from '../../../assets/images/ServiceProvider/pending2.jpg';
 const serviceCategories = {
     pendingJobs: {
         image: Pending,
-        title: "Pending Jobs",
+        title: "Job Invites",
     },
     processingJobs: {
         image: Pending,
@@ -24,7 +24,7 @@ const serviceCategories = {
     },
     pendingVacancies: {
         image: Pending,
-        title: "Pending Vacancies",
+        title: "Vacancy Invites",
     },
     processingVacancies: {
         image: Pending,

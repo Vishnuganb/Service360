@@ -30,10 +30,8 @@ import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Inde
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
 import SpCreateTrainingSession from './components/pages/ServiceProvider/CreateTrainingSession/Index.js';
-import SpMyProjectsJobsApplied from './components/pages/ServiceProvider/MyProjectsJobsApplied/Index.js';
-import SpMyProjectsJobsInvites from './components/pages/ServiceProvider/MyProjectsJobsInvites/Index.js';
-import SpMyProjectsVacanciesApplied from './components/pages/ServiceProvider/MyProjectsVacanciesApplied/Index.js';
-import SpMyProjectsVacanciesInvites from './components/pages/ServiceProvider/MyProjectsVacanciesInvites/Index.js';
+import SpMyProjectsJobs from './components/pages/ServiceProvider/MyProjectsJobs/Index.js';
+import SpMyProjectsVacancies from './components/pages/ServiceProvider/MyProjectsVacancies/Index.js';
 import SpViewTrainingSessions from './components/pages/ServiceProvider/ViewTrainingSessions/Index.js';
 import SpViewATrainingSession from './components/pages/ServiceProvider/ViewATrainingSession/Index.js';
 import SpMyProjectJobsStates from './components/pages/ServiceProvider/MyProjectJobsStates.js';
@@ -141,10 +139,8 @@ const router = createBrowserRouter(
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
-        <Route path="MyProjectsJobsApplied" element={<SpMyProjectsJobsApplied/>} />
-        <Route path="MyProjectsJobsInvites" element={<SpMyProjectsJobsInvites/>} />
-        <Route path="MyProjectsVacanciesApplied" element={<SpMyProjectsVacanciesApplied/>} />
-        <Route path="MyProjectsVacanciesInvites" element={<SpMyProjectsVacanciesInvites/>} />
+        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
+        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
         <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
         <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
         <Route path="MyProjectJobsStates" element={<SpMyProjectJobsStates/>} />

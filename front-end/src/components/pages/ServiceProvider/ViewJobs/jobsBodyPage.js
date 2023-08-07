@@ -240,7 +240,6 @@ function JobsBodyPage() {
                                 </div>
                             </div>
                         </div>
-
                         <hr />
                         <div className="view-jobs-card-footer">
                             <span
@@ -280,7 +279,7 @@ function JobsBodyPage() {
                     className={`page-link ${
                     currentPage === index + 1 ? 'active' : ''
                     }`}
-                    style={{ backgroundColor: '#292D32', color: '#fff' }}
+                    style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
                     onClick={() => handlePageChange(index + 1)}
                 >
                     {index + 1}

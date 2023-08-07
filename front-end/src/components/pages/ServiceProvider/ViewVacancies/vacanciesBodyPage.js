@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import UserImg from '../../../../assets/images/header/user.jpg';
 import React, { useState } from 'react';
 
-function VacancyBodyPage() {
+function VacanciesBodyPage() {
 
     //Vacancy objects with properties
     const viewVacanciesData = [
@@ -67,7 +67,7 @@ function VacancyBodyPage() {
             customerName: 'Payzy',
             lastSeen: '4 days ago',
             location: 'Nugegoda',
-            vacancyTitle: 'wooden furniture cleaner ',
+            vacancyTitle: 'Wooden furniture cleaner ',
             vacancyType: 'half-time',
             description: 'Clean wooden furniture in the office',
             dueDate: '2023-08-27',
@@ -237,10 +237,10 @@ function VacancyBodyPage() {
                     </div>
                     <div className='vacancy-card-body-inner-flex d-flex flex-row'>
                         <div>
-                            <span className='single-vacancy-title'>{Vacancy.vacancyTitle}</span>&nbsp;&nbsp;
+                            <span className='single-vacancy-title '>{Vacancy.vacancyTitle}</span>&nbsp;&nbsp;
                         </div>
                         <div>
-                            <span className='single-vacancy-type' id='vacancy-status'>{Vacancy.vacancyType}</span>
+                            <span className='single-vacancy-type d-flex justify-contents-center' id='vacancy-status'>{Vacancy.vacancyType}</span>
                         </div>
                     </div>
                     <div>
@@ -271,7 +271,7 @@ function VacancyBodyPage() {
                     className={`page-link ${
                     currentPage === index + 1 ? 'active' : ''
                     }`}
-                    style={{ backgroundColor: '#292D32', color: '#fff' }}
+                    style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
                     onClick={() => handlePageChange(index + 1)}
                 >
                     {index + 1}
@@ -284,4 +284,4 @@ function VacancyBodyPage() {
 
 }
 
-export default VacancyBodyPage;
+export default VacanciesBodyPage;

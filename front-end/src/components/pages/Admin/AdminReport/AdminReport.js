@@ -613,7 +613,7 @@ const AdminReport = () => {
     const revenueData = revenueView === 'last7days' ? generateRevenueData() : generateMonthlyRevenueData();
 
     const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
+        setSelectedComplaintOption(event.target.value);
     };
 
     const handleRevenueViewChange = (e) => {
@@ -711,20 +711,19 @@ const AdminReport = () => {
         });
         setFilteredComplaintData(filteredData);
 
-        const prepareDataForChart = () => {
-            const pendingCount = filteredData.filter((complaint) => complaint.status === 'Pending').length;
-            const resolvedCount = filteredData.filter((complaint) => complaint.status === 'Resolved').length;
 
-            const data = [
-                { category: 'Pending', value: pendingCount },
-                { category: 'Resolved', value: resolvedCount },
-            ];
+        const pendingCount = filteredData.filter((complaint) => complaint.status === 'Pending').length;
+        const resolvedCount = filteredData.filter((complaint) => complaint.status === 'Resolved').length;
 
-            setDataToShow(data);
-        };
+        const data = [
+            { category: 'Pending', value: pendingCount },
+            { category: 'Resolved', value: resolvedCount },
+        ];
 
-        prepareDataForChart();
-    }, []);
+        setDataToShow(data);
+
+
+    }, [selectedComplaintOption]);
 
     return (
         <div>
@@ -887,7 +886,7 @@ const AdminReport = () => {
                                 <h3 className="chart-title ms-3 fs-3 align-items-center mb-0">Complaints Status</h3>
                                 <div className="col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-3 m-3 me-xs-5">
                                     <div className="input-group">
-                                        <select className="form-select" value={selectedOption} onChange={handleOptionChange}>
+                                        <select className="form-select" value={selectedComplaintOption} onChange={handleOptionChange}>
                                             <option value="weekly">Last Week</option>
                                             <option value="monthly">Last Month</option>
                                         </select>

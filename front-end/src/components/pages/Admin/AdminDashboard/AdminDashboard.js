@@ -184,8 +184,14 @@ const AdminDashboard = () => {
     { category: 'Others', value: 120 },
   ];
 
+
+  const chartDataToShow = view === 'daily' ? generateDailyData() : generateMonthlyData();
   const dataToShow = selectedOption === 'weekly' ? advertisementDataWeekly : advertisementDataMonthly;
   const revenueData = revenueView === 'last7days' ? generateRevenueData() : generateMonthlyRevenueData();
+
+  const handleViewChange = (e) => {
+    setView(e.target.value);
+  };
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -194,11 +200,6 @@ const AdminDashboard = () => {
   const handleRevenueViewChange = (e) => {
     setRevenueView(e.target.value);
   };
-
-  const handleViewChange = (e) => {
-    setView(e.target.value);
-  };
-
 
   const COLORS = ['#8884d8', '#1f285a', '#687699', '#292D32'];
 
@@ -238,8 +239,6 @@ const AdminDashboard = () => {
       <stop offset={gradientOffset()} stopColor="#687699" />
     </linearGradient>
   );
-
-  const chartDataToShow = view === 'daily' ? generateDailyData() : generateMonthlyData();
 
   const renderActiveDot = (props) => {
     const { cx, cy, stroke, key } = props;

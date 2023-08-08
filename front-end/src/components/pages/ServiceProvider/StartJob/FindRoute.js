@@ -1,7 +1,17 @@
 import React from "react";
 import { Form } from 'react-bootstrap'
 
+import { MapContainer, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+import Routing from "./Routing";
+
+
 function FindRoute() {
+
+    const position = [6.902,79.859];
+    
+    
     return(
         <div className="ms-lg-4 me-lg-4">
             <div className="FindRoute-location-info">
@@ -30,10 +40,16 @@ function FindRoute() {
                 </Form>
 
             </div>
-            <div className="FindRoute-map mt-5 border" style={{width:"100%", height:"500px"}}>
-                <div id="map"></div>
-                <input type="text" id="origin" value="University of Colombo School of Computing (UCSC), Reid Avenue, Colombo" required hidden />  {/* service provider's location*/}
-                <input type="text" id="destination" value="" required hidden />  {/* customer's location*/}
+            <div className="FindRoute-map mt-5 border" style={{width:"100%", height:"600px"}}>
+                <div id="map">
+                    <MapContainer center={position} zoom={0} style={{ height: "82vh" }}>
+                        <TileLayer
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Routing />
+                    </MapContainer>
+                </div>
             </div>
         </div>
     );

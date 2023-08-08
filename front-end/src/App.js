@@ -70,6 +70,7 @@ import OngoingProject from './components/pages/Customer/CustomerDashboard/Ongoin
 import Quotation from './components/pages/Customer/Quotation.js'
 import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP.js';
+import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
 
 
 import Forum from './components/pages/Forum/Forum.js';
@@ -133,6 +134,7 @@ const router = createBrowserRouter(
         <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
         <Route path="CustomerComplaints" element={<CustomerComplaints/>} />
+        <Route path="AddReview" element={<AddReviewandRating/>}/>
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

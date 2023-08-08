@@ -4,14 +4,15 @@ import { Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/PostVacancyForm.css';
 import BgImage from '../../../assets/images/header/Background.png';
+import { Link } from 'react-router-dom';
 
 function CustomerComplaints() {
     return (
-        <div className='card2' style={{ backgroundImage: `url(${BgImage})` }}>
-            <p> <a href="#" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></a>
-                &nbsp;&nbsp;Back</p>
+        <div className='card2'>
+             <p> <Link to="/customer/CustomerComplaintPage" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></Link>
+        &nbsp;&nbsp;Back</p>
                <h3>Complaints</h3>
-            <div className="VacancyForm-container">
+            <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
 
                 <h3>Make Complaints</h3>
                 <br></br>
@@ -26,6 +27,12 @@ function CustomerComplaints() {
                         <Row><Col className="col-4">
                             <label for="email">Email <span style={{ color: "red" }}>&nbsp;*</span> </label></Col>
                             <Col className="col-6"><input type="text" name="email" className="form-control" id="title" placeholder="Enter your email" /></Col>
+                        </Row>
+                    </div>
+                    <div className="vacancy-form-group">
+                        <Row><Col className="col-4">
+                            <label for="category">Complaint category <span style={{ color: "red" }}>&nbsp;*</span> </label></Col>
+                            <Col className="col-6"><input type="text" name="category" className="form-control" id="title" placeholder="Enter your Complaint category" /></Col>
                         </Row>
                     </div>
                     <div className="vacancy-form-group">

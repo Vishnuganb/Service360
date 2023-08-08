@@ -5,11 +5,51 @@ import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
-import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
 
-export default function ReceivedQuotation() {
+const View = () => {
+    const [show, setShow] = useState(false);
+  
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+  
+    return (
+      <>
+        <Button variant="btn btn-viewvacancy-form-t" style={{
+          width: '16%',
+          height: '38px',
+          border: '1px solid #ced4da',
+          fontSize: '14px',
+          padding: '0 8px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          fontWeight: '500',
+          textTransform: 'none',
+          background: 'black',
+          '@media (max-width: 768px)': {
+            width: '100%',
+          }
+        }} onClick={handleShow} >
+          <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+        </Button>
+  
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+            <Modal.Title>Complaint</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <center><p>I am writing to express my dissatisfaction with the plumbing service provided by <b>Alex Kumar</b> on <b>27.07.2023 </b>at my residence located at <b>wellawatte</b>.</p></center>
+          </Modal.Body>
+          <Modal.Footer>
+           
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  };
+
+export default function CustomerComplaintPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Adjust this value based on how many items you want per page
 
@@ -17,34 +57,34 @@ export default function ReceivedQuotation() {
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
 
-    const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Ac Repair', status: 'Pending' },
-        { date: '26/07/2023', serviceTitle: 'Ac Repair', status: 'Checked' },
-        { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Accepted' },
-        { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Rejected' },
-        { date: '24/07/2023', serviceTitle: 'Tile fitting', status: 'Rejected' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Rejected' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Accepted' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Rejected' },
+    const complaints = [
+        { date: '27/07/2023', complaintCategory: 'Services provided by service providers' },
+        { date: '26/07/2023', complaintCategory: 'Billing Issues' },
+        { date: '25/07/2023', complaintCategory: 'System quality' },
+        { date: '25/07/2023', complaintCategory: 'System quality' },
+        { date: '24/07/2023', complaintCategory: 'Services provided by service providers' },
+        { date: '24/07/2023', complaintCategory: 'Services provided by service providers' },
+        { date: '24/07/2023', complaintCategory: 'Services provided by service providers' },
+
     ];
 
-    const filteredQuotations = quotations.filter((quotation) => {
-        const isDateMatch = (!fromDate || new Date(quotation.date) >= new Date(fromDate)) &&
-            (!toDate || new Date(quotation.date) <= new Date(toDate));
+    const filteredComplaints = complaints.filter((complaints) => {
+        const isDateMatch = (!fromDate || new Date(complaints.date) >= new Date(fromDate)) &&
+            (!toDate || new Date(complaints.date) <= new Date(toDate));
 
         return (
             isDateMatch &&
-            (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.status.toLowerCase().includes(searchTerm.toLowerCase()))
+            (complaints.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                complaints.complaintCategory.toLowerCase().includes(searchTerm.toLowerCase())
+            )
         );
     });
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentQuotations = filteredQuotations.slice(indexOfFirstItem, indexOfLastItem);
+    const currentComplaints = filteredComplaints.slice(indexOfFirstItem, indexOfLastItem);
 
-    const totalPages = Math.ceil(filteredQuotations.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -71,9 +111,15 @@ export default function ReceivedQuotation() {
                 <div className="vacancy-container background-total accordion " >
                     <div className="col d-flex flex-row justify-content-between">
                         <div className='d-flex flex-row gap-4 p-3 '>
-                            <p className="text-dark fs-4 fw-bold vacancytext">Quotation</p>
+                            <h3 className="text-dark fs-4 fw-bold vacancytext">Complaints</h3>
                         </div>
                     </div>
+                    <div className='d-flex justify-content-center justify-content-md-end gap-4 p-3' style={{ marginRight: '60px' }}>
+                        <Link style={{ color: 'white' }} to={`/customer/CustomerComplaints`}>
+                            <Button variant="secondary">Add Complaints</Button>
+                        </Link>
+                    </div>
+
 
                     <Form className="nav-search">
                         <div className="d-flex flex-wrap justify-content-center">
@@ -127,23 +173,18 @@ export default function ReceivedQuotation() {
                         <thead>
                             <tr>
                                 <th className="my-customer-table-th-1"><b>Date</b></th>
-                                <th className="my-customer-table-th-1"><b>Service Title</b></th>
-                                <th className="my-customer-table-th-2"><b>Status</b></th>
+                                <th className="my-customer-table-th-1"><b>Complaint Category</b></th>
                                 <th className="my-customer-table-th-2"><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentQuotations.map((quotation, index) => (
+                            {currentComplaints.map((quotation, index) => (
                                 <tr key={index}>
                                     <td>{quotation.date}</td>
-                                    <td>{quotation.serviceTitle}</td>
-                                    <td>{quotation.status}</td>
+                                    <td>{quotation.complaintCategory}</td>
                                     <td>
-                                        <Button variant="primary" className="my-customer-table-btn">
-                                            <Link style={{ color: 'white' }} to={`/customer/ViewAQuotation`}>
-                                                <i className="my-customer-table-icon bi bi-pencil-square h5"></i>
-                                            </Link>
-                                        </Button>
+                                        <View/>
+
                                     </td>
                                 </tr>
                             ))}
@@ -152,6 +193,7 @@ export default function ReceivedQuotation() {
                 </div>
 
                 <br></br>
+
 
                 <div className="pagination justify-content-center">
                     {Array.from({ length: totalPages }, (_, index) => (
@@ -165,7 +207,10 @@ export default function ReceivedQuotation() {
                         </button>
                     ))}
                 </div>
+
+
             </div>
         </>
     );
 }
+

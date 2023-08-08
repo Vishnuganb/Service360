@@ -1,10 +1,12 @@
 import '../../../style/User/ServiceCard.css';
 import UserImg from '../../../assets/images/header/user.jpg';
+import ServiceProvideimg from '../../../assets/images/Customer/ServiceProvider1.png';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import BgImage from '../../../assets/images/header/Background.png';
 
 const Popup = () => {
     const [show, setShow] = useState(false);
@@ -12,11 +14,13 @@ const Popup = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
   
+
     return (
       <>
-        <Button variant="cutomerShareSP_primary" onClick={handleShow}>
+        <Button variant="cutomerShareSP_primary" onClick={handleShow} style={{ bottom: "1.5px", fontsize: '1rem',
+    fontfamily: "Rubik, sansserif",}}>
         <i className="bi bi-share h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-            <span style={{ position: "relative", bottom: "1.5px",  }}>Share</span>
+            <span style={{ position: "relative",}}>Share</span>
         </Button>
   
         <Modal show={show} onHide={handleClose} centered>
@@ -36,14 +40,15 @@ const Popup = () => {
     );
   };
   
+  const rating = 4;
 
 function ServiceCard(){
     return (
-      <div className="single-Service-card" style={{ backgroundColor: '#DEE0E0'}}>
+      <div className="single-Service-card"style={{ backgroundImage: `url(${BgImage})` }}  >
         <div className="Service-card-header">
           <Row>
             <Col>
-              <img src={UserImg} alt="avatar" className="Service-card-avatar" />
+              <img src={ServiceProvideimg} alt="avatar" className="Service-card-avatar" />
             </Col>
             <Col>
                 <span className="Service-card-title1">VinothKhan</span>
@@ -53,16 +58,22 @@ function ServiceCard(){
                 <NavDropdown.Item href="#action3">View more</NavDropdown.Item>
               </NavDropdown>
             </Col>
-            
-            <Col className='star' style={{width:"200px",}}><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i></Col>
+            <Col className='star' style={{width:"200px", marginTop:'-40px'}}>
+            <div className='SPRatings'>
+          <div className='rating'>
+            <span className={`star ${rating >= 1 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 2 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 3 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 4 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 5 ? 'filled' : ''}`}>&#9733;</span>
+          </div>
+          </div>
+           </Col>
           </Row>
         </div>
         <div className="Service-card-body">
           <div className="Service-card-body-left">
-          {/* <span className="single-SP-status" id="SP-status">
-          <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-            </span>
-            <br /> */}
+         
             <span className="sinlge-Service-sub-info">Tile Fitting | Member since june 23 2022</span>
             <br />
             <span className="sinlge-Service-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: Wellawatte

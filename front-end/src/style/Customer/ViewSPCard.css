@@ -1,5 +1,20 @@
 /* bodyNav */
+.rating {
+    font-size: 24px; 
+    color: #dbdbd9; 
+   
+  }
 
+  .star.filled {
+    color: #f3b045; 
+  }
+
+  .SPRatings .ratereview{
+    font-weight: 500;
+  }
+  .SPRatings{
+    margin-top: 30px;
+  }
 #navbarScroll{
     justify-content: space-between;
     width: 100%;
@@ -95,7 +110,6 @@
     cursor: pointer;
     
 }
-
 
 
 

@@ -8,6 +8,32 @@ import '../../../style/Customer/Viewvacancy.css';
 import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
+import { Document, Page, pdfjs } from 'react-pdf';
+import { DocumentViewer } from '@cyntler/react-doc-viewer';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+const PDFViewer = () => {
+  const [numPages, setNumPages] = useState(null);
+
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+  };
+
+  const pdfUrl = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+
+  return (
+    <div className="pdf-viewer">
+      <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+        {Array.from(new Array(numPages), (el, index) => (
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+        ))}
+      </Document>
+    </div>
+  );
+};
+
+
 
 const Accept = () => {
     const [show, setShow] = useState(false);
@@ -115,27 +141,11 @@ const View = () => {
           <Modal.Title> Quotation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <center><p><a href='https://vyaparapp.in/tools/free-online-quotation-maker#'>Click here</a></p></center>
+          <center><p> <PDFViewer/></p></center>
         </Modal.Body>
         <Modal.Footer>
        
-          <Button variant="btn btn-viewvacancy-form-r"  style={{
-        width: '15%',
-        height: '38px',
-        border: '1px solid #ced4da',
-        fontSize: '14px',
-        padding: '0 8px',
-        backgroundColor: '#007bff',
-        color: '#fff',
-        fontWeight: '500',
-        textTransform: 'none',
-        background: 'rgb(126, 123, 123)',
-        '@media (max-width: 768px)': {
-          width: '70%', 
-        }
-      }} onClick={handleClose}>
-            Cancel
-          </Button>
+    
         </Modal.Footer>
       </Modal>
     </>
@@ -224,7 +234,7 @@ export default function ViewAQuotation() {
     return (
         <>
               <div className='vacancybackground' style={{ backgroundImage: `url(${BgImage})` }}>
-            <div className="vacancy-container background-total accordion bg-white rounded-3 mb-4 me-3" >
+            <div className="vacancy-container background-total accordion mb-4 me-3" >
                 <div className="col d-flex flex-row justify-content-between" style={{ backgroundImage: `url(${BgImage})` }}>
                     <div className='d-flex flex-row gap-4 p-3 '>
                         <p className="text-dark fs-4 fw-bold vacancytext"> Quotation </p>
@@ -247,11 +257,11 @@ export default function ViewAQuotation() {
                 <Table className="my-customer-table" striped bordered hover>
                     <thead>
                         <tr>
-                            <th className="my-customer-table-th-1">Date</th>
+                            <th className="my-customer-table-th-1"><b>Date</b></th>
                             {/* <th className="my-customer-table-th-1 col-3">Quotation ID</th> */}
-                            <th className="my-customer-table-th-2">Service Provider</th>
-                            <th className="my-customer-table-th-2">Amount</th>
-                            <th className="my-customer-table-th-2">Action</th>
+                            <th className="my-customer-table-th-2"><b>Service Provider</b></th>
+                            <th className="my-customer-table-th-2"><b>Amount</b></th>
+                            <th className="my-customer-table-th-2"><b>Action</b></th>
 
                         </tr>
                     </thead>
@@ -262,7 +272,7 @@ export default function ViewAQuotation() {
                             <td>Vijay Deva</td>
                             <td>Rs. 8000</td>
                             <td>
-                                <View />
+                            <View/>
                                 &nbsp; &nbsp; 
                                   <Accept />
                                   &nbsp; &nbsp; 
@@ -272,26 +282,9 @@ export default function ViewAQuotation() {
 
                     </tbody>
                 </Table>
-
             </div>
             </div>
-            {/* <br></br>
-            <Row id='bodyPageRow2'>
-                <div className="paginationContainer-jobs" >
-                    <Pagination className='pagination-element'>
-                        <Pagination.First />
-                        <Pagination.Prev />
-                        <Pagination.Item active>{1}</Pagination.Item>
-                        <Pagination.Item>{2}</Pagination.Item>
-                        <Pagination.Item>{3}</Pagination.Item>
-                        <Pagination.Item>{4}</Pagination.Item>
-                        <Pagination.Item>{5}</Pagination.Item>
-                        <Pagination.Ellipsis />
-                        <Pagination.Next />
-                        <Pagination.Last />
-                    </Pagination>
-                </div>
-            </Row> */}
+           
         </>
     );
 }

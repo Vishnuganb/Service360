@@ -109,7 +109,7 @@ function VacanciesBodyPage() {
         "Tiles Fitting",
     ];
 
-    // Number of cards (training sessions) to display per page
+    // Number of cards to display per page
     const cardsPerPage = 5;
 
     // State to keep track of the current page number

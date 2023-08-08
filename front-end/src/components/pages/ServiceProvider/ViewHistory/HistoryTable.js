@@ -229,7 +229,7 @@ function HistoryTable() {
 
 
       {/* Table*/}
-      <div className="mt-4 d-flex flex-column w-100" style={{ width: '100%' }}>
+      <div className="mt-3 d-flex flex-column w-100" style={{ width: '100%' }}>
         <Container className="table-responsive">
           <Table striped bordered hover size="sm" className="training-session-table">
             <thead className="text-center">

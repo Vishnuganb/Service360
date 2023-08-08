@@ -102,7 +102,7 @@ function JobsBodyPage() {
         "Tiles Fitting",
     ];
 
-    // Number of cards (training sessions) to display per page
+    // Number of cards to display per page
     const cardsPerPage = 5;
 
     // State to keep track of the current page number
@@ -205,7 +205,7 @@ function JobsBodyPage() {
                                     <img
                                             src={job.profile}
                                             alt="avatar"
-                                            className="rounded-circle"
+                                            className="rounded-circle view-jobs-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
                                     />
                                 </div>
@@ -241,7 +241,7 @@ function JobsBodyPage() {
                             </div>
                         </div>
                         <hr />
-                        <div className="view-jobs-card-footer">
+                        <div className="view-jobs-card-footer  mt-sm-0 mt-4">
                             <span
                                 className="btn btn-default job-card-footer-btn"
                                 id="job-card-footer-btn-view"

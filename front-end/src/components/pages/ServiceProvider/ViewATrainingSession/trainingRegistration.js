@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 function Index(){
     return(
-        <div className="mt-4">
+        <div className="ms-lg-4 me-lg-4 mt-4">
             <div>
                 <span className="h5 ViewATraining-title">Registration</span>
             </div>

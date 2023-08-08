@@ -4,23 +4,34 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 function MyTrainingSessions() {
+
+    const [show, setShow] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null); 
+
+    const handleClose = () => setShow(false);
+    const handleShow = (rowData) => {
+      setSelectedRow(rowData);
+      setShow(true); // Show the modal
+    };
 
     //training session objects with properties
     const trainingSessionData = [       
         {
           id: 1,
-          sessionName: 'Introduction to React',
+          sessionTitle: 'Basic Electricity for the Non-Electrician Skills Training',
           date: '2023-08-20',
           startTime: '09:00',
           endTime: '12:00',
           location: 'Room 101',
-          status: 'Pending',
+          status: 'Published',
         },
         {
           id: 2,
-          sessionName: 'Advanced Java Programming',
+          sessionTitle: 'Introduction to Masonry Techniques',
           date: '2023-08-25',
           startTime: '10:00',
           endTime: '15:00',
@@ -29,7 +40,7 @@ function MyTrainingSessions() {
         },
         {
           id: 3,
-          sessionName: 'Python Basics for Beginners',
+          sessionTitle: 'Plumbing Essentials Workshop',
           date: '2023-08-25',
           startTime: '14:00',
           endTime: '17:00',
@@ -38,7 +49,7 @@ function MyTrainingSessions() {
         },
         {
           id: 4,
-          sessionName: 'Web Development Fundamentals',
+          sessionTitle: 'Carpentry Fundamentals: Building Strong Foundations',
           date: '2023-08-22',
           startTime: '09:30',
           endTime: '11:30',
@@ -47,16 +58,16 @@ function MyTrainingSessions() {
         },
         {
           id: 5,
-          sessionName: 'Networking Basics',
+          sessionTitle: 'Advanced Electrical Wiring Techniques',
           date: '2023-08-24',
           startTime: '14:00',
           endTime: '16:00',
           location: 'Online',
-          status: 'Pending',
+          status: 'Payment Pending',
         },
         {
           id: 6,
-          sessionName: 'Data Science Essentials',
+          sessionTitle: 'Mastering Masonry: From Basics to Artistry',
           date: '2023-08-28',
           startTime: '13:00',
           endTime: '15:30',
@@ -65,7 +76,7 @@ function MyTrainingSessions() {
         },
         {
           id: 7,
-          sessionName: 'Embedded Systems Workshop',
+          sessionTitle: 'Essential Carpentry Tools and Techniques',
           date: '2023-09-02',
           startTime: '10:00',
           endTime: '12:00',
@@ -74,16 +85,16 @@ function MyTrainingSessions() {
         },
         {
           id: 8,
-          sessionName: 'Cybersecurity Best Practices',
+          sessionTitle: 'CCTV Best Practices',
           date: '2023-09-05',
           startTime: '15:00',
           endTime: '17:00',
           location: 'Online',
-          status: 'Pending',
+          status: 'Payment Pending',
         },
         {
           id: 9,
-          sessionName: 'Introduction to Machine Learning',
+          sessionTitle: 'Masonsry for Beginners',
           date: '2023-09-09',
           startTime: '11:30',
           endTime: '13:30',
@@ -92,7 +103,7 @@ function MyTrainingSessions() {
         },
         {
           id: 10,
-          sessionName: 'Network Security Protocols',
+          sessionTitle: 'Network Security Protocols',
           date: '2023-09-12',
           startTime: '09:00',
           endTime: '12:00',
@@ -101,16 +112,16 @@ function MyTrainingSessions() {
         },
         {
           id: 11,
-          sessionName: 'Cloud Computing Basics',
+          sessionTitle: 'Introduction to Electrical Engineering',
           date: '2023-09-15',
           startTime: '14:00',
           endTime: '16:30',
           location: 'Online',
-          status: 'Pending',
+          status: 'Payment Pending',
         },
         {
           id: 12,
-          sessionName: 'Introduction to Robotics',
+          sessionTitle: 'Introduction to Civil Engineering',
           date: '2023-09-18',
           startTime: '12:00',
           endTime: '14:00',
@@ -119,7 +130,7 @@ function MyTrainingSessions() {
         },
         {
           id: 13,
-          sessionName: 'Full-Stack Web Development',
+          sessionTitle: 'Introduction to Mechanical Engineering',
           date: '2023-09-22',
           startTime: '09:30',
           endTime: '12:30',
@@ -165,7 +176,7 @@ function MyTrainingSessions() {
 
     return (
       (!selected || sessionDate.toDateString() === selected.toDateString()) &&
-      (session.sessionName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (session.sessionTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
         session.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
         session.status.toLowerCase().includes(searchTerm.toLowerCase()))
     );
@@ -222,13 +233,13 @@ function MyTrainingSessions() {
 
 
       {/* Table*/}
-      <div className="mt-4 d-flex flex-column w-100" style={{ width: '100%' }}>
+      <div className="mt-3 d-flex flex-column w-100" style={{ width: '100%' }}>
         <Container className="table-responsive">
           <Table striped bordered hover size="sm" className="My-training-session-table">
             <thead className="text-center">
               <tr>
                 <th>Session ID</th>
-                <th>Session Name</th>
+                <th>Training Session Title</th>
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
@@ -242,14 +253,28 @@ function MyTrainingSessions() {
               {displayedSessions.map((session) => (
                 <tr key={session.id} className="custom-table-row">
                   <td>{String(session.id).padStart(3, '0')}</td>
-                  <td>{session.sessionName}</td>
+                  <td>{session.sessionTitle}</td>
                   <td>{session.date}</td>
                   <td>{session.startTime}</td>
                   <td>{session.endTime}</td>
                   <td>{session.location}</td>
                   <td>{session.status}</td>
                   <td className="d-flex justify-content-center">
-                    <Button className='btn-My-Training-ServiceProvider-2'>Publish</Button>
+                      {session.status === 'Payment Pending' ? (
+                        <i 
+                          className={`bi bi-cash fs-4 mx-2 my-2`} 
+                          onClick={handleShow}
+                        ></i>
+                      ) : session.status === 'Accepted' ? (
+                        <i
+                          className={`bi bi-upload fs-4 mx-2 my-2`}
+                        ></i>
+                      ) : session.status === 'Published' ? (
+                        <i 
+                          className={`bi bi-eye fs-4 mx-2 my-2`}
+                        ></i>
+                      ) : null 
+                    }
                   </td>
                 </tr>
               ))}
@@ -275,6 +300,49 @@ function MyTrainingSessions() {
           </button>
         ))}
       </div>
+
+
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+          <Modal.Title>Pay for Training Session</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3" controlId="sessionTitle">
+                    <Form.Label>Session Title</Form.Label>
+                    <Form.Control type="text" value="" readOnly />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="amount">
+                  <Form.Label>Amount</Form.Label>
+                  <Form.Control type="text" value="" readOnly />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="paymentConfirmation">
+                  <Form.Check
+                    type="checkbox"
+                    label="I confirm that I want to proceed with the payment."
+                  />
+                </Form.Group>
+              </Form.Group>
+        </Form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button className='btn-ServiceProvider-2' >
+            Close
+          </Button>
+          <Button className='btn-ServiceProvider-1' >
+            Pay Now
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+
     </div>
     
   );

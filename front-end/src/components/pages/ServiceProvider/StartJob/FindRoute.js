@@ -3,9 +3,9 @@ import { Form } from 'react-bootstrap'
 
 function FindRoute() {
     return(
-        <div>
+        <div className="ms-lg-4 me-lg-4">
             <div className="FindRoute-location-info">
-                <span style={{fontSize:"26px",fontWeight:"bold"}}>Route Details</span>
+                <span style={{fontSize:"28px",fontWeight:"bold"}}>Route Details</span>
                 
                 <Form className="mt-4">
                     <Form.Group className="mb-3" controlId="formBasicTitle">

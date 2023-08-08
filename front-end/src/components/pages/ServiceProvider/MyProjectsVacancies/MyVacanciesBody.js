@@ -289,7 +289,7 @@ function MyProjectsBody(){
                                 <img
                                             src={vacancy.profile}
                                             alt="avatar"
-                                            className="rounded-circle"
+                                            className="rounded-circle my-projects-vacancies-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
                                 />
                             </div>

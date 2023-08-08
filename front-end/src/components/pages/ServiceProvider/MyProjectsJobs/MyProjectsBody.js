@@ -324,7 +324,7 @@ function MyProjectsBody(){
                                 <img
                                             src={job.profile}
                                             alt="avatar"
-                                            className="rounded-circle"
+                                            className="rounded-circle my-projects-jobs-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
                                 />
                             </div>

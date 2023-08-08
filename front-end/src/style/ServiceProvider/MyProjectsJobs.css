@@ -173,7 +173,11 @@
         flex-direction: column !important;
     }
 
-    .rounded-circle{
+    /* .rounded-circle{
+        margin-left: -30px;
+    } */
+    
+    .my-projects-jobs-rounded-circle{
         margin-left: -30px;
     }
 }

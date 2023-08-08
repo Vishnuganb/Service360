@@ -12,17 +12,23 @@
     display: flex;
 }
 
-#view-jobs-button {
+.viewJobs-nav-button{
     position: relative;
     left: -12px;
-    background-color: #5f7085;
-    color: white;
     padding: 10px;
-    font-size: 14px;
-    border-radius:40px;
+    font-size: 15px;
     border-radius: 0px 8px 8px 0px;
     cursor: pointer;
+
+    background: #292d32 !important;
+    color: #fff !important;
   }
+
+  .viewJobs-nav-button:hover{
+    background: #fff !important;
+    border-color: #2596be !important;
+    color: #9f390d !important;
+}
 
 @media only screen and (min-width:623px) and (max-width: 1100px){
     #navbarScroll{
@@ -73,6 +79,10 @@
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
+}
+
+.custom-pagination-job .page-link {
+    color: #292D32;
 }
 
 @media only screen and (max-width:566px){       /* PROBLEM */

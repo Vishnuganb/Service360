@@ -46,7 +46,7 @@ function AppHero() {
                                 <Carousel.Caption>
                                     <h2>{item.title}</h2>
                                     <p>{item.description}</p>
-                                    <a className='btn btn-primary' href={item.link}>{item.buttonTitle} <i className="fas fa-chevron-right"></i></a>
+                                    <a className='btn btn-primary d-none d-sm-inline' href={item.link}>{item.buttonTitle} <i className="fas fa-chevron-right"></i></a>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         );

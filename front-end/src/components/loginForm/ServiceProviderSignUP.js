@@ -260,6 +260,8 @@ const ServiceProviderSignUP = () => {
             categoryErrorMessage = 'Select the category(S) you provide';
         }
 
+        
+
         setStep2Data((prevData) => ({
             ...prevData,
             passwordErrorMessage,
@@ -311,12 +313,7 @@ const ServiceProviderSignUP = () => {
             contactNumberErrorMessage = 'Should contain only digits';
         }
 
-        if (!/^\d{9}(\d{3}[vV])?$/.test(nicNumber)) {
-            isError = true;
-            nicNumberErrorMessage = 'Invalid NIC number';
-        }
-
-        if (!/^\d+[A-Za-z]?$/.test(nicNumber) & nicNumber.length < 9) {
+        if (!/^(\d{9}[vV]|\d{12})$/.test(nicNumber)) {
             isError = true;
             nicNumberErrorMessage = 'Invalid NIC number';
         }

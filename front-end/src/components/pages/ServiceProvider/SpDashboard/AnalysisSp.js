@@ -4,7 +4,7 @@ import Chart from "chart.js/auto";
 
 function AnalysisSp() {
   return (
-    <div className="graphContainer">
+    <div className="graphContainer ms-lg-4 me-lg-4">
       <Bar
         data={{
           labels: [

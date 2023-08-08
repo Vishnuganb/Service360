@@ -85,9 +85,9 @@ const Step2 = ({
     return (
         <form className="my-2 mx-4">
 
-            <div className="mb-3 d-flex justify-content-between">
+            <div className="mb-2 d-flex justify-content-between">
                 <div className='me-xs-2 col-6 me-sm-0'>
-                    <p className="mb-0">Select Service</p>
+                    <p className="mb-0">Select Service Categories<span style={{ color: 'red' }}>*</span></p>
                     <select
                         className="form-select"
                         value="default"
@@ -105,7 +105,7 @@ const Step2 = ({
                 </div>
 
                 <div className="mb-3 col-5">
-                    <p className="mb-0">Selected Services:</p>
+                    <p className="mb-0">Selected Categories:</p>
                     {selectedServices.length === 0 ? (
                         <p className='list-group d-flex justify-content-between align-items-center p-1'
                             style={{
@@ -129,10 +129,10 @@ const Step2 = ({
 
             </div>
 
-            <div className="mb-3 d-flex justify-content-between">
+            <div className="mb-2 d-flex justify-content-between">
 
                 <div className="me-xs-2 col-6 me-sm-0">
-                    <p className="mb-0">Select Category</p>
+                    <p className="mb-0">Select Services<span style={{ color: 'red' }}>*</span></p>
                     {categoryErrorMessage && <p className="text-danger p-0 m-0">{categoryErrorMessage}</p>}
                     {selectedServices.length === 0 ? (
                         <div className='list-group d-flex justify-content-between align-items-center p-1 px-1 text-danger'
@@ -141,8 +141,9 @@ const Step2 = ({
                             }}>
                             <div className="d-flex align-items-center">
 
-                                <span>Please select a service first</span>
-                                <i className="bi bi-exclamation-triangle me-2"></i>
+                                <span>
+                                    Please select a service first <i className="bi bi-exclamation-triangle me-2"></i>
+                                </span>
                             </div>
                         </div>
                     ) : (
@@ -183,7 +184,7 @@ const Step2 = ({
                 </div>
 
                 <div className="mb-3 col-5">
-                    <p className="mb-0">Selected Categories:</p>
+                    <p className="mb-0">Selected Services:</p>
                     {selectedCategories.length === 0 ? (
                         <p className='list-group d-flex justify-content-between align-items-center p-1'
                             style={{
@@ -209,7 +210,7 @@ const Step2 = ({
             </div>
 
             <div className="mb-3">
-                <p className="mb-0">Upload Gramaniladahri Certified document (One file only)</p>
+                <p className="mb-0">Upload Gramaniladahri Certified document (One file only)<span style={{ color: 'red' }}>*</span></p>
                 <input
                     type="file"
                     className="form-control"
@@ -220,7 +221,7 @@ const Step2 = ({
             </div>
 
             <div className="mb-3">
-                <p className="mb-0">Upload Qualification Certificates ( Not required )</p>
+                <p className="mb-0">Upload Qualification Certificates</p>
                 <input
                     type="file"
                     className="form-control"
@@ -250,7 +251,7 @@ const Step2 = ({
 
             <div className="mb-3 d-flex justify-content-between">
                 <div className='me-3'>
-                    <p className="mb-0">Enter your Password</p>
+                    <p className="mb-0">Enter your Password<span style={{ color: 'red' }}>*</span></p>
                     <div className="input-group">
                         <input
                             type={passwordType}
@@ -275,7 +276,7 @@ const Step2 = ({
                 </div>
 
                 <div>
-                    <p className="mb-0">Retype Password</p>
+                    <p className="mb-0">Confirm Password<span style={{ color: 'red' }}>*</span></p>
                     <div className="input-group">
                         <input
                             type={passwordType}

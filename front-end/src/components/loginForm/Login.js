@@ -136,7 +136,7 @@ const Login = () => {
 
                                                 <div>
                                                     <div className="mb-3">
-                                                        <p className="mb-0">Enter your email address</p>
+                                                        <p className="mb-0">Enter your email address<span style={{ color: 'red' }}>*</span></p>
                                                         <div className="input-group align-items-center">
                                                             <input
                                                                 type="email"
@@ -152,7 +152,7 @@ const Login = () => {
                                                     </div>
 
                                                     <div className="input-group mb-3">
-                                                        <p className="mb-0">Enter your password</p>
+                                                        <p className="mb-0">Enter your password<span style={{ color: 'red' }}>*</span></p>
                                                         <div className="input-group ">
                                                             <input
                                                                 type={passwordType}
@@ -209,7 +209,7 @@ const Login = () => {
                                                     </div>
 
                                                     <Modal show={showModal} onHide={toggleModal}>
-                                                        <Modal.Header closeButton style={{ background: '#292D32', color: '#fff' }}>
+                                                        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
                                                             <Modal.Title>Sign Up As</Modal.Title>
                                                         </Modal.Header>
                                                         <Modal.Body>

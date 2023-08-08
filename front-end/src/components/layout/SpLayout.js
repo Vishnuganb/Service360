@@ -12,12 +12,12 @@ const SpLayout = () => {
                 <ServiceProviderHeader />
                 <div style={{ flex: 1, display: 'flex' }}>
                     <ServiceProviderSideBar />
-                    <div className="classoutlet" style={{ flex: 1 }}>
+                    <div className="classoutlet" style={{ flex: 1,overflow:'auto' }}>
                     <Outlet />
                     </div>
                 </div>
                 <AppFooter />
-                </div>
+            </div>
         </>
     )
 }

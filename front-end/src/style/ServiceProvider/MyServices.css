@@ -62,9 +62,9 @@
 
 /* service table */
 
-.my-service-table{
+/* /* .my-service-table{
     width: 100%;
-}
+} */
 
 .my-service-table thead tr th{
     padding: 10px 0px 10px 0px;
@@ -72,6 +72,10 @@
     vertical-align: middle;
     font-weight: 500;
     color: #333;
+    /* font-size:1.1rem; */
+    font-family: 'Rubik', sans-serif;
+    color:white;
+    background: #23688e;
 }
 
 .my-service-table tbody tr td {
@@ -81,7 +85,15 @@
     vertical-align: middle;
     font-weight: 400;
     color: #333;
+    /* font-size:1rem; */
+    font-family: 'Rubik', sans-serif;
 }
+
+.my-service-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
 
 .my-service-table-btn {
     background-color: #292D32;

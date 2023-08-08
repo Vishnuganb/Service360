@@ -173,14 +173,14 @@ const AdminDashboard = () => {
   const advertisementDataWeekly = [
     { category: 'Spare parts', value: 120 },
     { category: 'Tools', value: 200 },
-    { category: 'Sessions', value: 150 },
+    { category: 'Equipment', value: 150 },
     { category: 'Others', value: 80 },
   ];
 
   const advertisementDataMonthly = [
     { category: 'Spare parts', value: 220 },
     { category: 'Tools', value: 180 },
-    { category: 'Sessions', value: 250 },
+    { category: 'Equipment', value: 250 },
     { category: 'Others', value: 120 },
   ];
 

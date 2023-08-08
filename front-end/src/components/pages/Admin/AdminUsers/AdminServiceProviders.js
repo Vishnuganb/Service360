@@ -534,7 +534,7 @@ function AdminServiceProvider() {
 
                 <h2 className="ms-5 fw-bold align-self-start">Service Providers</h2>
 
-                <div className="d-flex align-items-center  w-100">
+                <div className="d-flex align-items-center justify-content-center w-100">
                     <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 m-3'>
                         <div className="input-group">
                             <select
@@ -553,7 +553,7 @@ function AdminServiceProvider() {
                         </div>
                     </div>
 
-                    <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 m-3'>
+                    <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 col-xxl-3 m-3'>
                         <div className="input-group">
                             <input
                                 type="text"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Tab, Tabs, Modal, Button, Form } from 'react-bootstrap';
+import { Card, Tab, Tabs, Modal, Button, Form, Carousel } from 'react-bootstrap';
 import '../../../../style/Admin/AdminServiceProvider.css';
 import BgImage from '../../../../assets/images/header/Background.png';
 import PopupBgImage from '../../../../assets/images/header/popupBg.png';
@@ -7,15 +7,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-import person1 from '../../../../assets/images/home/Customer_1.png';
-import person2 from '../../../../assets/images/home/Customer_2.png';
-import person3 from '../../../../assets/images/home/Customer_3.png';
-import person4 from '../../../../assets/images/home/Customer_4.jpg';
-import person5 from '../../../../assets/images/home/Customer_5.jpg';
-import person6 from '../../../../assets/images/home/Customer_6.jpg';
-import person7 from '../../../../assets/images/home/Customer_7.jpg';
-import person8 from '../../../../assets/images/home/Customer_8.jpg';
-import person9 from '../../../../assets/images/home/Customer_9.jpg';
+import Ad1_1 from '../../../../assets/images/admin/Driller_1.jpg';
+import Ad1_2 from '../../../../assets/images/admin/Driller_2.jpg';
+import Ad1_3 from '../../../../assets/images/admin/Driller_3.jpg';
+import Ad2_1 from '../../../../assets/images/admin/Screw_1.jpeg';
+import Ad2_2 from '../../../../assets/images/admin/Screw_2.jpeg';
+import Ad2_3 from '../../../../assets/images/admin/Screw_3.jpeg';
+import Ad3_1 from '../../../../assets/images/admin/Grinder_1.jpeg';
+import Ad3_2 from '../../../../assets/images/admin/Grinder_2.jpeg';
+import Ad3_3 from '../../../../assets/images/admin/Grinder_3.jpeg';
+import Ad4_1 from '../../../../assets/images/admin/drills_2.jpeg';
+import Ad4_2 from '../../../../assets/images/admin/drills_1.jpeg';
+import Ad4_3 from '../../../../assets/images/admin/drills_3.jpeg';
+import Ad5_1 from '../../../../assets/images/admin/handsaw_1.jpeg';
+import Ad5_2 from '../../../../assets/images/admin/handsaw_2.jpeg';
+import Ad5_3 from '../../../../assets/images/admin/handsaw_3.jpeg';
+import Ad6_1 from '../../../../assets/images/admin/hammer_1.jpeg';
+import Ad6_2 from '../../../../assets/images/admin/hammer_2.jpeg';
+import Ad6_3 from '../../../../assets/images/admin/hammer_3.jpeg';
+import Ad7_1 from '../../../../assets/images/admin/disk_2.jpeg';
+import Ad7_2 from '../../../../assets/images/admin/disk_1.jpeg';
+import Ad7_3 from '../../../../assets/images/admin/disk_3.jpeg';
+import Ad8_1 from '../../../../assets/images/admin/plier_1.jpeg';
+import Ad8_2 from '../../../../assets/images/admin/plier_2.jpeg';
+import Ad8_3 from '../../../../assets/images/admin/plier_3.jpeg';
+import Ad9_1 from '../../../../assets/images/admin/wrench_1.jpeg';
+import Ad9_2 from '../../../../assets/images/admin/wrench_2.jpeg';
+import Ad9_3 from '../../../../assets/images/admin/wrench_3.jpeg';
 import { set } from 'lodash';
 
 const searchInputStyle = {
@@ -31,6 +49,7 @@ function AdminAdvertisements() {
     const advertisementsData = [
         {
             id: 1,
+            adName: 'Driller',
             firstName: 'John',
             lastName: 'Doe',
             nic: '123456789V',
@@ -39,8 +58,8 @@ function AdminAdvertisements() {
             address: '123 Main Street, City',
             registeredDate: '2023-08-01',
             service: 'Carpentry',
-            category: 'Interior Works',
-            image: person1,
+            category: 'Tools',
+            images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -49,6 +68,7 @@ function AdminAdvertisements() {
         },
         {
             id: 2,
+            adName: 'ScrewDriver',
             firstName: 'Jane',
             lastName: 'Smith',
             nic: '987654321V',
@@ -57,8 +77,8 @@ function AdminAdvertisements() {
             address: '456 Oak Avenue, Town',
             registeredDate: '2023-08-02',
             service: 'AC Repair',
-            category: 'Electrical & Plumbing',
-            image: person2,
+            category: 'Tools',
+            images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -67,6 +87,7 @@ function AdminAdvertisements() {
         },
         {
             id: 3,
+            adName: 'Grinder',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '456123789V',
@@ -75,8 +96,8 @@ function AdminAdvertisements() {
             address: '789 Maple Lane, Village',
             registeredDate: '2023-08-03',
             service: 'Masonry',
-            category: 'Construction',
-            image: person3,
+            category: 'Tools',
+            images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -85,6 +106,7 @@ function AdminAdvertisements() {
         },
         {
             id: 4,
+            adName: 'ScrewDriver',
             firstName: 'De',
             lastName: 'Silva',
             nic: '789123456V',
@@ -93,8 +115,8 @@ function AdminAdvertisements() {
             address: '101 Pine Street, City',
             registeredDate: '2023-08-04',
             service: 'CCTV Repair',
-            category: 'Security',
-            image: person2,
+            category: 'Tools',
+            images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -103,6 +125,7 @@ function AdminAdvertisements() {
         },
         {
             id: 5,
+            adName: 'Grinder',
             firstName: 'Kumar',
             lastName: 'Sangakkara',
             nic: '654987321V',
@@ -111,8 +134,8 @@ function AdminAdvertisements() {
             address: '222 Oak Road, Town',
             registeredDate: '2023-08-05',
             service: 'Sofa cleaning',
-            category: 'cleaning',
-            image: person3,
+            category: 'Tools',
+            images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -121,6 +144,7 @@ function AdminAdvertisements() {
         },
         {
             id: 6,
+            adName: 'Driller',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '789654123V',
@@ -129,8 +153,8 @@ function AdminAdvertisements() {
             address: '333 Maple Street, Village',
             registeredDate: '2023-08-06',
             service: 'Painting',
-            category: 'Interior Works',
-            image: person1,
+            category: 'Tools',
+            images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -139,6 +163,7 @@ function AdminAdvertisements() {
         },
         {
             id: 7,
+            adName: 'Drills',
             firstName: 'Saman',
             lastName: 'Perera',
             nic: '321456789V',
@@ -147,8 +172,8 @@ function AdminAdvertisements() {
             address: '444 Pine Avenue, City',
             registeredDate: '2023-08-07',
             service: 'Electrical Wiring',
-            category: 'Electrical & Plumbing',
-            image: person4,
+            category: 'Spare Parts',
+            images: [Ad4_1, Ad4_2, Ad4_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -157,6 +182,7 @@ function AdminAdvertisements() {
         },
         {
             id: 8,
+            adName: 'Handsaw',
             firstName: 'Susantha',
             lastName: 'Villergers',
             nic: '987654321V',
@@ -164,9 +190,9 @@ function AdminAdvertisements() {
             email: 'susantha.villergers@example.com',
             address: '555 Oak Lane, Town',
             registeredDate: '2023-08-08',
-            service: 'Tiles Fitting',
+            service: 'Tools',
             category: 'Construction',
-            image: person5,
+            images: [Ad5_1, Ad5_2, Ad5_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -175,6 +201,7 @@ function AdminAdvertisements() {
         },
         {
             id: 9,
+            adName: 'Hammer',
             firstName: 'William',
             lastName: 'Wiliamson',
             nic: '654321789V',
@@ -183,8 +210,8 @@ function AdminAdvertisements() {
             address: '666 Maple Road, Village',
             registeredDate: '2023-08-09',
             service: 'Fire Alarm',
-            category: 'Security',
-            image: person6,
+            category: 'Tools',
+            images: [Ad6_1, Ad6_2, Ad6_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -193,6 +220,7 @@ function AdminAdvertisements() {
         },
         {
             id: 10,
+            adName: 'Driller',
             firstName: 'Johnes',
             lastName: 'Doe',
             nic: '123456789V',
@@ -201,8 +229,8 @@ function AdminAdvertisements() {
             address: '777 Main Street, City',
             registeredDate: '2023-08-10',
             service: 'Carpentry',
-            category: 'Interior Works',
-            image: person1,
+            category: 'Tools',
+            images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -211,6 +239,7 @@ function AdminAdvertisements() {
         },
         {
             id: 11,
+            adName: 'ScrewDriver',
             firstName: 'Jane',
             lastName: 'Smith',
             nic: '987654321V',
@@ -219,8 +248,8 @@ function AdminAdvertisements() {
             address: '888 Oak Avenue, Town',
             registeredDate: '2023-08-11',
             service: 'AC Repair',
-            category: 'Electrical & Plumbing',
-            image: person2,
+            category: 'Tools',
+            images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -229,6 +258,7 @@ function AdminAdvertisements() {
         },
         {
             id: 12,
+            adName: 'Grinder',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '456123789V',
@@ -237,8 +267,8 @@ function AdminAdvertisements() {
             address: '999 Maple Lane, Village',
             registeredDate: '2023-08-12',
             service: 'Masonry',
-            category: 'Construction',
-            image: person3,
+            category: 'Tools',
+            images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -247,6 +277,7 @@ function AdminAdvertisements() {
         },
         {
             id: 13,
+            adName: 'Grinder Disks',
             firstName: 'De',
             lastName: 'Silva',
             nic: '789123456V',
@@ -255,8 +286,8 @@ function AdminAdvertisements() {
             address: '1010 Pine Street, City',
             registeredDate: '2023-08-13',
             service: 'CCTV Repair',
-            category: 'Security',
-            image: person7,
+            category: 'Spare Parts',
+            images: [Ad7_1, Ad7_2, Ad7_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -265,6 +296,7 @@ function AdminAdvertisements() {
         },
         {
             id: 14,
+            adName: 'Pliers',
             firstName: 'Kumar',
             lastName: 'Sangakkara',
             nic: '654987321V',
@@ -273,8 +305,8 @@ function AdminAdvertisements() {
             address: '111 Oak Road, Town',
             registeredDate: '2023-08-14',
             service: 'Sofa cleaning',
-            category: 'cleaning',
-            image: person8,
+            category: 'Tools',
+            images: [Ad8_1, Ad8_2, Ad8_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -283,6 +315,7 @@ function AdminAdvertisements() {
         },
         {
             id: 15,
+            adName: 'Wrench',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '789654123V',
@@ -291,8 +324,8 @@ function AdminAdvertisements() {
             address: '1212 Maple Street, Village',
             registeredDate: '2023-08-15',
             service: 'Painting',
-            category: 'Interior Works',
-            image: person9,
+            category: 'Tools',
+            images: [Ad9_1, Ad9_2, Ad9_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -301,6 +334,7 @@ function AdminAdvertisements() {
         },
         {
             id: 16,
+            adName: 'Grinder',
             firstName: 'Saman',
             lastName: 'Perera',
             nic: '321456789V',
@@ -309,8 +343,8 @@ function AdminAdvertisements() {
             address: '1313 Pine Avenue, City',
             registeredDate: '2023-08-16',
             service: 'Electrical Wiring',
-            category: 'Electrical & Plumbing',
-            image: person3,
+            category: 'Tools',
+            images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -319,6 +353,7 @@ function AdminAdvertisements() {
         },
         {
             id: 17,
+            adName: 'Driller',
             firstName: 'Susantha',
             lastName: 'Villergers',
             nic: '987654321V',
@@ -327,8 +362,8 @@ function AdminAdvertisements() {
             address: '1414 Oak Lane, Town',
             registeredDate: '2023-08-17',
             service: 'Tiles Fitting',
-            category: 'Construction',
-            image: person1,
+            category: 'Tools',
+            images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -337,6 +372,7 @@ function AdminAdvertisements() {
         },
         {
             id: 18,
+            adName: 'ScrewDriver',
             firstName: 'William',
             lastName: 'Wiliamson',
             nic: '654321789V',
@@ -345,8 +381,8 @@ function AdminAdvertisements() {
             address: '1515 Maple Road, Village',
             registeredDate: '2023-08-18',
             service: 'Fire Alarm',
-            category: 'Security',
-            image: person2,
+            category: 'Tools',
+            images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -356,11 +392,10 @@ function AdminAdvertisements() {
     ];
 
     const advertisementsCategories = {
-        "Interior Works": ["Carpentry", "Painting"],
-        "Electrical & Plumbing": ["AC Repair", "Electrical Wiring", "Plumbing"],
-        "Construction": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
-        "Security": ["CCTV Repair", "Fire Alarm", "Video Surveillance"],
-        "cleaning": ["Sofa cleaning", "Carpet cleaning"],
+        "Tools": ["Carpentry", "Painting"],
+        "Spare Parts": ["AC Repair", "Electrical Wiring", "Plumbing"],
+        "Equipment": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
+        "others": ["CCTV Repair", "Fire Alarm", "Video Surveillance"],
     };
 
     const [data, setData] = useState({
@@ -376,7 +411,7 @@ function AdminAdvertisements() {
         filteredServiceProviders: [],
         displayedServices: [],
         showDetailsModal: false,
-        selectedProvider: null,
+        selectedAdvertisement: null,
         cardsPerPage: 3,
         showAcceptConfirmation: false,
         showRejectConfirmation: false,
@@ -425,15 +460,14 @@ function AdminAdvertisements() {
 
     const filterServiceProviders = (status) => {
         const filteredServices = data.selectedCategory !== 'default'
-            ? advertisementsData.filter((service) => service.category === data.selectedCategory)
+            ? advertisementsData.filter((advertisement) => advertisement.category === data.selectedCategory)
             : advertisementsData;
 
-        const filteredProviders = filteredServices.filter((service) =>
-            service.status === status && (
-                service.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                service.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                service.category.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                service.service.toLowerCase().includes(data.searchTerm.toLowerCase())
+        const filteredProviders = filteredServices.filter((advertisement) =>
+            advertisement.status === status && (
+                advertisement.adName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                advertisement.category.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                advertisement.service.toLowerCase().includes(data.searchTerm.toLowerCase())
             )
         );
 
@@ -443,12 +477,12 @@ function AdminAdvertisements() {
 
     const calculateTotalPages = (filteredServices) => Math.ceil(filteredServices.length / data.cardsPerPage);
 
-    const handleServiceCategoryChange = (e) => {
+    const handleAdvertisementCategoryChange = (e) => {
         const selectedCategory = e.target.value;
         const filteredServiceProvidersByCategory = filterServiceProvidersByCategory(selectedCategory);
 
-        const displayedServices = filteredServiceProvidersByCategory.filter((service) => {
-            return service.status === data.activeTab;
+        const displayedServices = filteredServiceProvidersByCategory.filter((advertisement) => {
+            return advertisement.status === data.activeTab;
         });
 
         setData((prevState) => ({
@@ -496,7 +530,7 @@ function AdminAdvertisements() {
         setData({ ...data, showRejectConfirmation: false });
     };
 
-    const handleAcceptProvider = () => {
+    const handleAcceptAdvertisement = () => {
         setData({ ...data, showAcceptConfirmation: false });
     };
 
@@ -517,8 +551,20 @@ function AdminAdvertisements() {
     };
 
     const handleShowDetails = (provider) => {
-        setData({ ...data, showDetailsModal: true, selectedProvider: provider });
+        setData({ ...data, showDetailsModal: true, selectedAdvertisement: provider });
     };
+
+    function handleImageClick(e) {
+        e.target.style.transform = 'scale(2)'; 
+        e.target.style.filter = 'brightness(1)';
+        e.target.style.cursor = 'zoom-out';
+    }
+
+    function handleImageMouseLeave(e) {
+        e.target.style.transform = 'scale(1)';
+        e.target.style.filter = 'brightness(1.2)';
+        e.target.style.cursor = 'zoom-in';
+    }
 
 
     return (
@@ -534,31 +580,31 @@ function AdminAdvertisements() {
 
                 <h2 className="ms-5 fw-bold align-self-start">Advertisements</h2>
 
-                <div className="d-flex align-items-center  w-100">
+                <div className="d-flex align-items-center justify-content-center w-100">
                     <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 m-3'>
                         <div className="input-group">
                             <select
                                 className="form-select"
                                 value={data.selectedCategory}
-                                onChange={handleServiceCategoryChange}
+                                onChange={handleAdvertisementCategoryChange}
                                 required
                             >
-                                <option value="default">Select a Service Category</option>
-                                {Object.keys(advertisementsCategories).map((service) => (
-                                    <option key={service} value={service}>
-                                        {service}
+                                <option value="default">Select a Advertisement Category</option>
+                                {Object.keys(advertisementsCategories).map((advertisement) => (
+                                    <option key={advertisement} value={advertisement}>
+                                        {advertisement}
                                     </option>
                                 ))}
                             </select>
                         </div>
                     </div>
 
-                    <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 m-3'>
+                    <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 col-xxl-3 m-3'>
                         <div className="input-group">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Search Services"
+                                placeholder="Search Advertisements"
                                 value={data.searchTerm}
                                 onChange={handleSearchChange}
                                 style={searchInputStyle}
@@ -572,20 +618,20 @@ function AdminAdvertisements() {
                 </div>
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
-                    {data.displayedServices && data.displayedServices.map((provider) => (
-                        <Card className="m-3" key={provider.id}>
-                            <Card.Img src={provider.image} alt="Service Provider" className="rounded-circle" width="50" height="50" />
+                    {data.displayedServices && data.displayedServices.map((ads) => (
+                        <Card className="m-3" key={ads.id}>
+                            <Card.Img src={ads.images[0]} alt="Service ads" />
                             <Card.Body className="d-flex flex-column align-items-center">
-                                <p className="card-text fw-bold d-none d-md-block">{provider.firstName}{' '}{provider.lastName}</p>
-                                <p className="card-text d-none d-md-block align-self-start">Service: {provider.service}</p>
-                                <p className="card-text d-none d-md-block align-self-start">Category: {provider.category}</p>
+                                <p className="card-text fw-bold d-none d-md-block">{ads.adName}</p>
+                                <p className="card-text d-none d-md-block align-self-start">Advertisement ID: Ads000{ads.id}</p>
+                                <p className="card-text d-none d-md-block align-self-start">Category: {ads.category}</p>
                                 <div className="d-flex flex-column justify-content-center text-center">
-                                    <button onClick={() => handleShowDetails(provider)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
+                                    <button onClick={() => handleShowDetails(ads)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
                                     <button
                                         className="btn"
                                         style={{ backgroundColor: "#0D6445" }}
                                         onClick={() => {
-                                            setData({ ...data, showAcceptConfirmation: true, selectedProvider: provider });
+                                            setData({ ...data, showAcceptConfirmation: true, selectedAdvertisement: ads });
                                         }}
                                     >
                                         Accept
@@ -594,7 +640,7 @@ function AdminAdvertisements() {
                                         className="btn"
                                         style={{ backgroundColor: "#B60E0E" }}
                                         onClick={() => {
-                                            setData({ ...data, showRejectConfirmation: true, selectedProvider: provider });
+                                            setData({ ...data, showRejectConfirmation: true, selectedAdvertisement: ads });
                                         }}
                                     >
                                         Reject
@@ -624,19 +670,19 @@ function AdminAdvertisements() {
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
                     <Modal.Title>Confirm Acceptance</Modal.Title>
                 </Modal.Header>
-                {data.selectedProvider && (
+                {data.selectedAdvertisement && (
                     <Modal.Body className="centered-body" style={{ backgroundImage: `url(${BgImage})` }}>
                         <div className="d-flex justify-content-center">
-                            <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                            <img src={data.selectedAdvertisement.images[0]} alt="Service Provider"  width="150" height="150" />
                         </div>
-                        <p className='fw-bold pt-4'>Are you sure you want to accept this service provider?</p>
+                        <p className='fw-bold pt-4'>Are you sure you want to accept this Advertisement?</p>
                     </Modal.Body>
                 )}
                 <Modal.Footer>
                     <Button className='btn-effect2' onClick={() => setData({ ...data, showAcceptConfirmation: false })}>
                         No
                     </Button>
-                    <Button className='btn-effect' style={{ marginLeft: '10px' }} onClick={handleAcceptProvider}>
+                    <Button className='btn-effect' style={{ marginLeft: '10px' }} onClick={handleAcceptAdvertisement}>
                         Yes
                     </Button>
                 </Modal.Footer>
@@ -646,12 +692,12 @@ function AdminAdvertisements() {
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
                     <Modal.Title>Confirm Rejection</Modal.Title>
                 </Modal.Header>
-                {data.selectedProvider && (
+                {data.selectedAdvertisement && (
                     <Modal.Body className="centered-body" style={{ backgroundImage: `url(${BgImage})` }}>
                         <div className="d-flex justify-content-center">
-                            <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                            <img src={data.selectedAdvertisement.images[0]} alt="Service Provider" width="150" height="150" />
                         </div>
-                        <p className='fw-bold pt-4'>Are you sure you want to Reject this service provider?</p>
+                        <p className='fw-bold pt-4'>Are you sure you want to Reject this Advertisement?</p>
                         <p>If you select "Yes," please enter the reason for rejection.<span style={{ color: 'red' }}>*</span></p>
                         <input type="text" value={data.rejectReason} onChange={(e) => setData({ ...data, rejectReason: e.target.value })} placeholder="Enter Reject Reason" />
                         {data.rejectReasonErrorMessage && <p className="text-danger p-0 m-0">{data.rejectReasonErrorMessage}</p>}
@@ -669,50 +715,63 @@ function AdminAdvertisements() {
 
             <Modal show={data.showDetailsModal} onHide={() => setData({ ...data, showDetailsModal: false })} centered>
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
-                    <Modal.Title>Service Provider Details</Modal.Title>
+                    <Modal.Title>Advertisement Details</Modal.Title>
                 </Modal.Header>
-                {data.selectedProvider && (
+                {data.selectedAdvertisement && (
                     <Modal.Body className="text-start" style={{ backgroundImage: `url(${PopupBgImage})` }}>
                         <div className="row">
                             <div className="col-md-8">
                                 <div className="d-flex justify-content-start">
-                                    <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                                    <Carousel
+                                        interval={3000}
+                                        prevIcon={<span className="carousel-control-prev-icon" aria-hidden="true" />}
+                                        nextIcon={<span className="carousel-control-next-icon" aria-hidden="true" />}
+                                        onMouseEnter={handleImageClick}
+                                        onMouseLeave={handleImageMouseLeave}
+                                        className="custom-carousel"
+                                    >
+                                        {data.selectedAdvertisement.images.map((image, index) => (
+                                            <Carousel.Item key={index}>
+                                                <img src={image} alt={`Image ${index + 1}`} className="d-block" width="200" height="150" />
+                                            </Carousel.Item>
+                                        ))}
+                                    </Carousel>
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service Provider ID: </span> SP0{data.selectedProvider.id}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertisement ID: </span>Ads000{data.selectedAdvertisement.id}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedProvider.firstName}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertiser ID: </span> Adv000{data.selectedAdvertisement.id}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Last Name: </span> {data.selectedProvider.lastName}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Category:</span> {data.selectedAdvertisement.category}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>NIC: </span> {data.selectedProvider.nic}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedAdvertisement.firstName}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Email: </span> {data.selectedProvider.email}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Last Name: </span> {data.selectedAdvertisement.lastName}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Address: </span> {data.selectedProvider.address}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>NIC: </span> {data.selectedAdvertisement.nic}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Registered Date: </span> {data.selectedProvider.registeredDate}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Email: </span> {data.selectedAdvertisement.email}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service: </span> {data.selectedProvider.service}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Address: </span> {data.selectedAdvertisement.address}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Category:</span> {data.selectedProvider.category}
-                                </div>
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Registered Date: </span> {data.selectedAdvertisement.registeredDate}
+                                </div>    
                             </div>
                             <div className="col-md-4">
                                 <div className="p-3 " style={{ marginTop: '100px' }}>
                                     <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
-                                        <h6 className="text-center">Certificates And Documents</h6>
+                                        <h6 className="text-center">Warranty Card And Documents</h6>
                                     </div>
                                     <ul className="list-unstyled">
-                                        {data.selectedProvider.uploadedFiles.map((file, index) => (
+                                        {data.selectedAdvertisement.uploadedFiles.map((file, index) => (
                                             <li key={index}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
                                                     <i class="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>

@@ -39,6 +39,10 @@ import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 import Forum from './components/pages/Forum/Forum.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
+import ToDoForm from './components/pages/Customer/ToDoForm.js';
+import RatenReview from './components/pages/Customer/RatenReview.js';
+
 
 
 const router = createBrowserRouter(
@@ -72,6 +76,9 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy/>} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
         <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+        <Route path="ViewServiceProvider" element={<ViewServiceProvider />} />
+        <Route path="ToDoForm" element={<ToDoForm />} />
+        <Route path="RatenReview" element={<RatenReview />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

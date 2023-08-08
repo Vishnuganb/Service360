@@ -13,7 +13,7 @@ import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
-import AdvertiserProfile from'./components/pages/User/Advertiser/EditProfile.js';
+import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
 import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
 import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
 import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
@@ -71,16 +71,18 @@ import Quotation from './components/pages/Customer/Quotation.js'
 import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP.js';
 import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
-
-
-import Forum from './components/pages/Forum/Forum.js';
-import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
-import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
+import ToDoForm from './components/pages/Customer/ToDoForm.js';
+import RatenReview from './components/pages/Customer/RatenReview.js';
 import ViewAservice from './components/pages/User/ViewAservice.js';
 import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js';
 import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
 import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.js';
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
+import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import Forum from './components/pages/Forum/Forum.js';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -106,7 +108,7 @@ const router = createBrowserRouter(
         <Route path="complaints" element={<AdminComplaints />} />
         <Route path="report" element={<AdminReport />} />
         <Route path="advertisements" element={<AdminAdvertisements />} />
-        <Route path="history" element={<ViewHistory /> } />
+        <Route path="history" element={<ViewHistory />} />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
@@ -129,12 +131,15 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="Searchserviceprovider" element={<Searchserviceprovider/>} />
+        <Route path="ViewServiceProvider" element={<ViewServiceProvider />} />
+        <Route path="ToDoForm" element={<ToDoForm />} />
+        <Route path="RatenReview" element={<RatenReview />} />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
-        <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
-        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
-        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />
-        <Route path="AddReview" element={<AddReviewandRating/>}/>
+        <Route path="ViewAQuotation" element={<ViewAQuotation />} />
+        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+        <Route path="AddReview" element={<AddReviewandRating />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -148,18 +153,18 @@ const router = createBrowserRouter(
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
-        <Route path="MyProjectsJobsApplied" element={<SpMyProjectsJobsApplied/>} />
-        <Route path="MyProjectsJobsInvites" element={<SpMyProjectsJobsInvites/>} />
-        <Route path="MyProjectsVacanciesApplied" element={<SpMyProjectsVacanciesApplied/>} />
-        <Route path="MyProjectsVacanciesInvites" element={<SpMyProjectsVacanciesInvites/>} />
-        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
-        <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
-        <Route path="MyProjectJobsStates" element={<SpMyProjectJobsStates/>} />
-        <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
-        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
-        <Route path="StartJob" element={<SpStartJob/>} />
-        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
-        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
+        <Route path="MyProjectsJobsApplied" element={<SpMyProjectsJobsApplied />} />
+        <Route path="MyProjectsJobsInvites" element={<SpMyProjectsJobsInvites />} />
+        <Route path="MyProjectsVacanciesApplied" element={<SpMyProjectsVacanciesApplied />} />
+        <Route path="MyProjectsVacanciesInvites" element={<SpMyProjectsVacanciesInvites />} />
+        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions />} />
+        <Route path="ViewATrainingSession" element={<SpViewATrainingSession />} />
+        <Route path="MyProjectJobsStates" element={<SpMyProjectJobsStates />} />
+        <Route path="AcceptedJob" element={<SpAcceptedJob />} />
+        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy />} />
+        <Route path="StartJob" element={<SpStartJob />} />
+        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar />} />
+        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions />} />
       </Route>
 
       <Route

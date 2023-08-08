@@ -59,6 +59,7 @@ import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js'
 import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
 import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.js';
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
+import CustomerComplaintPage from './components/pages/Customer/CustomerComplaintPage.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -107,7 +108,9 @@ const router = createBrowserRouter(
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
-        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />  
+        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
+
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

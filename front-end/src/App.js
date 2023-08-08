@@ -18,6 +18,7 @@ import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
 import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
+import Subscribtion from './components/pages/advertiser/subscription.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -88,6 +89,7 @@ const router = createBrowserRouter(
         <Route path="VerifiedAds" element={<VerifiedAds />} />
         <Route path="RejectedAds" element={<RejectedAds />} />
         <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
+        <Route path="Subscribtion" element={<Subscribtion />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>

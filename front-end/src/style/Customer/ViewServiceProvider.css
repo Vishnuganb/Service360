@@ -1,4 +1,3 @@
-
 .SPBox {
     display: flex;
     background-image: url("../../assets/images/header/Background.png");
@@ -10,7 +9,6 @@
 .SPProfile{
   font-size: 14px;
   margin-left: 50px;
-  
 }
 
 .SPname{
@@ -117,6 +115,7 @@
   
 
 
+  
 
 
 

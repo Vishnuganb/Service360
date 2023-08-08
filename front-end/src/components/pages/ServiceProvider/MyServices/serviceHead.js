@@ -1,5 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 function serviceHead() {
   return (
@@ -26,17 +27,15 @@ function serviceHead() {
             </span>
           </Col>
           <Col className="my-serivice-head-container-col-2">
-            <button
-              className="btn my-serivice-head-container-col-2-btn"
+            <Button
+              className="btn-ServiceProvider-2 my-serivice-head-container-col-2-btn"
               style={{
-                backgroundColor: "#292D32",
-                color: "white",
                 borderRadius: "10px",
               }}
             >
               <i className="fas fa-plus pe-2"></i>
               Add Services
-            </button>
+            </Button>
           </Col>
         </Row>
       </div>

@@ -1,0 +1,17 @@
+.ViewATraining-title{
+    font-weight: 600;
+}
+
+.ViewATraining-details-sub-info-val{
+    font-weight: 600;
+}
+
+@media only screen and (max-width:420px) {
+    .ViewATraining-button-container{
+        flex-direction: column !important;
+    }
+    .ViewATraining-cancel{
+        width: 100% !important;
+        margin-top: 5px;
+    }
+}

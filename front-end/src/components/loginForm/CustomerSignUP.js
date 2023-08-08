@@ -171,7 +171,7 @@ const CustomerSignUP = () => {
 
         if (data.contactNumber.trim() === '') {
             isError = true;
-            contactNumberErrorMessage = 'Contact number is required';
+            contactNumberErrorMessage = 'Number is required';
         }
 
         if (data.address.trim() === '') {
@@ -189,7 +189,6 @@ const CustomerSignUP = () => {
             confirmPasswordErrorMessage = 'Confirm password is required';
         }
 
-        // Set error messages in the state
         setdata({
             ...data,
             emailErrorMessage,

@@ -75,7 +75,7 @@
     /* font-size:1.1rem; */
     font-family: 'Rubik', sans-serif;
     color:white;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(130deg, #054f77 20%, #4a7fa2 77.5%);
+    background: #23688e;
 }
 
 .my-service-table tbody tr td {

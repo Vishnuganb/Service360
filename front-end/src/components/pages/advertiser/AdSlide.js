@@ -4,6 +4,8 @@ import Carousel from "react-bootstrap/Carousel";
 import "../../../style/advertiser/AdIndex.css";
 
 import adImage from "./../../../assets/images/advertiser/Ad.png";
+import backgroundImage from "../../../assets/images/header/Background.png";
+
 
 const AdSlide = () => {
 
@@ -39,7 +41,10 @@ const AdSlide = () => {
       <Carousel>
         {advertisements.map((ad, index) => (
           <Carousel.Item key={index}>
-            <div className="AdSlide">
+            <div
+              className="AdSlide"
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+            >
               <div className="AdLeftCol">
                 <img src={ad.adImage} alt="Item" rounded />
               </div>
@@ -59,14 +64,22 @@ const AdSlide = () => {
                 <div>
                   <h1 className="AdPrice">{ad.price}</h1>
                 </div>
-                <div>
+                <div className="d-flex gap-2 p-3">
+                  <div>
+                    <i className="fa-solid fa-truck-front"></i>
+                  </div>
                   <h4>Free Delivery</h4>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h4 className="SlideAdArea">{ad.location}</h4>
+            <div className="d-flex justify-content-end gap-1 m-3">
+              <div>
+                <i className="fa-solid fa-location-dot"></i>
+              </div>
+              <div className="d-flex align-items-center">
+                <h4>{ad.location}</h4>
+              </div>
             </div>
           </Carousel.Item>
         ))}

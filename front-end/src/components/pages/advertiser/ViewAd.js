@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Container, Row, Col, Image, } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import backgroundImage from "../../../assets/images/header/Background.png";
 
-import AdImg1 from "../../../assets/images/advertiser/Ads/Drill1.jpg";
-import AdImg2 from "../../../assets/images/advertiser/Ads/Drill2.jpg";
-import AdImg3 from "../../../assets/images/advertiser/Ads/Driller3.jpg";
+import AdImg1 from "../../../assets/images/advertiser/Ads/Drill1.png";
+import AdImg2 from "../../../assets/images/advertiser/Ads/Drill2.png";
+import AdImg3 from "../../../assets/images/advertiser/Ads/Driller3.png";
 import profileIcon from "./../../../assets/images/advertiser/Adam.jpg";
 
 
@@ -28,7 +29,10 @@ const ViewAd = () => {
 
   return (
     <Container>
-      <Row className="shadow-lg p-3 mb-5 bg-white border rounded">
+      <Row
+        className="shadow-lg p-3 mb-5 bg-white border rounded"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <Row>
           <Col md="auto" className="d-flex align-items-center ">
             <div>
@@ -89,30 +93,32 @@ const ViewAd = () => {
           </Col>
           <Col>
             <Col className="shadow p-3 mb-5 bg-white border rounded ">
-              <h2 className="text-center">Emereld Electrical</h2>
+              <div style={{ backgroundImage: `url(${backgroundImage})` }}>
+                <h2 className="text-center">Emereld Electrical</h2>
 
-              <Row className="d-flex justify-content-center border-bottom">
-                <Col className="col-4">Owner Name </Col>
-                <Col className="col-6">Adam Robert</Col>
-              </Row>
-              <br />
-              <Row className="d-flex justify-content-center border-bottom">
-                <Col className="col-4">Mobile No </Col>
-                <Col className="col-6">0778964983</Col>
-              </Row>
-              <br />
-              <Row className="d-flex justify-content-center border-bottom">
-                <Col className="col-4 align-self-center">Address </Col>
-                <Col className="col-6">
-                  No 132, Marain Drive, Bambalapittiya, Colombo
-                </Col>
-              </Row>
-              <br />
-              <br />
+                <Row className="d-flex justify-content-center border-bottom">
+                  <Col className="col-4">Owner Name </Col>
+                  <Col className="col-6">Adam Robert</Col>
+                </Row>
+                <br />
+                <Row className="d-flex justify-content-center border-bottom">
+                  <Col className="col-4">Mobile No </Col>
+                  <Col className="col-6">0778964983</Col>
+                </Row>
+                <br />
+                <Row className="d-flex justify-content-center border-bottom">
+                  <Col className="col-4 align-self-center">Address </Col>
+                  <Col className="col-6">
+                    No 132, Marain Drive, Bambalapittiya, Colombo
+                  </Col>
+                </Row>
+                <br />
+                <br />
 
-              <Row className="d-flex justify-content-center">
-                <button className="AdSlideButton">Chat</button>
-              </Row>
+                <Row className="d-flex justify-content-center">
+                  <button className="AdSlideButton">Chat</button>
+                </Row>
+              </div>
             </Col>
           </Col>
         </Row>

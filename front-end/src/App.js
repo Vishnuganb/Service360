@@ -18,6 +18,8 @@ import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
 import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
 import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
+import About from './components/pages/User/About/Index.js';
+import Subscribtion from './components/pages/advertiser/subscription.js';
 
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
@@ -93,10 +95,11 @@ const router = createBrowserRouter(
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
-        <Route path='login' element={<Login />} />
-        <Route path='/signup/customer' element={<CustSignUp />} />
-        <Route path='/signup/serviceProvider' element={<SpSignUp />} />
-        <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
+        <Route path="login" element={<Login />} />
+        <Route path="/signup/customer" element={<CustSignUp />} />
+        <Route path="/signup/serviceProvider" element={<SpSignUp />} />
+        <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
+        <Route path="/About" element={<About />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
@@ -117,11 +120,10 @@ const router = createBrowserRouter(
         <Route path="Ads" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path="Forum" element={<Forum />} />
         <Route path="VerifiedAds" element={<VerifiedAds />} />
         <Route path="RejectedAds" element={<RejectedAds />} />
         <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
-        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="Subscribtion" element={<Subscribtion />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -145,6 +147,9 @@ const router = createBrowserRouter(
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
+        
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

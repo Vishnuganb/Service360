@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import ForumQuestion from "./ForumQuestion";
 import ForumAnswer from "./ForumAnswer";
 import CreateAns from "./CreateAns";
-import PageNumber from "../PageNumber";
+// import PageNumber from "../PageNumber";
 
 import ForumImage from "../../../../assets/images/forum/AC.jpg";
 import profileIcon from "../../../../assets/images/advertiser/Adam.jpg";
@@ -18,10 +18,12 @@ import Ans2 from "../../../../assets/images/forum/Ans2.png";
 import Ans3 from "../../../../assets/images/forum/Ans3.jpg";
 import Ans4 from "../../../../assets/images/forum/Ans4.jpeg";
 
+import "../../../../style/advertiser/AdIndex.css";
+
 const ViewThread = () => {
   const [AnsModalShow, setAnsModalShow] = useState(false);
   const AnsImages1 = [Ans1, Ans2];
-  const AnsImages2 = [Ans2, Ans3];
+  const AnsImages2 = [Ans4, Ans3];
 
   const Question = [
     {
@@ -82,8 +84,8 @@ const ViewThread = () => {
         className="p-3"
       >
         <div>
-          {Question.map((post, index) => (
-            <ForumQuestion key={index} {...post} />
+          {Question.map((post) => (
+            <ForumQuestion key={post.id} {...post} />
           ))}
         </div>
         <div className="d-flex justify-content-center pt-4">
@@ -94,14 +96,14 @@ const ViewThread = () => {
         <CreateAns show={AnsModalShow} onHide={() => setAnsModalShow(false)} />
         <div>
           <h3>{Question[0].answers} Answers</h3>
-          {Answers.map((post, index) => (
-            <ForumAnswer key={index} {...post} />
+          {Answers.map((post) => (
+            <ForumAnswer key={post.id} {...post} />
           ))}
         </div>
 
-        <div className="d-flex justify-content-center">
+        {/* <div className="d-flex justify-content-center">
           <PageNumber />
-        </div>
+        </div> */}
       </div>
     </Container>
   );

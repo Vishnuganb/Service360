@@ -1,17 +1,9 @@
-.topActivity{
-    display: flex; 
-    flex-direction: row;
- 
- }
- 
- .Activity{
-     margin-top: 50px;
-     margin-bottom:  50px; 
-     font-size: 50px;
- }
- 
- .Date{
-     margin-top: 70px;
-     margin-bottom:  50px; 
-     margin-left: 150px;
- }
+.custom-icon {
+    
+    border: 1px solid #000000; /* Border color */
+  border-radius: 5px; /* Add a small curve to the corners */
+  padding: 5px 10px; /* Adjust padding as needed */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  }

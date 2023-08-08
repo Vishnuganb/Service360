@@ -1,117 +1,173 @@
-.location-popup, .Filter-popup{
-    display: none;
-  }
-  
-  .location-popup.open, .Filter-popup.open{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .popup-content {
-    width: 500px;
-    height: 600px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .popup-content h2{
-    font-family: roboto;
-    font-size: 25px;
-  }
-
-  .top{
-    display: flex;
-  }
-  
-  .close-button{
-    font-size: 20px;
-    width: 25px;
-    height: 25px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    margin-left: auto;
-  }
-
-  .PlaceList{
-    list-style: none;
-    padding: 0;
-    padding-top: 15px;
-    padding-left: 10px;
-  
-  }
-
-  .PlaceList li{
-    font-size: 14px; /* Change font size as needed */
-    margin-bottom: 12px; 
-    font-family: roboto;
+.location-popup,
+.Filter-popup {
+  display: none;
 }
 
-.PlaceList li.selected{
-    background-color: #f0f0f0; /* Add your preferred style for the selected location */
+/* locationsetup */
+.scrollable-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.cusmodalcontent {
+  background-image: url("../../assets/images/header/Background.png");
+ height: 200px;
+}
+
+.cuslocsearch {
+  border-radius: 10px;
+}
+
+.cuslocpopup {
+  background-color: black;
+  color: white;
+  height: 50px;
+}
+
+.PlaceList {
+  list-style: none;
+  padding: 0;
+  padding-top: 15px;
+  padding-left: 10px;
+
+}
+
+.PlaceList li {
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-family: roboto;
+}
+
+.PlaceList li.selected {
+  background-color: #f0f0f0;
   font-weight: bold;
 }
 
-/*FilterpopUp*/
-.custom-sort-button {
-  background-color: transparent; /* Set the background color to transparent */
-  color: #000000; /* Set the font color for the button text */
-  border: none;
-  outline: none;
-}
+/*.Filter-popup.open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}*/
 
-.custom-sort-button:focus,
-.custom-sort-button:active,
-.custom-sort-button:hover {
-  background-color: transparent;
-  color: black;
-  border: none;
-  outline: none;
-}
 
-.custom-dropdown-item {
-  background-color: transparent;
-  color: #000000;
-}
 
-.custom-dropdown-item:hover,
-.custom-dropdown-item.active {
-  background-color: #b7c3c7; /* Change this to your desired color for the hover and active states */
-  color: #5f5d5d; /* Set the font color for the dropdown text in the hover and active states */
-}
-.filter {
-  margin-top: 20px; /* Changed the margin-top value to 20px */
-  margin-left: 500px;
-}
+/*.popup-content {
+  width: 500px;
+  height: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}*/
 
-.FilterBy {
+/*.popup-content h2 {
   font-family: roboto;
-  margin-bottom: 10px; /* Added margin-bottom to separate from the content above */
+  font-size: 25px;
+}*/
+
+.top {
+  display: flex;
 }
+
+
+
+/*FilterpopUp*/
+
 
 .button-group-bottom {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 350px;
+  justify-content: center;
 }
 
-.button-group-bottom .btn {
-  background-color: #020d4b; /* Change this to your desired background color */
-  color: #ffffff; /* Change this to your desired text color */
+.btn2{
+  padding-left: 10px;
+}
+
+.btn1,
+.btn2 {
+  display: flex;
+  justify-content: center;
+  background-color: #292d32;
+  color: #fff;
+  font-size: 14px;
   border: none;
-  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.button-group-bottom .btn:active {
-  background-color: #000102; /* Change this to your desired background color when the button is active (clicked) */
-  color: #ffffff; /* Change this to your desired text color when the button is active (clicked) */
+.btn1:hover,
+.btn2:hover{
+  background-color: #fff;
+  border-color: #2596be;
+  color: #9f390d;
+}
+
+.cusfilterdropdown {
+  color: white; /* Change the text color */
+  background-color: #292d32; /* Change the background color */
+  border: none;
+}
+
+.cusfilterdropdown:hover{
+  background-color: #fff;
+  border-color: #2596be;
+  color: #9f390d;
+}
+
+.cusfilterdropdown:active {
+  background-color: rgb(255, 255, 255); /* Change the background color while clicking */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cusfilterbutt .dropdown-item {
+  color: black; /* Change the text color of dropdown options */
+  background-color: rgb(255, 252, 252); /* Change the background color of dropdown options */
+}
+
+.cusfilterbutt .dropdown-item:hover {
+  background-color: gray; /* Change the background color of dropdown options on hover */
+}
+
+.cusfilterbutt .dropdown-toggle{
+  background-color: #292d32; 
+  border: none;
+}
+/* If you want to style the split part of the dropdown toggle separately */
+.cusfilterbutt .dropdown-toggle::after {
+  border-top-color: rgb(255, 255, 255); /* Change the color of the split arrow */
 }

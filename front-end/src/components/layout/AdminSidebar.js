@@ -87,6 +87,13 @@ function AdminSideBar() {
                                 </Link>
                             </li>
 
+                            <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
+                                <Link to="/admin/sessions" className="nav-link nav-link-sidebar text-white">
+                                    <i class="bi bi-display"></i>
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Training Sessions </span>
+                                </Link>
+                            </li>
+
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                                 <Link to="/admin/reviews" className="nav-link nav-link-sidebar text-white" >
                                     <i className="fas fa-star-half-alt"></i>

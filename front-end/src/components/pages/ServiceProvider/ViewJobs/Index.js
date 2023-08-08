@@ -4,10 +4,10 @@ import BodyPage from './bodyPage.js';
 
 function Index(){
     return(
-        <>
+        <div>
             <BodyNav/>
             <BodyPage/>
-        </>
+        </div>
     );
 }
 

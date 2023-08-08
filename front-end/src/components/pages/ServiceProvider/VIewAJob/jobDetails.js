@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
 import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
+import Button from "react-bootstrap/Button";
 
 function jobDetails() {
   return (
@@ -38,6 +39,16 @@ function jobDetails() {
         >
           (for 5 jobs)
         </div>
+
+        <div>
+            <Button
+              className="jobDetails-apply-btn btn-ServiceProvider-1 mt-2 mb-4"
+              style={{ fontFamily: "'Rubik', sans-serif" }}
+            >
+              Apply
+            </Button>
+          </div>
+
       </Col>
       <Col className="jobDetails-details-container col-12 col-lg-10 d-flex flex-column">
         <div className="jobDetails-status-container mb-2">

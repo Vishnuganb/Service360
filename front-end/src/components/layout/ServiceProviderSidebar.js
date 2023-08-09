@@ -32,7 +32,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 mt-4 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/Dashboard" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-grid"></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Dashboard</span>
                                 </Link>
@@ -41,7 +41,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/MyProjectStates" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-briefcase" id="nav-single-element" style={{ fill: "none" }}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Jobs & Vacancies</span>
                                 </Link>
@@ -50,7 +50,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/AvailabilityCalendar" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-calendar2-check" id="nav-single-element" style={{ fill: "none" }}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Availability Calendar</span>
                                 </Link>
@@ -74,9 +74,11 @@ function ServiceProviderSideBar() {
                                     id="basic-nav-dropdown"
                                     className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
                                 >
-                                    <NavDropdown.Item as={Link} to="#" className="no-hover"> Create Session </NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/ServiceProvider/ViewTrainingSessions" className="no-hover"> View Session </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item as={Link} to="#" className="no-hover">  My Sessions </NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/ServiceProvider/CreateTrainingSession" className="no-hover"> Create Sessions </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item as={Link} to="/ServiceProvider/MyTrainingSessions" className="no-hover">  My Sessions </NavDropdown.Item>
                                 </NavDropdown>
                                 
                                 <ul
@@ -85,8 +87,9 @@ function ServiceProviderSideBar() {
                                     data-bs-parent="#parentM"
                                 >
                                     <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
-                                        <Link to="#" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4" > Create Session  </Link>
-                                        <Link to="#" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> My Sessions </Link>
+                                        <Link to="/ServiceProvider/ViewTrainingSessions" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4" > View Sessions  </Link>
+                                        <Link to="/ServiceProvider/CreateTrainingSession" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4" > Create Session  </Link>
+                                        <Link to="/ServiceProvider/MyTrainingSessions" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> My Sessions </Link>
                                     </li>
                                 </ul>
                             </li>
@@ -94,7 +97,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/MyServices" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-tools" id="nav-single-element" style={{ fill: "none" }}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>My Services</span>
                                 </Link>
@@ -103,7 +106,7 @@ function ServiceProviderSideBar() {
                             
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/ViewHistory" className="nav-link nav-link-sidebar text-white">
                                     <i class="fas fa-history" id="nav-single-element" ></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>View History</span>
                                 </Link>
@@ -112,7 +115,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/CreateBlog" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-card-heading" id="nav-single-element" style={{ fill: "none" }}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Create Blog</span>
                                 </Link>

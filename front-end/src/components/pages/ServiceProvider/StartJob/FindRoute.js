@@ -7,15 +7,15 @@ import "leaflet/dist/leaflet.css";
 import Routing from "./Routing";
 
 const routeDetails = [
-    {
-    cutomerLocation: "nelson place, colombo",
-    serviceProviderLocation: "42nd lane, colombo",
-    },
-  ];
+  {
+    cutomerLocation: "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
+    serviceProviderLocation: "no 11 5/4 Nelson Place, Colombo 06"
+  }
+];
 
 function FindRoute() {
 
-    const position = [6.902,79.859];
+    const position = [16.902,79.859];
     
     return(
         <div className="ms-lg-4 me-lg-4">
@@ -31,16 +31,6 @@ function FindRoute() {
                     <Form.Group className="mb-3" controlId="formBasicTitle">
                         <Form.Label>Destination</Form.Label>
                         <Form.Control type="text" value={routeDetails[0].cutomerLocation} />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Distance</Form.Label>
-                        <Form.Control type="text" value="15 km" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Duration</Form.Label>
-                        <Form.Control type="text" value="50 minutes"/>
                     </Form.Group>
                 </Form>
 

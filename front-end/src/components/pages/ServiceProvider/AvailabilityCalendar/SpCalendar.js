@@ -24,81 +24,138 @@ function SpCalendar(){
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
-       //Job objects with properties
-       const availabilityCalenderSingleDayData = [
+    const handleShow = (date) => {
+        setSelectedModalDate(date); // Set the selected date for the modal
+        setShow(true);
+    };
+    const [selectedModalDate, setSelectedModalDate] = useState(new Date());
+    
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [activeDate, setActiveDate] = useState(new Date());
+
+
+    const [selectedSchedules, setSelectedSchedules] = useState([]);    // New state for selected date's schedules
+
+    const availabilityCalenderSingleDayData = [
         {
             profile: UserImg,
-            id: 1,
-            customerName: 'Viyaasan',
-            startTime: '8.00',
-            endTime: '10.00', 
-            location: 'Dehiwala',
-            description: 'AC repairing',
-            date:'2023-08-19',
+            id: 5,
+            customerName: 'Rahul',
+            startTime: '9.30',
+            endTime: '12.00',
+            location: 'Colombo',
+            description: 'Plumbing work',
+            date: '2023-08-012',
         },
         {
             profile: UserImg,
-            id: 2,
-            customerName: 'Tharun',
+            id: 6,
+            customerName: 'Samantha',
+            startTime: '14.00',
+            endTime: '16.00',
+            location: 'Kandy',
+            description: 'Electrical work',
+            date: '2023-08-12',
+        },
+        {
+            profile: UserImg,
+            id: 7,
+            customerName: 'Nimal',
+            startTime: '11.00',
+            endTime: '12.30',
+            location: 'Galle',
+            description: 'Painting',
+            date: '2023-08-16',
+        },
+        {
+            profile: UserImg,
+            id: 8,
+            customerName: 'Lakshmi',
+            startTime: '9.00',
+            endTime: '10.30',
+            location: 'Negombo',
+            description: 'Carpentry work',
+            date: '2023-08-16',
+        },
+        {
+            profile: UserImg,
+            id: 9,
+            customerName: 'Dilshan',
+            startTime: '15.00',
+            endTime: '17.00',
+            location: 'Kurunegala',
+            description: 'Roof repair',
+            date: '2023-08-20',
+        },
+        {
+            profile: UserImg,
+            id: 10,
+            customerName: 'Priya',
+            startTime: '12.00',
+            endTime: '13.30',
+            location: 'Matara',
+            description: 'Gardening',
+            date: '2023-08-24',
+        },
+        {
+            profile: UserImg,
+            id: 11,
+            customerName: 'Aruna',
+            startTime: '8.30',
+            endTime: '10.30',
+            location: 'Anuradhapura',
+            description: 'Window cleaning',
+            date: '2023-08-24',
+        },
+        {
+            profile: UserImg,
+            id: 12,
+            customerName: 'Sanjeewa',
+            startTime: '14.00',
+            endTime: '16.00',
+            location: 'Gampaha',
+            description: 'Floor polishing',
+            date: '2023-08-27',
+        },
+        {
+            profile: UserImg,
+            id: 13,
+            customerName: 'Thilini',
             startTime: '10.00',
-            endTime: '11.00',
-            location: 'Wellawatte',
-            description: 'sofa cleaning',
-            date:'2023-08-19',
-        },
-        {
-            profile: UserImg,
-            id: 3,
-            customerName: 'Kavin',
-            startTime: '1.00',
-            endTime: '3.00',
-            location: 'Nugegoda',
-            description: 'TV repairing',
-            date:'2023-08-19',
-        },
-        {
-            profile: UserImg,
-            id:4,
-            customerName: 'Umai vanan',
-            startTime: '4.00',
-            endTime: '5.00',
-            location: 'Jaffna',
-            description: 'Fridge repairing',
-            date:'2023-08-19',
+            endTime: '12.00',
+            location: 'Kotte',
+            description: 'Plastering work',
+            date: '2023-08-29',
         },
     ];
 
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [activeDate, setActiveDate] = useState(new Date());
-  
     const getHeader = () => {
         return (
 
-<div className="SpCalendar-header d-flex justify-content-between align-items-center">
-    <div className="d-flex align-items-center">
-        <i
-            className="bi bi-chevron-left me-2"
-            onClick={() => setActiveDate(subMonths(activeDate, 1))}
-        />
-        <i
-            className="bi bi-chevron-right"
-            onClick={() => setActiveDate(addMonths(activeDate, 1))}
-        />
-    </div>
-    <span className="currentMonth">{format(activeDate, "MMMM yyyy")}</span>
-    <div
-        className="SpCalendar-todayButton"
-        onClick={() => {
-            setSelectedDate(new Date());
-            setActiveDate(new Date());
-        }}
-    >
-        Today
-    </div>
-</div>
+        <div className="SpCalendar-header d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center">
+                <i
+                    className="bi bi-chevron-left me-2"
+                    onClick={() => setActiveDate(subMonths(activeDate, 1))}
+                />
+                <i
+                    className="bi bi-chevron-right"
+                    onClick={() => setActiveDate(addMonths(activeDate, 1))}
+                />
+            </div>
+            <span className="currentMonth">{format(activeDate, "MMMM yyyy")}</span>
+            <div
+                className="SpCalendar-todayButton"
+                onClick={() => {
+                    setSelectedDate(new Date());
+                    setActiveDate(new Date());
+                }}
+            >
+                Today
+            </div>
+        </div>
 
             
           );
@@ -122,16 +179,31 @@ function SpCalendar(){
     const generateDatesForCurrentWeek = (date, selectedDate, activeDate) => {
         let currentDate = date;
         const week = [];
+
         for (let day = 0; day < 7; day++) {
           const cloneDate = currentDate;
+          const formattedDate = format(currentDate, "yyyy-MM-dd");
+    
+          const schedulesForDate = getSchedulesForDate(cloneDate);
+          const numSchedules = schedulesForDate.length;
+  
+          const hasSchedules = numSchedules > 0;
+          const hasFewSchedules = numSchedules === 1;
+          const hasManySchedules = numSchedules >= 2;
+
           week.push(
             <div
               className={`day ${
                 isSameMonth(currentDate, activeDate) ? "" : "inactiveDay"
               } ${isSameDay(currentDate, selectedDate) ? "selectedDay" : ""}
-              ${isSameDay(currentDate, new Date()) ? "today" : ""}`}
+              ${isSameDay(currentDate, new Date()) ? "today" : ""}
+              ${isSameDay(currentDate, new Date()) ? "" : hasSchedules ? "hasSchedules" : ""}
+              ${isSameDay(currentDate, new Date()) ? "" : hasFewSchedules ? "hasFewSchedules" : ""}
+              ${isSameDay(currentDate, new Date()) ? "" : hasManySchedules ? "hasManySchedules" : ""}`}
               onClick={() => {
                 setSelectedDate(cloneDate);
+                setSelectedSchedules(getSchedulesForDate(cloneDate)); // Update selected schedules
+                // setSelectedModalDate(cloneDate); // Pass the selected date to handleShow
               }}
             >
               {format(currentDate, "d")}
@@ -140,6 +212,11 @@ function SpCalendar(){
           currentDate = addDays(currentDate, 1);
         }
         return <>{week}</>;
+      };
+
+      const getSchedulesForDate = (date) => {
+        const formattedDate = format(date, "yyyy-MM-dd");
+        return availabilityCalenderSingleDayData.filter((work) => work.date === formattedDate);
       };
     
       const getDates = () => {
@@ -177,15 +254,15 @@ function SpCalendar(){
                             {getDates()}
 
                         </div>
-                        <Button className="mt-3 d-flex ms-auto btn-ServiceProvider-1" onClick={handleShow}>Add Schedule</Button>
+                        <Button className="mt-3 d-flex ms-auto btn-ServiceProvider-1" onClick={() => handleShow(activeDate)}>Add Schedule</Button>
                     </div>
 
                     <div className="div-schedules w-xl-50 w-100">
                             <div className=" col-lg-10 col-12 ms-lg-5 mt-xl-0 mt-4">
-                                        <span style={{fontSize:"24px"}}>Schedule for {availabilityCalenderSingleDayData[0].date}</span>    {/* date is not rendering */}      
+                                        <span style={{fontSize:"24px"}}>Schedule for {format(selectedDate, "yyyy-MM-dd")}</span>    {/* date is not rendering */}      
                             </div>
 
-                            {availabilityCalenderSingleDayData.map((work) => (
+                            {selectedSchedules.map((work) => (
                                 <Col key={work.id} className="col-lg-12 col-12 ms-lg-5">
                                     <div className="col-lg-10 px-3 mt-1">
                                         <Row>
@@ -218,14 +295,14 @@ function SpCalendar(){
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff'}}>
-                    <Modal.Title>Schedule Visitation</Modal.Title>
+                        <Modal.Title>Schedule Visitation</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Date</Form.Label>
-                        <Form.Control className='mb-2' type="date" placeholder="" autoFocus />
+                        <Form.Control className='mb-2' type="date" value={format(selectedDate, "yyyy-MM-dd")}  onChange={(e)=>setSelectedDate(new Date(e.target.value))} autoFocus />
 
                         <Form.Label>Start Time</Form.Label>
                         <Form.Control className='mb-2' type="time" placeholder="" autoFocus/>

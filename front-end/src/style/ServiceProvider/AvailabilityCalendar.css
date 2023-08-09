@@ -91,3 +91,21 @@
        overflow-x: scroll;
     }
   }
+
+  .day.hasSchedules {
+    background-color: #F0D787; /* Replace with your desired background color */
+  }
+
+  .day.today {
+    background-color: #77e177; /* Replace with your desired background color for today */
+  }
+
+  /* Light dark green color for dates with 1 or 2 schedules */
+  .day.hasFewSchedules {
+    background-color: #98caf6;
+  }
+
+  /* Dark red color for dates with 3 or more schedules */
+  .day.hasManySchedules {
+    background-color: #eb7e6f;
+  }

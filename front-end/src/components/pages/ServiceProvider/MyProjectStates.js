@@ -48,7 +48,7 @@ function MyProjectsJobsStates() {
                 </Row>
                 <Row className='MyProjectsStates-Job-Container d-flex flex-row ms-lg-2 me-lg-2'>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyProjectsJobs">
                         <Card className="MyProjectsStates-card mb-3" >
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.pendingJobs.image} />
                             <Card.Body>
@@ -58,7 +58,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyProjectsJobs">
                         <Card className="MyProjectsStates-card mb-3">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.processingJobs.image} />
                             <Card.Body>
@@ -68,7 +68,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyProjectsJobs">
                         <Card className="MyProjectsStates-card mb-3">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.completedJobs.image} />
                             <Card.Body>
@@ -78,7 +78,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyProjectsJobs">
                         <Card className="MyProjectsStates-card">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.rejectedJobs.image} />
                             <Card.Body>
@@ -95,7 +95,7 @@ function MyProjectsJobsStates() {
                 </Row>
                 <Row className='MyProjectsStates-Vacancy-Container d-flex flex-row ms-lg-2 me-lg-2'>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyprojectsVacancies">
                         <Card className="MyProjectsStates-card mb-3" >
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.pendingVacancies.image} />
                             <Card.Body>
@@ -105,7 +105,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyprojectsVacancies">
                         <Card className="MyProjectsStates-card mb-3">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.processingVacancies.image} />
                             <Card.Body>
@@ -115,7 +115,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyprojectsVacancies">
                         <Card className="MyProjectsStates-card mb-3">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.completedVacancies.image} />
                             <Card.Body>
@@ -125,7 +125,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="#">
+                        <Link to="/ServiceProvider/MyprojectsVacancies">
                         <Card className="MyProjectsStates-card">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.rejectedVacancies.image} />
                             <Card.Body>

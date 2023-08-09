@@ -3,33 +3,72 @@ import L from "leaflet";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
 import { useMap } from "react-leaflet";
+import Geocode from "react-geocode";
+import { useState } from "react";
+
+Geocode.setApiKey("AIzaSyBbGzH8N4wZYI3haxyktwT0G-QqA13fJyg");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
 
 // Set custom marker icon for Leaflet
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
 });
 
-// Routing component using Leaflet Routing Machine
+
+const routeDetails = [
+  {
+    cutomerLocation: "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
+    serviceProviderLocation: "293 Galle Rd, Dehiwala-Mount Lavinia 10350"
+  }
+];
+
 export default function Routing() {
-  const map = useMap(); // Get access to the map instance from react-leaflet
+  const map = useMap();
+  const [waypoints, setWaypoints] = useState([]);
 
-  // Effect to add routing control to the map
   useEffect(() => {
-    if (!map) return; // Return if map instance is not available
+    if (!map) return;
 
-    // Create a routing control with waypoints and options
+    const convertAddressToLatLng = async (address) => {
+      try {
+        const response = await Geocode.fromAddress(address);
+        const { lat, lng } = response.results[0].geometry.location;
+        return L.latLng(lat, lng);
+      } catch (error) {
+        console.error("Error converting address to LatLng:", error);
+        return null;
+      }
+    };
+
+    const convertRouteDetailsToWaypoints = async () => {
+      const customerLocation = routeDetails[0].cutomerLocation;
+      const serviceProviderLocation = routeDetails[0].serviceProviderLocation;
+      const customerLatLng = await convertAddressToLatLng(customerLocation);
+      const serviceProviderLatLng = await convertAddressToLatLng(serviceProviderLocation);
+      return [customerLatLng, serviceProviderLatLng];
+    };
+
+    convertRouteDetailsToWaypoints().then((waypoints) => {
+      setWaypoints(waypoints);
+    });
+  }, [map]);
+
+  useEffect(() => {
+    if (waypoints.length === 0) return;
+
     const routingControl = L.Routing.control({
-      waypoints: [L.latLng(6.9, 79.86), L.latLng(6.91189,79.848)],
+      waypoints,
       routeWhileDragging: true
     }).addTo(map);
 
-    // Cleanup function to remove routing control when component unmounts
     return () => {
       if (map.hasLayer(routingControl)) {
         map.removeControl(routingControl);
       }
     };
-  }, [map]); // Depend on the map instance to trigger the effect
+  }, [map, waypoints]);
 
-  return null; // This component doesn't render anything itself
+  return null;
 }

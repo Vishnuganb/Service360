@@ -7,33 +7,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-import Ad1_1 from '../../../../assets/images/admin/ads/Driller_1.jpg';
-import Ad1_2 from '../../../../assets/images/admin/ads/Driller_2.jpg';
-import Ad1_3 from '../../../../assets/images/admin/ads/Driller_3.jpg';
-import Ad2_1 from '../../../../assets/images/admin/ads/Screw_1.jpeg';
-import Ad2_2 from '../../../../assets/images/admin/ads/Screw_2.jpeg';
-import Ad2_3 from '../../../../assets/images/admin/ads/Screw_3.jpeg';
-import Ad3_1 from '../../../../assets/images/admin/ads/Grinder_1.jpeg';
-import Ad3_2 from '../../../../assets/images/admin/ads/Grinder_2.jpeg';
-import Ad3_3 from '../../../../assets/images/admin/ads/Grinder_3.jpeg';
-import Ad4_1 from '../../../../assets/images/admin/ads/drills_2.jpeg';
-import Ad4_2 from '../../../../assets/images/admin/ads/drills_1.jpeg';
-import Ad4_3 from '../../../../assets/images/admin/ads/drills_3.jpeg';
-import Ad5_1 from '../../../../assets/images/admin/ads/handsaw_1.jpeg';
-import Ad5_2 from '../../../../assets/images/admin/ads/handsaw_2.jpeg';
-import Ad5_3 from '../../../../assets/images/admin/ads/handsaw_3.jpeg';
-import Ad6_1 from '../../../../assets/images/admin/ads/hammer_1.jpeg';
-import Ad6_2 from '../../../../assets/images/admin/ads/hammer_2.jpeg';
-import Ad6_3 from '../../../../assets/images/admin/ads/hammer_3.jpeg';
-import Ad7_1 from '../../../../assets/images/admin/ads/disk_2.jpeg';
-import Ad7_2 from '../../../../assets/images/admin/ads/disk_1.jpeg';
-import Ad7_3 from '../../../../assets/images/admin/ads/disk_3.jpeg';
-import Ad8_1 from '../../../../assets/images/admin/ads/plier_1.jpeg';
-import Ad8_2 from '../../../../assets/images/admin/ads/plier_2.jpeg';
-import Ad8_3 from '../../../../assets/images/admin/ads/plier_3.jpeg';
-import Ad9_1 from '../../../../assets/images/admin/ads/wrench_1.jpeg';
-import Ad9_2 from '../../../../assets/images/admin/ads/wrench_2.jpeg';
-import Ad9_3 from '../../../../assets/images/admin/ads/wrench_3.jpeg';
+import Session1_1 from '../../../../assets/images/admin/trainingSession/Training_Carpentry_1.jpeg';
+import Session1_2 from '../../../../assets/images/admin/trainingSession/Training_Carpentry_2.jpeg';
+import Session1_3 from '../../../../assets/images/admin/trainingSession/Training_Carpentry_3.jpeg';
+import Session2_1 from '../../../../assets/images/admin/trainingSession/Training_Tiling_1.jpeg';
+import Session2_2 from '../../../../assets/images/admin/trainingSession/Training_Tiling_2.jpeg';
+import Session2_3 from '../../../../assets/images/admin/trainingSession/Training_Tiling_3.jpeg';
+import Session3_1 from '../../../../assets/images/admin/trainingSession/Training_ACRepair_1.jpeg';
+import Session3_2 from '../../../../assets/images/admin/trainingSession/Training_ACRepair_2.jpeg';
+import Session3_3 from '../../../../assets/images/admin/trainingSession/Training_ACRepair_3.jpeg';
+import Session4_1 from '../../../../assets/images/admin/trainingSession/Training_Painting_1.jpeg';
+import Session4_2 from '../../../../assets/images/admin/trainingSession/Training_Painting_2.jpeg';
+import Session4_3 from '../../../../assets/images/admin/trainingSession/Training_Painting_3.jpeg';
+import Session5_1 from '../../../../assets/images/admin/trainingSession/Training_Plumbing_1.jpeg';
+import Session5_2 from '../../../../assets/images/admin/trainingSession/Training_Plumbing_2.jpeg';
+import Session5_3 from '../../../../assets/images/admin/trainingSession/Training_Plumbing_3.jpeg';
+import Session6_1 from '../../../../assets/images/admin/trainingSession/Training_Electrical_1.jpeg';
+import Session6_2 from '../../../../assets/images/admin/trainingSession/Training_Electrical_2.jpeg';
+import Session6_3 from '../../../../assets/images/admin/trainingSession/Training_Electrical_3.jpeg';
+import Session7_1 from '../../../../assets/images/admin/trainingSession/Training_Roofing_1.jpeg';
+import Session7_2 from '../../../../assets/images/admin/trainingSession/Training_Roofing_2.jpeg';
+import Session7_3 from '../../../../assets/images/admin/trainingSession/Training_Roofing_3.jpeg';
+import Session8_1 from '../../../../assets/images/admin/trainingSession/Training_Masonry_1.jpeg';
+import Session8_2 from '../../../../assets/images/admin/trainingSession/Training_Masonry_2.jpeg';
+import Session8_3 from '../../../../assets/images/admin/trainingSession/Training_Masonry_3.jpeg';
+import Session9_1 from '../../../../assets/images/admin/ads/wrench_1.jpeg';
+import Session9_2 from '../../../../assets/images/admin/ads/wrench_2.jpeg';
+import Session9_3 from '../../../../assets/images/admin/ads/wrench_3.jpeg';
 import { set } from 'lodash';
 
 const searchInputStyle = {
@@ -44,12 +44,18 @@ const StyledModalFooter = styled(Modal.Footer)`
         justify-content: flex-end;
     `;
 
-function AdminAdvertisements() {
+function AdminSessions() {
 
-    const advertisementsData = [
+    const sessionsData = [
         {
             id: 1,
-            adName: 'Driller',
+            title: 'Mastering Carpentry Techniques',
+            description: 'Join our comprehensive carpentry training session to learn advanced techniques and enhance your woodworking skills.',
+            date: '2023-08-25',
+            time: '10:00 AM',
+            duration: '2 hours',
+            location: 'Colombo Workshop ',
+            entrance_fee: 'Rs. 500',
             firstName: 'John',
             lastName: 'Doe',
             nic: '123456789V',
@@ -58,10 +64,8 @@ function AdminAdvertisements() {
             address: '123 Main Street, City',
             registeredDate: '2023-08-01',
             service: 'Carpentry',
-            category: 'Tools',
-            shopName: 'The Handyman Hub',
-            shopAddress: '123 Main Street, City',
-            images: [Ad1_1, Ad1_2, Ad1_3],
+            category: 'Interior Works',
+            images: [Session1_1, Session1_2, Session1_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -70,7 +74,13 @@ function AdminAdvertisements() {
         },
         {
             id: 2,
-            adName: 'ScrewDriver',
+            title: 'Expert Plumbing Solutions',
+            description: 'Discover the latest trends in plumbing and get hands-on experience with modern tools and techniques in this informative session.',
+            date: '2023-08-23',
+            time: '09:00 AM',
+            duration: '2.5 hours',
+            location: 'Jaffna Workshop Center',
+            entrance_fee: 'Rs. 600',
             firstName: 'Jane',
             lastName: 'Smith',
             nic: '987654321V',
@@ -78,11 +88,9 @@ function AdminAdvertisements() {
             email: 'jane.smith@example.com',
             address: '456 Oak Avenue, Town',
             registeredDate: '2023-08-02',
-            service: 'AC Repair',
-            category: 'Tools',
-            shopName: 'Electric Fixers',
-            shopAddress: '456 Oak Avenue, Town',
-            images: [Ad2_1, Ad2_2, Ad2_3],
+            service: 'Plumbing',
+            category: 'Electrical & Plumbing',
+            images: [Session5_1, Session5_2, Session5_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -91,7 +99,13 @@ function AdminAdvertisements() {
         },
         {
             id: 3,
-            adName: 'Grinder',
+            title: 'Essential Electrical Repairs',
+            description: 'Learn the fundamentals of electrical repairs and safety measures to provide top-notch electrical services to your customers.',
+            date: '2023-08-24',
+            time: '11:00 AM',
+            duration: '4 hours',
+            location: 'Badhulla Training Center',
+            entrance_fee: 'Rs. 800',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '456123789V',
@@ -99,11 +113,9 @@ function AdminAdvertisements() {
             email: 'mike.johnson@example.com',
             address: '789 Maple Lane, Village',
             registeredDate: '2023-08-03',
-            service: 'Masonry',
-            category: 'Tools',
-            shopName: 'Creative Carpentry',
-            shopAddress: '789 Maple Lane, Village',
-            images: [Ad3_1, Ad3_2, Ad3_3],
+            service: 'Electrical Wiring',
+            category: 'Electrical & Plumbing',
+            images: [Session6_1, Session6_2, Session6_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -112,7 +124,13 @@ function AdminAdvertisements() {
         },
         {
             id: 4,
-            adName: 'ScrewDriver',
+            title: 'Mastering Tiling Techniques',
+            description: 'Explore the art of tiling and become proficient in creating beautiful and durable tile installations for various spaces.',
+            date: '2023-08-26',
+            time: '10:30 AM',
+            duration: '3.5 hours',
+            location: 'Tile Design Studio',
+            entrance_fee: 'Rs. 800',
             firstName: 'De',
             lastName: 'Silva',
             nic: '789123456V',
@@ -120,11 +138,9 @@ function AdminAdvertisements() {
             email: 'de.silva@example.com',
             address: '101 Pine Street, City',
             registeredDate: '2023-08-04',
-            service: 'CCTV Repair',
-            category: 'Tools',
-            shopName: 'Master Plumbers',
-            shopAddress: '101 Pine Street, City',
-            images: [Ad2_1, Ad2_2, Ad2_3],
+            service: 'Tiles Fitting',
+            category: 'Construction',
+            images: [Session2_1, Session2_2, Session2_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -133,7 +149,13 @@ function AdminAdvertisements() {
         },
         {
             id: 5,
-            adName: 'Grinder',
+            title: 'Advanced HVAC Maintenance',
+            description: 'Join us to delve into advanced HVAC system maintenance strategies, ensuring optimal performance and customer satisfaction.',
+            date: '2023-08-27',
+            time: '01:00 PM',
+            duration: '2 hours',
+            location: 'HVAC Training Center',
+            entrance_fee: 'Rs. 500',
             firstName: 'Kumar',
             lastName: 'Sangakkara',
             nic: '654987321V',
@@ -141,11 +163,9 @@ function AdminAdvertisements() {
             email: 'kumar.sangakkara@example.com',
             address: '222 Oak Road, Town',
             registeredDate: '2023-08-05',
-            service: 'Sofa cleaning',
-            category: 'Tools',
-            shopName: 'All Seasons Cleaners',
-            shopAddress: '222 Oak Road, Town',
-            images: [Ad3_1, Ad3_2, Ad3_3],
+            service: 'AC Repair',
+            category: 'Electrical & Plumbing',
+            images: [Session3_1, Session3_2, Session3_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -154,7 +174,13 @@ function AdminAdvertisements() {
         },
         {
             id: 6,
-            adName: 'Driller',
+            title: 'Creative Interior Carpentry',
+            description: 'Unleash your creativity with interior carpentry designs and learn how to add unique touches to spaces through custom woodwork.',
+            date: '2023-09-02',
+            time: '03:30 PM',
+            duration: '2 hours',
+            location: 'Interior Design Academy',
+            entrance_fee: 'Rs. 1000',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '789654123V',
@@ -162,11 +188,9 @@ function AdminAdvertisements() {
             email: 'mike.johnson@example.com',
             address: '333 Maple Street, Village',
             registeredDate: '2023-08-06',
-            service: 'Painting',
-            category: 'Tools',
-            shopName: 'Artisan Masons',
-            shopAddress: '333 Maple Street, Village',
-            images: [Ad1_1, Ad1_2, Ad1_3],
+            service: 'Carpentry',
+            category: 'Interior Works',
+            images: [Session1_1, Session1_2, Session1_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -175,7 +199,13 @@ function AdminAdvertisements() {
         },
         {
             id: 7,
-            adName: 'Drills',
+            title: 'Professional Painting Techniques',
+            description: 'Upgrade your painting skills by mastering advanced techniques, color theory, and surface preparation for flawless results.',
+            date: '2023-09-06',
+            time: '11:30 AM',
+            duration: '4 hours',
+            location: 'Artistic Painting Studio',
+            entrance_fee: 'Rs. 950',
             firstName: 'Saman',
             lastName: 'Perera',
             nic: '321456789V',
@@ -183,11 +213,9 @@ function AdminAdvertisements() {
             email: 'saman.perera@example.com',
             address: '444 Pine Avenue, City',
             registeredDate: '2023-08-07',
-            service: 'Electrical Wiring',
-            category: 'Spare Parts',
-            shopName: 'SecureTech Solutions',
-            shopAddress: '444 Pine Avenue, City',
-            images: [Ad4_1, Ad4_2, Ad4_3],
+            service: 'Painting',
+            category: 'Interior Works',
+            images: [Session4_1, Session4_2, Session4_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -196,7 +224,13 @@ function AdminAdvertisements() {
         },
         {
             id: 8,
-            adName: 'Handsaw',
+            title: 'Effective Roofing Practices',
+            description: 'Learn the essentials of roofing installation, repair, and maintenance, ensuring your clients have a reliable and safe roof over their heads.',
+            date: '2023-09-10',
+            time: '09:30 AM',
+            duration: '3.5 hours',
+            location: 'Roofing Education Center',
+            entrance_fee: 'Rs. 850',
             firstName: 'Susantha',
             lastName: 'Villergers',
             nic: '987654321V',
@@ -204,11 +238,9 @@ function AdminAdvertisements() {
             email: 'susantha.villergers@example.com',
             address: '555 Oak Lane, Town',
             registeredDate: '2023-08-08',
-            service: 'Tools',
-            category: 'Tools',
-            shopName: 'Elite Interior Design',
-            shopAddress: '555 Oak Lane, Town',
-            images: [Ad5_1, Ad5_2, Ad5_3],
+            service: 'Iron Works',
+            category: 'Construction',
+            images: [Session7_1, Session7_2, Session7_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -217,7 +249,13 @@ function AdminAdvertisements() {
         },
         {
             id: 9,
-            adName: 'Hammer',
+            title: 'Plumbing Innovations Workshop',
+            description: 'Stay updated with the latest plumbing innovations and technology trends to offer cutting-edge solutions to your customers.',
+            date: '2023-09-15',
+            time: '02:00 PM',
+            duration: '2 hours',
+            location: 'Plumbing Training Center',
+            entrance_fee: 'Rs. 750',
             firstName: 'William',
             lastName: 'Wiliamson',
             nic: '654321789V',
@@ -225,11 +263,9 @@ function AdminAdvertisements() {
             email: 'william.wiliamson@example.com',
             address: '666 Maple Road, Village',
             registeredDate: '2023-08-09',
-            service: 'Fire Alarm',
-            category: 'Tools',
-            shopName: 'GreenThumb Landscaping',
-            shopAddress: '666 Maple Road, Village',
-            images: [Ad6_1, Ad6_2, Ad6_3],
+            service: 'Plumbing',
+            category: 'Electrical & Plumbing',
+            images: [Session5_1, Session5_2, Session5_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -238,7 +274,13 @@ function AdminAdvertisements() {
         },
         {
             id: 10,
-            adName: 'Driller',
+            title: 'Expert Furniture Restoration',
+            description: 'Dive into the art of furniture restoration and learn how to bring new life to old pieces with careful techniques and craftsmanship.',
+            date: '2023-09-20',
+            time: '11:30 AM',
+            duration: '3 hours',
+            location: 'Restoration Art Studio',
+            entrance_fee: 'Rs. 500',
             firstName: 'Johnes',
             lastName: 'Doe',
             nic: '123456789V',
@@ -247,10 +289,8 @@ function AdminAdvertisements() {
             address: '777 Main Street, City',
             registeredDate: '2023-08-10',
             service: 'Carpentry',
-            category: 'Tools',
-            shopName: 'TopNotch Roofing',
-            shopAddress: '777 Main Street, City',
-            images: [Ad1_1, Ad1_2, Ad1_3],
+            category: 'Interior Works',
+            images: [Session1_1, Session1_2, Session1_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -259,7 +299,13 @@ function AdminAdvertisements() {
         },
         {
             id: 11,
-            adName: 'ScrewDriver',
+            title: 'Advanced Locksmithing Methods',
+            description: 'Discover advanced locksmithing techniques and tools that will help you offer efficient and secure solutions to your clients.',
+            date: '2023-08-27',
+            time: '10:00 AM',
+            duration: '2.5 hours',
+            location: 'Colombo Training center',
+            entrance_fee: 'Rs. 1200',
             firstName: 'Jane',
             lastName: 'Smith',
             nic: '987654321V',
@@ -267,11 +313,9 @@ function AdminAdvertisements() {
             email: 'jane.smith@example.com',
             address: '888 Oak Avenue, Town',
             registeredDate: '2023-08-11',
-            service: 'AC Repair',
-            category: 'Tools',
-            shopName: 'TechZone Electronics',
-            shopAddress: '888 Oak Avenue, Town',
-            images: [Ad2_1, Ad2_2, Ad2_3],
+            service: 'Video Surveillance',
+            category: 'Security',
+            images: [Session2_1, Session2_2, Session2_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -280,7 +324,13 @@ function AdminAdvertisements() {
         },
         {
             id: 12,
-            adName: 'Grinder',
+            title: 'Green Energy Plumbing',
+            description: 'Learn how to integrate green energy solutions into your plumbing services and contribute to sustainable practices.',
+            date: '2023-09-30',
+            time: '10:00 AM',
+            duration: '3 hours',
+            location: 'Green Plumbing Institute',
+            entrance_fee: 'Rs. 2000',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '456123789V',
@@ -288,11 +338,9 @@ function AdminAdvertisements() {
             email: 'mike.johnson@example.com',
             address: '999 Maple Lane, Village',
             registeredDate: '2023-08-12',
-            service: 'Masonry',
-            category: 'Tools',
-            shopName: 'AquaFlow Plumbing',
-            shopAddress: '999 Maple Lane, Village',
-            images: [Ad3_1, Ad3_2, Ad3_3],
+            service: 'Plumbing',
+            category: 'Electrical & Plumbing',
+            images: [Session5_1, Session5_2, Session5_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -301,7 +349,13 @@ function AdminAdvertisements() {
         },
         {
             id: 13,
-            adName: 'Grinder Disks',
+            title: 'Mastering Concrete Finishes',
+            description: 'Discover various concrete finishing techniques and create stunning surfaces for both indoor and outdoor spaces.',
+            date: '2023-10-05',
+            time: '09:00 AM',
+            duration: '4 hours',
+            location: 'Colombo Workshop ',
+            entrance_fee: 'Rs. 500',
             firstName: 'De',
             lastName: 'Silva',
             nic: '789123456V',
@@ -309,11 +363,9 @@ function AdminAdvertisements() {
             email: 'de.silva@example.com',
             address: '1010 Pine Street, City',
             registeredDate: '2023-08-13',
-            service: 'CCTV Repair',
-            category: 'Spare Parts',
-            shopName: 'SparkleClean Services',
-            shopAddress: '1010 Pine Street, City',
-            images: [Ad7_1, Ad7_2, Ad7_3],
+            service: 'Masonry',
+            category: 'Construction',
+            images: [Session8_1, Session8_2, Session8_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -322,7 +374,13 @@ function AdminAdvertisements() {
         },
         {
             id: 14,
-            adName: 'Pliers',
+            title: 'Essential Electrical Safety',
+            description: 'Learn about critical electrical safety measures to protect yourself, your clients, and their properties during electrical projects.',
+            date: '2023-08-30',
+            time: '02:00 AM',
+            duration: '5 hours',
+            location: 'Electrical Safety Institute',
+            entrance_fee: 'Rs. 1500',
             firstName: 'Kumar',
             lastName: 'Sangakkara',
             nic: '654987321V',
@@ -330,11 +388,9 @@ function AdminAdvertisements() {
             email: 'kumar.sangakkara@example.com',
             address: '111 Oak Road, Town',
             registeredDate: '2023-08-14',
-            service: 'Sofa cleaning',
-            category: 'Tools',
-            shopName: 'Precision Builders',
-            shopAddress: '111 Oak Road, Town',
-            images: [Ad8_1, Ad8_2, Ad8_3],
+            service: 'Electrical Wiring',
+            category: 'Electrical & Plumbing',
+            images: [Session6_1, Session6_2, Session6_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -343,7 +399,13 @@ function AdminAdvertisements() {
         },
         {
             id: 15,
-            adName: 'Wrench',
+            title: 'Expert Roof Inspection',
+            description: 'Enhance your roofing inspection skills to accurately assess the condition of roofs and provide informed recommendations.',
+            date: '2023-10-15',
+            time: '01:30 PM',
+            duration: '2.5 hours',
+            location: 'Roof Inspection Academy',
+            entrance_fee: 'Rs. 1200',
             firstName: 'Mike',
             lastName: 'Johnson',
             nic: '789654123V',
@@ -351,11 +413,9 @@ function AdminAdvertisements() {
             email: 'mike.johnson@example.com',
             address: '1212 Maple Street, Village',
             registeredDate: '2023-08-15',
-            service: 'Painting',
-            category: 'Tools',
-            shopName: 'SkyHigh Air Conditioning',
-            shopAddress: '1212 Maple Street, Village',
-            images: [Ad9_1, Ad9_2, Ad9_3],
+            service: 'Iron Works',
+            category: 'Construction',
+            images: [Session7_1, Session7_2, Session7_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -364,7 +424,13 @@ function AdminAdvertisements() {
         },
         {
             id: 16,
-            adName: 'Grinder',
+            title: 'Effective Pest Control Strategies',
+            description: 'Learn about various pest control methods and techniques to help your clients maintain a pest-free environment.',
+            date: '2023-10-20',
+            time: '10:30 AM',
+            duration: '3 hours',
+            location: 'Pest Control Center',
+            entrance_fee: 'Rs. 500',
             firstName: 'Saman',
             lastName: 'Perera',
             nic: '321456789V',
@@ -372,11 +438,9 @@ function AdminAdvertisements() {
             email: 'saman.perera@example.com',
             address: '1313 Pine Avenue, City',
             registeredDate: '2023-08-16',
-            service: 'Electrical Wiring',
-            category: 'Tools',
-            shopName: 'Golden Hammer Construction',
-            shopAddress: '1313 Pine Avenue, City',
-            images: [Ad3_1, Ad3_2, Ad3_3],
+            service: 'Carpet cleaning',
+            category: 'cleaning',
+            images: [Session3_1, Session3_2, Session3_3],
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -385,7 +449,13 @@ function AdminAdvertisements() {
         },
         {
             id: 17,
-            adName: 'Driller',
+            title: 'Metalworking Techniques',
+            description: 'Discover innovative approaches to metalworking and create stunning metal designs and structures for clients.',
+            date: '2023-10-25',
+            time: '02:30 PM',
+            duration: '2.5 hours',
+            location: 'Metalworking Studio',
+            entrance_fee: 'Rs. 2500',
             firstName: 'Susantha',
             lastName: 'Villergers',
             nic: '987654321V',
@@ -393,11 +463,9 @@ function AdminAdvertisements() {
             email: 'susantha.villergers@example.com',
             address: '1414 Oak Lane, Town',
             registeredDate: '2023-08-17',
-            service: 'Tiles Fitting',
-            category: 'Tools',
-            shopName: 'SilverLock Security',
-            shopAddress: '1414 Oak Lane, Town',
-            images: [Ad1_1, Ad1_2, Ad1_3],
+            service: 'Iron Works',
+            category: 'Construction',
+            images: [Session1_1, Session1_2, Session1_3],
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -406,7 +474,13 @@ function AdminAdvertisements() {
         },
         {
             id: 18,
-            adName: 'ScrewDriver',
+            title: 'Artistic Wood Carving',
+            description: 'Unleash your artistic talents through wood carving and create intricate designs that add a touch of elegance to spaces.',
+            date: '2023-10-30',
+            time: '11:00 AM',
+            duration: '3 hours',
+            location: 'Artistic Carving Workshop',
+            entrance_fee: 'Rs. 2500',
             firstName: 'William',
             lastName: 'Wiliamson',
             nic: '654321789V',
@@ -414,11 +488,9 @@ function AdminAdvertisements() {
             email: 'william.wiliamson@example.com',
             address: '1515 Maple Road, Village',
             registeredDate: '2023-08-18',
-            service: 'Fire Alarm',
-            category: 'Tools',
-            shopName: 'Elegant Designs',
-            shopAddress: '1515 Maple Road, Village',
-            images: [Ad2_1, Ad2_2, Ad2_3],
+            service: 'Carpentry',
+            category: 'Interior Works',
+            images: [Session1_1, Session1_2, Session1_3],
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -427,11 +499,12 @@ function AdminAdvertisements() {
         },
     ];
 
-    const advertisementsCategories = {
-        "Tools": ["Carpentry", "Painting"],
-        "Spare Parts": ["AC Repair", "Electrical Wiring", "Plumbing"],
-        "Equipment": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
-        "others": ["CCTV Repair", "Fire Alarm", "Video Surveillance"],
+    const sessionsCategories = {
+        "Interior Works": ["Carpentry", "Painting"],
+        "Electrical & Plumbing": ["AC Repair", "Electrical Wiring", "Plumbing"],
+        "Construction": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
+        "Security": ["CCTV Repair", "Fire Alarm", "Video Surveillance"],
+        "cleaning": ["Sofa cleaning", "Carpet cleaning"],
     };
 
     const [data, setData] = useState({
@@ -444,10 +517,10 @@ function AdminAdvertisements() {
         totalPages: 1,
         searchTerm: '',
         activeTab: 'Pending',
-        filteredAdvertisements: [],
-        displayedServices: [],
+        filteredSessions: [],
+        displayedSessions: [],
         showDetailsModal: false,
-        selectedAdvertisement: null,
+        selectedSession: null,
         cardsPerPage: 3,
         showAcceptConfirmation: false,
         showRejectConfirmation: false,
@@ -457,16 +530,16 @@ function AdminAdvertisements() {
     });
 
     // const cardsPerPage = data.windowWidth <= 768 ? 3 : 6;
-    const totalPages = Math.ceil(advertisementsData.length / data.cardsPerPage);
+    const totalPages = Math.ceil(sessionsData.length / data.cardsPerPage);
     const startIndex = (data.currentPage - 1) * data.cardsPerPage;
     const endIndex = startIndex + data.cardsPerPage;
-    const displayedServices = advertisementsData.slice(startIndex, endIndex);
+    const displayedSessions = sessionsData.slice(startIndex, endIndex);
 
-    const filterServiceProvidersByCategory = (category) => {
+    const filterSessionsByCategory = (category) => {
         if (category === 'default') {
-            return advertisementsData;
+            return sessionsData;
         } else {
-            return advertisementsData.filter((provider) => provider.category === category);
+            return sessionsData.filter((provider) => provider.category === category);
         }
     };
 
@@ -474,13 +547,13 @@ function AdminAdvertisements() {
     const handlePageChange = (page) => {
         const startIndex = (page - 1) * data.cardsPerPage;
         const endIndex = startIndex + data.cardsPerPage;
-        const filteredData = data.filteredAdvertisements[data.activeTab];
-        const displayedServices = filteredData.slice(startIndex, endIndex);
+        const filteredData = data.filteredSessions[data.activeTab];
+        const displayedSessions = filteredData.slice(startIndex, endIndex);
 
         setData({
             ...data,
             currentPage: page,
-            displayedServices,
+            displayedSessions,
         });
 
     };
@@ -494,15 +567,17 @@ function AdminAdvertisements() {
         }));
     };
 
-    const filterAdvertisements = (status) => {
+    const filterServiceProviders = (status) => {
         const filteredServices = data.selectedCategory !== 'default'
-            ? advertisementsData.filter((advertisement) => advertisement.category === data.selectedCategory)
-            : advertisementsData;
+            ? sessionsData.filter((session) => session.category === data.selectedCategory)
+            : sessionsData;
 
-        const filteredProviders = filteredServices.filter((advertisement) =>
-            advertisement.status === status && (
-                advertisement.adName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                advertisement.category.toLowerCase().includes(data.searchTerm.toLowerCase()) 
+        const filteredProviders = filteredServices.filter((session) =>
+            session.status === status && (
+                session.title.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                session.category.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                session.date.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                session.location.toLowerCase().includes(data.searchTerm.toLowerCase())
             )
         );
 
@@ -512,20 +587,20 @@ function AdminAdvertisements() {
 
     const calculateTotalPages = (filteredServices) => Math.ceil(filteredServices.length / data.cardsPerPage);
 
-    const handleAdvertisementCategoryChange = (e) => {
+    const handleSessionCategoryChange = (e) => {
         const selectedCategory = e.target.value;
-        const filteredServiceProvidersByCategory = filterServiceProvidersByCategory(selectedCategory);
+        const filteredServiceProvidersByCategory = filterSessionsByCategory(selectedCategory);
 
-        const displayedServices = filteredServiceProvidersByCategory.filter((advertisement) => {
-            return advertisement.status === data.activeTab;
+        const displayedSessions = filteredServiceProvidersByCategory.filter((session) => {
+            return session.status === data.activeTab;
         });
 
         setData((prevState) => ({
             ...prevState,
             selectedCategory,
-            displayedServices,
+            displayedSessions,
             currentPage: 1,
-            totalPages: calculateTotalPages(displayedServices),
+            totalPages: calculateTotalPages(displayedSessions),
         }));
     };
 
@@ -539,20 +614,20 @@ function AdminAdvertisements() {
 
 
     useEffect(() => {
-        const filteredServicesByStatus = {
-            Pending: filterAdvertisements('Pending'),
-            Accepted: filterAdvertisements('Accepted'),
-            Rejected: filterAdvertisements('Rejected'),
+        const filteredSessionsByStatus = {
+            Pending: filterServiceProviders('Pending'),
+            Accepted: filterServiceProviders('Accepted'),
+            Rejected: filterServiceProviders('Rejected'),
         };
 
-        const filteredProviders = filteredServicesByStatus[data.activeTab];
+        const filteredProviders = filteredSessionsByStatus[data.activeTab];
         const totalPages = Math.ceil(filteredProviders.length / data.cardsPerPage);
 
         setData((prevState) => ({
             ...prevState,
             totalPages,
-            filteredAdvertisements: filteredServicesByStatus,
-            displayedServices: filteredProviders.slice(0, data.cardsPerPage),
+            filteredSessions: filteredSessionsByStatus,
+            displayedSessions: filteredProviders.slice(0, data.cardsPerPage),
             currentPage: 1,
         }));
     }, [data.selectedCategory, data.searchTerm, data.activeTab]);
@@ -569,7 +644,7 @@ function AdminAdvertisements() {
         setData({ ...data, showAcceptConfirmation: false });
     };
 
-    const handleRejectProvider = (rejectReason) => {
+    const handleRejectSession = (rejectReason) => {
         let isError = false;
         let rejectReasonErrorMessage = '';
 
@@ -586,11 +661,11 @@ function AdminAdvertisements() {
     };
 
     const handleShowDetails = (provider) => {
-        setData({ ...data, showDetailsModal: true, selectedAdvertisement: provider });
+        setData({ ...data, showDetailsModal: true, selectedSession: provider });
     };
 
     function handleImageClick(e) {
-        e.target.style.transform = 'scale(2)'; 
+        e.target.style.transform = 'scale(2)';
         e.target.style.filter = 'brightness(1)';
         e.target.style.cursor = 'zoom-out';
     }
@@ -613,7 +688,7 @@ function AdminAdvertisements() {
 
             <section id="service-page" className="block serviceProvider m-5 p-5" style={{ backgroundImage: `url(${BgImage})` }} >
 
-                <h2 className="ms-5 fw-bold align-self-start">Advertisements</h2>
+                <h2 className="ms-5 fw-bold align-self-start">Training Sessions</h2>
 
                 <div className="d-flex align-items-center justify-content-center w-100">
                     <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 m-3'>
@@ -621,13 +696,13 @@ function AdminAdvertisements() {
                             <select
                                 className="form-select"
                                 value={data.selectedCategory}
-                                onChange={handleAdvertisementCategoryChange}
+                                onChange={handleSessionCategoryChange}
                                 required
                             >
-                                <option value="default">Select a Advertisement Category</option>
-                                {Object.keys(advertisementsCategories).map((advertisement) => (
-                                    <option key={advertisement} value={advertisement}>
-                                        {advertisement}
+                                <option value="default">Select a Training sessions Category</option>
+                                {Object.keys(sessionsCategories).map((session) => (
+                                    <option key={session} value={session}>
+                                        {session}
                                     </option>
                                 ))}
                             </select>
@@ -639,7 +714,7 @@ function AdminAdvertisements() {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Search Advertisements"
+                                placeholder="Search Training sessions"
                                 value={data.searchTerm}
                                 onChange={handleSearchChange}
                                 style={searchInputStyle}
@@ -653,20 +728,20 @@ function AdminAdvertisements() {
                 </div>
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
-                    {data.displayedServices && data.displayedServices.map((ads) => (
-                        <Card className="m-3" key={ads.id}>
-                            <Card.Img src={ads.images[0]} alt="Service ads" />
+                    {data.displayedSessions && data.displayedSessions.map((session) => (
+                        <Card className="m-3" key={session.id}>
+                            <Card.Img src={session.images[0]} alt="Service session" />
                             <Card.Body className="d-flex flex-column align-items-center">
-                                <p className="card-text fw-bold d-none d-md-block">{ads.adName}</p>
-                                <p className="card-text d-none d-md-block align-self-start">Advertisement ID: Ads000{ads.id}</p>
-                                <p className="card-text d-none d-md-block align-self-start">Category: {ads.category}</p>
+                                <p className="card-text fw-bold d-none d-md-block">{session.title}</p>
+                                <p className="card-text d-none d-md-block align-self-start">Date: {session.date}</p>
+                                <p className="card-text d-none d-md-block align-self-start">Location: {session.location}</p>
                                 <div className="d-flex flex-column justify-content-center text-center">
-                                    <button onClick={() => handleShowDetails(ads)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
+                                    <button onClick={() => handleShowDetails(session)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
                                     <button
                                         className="btn"
                                         style={{ backgroundColor: "#0D6445" }}
                                         onClick={() => {
-                                            setData({ ...data, showAcceptConfirmation: true, selectedAdvertisement: ads });
+                                            setData({ ...data, showAcceptConfirmation: true, selectedSession: session });
                                         }}
                                     >
                                         Accept
@@ -675,7 +750,7 @@ function AdminAdvertisements() {
                                         className="btn"
                                         style={{ backgroundColor: "#B60E0E" }}
                                         onClick={() => {
-                                            setData({ ...data, showRejectConfirmation: true, selectedAdvertisement: ads });
+                                            setData({ ...data, showRejectConfirmation: true, selectedSession: session });
                                         }}
                                     >
                                         Reject
@@ -705,12 +780,12 @@ function AdminAdvertisements() {
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
                     <Modal.Title>Confirm Acceptance</Modal.Title>
                 </Modal.Header>
-                {data.selectedAdvertisement && (
+                {data.selectedSession && (
                     <Modal.Body className="centered-body" style={{ backgroundImage: `url(${BgImage})` }}>
                         <div className="d-flex justify-content-center">
-                            <img src={data.selectedAdvertisement.images[0]} alt="Service Provider"  width="150" height="150" />
+                            <img src={data.selectedSession.images[0]} alt="Service Provider" width="150" height="150" />
                         </div>
-                        <p className='fw-bold pt-4'>Are you sure you want to accept this Advertisement?</p>
+                        <p className='fw-bold pt-4'>Are you sure you want to accept this Training session?</p>
                     </Modal.Body>
                 )}
                 <Modal.Footer>
@@ -727,12 +802,12 @@ function AdminAdvertisements() {
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
                     <Modal.Title>Confirm Rejection</Modal.Title>
                 </Modal.Header>
-                {data.selectedAdvertisement && (
+                {data.selectedSession && (
                     <Modal.Body className="centered-body" style={{ backgroundImage: `url(${BgImage})` }}>
                         <div className="d-flex justify-content-center">
-                            <img src={data.selectedAdvertisement.images[0]} alt="Service Provider" width="150" height="150" />
+                            <img src={data.selectedSession.images[0]} alt="Service Provider" width="150" height="150" />
                         </div>
-                        <p className='fw-bold pt-4'>Are you sure you want to Reject this Advertisement?</p>
+                        <p className='fw-bold pt-4'>Are you sure you want to Reject this Training session?</p>
                         <p>If you select "Yes," please enter the reason for rejection.<span style={{ color: 'red' }}>*</span></p>
                         <input type="text" value={data.rejectReason} onChange={(e) => setData({ ...data, rejectReason: e.target.value })} placeholder="Enter Reject Reason" />
                         {data.rejectReasonErrorMessage && <p className="text-danger p-0 m-0">{data.rejectReasonErrorMessage}</p>}
@@ -742,7 +817,7 @@ function AdminAdvertisements() {
                     <Button className='btn-effect3' onClick={() => setData({ ...data, showRejectConfirmation: false })}>
                         No
                     </Button>
-                    <Button className='btn-effect' style={{ marginLeft: '10px' }} onClick={() => handleRejectProvider(data.rejectReason)}>
+                    <Button className='btn-effect' style={{ marginLeft: '10px' }} onClick={() => handleRejectSession(data.rejectReason)}>
                         Yes
                     </Button>
                 </Modal.Footer>
@@ -750,9 +825,9 @@ function AdminAdvertisements() {
 
             <Modal show={data.showDetailsModal} onHide={() => setData({ ...data, showDetailsModal: false })} centered>
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
-                    <Modal.Title>Advertisement Details</Modal.Title>
+                    <Modal.Title>Training session Details</Modal.Title>
                 </Modal.Header>
-                {data.selectedAdvertisement && (
+                {data.selectedSession && (
                     <Modal.Body className="text-start" style={{ backgroundImage: `url(${PopupBgImage})` }}>
                         <div className="row">
                             <div className="col-md-8">
@@ -765,7 +840,7 @@ function AdminAdvertisements() {
                                         onMouseLeave={handleImageMouseLeave}
                                         className="custom-carousel"
                                     >
-                                        {data.selectedAdvertisement.images.map((image, index) => (
+                                        {data.selectedSession.images.map((image, index) => (
                                             <Carousel.Item key={index}>
                                                 <img src={image} alt={`Image ${index + 1}`} className="d-block" width="200" height="150" />
                                             </Carousel.Item>
@@ -773,16 +848,19 @@ function AdminAdvertisements() {
                                     </Carousel>
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertisement ID: </span>Ads000{data.selectedAdvertisement.id}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>session ID: </span>TS000{data.selectedSession.id}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service Provider ID: </span>SP000{data.selectedSession.id}
                                 </div>
                             </div>
                             <div className="col-md-4">
                                 <div className="p-3 ">
-                                    <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
+                                    <div className="d-flex justify-content-start align-items-start" style={{ height: '100%' }}>
                                         <h6 className="text-center">Warranty Card And Documents</h6>
                                     </div>
                                     <ul className="list-unstyled">
-                                        {data.selectedAdvertisement.uploadedFiles.map((file, index) => (
+                                        {data.selectedSession.uploadedFiles.map((file, index) => (
                                             <li key={index}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
                                                     <i class="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
@@ -796,31 +874,39 @@ function AdminAdvertisements() {
                                 </div>
                             </div>
                         </div>
+
                         <div className="row">
                             <div className="col-12">
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertiser ID: </span> Adv000{data.selectedAdvertisement.id}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Session Title: </span>{data.selectedSession.title}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Shop Name:</span> {data.selectedAdvertisement.shopName}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Description: </span>{data.selectedSession.description}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Shop Address: </span> {data.selectedAdvertisement.shopAddress}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Session Date: </span>{data.selectedSession.date}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>contact Number: </span> {data.selectedAdvertisement.contactNumber}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Location: </span>{data.selectedSession.location}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Category:</span> {data.selectedAdvertisement.category}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Duration: </span>{data.selectedSession.duration}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>NIC: </span> {data.selectedAdvertisement.nic}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Enterance Fee: </span>{data.selectedSession.entrance_fee}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Email: </span> {data.selectedAdvertisement.email}
-                                </div> 
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Category:</span> {data.selectedSession.category}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>NIC: </span> {data.selectedSession.nic}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Email: </span> {data.selectedSession.email}
+                                </div>
                             </div>
                         </div>
+
                     </Modal.Body>
                 )}
                 <StyledModalFooter>
@@ -863,4 +949,4 @@ function AdminAdvertisements() {
     );
 }
 
-export default AdminAdvertisements;
+export default AdminSessions;

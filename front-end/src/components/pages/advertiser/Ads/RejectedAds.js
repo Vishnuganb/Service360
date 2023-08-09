@@ -11,7 +11,7 @@ import soapImage from "./../../../../assets/images/advertiser/soap.jpg";
 
 
 
-const RejectAdCont = ({ profileIcon, adImage, adName, price, location }) => {
+const RejectAdCont = ({ profileIcon, adImage, adName, price, location, Reason }) => {
   return (
     <Col className="adCont">
       <div className="AdSampleCont">
@@ -43,18 +43,25 @@ const RejectAdCont = ({ profileIcon, adImage, adName, price, location }) => {
           <h3 className="Adprice ">{price} LKR</h3>
         </Row>
 
-        <Row className="d-flex justify-content-center">
-          <button className="AdViewButton">View</button>
-        </Row>
-
         <Row>
-          <Col>
+          <Col sm={4} className="d-flex gap-1">
+            <div>
+              <i className="fa-solid fa-location-dot"></i>
+            </div>
+
             <p>{location}</p>
           </Col>
-          <Col>
-            <p className="AdRgtAln">Free Delivery</p>
+          <Col sm={8} className="d-flex justify-content-end gap-1">
+            <div>
+              <i className="fa-solid fa-truck-front"></i>
+            </div>
+            <p>Free Delivery</p>
           </Col>
         </Row>
+        <Row className="d-flex justify-content-center">
+          <button className="AdViewButton mb-3">View</button>
+        </Row>
+        <Row ><p className="rejectP">{Reason}</p></Row>
       </div>
     </Col>
   );
@@ -68,6 +75,7 @@ const RejectedAds = () => {
       adName: "Lifebuoy Soap",
       price: 160,
       location: "Colombo",
+      Reason: "Your Ad Not Relevent For Our System",
     },
     {
       profileIcon: profileIcon,
@@ -75,6 +83,7 @@ const RejectedAds = () => {
       adName: "Lifebuoy Soap",
       price: 160,
       location: "Colombo",
+      Reason: "Your Ad Not Relevent For Our System",
     },
     {
       profileIcon: profileIcon,
@@ -82,6 +91,7 @@ const RejectedAds = () => {
       adName: "Lifebuoy Soap",
       price: 160,
       location: "Colombo",
+      Reason: "Your Ad Not Relevent For Our System",
     },
   ];
 
@@ -99,6 +109,7 @@ const RejectedAds = () => {
               adName={ad.adName}
               price={ad.price}
               location={ad.location}
+               Reason ={ad.Reason}
             />
           ))}
         </div>

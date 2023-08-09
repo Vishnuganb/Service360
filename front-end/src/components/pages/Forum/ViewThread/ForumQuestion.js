@@ -5,9 +5,14 @@ import forumImage1 from "../../../../assets/images/forum/AC.jpg";
 import forumImage2 from "../../../../assets/images/forum/Forum2.jpg";
 import forumImage3 from "../../../../assets/images/forum/Forum3.png";
 
+import profileIcon1 from "../../../../assets/images/advertiser/Adam.jpg";
+import profileIcon2 from "../../../../assets/images/advertiser/sara.jpg";
+import profileIcon3 from "../../../../assets/images/advertiser/aishu.jpg";
+
 import Comment from "./Comment";
 
 const ForumQuestion = ({
+  id,
   profileIcon,
   forumImage,
   username,
@@ -21,36 +26,38 @@ const ForumQuestion = ({
 
 }) => {
    const [CommentModalShow, setCommentModalShow] = useState(false);
-    const commentData = [
-      {
-        id: 1,
-        author: "John Doe",
-        content: "This is the first comment.",
-        timestamp: "2023-08-05 12:34:56",
-      },
-      {
-        id: 2,
-        author: "Jane Smith",
-        content: "I agree with John.",
-        timestamp: "2023-08-05 13:45:32",
-      },
-      {
-        id: 3,
-        author: "Michael Johnson",
-        content: "Nice post!",
-        timestamp: "2023-08-05 14:20:10",
-      },
-    ];
+     const commentData = [
+       {
+         id: 1,
+         author: "John Doe",
+         content: "This is the first comment.",
+         timestamp: "2023-08-05 12:34:56",
+         profileIcon: profileIcon1,
+       },
+       {
+         id: 2,
+         author: "Jane Smith",
+         content: "I agree with John.",
+         timestamp: "2023-08-05 13:45:32",
+         profileIcon: profileIcon2,
+       },
+       {
+         id: 3,
+         author: "Michael Johnson",
+         content: "Nice post!",
+         timestamp: "2023-08-05 14:20:10",
+         profileIcon: profileIcon3,
+       },
+     ];
     
   return (
-    <div className="shadow-sm p-3">
+    <div className="shadow-sm p-3" key={id}>
       <div className="ForumHeader d-flex  justify-content-between">
         <div className="d-flex align-items-center">
           <div>
             <img
               src={profileIcon}
               alt="Profile of Advertiser"
-              roundedCircle
               className="AdProfilePic"
             />
           </div>
@@ -110,12 +117,12 @@ const ForumQuestion = ({
           <div style={{ cursor: "pointer" }}>
             {liked ? (
               <i
-                class="fa-solid fa-heart fa-lg"
+                className="fa-solid fa-heart fa-lg"
                 style={{ color: "#292D32" }}
               ></i>
             ) : (
               <i
-                class="fa-regular fa-heart fa-lg"
+                className="fa-regular fa-heart fa-lg"
                 style={{ color: "#292D32" }}
               ></i>
             )}
@@ -134,7 +141,7 @@ const ForumQuestion = ({
           </div>
 
           <div>
-            <i class="fa-solid fa-eye fa-lg" style={{ color: "#292D32" }}></i>
+            <i className="fa-solid fa-eye fa-lg" style={{ color: "#292D32" }}></i>
             <p className="text-muted">10</p>
           </div>
         </div>

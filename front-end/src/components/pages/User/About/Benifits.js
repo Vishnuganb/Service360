@@ -107,7 +107,7 @@ const Benifits = () => {
         </div>
 
         <div className="AboutImageContainer">
-          <Image src={BenifitsImg} className="AboutTitleImg" />
+          <Image src={BenifitsImg} className="AboutTitleImg" rounded />
         </div>
       </div>
     );

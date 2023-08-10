@@ -7,10 +7,10 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import "../../../style/advertiser/AdIndex.css";
+import "../../../../style/advertiser/AdIndex.css";
 
-import profileIcon from "./../../../assets/images/advertiser/Adam.jpg";
-import adImage from "./../../../assets/images/advertiser/41CKlQ1b08S.jpg";
+import profileIcon from "./../../../../assets/images/advertiser/Adam.jpg";
+import adImage from "./../../../../assets/images/advertiser/41CKlQ1b08S.jpg";
 
 const CreateAd = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);

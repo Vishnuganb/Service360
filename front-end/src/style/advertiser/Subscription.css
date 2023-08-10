@@ -23,6 +23,11 @@
     /* width: 100%;  */
   }
 
+  .AdBillDetailsP{
+    margin-top: 1em;
+    font-size:0.5em;
+  }
+
   @media screen and (max-width: 422px) {
     .AdSubDiv {
       max-width: 10em;
@@ -39,12 +44,17 @@
   }
 }
 
+.AdsubH{
+  margin: unset;
+}
+
 .SubP {
   all: unset;
 }
 
 .ChooseSubBut {
   background-color: #292D32;
+  border-radius: 0.3em;
   color: #FFFFFF;
 }
 
@@ -82,3 +92,42 @@
   color: #000000;
 }
 
+.selectedAdSub {
+  background-color: #292D32;
+  color: #FFFFFF;
+  scale: 1.05;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.selectedAdSub .ChooseSubBut {
+  border: 2px solid #FFFFFF;
+  font-weight: bold;
+}
+
+.selectedAdSub .AdMP {
+  color: #c9c4c4;
+}
+
+.selectedAdSub .ChooseSubBut:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+.AdSubPriceP{
+  font-size: larger;
+  font-weight: bold;
+
+}
+
+.AdBillDetails{
+  margin-top: 3em;
+  width: 100%;
+  background-image: url("./../../assets/images/header/Background.png");
+  background-repeat: repeat-x;
+  background-position: right bottom; 
+}
+
+.AdBillDetailsP{
+  margin-top: 1em;
+  font-size:large;
+}

@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import UserImg from '../../../../assets/images/header/user.jpg';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function VacanciesBodyPage() {
 
@@ -21,6 +22,12 @@ function VacanciesBodyPage() {
             dueDate: '2023-08-29',
             vacancyStatus: 'new',
             serviceName: 'Electrical Wiring',
+	        posted: '2023-08-01 ',
+      	    vacancyCount:6,
+	        stars:5,
+	        address: '44, T13, T14, Dedicated Economic Center Kirimandala Mawatha, Colombo -5' ,
+	        qualifications:'Candidates with a minimum of 1 year and above work experience and trainees. Basic knowledge of laying the wiring using conduit and casing. Good communication skills Valid riding/ driving license will be a value-added qualification.',
+	        responsibilities:'Perform routine maintenance and troubleshooting of electronic equipment.Identify and resolve electronic equipment malfunctions or failures by conducting diagnostic tests, analyzing circuitry. Assist in designing and modifying electronic circuits, including PCB layout, component selection, and soldering. Maintain accurate records of equipment maintenance, repair activities, and component inventory.'
         },
         {
             profile: UserImg,
@@ -34,6 +41,12 @@ function VacanciesBodyPage() {
             dueDate: '2023-08-28',
             vacancyStatus: 'new',
             serviceName: 'Sofa Cleaning',
+            posted: '2023-08-05 ',
+      	    vacancyCount:3,
+	        stars:4,
+            address: '123, ABC Lane, Colombo',
+            qualifications: 'Candidates with a minimum of 2 years of work experience in electronics repair. Proficiency in soldering and component-level diagnostics. Excellent problem-solving skills and attention to detail.',
+            responsibilities: 'Diagnose and repair complex electronic faults. Collaborate with engineering teams to troubleshoot and enhance product designs. Keep up to date with the latest electronic components and technologies.'
         },
         {
             profile: UserImg,
@@ -47,6 +60,12 @@ function VacanciesBodyPage() {
             dueDate: '2023-08-30',
             vacancyStatus: 'new',
             serviceName: 'CCTV Systems Repair',
+            posted: '2023-08-09 ',
+      	    vacancyCount:2,
+	        stars:4,
+	        address: '789, XYZ Street, Dehiwala',
+            qualifications: 'Candidates with a diploma in Electronics Engineering. Experience in troubleshooting and repairing electronic devices. Strong analytical skills and ability to read schematics.',
+            responsibilities: 'Conduct functional tests on electronic systems. Repair and replace faulty components. Collaborate with cross-functional teams to improve product reliability and performance.'
         },
         {
             profile: UserImg,
@@ -60,6 +79,12 @@ function VacanciesBodyPage() {
             dueDate: '2023-08-25',
             vacancyStatus: 'new',
             serviceName: 'Masonry',
+            posted: '2023-07-18 ',
+      	    vacancyCount:11,
+	        stars:2,
+	        address: '456, PQR Avenue, Nugegoda',
+            qualifications: 'Candidates with hands-on experience in electronics repair. Ability to diagnose and repair a variety of electronic devices. Familiarity with safety protocols and industry standards.',
+            responsibilities: 'Inspect, diagnose, and repair electronic equipment. Maintain accurate records of repairs and parts used. Provide technical support to customers and address their inquiries.'
         },
         {
             profile: UserImg,
@@ -73,6 +98,12 @@ function VacanciesBodyPage() {
             dueDate: '2023-08-27',
             vacancyStatus: 'completed',
             serviceName: 'Carpentry',
+            posted: '2023-08-06 ',
+      	    vacancyCount:3,
+	        stars:5,
+            address: '789, MNO Road, Rajagiriya',
+            qualifications: 'Candidates with a degree in Electronics Engineering. Proven track record of repairing advanced electronic systems. Strong communication skills and ability to lead a team.',
+            responsibilities: 'Lead the electronic repair team. Develop repair strategies and ensure high-quality repairs. Collaborate with suppliers and vendors to source components and materials.'
         },
         {
             profile: UserImg,
@@ -86,6 +117,12 @@ function VacanciesBodyPage() {
             dueDate: '2023-08-24',
             vacancyStatus: 'completed',
             serviceName: 'Ac Repair',
+            posted: '2023-08-04 ',
+      	    vacancyCount:2,
+	        stars:4,
+	        address: '789, JKL Road, Colombo',
+            qualifications: 'Candidates with a diploma in Electrical Engineering. Experience in troubleshooting and repairing electronic systems. Knowledge of PLC programming and industrial control systems.',
+            responsibilities: 'Inspect and maintain industrial electronic systems. Troubleshoot and repair PLC-based control systems. Collaborate with production teams to ensure optimal equipment performance.'
         },
         {
             profile: UserImg,
@@ -99,6 +136,12 @@ function VacanciesBodyPage() {
             dueDate: '2023-08-26',
             vacancyStatus: 'completed',
             serviceName: 'Plumbing',
+            posted: '2023-07-20 ',
+      	    vacancyCount:7,
+	        stars:5,
+	        address: '123, UVW Lane, Kotte',
+            qualifications: 'Candidates with a degree in Computer Engineering or related field. Experience in embedded systems development and debugging. Proficiency in programming languages like C/C++.',
+            responsibilities: 'Design and develop embedded systems for electronic devices. Debug and optimize software for efficient performance. Collaborate with hardware engineers to integrate software and hardware components.'
         },
     ];
     
@@ -253,10 +296,14 @@ function VacanciesBodyPage() {
             </div>
             <hr/>
             <div className='vacancy-card-footer'>
-                <span className='btn btn-default vacancy-card-footer-btn' id='vacancy-card-footer-btn-view'>
-                    <i className="bi bi-file-earmark-plus h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span style={{position:"relative",bottom:"1.5px"}}>Apply for Job</span>
-                </span>
+               
+                <Link to={`/ServiceProvider/ViewAVacancy/${Vacancy.id}`} className="btn btn-default job-card-footer-btn" id="job-card-footer-btn-view">
+                    <span className='btn btn-default vacancy-card-footer-btn' id='vacancy-card-footer-btn-view'>
+                        <i className="bi bi-file-earmark-plus h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style={{position:"relative",bottom:"1.5px"}}>Apply for Job</span>
+                    </span>
+                </Link>
+
             </div>
         </div>
     ))}

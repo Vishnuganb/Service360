@@ -3,8 +3,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import UserImg from '../../../../assets/images/header/user.jpg';
+import { useLocation } from 'react-router-dom';
 
 function MyProjectsBody(){
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const initialActiveTab = queryParams.get('tab') || 'defaultTab'; // 'defaultTab' is the fallback
     
     //Vacancy objects with properties
     const MyProjectsVacanciesData = [
@@ -153,7 +157,7 @@ function MyProjectsBody(){
     const cardsPerPage = 5;
 
     // To keep track of the active tab
-    const [activeTab, setActiveTab] = useState(''); 
+    const [activeTab, setActiveTab] = useState(initialActiveTab); 
 
     // State to keep track of the current page number
     const [currentPage, setCurrentPage] = useState(1);

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import {Link} from 'react-router-dom';
 
 function serviceHead() {
   return (
@@ -27,15 +28,17 @@ function serviceHead() {
             </span>
           </Col>
           <Col className="my-serivice-head-container-col-2">
-            <Button
-              className="btn-ServiceProvider-2 my-serivice-head-container-col-2-btn me-3"
-              style={{
-                borderRadius: "10px",
-              }}
-            >
-              <i className="fas fa-plus pe-2"></i>
-              Add Services
-            </Button>
+            <Link to="/ServiceProvider/AddNewServices">
+              <Button
+                className="btn-ServiceProvider-2 my-serivice-head-container-col-2-btn me-3"
+                style={{
+                  borderRadius: "10px",
+                }}
+              >
+                <i className="fas fa-plus pe-2"></i>
+                Add Services
+              </Button>
+            </Link>
           </Col>
         </Row>
       </div>

@@ -6,6 +6,7 @@ import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function JobDetails() {
 
@@ -127,11 +128,11 @@ function JobDetails() {
 
 
     const {singleId} = useParams();
-
+    
     const singleJobData = viewJobsData.find((job) => job.id === parseInt(singleId));
 
     if (!singleJobData) {
-      return <div>Job not found. {singleId}</div>;
+      return <div>Job not found.</div>;
     }
 
   return (
@@ -151,32 +152,15 @@ function JobDetails() {
         >
           {singleJobData.customerName}
         </div>
-        <div
-          className="jobDetails-ratings mb-1"
-          style={{ fontFamily: "'Rubik', sans-serif" }}
-        >
-         {Array.from({ length: 5 }, (_, index) => (
-            <i
-              key={index}
-              className="bi bi-star-fill"
-              style={{ color: index < singleJobData.stars ? "#F0DE36" : "#DFDFDE" }}
-            ></i>
-          ))}
-        </div>
-        <div
-          className="jobDetails-ratings-count"
-          style={{ fontFamily: "'Rubik', sans-serif" }}
-        >
-          (for {singleJobData.jobsCount} jobs)
-        </div>
-
         <div>
+          {/* <Link to="/ServiceProvider/AcceptedJob"> */}
             <Button
               className="jobDetails-apply-btn btn-ServiceProvider-1 mt-2 mb-4"
               style={{ fontFamily: "'Rubik', sans-serif" }}
             >
               Apply
             </Button>
+          {/* </Link> */}
           </div>
 
       </Col>

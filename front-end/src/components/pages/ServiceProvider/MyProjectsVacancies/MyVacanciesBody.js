@@ -144,6 +144,39 @@ function MyProjectsBody(){
             customerName: 'IBC',
             status:'Invite',
         },
+        {
+            profile: UserImg,
+            id: 13,
+            vacancyTitle: 'Electrician',
+            Posted: '2 weeks ago',
+            dueDate: '2023-09-15',
+            serviceName: 'Electrical Services',
+            location: 'Kandy',
+            customerName: 'Energix',
+            status: 'Pending',
+        },
+        {
+            profile: UserImg,
+            id: 14,
+            vacancyTitle: 'Painter',
+            Posted: '3 weeks ago',
+            dueDate: '2023-09-20',
+            serviceName: 'Painting',
+            location: 'Negombo',
+            customerName: 'ColorWave',
+            status: 'Pending',
+        },
+        {
+            profile: UserImg,
+            id: 15,
+            vacancyTitle: 'Gardener',
+            Posted: '4 weeks ago',
+            dueDate: '2023-09-25',
+            serviceName: 'Gardening',
+            location: 'Anuradhapura',
+            customerName: 'GreenScape',
+            status: 'Pending',
+        }        
     ];
 
     const MyServices= [
@@ -231,6 +264,12 @@ function MyProjectsBody(){
                             Invites
                         </Nav.Link>
                         <Nav.Link 
+                            active={activeTab === 'Pending'} 
+                            onClick={() => setActiveTab('Pending')}
+                        >
+                            Pending
+                        </Nav.Link>
+                        <Nav.Link 
                             active={activeTab === 'Ongoing'} 
                             onClick={() => setActiveTab('Ongoing')} 
                         >
@@ -285,7 +324,7 @@ function MyProjectsBody(){
             </div>
             
             {/* only display ongoing, completed, rejected vacancies */}
-            {activeTab !== 'Invite' && displayedCards.filter((vacancy) => vacancy.status === 'Ongoing'|| vacancy.status === 'Completed'|| vacancy.status ==='Rejected').map((vacancy) => (
+            {activeTab !== 'Invite' && displayedCards.filter((vacancy) => vacancy.status === 'Pending'|| vacancy.status === 'Ongoing'|| vacancy.status === 'Completed'|| vacancy.status ==='Rejected').map((vacancy) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>

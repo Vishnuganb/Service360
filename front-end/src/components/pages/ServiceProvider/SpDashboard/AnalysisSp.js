@@ -1,6 +1,6 @@
 import "../../../../style/ServiceProvider/Dashboard.css";
 
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,  Cell } from 'recharts';
+import { AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,  Cell } from 'recharts';
 
 function AnalysisSp() {
 
@@ -60,7 +60,7 @@ function AnalysisSp() {
     <div className="graphContainer px-3 py-4" style={{ height: 400}}> 
       <ResponsiveContainer width="100%" height="90%">
         
-        <AreaChart data={data} margin={{ top: 0, right: 30, left: 0, bottom: 42 }}>
+        <LineChart data={data} margin={{ top: 0, right: 30, left: 0, bottom: 42 }}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -76,7 +76,7 @@ function AnalysisSp() {
           {/* 'auto' means the Y-axis will automatically adjust based on the data */}
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
-          <Area type="monotone" dataKey="income" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+          <Line type="monotone" dataKey="income" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
 
           {/* Adding Legends with Custom Label */}
           <Legend
@@ -86,7 +86,7 @@ function AnalysisSp() {
             wrapperStyle={{ paddingTop: 15 }}
             payload={[{ value: 'income (LKR)', type: 'rect', color: '#8884d8' }]} // Custom label and icon
           />
-        </AreaChart>
+        </LineChart>
 
       </ResponsiveContainer>
     </div>

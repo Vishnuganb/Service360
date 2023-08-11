@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function VacancyDetails() {
 
@@ -20,12 +21,11 @@ function VacancyDetails() {
         dueDate: '2023-08-29',
         vacancyStatus: 'new',
         serviceName: 'Electrical Wiring',
-      posted: '2023-08-01 ',
+        posted: '2023-08-01 ',
         vacancyCount:6,
-      stars:5,
-      address: '44, T13, T14, Dedicated Economic Center Kirimandala Mawatha, Colombo -5' ,
-      qualifications:'Candidates with a minimum of 1 year and above work experience and trainees. Basic knowledge of laying the wiring using conduit and casing. Good communication skills Valid riding/ driving license will be a value-added qualification.',
-      responsibilities:'Perform routine maintenance and troubleshooting of electronic equipment.Identify and resolve electronic equipment malfunctions or failures by conducting diagnostic tests, analyzing circuitry. Assist in designing and modifying electronic circuits, including PCB layout, component selection, and soldering. Maintain accurate records of equipment maintenance, repair activities, and component inventory.'
+        address: '44, T13, T14, Dedicated Economic Center Kirimandala Mawatha, Colombo -5' ,
+        qualifications:'Candidates with a minimum of 1 year and above work experience and trainees. Basic knowledge of laying the wiring using conduit and casing. Good communication skills Valid riding/ driving license will be a value-added qualification.',
+        responsibilities:'Perform routine maintenance and troubleshooting of electronic equipment.Identify and resolve electronic equipment malfunctions or failures by conducting diagnostic tests, analyzing circuitry. Assist in designing and modifying electronic circuits, including PCB layout, component selection, and soldering. Maintain accurate records of equipment maintenance, repair activities, and component inventory.'
     },
     {
         profile: UserImg,
@@ -41,7 +41,6 @@ function VacancyDetails() {
         serviceName: 'Sofa Cleaning',
         posted: '2023-08-05 ',
         vacancyCount:3,
-      stars:4,
         address: '123, ABC Lane, Colombo',
         qualifications: 'Candidates with a minimum of 2 years of work experience in electronics repair. Proficiency in soldering and component-level diagnostics. Excellent problem-solving skills and attention to detail.',
         responsibilities: 'Diagnose and repair complex electronic faults. Collaborate with engineering teams to troubleshoot and enhance product designs. Keep up to date with the latest electronic components and technologies.'
@@ -60,8 +59,7 @@ function VacancyDetails() {
         serviceName: 'CCTV Systems Repair',
         posted: '2023-08-09 ',
         vacancyCount:2,
-      stars:4,
-      address: '789, XYZ Street, Dehiwala',
+        address: '789, XYZ Street, Dehiwala',
         qualifications: 'Candidates with a diploma in Electronics Engineering. Experience in troubleshooting and repairing electronic devices. Strong analytical skills and ability to read schematics.',
         responsibilities: 'Conduct functional tests on electronic systems. Repair and replace faulty components. Collaborate with cross-functional teams to improve product reliability and performance.'
     },
@@ -79,8 +77,7 @@ function VacancyDetails() {
         serviceName: 'Masonry',
         posted: '2023-07-18 ',
         vacancyCount:11,
-      stars:2,
-      address: '456, PQR Avenue, Nugegoda',
+        address: '456, PQR Avenue, Nugegoda',
         qualifications: 'Candidates with hands-on experience in electronics repair. Ability to diagnose and repair a variety of electronic devices. Familiarity with safety protocols and industry standards.',
         responsibilities: 'Inspect, diagnose, and repair electronic equipment. Maintain accurate records of repairs and parts used. Provide technical support to customers and address their inquiries.'
     },
@@ -98,7 +95,6 @@ function VacancyDetails() {
         serviceName: 'Carpentry',
         posted: '2023-08-06 ',
         vacancyCount:3,
-      stars:5,
         address: '789, MNO Road, Rajagiriya',
         qualifications: 'Candidates with a degree in Electronics Engineering. Proven track record of repairing advanced electronic systems. Strong communication skills and ability to lead a team.',
         responsibilities: 'Lead the electronic repair team. Develop repair strategies and ensure high-quality repairs. Collaborate with suppliers and vendors to source components and materials.'
@@ -117,8 +113,7 @@ function VacancyDetails() {
         serviceName: 'Ac Repair',
         posted: '2023-08-04 ',
         vacancyCount:2,
-      stars:4,
-      address: '789, JKL Road, Colombo',
+        address: '789, JKL Road, Colombo',
         qualifications: 'Candidates with a diploma in Electrical Engineering. Experience in troubleshooting and repairing electronic systems. Knowledge of PLC programming and industrial control systems.',
         responsibilities: 'Inspect and maintain industrial electronic systems. Troubleshoot and repair PLC-based control systems. Collaborate with production teams to ensure optimal equipment performance.'
     },
@@ -136,8 +131,7 @@ function VacancyDetails() {
         serviceName: 'Plumbing',
         posted: '2023-07-20 ',
         vacancyCount:7,
-      stars:5,
-      address: '123, UVW Lane, Kotte',
+        address: '123, UVW Lane, Kotte',
         qualifications: 'Candidates with a degree in Computer Engineering or related field. Experience in embedded systems development and debugging. Proficiency in programming languages like C/C++.',
         responsibilities: 'Design and develop embedded systems for electronic devices. Debug and optimize software for efficient performance. Collaborate with hardware engineers to integrate software and hardware components.'
     },
@@ -146,10 +140,10 @@ function VacancyDetails() {
 
     const {singleId} = useParams();
 
-    const singleJobData = viewVacanciesData.find((vacancy) => vacancy.id === parseInt(singleId));
+    const singleVacancyData = viewVacanciesData.find((vacancy) => vacancy.id === parseInt(singleId));
 
-    if (!singleJobData) {
-      return <div>Job not found. {singleId}</div>;
+    if (!singleVacancyData) {
+      return <div>Job not found. </div>;
     }
 
     return (
@@ -157,7 +151,7 @@ function VacancyDetails() {
         <Col className="vacancyDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
           <div className="vacancyDetails-avatar-container mb-2">
               <img
-              src={viewVacanciesData[0].profile}
+              src={singleVacancyData.profile}
               alt="avatar"
               className="vacancyDetails-avatar rounded-circle"
               style={{ width: "50px", height: "50px" }}
@@ -167,84 +161,67 @@ function VacancyDetails() {
             className="vacancyDetails-username mb-1"
             style={{ fontSize:"18px",fontFamily: "'Rubik', sans-serif" }}
           >
-            {viewVacanciesData.customerName}
+            {singleVacancyData.customerName}
           </div>
-          <div
-            className="vacancyDetails-ratings mb-1"
-            style={{ fontFamily: "'Rubik', sans-serif" }}
-          >
-            {Array.from({ length: 5 }, (_, index) => (
-            <i
-              key={index}
-              className="bi bi-star-fill"
-              style={{ color: index < viewVacanciesData[0].stars ? "#F0DE36" : "#DFDFDE" }}
-            ></i>
-          ))}
-          </div>
-          <div
-            className="vacancyDetails-ratings-count"
-            style={{ fontFamily: "'Rubik', sans-serif" }}
-          >
-            (for {viewVacanciesData[0].vacancyCount} vacancies)
-          </div>
-
           <div>
+            <Link to="/ServiceProvider/ApplyVacancy">
             <Button
               className="vacancyDetails-apply-btn btn-ServiceProvider-1 mt-2 mb-4"
               style={{ fontFamily: "'Rubik', sans-serif" }}
             >
               Apply
             </Button>
+            </Link>
           </div>
         </Col>
 
         <Col className="vacancyDetails-details-container col-12 col-lg-10 d-flex flex-column">
           <div className="vacancyDetails-status-container mb-2">
             <span className="vacancyDetails-status me-2" id="vacancy-status" style={{fontSize:"16px",fontWeight:"400",padding:"4px 6px",border:"2px solid rgb(37, 199, 37)",borderRadius:"8px"}}>
-              {viewVacanciesData[0].vacancyStatus}
+              {singleVacancyData.vacancyStatus}
             </span>
             <span className="vacancyDetails-status" id="vacancy-status" style={{fontSize:"16px",fontWeight:"400",padding:"4px 6px",border:"2px solid rgb(37, 199, 37)",borderRadius:"8px"}}>
-              {viewVacanciesData[0].vacancyType}
+              {singleVacancyData.vacancyType}
             </span>
           </div>
           <div className="vacancyDetails-title-container mb-2">
-            <span className="jobDetails-title" style={{fontWeight:"650"}}>{viewVacanciesData[0].vacancyTitle}</span>
+            <span className="jobDetails-title" style={{fontWeight:"650"}}>{singleVacancyData.vacancyTitle}</span>
           </div>
           <div className="vacancyDetails-category-container mb-2 d-flex flex-column">
-            <span className="jobDetails-category" style={{fontWeight:"650"}}>{viewVacanciesData[0].serviceName}</span>
-            <span className="jobDetails-category-value">Electricians</span>
+            <span className="jobDetails-category" style={{fontWeight:"650"}}>Category</span>
+            <span className="jobDetails-category-value">{singleVacancyData.serviceName}</span>
           </div>
           <div className="vacancyDetails-location-container mb-2 d-flex flex-column">
             <span className="jobDetails-location" style={{fontWeight:"650"}}>Location</span>
-            <span className="jobDetails-location-value">{viewVacanciesData[0].location}</span>
+            <span className="jobDetails-location-value">{singleVacancyData.location}</span>
           </div>
           <div className="vacancyDetails-dueDate-container mb-2 d-flex flex-row">
             <div>
               <span className="vacancyDetails-dueDate" style={{fontWeight:"650"}}>Due Date</span>
               <br />
-              <span className="vacancyDetails-dueDate-value">{viewVacanciesData[0].dueDate}</span>
+              <span className="vacancyDetails-dueDate-value">{singleVacancyData.dueDate}</span>
             </div>
             <div className="mx-4">
               <span className="vacancyDetails-posted" style={{fontWeight:"650"}}>Posted</span>
               <br />
-              <span className="vacancyDetails-posted-value">{viewVacanciesData[0].posted}</span>
+              <span className="vacancyDetails-posted-value">{singleVacancyData.posted}</span>
             </div>
           </div>
           <div className="vacancyDetails-skills-container d-flex flex-column mb-2">
             <span className="vacancyDetails-skills" style={{fontWeight:"650"}}>Skills & Qualifications</span>
             <span className="vacancyDetails-skills-value">
-                {viewVacanciesData[0].qualifications}
+                {singleVacancyData.qualifications}
             </span>
           </div>
           <div className="vacancyDetails-responsibility-container d-flex flex-column mb-2">
             <span className="vacancyDetails-responsibility" style={{fontWeight:"650"}}>Responsibilities</span>
             <span className="vacancyDetails-responsibility-value">
-                {viewVacanciesData[0].responsibilities}
+                {singleVacancyData.responsibilities}
             </span>
           </div>
           <div className="vacancyDetails-place-container d-flex flex-column mb-2">
             <span className="vacancyDetails-place-value text-success" style={{fontWeight:"650", fontSize:"19px"}}>
-                {viewVacanciesData[0].address}
+                {singleVacancyData.address}
             </span>
           </div>
           <div className="vacancyDetails-place-container d-flex flex-column mt-3 mb-3">

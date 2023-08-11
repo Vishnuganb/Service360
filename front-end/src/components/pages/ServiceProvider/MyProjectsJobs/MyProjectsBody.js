@@ -133,6 +133,36 @@ function MyProjectsBody(){
         location: 'Battaramulla',
         status:'Ongoing',
         },
+        {
+            profile: UserImg,
+            id: 13,
+            jobTitle: 'Gutter Cleaning',
+            Posted: '2 weeks ago',
+            dueDate: '2023-09-10',
+            serviceName: 'Roof Maintenance',
+            location: 'Kandy',
+            status: 'Pending',
+        },
+        {
+            profile: UserImg,
+            id: 14,
+            jobTitle: 'Install Ceiling Fan',
+            Posted: '3 weeks ago',
+            dueDate: '2023-09-15',
+            serviceName: 'Electrical Wiring',
+            location: 'Negombo',
+            status: 'Pending',
+        },
+        {
+            profile: UserImg,
+            id: 15,
+            jobTitle: 'Lawn Mowing',
+            Posted: '4 weeks ago',
+            dueDate: '2023-09-20',
+            serviceName: 'Gardening',
+            location: 'Anuradhapura',
+            status: 'Pending',
+        }        
     ];
 
     const MyServices= [
@@ -218,6 +248,12 @@ function MyProjectsBody(){
                             Invites
                         </Nav.Link>
                         <Nav.Link 
+                            active={activeTab === 'Pending'} 
+                            onClick={() => setActiveTab('Pending')} 
+                        >
+                            Pending
+                        </Nav.Link>
+                        <Nav.Link 
                             active={activeTab === 'Ongoing'} 
                             onClick={() => setActiveTab('Ongoing')} 
                         >
@@ -272,7 +308,7 @@ function MyProjectsBody(){
             </div>
             
             {/* only display ongoing, completed, rejected jobs */}
-            {activeTab !== 'Invite' && displayedCards.filter((job) => job.status === 'Ongoing'|| job.status === 'Completed'|| job.status ==='Rejected').map((job) => (
+            {activeTab !== 'Invite' && displayedCards.filter((job) => job.status === 'Pending'|| job.status === 'Ongoing'|| job.status === 'Completed'|| job.status ==='Rejected').map((job) => (
                 <div className="single-job-card mx-auto mt-3">
                     <div className="job-card-header">
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>

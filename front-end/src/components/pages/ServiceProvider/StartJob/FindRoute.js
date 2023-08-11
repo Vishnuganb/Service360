@@ -24,12 +24,12 @@ function FindRoute() {
                 
                 <Form className="mt-4">
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Origin</Form.Label>
+                        <Form.Label>My Location</Form.Label>
                         <Form.Control type="text" value={routeDetails[0].serviceProviderLocation}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Destination</Form.Label>
+                        <Form.Label>Customer's Location</Form.Label>
                         <Form.Control type="text" value={routeDetails[0].cutomerLocation} />
                     </Form.Group>
                 </Form>

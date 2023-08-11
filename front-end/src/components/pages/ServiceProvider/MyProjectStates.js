@@ -6,9 +6,13 @@ import { Link } from 'react-router-dom';
 import Pending from '../../../assets/images/ServiceProvider/pending2.jpg';
 
 const serviceCategories = {
-    pendingJobs: {
+    jobInvites: {
         image: Pending,
         title: "Job Invites",
+    },
+    pendingJobs: {
+        image: Pending,
+        title: "Pending Jobs",
     },
     processingJobs: {
         image: Pending,
@@ -22,9 +26,13 @@ const serviceCategories = {
         image: Pending,
         title: "Rejected Jobs",
     },
-    pendingVacancies: {
+    VacancyInvites: {
         image: Pending,
         title: "Vacancy Invites",
+    },
+    pendingVacancies: {
+        image: Pending,
+        title: "Pending Vacancies",
     },
     processingVacancies: {
         image: Pending,
@@ -49,6 +57,16 @@ function MyProjectsJobsStates() {
                 <Row className='MyProjectsStates-Job-Container d-flex flex-row ms-lg-2 me-lg-2'>
                     <div className='col-lg-3 col-sm-6 col-12'>
                         <Link to="/ServiceProvider/MyProjectsJobs?tab=Invite">
+                        <Card className="MyProjectsStates-card mb-3" >
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.jobInvites.image} />
+                            <Card.Body>
+                                <span >{serviceCategories.jobInvites.title}</span>
+                            </Card.Body>
+                        </Card>
+                        </Link>
+                    </div>
+                    <div className='col-lg-3 col-sm-6 col-12'>
+                        <Link to="/ServiceProvider/MyProjectsJobs?tab=Pending">
                         <Card className="MyProjectsStates-card mb-3" >
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.pendingJobs.image} />
                             <Card.Body>
@@ -96,6 +114,16 @@ function MyProjectsJobsStates() {
                 <Row className='MyProjectsStates-Vacancy-Container d-flex flex-row ms-lg-2 me-lg-2'>
                     <div className='col-lg-3 col-sm-6 col-12'>
                         <Link to="/ServiceProvider/MyprojectsVacancies?tab=Invite">
+                        <Card className="MyProjectsStates-card mb-3" >
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.VacancyInvites.image} />
+                            <Card.Body>
+                                <span >{serviceCategories.VacancyInvites.title}</span>
+                            </Card.Body>
+                        </Card>
+                        </Link>
+                    </div>
+                    <div className='col-lg-3 col-sm-6 col-12'>
+                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=Pending">
                         <Card className="MyProjectsStates-card mb-3" >
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.pendingVacancies.image} />
                             <Card.Body>

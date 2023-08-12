@@ -6,7 +6,7 @@ import { useMap } from "react-leaflet";
 import Geocode from "react-geocode";
 import { useState } from "react";
 
-Geocode.setApiKey("AIzaSyBbGzH8N4wZYI3haxyktwT0G-QqA13fJyg");
+// Geocode.setApiKey("AIzaSyBbGzH8N4wZYI3haxyktwT0G-QqA13fJyg");
 Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 

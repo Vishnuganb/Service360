@@ -237,16 +237,19 @@ function AcceptedJobDetails() {
                 </div>
             </Col>
         </Row>
-        <span>Todo List</span>
-        <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button className="btn-ServiceProvider-1">Start Todo List</Button>
-                <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
-        </div>
-        <hr/>
-        <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Link className="ms-auto" to="../StartJob">
-                  <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
-                </Link>
+        <span>Quotation</span>
+        <div className="mt-2 d-flex flex-column">
+                <Form>
+                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                        <Form.Control type="file" placeholder="Password" /> 
+                    </Form.Group>
+                    <Form.Text className="text-muted d-block mb-3">
+                      Visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
+                    </Form.Text>
+                    <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
+                        Send Quotation
+                    </Button>
+                </Form>
         </div>
 
 

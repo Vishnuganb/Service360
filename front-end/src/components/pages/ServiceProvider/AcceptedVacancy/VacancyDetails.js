@@ -32,21 +32,6 @@ function VacancyDetails() {
             >
                 Aptinex
             </div>
-            <div
-                className="AcceptedvacancyDetails-ratings mb-1"
-                style={{ fontFamily: "'Rubik', sans-serif" }}
-            >
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-            </div>
-            <div
-                className="AcceptedvacancyDetails-ratings-count"
-                style={{ fontFamily: "'Rubik', sans-serif" }}
-            >
-                (for 8 vacancies)
-            </div>
             <div className="d-flex flex-row">
                     <div className="me-3">
                         <i class="bi bi-telephone-fill"></i>

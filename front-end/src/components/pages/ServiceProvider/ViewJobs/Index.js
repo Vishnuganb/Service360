@@ -1,12 +1,11 @@
 import React from 'react';
-import BodyNav from './bodyNav.js';
-import BodyPage from './bodyPage.js';
+import JobsBodyPage from './jobsBodyPage.js';
+import '../../../../style/ServiceProvider/ViewJobs.css'
 
 function Index(){
     return(
-        <div>
-            <BodyNav/>
-            <BodyPage/>
+        <div className="index-container ms-lg-4 me-lg-5 p-sm-5 p-3 border rounded">
+            <JobsBodyPage/>
         </div>
     );
 }

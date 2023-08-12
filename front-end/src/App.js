@@ -13,11 +13,13 @@ import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
-import AdvertiserProfile from'./components/pages/User/Advertiser/EditProfile.js';
+import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
 import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
 import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
 import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
+import About from './components/pages/User/About/Index.js';
+import Subscribtion from './components/pages/advertiser/subscription.js';
 
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
@@ -25,7 +27,7 @@ import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
 import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
@@ -51,13 +53,17 @@ import AdminLayout from './components/layout/AdminLayout.js';
 import Layout404 from './components/layout/Layout404.js';
 import PageNotFound from './components/pages/PageNotFound.js';
 
-import AdminDashboard from './components/pages/Admin/AdminDashboard/Dashboard.js';
-import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
+import AdminDashboard from './components/pages/Admin/AdminDashboard/AdminDashboard.js';
 import AdminServices from './components/pages/Admin/AdminServices/AdminServices.js';
 import AdminServiceProvider from './components/pages/Admin/AdminUsers/AdminServiceProviders.js';
 import AdminCustomers from './components/pages/Admin/AdminUsers/AdminCustomers.js';
 import AdminAdvertisers from './components/pages/Admin/AdminUsers/AdminAdvertisers.js';
 import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js';
+import AdminComplaints from './components/pages/Admin/AdminComplaints/AdminComplaints.js';
+import AdminReport from './components/pages/Admin/AdminReport/AdminReport.js';
+import AdminAdvertisements from './components/pages/Admin/AdminAdvertisements/AdminAdvertisements.js';
+import AdminSessions from './components/pages/Admin/AdminSessions/AdminSessions.js';
+import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -67,17 +73,21 @@ import OngoingProject from './components/pages/Customer/CustomerDashboard/Ongoin
 import Quotation from './components/pages/Customer/Quotation.js'
 import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP.js';
-
-
-import Forum from './components/pages/Forum/Forum.js';
-import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
-import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
+import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
+import ToDoForm from './components/pages/Customer/ToDoForm.js';
+import RatenReview from './components/pages/Customer/RatenReview.js';
 import ViewAservice from './components/pages/User/ViewAservice.js';
 import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js';
 import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
 import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.js';
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
 import ViewAjob from './components/pages/User/ViewAjob.js';
+import CustomerComplaintPage from './components/pages/Customer/CustomerComplaintPage.js';
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
+import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import Forum from './components/pages/Forum/Forum.js';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -88,19 +98,24 @@ const router = createBrowserRouter(
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
         <Route path="/services/:serviceName/:ViewAjob" element={<ViewAjob />} />
-        <Route path='login' element={<Login />} />
-        <Route path='/signup/customer' element={<CustSignUp />} />
-        <Route path='/signup/serviceProvider' element={<SpSignUp />} />
-        <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
+        <Route path="login" element={<Login />} />
+        <Route path="/signup/customer" element={<CustSignUp />} />
+        <Route path="/signup/serviceProvider" element={<SpSignUp />} />
+        <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
+        <Route path="/About" element={<About />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route index path="dashboard" element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
         <Route path="customers" element={<AdminCustomers />} />
         <Route path="advertisers" element={<AdminAdvertisers />} />
         <Route path="reviews" element={<AdminReviews />} />
+        <Route path="complaints" element={<AdminComplaints />} />
+        <Route path="report" element={<AdminReport />} />
+        <Route path="advertisements" element={<AdminAdvertisements />} />
+        <Route path="sessions" element={<AdminSessions />} />
         <Route path="history" element={<ViewHistory /> } />
       </Route>
 
@@ -109,11 +124,10 @@ const router = createBrowserRouter(
         <Route path="Ads" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path="Forum" element={<Forum />} />
         <Route path="VerifiedAds" element={<VerifiedAds />} />
         <Route path="RejectedAds" element={<RejectedAds />} />
         <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
-        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="Subscribtion" element={<Subscribtion />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -124,11 +138,22 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="Searchserviceprovider" element={<Searchserviceprovider/>} />
+        <Route path="ViewServiceProvider" element={<ViewServiceProvider />} />
+        <Route path="ToDoForm" element={<ToDoForm />} />
+        <Route path="RatenReview" element={<RatenReview />} />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
-        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />  
+        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
+        <Route path="ViewAQuotation" element={<ViewAQuotation />} />
+        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+        <Route path="AddReview" element={<AddReviewandRating />} />
+        
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

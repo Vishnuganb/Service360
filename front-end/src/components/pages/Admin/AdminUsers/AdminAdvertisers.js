@@ -5,7 +5,6 @@ import BgImage from '../../../../assets/images/header/Background.png';
 import PopupBgImage from '../../../../assets/images/header/popupBg.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 import person1 from '../../../../assets/images/home/Customer_1.png';
@@ -395,8 +394,6 @@ function AdminAdvertisers() {
             displayedAdvertisers,
         });
 
-        console.log(data.displayedAdvertisers);
-        console.log(page)
     };
 
     const handleSearchChange = (e) => {
@@ -437,9 +434,6 @@ function AdminAdvertisers() {
 
         const filteredAdvertisers = filteredAdvertisersByStatus[data.activeTab];
         const totalPages = Math.ceil(filteredAdvertisers.length / data.cardsPerPage);
-
-        console.log(filteredAdvertisers)
-        console.log(totalPages)
 
         setData((prevState) => ({
             ...prevState,

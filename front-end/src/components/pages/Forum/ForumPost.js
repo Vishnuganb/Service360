@@ -4,6 +4,8 @@ import { Row, Col } from "react-bootstrap";
 
 import "../../../style/advertiser/AdIndex.css";
 
+import backgroundImage from "../../../assets/images/header/Background.png";
+
 
 const ForumPost = ({
   profileIcon,
@@ -18,7 +20,10 @@ const ForumPost = ({
   answers,
 }) => {
   return (
-    <div className="border rounded shadow-sm d-flex SingleForumCont">
+    <div
+      className="border rounded shadow-sm d-flex SingleForumCont"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <Row>
         <Col xs={2} md={2} className="forumImage">
           <Image src={forumImage} alt="Main image" fluid rounded />
@@ -41,7 +46,6 @@ const ForumPost = ({
           </Row>
           <Row>
             <p className="Forumtitle">{title}</p>
-          
           </Row>
           <Row>
             <p className="Forumtitle">{description}</p>

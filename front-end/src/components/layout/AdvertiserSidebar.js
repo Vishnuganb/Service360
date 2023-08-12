@@ -381,7 +381,7 @@ function AdvertiserSidebar() {
 
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
-                  to=""
+                  to="/advertiser/Subscribtion"
                   className="nav-link nav-link-sidebar text-white"
                 >
                   <i

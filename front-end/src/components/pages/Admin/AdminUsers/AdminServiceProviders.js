@@ -10,6 +10,12 @@ import styled from 'styled-components';
 import person1 from '../../../../assets/images/home/Customer_1.png';
 import person2 from '../../../../assets/images/home/Customer_2.png';
 import person3 from '../../../../assets/images/home/Customer_3.png';
+import person4 from '../../../../assets/images/home/Customer_4.jpg';
+import person5 from '../../../../assets/images/home/Customer_5.jpg';
+import person6 from '../../../../assets/images/home/Customer_6.jpg';
+import person7 from '../../../../assets/images/home/Customer_7.jpg';
+import person8 from '../../../../assets/images/home/Customer_8.jpg';
+import person9 from '../../../../assets/images/home/Customer_9.jpg';
 import { set } from 'lodash';
 
 const searchInputStyle = {
@@ -142,7 +148,7 @@ function AdminServiceProvider() {
             registeredDate: '2023-08-07',
             service: 'Electrical Wiring',
             category: 'Electrical & Plumbing',
-            image: person3,
+            image: person4,
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -160,7 +166,7 @@ function AdminServiceProvider() {
             registeredDate: '2023-08-08',
             service: 'Tiles Fitting',
             category: 'Construction',
-            image: person1,
+            image: person5,
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -178,7 +184,7 @@ function AdminServiceProvider() {
             registeredDate: '2023-08-09',
             service: 'Fire Alarm',
             category: 'Security',
-            image: person2,
+            image: person6,
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -250,7 +256,7 @@ function AdminServiceProvider() {
             registeredDate: '2023-08-13',
             service: 'CCTV Repair',
             category: 'Security',
-            image: person2,
+            image: person7,
             status: 'Pending',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -268,7 +274,7 @@ function AdminServiceProvider() {
             registeredDate: '2023-08-14',
             service: 'Sofa cleaning',
             category: 'cleaning',
-            image: person3,
+            image: person8,
             status: 'Accepted',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -286,7 +292,7 @@ function AdminServiceProvider() {
             registeredDate: '2023-08-15',
             service: 'Painting',
             category: 'Interior Works',
-            image: person1,
+            image: person9,
             status: 'Rejected',
             uploadedFiles: [
                 { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
@@ -528,7 +534,7 @@ function AdminServiceProvider() {
 
                 <h2 className="ms-5 fw-bold align-self-start">Service Providers</h2>
 
-                <div className="d-flex align-items-center  w-100">
+                <div className="d-flex align-items-center justify-content-center w-100">
                     <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 m-3'>
                         <div className="input-group">
                             <select
@@ -547,7 +553,7 @@ function AdminServiceProvider() {
                         </div>
                     </div>
 
-                    <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 m-3'>
+                    <div className='me-xs-2 col-xs-2 col-sm-5 col-md-4 col-xxl-3 m-3'>
                         <div className="input-group">
                             <input
                                 type="text"
@@ -748,7 +754,7 @@ function AdminServiceProvider() {
                         </>
                     )}
                     <div className="col-sm-6 d-flex justify-content-end align-items-end m-0">
-                        <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showServiceModal: false })}>
+                        <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showDetailsModal: false })}>
                             Cancel
                         </Button>
                         <Button type="submit" className="btn-effect">

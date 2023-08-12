@@ -237,10 +237,6 @@ function AcceptedJobDetails() {
                 </div>
             </Col>
         </Row>
-        <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button className="btn-ServiceProvider-1" onClick={handleShow}>Schedule Physical Visit</Button>
-        </div>
-        <hr/>
         <span>Quotation</span>
         <div className="mt-2 d-flex flex-column">
                 <Form>

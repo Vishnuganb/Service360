@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
+// {profile,id,customerName,lastSeen,jobTitle,dueDate,serviceName,jobStatus,description,location,posted,images,jobsCount,jobCommentId}
 function JobDetails() {
 
     const viewJobsData = [
@@ -126,14 +127,12 @@ function JobDetails() {
       },
   ];
 
-
-    const {singleId} = useParams();
-    
-    const singleJobData = viewJobsData.find((job) => job.id === parseInt(singleId));
-
-    if (!singleJobData) {
-      return <div>Job not found.</div>;
-    }
+  const params = useParams();
+  const Id=params.id-1;
+  const singleJobData = viewJobsData[Id];
+  if (!singleJobData) {
+    return <div>Job not found.</div>;
+  }
 
   return (
     <Row className="JobDetails-Col-container">
@@ -204,7 +203,7 @@ function JobDetails() {
           
           
           <div className="jobDetails-images-container-box row mt-2">
-          {singleJobData.images.map((image, index) => (
+          {singleJobData.images && singleJobData.images.map((image, index) => (
             <div key={index} className="col-6 col-md-4 col-lg-3">
               <img
                 src={image}

@@ -137,8 +137,8 @@ const router = createBrowserRouter(
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
-        <Route path="ViewAJob/:singleId" element={<SpViewAJob />} />
-        <Route path="ViewAVacancy/:singleId" element={<SpViewAVacancy />} />
+        <Route path="ViewAJob/:id" element={<SpViewAJob />} />
+        <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />

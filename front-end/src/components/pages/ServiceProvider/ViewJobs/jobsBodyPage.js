@@ -7,6 +7,7 @@ import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import JobDetails from '../ViewAJob/jobDetails';
 
 function JobsBodyPage() {
 
@@ -126,12 +127,58 @@ function JobsBodyPage() {
         },
     ];
 
+    const comment = [
+        {
+          profile: UserImg,
+          customerName: 'Viyaasan',
+          id: 1,
+          description: 'A great job!',
+          date: '2021-08-01',
+        },
+        {
+          profile: UserImg,
+          customerName: 'Pranavan',
+          id: 2,
+          description: 'Very satisfied with the service!',
+          date: '2021-08-02',
+        },
+        {
+          profile: UserImg,
+          customerName: 'Kavin',
+          id: 3,
+          description: 'Professional and efficient.',
+          date: '2021-08-03',
+        },
+        {
+          profile: UserImg,
+          customerName: 'Tharun',
+          id: 4,
+          description: 'Highly recommended!',
+          date: '2021-08-04',
+        },
+        {
+          profile: UserImg,
+          customerName: 'Umai vanan',
+          id: 5,
+          description: 'Excellent work!',
+          date: '2021-08-05',
+        },
+    ];
+
     const MyServices= [
         "Electrical Wiring",
         "Masonry",
         "Cleaning",
         "Tiles Fitting",
     ];
+
+    //to store the selected job
+    const [selectedJob, setSelectedJob] = useState(null);    
+
+    // Function to handle viewing job details
+    const handleSelectAJob = (job) => {
+        setSelectedJob(job);
+    };
 
     // Number of cards to display per page
     const cardsPerPage = 5;
@@ -227,8 +274,13 @@ function JobsBodyPage() {
 
             {/* Job Cards */}
 
-            {displayedCards.map((job) => (
-                    <div className="single-job-card mx-auto mt-3">    
+            {displayedCards.map((job) => (      
+                
+                
+                
+                    <div className="single-job-card mx-auto mt-3"> 
+
+
                         <div className="job-card-header">
                             <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                                 <div className='d-flex justify-content-center align-items-center'>
@@ -276,16 +328,16 @@ function JobsBodyPage() {
                         </div>
                         <hr />
                         <div className="view-jobs-card-footer  mt-sm-0 mt-4">
-                          
-                            <Link to={`/ServiceProvider/ViewAJob/${job.id}`} className="btn btn-default job-card-footer-btn" id="job-card-footer-btn-view">
-                                <span
-                                    className="btn btn-default job-card-footer-btn"
-                                    id="job-card-footer-btn-view"
-                                >
-                                    <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
-                                </span>
-                            </Link>
+                            
+                            <Link to={`../ViewAJob/${job.id}` }
+                                className="btn btn-default job-card-footer-btn"
+                                id="job-card-footer-btn-view" 
+                                // onClick={handleSelectAJob}
+                            >
+                                <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
+                            </Link>                                
+                            
 
                             <span
                                 className="btn btn-default job-card-footer-btn"
@@ -307,6 +359,25 @@ function JobsBodyPage() {
                         </div>
                     </div>
             ))}
+
+            {/* {selectedJob && (
+                <JobDetails  
+                    profile={selectedJob.profile}
+                    id={selectedJob.id} 
+                    customerName={selectedJob.customerName}
+                    lastSeen={selectedJob.lastSeen}
+                    jobTitle={selectedJob.jobTitle}
+                    dueDate={selectedJob.dueDate}
+                    serviceName={selectedJob.serviceName}
+                    jobStatus={selectedJob.jobStatus}
+                    description={selectedJob.description}
+                    location={selectedJob.location}
+                    images={selectedJob.images}
+                    jobsCount={selectedJob.jobsCount}
+                    jobsCommentId={selectedJob.jobsCommentId}
+                />
+            )} */}
+
 
             {/* Pagination */}
             <div className="pagination justify-content-center">

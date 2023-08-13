@@ -4,7 +4,7 @@ import Home from './components/pages/Home/Index.js';
 
 import Login from './components/loginForm/LoginContextProviderInterface.js';
 import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
-import CustSignUp from './components/loginForm/CustomerSignUP.js';
+import CustSignUp from './components/loginForm/CustomerSignupContextProviderInterface.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
 import ServicePage from './components/pages/User/ServicePage.js';

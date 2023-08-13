@@ -49,9 +49,9 @@ const AuthenticationContextProvider = (props) => {
 
     }
 
-    const signUp = (data) => {
+    const customerSignUp = (data) => {
 
-        axios.post(serverLink + '/auth', data).then(
+        axios.post(serverLink + '/auth/signup/customer', data).then(
 
             (response) => {
 
@@ -154,7 +154,6 @@ const AuthenticationContextProvider = (props) => {
 
     }
 
-    /*change later*/
 
     const [contentVisible, setContentVisible] = useState(0)
 
@@ -172,7 +171,7 @@ const AuthenticationContextProvider = (props) => {
 
     return (
 
-        <AuthenticationContext.Provider value={{ authenticated, authenticateUser, login, signUp, contentVisible, changeContentVisible, logout, packagesDetail, changePackageDetails, userDetailsAfterAuthentication, eventDetails, assignEventDetails, assignEventId, eventId }}>
+        <AuthenticationContext.Provider value={{ authenticated, authenticateUser, login, customerSignUp, contentVisible, changeContentVisible, logout, packagesDetail, changePackageDetails, userDetailsAfterAuthentication, eventDetails, assignEventDetails, assignEventId, eventId }}>
 
             {props.children}
 

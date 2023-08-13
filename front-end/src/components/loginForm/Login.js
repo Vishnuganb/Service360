@@ -1,67 +1,13 @@
 import React, { useState, useContext } from 'react'
-import { Link, useNavigate } from "react-router-dom";
-import loginPhoto from '../../assets/images/home/login.jpeg'
+import { Link } from "react-router-dom";
+import loginPhoto from '../../assets/images/home/login.png'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styled from 'styled-components';
 import { Modal} from 'react-bootstrap';
 import '../../style/Login.css'
 import image from '../../assets/images/header/Background.png'
 import { ReactLinkContext } from "../../ContextFiles/ReactLinkContext";
-
-
-const Login = () => {
-
-    const navigate = useNavigate();
-
-    const { CustomerSignUpLink, ServiceProviderSignUpLink, AdvertiserSignUpLink } = useContext(ReactLinkContext)
-
-    const { ResetPasswordLink: forgotPasswordLink } = useContext(ReactLinkContext)
-
-    const [isPasswordHidden, setIsPasswordHidden] = useState(true)
-
-    const [passwordType, setPasswordType] = useState('password')
-
-    const [email, setEmail] = useState('')
-
-    const [password, setPassword] = useState('')
-
-    const [errorMessage, setErrorMessage] = useState(null)
-
-    const login = (email, password) => {
-
-        let isError = false
-
-        if (email === '' || password === '') {
-            isError = true
-            setErrorMessage('Please fill in all the fields')
-        } 
-        
-        if (!isError) {
-            navigate('/')
-        } 
-
-    }
-
-    const showHidePassword = () => {
-
-        if (isPasswordHidden) {
-            setPasswordType('text')
-            setIsPasswordHidden(false)
-
-        }
-        else {
-
-            setPasswordType('password')
-            setIsPasswordHidden(true)
-
-        }
-
-    }
-
-    const customFontStyle = {
-        fontFamily: "Roboto",
-        color: '#9F390D' // Replace 'Your_Custom_Font' with the font name you want to use
-    };
+import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
 
     const StyledButton = styled.button`
         background-color: #292D32;
@@ -90,6 +36,60 @@ const Login = () => {
             color: #9f390d;
         }
     `;
+
+const Login = () => {
+
+    const { login } = useContext(AuthenticationContext)
+
+    const { CustomerSignUpLink, ServiceProviderSignUpLink, AdvertiserSignUpLink } = useContext(ReactLinkContext)
+
+    const { ResetPasswordLink: forgotPasswordLink } = useContext(ReactLinkContext)
+
+    const [isPasswordHidden, setIsPasswordHidden] = useState(true)
+
+    const [passwordType, setPasswordType] = useState('password')
+
+    const [email, setEmail] = useState('')
+
+    const [password, setPassword] = useState('')
+
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    const LoginLink = (email, password) => {
+
+        if (email === '' && password === '') {
+            setErrorMessage('Please fill in all the fields')
+        }else if (email === '') {
+            setErrorMessage('Please enter the email address')
+        }else if (email === '' && password === '') {
+            setErrorMessage('Please enter the password')
+        } else {
+             login(email, password);
+             console.log(email, password)
+        } 
+
+    }
+
+    const showHidePassword = () => {
+
+        if (isPasswordHidden) {
+            setPasswordType('text')
+            setIsPasswordHidden(false)
+
+        }
+        else {
+
+            setPasswordType('password')
+            setIsPasswordHidden(true)
+
+        }
+
+    }
+
+    const customFontStyle = {
+        fontFamily: "Roboto",
+        color: '#9F390D' 
+    };
 
     const [showModal, setShowModal] = useState(false);
 
@@ -183,7 +183,7 @@ const Login = () => {
                                                     <StyledButton
                                                         className="btn btn-dark btn-block"
                                                         type="button"
-                                                        onClick={() => login(email, password)}
+                                                        onClick={() => LoginLink(email, password)}
                                                     >
                                                         Sign in
                                                     </StyledButton>
@@ -262,7 +262,7 @@ const Login = () => {
 
                                             <div className="text-center">
 
-                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" />
+                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" style={{backgroundColor:'none'}}/>
 
                                             </div>
 

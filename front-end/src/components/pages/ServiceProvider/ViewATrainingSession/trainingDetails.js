@@ -3,7 +3,7 @@ import powerImage from '../../../../assets/images/ServiceProvider/power.jpg';
 
 function trainingSession(){
     return(
-        <div>
+        <div className="ms-lg-4 me-lg-4">
             <div className="ViewATraining-image-container d-flex justify-content-center mb-3">
                 <img src={powerImage} alt="power" width="50%" height="50%" style={{textAlign:"center"}}/>
 

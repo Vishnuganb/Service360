@@ -766,7 +766,7 @@ const AdminReport = () => {
                             className="btn me-2 d-block d-md-none fs-3"
                             onClick={handleGenerateMonthlyReport}
                         >
-                            <i class="bi bi-clipboard2-minus-fill"></i>
+                            <i className="bi bi-clipboard2-minus-fill"></i>
                         </button>
                         <Button onClick={handleGenerateMonthlyReport} className="btn-effect3 d-none d-md-block">
                             Generate Monthly Report

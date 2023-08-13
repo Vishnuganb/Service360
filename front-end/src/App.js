@@ -11,18 +11,15 @@ import ServicePage from './components/pages/User/ServicePage.js';
 
 import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
-import AdDashbord from './components/pages/advertiser/AdDashboard.js';
+import AdDashbord from './components/pages/advertiser/Dashboard/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
 import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
-import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
-import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
-import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/index.js';
+import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
 import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
@@ -119,14 +116,11 @@ const router = createBrowserRouter(
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
         <Route path="Forum" element={<Forum />} />
-        <Route path="VerifiedAds" element={<VerifiedAds />} />
-        <Route path="RejectedAds" element={<RejectedAds />} />
-        <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
         <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
-        <Route path="CustomerDashboard" element={<CustomerDashboard />} />
+        <Route index element={<CustomerDashboard />} />
         <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
         <Route path="OngoingProject" element={<OngoingProject />} />
         <Route path="Quotation" element={<Quotation />} />

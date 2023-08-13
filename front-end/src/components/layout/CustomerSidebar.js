@@ -31,7 +31,7 @@ function CustomerSideBar() {
                             </li>
 
                             <li className="nav-item text-white fs-4 mt-4 py-2 py-xs-1">
-                                <Link to="/Customer/Customerdashboard" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/Customer" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-grid"></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Dashboard</span>
                                 </Link>

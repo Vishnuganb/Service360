@@ -1,9 +1,15 @@
 import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
+import {Modal,Form} from "react-bootstrap";
+
+import "../../../../style/advertiser/AdIndex.css";
+
+import backgroundImage from "../../../../assets/images/header/Background.png";
+import userProfileIcon from "../../../../assets/images/advertiser/proAd.jpg";
+
 
 const Comment = (props) => {
   const { commentData } = props;
+  console.log(commentData[0]);
   
   if (!commentData || commentData.length === 0) {
     return (
@@ -26,29 +32,59 @@ const Comment = (props) => {
             <p className="AskQPop">Comments</p>
           </Modal.Title>
         </Modal.Header>
-        <div className="InnerCreateForum">
+        <div
+          className="InnerCreateForum"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
           <Form>
             <fieldset>
               {commentData.map((comment) => (
                 <div key={comment.id}>
-                  <div className="d-flex justify-content-center text-muted">
-                    {comment.timestamp}
-                  </div>
-
                   <div>
-                    <div className="text-muted">{comment.author}</div>
-                    <div>{comment.content}</div>
+                    <div className="d-flex align-items-center  ">
+                      <div>
+                        <img
+                          src={comment.profileIcon}
+                          alt="Comment User"
+                          className="AdProfilePic"
+                        />
+                      </div>
+                      <div className="namediv text-muted">
+                        <p className="small">{comment.author}</p>
+                      </div>
+                    </div>
+
+                    <div
+                      className="p-3 ms-3 mb-1  border shadow-sm  rounded"
+                      style={{ backgroundColor: "#f5f6f7" }}
+                    >
+                      {comment.content}
+                    </div>
+                    <div className="d-flex justify-content-end text-muted">
+                      <p style={{ fontSize: "x-small" }}>{comment.timestamp}</p>
+                    </div>
                   </div>
                 </div>
               ))}
-              <Form.Group className=" mt-3">
-                <Form.Control
-                  id="disabledTextInput"
-                  required
-                  placeholder="Post Your Comment"
-                ></Form.Control>
-              </Form.Group>
-              <i className="fa-thin fa-paper-plane"></i>
+              <div className="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
+                <img
+                  src={userProfileIcon}
+                  alt="User Profile"
+                  className="AdProfilePic m-2"
+                />
+                <input
+                  type="text"
+                  className="form-control form-control-lg ForummessageInput"
+                  id="exampleFormControlInput2"
+                  placeholder="Type message"
+                />
+                <a className="ms-3" href="#!">
+                  <i
+                    className="fa-solid fa-paper-plane fa-lg"
+                    style={{ color: "#292D32" }}
+                  ></i>
+                </a>
+              </div>
             </fieldset>
           </Form>
         </div>

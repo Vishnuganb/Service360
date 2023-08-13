@@ -403,7 +403,7 @@ function AdminCustomer() {
                             isClearable
                         />
                         <span className="input-group-text">
-                            <i class="bi bi-calendar2-week"></i>
+                            <i className="bi bi-calendar2-week"></i>
                         </span>
                     </div>
                 </div>
@@ -418,7 +418,7 @@ function AdminCustomer() {
                             isClearable
                         />
                         <span className="input-group-text">
-                            <i class="bi bi-calendar2-week"></i>
+                            <i className="bi bi-calendar2-week"></i>
                         </span>
                     </div>
                 </div>
@@ -466,7 +466,7 @@ function AdminCustomer() {
                                     <td>{customer.email}</td>
                                     <td>{customer.address}</td>
                                     <td className='d-flex justify-content-center'>
-                                        <i class="bi bi-info-circle-fill fs-3" onClick={() => handleShowDetails(customer)}></i>
+                                        <i className="bi bi-info-circle-fill fs-3" onClick={() => handleShowDetails(customer)}></i>
                                     </td>
                                 </tr>
                             ))}
@@ -500,9 +500,7 @@ function AdminCustomer() {
                                 <div className="d-flex justify-content-start">
                                     <img src={data.selectedCustomer.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
                                 </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Customer ID: </span> CUS000{data.selectedCustomer.id}
-                                </div>
+
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedCustomer.firstName}
                                 </div>

@@ -12,15 +12,15 @@ import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
 
 
 
-import Ad6_1 from "../../../../../assets/images/admin/hammer_1.jpeg";
-import Ad6_2 from "../../../../../assets/images/admin/hammer_2.jpeg";
-import Ad6_3 from "../../../../../assets/images/admin/hammer_3.jpeg";
-import Ad7_1 from "../../../../../assets/images/admin/disk_2.jpeg";
-import Ad7_2 from "../../../../../assets/images/admin/disk_1.jpeg";
-import Ad7_3 from "../../../../../assets/images/admin/disk_3.jpeg";
-import Ad8_1 from "../../../../../assets/images/admin/plier_1.jpeg";
-import Ad8_2 from "../../../../../assets/images/admin/plier_2.jpeg";
-import Ad8_3 from "../../../../../assets/images/admin/plier_3.jpeg";
+import Ad6_1 from "../../../../../assets/images/admin/ads/hammer_1.jpeg";
+import Ad6_2 from "../../../../../assets/images/admin/ads/hammer_2.jpeg";
+import Ad6_3 from "../../../../../assets/images/admin/ads/hammer_3.jpeg";
+import Ad7_1 from "../../../../../assets/images/admin/ads/disk_2.jpeg";
+import Ad7_2 from "../../../../../assets/images/admin/ads/disk_1.jpeg";
+import Ad7_3 from "../../../../../assets/images/admin/ads/disk_3.jpeg";
+import Ad8_1 from "../../../../../assets/images/admin/ads/plier_1.jpeg";
+import Ad8_2 from "../../../../../assets/images/admin/ads/plier_2.jpeg";
+import Ad8_3 from "../../../../../assets/images/admin/ads/plier_3.jpeg";
 
 
 const VerifiedAdCont = ({

@@ -37,21 +37,21 @@ const AuthenticationContextProvider = (props) => {
         authenticated = setAuthenticated;
         userDetailsAfterAuthentication = setUserDetailsAfterAuthentication;
 
-        if (!authenticated) { navigate("/Login") }
+        if (!authenticated) { navigate("/login") }
         else {
 
-            if (userType === 'customer') { if (userDetailsAfterAuthentication.customer === null) { logout(); navigate("/Login") } }
-            else if (userType === 'admin') { if (userDetailsAfterAuthentication.employee.type !== 'admin') { logout(); navigate("/Login") } }
-            else if (userType === 'manager') { if (userDetailsAfterAuthentication.employee.type !== 'manager') { navigate("/Login") } }
-            else if (userType === 'employee') { if (userDetailsAfterAuthentication.employee.type !== 'photographer' || userDetailsAfterAuthentication.employee.type !== 'videographer' || userDetailsAfterAuthentication.employee.type !== 'editor') { navigate("/Login") } }
+            if (userType === 'customer') { if (userDetailsAfterAuthentication.type !== 'customer') { logout(); navigate("/login") } }
+            else if (userType === 'admin') { if (userDetailsAfterAuthentication.type !== 'admin') { logout(); navigate("/login") } }
+            else if (userType === 'serviceProvider') { if (userDetailsAfterAuthentication.type !== 'serviceProvider') { navigate("/login") } }
+            else if (userType === 'advertiser') { if (userDetailsAfterAuthentication.employee.type !== 'advertiser') { navigate("/login") } }
 
         }
 
     }
 
-    const signUp = (data) => {
+    const customerSignUp = (data) => {
 
-        axios.post(serverLink + '/createUser', data).then(
+        axios.post(serverLink + '/auth/signup/customer', data).then(
 
             (response) => {
 
@@ -67,47 +67,40 @@ const AuthenticationContextProvider = (props) => {
 
         )
 
-
-
     }
 
     /*Here the username refers the email*/
     const login = (username, password) => {
-
-        axios.post(
-
-            serverLink + '/authenticate', {
-            username,
-            password
-        }).then(
-
-            (response) => {
-
-                storeSessionJWT(username, response.data.token)
-                authenticated = true
-                getUserDetailsAfterAuthenticated(username)
-
-            }).catch(
-
-                () => {
-
-                    alert("ERROR!!! 1")
-
-                })
-
+        axios.post(serverLink + '/auth/login', {email: username, password: password})
+            .then((response) => {
+                const token = response.data.token;
+                storeSessionJWT(username, token);
+                authenticated = true;
+                getUserDetailsAfterAuthenticated(username);
+                console.log(response.data)
+                console.log(response.data.token)
+                console.log(username)
+            })
+            .catch((error) => {
+                alert("ERROR!!! 1");
+                console.log('An error occurred during login.',error);
+            });
     }
+
 
     const getUserDetailsAfterAuthenticated = (email) => {
 
-        axios.get(serverLink + '/getUserDetails/' + email).then(
+        axios.get(serverLink + '/auth/login/' + email).then(
 
             (response) => {
-                authenticated = true; userDetailsAfterAuthentication = response.data;
+                authenticated = true;
+                userDetailsAfterAuthentication = response.data;
+                console.log(response.data)
 
-                if (userDetailsAfterAuthentication.customer !== null) { navigate("/Customer", { state: { authenticated, userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.employee.type === 'admin') { navigate("/Admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.employee.type === 'manager') { navigate("/Manager", { state: { authenticated, userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.employee.type !== 'photographer' || userDetailsAfterAuthentication.employee.type !== 'videographer' || userDetailsAfterAuthentication.employee.type !== 'editor') { navigate("/Employee", { state: { authenticated, userDetailsAfterAuthentication } }) }
+                if (userDetailsAfterAuthentication.role === 'CUSTOMER') { navigate("/admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
+                else if (userDetailsAfterAuthentication.role === 'ADMIN') { navigate("/admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
+                else if (userDetailsAfterAuthentication.role === 'SERVICEPROVIDER') { navigate("/serviceProvider", { state: { authenticated, userDetailsAfterAuthentication } }) }
+                else if (userDetailsAfterAuthentication.role === 'ADVERTISER') { navigate("/advertiser", { state: { authenticated, userDetailsAfterAuthentication } }) }
 
             }
 
@@ -143,16 +136,12 @@ const AuthenticationContextProvider = (props) => {
     }
 
     const storeSessionJWT = (username, token) => {
-
         sessionStorage.setItem('authenticatedUser', username);
         setupAxiosInterceptors(createJWTToken(token));
-
     }
 
     const createJWTToken = (token) => {
-
         return 'Bearer ' + token;
-
     }
 
     const logout = () => {
@@ -160,11 +149,11 @@ const AuthenticationContextProvider = (props) => {
         sessionStorage.removeItem('authenticatedUser');
         authenticated = false;
         userDetailsAfterAuthentication = null;
-        navigate("/Login");
+        navigate("/login");
+        console.log("Logged out successfully!!!")
 
     }
 
-    /*change later*/
 
     const [contentVisible, setContentVisible] = useState(0)
 
@@ -182,7 +171,7 @@ const AuthenticationContextProvider = (props) => {
 
     return (
 
-        <AuthenticationContext.Provider value={{ authenticated, authenticateUser, login, signUp, contentVisible, changeContentVisible, logout, packagesDetail, changePackageDetails, userDetailsAfterAuthentication, eventDetails, assignEventDetails, assignEventId, eventId }}>
+        <AuthenticationContext.Provider value={{ authenticated, authenticateUser, login, customerSignUp, contentVisible, changeContentVisible, logout, packagesDetail, changePackageDetails, userDetailsAfterAuthentication, eventDetails, assignEventDetails, assignEventId, eventId }}>
 
             {props.children}
 

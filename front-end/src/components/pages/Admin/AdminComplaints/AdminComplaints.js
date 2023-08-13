@@ -511,7 +511,7 @@ function AdminComplaints() {
                                 isClearable
                             />
                             <span className="input-group-text">
-                                <i class="bi bi-calendar2-week"></i>
+                                <i className="bi bi-calendar2-week"></i>
                             </span>
                         </div>
                     </div>
@@ -526,7 +526,7 @@ function AdminComplaints() {
                                 isClearable
                             />
                             <span className="input-group-text">
-                                <i class="bi bi-calendar2-week"></i>
+                                <i className="bi bi-calendar2-week"></i>
                             </span>
                         </div>
                     </div>
@@ -572,7 +572,7 @@ function AdminComplaints() {
                                         <td>{user.email}</td>
                                         <td>{user.complaint}</td>
                                         <td className='d-flex justify-content-center'>
-                                            <i class="bi bi-info-circle-fill fs-3" onClick={() => handleShowDetails(user)}></i>
+                                            <i className="bi bi-info-circle-fill fs-3" onClick={() => handleShowDetails(user)}></i>
                                         </td>
                                     </tr>
                                 ))}

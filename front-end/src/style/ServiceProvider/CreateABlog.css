@@ -12,7 +12,8 @@
 /* COMMON CSS FOR INDEX AND BUTTONS APPLICABLE TO ALL FILES */
 
 .index-container{
-    background-color: rgba(251, 248, 248, 0.89)
+    background-color: rgba(251, 248, 248, 0.89);
+    background-image: url(../../assets/images/ServiceProvider/Background.png);
 }
 
 

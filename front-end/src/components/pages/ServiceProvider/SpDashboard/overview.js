@@ -5,7 +5,7 @@ import '../../../../style/ServiceProvider/Dashboard.css'
 
 function Overview() {
   return (
-        <div className="dashboard-top-cards-container d-flex flex-row ms-lg-4 me-lg-4">
+        <div className="dashboard-top-cards-container d-flex flex-row mt-3 ms-lg-4 me-lg-4">
             <Card className="card-sp-dashboard dashboard-button-1 col-3">
                 <Card.Body className="d-flex flex-column">
                     <Card.Title className="card-sp-dashboard-title">24</Card.Title>
@@ -35,7 +35,7 @@ function Overview() {
             </Card>
             <Card className="card-sp-dashboard dashboard-button-4 col-3">
                 <Card.Body className="d-flex flex-column">
-                    <Card.Title className="card-sp-dashboard-title">14</Card.Title>
+                    <Card.Title className="card-sp-dashboard-title">3.5 (28)</Card.Title>
                     <Card.Text className="card-body-container d-flex flex-row">
                         <span>Ratings</span>
                         <i className="bi bi-pass ms-lg-auto"></i>

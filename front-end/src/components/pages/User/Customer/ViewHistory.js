@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { Container, Form, Table, Row, Col, InputGroup } from "react-bootstrap";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import styled from "styled-components";
 import BgImage from "../../../../assets/images/header/Background.png";
 import { FaSearch } from "react-icons/fa";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(faCalendarAlt);
-const AdminHistory = () => {
+const CustomerHistory = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,37 +39,37 @@ const AdminHistory = () => {
           className="block serviceProvider py-3"
           style={{ backgroundImage: `url(${BgImage})` }}
         >
-          <h2 className="ms-5 fw-bold align-self-start">History</h2>
+          <h2 className="ms-5 fw-bold align-self-start">CustomerHistory</h2>
           <div className="d-flex justify-content-center w-100">
             <Row className="d-flex justify-content-around">
-              <Col >
+              <Col>
                 <div className="input-group">
-                <DatePicker
-                  className="form-control"
-                  selected={startDate}
-                  onChange={handleStartDateChange}
-                  placeholderText="From Date"
-                  dateFormat="dd/MM/yyyy"
-                />
-                 <span className="input-group-text">
+                  <DatePicker
+                    className="form-control"
+                    selected={startDate}
+                    onChange={handleStartDateChange}
+                    placeholderText="From Date"
+                    dateFormat="dd/MM/yyyy"
+                  />
+                  <span className="input-group-text">
                     <i class="bi bi-calendar2-week"></i>
                   </span>
-                  </div>
+                </div>
               </Col>
-              <Col >
+              <Col>
                 <div className="input-group">
-                <DatePicker
-                  className="form-control"
-                  selected={endDate}
-                  onChange={handleEndDateChange}
-                  placeholderText="To Date"
-                  dateFormat="dd/MM/yyyy"
-                  minDate={startDate}
-                />
-                   <span className="input-group-text">
+                  <DatePicker
+                    className="form-control"
+                    selected={endDate}
+                    onChange={handleEndDateChange}
+                    placeholderText="To Date"
+                    dateFormat="dd/MM/yyyy"
+                    minDate={startDate}
+                  />
+                  <span className="input-group-text">
                     <i class="bi bi-calendar2-week"></i>
                   </span>
-                  </div>
+                </div>
               </Col>
 
               <Col>
@@ -98,7 +95,6 @@ const AdminHistory = () => {
                 <thead>
                   <tr>
                     <th>Service Provider Name</th>
-                    <th>Customer Name</th>
                     <th>Date</th>
                     <th>Event</th>
                     <th>Service Type</th>
@@ -109,7 +105,6 @@ const AdminHistory = () => {
                 <tbody>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -121,7 +116,6 @@ const AdminHistory = () => {
                   </tr>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -133,7 +127,6 @@ const AdminHistory = () => {
                   </tr>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -145,7 +138,6 @@ const AdminHistory = () => {
                   </tr>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -157,7 +149,6 @@ const AdminHistory = () => {
                   </tr>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -169,7 +160,6 @@ const AdminHistory = () => {
                   </tr>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -181,7 +171,6 @@ const AdminHistory = () => {
                   </tr>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -193,7 +182,6 @@ const AdminHistory = () => {
                   </tr>
                   <tr>
                     <td>Pranavan</td>
-                    <td>Karththi</td>
                     <td>
                       {" "}
                       12/07/2023 <br /> 9.00am
@@ -213,4 +201,4 @@ const AdminHistory = () => {
   );
 };
 
-export default AdminHistory;
+export default CustomerHistory;

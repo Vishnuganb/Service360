@@ -36,7 +36,7 @@ const Mission = ( ) => {
           </div>
         </div>
         <div className="AboutImageContainer">
-          <Image src={MissonImg} className="AboutTitleImg" />
+          <Image src={MissonImg} className="AboutTitleImg" rounded />
         </div>
       </div>
     );

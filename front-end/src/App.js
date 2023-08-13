@@ -10,18 +10,19 @@ import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
 import ServicePage from './components/pages/User/ServicePage.js';
 
-import CreateAd from './components/pages/advertiser/CreateAd.js';
+import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
-import AdDashbord from './components/pages/advertiser/AdDashboard.js';
+import AdDashbord from './components/pages/advertiser/Dashboard/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
 import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
-import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
-import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
-import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
+// import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
+// import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
+// import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
-import Subscribtion from './components/pages/advertiser/subscription.js';
-
+import Subscribtion from './components/pages/advertiser/Dashboard/subscription.js';
+import Ads from './components/pages/advertiser/Dashboard/Ads/Index.js';
+// import EditAd from './components/pages/advertiser/Dashboard/EditAd.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -130,13 +131,15 @@ const router = createBrowserRouter(
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
-        <Route path="Ads" element={<AdsPage />} />
+        <Route path="AdsPage" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path="VerifiedAds" element={<VerifiedAds />} />
+        {/* <Route path="VerifiedAds" element={<VerifiedAds />} />
         <Route path="RejectedAds" element={<RejectedAds />} />
-        <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
+        <Route path="YetToVerifyAds" element={<YetToVerifyAds />} /> */}
         <Route path="Subscribtion" element={<Subscribtion />} />
+        <Route path="Ads" element={<Ads />} />
+        {/* <Route path="EditAd" element={<EditAd />} /> */}
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -159,10 +162,6 @@ const router = createBrowserRouter(
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
-       
-        
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -188,6 +187,9 @@ const router = createBrowserRouter(
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
         <Route path="ViewHistory" element={<SpViewHistory/>} />
         <Route path="PendingJob" element={<SpPendingJob/>} />
+
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route

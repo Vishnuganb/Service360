@@ -9,7 +9,7 @@ const UserFrd = () => {
   return (
     <div className="d-flex p-3 AboutSectionCont">
       <div className="AboutImageContainer">
-        <Image src={FrdImg} alt="UserFrdly" className="AboutTitleImg" />
+        <Image src={FrdImg} alt="UserFrdly" className="AboutTitleImg" rounded />
       </div>
       <div
         className="d-flex align-items-center flex-column justify-content-center AboutContentContainer"

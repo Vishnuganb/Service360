@@ -94,3 +94,18 @@
     border: 1px solid #357DEA;
     
 }
+
+.CreateAdInput{
+    background-color: unset;
+}
+
+.BrowseImageInput{
+    /* all:unset; */
+    
+    /* background-color: #292D32; */
+}
+
+.AddeleteImg:hover{
+scale: 1.1;
+}
+

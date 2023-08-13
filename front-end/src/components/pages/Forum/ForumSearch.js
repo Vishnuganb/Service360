@@ -3,7 +3,7 @@ import { Form, Row, Col } from "react-bootstrap";
 
 const ForumSearch = () => {
   return (
-    <Form >
+    <Form>
       <fieldset>
         <Row className="AdsSearchRow">
           <h1>Search Questions</h1>
@@ -16,9 +16,17 @@ const ForumSearch = () => {
             <Form.Group className="mb-3">
               <Form.Select>
                 <option>Select Category</option>
-                <option>Electrician</option>
-                <option>Plumber</option>
-                <option>Mechanic</option>
+                <option>Electricial</option>
+                <option>Plumbing</option>
+                <option>Mechanical</option>
+                <option>Tiles</option>
+                <option>Carpentary</option>
+                <option>Painting</option>
+                <option>Glass And Aluminium Fiting</option>
+                <option>iron Works</option>
+                <option>CCTV</option>
+                <option>Fire Alarm</option>
+                <option>Video Surveillance</option>
               </Form.Select>
             </Form.Group>
           </Col>

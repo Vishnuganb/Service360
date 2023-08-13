@@ -1,15 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
-import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { DocumentViewer } from '@cyntler/react-doc-viewer';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -20,13 +16,13 @@ const PDFViewer = () => {
     setNumPages(numPages);
   };
 
-  const pdfUrl = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+  const pdfUrl = process.env.PUBLIC_URL + '/pdf/Customer.pdf';
 
   return (
     <div className="pdf-viewer">
       <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
-          <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfpopup'/>
         ))}
       </Document>
     </div>
@@ -44,8 +40,8 @@ const Accept = () => {
   return (
     <>
       <Button variant="btn btn-viewvacancy-form-t" style={{
-        width: '16%',
-        height: '38px',
+        width: '13%',
+        height: '34px',
         border: '1px solid #ced4da',
         fontSize: '14px',
         padding: '0 8px',
@@ -58,7 +54,7 @@ const Accept = () => {
           width: '100%',
         }
       }} onClick={handleShow} >
-        <i className="my-customer-table-icon bi bi-pen h5"></i>
+        <i className="my-customer-table-icon bi bi-pen h6"></i>
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
@@ -119,8 +115,8 @@ const View = () => {
   return (
     <>
       <Button variant="btn btn-viewvacancy-form-t" style={{
-        width: '16%',
-        height: '38px',
+        width: '13%',
+        height: '34px',
         border: '1px solid #ced4da',
         fontSize: '14px',
         padding: '0 8px',
@@ -133,20 +129,18 @@ const View = () => {
           width: '100%',
         }
       }} onClick={handleShow} >
-        <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
+        <i className="my-customer-table-icon bi bi-eye-fill h6"></i>
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
           <Modal.Title> Quotation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <center><p> <PDFViewer /></p></center>
+        <Modal.Body >
+          <PDFViewer />
         </Modal.Body>
-        <Modal.Footer>
 
 
-        </Modal.Footer>
       </Modal>
     </>
   );
@@ -162,8 +156,8 @@ const Reject = () => {
   return (
     <>
       <Button variant="btn btn-viewvacancy-form-t" style={{
-        width: '16%',
-        height: '38px',
+        width: '13%',
+        height: '34px',
         border: '1px solid #ced4da',
         fontSize: '14px',
         padding: '0 8px',
@@ -176,7 +170,7 @@ const Reject = () => {
           width: '100%',
         }
       }} onClick={handleShow} >
-        <i className="my-customer-table-icon bi bi-trash h5"></i>
+        <i className="my-customer-table-icon bi bi-trash h6"></i>
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
@@ -184,8 +178,7 @@ const Reject = () => {
           <Modal.Title>Reject Quotation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <center><p>Please tell, why you are rejecting this quoation</p></center>
-          <input type="text" name="reason" className="form-control" id="reason" />
+          <center><p>Are you sure to delete?</p></center>
 
         </Modal.Body>
         <Modal.Footer>
@@ -240,7 +233,7 @@ export default function ViewAQuotation() {
               <p className="text-dark fs-4 fw-bold vacancytext"> Quotation </p>
             </div>
           </div>
-          <p> <Link to="/customer/ReceivedQuotation" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></Link>
+          <p> <Link to="/customer/ReceivedQuotation" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none' style={{ color: 'black' }}><i className="bi bi-arrow-left-circle-fill"></i></Link>
             &nbsp;&nbsp;Back</p>
           {/* <Form className="nav-search col-4"  >
                     <Form.Control
@@ -253,7 +246,7 @@ export default function ViewAQuotation() {
                 </Form> */}
         </div>
 
-        <div className="my-customer-table-container col-11">
+        <div className="my-customer-table-container">
           <Table className="my-customer-table" striped bordered hover>
             <thead>
               <tr>

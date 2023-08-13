@@ -6,6 +6,210 @@ import ResponsiveCalendar from '../../../layout/ResponsiveCalendar';
 import profile_img_2 from '../../../../assets/images/Customer/projects.jpg'
 import BgImage from '../../../../assets/images/header/Background.png';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Modal, Button, Col } from 'react-bootstrap';
+import ServiceProvider1 from '../../../../assets/images/Customer/ServiceProvider1.jpg';
+import ServiceProvider2 from '../../../../assets/images/Customer/ServiceProvider1.png';
+import ServiceProvider3 from '../../../../assets/images/Customer/ServiceProvider3.jpg';
+
+function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" onClick={handleShow}>
+                <i className="my-customer-table-icon bi bi-arrow-right-circle h5"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center>
+                        <Col>
+                            <img src={imageSrc} alt="Profile" className="ServiceProvider1" />
+                        </Col>
+                        <Col>Service Provider: {serviceProvider}</Col>
+                        <Col>Due Date: {dueDate}</Col>
+                        <Button variant='secondary' style={{ background: "#292d32", marginRight: '10px' }}>
+                            <i className="bi bi-list-task"></i>                    </Button>
+                        <Button variant='secondary' style={{ background: "#292d32" }}>
+                            <i className="bi bi-chat-fill"></i>                    </Button>
+                    </center>
+                </Modal.Body>
+                <Modal.Footer>
+
+                    <Button variant='secondary' style={{ background: "#292d32" }}>
+                        View Profile
+                    </Button>
+
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+}
+
+function HiredPopup({ title, serviceProvider, durationPeriod, imageSrc, }) {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" onClick={handleShow}>
+                <i className="my-customer-table-icon bi bi-arrow-right-circle h5"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center>
+                        <Col>
+                            <img src={imageSrc} alt="Profile" className="ServiceProvider1" />
+                        </Col>
+                        <Col>Service Provider: {serviceProvider}</Col>
+                        <Col>Duration Period: {durationPeriod}</Col>
+                        <Button variant='secondary' style={{ background: "#292d32", marginRight: '10px' }}>
+                            <i className="bi bi-list-task"></i>                    </Button>
+                        <Button variant='secondary' style={{ background: "#292d32" }}>
+                            <i className="bi bi-chat-fill"></i>                    </Button>
+                    </center>
+                </Modal.Body>
+                <Modal.Footer>
+
+                    <Button variant='secondary' style={{ background: "#292d32" }}>
+                        View Profile
+                    </Button>
+
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+}
+
+function PastPopup({ title, serviceProvider, dueDate, imageSrc }) {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" onClick={handleShow}>
+                <i className="my-customer-table-icon bi bi-arrow-right-circle h5"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center>
+                        <Col>
+                            <img src={imageSrc} alt="Profile" className="ServiceProvider1" />
+                        </Col>
+                        <Col>Service Provider: {serviceProvider}</Col>
+                        <Col>work Completed</Col>
+                        <Button variant='secondary' style={{ background: "#292d32", marginRight: '10px' }}>
+                            <i className="bi bi-list-task"></i>                    </Button>
+                        <Button variant='secondary' style={{ background: "#292d32" }}>
+                            <i className="bi bi-chat-fill"></i>
+                        </Button>
+                        &nbsp;&nbsp;<Delete />
+                    </center>
+                </Modal.Body>
+                <Modal.Footer>
+
+                    <Button variant='secondary' style={{ background: "#292d32" }}>
+                        View Profile
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+}
+
+
+const Delete = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" style={{
+                width: '9%',
+                height: '38px',
+                border: '1px solid #ced4da',
+                fontSize: '14px',
+                padding: '0 3px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                fontWeight: '500',
+                textTransform: 'none',
+                background: 'black',
+                '@media (max-width: 768px)': {
+                    width: '100%',
+                }
+            }} onClick={handleShow} >
+                <i className="my-customer-table-icon bi bi-trash h7"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose} centered style={{ width: '300px', marginLeft: '480px' }}>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
+                    <Modal.Title>Delete </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center><p>Are you sure to delete?</p></center>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="btn btn-viewvacancy-form-a" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'black',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }} onClick={handleClose}>
+                        Yes
+                    </Button>
+                    <Button variant="btn btn-viewvacancy-form-r" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'rgb(126, 123, 123)',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }} onClick={handleClose}>
+                        No
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+};
 
 const CustomerDashboard = () => {
     return (
@@ -13,21 +217,21 @@ const CustomerDashboard = () => {
 
             <div className="col-8">
                 <h4>Welcome back, Tharsana!</h4>
-                    <Row >
-                        <Card className="card-cus-dashboard dashboard-button-1" >
+                <Row >
+                    <Card className="card-cus-dashboard dashboard-button-1" >
                         <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
                             <Card.Body >
                                 <Card.Title>8</Card.Title>
                                 <Card.Text className="card-body-container">
-                                    Pending responded Vacancy
+                                    Pending vacancy Application
                                     <i className="bi bi-rocket-takeoff"></i>
                                 </Card.Text>
                             </Card.Body>
-                            </Link>
-                        </Card>
-                        
+                        </Link>
+                    </Card>
 
-                        <Card className="card-cus-dashboard dashboard-button-2">
+
+                    <Card className="card-cus-dashboard dashboard-button-2">
                         <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
                             <Card.Body>
                                 <Card.Title>3</Card.Title>
@@ -36,108 +240,121 @@ const CustomerDashboard = () => {
                                     <i className="bi bi-file-post-fill"></i>
                                 </Card.Text>
                             </Card.Body>
-                            </Link>
-                        </Card>
-                    </Row>
-                    <div className="col-sm" >
-                        <div className="d-none d-sm-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-1 responsiveCalendar_cus" >
-                            <ResponsiveCalendar />
-                        </div>
+                        </Link>
+                    </Card>
+                </Row>
+                <div className="col-sm" >
+                    <div className="d-none d-sm-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-1 responsiveCalendar_cus" >
+                        <ResponsiveCalendar />
                     </div>
-                    <div className='Onpro'> <h3>Ongoing Projects</h3></div>
-                    <Row>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                    Tiles fitting
-                                    {/* <p>Due date: 20/08/2023</p> */}
-                                    <a href="#Tiles fitting"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                    Plumbing
-                                    <a href="Plumbing"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                    Ac Repair
-                                    <a href="#Ac Repair"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                    Capentry
-                                    <a href="#Capentry"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-
-                    </Row>
-                    <br></br>
-                    <div className='Onpro'> <h3>Past Projects</h3></div>
-                    <Row>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                    Tiles fitting
-                                    {/* <p>Due date: 20/08/2023</p> */}
-                                    <a href="#Tiles fitting"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                    Plumbing
-                                    <a href="Plumbing"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                    Ac Repair
-                                    <a href="#Ac Repair"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Row>
-                    <br></br>
-                    <div className='Onpro'> <h3>Hired </h3></div>
-                    <Row>
-                        <Card className="dashboard-pages">
-                            <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                            <Card.Body>
-                                <Card.Text>
-                                Painting
-                                    {/* <p>Due date: 20/08/2023</p> */}
-                                    <a href="#Tiles fitting"><i className="bi bi-arrow-right-circle h3 text-dark"></i></a>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                       
-                        
-                    </Row>
                 </div>
+                <div className='Onpro'> <h3>Ongoing Projects</h3></div>
+                <Row>
+                    <Card className="dashboard-pages">
+                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                        <Card.Body>
+                            <Card.Text>
+                                Tiles fitting
+                                {/* <p>Due date: 20/08/2023</p> */}
+                                <ProjectPopup title="Tile fitting"
+                                    serviceProvider="Vinoth Kishan"
+                                    dueDate="2023-08-21"
+                                    imageSrc={ServiceProvider1} />
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card className="dashboard-pages">
+                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                        <Card.Body>
+                            <Card.Text>
+                                Plumbing
+                                <ProjectPopup title="Plumbing"
+                                    serviceProvider="Alex Kumar"
+                                    dueDate="2023-08-31"
+                                    imageSrc={ServiceProvider2} />
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card className="dashboard-pages">
+                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                        <Card.Body>
+                            <Card.Text>
+                                Ac Repair
+                                <ProjectPopup title=" Ac Repair"
+                                    serviceProvider="Ashwin Kumar"
+                                    dueDate="2023-08-20"
+                                    imageSrc={ServiceProvider3} />
 
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card className="dashboard-pages">
+                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                        <Card.Body>
+                            <Card.Text>
+                                Capentry
+                                <ProjectPopup title="Capentry"
+                                    serviceProvider="Ashwin Kumar"
+                                    dueDate="2023-08-28" />
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
 
+                </Row>
                 <br></br>
+                <div className='Onpro'> <h3>Hired </h3></div>
+                <Row>
+                    <Card className="dashboard-pages">
+                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                        <Card.Body>
+                            <Card.Text>
+                            Electrician
+                            <HiredPopup title="Electrician"
+                                    serviceProvider="Alex Kumar"
+                                    durationPeriod="2 years"
+                                    imageSrc={ServiceProvider2} />
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+
+
+                </Row>
+                <br></br>
+                <div className='Onpro'> <h3>Past Projects</h3></div>
+                <Row>
+                    <Card className="dashboard-pages">
+                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                        <Card.Body>
+                            <Card.Text>
+                                Tiles fitting
+                                <PastPopup title="Tile fitting"
+                                    serviceProvider="Vinoth Kishan"
+                                    dueDate="2023-04-21"
+                                    imageSrc={ServiceProvider1} />
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    <Card className="dashboard-pages">
+                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                        <Card.Body>
+                            <Card.Text>
+                                Plumbing
+                                <PastPopup title="Plumbing"
+                                    serviceProvider="Alex Kumar"
+                                    dueDate="2023-05-31"
+                                    imageSrc={ServiceProvider2} />
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+
+                </Row>
+                <br></br>
+                
             </div>
+
+
+            <br></br>
+        </div>
 
     );
 };

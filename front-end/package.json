@@ -56,6 +56,8 @@
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.4",
     "react-slick": "^0.29.0",
+    "react-time-picker": "^6.5.0",
+    "recharts": "^2.7.2",
     "recharts": "^2.7.3",
     "sass": "^1.63.6",
     "slick-carousel": "^1.8.1",

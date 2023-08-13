@@ -15,21 +15,17 @@ import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/Dashboard/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
 import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
-// import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
-// import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
-// import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
 import Subscribtion from './components/pages/advertiser/Dashboard/subscription.js';
 import Ads from './components/pages/advertiser/Dashboard/Ads/Index.js';
-// import EditAd from './components/pages/advertiser/Dashboard/EditAd.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
 import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
@@ -69,7 +65,6 @@ import ViewReviewandRating from './components/pages/User/Admin/ViewReviewandRati
 import Chat from './components/pages/User/Chat/ChatPage.js';
 import AdminSessions from './components/pages/Admin/AdminSessions/AdminSessions.js';
 
-
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
 import CustomerProfile from './components/pages/User/Customer/EditProfile.js';
@@ -79,11 +74,6 @@ import Quotation from './components/pages/Customer/Quotation.js'
 import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP.js';
 import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
-import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js';
-
-import Forum from './components/pages/Forum/Forum.js';
-import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
-import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
 import ToDoForm from './components/pages/Customer/ToDoForm.js';
 import RatenReview from './components/pages/Customer/RatenReview.js';
@@ -92,9 +82,11 @@ import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js'
 import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
 import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.js';
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
-import ViewAjob from './components/pages/User/ViewAjob.js';
 import CustomerComplaintPage from './components/pages/Customer/CustomerComplaintPage.js';
-
+import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
+import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import Forum from './components/pages/Forum/Forum.js';
+import ToDoList from './components/pages/Customer/CreateToDo';
 
 
 const router = createBrowserRouter(
@@ -134,16 +126,12 @@ const router = createBrowserRouter(
         <Route path="AdsPage" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        {/* <Route path="VerifiedAds" element={<VerifiedAds />} />
-        <Route path="RejectedAds" element={<RejectedAds />} />
-        <Route path="YetToVerifyAds" element={<YetToVerifyAds />} /> */}
         <Route path="Subscribtion" element={<Subscribtion />} />
         <Route path="Ads" element={<Ads />} />
-        {/* <Route path="EditAd" element={<EditAd />} /> */}
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
-        <Route path="CustomerDashboard" element={<CustomerDashboard />} />
+        <Route index element={<CustomerDashboard />} />
         <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
         <Route path="OngoingProject" element={<OngoingProject />} />
         <Route path="Quotation" element={<Quotation />} />
@@ -156,15 +144,16 @@ const router = createBrowserRouter(
         <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
-        <Route path="AddReview" element={<AddReviewandRating/>}/>
-        <Route path="History"element={<CustomerViewHistory/>}/>
+        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />  
         <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
-        <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+        <Route path="ToDoList" element={<ToDoList />} />
+        <Route path="AddReview" element={<AddReviewandRating />} />
       </Route>
 
-      <Route path="/ServiceProvider" element={<SpLayout />}>
+       <Route path="/ServiceProvider" element={<SpLayout />}>
         <Route path="Dashboard" element={<SpDashboard />} />
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
@@ -191,6 +180,7 @@ const router = createBrowserRouter(
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
       </Route>
+
 
       <Route
         path="*"

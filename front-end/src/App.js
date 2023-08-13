@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Home from './components/pages/Home/Index.js';
 
+
 import Login from './components/loginForm/LoginContextProviderInterface.js';
 import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
 import CustSignUp from './components/loginForm/CustomerSignUP.js';
@@ -25,8 +26,8 @@ import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
-import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
+// import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
+// import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
 import SpCreateTrainingSession from './components/pages/ServiceProvider/CreateTrainingSession/Index.js';
@@ -60,7 +61,9 @@ import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js'
 import AdminComplaints from './components/pages/Admin/AdminComplaints/AdminComplaints.js';
 import AdminReport from './components/pages/Admin/AdminReport/AdminReport.js';
 import AdminAdvertisements from './components/pages/Admin/AdminAdvertisements/AdminAdvertisements.js';
-import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
+import AdminViewHistory from './components/pages/User/Admin/ViewHistory.js';
+import ViewReviewandRating from './components/pages/User/Admin/ViewReviewandRating.js';
+import Chat from './components/pages/User/Chat/ChatPage.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -71,7 +74,7 @@ import Quotation from './components/pages/Customer/Quotation.js'
 import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP.js';
 import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
-
+import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js';
 
 import Forum from './components/pages/Forum/Forum.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
@@ -106,7 +109,9 @@ const router = createBrowserRouter(
         <Route path="complaints" element={<AdminComplaints />} />
         <Route path="report" element={<AdminReport />} />
         <Route path="advertisements" element={<AdminAdvertisements />} />
-        <Route path="history" element={<ViewHistory /> } />
+        <Route path="history" element={<AdminViewHistory /> } />
+        <Route path="review" element={<ViewReviewandRating/>}  />  
+        <Route path="chat" element={<Chat/>}  /> 
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
@@ -135,6 +140,7 @@ const router = createBrowserRouter(
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
         <Route path="CustomerComplaints" element={<CustomerComplaints/>} />
         <Route path="AddReview" element={<AddReviewandRating/>}/>
+        <Route path="History"element={<CustomerViewHistory/>}/>
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -143,8 +149,8 @@ const router = createBrowserRouter(
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
-        <Route path="ViewAJob" element={<SpViewAJob />} />
-        <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
+        {/* <Route path="ViewAJob" element={<SpViewAJob />} /> */}
+        {/* <Route path="ViewAVacancy" element={<SpViewAVacancy />} /> */}
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />

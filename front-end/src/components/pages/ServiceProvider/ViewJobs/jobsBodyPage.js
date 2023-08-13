@@ -7,7 +7,7 @@ import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import JobDetails from '../ViewAJob/jobDetails';
+// import JobDetails from '../ViewAJob/jobDetails';
 
 function JobsBodyPage() {
 

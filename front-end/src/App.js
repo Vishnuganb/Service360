@@ -83,6 +83,7 @@ import CustomerComplaintPage from './components/pages/Customer/CustomerComplaint
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import Forum from './components/pages/Forum/Forum.js';
+import ToDoList from './components/pages/Customer/CreateToDo';
 
 
 const router = createBrowserRouter(
@@ -143,7 +144,7 @@ const router = createBrowserRouter(
         <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
-        <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+        <Route path="ToDoList" element={<ToDoList />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
       </Route>
 

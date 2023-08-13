@@ -22,17 +22,13 @@ const Popup = () => {
         </Button>
   
         <Modal show={show} onHide={handleClose} centered>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
             <Modal.Title>Share through</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <center><p><i className="bi bi-whatsapp"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i className="bi bi-facebook"></i> &nbsp;&nbsp;&nbsp;&nbsp;<i className="bi bi-instagram"></i></p></center>
+            <center><p><i className="bi bi-whatsapp h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i className="bi bi-facebook h5"></i> &nbsp;&nbsp;&nbsp;&nbsp;<i className="bi bi-instagram h5"></i></p></center>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
+          
         </Modal>
       </>
     );

@@ -12,7 +12,6 @@ import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
 
 import soapImage from "./../../../../../assets/images/advertiser/soap.jpg";
 
-import backgroundImage from "../../../../../assets/images/header/Background.png";
 
 const RejectedAdCont = ({
   profileIcon,
@@ -110,7 +109,7 @@ const RejectedAds = () => {
   ];
 
   return (
-    <Container style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <Container >
       <h2 className="AdPageHeading">Rejected Ads</h2>
       <Row>
         <div className="AdsRow">

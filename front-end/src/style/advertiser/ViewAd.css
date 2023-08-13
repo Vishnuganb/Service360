@@ -36,14 +36,47 @@
   padding: 0.4em;
 }
 
+.AdDeleted:hover {
+  color: #000000;
+  font-weight: bold;
+  border: 1px solid rgb(78, 4, 4);
+  background-color: unset;
+}
+
+.AdEditBut:hover {
+  color: #2d2932;
+  scale: 1.05;
+}
+
+.AdDeleteBut:hover {
+  color: #000000;
+  font-weight: bold;
+  scale: 1.1;
+  /* border: 1px solid  rgb(78, 4, 4); */
+  background-color: unset;
+}
+
+.AdDisableBut:hover {
+  color: #000000;
+  font-weight: bold;
+  border: 1px solid rgb(78, 4, 4);
+  background-color: unset;
+}
+
 .AdEnableBut {
   all: unset;
-  background-color:rgb(13, 100, 69);
+  font-weight: bold;
+  background-color: rgb(13, 100, 69);
   color: white;
   padding: 0.4em;
 }
 
+.AdEnableBut:hover {
+  color: rgb(13, 100, 69);
+  border: 1px solid rgb(13, 100, 69);
+  background-color: unset;
+}
 
-.AdrejectP{
-  color:  rgb(78, 4, 4);
+.AdrejectP {
+  color: rgb(78, 4, 4);
 }

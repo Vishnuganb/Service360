@@ -182,7 +182,7 @@ import ViewAd from "./ViewAd";
 
 import "../../../../../style/advertiser/AdIndex.css";
 
-import backgroundImage from "../../../../../assets/images/header/Background.png";
+
 
 import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
 import adImage from "./../../../../../assets/images/advertiser/41CKlQ1b08S.jpg";
@@ -351,7 +351,7 @@ const YetToVerifyAds = () => {
   ];
 
   return (
-    <Container style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <Container>
       <h2 className="AdPageHeading">Verified Ads</h2>
       <Row>
         <div className="AdsRow">

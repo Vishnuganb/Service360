@@ -21,7 +21,7 @@ import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
 import Subscribtion from './components/pages/advertiser/Dashboard/subscription.js';
 import Ads from './components/pages/advertiser/Dashboard/Ads/Index.js';
-
+// import EditAd from './components/pages/advertiser/Dashboard/EditAd.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -129,6 +129,7 @@ const router = createBrowserRouter(
         <Route path="YetToVerifyAds" element={<YetToVerifyAds />} /> */}
         <Route path="Subscribtion" element={<Subscribtion />} />
         <Route path="Ads" element={<Ads />} />
+        {/* <Route path="EditAd" element={<EditAd />} /> */}
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>

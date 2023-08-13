@@ -10,7 +10,7 @@ import "../../../../../style/advertiser/AdIndex.css";
 
 import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
 
-import backgroundImage from "../../../../../assets/images/header/Background.png";
+
 
 import Ad6_1 from "../../../../../assets/images/admin/hammer_1.jpeg";
 import Ad6_2 from "../../../../../assets/images/admin/hammer_2.jpeg";
@@ -135,7 +135,7 @@ const VerifiedAds = () => {
   ];
 
   return (
-    <Container style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <Container >
       <h2 className="AdPageHeading">Disabled Ads</h2>
       <Row>
         <div className="AdsRow">

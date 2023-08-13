@@ -149,7 +149,7 @@ const AdDashbord = () => {
         </div>
       </div>
       <div className="adCenterCont mt-3">
-        <Link to="/advertiser/CreateAd" className="PostAd">
+        <Link to="/advertiser/CreateAd" >
           <button className="PostAd">Post New Ad</button>
         </Link>
       </div>

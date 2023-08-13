@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,8 +14,6 @@ import adImage from "./../../../../../assets/images/advertiser/41CKlQ1b08S.jpg";
 import AdImg1 from "../../../../../assets/images/advertiser/Ads/Drill1.png";
 import AdImg2 from "../../../../../assets/images/advertiser/Ads/Drill2.png";
 import AdImg3 from "../../../../../assets/images/advertiser/Ads/Driller3.png";
-
-import backgroundImage from "../../../../../assets/images/header/Background.png";
 
 import Ad2_1 from "../../../../../assets/images/admin/Screw_1.jpeg";
 import Ad2_2 from "../../../../../assets/images/admin/Screw_2.jpeg";
@@ -42,8 +40,15 @@ import Ad9_1 from "../../../../../assets/images/admin/wrench_1.jpeg";
 import Ad9_2 from "../../../../../assets/images/admin/wrench_2.jpeg";
 import Ad9_3 from "../../../../../assets/images/admin/wrench_3.jpeg";
 
-
-const VerifiedAdCont = ({  profileIcon,proName, adImage, adName, price, location, openModal  }) => {
+const VerifiedAdCont = ({
+  profileIcon,
+  proName,
+  adImage,
+  adName,
+  price,
+  location,
+  openModal,
+}) => {
   return (
     <Col className="adCont">
       <div className="AdSampleCont">
@@ -66,7 +71,6 @@ const VerifiedAdCont = ({  profileIcon,proName, adImage, adName, price, location
               <p className="AdVrifiedP  "> Verified</p>
             </div>
           </Col>
-         
         </Row>
 
         <Row>
@@ -74,7 +78,7 @@ const VerifiedAdCont = ({  profileIcon,proName, adImage, adName, price, location
         </Row>
 
         <Row className="d-flex justify-content-center">
-          <Image src={adImage} fluid alt="Item" style={{maxHeight:"10em"}}/>
+          <Image src={adImage} fluid alt="Item" style={{ maxHeight: "10em" }} />
         </Row>
 
         <Row>
@@ -106,22 +110,22 @@ const VerifiedAdCont = ({  profileIcon,proName, adImage, adName, price, location
   );
 };
 
-
 const VerifiedAds = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [ViewAdmodalVisible, ViewAdsetModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
 
-  const openModal = (ad) => {
+  const ViewAdopenModal = (ad) => {
     setSelectedAd(ad); // Set the selected ad
-    setModalVisible(true);
+    ViewAdsetModalVisible(true);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const ViewAdcloseModal = () => {
+    ViewAdsetModalVisible(false);
   };
 
   const adsData = [
     {
+      id: 1,
       proName: "Adam",
       profileIcon: profileIcon,
       adImages: [AdImg1, AdImg2, AdImg3],
@@ -130,6 +134,7 @@ const VerifiedAds = () => {
       location: "Colombo",
     },
     {
+      id: 2,
       proName: "Adam",
       profileIcon: profileIcon,
       adImages: [adImage],
@@ -139,6 +144,7 @@ const VerifiedAds = () => {
     },
 
     {
+      id: 3,
       proName: "Adam",
       profileIcon: profileIcon,
       adImages: [Ad2_1, Ad2_2, Ad2_3],
@@ -148,6 +154,7 @@ const VerifiedAds = () => {
     },
 
     {
+      id: 4,
       proName: "Adam",
       profileIcon: profileIcon,
       adImages: [Ad3_1, Ad3_2, Ad3_3],
@@ -166,6 +173,7 @@ const VerifiedAds = () => {
     },
 
     {
+      id: 5,
       proName: "Adam",
       profileIcon: profileIcon,
       adImages: [Ad5_1, Ad5_2, Ad5_3],
@@ -175,9 +183,8 @@ const VerifiedAds = () => {
     },
   ];
 
-
   return (
-    <Container style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <Container>
       <h2 className="AdPageHeading">Verified Ads</h2>
       <Row>
         <div className="AdsRow">
@@ -190,21 +197,22 @@ const VerifiedAds = () => {
               adName={ad.adName}
               price={ad.price}
               location={ad.location}
-              openModal={() => openModal(ad)}
+              openModal={() => ViewAdopenModal(ad)}
             />
           ))}
         </div>
 
         {selectedAd && (
           <ViewAd
+            id={selectedAd.id}
             adName={selectedAd.adName}
             proName={selectedAd.proName}
             price={selectedAd.price}
             profileIcon={selectedAd.profileIcon}
             adImages={selectedAd.adImages}
             location={selectedAd.location}
-            modalVisible={modalVisible}
-            closeModal={closeModal}
+            modalVisible={ViewAdmodalVisible}
+            closeModal={ViewAdcloseModal}
           />
         )}
       </Row>

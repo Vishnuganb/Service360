@@ -156,7 +156,7 @@ const DisableAdPop = ({
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3">
-                <i className="fa-solid fa-pen-to-square fa-2xl"></i>
+                <i className="fa-solid fa-pen-to-square fa-2xl AdEditBut"></i>
                 <button
                   className="AdEnableBut rounded"
                   onClick={() => setEnableModalShow(true)}

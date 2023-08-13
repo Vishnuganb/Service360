@@ -848,22 +848,19 @@ function AdminSessions() {
                                     </Carousel>
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>session ID: </span>TS000{data.selectedSession.id}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service Provider ID: </span>SP000{data.selectedSession.id}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name: </span> {data.selectedSession.firstName}{' '}{data.selectedSession.lastName}
                                 </div>
                             </div>
                             <div className="col-md-4">
                                 <div className="p-3 ">
                                     <div className="d-flex justify-content-start align-items-start" style={{ height: '100%' }}>
-                                        <h6 className="text-center">Warranty Card And Documents</h6>
+                                        <h6 className="text-center">Flyers And Advertisements</h6>
                                     </div>
                                     <ul className="list-unstyled">
                                         {data.selectedSession.uploadedFiles.map((file, index) => (
                                             <li key={index}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
-                                                    <i class="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
+                                                    <i className="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
                                                     <a href={file.url} download className="text-decoration-none text-dark fw-bold">
                                                         {file.fileName}
                                                     </a>

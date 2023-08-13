@@ -96,7 +96,7 @@ const router = createBrowserRouter(
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
         <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
@@ -104,7 +104,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index path="dashboard" element={<AdminDashboard />} />
+        <Route index element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
         <Route path="customers" element={<AdminCustomers />} />

@@ -378,7 +378,7 @@ const AdminDashboard = () => {
                         <td className="text-center">{item.service}</td>
                         <td className="text-center">{item.numOfProjects}</td>
                         <td className="text-center">
-                          <i class="bi bi-info-circle-fill fs-4" onClick={() => handleActionButtonClick(item)} ></i>
+                          <i className="bi bi-info-circle-fill fs-4" onClick={() => handleActionButtonClick(item)} ></i>
                         </td>
                       </tr>
                     ))}
@@ -517,7 +517,7 @@ const AdminDashboard = () => {
                       {data.selectedProvider.uploadedFiles.map((file, index) => (
                         <li key={index}>
                           <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
-                            <i class="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
+                            <i className="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
                             <a href={file.url} download className="text-decoration-none text-dark fw-bold">
                               {file.fileName}
                             </a>

@@ -772,9 +772,6 @@ function AdminAdvertisements() {
                                         ))}
                                     </Carousel>
                                 </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertisement ID: </span>Ads000{data.selectedAdvertisement.id}
-                                </div>
                             </div>
                             <div className="col-md-4">
                                 <div className="p-3 ">
@@ -785,7 +782,7 @@ function AdminAdvertisements() {
                                         {data.selectedAdvertisement.uploadedFiles.map((file, index) => (
                                             <li key={index}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
-                                                    <i class="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
+                                                    <i className="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
                                                     <a href={file.url} download className="text-decoration-none text-dark fw-bold">
                                                         {file.fileName}
                                                     </a>
@@ -799,7 +796,7 @@ function AdminAdvertisements() {
                         <div className="row">
                             <div className="col-12">
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertiser ID: </span> Adv000{data.selectedAdvertisement.id}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertiser Full Name: </span>{data.selectedAdvertisement.firstName}{' '}{data.selectedAdvertisement.lastName}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Shop Name:</span> {data.selectedAdvertisement.shopName}

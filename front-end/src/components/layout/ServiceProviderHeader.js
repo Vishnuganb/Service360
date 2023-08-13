@@ -22,8 +22,8 @@ function ServiceProviderHeader() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav className="me-auto">
-                        <Nav.Link href="#jobs" className='fw-bold navLink'>Jobs</Nav.Link>
-                        <Nav.Link href="#vacancies" className='fw-bold navLink'>Vacancies</Nav.Link>
+                        <Nav.Link href="/ServiceProvider/ViewJobs" className='fw-bold navLink'>Jobs</Nav.Link>
+                        <Nav.Link href="/ServiceProvider/ViewVacancies" className='fw-bold navLink'>Vacancies</Nav.Link>
 
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
                         <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>

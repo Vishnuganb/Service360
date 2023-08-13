@@ -1,3 +1,18 @@
+/* bodyNav */
+
+@media screen and (max-width: 1200px) {
+    .body-nav-container{
+        flex-direction: column !important;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .body-nav-filter-container{
+        flex-direction: column !important;
+    }
+}
+
+
 /* body page */
 
 .bodyPageContainer-vacancy{
@@ -10,19 +25,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     padding-bottom: 10px;
 }
-
-.paginationContainer-vacancies{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-@media only screen and (max-width: 566px){          /* PROBLEM */
-    .paginationContainer-vacancies{
-        display: none;
-    }
-}
-
 
 .vacancyCardContainer{
     display: flex;
@@ -49,7 +51,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 4px;
-    width: 90%;
+    width: 95%;
     height: 30%;
     margin-bottom: 20px;
     padding: 20px 20px 0 20px;
@@ -90,7 +92,7 @@
     font-size: 18px;
     font-weight: 600;
     margin-top: 1px;
-    margin-bottom: 0px;
+    margin-bottom:2px;
 }
 
 .vacancy-card-date{
@@ -127,23 +129,15 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 15px;
+
 }
 
 .single-vacancy-type{
     font-size: 16px;
     font-weight: 400;
-    margin-bottom: 20px;
     padding: 4px 6px;
     border: 2px solid rgb(37, 199, 37);
     border-radius: 8px;
-}
-
-@media only screen and (max-width: 600px){
-    .single-vacancy-type{
-        display: inline-block;
-        margin-bottom: 0px;
-    }
 }
 
 .single-vacancy-title{
@@ -167,14 +161,13 @@
 }
 
 
-
 .vacancy-card-footer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     position: relative;
-    bottom: 10px;
+    bottom: 5px;
 }
 
 @media only screen and (max-width: 424px){
@@ -184,7 +177,7 @@
         justify-content: space-between;
         width: 100%;
         position: relative;
-        bottom: 20px;
+        /* bottom: 20px; */
     }
 }
 
@@ -228,4 +221,12 @@
 
 .custom-pagination-vacancy .page-link {
     color: #292D32;
+}
+
+/* newly added */
+
+@media only screen and (max-width: 650px) {
+    .vacancy-card-body-inner-flex{
+        flex-direction: column !important;
+    }
 }

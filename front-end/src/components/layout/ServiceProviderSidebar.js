@@ -32,7 +32,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 mt-4 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/Dashboard" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-grid"></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Dashboard</span>
                                 </Link>
@@ -41,8 +41,8 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
-                                    <i className="bi bi-people" id="nav-single-element" style={{ fill: "none" }}></i>
+                                <Link to="/ServiceProvider/MyProjectStates" className="nav-link nav-link-sidebar text-white">
+                                    <i className="bi bi-briefcase" id="nav-single-element" style={{ fill: "none" }}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Jobs & Vacancies</span>
                                 </Link>
                             </li>
@@ -50,16 +50,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
-                                    <i className="bi bi-tools" id="nav-single-element" style={{ fill: "none" }}></i>
-                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>My Services</span>
-                                </Link>
-                            </li>
-
-
-
-                            <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider/AvailabilityCalendar" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-calendar2-check" id="nav-single-element" style={{ fill: "none" }}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Availability Calendar</span>
                                 </Link>
@@ -68,21 +59,68 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                <Link to="#submenu-1"
+                                    className={`nav-link nav-link-sidebar text-white d-none ${isOpen ? "d-lg-block" : "d-none"}`}
+                                    data-bs-toggle="collapse"
+                                    aria-current="page"
+                                >
+                                    <i className={`bi bi-window-stack d-none ${isOpen ? "d-lg-inline" : "d-none"}`}></i>
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Training Session</span>
+                                    <i className={`bi bi-chevron-down ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"} custom-icon-size`}></i>
+                                </Link>
+
+                                <NavDropdown
+                                    title={<> <i className="bi bi-window-stack" style={{color:"white"}}></i> </> }
+                                    id="basic-nav-dropdown"
+                                    className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
+                                >
+                                    <NavDropdown.Item as={Link} to="/ServiceProvider/ViewTrainingSessions" className="no-hover"> View Session </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item as={Link} to="/ServiceProvider/CreateTrainingSession" className="no-hover"> Create Sessions </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item as={Link} to="/ServiceProvider/MyTrainingSessions" className="no-hover">  My Sessions </NavDropdown.Item>
+                                </NavDropdown>
+                                
+                                <ul
+                                    className="nav collapse ms-4.5 flex-column"
+                                    id="submenu-1"
+                                    data-bs-parent="#parentM"
+                                >
+                                    <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
+                                        <Link to="/ServiceProvider/ViewTrainingSessions" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4" > View Sessions  </Link>
+                                        <Link to="/ServiceProvider/CreateTrainingSession" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4" > Create Session  </Link>
+                                        <Link to="/ServiceProvider/MyTrainingSessions" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> My Sessions </Link>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+
+                            <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
+                                <Link to="/ServiceProvider/MyServices" className="nav-link nav-link-sidebar text-white">
+                                    <i className="bi bi-tools" id="nav-single-element" style={{ fill: "none" }}></i>
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>My Services</span>
+                                </Link>
+                            </li>
+
+                            
+
+                            <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
+                                <Link to="/ServiceProvider/ViewHistory" className="nav-link nav-link-sidebar text-white">
+                                    <i class="fas fa-history" id="nav-single-element" ></i>
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>View History</span>
+                                </Link>
+                            </li>
+
+
+
+                            <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
+                                <Link to="/ServiceProvider/CreateBlog" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-card-heading" id="nav-single-element" style={{ fill: "none" }}></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Create Blog</span>
                                 </Link>
                             </li>
-
-
-
-                            <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
-                                <Link to="#" className="nav-link nav-link-sidebar text-white">
-                                    <i className="bi bi-window-stack"></i>
-                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Create Session</span> 
-                                </Link>
-                            </li>
-
+                        
                         </ul>
                     </div>
                 </div>

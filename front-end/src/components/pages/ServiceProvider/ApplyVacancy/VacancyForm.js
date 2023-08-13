@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 function ApplyVacancy(){
     return(
-        <div className="VacancyForm-container ms-lg-4 me-lg-4">
+        <div className="ms-lg-4 me-lg-4">
             <div className='d-flex flex-column'>
               <span style={{fontSize:"30px",fontWeight:"600"}}>Electronics Technician</span>
               <span style={{fontSize:"26px",fontWeight:"600"}}>Aptinex</span>

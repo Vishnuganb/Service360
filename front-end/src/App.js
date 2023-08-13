@@ -9,7 +9,7 @@ import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
 import ServicePage from './components/pages/User/ServicePage.js';
 
-import CreateAd from './components/pages/advertiser/CreateAd.js';
+import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/Dashboard/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
@@ -22,23 +22,23 @@ import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
 import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
 import SpCreateTrainingSession from './components/pages/ServiceProvider/CreateTrainingSession/Index.js';
-import SpMyProjectsJobsApplied from './components/pages/ServiceProvider/MyProjectsJobsApplied/Index.js';
-import SpMyProjectsJobsInvites from './components/pages/ServiceProvider/MyProjectsJobsInvites/Index.js';
-import SpMyProjectsVacanciesApplied from './components/pages/ServiceProvider/MyProjectsVacanciesApplied/Index.js';
-import SpMyProjectsVacanciesInvites from './components/pages/ServiceProvider/MyProjectsVacanciesInvites/Index.js';
+import SpMyProjectsJobs from './components/pages/ServiceProvider/MyProjectsJobs/Index.js';
+import SpMyProjectsVacancies from './components/pages/ServiceProvider/MyProjectsVacancies/Index.js';
 import SpViewTrainingSessions from './components/pages/ServiceProvider/ViewTrainingSessions/Index.js';
 import SpViewATrainingSession from './components/pages/ServiceProvider/ViewATrainingSession/Index.js';
-import SpMyProjectJobsStates from './components/pages/ServiceProvider/MyProjectJobsStates.js';
+import SpMyProjectStates from './components/pages/ServiceProvider/MyProjectStates.js';
 import SpAcceptedJob from './components/pages/ServiceProvider/AcceptedJob/Index.js';
 import SpAcceptedVacancy from './components/pages/ServiceProvider/AcceptedVacancy/Index.js';
 import SpStartJob from './components/pages/ServiceProvider/StartJob/Index.js';
 import SpAvailabilityCalendar from './components/pages/ServiceProvider/AvailabilityCalendar/Index.js';
 import SpMyTrainingSessions from './components/pages/ServiceProvider/MyTrainingSessions/Index.js';
+import SpViewHistory from './components/pages/ServiceProvider/ViewHistory/Index.js';
+import SpPendingJob from './components/pages/ServiceProvider/PendingJob/Index.js';
 
 
 import RootLayout from './components/layout/RootLayout.js';
@@ -143,28 +143,28 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
-        <Route path="Dashboard" element={<SpDashboard />} />
+        <Route index element={<SpDashboard />} />
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
-        <Route path="ViewAJob" element={<SpViewAJob />} />
+        <Route path="ViewAJob/:id" element={<SpViewAJob />} />
         <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
-        <Route path="MyProjectsJobsApplied" element={<SpMyProjectsJobsApplied />} />
-        <Route path="MyProjectsJobsInvites" element={<SpMyProjectsJobsInvites />} />
-        <Route path="MyProjectsVacanciesApplied" element={<SpMyProjectsVacanciesApplied />} />
-        <Route path="MyProjectsVacanciesInvites" element={<SpMyProjectsVacanciesInvites />} />
-        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions />} />
-        <Route path="ViewATrainingSession" element={<SpViewATrainingSession />} />
-        <Route path="MyProjectJobsStates" element={<SpMyProjectJobsStates />} />
-        <Route path="AcceptedJob" element={<SpAcceptedJob />} />
-        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy />} />
-        <Route path="StartJob" element={<SpStartJob />} />
-        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar />} />
-        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions />} />
+        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
+        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
+        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
+        <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
+        <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
+        <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
+        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
+        <Route path="StartJob" element={<SpStartJob/>} />
+        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
+        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
+        <Route path="ViewHistory" element={<SpViewHistory/>} />
+        <Route path="PendingJob" element={<SpPendingJob/>} />
       </Route>
 
       <Route

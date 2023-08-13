@@ -5,7 +5,7 @@ import Home from './components/pages/Home/Index.js';
 
 import Login from './components/loginForm/LoginContextProviderInterface.js';
 import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
-import CustSignUp from './components/loginForm/CustomerSignUP.js';
+import CustSignUp from './components/loginForm/CustomerSignupContextProviderInterface.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
 import ServicePage from './components/pages/User/ServicePage.js';
@@ -14,35 +14,37 @@ import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
-import AdvertiserProfile from'./components/pages/User/Advertiser/EditProfile.js';
+import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
 import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
 import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
 import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
+import About from './components/pages/User/About/Index.js';
+import Subscribtion from './components/pages/advertiser/subscription.js';
 
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
-import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/index.js';
+import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-// import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
-// import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
+import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
 import SpCreateTrainingSession from './components/pages/ServiceProvider/CreateTrainingSession/Index.js';
-import SpMyProjectsJobsApplied from './components/pages/ServiceProvider/MyProjectsJobsApplied/Index.js';
-import SpMyProjectsJobsInvites from './components/pages/ServiceProvider/MyProjectsJobsInvites/Index.js';
-import SpMyProjectsVacanciesApplied from './components/pages/ServiceProvider/MyProjectsVacanciesApplied/Index.js';
-import SpMyProjectsVacanciesInvites from './components/pages/ServiceProvider/MyProjectsVacanciesInvites/Index.js';
+import SpMyProjectsJobs from './components/pages/ServiceProvider/MyProjectsJobs/Index.js';
+import SpMyProjectsVacancies from './components/pages/ServiceProvider/MyProjectsVacancies/Index.js';
 import SpViewTrainingSessions from './components/pages/ServiceProvider/ViewTrainingSessions/Index.js';
 import SpViewATrainingSession from './components/pages/ServiceProvider/ViewATrainingSession/Index.js';
-import SpMyProjectJobsStates from './components/pages/ServiceProvider/MyProjectJobsStates.js';
+import SpMyProjectStates from './components/pages/ServiceProvider/MyProjectStates.js';
 import SpAcceptedJob from './components/pages/ServiceProvider/AcceptedJob/Index.js';
 import SpAcceptedVacancy from './components/pages/ServiceProvider/AcceptedVacancy/Index.js';
 import SpStartJob from './components/pages/ServiceProvider/StartJob/Index.js';
 import SpAvailabilityCalendar from './components/pages/ServiceProvider/AvailabilityCalendar/Index.js';
 import SpMyTrainingSessions from './components/pages/ServiceProvider/MyTrainingSessions/Index.js';
+import SpViewHistory from './components/pages/ServiceProvider/ViewHistory/Index.js';
+import SpPendingJob from './components/pages/ServiceProvider/PendingJob/Index.js';
 
 
 import RootLayout from './components/layout/RootLayout.js';
@@ -64,6 +66,8 @@ import AdminAdvertisements from './components/pages/Admin/AdminAdvertisements/Ad
 import AdminViewHistory from './components/pages/User/Admin/ViewHistory.js';
 import ViewReviewandRating from './components/pages/User/Admin/ViewReviewandRating.js';
 import Chat from './components/pages/User/Chat/ChatPage.js';
+import AdminSessions from './components/pages/Admin/AdminSessions/AdminSessions.js';
+
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -79,11 +83,18 @@ import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js
 import Forum from './components/pages/Forum/Forum.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
+import ToDoForm from './components/pages/Customer/ToDoForm.js';
+import RatenReview from './components/pages/Customer/RatenReview.js';
 import ViewAservice from './components/pages/User/ViewAservice.js';
 import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js';
 import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
 import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.js';
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
+import ViewAjob from './components/pages/User/ViewAjob.js';
+import CustomerComplaintPage from './components/pages/Customer/CustomerComplaintPage.js';
+
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -93,14 +104,15 @@ const router = createBrowserRouter(
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
-        <Route path='login' element={<Login />} />
-        <Route path='/signup/customer' element={<CustSignUp />} />
-        <Route path='/signup/serviceProvider' element={<SpSignUp />} />
-        <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup/customer" element={<CustSignUp />} />
+        <Route path="/signup/serviceProvider" element={<SpSignUp />} />
+        <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
+        <Route path="/About" element={<About />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index path="dashboard" element={<AdminDashboard />} />
+        <Route index element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
         <Route path="customers" element={<AdminCustomers />} />
@@ -112,6 +124,8 @@ const router = createBrowserRouter(
         <Route path="history" element={<AdminViewHistory /> } />
         <Route path="review" element={<ViewReviewandRating/>}  />  
         <Route path="chat" element={<Chat/>}  /> 
+        <Route path="sessions" element={<AdminSessions />} />
+     
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
@@ -119,11 +133,10 @@ const router = createBrowserRouter(
         <Route path="Ads" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path="Forum" element={<Forum />} />
         <Route path="VerifiedAds" element={<VerifiedAds />} />
         <Route path="RejectedAds" element={<RejectedAds />} />
         <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
-        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="Subscribtion" element={<Subscribtion />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -134,13 +147,22 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="Searchserviceprovider" element={<Searchserviceprovider/>} />
+        <Route path="ViewServiceProvider" element={<ViewServiceProvider />} />
+        <Route path="ToDoForm" element={<ToDoForm />} />
+        <Route path="RatenReview" element={<RatenReview />} />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
-        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
-        <Route path="CustomerComplaints" element={<CustomerComplaints/>} />
         <Route path="AddReview" element={<AddReviewandRating/>}/>
         <Route path="History"element={<CustomerViewHistory/>}/>
+        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
+        <Route path="ViewAQuotation" element={<ViewAQuotation />} />
+        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+       
+        
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -149,23 +171,23 @@ const router = createBrowserRouter(
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
-        {/* <Route path="ViewAJob" element={<SpViewAJob />} /> */}
-        {/* <Route path="ViewAVacancy" element={<SpViewAVacancy />} /> */}
+        <Route path="ViewAJob/:id" element={<SpViewAJob />} />
+        <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
-        <Route path="MyProjectsJobsApplied" element={<SpMyProjectsJobsApplied/>} />
-        <Route path="MyProjectsJobsInvites" element={<SpMyProjectsJobsInvites/>} />
-        <Route path="MyProjectsVacanciesApplied" element={<SpMyProjectsVacanciesApplied/>} />
-        <Route path="MyProjectsVacanciesInvites" element={<SpMyProjectsVacanciesInvites/>} />
+        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
+        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
         <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
         <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
-        <Route path="MyProjectJobsStates" element={<SpMyProjectJobsStates/>} />
+        <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
         <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
         <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
         <Route path="StartJob" element={<SpStartJob/>} />
         <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
+        <Route path="ViewHistory" element={<SpViewHistory/>} />
+        <Route path="PendingJob" element={<SpPendingJob/>} />
       </Route>
 
       <Route

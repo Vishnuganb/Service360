@@ -1,10 +1,12 @@
 import '../../../../style/Customer/ViewSPCard.css';
 import UserImg from '../../../../assets/images/header/user.jpg'
+import ServiceProvideimg from '../../../../assets/images/Customer/ServiceProvider1.png';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import BgImage from '../../../../assets/images/header/Background.png';
 
 const Popup = () => {
     const [show, setShow] = useState(false);
@@ -36,27 +38,38 @@ const Popup = () => {
     );
   };
   
+  const rating = 4;
 
 function ViewSPCard(){
     return (
-      <div className="single-SP-card" style={{ backgroundColor: '#DEE0E0' }}>
+      <div className="single-SP-card" style={{ backgroundImage: `url(${BgImage})` }} >
         <div className="SP-card-header">
           <Row>
             <Col>
-              <img src={UserImg} alt="avatar" className="SP-card-avatar" />
+              <img src={ServiceProvideimg} alt="avatar" className="SP-card-avatar" />
             </Col>
             <Col>
-                <span className="SP-card-title">VinothKhan</span>
+                <span className="SP-card-title">Alex</span>
             </Col>
             <Col>
               <NavDropdown id="Single-item-Dropdown">
-                <NavDropdown.Item href="#action3">View more</NavDropdown.Item>
+                <NavDropdown.Item href="#action3">Alex Kumar</NavDropdown.Item>
               </NavDropdown>
             </Col>
-            
-            <Col className='star' style={{width:"200px",}}><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i></Col>
+            <Col className='star' style={{width:"200px", marginTop:'-40px'}}>
+            <div className='SPRatings'>
+          <div className='rating'>
+            <span className={`star ${rating >= 1 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 2 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 3 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 4 ? 'filled' : ''}`}>&#9733;</span>
+            <span className={`star ${rating >= 5 ? 'filled' : ''}`}>&#9733;</span>
+          </div>
+          </div>
+           </Col>
           </Row>
         </div>
+       
         <div className="SP-card-body">
           <div className="SP-card-body-left">
           {/* <span className="single-SP-status" id="SP-status">
@@ -65,6 +78,7 @@ function ViewSPCard(){
             <br /> */}
             <span className="sinlge-SP-sub-info">Tile Fitting | Member since june 23 2022</span>
             <br />
+           
             <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: Wellawatte
         </span>
             <br />
@@ -74,6 +88,7 @@ function ViewSPCard(){
             <br />
           </div>
         </div>
+        
         <hr />
         <div className="SP-card-footer">
           <span

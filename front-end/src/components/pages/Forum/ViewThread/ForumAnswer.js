@@ -6,6 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import VideoPopup from "./VideoPopup";
 import Comment from "./Comment";
 
+import profileIcon1 from "../../../../assets/images/advertiser/Adam.jpg";
+import profileIcon2 from "../../../../assets/images/advertiser/sara.jpg";
+import profileIcon3 from "../../../../assets/images/advertiser/aishu.jpg";
 
 const ForumAnswer = ({
   id,
@@ -22,24 +25,30 @@ const ForumAnswer = ({
   const [CommentModalShow, setCommentModalShow] = useState(false);
   const liked =false;
 
+  
+
+
     const commentData = [
       {
         id: 1,
         author: "John Doe",
         content: "This is the first comment.",
         timestamp: "2023-08-05 12:34:56",
+        profileIcon: profileIcon1,
       },
       {
         id: 2,
         author: "Jane Smith",
         content: "I agree with John.",
         timestamp: "2023-08-05 13:45:32",
+        profileIcon: profileIcon2,
       },
       {
         id: 3,
         author: "Michael Johnson",
         content: "Nice post!",
         timestamp: "2023-08-05 14:20:10",
+        profileIcon: profileIcon3,
       },
     ];
 
@@ -52,7 +61,6 @@ const ForumAnswer = ({
             <img
               src={profileIcon}
               alt="Profile of Advertiser"
-              roundedCircle
               className="AdProfilePic"
             />
           </div>
@@ -121,23 +129,25 @@ const ForumAnswer = ({
             onHide={() => setVideoModalShow(false)}
           />
         </div>
-        <div className="d-flex justify-content-around align-items-start mt-3">
+        <div className="d-flex justify-content-center">
+          <hr className="w-50" />
+        </div>
+        <div className="d-flex justify-content-around align-items-start mt-3 ">
           <hr />
           <div style={{ cursor: "pointer" }}>
             {liked ? (
               <i
-                class="fa-light fa-thumbs-up fa-lg"
+                className="fa-light fa-thumbs-up fa-lg"
                 style={{ color: "#292D32" }}
               ></i>
             ) : (
               <i
-                class="fa-solid fa-thumbs-up fa-lg"
+                className="fa-solid fa-thumbs-up fa-lg"
                 style={{ color: "#292D32" }}
               ></i>
             )}
             <p className="text-muted">{likes}</p>
           </div>
-
           <div
             style={{ cursor: "pointer" }}
             onClick={() => setCommentModalShow(true)}
@@ -148,16 +158,15 @@ const ForumAnswer = ({
             ></i>
             <p className="text-muted">10</p>
           </div>
-
           <div style={{ cursor: "pointer" }}>
             {liked ? (
               <i
-                class="fa-light fa-thumbs-down fa-lg"
+                className="fa-light fa-thumbs-down fa-lg"
                 style={{ color: "#292D32" }}
               ></i>
             ) : (
               <i
-                class="fa-solid fa-thumbs-down fa-lg"
+                className="fa-solid fa-thumbs-down fa-lg"
                 style={{ color: "#292D32" }}
               ></i>
             )}

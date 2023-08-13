@@ -64,8 +64,8 @@ function commentSection() {
                             <div className="commentSection-username-container ms-3">
                                 <span className="commentSection-username" style={{fontWeight:"650"}}>Juliyan</span>
                             </div>
-                            <div className="commentSection-comment-date-container ms-auto ">
-                            <span className="commentSection-comment-date" style={{fontWeight:"650"}}>2021-08-01</span>
+                            <div className="commentSection-comment-date-container d-flex ms-auto ">
+                                <span className="commentSection-comment-date" style={{fontWeight:"650"}}>2021-08-01</span>
                             </div>
                         </div>
                         <div className="commentSection-body mt-2">
@@ -89,7 +89,7 @@ function commentSection() {
                                 />
                             </div>
                             <div className="commentSection-username-container ms-3">
-                                <span className="commentSection-username" style={{fontWeight:"650"}}>Juliyan</span>
+                            <span className="commentSection-username" style={{fontWeight:"650"}}>Juliyan</span>
                             </div>
                             <div className="commentSection-comment-date-container ms-auto ">
                             <span className="commentSection-comment-date" style={{fontWeight:"650"}}>2021-08-01</span>

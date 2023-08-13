@@ -1,13 +1,12 @@
 import React from 'react';
-import BodyNav from './bodyNav.js';
-import BodyPage from './bodyPage.js';
+import VacanciesBodyPage from './vacanciesBodyPage.js';
+import '../../../../style/ServiceProvider/ViewVacancies.css'
 
 function Index(){
     return(
-        <>
-            <BodyNav/>
-            <BodyPage/>
-        </>
+        <div className='index-container ms-lg-4 me-lg-5 p-sm-5 p-3 border rounded'>
+            <VacanciesBodyPage/>
+        </div>
     );
 }
 

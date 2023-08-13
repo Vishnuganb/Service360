@@ -1,62 +1,14 @@
 /* bodyNav */
 
-#navbarScroll{
-    justify-content: space-between;
-    width: 100%;
-    display: flex;
-}
-
-.nav-search{
-    position: relative;
-    left: 6px;
-    display: flex;
-}
-
-.viewJobs-nav-button{
-    position: relative;
-    left: -12px;
-    padding: 10px;
-    font-size: 15px;
-    border-radius: 0px 8px 8px 0px;
-    cursor: pointer;
-
-    background: #292d32 !important;
-    color: #fff !important;
-  }
-
-  .viewJobs-nav-button:hover{
-    background: #fff !important;
-    border-color: #2596be !important;
-    color: #9f390d !important;
-}
-
-@media only screen and (min-width:623px) and (max-width: 1100px){
-    #navbarScroll{
-        justify-content: space-between;
-        display: block;
-    }
-
-    #nav-filter{
-        display: flex;
-        flex-direction: row;
-    }
-
-    #navbarScrollingDropdown{
-        margin-right: 25px;
+@media screen and (max-width: 1200px) {
+    .body-nav-container{
+        flex-direction: column !important;
     }
 }
 
-@media screen and (width < 623px) {
-    .nav-search {
-        left: 10px;
-        display: flex;
-    }
-}
-
-@media only screen and (max-width: 1100px){
-    #navbarScroll{
-        justify-content: space-between;
-        display: block;
+@media screen and (max-width: 650px) {
+    .body-nav-filter-container{
+        flex-direction: column !important;
     }
 }
 
@@ -75,21 +27,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
-.paginationContainer-jobs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.custom-pagination-job .page-link {
-    color: #292D32;
-}
-
-@media only screen and (max-width:566px){       /* PROBLEM */
-    .paginationContainer-jobs {
-        display: none;
-    }
-}
 
 .jobCardContainer{
     display: flex;
@@ -117,7 +54,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 4px;
-    width: 90%;
+    width: 95%;
     height: 30%;
     margin-bottom: 20px;
     padding: 20px 20px 0 20px;
@@ -125,24 +62,10 @@
     transition: transform .3s;
 }
 
-.single-job-card:hover{
+.single-job-1-card:hover{
     transform: scale(1.005);
     z-index: 2;
     border: 0.2px solid #29435cf0;
-}
-
-.job-card-avatar{
-    width: 65px;
-    height: 40px;
-    border-radius: 20px;
-}
-
-@media only screen and (max-width: 465px){          
-    .job-card-avatar{
-        width: 85px;
-        height: 30px;
-        border-radius: 20px;
-    }
 }
 
 .job-card-header{
@@ -191,7 +114,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 15px;
+
 }
 
 .single-job-status{
@@ -222,18 +145,18 @@
     font-weight: 900;
 }
 
-.job-card-footer{
+.view-jobs-card-footer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     position: relative;
-    bottom: 10px;
+    bottom: 5px;
     vertical-align: middle;
 }
 
 @media only screen and (max-width: 590px){
-    .job-card-footer{
+    .view-jobs-card-footer{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -255,4 +178,29 @@
 
 .job-card-footer-btn:hover{
     color: #5f7085;
+}
+
+
+/* newly added */
+
+
+.job-card-avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+}
+
+@media only screen and (max-width: 565px){          
+    .job-card-header-inner-container{
+        flex-direction: column !important;
+    }
+
+    /* .rounded-circle{
+        margin-left: -30px;
+    } */
+    
+    .view-jobs-rounded-circle{
+        margin-left: -30px;
+    }
 }

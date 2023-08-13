@@ -3,7 +3,7 @@ import { Form, Row, Col } from "react-bootstrap";
 
 const ForumSearch = () => {
   return (
-    <Form>
+    <Form >
       <fieldset>
         <Row className="AdsSearchRow">
           <h1>Search Questions</h1>

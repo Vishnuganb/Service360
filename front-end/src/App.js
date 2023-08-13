@@ -4,7 +4,7 @@ import Home from './components/pages/Home/Index.js';
 
 import Login from './components/loginForm/LoginContextProviderInterface.js';
 import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
-import CustSignUp from './components/loginForm/CustomerSignUP.js';
+import CustSignUp from './components/loginForm/CustomerSignupContextProviderInterface.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
 import ServicePage from './components/pages/User/ServicePage.js';
@@ -97,8 +97,7 @@ const router = createBrowserRouter(
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
-        <Route path="/services/:serviceName/:ViewAjob" element={<ViewAjob />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
         <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
@@ -106,7 +105,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index path="dashboard" element={<AdminDashboard />} />
+        <Route index element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
         <Route path="customers" element={<AdminCustomers />} />

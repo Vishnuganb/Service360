@@ -44,7 +44,7 @@ function AppHero() {
                                     alt={"Slide " + item.id}
                                 />
                                 <Carousel.Caption>
-                                    <h2>{item.title}</h2>
+                                    <h1 style={{fontSize:'3.5em'}}>{item.title}</h1>
                                     <p>{item.description}</p>
                                     <a className='btn btn-primary d-none d-sm-inline' href={item.link}>{item.buttonTitle} <i className="fas fa-chevron-right"></i></a>
                                 </Carousel.Caption>

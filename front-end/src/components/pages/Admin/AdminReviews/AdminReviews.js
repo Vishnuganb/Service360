@@ -308,7 +308,7 @@ export default function AdminReviews() {
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
                     {data.displayedReviews && data.displayedReviews.map((review) => (
-                        <Card key={review.id}>
+                        <Card key={review.id} className="col-xs-12">
                             <Card.Body className="py-3" style={{ backgroundImage: `url(${Bg2Image})` }}>
                                 <div className="d-flex">
                                     <div className="flex-shrink-0">

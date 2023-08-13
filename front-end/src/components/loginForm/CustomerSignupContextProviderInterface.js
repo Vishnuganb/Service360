@@ -1,19 +1,19 @@
 import React from 'react'
-import Login from "./Login";
 import ReactLinkContextProvider from '../../ContextFiles/ReactLinkContext'
 import AuthenticationContextProvider from '../../ContextFiles/Authentication/AuthenticationContextProvider'
+import CustomerSignUP from './CustomerSignUP'
 
-const LoginContextProviderInterface = () => {
+const CustomerSignupContextProviderInterface = () => {
 
     return (
 
         <>
-            
+
             <AuthenticationContextProvider>
 
                 <ReactLinkContextProvider>
 
-                    <Login />
+                    <CustomerSignUP />
 
                 </ReactLinkContextProvider>
 
@@ -25,4 +25,4 @@ const LoginContextProviderInterface = () => {
 
 }
 
-export default LoginContextProviderInterface
+export default CustomerSignupContextProviderInterface

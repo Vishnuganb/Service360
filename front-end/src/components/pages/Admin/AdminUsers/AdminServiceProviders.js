@@ -679,9 +679,6 @@ function AdminServiceProvider() {
                                     <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service Provider ID: </span> SP0{data.selectedProvider.id}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedProvider.firstName}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
@@ -715,7 +712,7 @@ function AdminServiceProvider() {
                                         {data.selectedProvider.uploadedFiles.map((file, index) => (
                                             <li key={index}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
-                                                    <i class="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
+                                                    <i className="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
                                                     <a href={file.url} download className="text-decoration-none text-dark fw-bold">
                                                         {file.fileName}
                                                     </a>

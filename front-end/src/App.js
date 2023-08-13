@@ -25,7 +25,7 @@ import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
 import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';

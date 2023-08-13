@@ -2,9 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Home from './components/pages/Home/Index.js';
 
+
 import Login from './components/loginForm/LoginContextProviderInterface.js';
 import SpSignUp from './components/loginForm/ServiceProviderSignUP.js';
-import CustSignUp from './components/loginForm/CustomerSignUP.js';
+import CustSignUp from './components/loginForm/CustomerSignupContextProviderInterface.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
 import ServicePage from './components/pages/User/ServicePage.js';
@@ -15,14 +16,16 @@ import AdDashbord from './components/pages/advertiser/Dashboard/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
 import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
-
+import About from './components/pages/User/About/Index.js';
+import Subscribtion from './components/pages/advertiser/Dashboard/subscription.js';
+import Ads from './components/pages/advertiser/Dashboard/Ads/Index.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
 import SpViewVacancies from './components/pages/ServiceProvider/ViewVacancies/Index.js';
 import SpApplyVacancy from './components/pages/ServiceProvider/ApplyVacancy/Index.js';
 import SpServices from './components/pages/ServiceProvider/MyServices/index.js';
-import SpViewAJob from './components/pages/ServiceProvider/ViewAJob/Index.js';
+import SpViewAJob from './components/pages/ServiceProvider/VIewAJob/Index.js';
 import SpViewAVacancy from './components/pages/ServiceProvider/ViewAVacancy/Index.js';
 import SpAddNewServices from './components/pages/ServiceProvider/AddNewServices/Index.js';
 import SpCreateBlog from './components/pages/ServiceProvider/CreateABlog/Index.js';
@@ -57,7 +60,10 @@ import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js'
 import AdminComplaints from './components/pages/Admin/AdminComplaints/AdminComplaints.js';
 import AdminReport from './components/pages/Admin/AdminReport/AdminReport.js';
 import AdminAdvertisements from './components/pages/Admin/AdminAdvertisements/AdminAdvertisements.js';
-import ViewHistory from './components/pages/User/Admin/ViewHistory.js';
+import AdminViewHistory from './components/pages/User/Admin/ViewHistory.js';
+import ViewReviewandRating from './components/pages/User/Admin/ViewReviewandRating.js';
+import Chat from './components/pages/User/Chat/ChatPage.js';
+import AdminSessions from './components/pages/Admin/AdminSessions/AdminSessions.js';
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -91,14 +97,15 @@ const router = createBrowserRouter(
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
-        <Route path='login' element={<Login />} />
-        <Route path='/signup/customer' element={<CustSignUp />} />
-        <Route path='/signup/serviceProvider' element={<SpSignUp />} />
-        <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup/customer" element={<CustSignUp />} />
+        <Route path="/signup/serviceProvider" element={<SpSignUp />} />
+        <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
+        <Route path="/About" element={<About />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index path="dashboard" element={<AdminDashboard />} />
+        <Route index element={<AdminDashboard />} />
         <Route path="services" element={<AdminServices />} />
         <Route path="serviceProviders" element={<AdminServiceProvider />} />
         <Route path="customers" element={<AdminCustomers />} />
@@ -107,16 +114,20 @@ const router = createBrowserRouter(
         <Route path="complaints" element={<AdminComplaints />} />
         <Route path="report" element={<AdminReport />} />
         <Route path="advertisements" element={<AdminAdvertisements />} />
-        <Route path="history" element={<ViewHistory />} />
+        <Route path="history" element={<AdminViewHistory /> } />
+        <Route path="review" element={<ViewReviewandRating/>}  />  
+        <Route path="chat" element={<Chat/>}  /> 
+        <Route path="sessions" element={<AdminSessions />} />
+     
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
-        <Route path="Ads" element={<AdsPage />} />
+        <Route path="AdsPage" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route path="Dashboard" element={<AdDashbord />} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="Subscribtion" element={<Subscribtion />} />
+        <Route path="Ads" element={<Ads />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -142,8 +153,8 @@ const router = createBrowserRouter(
         <Route path="AddReview" element={<AddReviewandRating />} />
       </Route>
 
-      <Route path="/ServiceProvider" element={<SpLayout />}>
-        <Route index element={<SpDashboard />} />
+       <Route path="/ServiceProvider" element={<SpLayout />}>
+        <Route path="Dashboard" element={<SpDashboard />} />
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
         <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
@@ -165,7 +176,11 @@ const router = createBrowserRouter(
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
         <Route path="ViewHistory" element={<SpViewHistory/>} />
         <Route path="PendingJob" element={<SpPendingJob/>} />
+
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
+
 
       <Route
         path="*"

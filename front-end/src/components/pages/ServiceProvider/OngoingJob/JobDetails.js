@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 
-function PendingJobDetails() {
+function AcceptedJobDetails() {
   const [viewJobData, setViewJobData] = useState(null);
 
   const { id } = useParams();
@@ -154,7 +154,7 @@ function PendingJobDetails() {
                 className="AcceptedJobDetails-username mb-1"
                 style={{ fontSize:"18px",fontFamily: "'Rubik', sans-serif" }}
                 >
-                 {viewJobData.customername}
+                {viewJobData.customername}
                 </div>
                 <div className="d-flex flex-row">
                     <div className="me-3">
@@ -203,34 +203,32 @@ function PendingJobDetails() {
                 
                 <div className="AcceptedJobDetails-images-container-box row mt-2">
                 {/* {viewJobData.images.map((image, index) => (
-                      <div key={index} className="col-6 col-md-4 col-lg-3">
-                        <img
-                          src={image}
-                          alt={`job detail image ${index}`}
-                          className="jobDetails-images-value-img"
-                        />
-                      </div>
-                    ))} */}                    
+                        <div key={index} className="col-6 col-md-4 col-lg-3">
+                          <img
+                            src={image}
+                            alt={`job detail image ${index}`}
+                            className="jobDetails-images-value-img"
+                          />
+                        </div>
+                      ))} */}
                 </div>
                 </div>
             </Col>
         </Row>
-        <span>Quotation</span>
-        <div className="mt-2 d-flex flex-column">
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Control type="file" placeholder="Password" /> 
-                    </Form.Group>
-                    <Form.Text className="text-muted d-block mb-3">
-                      Visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
-                    </Form.Text>
-                    <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
-                        Send Quotation
-                    </Button>
-                </Form>
-        </div>      
+        <span>Todo List</span>
+        <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
+                <Button className="btn-ServiceProvider-1">Start Todo List</Button>
+                <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
+        </div>
+        <hr/>
+        <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
+                <Link className="ms-auto" to="../StartJob">
+                  <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
+                </Link>
+        </div>
+      
     </div>
   );
 }
 
-export default PendingJobDetails;
+export default AcceptedJobDetails;

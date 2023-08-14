@@ -4,166 +4,16 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import UserImg from '../../../../assets/images/header/user.jpg';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function MyProjectsBody(){
+    const [MyProjectsJobsData, setMyProjectsJobsData] = useState(null);
+
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const initialActiveTab = queryParams.get('tab') || 'defaultTab'; // 'defaultTab' is the fallback
-
-
-    //Job objects with properties
-    const MyProjectsJobsData = [
-        {
-        profile: UserImg,
-        id: 1,
-        jobTitle: 'Tv Repair',
-        Posted: '4 days ago',
-        dueDate: '2023-09-12',
-        serviceName: 'Electrical Wiring',
-        location: 'Wellawatte',
-        status:'Invite',
-        },
-        {
-        profile: UserImg,
-        id: 2,
-        jobTitle: 'Tiles fitting at House',
-        Posted:'12 days ago',
-        dueDate: '2023-08-28',
-        serviceName: 'Tiles Fitting',
-        location: 'Colombo',
-        status:'Completed',
-        },
-        {
-        profile: UserImg,
-        id: 3,
-        jobTitle: 'Build Wall',
-        Posted: '26 days ago',
-        dueDate: '2023-08-30',
-        serviceName: 'Masonry',
-        location: 'Mount Lavinia',
-        status:'Invite',
-        },
-        {
-        profile: UserImg,
-        id: 4,
-        jobTitle: 'House Cleaning',
-        Posted: '1 month ago',
-        dueDate: '2023-08-25',
-        serviceName: 'Carpet Cleaning',
-        location: 'Dehiwala',
-        status:'Rejected',
-        },
-        {
-        profile: UserImg,
-        id: 5,
-        jobTitle: 'Build House',
-        Posted: '1 month ago',
-        dueDate: '2023-08-27',
-        serviceName: 'Masonry',
-        location: 'Nugegoda',
-        status:'Invite',
-        },
-        {
-        profile: UserImg,
-        id: 6,
-        jobTitle: 'Office Cleaning',
-        Posted:'2 month ago',
-        dueDate: '2023-08-24',
-        serviceName: 'Sofa Cleaning',
-        location: 'Rajagiriya',
-        status:'Ongoing',
-        },
-        {
-        profile: UserImg,
-        id: 7,
-        jobTitle: 'Fix Fridge',
-        Posted:'2 month ago',
-        dueDate: '2023-08-26',
-        serviceName: 'Electrical Wiring',
-        location: 'Battaramulla',
-        status:'Completed',
-        },
-        {
-        profile: UserImg,
-        id: 8,
-        jobTitle: 'Build Bridge',
-        Posted: '26 days ago',
-        dueDate: '2023-08-30',
-        serviceName: 'Masonry',
-        location: 'Jaffna',
-        status:'Ongoing',
-        },
-        {
-        profile: UserImg,
-        id: 9,
-        jobTitle: 'School Cleaning',
-        Posted: '1 month ago',
-        dueDate: '2023-08-25',
-        serviceName: 'Carpet Cleaning',
-        location: 'Kilinochi',
-        status:'Rejected',
-        },
-        {
-        profile: UserImg,
-        id: 10,
-        jobTitle: 'Build Apartment',
-        Posted: '2 month ago',
-        dueDate: '2023-08-27',
-        serviceName: 'Masonry',
-        location: 'Bambalapitiya',
-        status:'Ongoing',
-        },
-        {
-        profile: UserImg,
-        id: 11,
-        jobTitle: 'Home Cleaning',
-        Posted:'1 month ago',
-        dueDate: '2023-08-24',
-        serviceName: 'Carpet Cleaning',
-        location: 'Rajagiriya',
-        status:'Invite',
-        },
-        {
-        profile: UserImg,
-        id: 12,
-        jobTitle: 'Fix Power Supply',
-        Posted:'1 month ago',
-        dueDate: '2023-08-26',
-        serviceName: 'Electrical Wiring',
-        location: 'Battaramulla',
-        status:'Ongoing',
-        },
-        {
-            profile: UserImg,
-            id: 13,
-            jobTitle: 'Gutter Cleaning',
-            Posted: '2 weeks ago',
-            dueDate: '2023-09-10',
-            serviceName: 'Roof Maintenance',
-            location: 'Kandy',
-            status: 'Pending',
-        },
-        {
-            profile: UserImg,
-            id: 14,
-            jobTitle: 'Install Ceiling Fan',
-            Posted: '3 weeks ago',
-            dueDate: '2023-09-15',
-            serviceName: 'Electrical Wiring',
-            location: 'Negombo',
-            status: 'Pending',
-        },
-        {
-            profile: UserImg,
-            id: 15,
-            jobTitle: 'Lawn Mowing',
-            Posted: '4 weeks ago',
-            dueDate: '2023-09-20',
-            serviceName: 'Gardening',
-            location: 'Anuradhapura',
-            status: 'Pending',
-        }        
-    ];
 
     const MyServices= [
         "Electrical Wiring",
@@ -205,18 +55,27 @@ function MyProjectsBody(){
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
 
+    useEffect(() => {
+        axios.get('http://localhost:8080/auth/viewJobs').then((res) => {
+            console.log(res.data);
+            setMyProjectsJobsData(res.data);
+        });
+    }   , []);
+
+    if (!MyProjectsJobsData) return 'No jobs found!';
+
     // Filter training sessions based on search term and selected date
     const filteredCards = MyProjectsJobsData.filter((card) => {
         return (
-        ( !filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
-           (card.serviceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()))
+        ( !filterCategoryTerm || card.servicename === filterCategoryTerm) &&
+           (card.servicename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.joblocation.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.jobtitle.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     });
 
     // Filter training sessions based on the active tab's status
-    const filteredAndSortedCards = filteredCards.filter((job) => job.status === activeTab);
+    const filteredAndSortedCards = filteredCards.filter((job) => job.jobstatus === activeTab);
 
     // Calculate the total number of pages based on the filtered and sorted cards
     const totalNumPages = Math.ceil(filteredAndSortedCards.length / cardsPerPage);
@@ -242,32 +101,32 @@ function MyProjectsBody(){
                 <Navbar className="MyProjects-top-nav me-lg-4" expand="lg md sm">
                     <Nav className="ms-3">
                         <Nav.Link 
-                            active={activeTab === 'Invite'} 
-                            onClick={() => setActiveTab('Invite')}
+                            active={activeTab === 'invite'} 
+                            onClick={() => setActiveTab('invite')}
                         >
                             Invites
                         </Nav.Link>
                         <Nav.Link 
-                            active={activeTab === 'Pending'} 
-                            onClick={() => setActiveTab('Pending')} 
+                            active={activeTab === 'pending'} 
+                            onClick={() => setActiveTab('pending')} 
                         >
                             Pending
                         </Nav.Link>
                         <Nav.Link 
-                            active={activeTab === 'Ongoing'} 
-                            onClick={() => setActiveTab('Ongoing')} 
+                            active={activeTab === 'ongoing'} 
+                            onClick={() => setActiveTab('ongoing')} 
                         >
                             Ongoing
                         </Nav.Link>
                         <Nav.Link 
-                            active={activeTab === 'Completed'} 
-                            onClick={() => setActiveTab('Completed')}
+                            active={activeTab === 'completed'} 
+                            onClick={() => setActiveTab('completed')}
                         >
                             Completed
                         </Nav.Link>
                         <Nav.Link 
-                            active={activeTab === 'Rejected'} 
-                            onClick={() => setActiveTab('Rejected')} 
+                            active={activeTab === 'rejected'} 
+                            onClick={() => setActiveTab('rejected')} 
                         >
                             Rejected
                         </Nav.Link>
@@ -307,8 +166,8 @@ function MyProjectsBody(){
                 </Navbar>
             </div>
             
-            {/* only display ongoing, completed, rejected jobs */}
-            {activeTab !== 'Invite' && displayedCards.filter((job) => job.status === 'Pending'|| job.status === 'Ongoing'|| job.status === 'Completed'|| job.status ==='Rejected').map((job) => (
+            {/* only display pending jobs */}
+            {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus === 'pending').map((job) => (
                 <div className="single-job-card mx-auto mt-3">
                     <div className="job-card-header">
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
@@ -322,10 +181,10 @@ function MyProjectsBody(){
                             </div>
                             <div className='d-flex flex-column'>
                                 <div className='ms-sm-3'>
-                                    <span className="job-card-title">{job.jobTitle}</span>
+                                    <span className="job-card-title">{job.jobtitle}</span>
                                 </div>
                                 <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{job.Posted}</span>
+                                    <span className="job-card-date">{job.posteddate}</span>
                                 </div>
                             </div>
                         </div>
@@ -333,11 +192,155 @@ function MyProjectsBody(){
                     <div className="my-job-card-body">
                         <div className="my-job-card-body-left d-flex flex-column">
                             <div>
-                                <span className="sinlge-my-job-sub-info">{job.dueDate} | {job.serviceName}</span>
+                                <span className="sinlge-my-job-sub-info">{job.duedate} | {job.servicename}</span>
                             </div>
                             <div>
                                 <span className="my-job-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.location}
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.joblocation}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div className="my-job-card-footer d-flex flex-row">
+                        <Link to={`../PendingJob/${job.jobid}` }
+                            className="btn btn-default my-job-card-footer-btn"
+                            id="my-job-card-footer-btn-view"
+                        >
+                            <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
+                        </Link>
+                    </div>
+                </div>
+            ))}
+
+            {/* only display ongoing jobs */}
+            {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus === 'ongoing').map((job) => (
+            <div className="single-job-card mx-auto mt-3">
+                <div className="job-card-header">
+                    <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
+                        <div className='d-flex justify-content-center align-items-center'>
+                            <img
+                                        src={job.profile}
+                                        alt="avatar"
+                                        className="rounded-circle"
+                                        style={{ width: "42px", height: "42px" }}
+                            />
+                        </div>
+                        <div className='d-flex flex-column'>
+                            <div className='ms-sm-3'>
+                                <span className="job-card-title">{job.jobtitle}</span>
+                            </div>
+                            <div className='ms-sm-3 d-flex'>
+                                <span className="job-card-date">{job.posteddate}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="my-job-card-body">
+                    <div className="my-job-card-body-left d-flex flex-column">
+                        <div>
+                            <span className="sinlge-my-job-sub-info">{job.duedate} | {job.servicename}</span>
+                        </div>
+                        <div>
+                            <span className="my-job-location-info">
+                                <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.joblocation}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div className="my-job-card-footer d-flex flex-row">
+                    <Link to={`../OngoingJob/${job.jobid}` }
+                        className="btn btn-default my-job-card-footer-btn"
+                        id="my-job-card-footer-btn-view"
+                    >
+                        <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
+                    </Link>
+                </div>
+            </div>
+        ))}
+
+            {/* only display completed jobs */}
+            {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus === 'completed').map((job) => (
+            <div className="single-job-card mx-auto mt-3">
+                <div className="job-card-header">
+                    <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
+                        <div className='d-flex justify-content-center align-items-center'>
+                            <img
+                                        src={job.profile}
+                                        alt="avatar"
+                                        className="rounded-circle"
+                                        style={{ width: "42px", height: "42px" }}
+                            />
+                        </div>
+                        <div className='d-flex flex-column'>
+                            <div className='ms-sm-3'>
+                                <span className="job-card-title">{job.jobtitle}</span>
+                            </div>
+                            <div className='ms-sm-3 d-flex'>
+                                <span className="job-card-date">{job.posteddate}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="my-job-card-body">
+                    <div className="my-job-card-body-left d-flex flex-column">
+                        <div>
+                            <span className="sinlge-my-job-sub-info">{job.duedate} | {job.servicename}</span>
+                        </div>
+                        <div>
+                            <span className="my-job-location-info">
+                                <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.joblocation}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div className="my-job-card-footer d-flex flex-row">
+                    <span
+                        className="btn btn-default my-job-card-footer-btn"
+                        id="my-job-card-footer-btn-view"
+                    >
+                        <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
+                    </span>
+                    </div>
+                </div>
+            ))}
+
+                {/* only display rejected jobs */}
+                {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus ==='rejected').map((job) => (
+                <div className="single-job-card mx-auto mt-3">
+                    <div className="job-card-header">
+                        <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
+                            <div className='d-flex justify-content-center align-items-center'>
+                                <img
+                                            src={job.profile}
+                                            alt="avatar"
+                                            className="rounded-circle"
+                                            style={{ width: "42px", height: "42px" }}
+                                />
+                            </div>
+                            <div className='d-flex flex-column'>
+                                <div className='ms-sm-3'>
+                                    <span className="job-card-title">{job.jobtitle}</span>
+                                </div>
+                                <div className='ms-sm-3 d-flex'>
+                                    <span className="job-card-date">{job.posteddate}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="my-job-card-body">
+                        <div className="my-job-card-body-left d-flex flex-column">
+                            <div>
+                                <span className="sinlge-my-job-sub-info">{job.duedate} | {job.servicename}</span>
+                            </div>
+                            <div>
+                                <span className="my-job-location-info">
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.joblocation}
                                 </span>
                             </div>
                         </div>
@@ -357,7 +360,7 @@ function MyProjectsBody(){
 
 
             {/* only display job invites for me */}
-            {activeTab === 'Invite' && displayedCards.filter((job) => job.status === 'Invite').map((job) => (
+            {activeTab === 'invite' && displayedCards.filter((job) => job.jobstatus === 'invite').map((job) => (
                 <div className="single-job-card mx-auto mt-3">
                     <div className="job-card-header">
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
@@ -371,10 +374,10 @@ function MyProjectsBody(){
                             </div>
                             <div className='d-flex flex-column'>
                                 <div className='ms-sm-3'>
-                                    <span className="job-card-title">{job.jobTitle}</span>
+                                    <span className="job-card-title">{job.jobtitle}</span>
                                 </div>
                                 <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{job.Posted}</span>
+                                    <span className="job-card-date">{job.posteddate}</span>
                                 </div>
                             </div>
                         </div>
@@ -382,11 +385,17 @@ function MyProjectsBody(){
                     <div className="my-job-card-body">
                         <div className="my-job-card-body-left d-flex flex-column">
                             <div>
-                                <span className="sinlge-my-job-sub-info">{job.dueDate} | {job.serviceName}</span>
+                                <span className="single-job-description">
+                                    {job.jobdescription.split(' ').slice(0, 14).join(' ')}
+                                    {job.jobdescription.split(' ').length > 14 ? ' ...' : ''}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="sinlge-my-job-sub-info">{job.duedate} | {job.servicename}</span>
                             </div>
                             <div>
                                 <span className="my-job-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.location}
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.joblocation}
                                 </span>
                             </div>
                         </div>

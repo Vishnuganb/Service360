@@ -37,7 +37,7 @@ import SpMyProjectsVacancies from './components/pages/ServiceProvider/MyProjects
 import SpViewTrainingSessions from './components/pages/ServiceProvider/ViewTrainingSessions/Index.js';
 import SpViewATrainingSession from './components/pages/ServiceProvider/ViewATrainingSession/Index.js';
 import SpMyProjectStates from './components/pages/ServiceProvider/MyProjectStates.js';
-import SpAcceptedJob from './components/pages/ServiceProvider/AcceptedJob/Index.js';
+import SpOngoingJob from './components/pages/ServiceProvider/OngoingJob/Index.js';
 import SpAcceptedVacancy from './components/pages/ServiceProvider/AcceptedVacancy/Index.js';
 import SpStartJob from './components/pages/ServiceProvider/StartJob/Index.js';
 import SpAvailabilityCalendar from './components/pages/ServiceProvider/AvailabilityCalendar/Index.js';
@@ -97,6 +97,7 @@ const router = createBrowserRouter(
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
+        <Route path="/jobs" element={<ViewAjob />} />        
         <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
@@ -171,13 +172,13 @@ const router = createBrowserRouter(
         <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
         <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
         <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
-        <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
+        <Route path="OngoingJob/:id" element={<SpOngoingJob/>} />
         <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
         <Route path="StartJob" element={<SpStartJob/>} />
         <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
         <Route path="ViewHistory" element={<SpViewHistory/>} />
-        <Route path="PendingJob" element={<SpPendingJob/>} />
+        <Route path="PendingJob/:id" element={<SpPendingJob/>} />
       </Route>
 
       <Route

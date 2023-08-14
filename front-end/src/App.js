@@ -14,15 +14,13 @@ import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/Dashboard/AdDashboard.js';
 import ViewAd from './components/pages/advertiser/ViewAd.js';
-import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
-// import VerifiedAds from './components/pages/advertiser/Ads/VerifiedAds.js';
-// import RejectedAds from "./components/pages/advertiser/Ads/RejectedAds.js";
-// import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js';
+// import AdvertiserProfile from './components/pages/User/Advertiser/EditProfile.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
 import Subscribtion from './components/pages/advertiser/Dashboard/subscription.js';
 import Ads from './components/pages/advertiser/Dashboard/Ads/Index.js';
-// import EditAd from './components/pages/advertiser/Dashboard/EditAd.js';
+import EditAd from './components/pages/advertiser/Dashboard/EditAd.js';
+import Subscriped from './components/pages/advertiser/Dashboard/subscribed.js';
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -69,6 +67,8 @@ import ViewReviewandRating from './components/pages/User/Admin/ViewReviewandRati
 import Chat from './components/pages/User/Chat/ChatPage.js';
 import AdminSessions from './components/pages/Admin/AdminSessions/AdminSessions.js';
 
+import AdminInvoices from './components/pages/Admin/AdminInvoices/AdminInvoices.js';
+
 
 import CustomerDashboard from './components/pages/Customer/CustomerDashboard/CustomerDashboard.js';
 import CustomerLayout from './components/layout/CustomerLayout.js';
@@ -104,7 +104,10 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
-        <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
+        <Route
+          path="/services/:serviceName/:ViewAservice"
+          element={<ViewAservice />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
@@ -122,24 +125,23 @@ const router = createBrowserRouter(
         <Route path="complaints" element={<AdminComplaints />} />
         <Route path="report" element={<AdminReport />} />
         <Route path="advertisements" element={<AdminAdvertisements />} />
-        <Route path="history" element={<AdminViewHistory /> } />
-        <Route path="review" element={<ViewReviewandRating/>}  />  
-        <Route path="chat" element={<Chat/>}  /> 
+        <Route path="history" element={<AdminViewHistory />} />
+        <Route path="review" element={<ViewReviewandRating />} />
+        {/* <Route path="chat" element={<Chat />} /> */}
         <Route path="sessions" element={<AdminSessions />} />
-     
+
+        <Route path="invoice" element={<AdminInvoices />} />
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
         <Route path="AdsPage" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
-        <Route path="Dashboard" element={<AdDashbord />} />
-        {/* <Route path="VerifiedAds" element={<VerifiedAds />} />
-        <Route path="RejectedAds" element={<RejectedAds />} />
-        <Route path="YetToVerifyAds" element={<YetToVerifyAds />} /> */}
+        <Route index element={<AdDashbord />} />
         <Route path="Subscribtion" element={<Subscribtion />} />
         <Route path="Ads" element={<Ads />} />
-        {/* <Route path="EditAd" element={<EditAd />} /> */}
+        <Route path="EditAd/:adId" element={<EditAd />} />
+        <Route path="Subscribed/:subId" element={<Subscriped />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -153,12 +155,18 @@ const router = createBrowserRouter(
         <Route path="ViewServiceProvider" element={<ViewServiceProvider />} />
         <Route path="ToDoForm" element={<ToDoForm />} />
         <Route path="RatenReview" element={<RatenReview />} />
-        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+        <Route
+          path="Searchserviceprovider"
+          element={<Searchserviceprovider />}
+        />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
-        <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
-        <Route path="AddReview" element={<AddReviewandRating/>}/>
-        <Route path="History"element={<CustomerViewHistory/>}/>
-        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
+        <Route path="ViewAQuotation" element={<ViewAQuotation />} />
+        <Route path="AddReview" element={<AddReviewandRating />} />
+        <Route path="History" element={<CustomerViewHistory />} />
+        <Route
+          path="CustomerComplaintPage"
+          element={<CustomerComplaintPage />}
+        />
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
@@ -174,19 +182,31 @@ const router = createBrowserRouter(
         <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
-        <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
-        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
-        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
-        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
-        <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
-        <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
-        <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
-        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
-        <Route path="StartJob" element={<SpStartJob/>} />
-        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
-        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
-        <Route path="ViewHistory" element={<SpViewHistory/>} />
-        <Route path="PendingJob" element={<SpPendingJob/>} />
+        <Route
+          path="CreateTrainingSession"
+          element={<SpCreateTrainingSession />}
+        />
+        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs />} />
+        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies />} />
+        <Route
+          path="ViewTrainingSessions"
+          element={<SpViewTrainingSessions />}
+        />
+        <Route
+          path="ViewATrainingSession"
+          element={<SpViewATrainingSession />}
+        />
+        <Route path="MyProjectStates" element={<SpMyProjectStates />} />
+        <Route path="AcceptedJob" element={<SpAcceptedJob />} />
+        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy />} />
+        <Route path="StartJob" element={<SpStartJob />} />
+        <Route
+          path="AvailabilityCalendar"
+          element={<SpAvailabilityCalendar />}
+        />
+        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions />} />
+        <Route path="ViewHistory" element={<SpViewHistory />} />
+        <Route path="PendingJob" element={<SpPendingJob />} />
 
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />

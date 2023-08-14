@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../style/Admin/AdminHeader.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -7,7 +7,14 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../assets/images/header/Frame 2.png";
 import profileIcon from "../../assets/images/header/user.jpg";
 
+import ChatApp from "../pages/Chat/ChatApp";
+
 function AdvertiserHeader() {
+  const [showChatApp, setShowChatApp] = useState(false);
+  const HideChatApp = () => {
+    setShowChatApp(false);
+  };
+
   return (
     <Navbar expand="lg" bg="light" className="navbar">
       <Container>
@@ -17,7 +24,6 @@ function AdvertiserHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav className="me-auto">
-            
             <Nav.Link
               href="#notifications"
               className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
@@ -25,11 +31,12 @@ function AdvertiserHeader() {
               <i className="bi bi-bell-fill"></i>
             </Nav.Link>
             <Nav.Link
-              href="#chat"
+              onClick={() => setShowChatApp(true)}
               className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
             >
               <i className="bi bi-chat-fill"></i>
             </Nav.Link>
+            <ChatApp show={showChatApp} onHide={HideChatApp} />
 
             <Nav.Link
               href="#notifications"
@@ -67,6 +74,6 @@ function AdvertiserHeader() {
       </Container>
     </Navbar>
   );
-};
+}
 
 export default AdvertiserHeader;

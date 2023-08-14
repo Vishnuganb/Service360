@@ -11,9 +11,16 @@ import { AuthenticationContext } from "../../ContextFiles/Authentication/Authent
 
 import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
 
+import ChatApp from '../pages/Chat/ChatApp';
+
 function AdminHeader() {
     const [showEditProfile, setShowEditProfile] = useState(false);
     const { logout } = useContext(AuthenticationContext)
+
+     const [showChatApp, setShowChatApp] = useState(false);
+     const HideChatApp = () => {
+       setShowChatApp(false);
+     };
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">
@@ -26,11 +33,11 @@ function AdminHeader() {
                     <Nav className="me-auto">
 
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
-                        <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
+                        <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'  onClick={() => setShowChatApp(true)}><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
-                        <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link>
-
+                        <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none " >Chat</Nav.Link>
+                        <ChatApp show={showChatApp} onHide={HideChatApp} />
                         <NavDropdown title="Vishnugan" className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item onClick={() => setShowEditProfile(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />

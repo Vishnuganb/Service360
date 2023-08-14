@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../../style/ServiceProvider/ServiceProviderHeader.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -10,8 +10,16 @@ import chat from '../../assets/images/header/chat.png';
 import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 
+import ChatApp from '../pages/Chat/ChatApp';
 
+  
 function CustomerHeader() {
+    
+    const [showChatApp, setShowChatApp] = useState(false);
+    const HideChatApp = () => {
+      setShowChatApp(false);
+    };
+
     return (
         <Navbar expand="lg" bg="light" className="navbar">
             <Container>
@@ -22,8 +30,8 @@ function CustomerHeader() {
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav className="me-auto">
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
-                        <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
-
+                        <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'  onClick={() => setShowChatApp(true)}><i className="bi bi-chat-fill"></i></Nav.Link>
+                        <ChatApp show={showChatApp} onHide={HideChatApp} />
                         <Nav.Link href="#History" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">History</Nav.Link> 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 

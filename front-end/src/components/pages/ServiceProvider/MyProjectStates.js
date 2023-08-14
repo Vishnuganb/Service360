@@ -18,10 +18,6 @@ const serviceCategories = {
         image: Pending,
         title: "On Going Jobs",
     },
-    completedJobs: {
-        image: Pending,
-        title: "Completed Jobs",
-    },
     rejectedJobs: {
         image: Pending,
         title: "Rejected Jobs",
@@ -30,17 +26,9 @@ const serviceCategories = {
         image: Pending,
         title: "Vacancy Invites",
     },
-    pendingVacancies: {
-        image: Pending,
-        title: "Pending Vacancies",
-    },
     processingVacancies: {
         image: Pending,
         title: "On Going Vacancies",
-    },
-    completedVacancies: {
-        image: Pending,
-        title: "Completed Vacancies",
     },
     rejectedVacancies: {
         image: Pending,
@@ -86,16 +74,6 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="/ServiceProvider/MyProjectsJobs?tab=completed">
-                        <Card className="MyProjectsStates-card mb-3">
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.completedJobs.image} />
-                            <Card.Body>
-                                <span >{serviceCategories.completedJobs.title}</span>
-                            </Card.Body>
-                        </Card>
-                        </Link>
-                    </div>
-                    <div className='col-lg-3 col-sm-6 col-12'>
                         <Link to="/ServiceProvider/MyProjectsJobs?tab=rejected">
                         <Card className="MyProjectsStates-card">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.rejectedJobs.image} />
@@ -113,7 +91,7 @@ function MyProjectsJobsStates() {
                 </Row>
                 <Row className='MyProjectsStates-Vacancy-Container d-flex flex-row ms-lg-2 me-lg-2'>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=Invite">
+                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=invite">
                         <Card className="MyProjectsStates-card mb-3" >
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.VacancyInvites.image} />
                             <Card.Body>
@@ -123,17 +101,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=Pending">
-                        <Card className="MyProjectsStates-card mb-3" >
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.pendingVacancies.image} />
-                            <Card.Body>
-                                <span >{serviceCategories.pendingVacancies.title}</span>
-                            </Card.Body>
-                        </Card>
-                        </Link>
-                    </div>
-                    <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=Ongoing">
+                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=ongoing">
                         <Card className="MyProjectsStates-card mb-3">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.processingVacancies.image} />
                             <Card.Body>
@@ -143,17 +111,7 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                     <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=Completed">
-                        <Card className="MyProjectsStates-card mb-3">
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.completedVacancies.image} />
-                            <Card.Body>
-                                <span >{serviceCategories.completedVacancies.title}</span>
-                            </Card.Body>
-                        </Card>
-                        </Link>
-                    </div>
-                    <div className='col-lg-3 col-sm-6 col-12'>
-                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=Rejected">
+                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=rejected">
                         <Card className="MyProjectsStates-card">
                             <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.rejectedVacancies.image} />
                             <Card.Body>

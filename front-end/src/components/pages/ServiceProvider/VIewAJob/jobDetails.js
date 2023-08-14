@@ -47,7 +47,7 @@ function JobDetails() {
     });
   }   , []);
 
-  if (!viewJobData) return 'No jobs found!';
+  if (!viewJobData) return 'No job found!';
 
   return (
     <>

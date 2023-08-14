@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Builder
@@ -15,24 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "jobs"
+        name = "vacancies"
 )
 
-public class Jobs {
-
+public class Vacancies {
     @Id
     @GeneratedValue()
     @Column(updatable = false)
-    private Long jobid;
-
-//    @OneToOne
-//    @JoinColumn(name = "commentid")
-    @Column
-    private Long jobcommentid;
-
-    @OneToOne
-    @JoinColumn(name = "detailsid", referencedColumnName = "jobdetailsid")
-    private JobDetails jobDetails;
+    private Long vacancyid;
 
     @Column( columnDefinition = "TEXT")
     private String profile;
@@ -44,7 +33,7 @@ public class Jobs {
     private String lastseen;
 
     @Column( columnDefinition = "TEXT")
-    private String jobtitle;
+    private String vacancytitle;
 
     @Column( columnDefinition = "DATE")
     private LocalDate duedate;
@@ -56,17 +45,23 @@ public class Jobs {
     private String servicename;
 
     @Column( columnDefinition = "TEXT")
-    private String jobstatus;
+    private String vacancystatus;
 
     @Column( columnDefinition = "TEXT")
-    private String jobdescription;
+    private String vacancydescription;
 
     @Column( columnDefinition = "TEXT")
-    private String joblocation;
+    private String vacancylocation;
 
     @Column( columnDefinition = "TEXT")
-    private String images;
+    private String vacancytype;
 
     @Column( columnDefinition = "TEXT")
-    private String paymentstatus;
+    private String address;
+
+    @Column( columnDefinition = "TEXT")
+    private String qualifications;
+
+    @Column( columnDefinition = "TEXT")
+    private String responsibilities;
 }

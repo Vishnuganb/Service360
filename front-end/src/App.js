@@ -44,7 +44,7 @@ import SpAvailabilityCalendar from './components/pages/ServiceProvider/Availabil
 import SpMyTrainingSessions from './components/pages/ServiceProvider/MyTrainingSessions/Index.js';
 import SpViewHistory from './components/pages/ServiceProvider/ViewHistory/Index.js';
 import SpPendingJob from './components/pages/ServiceProvider/PendingJob/Index.js';
-
+import SpOngoingVacancy from './components/pages/ServiceProvider/OngoingVacancy/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -160,10 +160,10 @@ const router = createBrowserRouter(
         <Route index element={<SpDashboard />} />
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
-        <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
+        <Route path="ApplyVacancy/:id" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
         <Route path="ViewAJob/:id" element={<SpViewAJob />} />
-        <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
+        <Route path="ViewAVacancy/:id" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
@@ -179,6 +179,7 @@ const router = createBrowserRouter(
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
         <Route path="ViewHistory" element={<SpViewHistory/>} />
         <Route path="PendingJob/:id" element={<SpPendingJob/>} />
+        <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
       </Route>
 
       <Route

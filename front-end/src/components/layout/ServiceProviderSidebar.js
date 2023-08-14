@@ -120,6 +120,15 @@ function ServiceProviderSideBar() {
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Create Blog</span>
                                 </Link>
                             </li>
+
+
+
+                            <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
+                                <Link to="#" className="nav-link nav-link-sidebar text-white">
+                                    <i className="bi bi-postcard" id="nav-single-element" style={{ fill: "none" }}></i>
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Forum</span>
+                                </Link>
+                            </li>
                         
                         </ul>
                     </div>

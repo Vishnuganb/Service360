@@ -15,7 +15,7 @@ function BasicExample() {
                     <Card.Text className='card-text-container d-flex align-items-center flex-row'>
                         <span>Ongoing Projects</span>
                         <span className="d-flex ms-auto">
-                            <Link to="/ServiceProvider/MyProjectsJobs?tab=Ongoing">
+                            <Link to="/ServiceProvider/MyProjectsJobs?tab=ongoing">
                                 <i className="bi bi-arrow-right-circle" style={{color:"black"}}></i>
                             </Link>
                         </span>

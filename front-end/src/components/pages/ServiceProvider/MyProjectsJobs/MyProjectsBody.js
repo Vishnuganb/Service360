@@ -119,12 +119,6 @@ function MyProjectsBody(){
                             Ongoing
                         </Nav.Link>
                         <Nav.Link 
-                            active={activeTab === 'completed'} 
-                            onClick={() => setActiveTab('completed')}
-                        >
-                            Completed
-                        </Nav.Link>
-                        <Nav.Link 
                             active={activeTab === 'rejected'} 
                             onClick={() => setActiveTab('rejected')} 
                         >
@@ -262,8 +256,9 @@ function MyProjectsBody(){
             </div>
         ))}
 
-            {/* only display completed jobs */}
-            {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus === 'completed').map((job) => (
+
+            {/* only display rejected jobs */}
+            {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus ==='rejected').map((job) => (
             <div className="single-job-card mx-auto mt-3">
                 <div className="job-card-header">
                     <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
@@ -274,54 +269,6 @@ function MyProjectsBody(){
                                         className="rounded-circle"
                                         style={{ width: "42px", height: "42px" }}
                             />
-                        </div>
-                        <div className='d-flex flex-column'>
-                            <div className='ms-sm-3'>
-                                <span className="job-card-title">{job.jobtitle}</span>
-                            </div>
-                            <div className='ms-sm-3 d-flex'>
-                                <span className="job-card-date">{job.posteddate}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="my-job-card-body">
-                    <div className="my-job-card-body-left d-flex flex-column">
-                        <div>
-                            <span className="sinlge-my-job-sub-info">{job.duedate} | {job.servicename}</span>
-                        </div>
-                        <div>
-                            <span className="my-job-location-info">
-                                <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {job.joblocation}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-                <div className="my-job-card-footer d-flex flex-row">
-                    <span
-                        className="btn btn-default my-job-card-footer-btn"
-                        id="my-job-card-footer-btn-view"
-                    >
-                        <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
-                    </span>
-                    </div>
-                </div>
-            ))}
-
-                {/* only display rejected jobs */}
-                {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus ==='rejected').map((job) => (
-                <div className="single-job-card mx-auto mt-3">
-                    <div className="job-card-header">
-                        <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
-                            <div className='d-flex justify-content-center align-items-center'>
-                                <img
-                                            src={job.profile}
-                                            alt="avatar"
-                                            className="rounded-circle"
-                                            style={{ width: "42px", height: "42px" }}
-                                />
                             </div>
                             <div className='d-flex flex-column'>
                                 <div className='ms-sm-3'>
@@ -347,13 +294,13 @@ function MyProjectsBody(){
                     </div>
                     <hr />
                     <div className="my-job-card-footer d-flex flex-row">
-                        <span
+                        <Link to={`../ViewAJob/${job.jobid}` }
                             className="btn btn-default my-job-card-footer-btn"
                             id="my-job-card-footer-btn-view"
                         >
                             <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                             <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
-                        </span>
+                        </Link>
                     </div>
                 </div>
             ))}

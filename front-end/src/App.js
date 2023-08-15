@@ -85,7 +85,9 @@ import CustomerComplaints from './components/pages/Customer/Complaints.js';
 import CustomerComplaintPage from './components/pages/Customer/CustomerComplaintPage.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import JobRequest from './components/pages/Customer/JobRequest.js';
 import Forum from './components/pages/Forum/Forum.js';
+import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
 import ToDoList from './components/pages/Customer/CreateToDo';
 import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
 import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
@@ -104,6 +106,7 @@ const router = createBrowserRouter(
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
         <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
         <Route path="/About" element={<About />} />
+        <Route path='/Contactus' element={<ContactpageNR />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
@@ -155,6 +158,8 @@ const router = createBrowserRouter(
         <Route path="AddReview" element={<AddReviewandRating />} />
         <Route path="RequestedQuotation" element={<RequestedQuotation />} />
         <Route path="PostedVacancies" element={<PostedVacancies />} />
+        <Route path="JobRequest" element={<JobRequest />} />
+       
       </Route>
 
        <Route path="/ServiceProvider" element={<SpLayout />}>

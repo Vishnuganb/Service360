@@ -5,13 +5,13 @@
 
 /* locationsetup */
 .scrollable-content {
-  max-height: 400px;
+  max-height: 380px;
   overflow-y: auto;
 }
 
 .cusmodalcontent {
   background-image: url("../../assets/images/header/Background.png");
- height: 200px;
+  height: 400px;
 }
 
 .cuslocsearch {
@@ -29,13 +29,18 @@
   padding: 0;
   padding-top: 15px;
   padding-left: 10px;
-
 }
 
 .PlaceList li {
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 12px;
-  font-family: roboto;
+}
+
+.PlaceList li:hover{
+  background-color: rgb(230, 230, 230);
+  color: #813613;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .PlaceList li.selected {
@@ -74,12 +79,7 @@
 .top {
   display: flex;
 }
-
-
-
 /*FilterpopUp*/
-
-
 .button-group-bottom {
   display: flex;
   justify-content: center;
@@ -109,51 +109,6 @@
   color: #9f390d;
 }
 
-.cusfilterdropdown {
-  color: white; /* Change the text color */
-  background-color: #292d32; /* Change the background color */
-  border: none;
-}
-
-.cusfilterdropdown:hover{
-  background-color: #fff;
-  border-color: #2596be;
-  color: #9f390d;
-}
-
-.cusfilterdropdown:active {
-  background-color: rgb(255, 255, 255); /* Change the background color while clicking */
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .cusfilterbutt .dropdown-item {
   color: black; /* Change the text color of dropdown options */
   background-color: rgb(255, 252, 252); /* Change the background color of dropdown options */
@@ -171,3 +126,20 @@
 .cusfilterbutt .dropdown-toggle::after {
   border-top-color: rgb(255, 255, 255); /* Change the color of the split arrow */
 }
+
+
+
+
+/* 
+expand the scope
+QR code
+Mobile responsive webpages*/
+
+/* demo 
+deployment readiness - how to deploy
+set deployment plan, cost
+
+git colabration
+complete sign up login
+front end 60-80%
+*/

@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import '../../../style/Customer/SearchServiceProvider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faTags, faFilter } from '@fortawesome/free-solid-svg-icons';
-import ServiceProvideimg from '../../../assets/images/Customer/ServiceProvider1.png';
+import { faMapMarkerAlt, faTags, faFilter, faSortAmountDown, faSortAmountUp } from '@fortawesome/free-solid-svg-icons';
 import LocationPopup from './PopUpcontents/LocationPopup';
-import FilterPopup from './PopUpcontents/FilterPopup';
-import CategoryPopup from './PopUpcontents/CategoryPopup';
-import { Link } from 'react-router-dom';
-import ViewServiceProvider from './ViewServiceProvider';
+import CategoryPopup from './PopUpcontents/CategoryPopup'; 
+import '../../../style/Customer/ViewSPCard.css';
+import Pagination from 'react-bootstrap/Pagination';
+import ViewSPCard from './SocialShare/ViewSPCard';
+import Row from 'react-bootstrap/esm/Row';
 
 const SearchServiceProvider = () => {
   const [isLocationPopupOpen, setLocationPopupOpen] = useState(false);
   const [isFilterPopupOpen, setFilterPopupOpen] = useState(false);
   const [isCategoryPopupOpen, setCategoryPopupOpen] = useState(false);
   const [searchLocation, setSearchLocation] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedService, setSelectedService] = useState('');
+  const [sortAscending, setSortAscending] = useState(true);
+  const [sortByReview, setSortByReview] = useState(false);
+ 
+
 
   const toggleLocationPopup = () => {
     setLocationPopupOpen(!isLocationPopupOpen);
@@ -23,6 +29,21 @@ const SearchServiceProvider = () => {
     setSearchLocation(location);
   };
 
+  const handleSearchService = (service) => {
+    setSearchLocation(service);
+  };
+
+  const handleSelectLocation = (location) => {
+    setSelectedLocation(location);
+
+  };
+
+  const handleSelectService = (service) => {
+    setSelectedService(service);
+
+  };
+
+
   const toggleFilterPopup = () => {
     setFilterPopupOpen(!isFilterPopupOpen);
   };
@@ -31,21 +52,30 @@ const SearchServiceProvider = () => {
     setCategoryPopupOpen(!isCategoryPopupOpen);
   };
 
+  const handleSortToggle = () => {
+    setSortAscending(!sortAscending);
+  };
+
+  const handleSortByReviewToggle = () => {
+    setSortByReview(!sortByReview);
+  };
+
   return (
     <div className="content">
       <div className="selectionpanel">
-
         <button className="custom-button" onClick={toggleCategoryPopup}>
           <div className="icon">
             <FontAwesomeIcon icon={faTags} />
           </div>
-          <div className="text">Services</div>
+          <div className="text">{selectedService || 'Services'}</div>
         </button>
 
         {isCategoryPopupOpen && (
           <CategoryPopup
             isOpen={isCategoryPopupOpen}
             onClose={toggleCategoryPopup}
+            onSearchService={handleSearchService}
+            onSelectService={handleSelectService}
           />
         )}
 
@@ -53,7 +83,7 @@ const SearchServiceProvider = () => {
           <div className="icon">
             <FontAwesomeIcon icon={faMapMarkerAlt} />
           </div>
-          <div className="text">Location</div>
+          <div className="text">{selectedLocation || 'Location'}</div>
         </button>
 
         {isLocationPopupOpen && (
@@ -61,100 +91,45 @@ const SearchServiceProvider = () => {
             isOpen={isLocationPopupOpen}
             onClose={toggleLocationPopup}
             onSearchLocation={handleSearchLocation}
+            onSelectLocation={handleSelectLocation}
           />
         )}
 
-        <button className="custom-button" onClick={toggleFilterPopup}>
+        <button className="custom-button2" onClick={handleSortByReviewToggle}>
           <div className="icon">
-            <FontAwesomeIcon icon={faFilter} />
+            Sort by Review &nbsp; &nbsp; {sortByReview ? <FontAwesomeIcon icon={faSortAmountUp} /> : <FontAwesomeIcon icon={faSortAmountDown} />}
           </div>
-          <div className="text">Filter</div>
         </button>
 
-        {isFilterPopupOpen && (
-          <FilterPopup
-            isOpen={isFilterPopupOpen}
-            onClose={toggleFilterPopup}
-          />
-        )}
-      </div>
-      <div className="profile-box">
-        <div className="profile-image d-flex">
-          <img
-            src={ServiceProvideimg}
-            alt="profile-image"
-            style={{
-              height: 'auto',
-              maxWidth: '100px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              margin: '0 2% 0 4%',
-            }}
-          />
-        </div>
-        <div className="profile-details">
-          <div className="info">
-            <p className="name">Alex</p>
-            <span className="cate">Plumbing |</span>
-            <span className="date">&nbsp; Member since June 23, 2023</span>
-            <p className="location">Dehiwala, Mount Lavinia</p>
-            <p className="phone_no">0705898344</p>
-          </div>
-        </div>
-        <div className="button">
-          <button className="bottombutton1">
-            <Link to={"/customer/ViewServiceProvider"}
-              style={{
-                color: 'white'
-              }}
-            >View Profile</Link>
-          </button>
-          <button className="bottombutton2">Share</button>
-        </div>
       </div>
 
-
-      <div className="profile-box">
-        <div className="profile-image">
-          <div className="profile-image d-flex">
-            <img
-              src={ServiceProvideimg}
-              alt="profile-image"
-              style={{
-                height: 'auto',
-                maxWidth: '100px',
-                borderRadius: '50%',
-                objectFit: 'cover',
-                margin: '0 2% 0 4%',
-              }}
-            />
+      <div className="bodyPageContainer-SP">
+        <Row id='bodyPageRow1'>
+          <div className="SPCardContainer" >
+            <ViewSPCard />
+            <ViewSPCard />
+            <ViewSPCard />
+            <ViewSPCard />
           </div>
-        </div>
-        <div className="profile-details">
-          <div className="info">
-            <p className="name">Vinoth</p>
-            <span className="cate">Carpenter |</span>
-            <span className="date">&nbsp; Member since March 2020</span>
-            <p className="location">Colombo 4</p>
-            <p className="phone_no">0775866987</p>
+        </Row>
+        <Row id='bodyPageRow2'>
+          <div className="paginationContainer-SP" >
+            <Pagination className='pagination-element'>
+              <Pagination.First />
+              <Pagination.Prev />
+              <Pagination.Item active>{1}</Pagination.Item>
+              <Pagination.Item>{2}</Pagination.Item>
+              <Pagination.Item>{3}</Pagination.Item>
+              <Pagination.Item>{4}</Pagination.Item>
+              <Pagination.Item>{5}</Pagination.Item>
+              <Pagination.Ellipsis />
+              <Pagination.Next />
+              <Pagination.Last />
+            </Pagination>
           </div>
-        </div>
-        <div className="button">
-          <button className="bottombutton1">
-            <Link to={"/customer/ViewServiceProvider"}
-              style={{
-                color: 'white'
-              }}
-            >View Profile</Link>
-          </button>
-          <button className="bottombutton2">Share</button>
-        </div>
+        </Row>
       </div>
     </div>
-
-
-
-
   );
 };
 

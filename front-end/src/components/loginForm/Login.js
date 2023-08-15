@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/login.png'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styled from 'styled-components';
-import { Modal} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import '../../style/Login.css'
 import image from '../../assets/images/header/Background.png'
 import { ReactLinkContext } from "../../ContextFiles/ReactLinkContext";
@@ -59,6 +59,13 @@ const Login = () => {
 
         if (email === '' && password === '') {
             setErrorMessage('Please fill in all the fields')
+<<<<<<< HEAD
+        }
+
+        if (!isError) {
+            navigate('/')
+        }
+=======
         }else if (email === '') {
             setErrorMessage('Please enter the email address')
         }else if (email === '' && password === '') {
@@ -67,6 +74,7 @@ const Login = () => {
              login(email, password);
              console.log(email, password)
         } 
+>>>>>>> 71291c652dc127cf7b1d46bd2eaf339fcf262ea9
 
     }
 
@@ -91,6 +99,37 @@ const Login = () => {
         color: '#9F390D' 
     };
 
+<<<<<<< HEAD
+    const StyledButton = styled.button`
+        background-color: #292D32;
+        width: 70%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+    }
+    `;
+
+    const StyledButton2 = styled.button`
+        background-color: #292D32;
+        width: 30%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+        }
+    `;
+
+=======
+>>>>>>> 71291c652dc127cf7b1d46bd2eaf339fcf262ea9
     const [showModal, setShowModal] = useState(false);
 
     const toggleModal = () => setShowModal(!showModal);
@@ -171,11 +210,11 @@ const Login = () => {
                                                                 >
                                                                     {isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
                                                                 </button>
-                                                            </span>  
+                                                            </span>
                                                         </div>
                                                         {errorMessage && <p className="text-danger p-0 m-0">{errorMessage}</p>}
                                                     </div>
-                                                    
+
 
                                                 </div>
 
@@ -195,7 +234,7 @@ const Login = () => {
                                                         <Link
                                                             className="text-primary mb-2 font-medium-bold"
                                                             style={{ textDecoration: 'none' }}
-                                                            to = { forgotPasswordLink}
+                                                            to={forgotPasswordLink}
                                                         >
                                                             Forgot password?
                                                         </Link>
@@ -215,21 +254,21 @@ const Login = () => {
                                                         <Modal.Body>
                                                             <div className="d-flex flex-column justify-content-between mb-3">
                                                                 <Link
-                                                                    to= {CustomerSignUpLink}
+                                                                    to={CustomerSignUpLink}
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', background: '#f2f2f2', color: '#000' }}
                                                                 >
                                                                     Customer
                                                                 </Link>
                                                                 <Link
-                                                                    to= {ServiceProviderSignUpLink} 
+                                                                    to={ServiceProviderSignUpLink}
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
                                                                 >
                                                                     Service Provider
                                                                 </Link>
                                                                 <Link
-                                                                    to= {AdvertiserSignUpLink} 
+                                                                    to={AdvertiserSignUpLink}
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
                                                                 >

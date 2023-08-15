@@ -1,0 +1,100 @@
+.contactusNR{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.contactuscontainer{
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  display: flex;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+.imgNR{
+  flex: 1;
+  background-image: url('../../assets/images/home/customerSignUP.jpeg');
+  opacity: 0.6;
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.contact-us h3{
+  color:#9f390d;
+}
+.contact-us{
+  flex: 1;
+  background-image: url('../../assets/images/header/footer.png');
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.contactdetailsNR{
+  padding-top: 60px;
+  text-align: center;
+  padding-left: 20px;
+}
+
+.form-group{
+  padding: 10px;
+}
+
+.NRName{
+  display: flex;
+  gap: 20px;
+}
+
+.CNRinput{
+  border-radius: 10px;
+}
+
+.CNRinput:hover{
+  border-color: rgb(145, 186, 240);
+}
+
+.CNRinput.filled{
+  background-color: rgb(255, 255, 255);
+}
+
+.buttonNR{
+  display: flex;
+  justify-content: center;
+  margin-left: 70%;
+  padding: 15px
+}
+
+.btnNR{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #292d32;
+  color: #fff;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btnNR:hover{
+  background-color: #fff;
+  border-color: #2596be;
+  color: #9f390d;
+}
+
+.error-message{
+  display: block;
+  font-size: 14px;
+  text-align: left;
+  color: red;
+}

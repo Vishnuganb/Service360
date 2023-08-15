@@ -81,7 +81,10 @@ import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
+import JobRequest from './components/pages/Customer/JobRequest.js';
 import Forum from './components/pages/Forum/Forum.js';
+import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
+
 
 
 const router = createBrowserRouter(
@@ -96,6 +99,7 @@ const router = createBrowserRouter(
         <Route path='/signup/customer' element={<CustSignUp />} />
         <Route path='/signup/serviceProvider' element={<SpSignUp />} />
         <Route path='/signup/advertiser' element={<AdvertiserSignUp />} />
+        <Route path='/Contactus' element={<ContactpageNR />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
@@ -140,6 +144,8 @@ const router = createBrowserRouter(
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
+        <Route path="JobRequest" element={<JobRequest />} />
+       
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

@@ -2,6 +2,7 @@ package com.service360.group50.controller;
 
 import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.Vacancies;
+import com.service360.group50.entity.ServiceProviderCalendar;
 import com.service360.group50.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -56,4 +57,26 @@ public class ServiceProvidersController {
     @GetMapping("auth/viewVacancies/{id}")
     public Vacancies viewAVacancy(@PathVariable Long id) {return serviceProviderService.viewAVacancy(id);}
 
+
+    //SP CALENDAR
+    //read
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("auth/viewServiceProviderCalendar")
+    public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
+        return serviceProviderService.viewServiceProviderCalendar();
+    }
+
+    //create
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("auth/createServiceProviderCalendar")
+    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
+        return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
+    }
+
+    //delete
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("auth/deleteServiceProviderCalendar/{id}")
+    public void deleteServiceProviderCalendarEvent(@PathVariable Long id) {
+        serviceProviderService.deleteServiceProviderCalendarEvent(id);
+    }
 }

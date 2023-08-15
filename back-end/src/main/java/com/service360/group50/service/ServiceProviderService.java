@@ -2,7 +2,9 @@ package com.service360.group50.service;
 
 import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.Vacancies;
+import com.service360.group50.entity.ServiceProviderCalendar;
 import com.service360.group50.repo.JobsRepository;
+import com.service360.group50.repo.ServiceProviderCalendarRepository;
 import com.service360.group50.repo.VacanciesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class ServiceProviderService {
     private JobsRepository jobsRepository;
     @Autowired
     private VacanciesRepository vacanciesRepository;
+    @Autowired
+    private ServiceProviderCalendarRepository serviceProviderCalendarRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -56,5 +60,24 @@ public class ServiceProviderService {
 
     public Vacancies viewAVacancy(Long id){
         return vacanciesRepository.findById(id).orElse(null);
+    }
+
+
+    //SP CALENDAR
+    //read
+    public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
+        List<ServiceProviderCalendar> ServiceProviderCalendarList = new ArrayList<>();
+        serviceProviderCalendarRepository.findAll().forEach(ServiceProviderCalendarList::add);
+        return ServiceProviderCalendarList;
+    }
+
+    //create
+    public ServiceProviderCalendar createServiceProviderCalendarEvent(ServiceProviderCalendar serviceProviderCalendar){
+        return serviceProviderCalendarRepository.save(serviceProviderCalendar);
+    }
+
+    //delete
+    public void deleteServiceProviderCalendarEvent(Long id){
+        serviceProviderCalendarRepository.deleteById(id);
     }
 }

@@ -15,22 +15,27 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "jobdetails"
+        name = "serviceprovidercalendar"
 )
 
-public class JobDetails {
+public class ServiceProviderCalendar {
     @Id
-    @GeneratedValue()
-    @Column(updatable = false)
-    private Long jobdetailsid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long eventid;
+
+    @Column
+    private Long serviceproviderid;
 
     @Column( columnDefinition = "DATE")
-    private LocalDate jobdate;
+    private LocalDate eventdate;
 
     @Column( columnDefinition = "Time")
-    private Time jobstarttime;
+    private Time eventstarttime;
 
     @Column( columnDefinition = "Time")
-    private Time jobendtime;
+    private Time eventendtime;
 
+    @Column( columnDefinition = "TEXT")
+    private String eventdescription;
 }

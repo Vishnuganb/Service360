@@ -1,27 +1,26 @@
 import React from "react";
-import { Row, Col, Card, InputGroup, Modal, Container } from "react-bootstrap";
+import { Row, Col, Card, InputGroup, Modal } from "react-bootstrap";
 import Scrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-import Aisu from "./../../../../assets/images/advertiser/aishu.jpg";
-import Adam from "./../../../../assets/images/advertiser/Adam.jpg";
-import Sara from "./../../../../assets/images/advertiser/sara.jpg";
-import ProAd from "./../../../../assets/images/advertiser/proAd.jpg";
-import cus1 from "./../../../../assets/images/home/Customer_1.png";
-import cus2 from "./../../../../assets/images/home/Customer_2.png";
-import cus3 from "./../../../../assets/images/home/Customer_3.png";
-import BgImage from "../../../../assets/images/header/Background.png";
-import "../../../../style/User/Chat/Chat.css";
+import Aisu from "./../../../assets/images/advertiser/aishu.jpg";
+import Adam from "./../../../assets/images/advertiser/Adam.jpg";
+import Sara from "./../../../assets/images/advertiser/sara.jpg";
+import ProAd from "./../../../assets/images/advertiser/proAd.jpg";
+import cus1 from "./../../../assets/images/home/Customer_1.png";
+import cus2 from "./../../../assets/images/home/Customer_2.png";
+import cus3 from "./../../../assets/images/home/Customer_3.png";
+
+import "./../../../style/Chat/chat.css";
 
 const ChatApp = () => {
   return (
-    <Container>
- <div   fluid>
-        <h1>Chat</h1>
+    
+      <div fluid>
         <Row>
           <Col md="12">
             <Card id="chat3">
-              <Card.Body style={{ backgroundImage: `url(${BgImage})` }}>
+              <Card.Body>
                 <Row>
                   <Col md="6" lg="5" xl="4" className="mb-4 mb-md-0">
                     <div className="p-3">
@@ -248,8 +247,6 @@ const ChatApp = () => {
                           src={Aisu}
                           alt="avatar"
                           className="chatProImg d-flex align-self-center me-3"
-                        
-
                         />
                         <div>
                           <p
@@ -269,7 +266,7 @@ const ChatApp = () => {
                         <div>
                           <p
                             className="small p-2 me-3 mb-1 text-white rounded-3"
-                            style={{ backgroundColor: "#1f285a" }}
+                            style={{ backgroundColor: "#292D32" }}
                           >
                             I'd be happy to help. Can you provide me with more
                             details about the problem? Have you noticed any
@@ -312,7 +309,7 @@ const ChatApp = () => {
                         <div>
                           <p
                             className="small p-2 me-3 mb-1 text-white rounded-3"
-                            style={{ backgroundColor: "#1f285a" }}
+                            style={{ backgroundColor: "#292D32" }}
                           >
                             Thanks for letting me know. It could be a wiring
                             problem or a faulty outlet. I recommend not using
@@ -353,7 +350,7 @@ const ChatApp = () => {
                         <div>
                           <p
                             className="small p-2 me-3 mb-1 text-white rounded-3 "
-                            style={{ backgroundColor: "#1f285a" }}
+                            style={{ backgroundColor: "#292D32" }}
                           >
                             I have openings in the morning between 9 AM and 12
                             PM or in the afternoon between 2 PM and 5 PM. Which
@@ -394,7 +391,7 @@ const ChatApp = () => {
                         <div>
                           <p
                             className="small p-2 me-3 mb-1 text-white rounded-3 "
-                            style={{ backgroundColor: "#1f285a" }}
+                            style={{ backgroundColor: "#292D32" }}
                           >
                             Great! I'll see you tomorrow at 10 AM. Please make
                             sure to clear the area around the outlets so I can
@@ -459,8 +456,6 @@ const ChatApp = () => {
           </Col>
         </Row>
       </div>
-    </Container>
-     
   );
 };
 

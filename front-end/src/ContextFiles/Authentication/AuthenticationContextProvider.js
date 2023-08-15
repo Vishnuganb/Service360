@@ -97,7 +97,7 @@ const AuthenticationContextProvider = (props) => {
                 userDetailsAfterAuthentication = response.data;
                 console.log(response.data)
 
-                if (userDetailsAfterAuthentication.role === 'CUSTOMER') { navigate("/admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
+                if (userDetailsAfterAuthentication.role === 'CUSTOMER') { navigate("/Customer/CustomerDashboard", { state: { authenticated, userDetailsAfterAuthentication } }) }
                 else if (userDetailsAfterAuthentication.role === 'ADMIN') { navigate("/admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
                 else if (userDetailsAfterAuthentication.role === 'SERVICEPROVIDER') { navigate("/serviceProvider", { state: { authenticated, userDetailsAfterAuthentication } }) }
                 else if (userDetailsAfterAuthentication.role === 'ADVERTISER') { navigate("/advertiser", { state: { authenticated, userDetailsAfterAuthentication } }) }

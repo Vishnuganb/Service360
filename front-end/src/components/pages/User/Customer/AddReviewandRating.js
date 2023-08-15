@@ -28,7 +28,7 @@ const AddReviewandRating = () => {
 
   return (
     <Container>
-      <h2>Add Review and Rating</h2>
+      <h2>Add Review And Rating For System</h2>
       <Form onSubmit={handleSubmit} className="block py-3">
         <Card
           className="block  py-5"

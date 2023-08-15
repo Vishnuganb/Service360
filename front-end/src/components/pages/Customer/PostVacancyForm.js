@@ -9,8 +9,7 @@ import BgImage from '../../../assets/images/header/Background.png';
 function PostVacancyForm() {
     return (
     <div className='card2' >
-        <p> <a href="#" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></a>
-            &nbsp;&nbsp;Back</p>
+       
         <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <h3>Vacancy Creation Form</h3>

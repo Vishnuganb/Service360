@@ -47,7 +47,8 @@ function ToDoList() {
 
 
     const isWithintwohrs = (task) => {
-        const ONE_DAY_IN_MS = 2 * 60 * 60 * 1000; // One day in milliseconds
+        const ONE_DAY_IN_MS = 4; 
+        // const ONE_DAY_IN_MS = 2 * 60 * 60 * 1000; 
         const taskCreationDate = new Date(task.id);
         const currentDate = new Date();
         return currentDate - taskCreationDate <= ONE_DAY_IN_MS;
@@ -86,6 +87,7 @@ function ToDoList() {
     return (
         <div className="custodo">
             <h3>To-Do List</h3>
+            <h4>Project Name : Tile Fitting</h4>
             <div>
                 <div style={{ display: "flex" }}>
                     <input
@@ -93,7 +95,7 @@ function ToDoList() {
                         placeholder="Enter a task..."
                         value={taskInput}
                         onChange={(e) => setTaskInput(e.target.value)}
-                        style={{ marginBottom: "10px", width: "600px" }} // Adjust the width and spacing as needed
+                        style={{ marginBottom: "10px", width: "600px" }} 
                     />
                     <DatePicker
                         selected={dueDate}
@@ -101,6 +103,8 @@ function ToDoList() {
                         placeholderText="Select due date "
                         dateFormat="yyyy-MM-dd"
                         style={{ width: "80px" }} // Adjust the width as needed
+                        minDate={new Date()} // Set minimum selectable date to today
+
                     />
                     <DatePicker
                         selected={reminderDate}
@@ -111,6 +115,8 @@ function ToDoList() {
                         timeFormat="HH:mm" // Time format
                         timeIntervals={15} // Set time intervals in minutes
                         style={{ width: "200px" }} // Adjust the width as needed
+                        minDate={new Date()} // Set minimum selectable date to today
+
                     />
 
                 </div>
@@ -127,6 +133,7 @@ function ToDoList() {
                                     type="checkbox"
                                     checked={task.completed}
                                     onChange={() => handleToggleComplete(task.id)}
+                                    disabled
                                 />
                                 &nbsp;&nbsp;
                                 {editingTaskId === task.id ? (

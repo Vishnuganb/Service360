@@ -87,6 +87,8 @@ import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import Forum from './components/pages/Forum/Forum.js';
 import ToDoList from './components/pages/Customer/CreateToDo';
+import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
+import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
 
 
 const router = createBrowserRouter(
@@ -96,7 +98,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
-        <Route path="/services/:serviceName/:ViewAservice" element={<ViewAservice />} />
+        <Route path="/services/ViewAservice" element={<ViewAservice />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
@@ -151,6 +153,8 @@ const router = createBrowserRouter(
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="ToDoList" element={<ToDoList />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
+        <Route path="RequestedQuotation" element={<RequestedQuotation />} />
+        <Route path="PostedVacancies" element={<PostedVacancies />} />
       </Route>
 
        <Route path="/ServiceProvider" element={<SpLayout />}>

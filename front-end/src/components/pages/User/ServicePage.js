@@ -4,6 +4,7 @@ import { Row, Col, Card } from 'react-bootstrap';
 import { serviceCategories } from './ViewServices';
 import '../../../style/User/ViewServices.css';
 import BgImage from '../../../assets/images/header/Background.png';
+import { Link } from 'react-router-dom';
 
 function ServicePage() {
     const { serviceName } = useParams();
@@ -14,6 +15,7 @@ function ServicePage() {
     const handleBackClick = () => {
         navigate(-1);
     };
+    
 
     return (
         <section id="service-page" className="block service m-5 p-5" style={{ backgroundImage: `url(${BgImage})` }}>
@@ -35,12 +37,12 @@ function ServicePage() {
             <Row className="cardflex">
                 {Array.isArray(selectedServiceData.services) && selectedServiceData.services.map((service) => (
                     <Col key={service.id} xs={5} sm={3} md={3} lg={3}>
-                        <Card className="card d-flex flex-column justify-content-center">
+                        <Link to={`/services/ViewAservice`}><Card className="card d-flex flex-column justify-content-center">
                             <Card.Img src={service.image} variant="top" alt={service.service} />
                             <Card.Body>
                                 <Card.Text>{service.service}</Card.Text>
                             </Card.Body>
-                        </Card>
+                        </Card></Link>
                     </Col>
                 ))}
             </Row>

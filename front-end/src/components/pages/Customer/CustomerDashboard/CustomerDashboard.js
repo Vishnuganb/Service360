@@ -42,10 +42,10 @@ function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
                     </center>
                 </Modal.Body>
                 <Modal.Footer>
-
+                <Link to={`/Customer/ViewServiceProvider`}>
                     <Button variant='secondary' style={{ background: "#292d32" }}>
                         View Profile
-                    </Button>
+                    </Button></Link>
 
                 </Modal.Footer>
             </Modal>
@@ -84,9 +84,10 @@ function HiredPopup({ title, serviceProvider, durationPeriod, imageSrc, }) {
                 </Modal.Body>
                 <Modal.Footer>
 
+                <Link to={`/Customer/ViewServiceProvider`}>
                     <Button variant='secondary' style={{ background: "#292d32" }}>
                         View Profile
-                    </Button>
+                    </Button></Link>
 
                 </Modal.Footer>
             </Modal>
@@ -127,9 +128,10 @@ function PastPopup({ title, serviceProvider, dueDate, imageSrc }) {
                 </Modal.Body>
                 <Modal.Footer>
 
+                <Link to={`/Customer/ViewServiceProvider`}>
                     <Button variant='secondary' style={{ background: "#292d32" }}>
                         View Profile
-                    </Button>
+                    </Button></Link>
                 </Modal.Footer>
             </Modal>
         </>
@@ -215,39 +217,41 @@ const CustomerDashboard = () => {
     return (
         <div className="row" style={{ backgroundImage: `url(${BgImage})` }}>
 
-            <div className="col-8">
-                <h4>Welcome back, Tharsana!</h4>
-                <Row >
-                    <Card className="card-cus-dashboard dashboard-button-1" >
-                        <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
-                            <Card.Body >
-                                <Card.Title>8</Card.Title>
-                                <Card.Text className="card-body-container">
-                                    Pending vacancy Application
-                                    <i className="bi bi-rocket-takeoff"></i>
-                                </Card.Text>
-                            </Card.Body>
-                        </Link>
-                    </Card>
+            <div className="col-12">
+            <h4>Welcome back, Tharsana!</h4>
+                <div className='d-flex flex-column flex-lg-row flex-md-row '>
+                    <div className="d-flex flex-row col-7">
+                        <Card className="card-cus-dashboard dashboard-button-1" >
+                            <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
+                                <Card.Body >
+                                    <Card.Title>8</Card.Title>
+                                    <Card.Text className="card-body-container">
+                                        Pending vacancy Application
+                                        <i className="bi bi-rocket-takeoff"></i>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Link>
+                        </Card>
+                    &nbsp; &nbsp; &nbsp;
+                        <Card className="card-cus-dashboard dashboard-button-2">
+                            <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
+                                <Card.Body>
+                                    <Card.Title>3</Card.Title>
+                                    <Card.Text className="card-body-container">
+                                        New Quotation
+                                        <i className="bi bi-file-post-fill"></i>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Link>
+                        </Card>
+                    </div>
 
-
-                    <Card className="card-cus-dashboard dashboard-button-2">
-                        <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
-                            <Card.Body>
-                                <Card.Title>3</Card.Title>
-                                <Card.Text className="card-body-container">
-                                    New Quotation
-                                    <i className="bi bi-file-post-fill"></i>
-                                </Card.Text>
-                            </Card.Body>
-                        </Link>
-                    </Card>
-                </Row>
-                <div className="col-sm" >
-                    <div className="d-none d-sm-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-1 responsiveCalendar_cus" >
+                    <div className="d-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-4 responsiveCalendar_cus" >
                         <ResponsiveCalendar />
                     </div>
+
                 </div>
+
                 <div className='Onpro'> <h3>Ongoing Projects</h3></div>
                 <Row>
                     <Card className="dashboard-pages">
@@ -302,14 +306,14 @@ const CustomerDashboard = () => {
 
                 </Row>
                 <br></br>
-                <div className='Onpro'> <h3>Hired </h3></div>
+                {/* <div className='Onpro'> <h3>Hired </h3></div>
                 <Row>
                     <Card className="dashboard-pages">
                         <img className="card-img-top" src={profile_img_2} alt="my profile" />
                         <Card.Body>
                             <Card.Text>
-                            Electrician
-                            <HiredPopup title="Electrician"
+                                Electrician
+                                <HiredPopup title="Electrician"
                                     serviceProvider="Alex Kumar"
                                     durationPeriod="2 years"
                                     imageSrc={ServiceProvider2} />
@@ -319,7 +323,7 @@ const CustomerDashboard = () => {
 
 
                 </Row>
-                <br></br>
+                <br></br> */}
                 <div className='Onpro'> <h3>Past Projects</h3></div>
                 <Row>
                     <Card className="dashboard-pages">
@@ -328,7 +332,7 @@ const CustomerDashboard = () => {
                             <Card.Text>
                                 Tiles fitting
                                 <PastPopup title="Tile fitting"
-                                    serviceProvider="Vinoth Kishan"
+                                    serviceProvider="Alex"
                                     dueDate="2023-04-21"
                                     imageSrc={ServiceProvider1} />
                             </Card.Text>
@@ -349,7 +353,7 @@ const CustomerDashboard = () => {
 
                 </Row>
                 <br></br>
-                
+
             </div>
 
 

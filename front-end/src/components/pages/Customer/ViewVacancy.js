@@ -7,7 +7,68 @@ import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
+import { Document, Page, pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+const PDFViewer = () => {
+    const [numPages, setNumPages] = useState(null);
+
+    const onDocumentLoadSuccess = ({ numPages }) => {
+        setNumPages(numPages);
+    };
+
+    const pdfUrl = process.env.PUBLIC_URL + '/pdf/pdfs.pdf';
+
+    return (
+        <div className="pdf-viewer">
+            <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                {Array.from(new Array(numPages), (el, index) => (
+                    <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfpopup' />
+                ))}
+            </Document>
+        </div>
+    );
+};
+
+const Pdf = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+      <>
+          <Button variant="btn btn-viewvacancy-form-t" style={{
+               width: '9%',
+               height: '28px',
+               border: '1px solid #ced4da',
+               fontSize: '14px',
+               padding: '0 5px',
+              backgroundColor: '#007bff',
+              color: '#fff',
+              fontWeight: '500',
+              textTransform: 'none',
+              background: 'black',
+              '@media (max-width: 768px)': {
+                  width: '100%',
+              }
+          }} onClick={handleShow} >
+              <i className="my-customer-table-icon bi bi-file-pdf-fill h7"></i>
+          </Button>
+
+          <Modal show={show} onHide={handleClose} centered>
+              <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                  <Modal.Title> Cv of ServiceProvider</Modal.Title>
+              </Modal.Header>
+              <Modal.Body >
+                  <PDFViewer />
+              </Modal.Body>
+
+
+          </Modal>
+      </>
+  );
+};
 function VacancyPopup() {
   const [show, setShow] = useState(false);
 
@@ -62,8 +123,8 @@ function VacancyPopup() {
                 </Col> </Row>
             </div>
             <div className="vacancy-form-group">
-              <Row> <Col className='col-4'><label for="qualification">Qualification</label></Col>
-                <Col className='col-8'> <input type="text" name="qualification" className="form-control" id="qualification" Value="xxxxxx" />
+              <Row> <Col className='col-4'><label for="qualification">Educational Qualification</label></Col>
+                <Col className='col-8'> <input type="text" name="qualification" className="form-control" id="qualification" Value="Ordinary Level" />
                 </Col> </Row>
             </div>
             <div className="vacancy-form-group">
@@ -72,7 +133,7 @@ function VacancyPopup() {
                 </Col> </Row>
             </div>
             <div className="vacancy-form-group">
-              <Row> <Col className='col-4'>  <label htmlFor="file">Files</label></Col>
+              <Row> <Col className='col-4'>  <label htmlFor="file">Files (CV)</label></Col>
                 <Col className='col-8'> <i className="my-customer-table-icon bi bi-file-pdf-fill h6"></i></Col>
               </Row>
             </div>
@@ -243,7 +304,7 @@ export default function ViewVacancy() {
   const [toDate, setToDate] = useState(null);
 
   const quotations = [
-    { date: '27/07/2023', serviceTitle: 'Ac Repair', status: 'Pending' },
+    { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', status: 'Pending' },
     { date: '26/07/2023', serviceTitle: 'Ac Repair', status: 'Pending' },
     { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Pending' },
     { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Pending' },
@@ -371,6 +432,8 @@ export default function ViewVacancy() {
                                             </Link>
                                         </Button> */}
                     <VacancyPopup />
+                    &nbsp; &nbsp;
+                    <Pdf/>
                     &nbsp; &nbsp;
                     <Accept />
                     &nbsp; &nbsp;

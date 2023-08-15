@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../../style/ServiceProvider/ServiceProviderHeader.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -11,7 +11,10 @@ import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 import EditProfile from '../pages/User/SeviceProvider/EditProfile';
 
+import ChatApp from '../pages/Chat/ChatApp';
+
 function ServiceProviderHeader() {
+
     const [modalShow, setModalShow] = React.useState(false);
     return (
         <Navbar expand="lg" bg="light" className="navbar">

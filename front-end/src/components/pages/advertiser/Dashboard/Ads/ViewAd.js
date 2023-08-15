@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import EditAd from "../EditAd";
-
 import backgroundImage from "../../../../../assets/images/header/Background.png";
 
 import "../../../../../style/advertiser/AdIndex.css";
@@ -118,18 +116,7 @@ const ViewAd = ({
   closeModal,
   
 }) => {
-  // Create Edit AD PopUp
-
-  // const [EditAdModal, setEditAdShowModal] = React.useState(false);
-
-  // const handleOpenAdEditModal = () => {
-  //   setEditAdShowModal(true);
-  // };
-
-  // const handleCloseAdEditModal = () => {
-  //   setEditAdShowModal(false);
-  // };
-
+ 
   // disable disable pop
   const [DisableModalShow, setDisableModalShow] = React.useState(false);
   // show delete details
@@ -168,6 +155,15 @@ const ViewAd = ({
     address: "No 132, Marain Drive, Bambalapittiya, Colombo",
   };
 
+
+  // Open Edit Ad Page
+   const navigate = useNavigate();
+
+   const handleOpenAdEditModal = () => {
+     // Navigate to the editAd route with the id as a parameter
+     navigate(`/Advertiser/editAd/${id}`);
+   };
+
   return (
     <div className="p-5">
       <Modal
@@ -202,11 +198,12 @@ const ViewAd = ({
               <div className="d-flex align-items-center gap-3">
                 <i
                   className="fa-solid fa-pen-to-square fa-2xl AdEditBut"
+                  onClick={handleOpenAdEditModal}
                 ></i>
-                {/* <EditAd
-                  show={EditAdModal}
-                  onHide={() => setEditAdShowModal(false)}
-                /> */}
+                {/* {EditAdModal && (
+                  <EditAd show={EditAdModal} onHide={handleCloseAdEditModal} />
+                )} */}
+
                 <button
                   className="AdDisableBut rounded"
                   onClick={() => setDisableModalShow(true)}

@@ -1,13 +1,12 @@
 import '../../../../style/Customer/ViewSPCard.css';
-import UserImg from '../../../../assets/images/header/user.jpg'
-import ServiceProvideimg from '../../../../assets/images/Customer/ServiceProvider1.png';
+import UserImg from '../../../../assets/images/header/user.jpg';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import ServiceProvideimg from '../../../../assets/images/Customer/ServiceProvider1.png';
 import ViewServiceProvider from '../ViewServiceProvider';
+import ServiceProvideimg from '../../../../assets/images/Customer/ServiceProvider1.png'
 
 const Popup = () => {
   const [show, setShow] = useState(false);

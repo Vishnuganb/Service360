@@ -8,149 +8,9 @@ import '../../../style/Customer/Viewvacancy.css';
 import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
-import { Document, Page, pdfjs } from 'react-pdf';
-
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
-const PDFViewer = () => {
-    const [numPages, setNumPages] = useState(null);
-
-    const onDocumentLoadSuccess = ({ numPages }) => {
-        setNumPages(numPages);
-    };
-
-    const pdfUrl = process.env.PUBLIC_URL + '/pdf/Customer.pdf';
-
-    return (
-        <div className="pdf-viewer">
-            <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-                {Array.from(new Array(numPages), (el, index) => (
-                    <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfpopup' />
-                ))}
-            </Document>
-        </div>
-    );
-};
 
 
-
-const Accept = () => {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-        <>
-            <Button variant="btn btn-viewvacancy-form-t" style={{
-                 width: '15%',
-                 height: '28px',
-                 border: '1px solid #ced4da',
-                 fontSize: '14px',
-                 padding: '0 5px',
-                backgroundColor: '#007bff',
-                color: '#fff',
-                fontWeight: '500',
-                textTransform: 'none',
-                background: 'black',
-                '@media (max-width: 768px)': {
-                    width: '100%',
-                }
-            }} onClick={handleShow} >
-                <i className="my-customer-table-icon bi bi-check2-square h7"></i>
-            </Button>
-
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                    <Modal.Title>Accept Quotation</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <center><p>You are accepting this Quotation.</p></center>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="btn btn-viewvacancy-form-a" style={{
-                        width: '15%',
-                        height: '38px',
-                        border: '1px solid #ced4da',
-                        fontSize: '14px',
-                        padding: '0 8px',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        fontWeight: '500',
-                        textTransform: 'none',
-                        background: 'black',
-                        '@media (max-width: 768px)': {
-                            width: '70%',
-                        }
-                    }} onClick={handleClose}>
-                        Accept
-                    </Button>
-                    <Button variant="btn btn-viewvacancy-form-r" style={{
-                        width: '15%',
-                        height: '38px',
-                        border: '1px solid #ced4da',
-                        fontSize: '14px',
-                        padding: '0 8px',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        fontWeight: '500',
-                        textTransform: 'none',
-                        background: 'rgb(126, 123, 123)',
-                        '@media (max-width: 768px)': {
-                            width: '70%',
-                        }
-                    }} onClick={handleClose}>
-                        Cancel
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    );
-};
-
-
-const View = () => {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-        <>
-            <Button variant="btn btn-viewvacancy-form-t" style={{
-                 width: '15%',
-                 height: '28px',
-                 border: '1px solid #ced4da',
-                 fontSize: '14px',
-                 padding: '0 5px',
-                backgroundColor: '#007bff',
-                color: '#fff',
-                fontWeight: '500',
-                textTransform: 'none',
-                background: 'black',
-                '@media (max-width: 768px)': {
-                    width: '100%',
-                }
-            }} onClick={handleShow} >
-                <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
-            </Button>
-
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                    <Modal.Title> Quotation</Modal.Title>
-                </Modal.Header>
-                <Modal.Body >
-                    <PDFViewer />
-                </Modal.Body>
-
-
-            </Modal>
-        </>
-    );
-};
-
-
-const Reject = () => {
+const Delete = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -178,7 +38,7 @@ const Reject = () => {
 
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                    <Modal.Title>Delete Quotation</Modal.Title>
+                    <Modal.Title>Delete</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <center><p>Are you sure to delete?</p></center>
@@ -226,7 +86,7 @@ const Reject = () => {
 };
 
 
-export default function ReceivedQuotation() {
+export default function RequestedQuotation() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Adjust this value based on how many items you want per page
 
@@ -235,14 +95,14 @@ export default function ReceivedQuotation() {
     const [toDate, setToDate] = useState(null);
 
     const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Ac Repair', status: 'Pending', serviceProvider: 'Vijay Deva', amount: 'Rs.8000', },
-        { date: '26/07/2023', serviceTitle: 'Ac Repair', status: 'Pending', serviceProvider: 'Ashwin Kumar', amount: 'Rs.7000' },
-        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', status: 'Accepted', serviceProvider: 'Alex Kumar', amount: 'Rs.3000' },
-        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', status: 'Pending', serviceProvider: 'Arun Kumar', amount: 'Rs.4000' },
-        { date: '24/07/2023', serviceTitle: 'Sofa cleaning', status: 'Pending', serviceProvider: 'Varun Kumar', amount: 'Rs.4000' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Pending', serviceProvider: 'Tharun Kumar', amount: 'Rs.5000' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Accepted', serviceProvider: 'Vijay Deva', amount: 'Rs.4000' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Pending', serviceProvider: 'Karthik Kumar', amount: 'Rs.4000' },
+        { date: '27/07/2023', serviceTitle: 'Ac Repair',  serviceProvider: 'Vijay Deva', amount: 'Rs.8000', duedate:'02/08/2023' },
+        { date: '26/07/2023', serviceTitle: 'Ac Repair',  serviceProvider: 'Ashwin Kumar', amount: 'Rs.7000',duedate:'02/08/2023' },
+        { date: '25/07/2023', serviceTitle: 'Sofa cleaning',  serviceProvider: 'Alex Kumar', amount: 'Rs.3000',duedate:'02/08/2023' },
+        { date: '25/07/2023', serviceTitle: 'Sofa cleaning',  serviceProvider: 'Arun Kumar', amount: 'Rs.4000',duedate:'02/08/2023' },
+        { date: '24/07/2023', serviceTitle: 'Sofa cleaning',  serviceProvider: 'Varun Kumar', amount: 'Rs.4000',duedate:'02/08/2023' },
+        { date: '24/07/2023', serviceTitle: 'Plumbing',  serviceProvider: 'Tharun Kumar', amount: 'Rs.5000',duedate:'02/08/2023' },
+        { date: '24/07/2023', serviceTitle: 'Plumbing',  serviceProvider: 'Vijay Deva', amount: 'Rs.4000', duedate:'02/08/2023'},
+        { date: '23/07/2023', serviceTitle: 'Plumbing',  serviceProvider: 'Karthik Kumar', amount: 'Rs.4000',duedate:'02/08/2023' },
     ];
 
     const filteredQuotations = quotations.filter((quotation) => {
@@ -254,8 +114,8 @@ export default function ReceivedQuotation() {
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.status.toLowerCase().includes(searchTerm.toLowerCase()))
+                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase()) 
+                )
         );
     });
 
@@ -290,7 +150,7 @@ export default function ReceivedQuotation() {
                 <div className="vacancy-container background-total accordion " >
                     <div className="col d-flex flex-row justify-content-between">
                         <div className='d-flex flex-row gap-4 p-3 '>
-                            <p className="text-dark fs-4 fw-bold vacancytext">Quotation</p>
+                            <p className="text-dark fs-4 fw-bold vacancytext"> Requested Quotation</p>
                         </div>
                     </div>
 
@@ -349,8 +209,8 @@ export default function ReceivedQuotation() {
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Title</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Provider</b></th>
                                 {/* <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Amount</b></th> */}
-                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Status</b></th>
-                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Due Date</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>                           
                             </tr>
                         </thead>
                         <tbody>
@@ -359,16 +219,11 @@ export default function ReceivedQuotation() {
                                     <td style={{ width: '16.67%' }}>{quotation.date}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.serviceProvider}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
                                     {/* <td style={{ width: '16.67%' }}>{quotation.amount}</td> */}
-                                    <td style={{ width: '16.67%' }}>{quotation.status}</td>
                                     <td style={{ width: '16.67%' }}>
-                                        <View />
-                                        &nbsp; &nbsp;
-                                        <Accept />
-                                        &nbsp; &nbsp;
-                                        <Reject />
+                                        <Delete />
                                     </td>
-
 
                                 </tr>
                             ))}

@@ -59,13 +59,6 @@ const Login = () => {
 
         if (email === '' && password === '') {
             setErrorMessage('Please fill in all the fields')
-<<<<<<< HEAD
-        }
-
-        if (!isError) {
-            navigate('/')
-        }
-=======
         }else if (email === '') {
             setErrorMessage('Please enter the email address')
         }else if (email === '' && password === '') {
@@ -74,7 +67,6 @@ const Login = () => {
              login(email, password);
              console.log(email, password)
         } 
->>>>>>> 71291c652dc127cf7b1d46bd2eaf339fcf262ea9
 
     }
 
@@ -99,37 +91,6 @@ const Login = () => {
         color: '#9F390D' 
     };
 
-<<<<<<< HEAD
-    const StyledButton = styled.button`
-        background-color: #292D32;
-        width: 70%;
-        @media (max-width: 768px) {
-            width: 100%; 
-            margin-top: 1rem; 
-        }
-        &:hover {
-            background: #fff;
-            border-color: #2596be;
-            color: #9f390d;
-    }
-    `;
-
-    const StyledButton2 = styled.button`
-        background-color: #292D32;
-        width: 30%;
-        @media (max-width: 768px) {
-            width: 100%; 
-            margin-top: 1rem; 
-        }
-        &:hover {
-            background: #fff;
-            border-color: #2596be;
-            color: #9f390d;
-        }
-    `;
-
-=======
->>>>>>> 71291c652dc127cf7b1d46bd2eaf339fcf262ea9
     const [showModal, setShowModal] = useState(false);
 
     const toggleModal = () => setShowModal(!showModal);

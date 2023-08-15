@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
-import "../../../../style/advertiser/AdIndex.css";
+import ViewAd from "./ViewAd";
 
-import profileIcon from "./../../../../assets/images/advertiser/Adam.jpg";
-import adImage from "./../../../../assets/images/advertiser/41CKlQ1b08S.jpg";
+import "../../../../../style/advertiser/AdIndex.css";
+
+import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
+
+import soapImage from "./../../../../../assets/images/advertiser/soap.jpg";
 
 
-const VerifiedAdCont = ({ profileIcon, adImage, adName, price, location }) => {
+const RejectedAdCont = ({
+  profileIcon,
+  proName,
+  adImage,
+  adName,
+  price,
+  location,
+  openModal,
+}) => {
   return (
     <Col className="adCont">
       <div className="AdSampleCont">
@@ -25,12 +36,12 @@ const VerifiedAdCont = ({ profileIcon, adImage, adName, price, location }) => {
               />
             </div>
             <div className="namediv">
-              <p>Adam</p>
+              <p>{proName}</p>
             </div>
           </Col>
           <Col className="d-flex align-items-center justify-content-end">
             <div className="namediv float-right">
-              <p className="AdVrifiedP  "> Verified</p>
+              <p className="AdrejectP  "> Rejected</p>
             </div>
           </Col>
         </Row>
@@ -40,11 +51,11 @@ const VerifiedAdCont = ({ profileIcon, adImage, adName, price, location }) => {
         </Row>
 
         <Row className="d-flex justify-content-center">
-          <Image src={adImage} fluid alt="Item" />
+          <Image src={adImage} fluid alt="Item" style={{ maxHeight: "10em" }} />
         </Row>
 
         <Row>
-          <h3 className="Adprice ">{price} LKR</h3>
+          <h3 className="Adprice mt-3">{price} LKR</h3>
         </Row>
 
         <Row>
@@ -63,87 +74,75 @@ const VerifiedAdCont = ({ profileIcon, adImage, adName, price, location }) => {
           </Col>
         </Row>
         <Row className="d-flex justify-content-center ">
-          <button className="AdViewButton mb-3">View</button>
+          <button className="AdViewButton mb-3" onClick={openModal}>
+            View
+          </button>
         </Row>
       </div>
     </Col>
   );
 };
 
+const RejectedAds = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
 
-const VerifiedAds = () => {
+  const openModal = (ad) => {
+    setSelectedAd(ad); // Set the selected ad
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const adsData = [
-    {
+      {
+      proName: "Adam",
       profileIcon: profileIcon,
-      adImage: adImage,
-      adName: "Ideal Driller",
-      price: 16000,
+      adImages: [soapImage],
+      adName: "Lifebuoy Soap",
+      price: 160,
       location: "Colombo",
-    },
-    {
-      profileIcon: profileIcon,
-      adImage: adImage,
-      adName: "Ideal Driller",
-      price: 16000,
-      location: "Colombo",
-    },
-
-    {
-      profileIcon: profileIcon,
-      adImage: adImage,
-      adName: "Ideal Driller",
-      price: 16000,
-      location: "Colombo",
-    },
-
-    {
-      profileIcon: profileIcon,
-      adImage: adImage,
-      adName: "Ideal Driller",
-      price: 16000,
-      location: "Colombo",
-    },
-
-    {
-      profileIcon: profileIcon,
-      adImage: adImage,
-      adName: "Ideal Driller",
-      price: 16000,
-      location: "Colombo",
-    },
-
-    {
-      profileIcon: profileIcon,
-      adImage: adImage,
-      adName: "Ideal Driller",
-      price: 16000,
-      location: "Colombo",
+      Reason: "This Ad Not Relevant For Our System",
     },
   ];
 
-
   return (
-    <Container>
-      
-      <h2 className="AdPageHeading">Verified Ads</h2>
+    <Container >
+      <h2 className="AdPageHeading">Rejected Ads</h2>
       <Row>
         <div className="AdsRow">
           {adsData.map((ad, index) => (
-            <VerifiedAdCont
+            <RejectedAdCont
               key={index}
               profileIcon={ad.profileIcon}
-              adImage={ad.adImage}
+              proName={ad.proName}
+              adImage={ad.adImages[0]}
               adName={ad.adName}
               price={ad.price}
               location={ad.location}
+              openModal={() => openModal(ad)}
             />
           ))}
         </div>
+
+        {selectedAd && (
+          <ViewAd
+            adName={selectedAd.adName}
+            proName={selectedAd.proName}
+            price={selectedAd.price}
+            profileIcon={selectedAd.profileIcon}
+            adImages={selectedAd.adImages}
+            location={selectedAd.location}
+            Reason={selectedAd.Reason}
+            modalVisible={modalVisible}
+            closeModal={closeModal}
+          />
+        )}
       </Row>
-     
     </Container>
   );
 };
 
-export default VerifiedAds;
+export default RejectedAds;

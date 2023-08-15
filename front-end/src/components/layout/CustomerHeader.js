@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import '../../style/ServiceProvider/ServiceProviderHeader.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -9,9 +9,11 @@ import bell from '../../assets/images/header/bell.png';
 import chat from '../../assets/images/header/chat.png';
 import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
-
+import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
 
 function CustomerHeader() {
+    const [showEditProfile, setShowEditProfile] = useState(false);
+
     return (
         <Navbar expand="lg" bg="light" className="navbar">
             <Container>
@@ -29,10 +31,11 @@ function CustomerHeader() {
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
 
                         <NavDropdown title="Tharsana" className='fw-bold' id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#" className="fw-bold no-hover">View Profile</NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => setShowEditProfile(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item as={Link} to="#" className="fw-bold no-hover">Logout</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/" className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
+                        <AdminEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)} />
                         <img src={profileIcon} alt="Profile" className="profileIcon" />
                     </Nav>
                 </Navbar.Collapse>

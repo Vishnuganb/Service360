@@ -17,7 +17,7 @@ const CreateAns = (props) => {
     >
       <Modal.Header closeButton style={{ backgroundColor: "#292D32" }}>
         <Modal.Title id="contained-modal-title-vcenter">
-          <p className="AskQPop">Ask Your Question</p>
+          <p className="AskQPop">Your Answer</p>
         </Modal.Title>
       </Modal.Header>
       <div className="InnerCreateForum">

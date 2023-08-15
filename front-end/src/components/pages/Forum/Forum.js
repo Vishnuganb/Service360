@@ -73,7 +73,10 @@ function Forum() {
 
   return (
     <Container>
-      <div style={{ backgroundImage: `url(${backgroundImage})` }} className="p-4">
+      <div
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+        className="p-4"
+      >
         <div>
           <h1>Forum</h1>
         </div>
@@ -91,7 +94,7 @@ function Forum() {
       <div className="ForumDiv p-3">
         <h3>368 Questions</h3>
         {posts.map((post, index) => (
-          <Link to="/ServiceProvider/ViewThread">
+          <Link to="/Customer/ViewThread">
             <ForumPost key={index} {...post} />
           </Link>
         ))}

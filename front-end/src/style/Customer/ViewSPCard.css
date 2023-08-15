@@ -1,13 +1,3 @@
-/* bodyNav */
-.rating {
-    font-size: 24px; 
-    color: #dbdbd9; 
-   
-  }
-
-  .star.filled {
-    color: #f3b045; 
-  }
 
   .SPRatings .ratereview{
     font-weight: 500;
@@ -69,10 +59,6 @@
     }
 }
 
-
-
-/* bodyPage */
-
 .bodyPageContainer-SP{
     display: flex;
     flex-direction: column;
@@ -90,7 +76,7 @@
     margin-bottom: 15px;
 }
 
-@media only screen and (max-width:566px){       /* PROBLEM */
+@media only screen and (max-width:566px){       
     .paginationContainer-SP {
         display: none;
     }
@@ -111,28 +97,16 @@
     
 }
 
-
-
-
-
-/* spCard */
-
 .single-SP-card{
     display: flex;
     flex-direction: column;
     border-radius: 4px;
     width: 90%;
-    height: 30%;
+    height: 45% ;
     margin-bottom: 20px;
     padding: 20px 20px 0 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 8px rgba(116, 112, 112, 0.2); 
     transition: transform .3s;
-}
-
-.single-SP-card:hover{
-    transform: scale(1.005);
-    z-index: 2;
-    border: 0.2px solid #29435cf0;
 }
 
 .SP-card-avatar{
@@ -255,8 +229,15 @@
     font-weight: 620;
     cursor: pointer;
     margin: auto;
+    border: none;
 }
 
 .SP-card-footer-btn:hover{
     color: #5f7085;
+    border: none;
 }
+
+.rating {
+    font-size: 24px; 
+    color: #3d3d3d;
+  }

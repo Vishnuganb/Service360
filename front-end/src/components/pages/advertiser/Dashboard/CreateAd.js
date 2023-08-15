@@ -7,33 +7,94 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import "../../../style/advertiser/AdIndex.css";
+import "../../../../style/advertiser/AdIndex.css";
 
-import profileIcon from "./../../../assets/images/advertiser/Adam.jpg";
-import adImage from "./../../../assets/images/advertiser/41CKlQ1b08S.jpg";
+import profileIcon from "./../../../../assets/images/advertiser/Adam.jpg";
+import adImage from "./../../../../assets/images/advertiser/41CKlQ1b08S.jpg";
+
+import backgroundImage from "../../../../assets/images/header/Background.png";
 
 const CreateAd = () => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const selectedFileCount = selectedFiles.length;
-
-  // Handler for file input change
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    setSelectedFiles(files);
+  const [adName, setAdName] = useState("");
+  const handleAdNameChange = (event) => {
+    setAdName(event.target.value);
   };
 
-  // Handler for removing a file from the selected files list
-  const handleRemoveFile = (index) => {
-    const updatedFiles = [...selectedFiles];
-    updatedFiles.splice(index, 1);
-    setSelectedFiles(updatedFiles);
+  const [adPrice, setAdPrice] = useState("");
+  const handleAdPriceChange = (event) => {
+    setAdPrice(event.target.value);
   };
 
-  // Handler for form submission (Not implemented in this code)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Implement your submit logic here
+  const [adLocation, setAdLocation] = useState("");
+  const handleAdLocationChange = (event) => {
+    setAdLocation(event.target.value);
   };
+
+  const [adDelivery, setAdDelivery] = useState("");
+  const handleAdDeliveryChange = (event) => {
+    setAdDelivery(event.target.value);
+  };
+
+  // Ad Image useState
+
+  const [selectedAdImages, setSelectedAdImages] = useState([]);
+  const [previewImage, setPreviewImage] = useState(adImage);
+
+  // console.log("adImages:" + adImages);
+  console.log("selectedAdImages:"+selectedAdImages);
+  // console.log("previewImage:"+previewImage);
+
+  //Validation UseState
+  const [AdImageInputErr, setAdImageInputErr] = useState(false);
+
+  // Ad Image
+
+
+  const PreviewAdImage = (selectedImages) => {
+    // setAdImages(selectedImages);
+
+    if (selectedAdImages.length === 0 && selectedImages.length > 0) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(selectedImages[0]);
+    }
+  };
+
+  const handleAdimages = (event) => {
+    const selectedImages = Array.from(event.target.files);
+
+    if (selectedAdImages.length + selectedImages.length <= 3) {
+      setSelectedAdImages((prevSelectedAdImages) => [
+        ...prevSelectedAdImages,
+        ...selectedImages,
+      ]);
+      PreviewAdImage([...selectedAdImages, ...selectedImages]);
+    } else {
+      alert("You can only select up to 3 files.");
+    }
+  };
+
+  const handleRemoveAdImages = (index) => {
+    const updatedAdImages = selectedAdImages.filter((_, i) => i !== index);
+    setSelectedAdImages(updatedAdImages);
+    setPreviewImage(
+      updatedAdImages.length > 0 ? selectedAdImages[0] : adImage
+    );
+
+  };
+
+  // Validation
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (selectedAdImages.length === 0) {
+      setAdImageInputErr(true);
+      return;
+    }
+  };
+
   return (
     <Container>
       <Row className="AdsHome-mainCont">
@@ -46,7 +107,6 @@ const CreateAd = () => {
                     <img
                       src={profileIcon}
                       alt="Profile of Advertiser"
-                      roundedCircle
                       className="AdProfilePic"
                     />
                   </div>
@@ -57,46 +117,45 @@ const CreateAd = () => {
               </Row>
 
               <Row>
-                <h3 className="adname">Ideal Driller</h3>
+                <h3 className="adname"> {adName ? adName : "Ad Name"}</h3>
               </Row>
 
               <Row className="d-flex justify-content-center">
-                <Image src={adImage} fluid alt="Item" />
+                <Image src={previewImage} fluid alt="Item" />
               </Row>
 
               <Row>
-                <h3 className="Adprice ">16000 LKR</h3>
-              </Row>
-
-              <Row className="d-flex justify-content-center">
-                <button className="AdViewButton">View</button>
+                <h3 className="Adprice "> {adPrice ? adPrice : "16000"} LKR</h3>
               </Row>
 
               <Row>
-                <Col>
-                  <p>Colombo</p>
+                <Col sm={4} className="d-flex gap-1">
+                  <div>
+                    <i className="fa-solid fa-location-dot"></i>
+                  </div>
+
+                  <p>{adLocation ? adLocation : "Colombo"}</p>
                 </Col>
-                <Col>
-                  <p className="AdRgtAln">Free Delivery</p>
+                <Col sm={8} className="d-flex justify-content-end gap-1">
+                  <div>
+                    <i className="fa-solid fa-truck-front"></i>
+                  </div>
+                  <p>{adDelivery ? adDelivery : "Free Delivery"}</p>
                 </Col>
+              </Row>
+              <Row className="d-flex justify-content-center ">
+                <button className="AdViewButton mb-3">View</button>
               </Row>
             </div>
           </Row>
         </Col>
 
-        <Col className="AdsHome-right-cont">
+        <Col
+          className="AdsHome-right-cont"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
           <Form>
             <fieldset>
-              {/* <Form.Group className="mb-3">
-                <Form.Label htmlFor="disabledTextInput">
-                  Select Item Image
-                </Form.Label>
-                <br />
-                <div className="adCenterCont">
-                  <button className="AdBrowseBut">Browse</button>
-                </div>
-              </Form.Group> */}
-
               <Form.Group className="mb-3">
                 <Form.Label htmlFor="disabledTextInput">
                   Ad Name{" "}
@@ -104,40 +163,52 @@ const CreateAd = () => {
                     <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
                   </sup>
                 </Form.Label>
-                <Form.Control id="disabledTextInput" placeholder="Ad Name" />
+                <Form.Control
+                  id="disabledTextInput"
+                  className="CreateAdInput"
+                  placeholder="Ad Name"
+                  value={adName}
+                  onChange={handleAdNameChange}
+                />
               </Form.Group>
 
               <div className="mb-3">
                 <p className="mb-0">
-                  Upload Item Pictures{" "}
+                  Upload Item Images (Maximum 3 Images){" "}
                   <sup>
                     <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
                   </sup>
                 </p>
-                <input type="file" className="form-control" multiple required />
-                {Array.isArray(selectedFiles) && selectedFiles.length > 0 && (
-                  <>
-                    <p>
-                      {selectedFileCount} file
-                      {selectedFileCount !== 1 ? "s" : ""} selected
-                    </p>
-                    <ul className="list-group mt-2">
-                      {selectedFiles.map((file, index) => (
-                        <li
-                          key={index}
-                          className="list-group-item d-flex justify-content-between align-items-center"
-                        >
-                          <span>{file.name}</span>
-                          <button
-                            type="button"
-                            onClick={() => handleRemoveFile(index)}
-                            className="btn-close"
-                            aria-label="Close"
-                          ></button>
-                        </li>
+
+                <input
+                  type="file"
+                  onChange={handleAdimages}
+                  multiple
+                  accept=".jpg, .jpeg, .png"
+                  className="BrowseImageInput form-control"
+                />
+
+                {AdImageInputErr && (
+                  <p className="px-3 text-danger">
+                    Please select one or more files.
+                  </p>
+                )}
+
+                {selectedAdImages.length > 0 && (
+                  <div className="p-3 d-flex gap-3">
+                    <p>Selected Files:</p>
+                    <ul>
+                      {selectedAdImages.map((file, index) => (
+                        <div className="d-flex align-items-center justify-content-between gap-3">
+                          <li key={index}>{file.name}</li>
+                          <i
+                            className="fa-solid fa-trash fa-lg AddeleteImg"
+                            onClick={() => handleRemoveAdImages(index)}
+                          ></i>
+                        </div>
                       ))}
                     </ul>
-                  </>
+                  </div>
                 )}
               </div>
 
@@ -148,10 +219,14 @@ const CreateAd = () => {
                     <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
                   </sup>
                 </Form.Label>
-                <Form.Select>
-                  <option>Electician</option>
-                  <option>Plumber</option>
-                  <option>Mechanic</option>
+                <Form.Select className="CreateAdInput">
+                  <option defaultValue disabled selected>
+                    Select Category
+                  </option>
+                  <option>Tools</option>
+                  <option>Spare Parts</option>
+                  <option>Equipment</option>
+                  <option>Others</option>
                 </Form.Select>
               </Form.Group>
 
@@ -165,6 +240,10 @@ const CreateAd = () => {
                 <Form.Control
                   id="disabledTextInput"
                   placeholder="Price in LKR"
+                  className="CreateAdInput"
+                  type="number"
+                  value={adPrice}
+                  onChange={handleAdPriceChange}
                 />
               </Form.Group>
 
@@ -175,7 +254,7 @@ const CreateAd = () => {
                     <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
                   </sup>
                 </Form.Label>
-                <Form.Select>
+                <Form.Select className="CreateAdInput">
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </Form.Select>
@@ -185,6 +264,7 @@ const CreateAd = () => {
                 <Form.Label>Warranty Months</Form.Label>
                 <Form.Control
                   type="number"
+                  className="CreateAdInput"
                   placeholder="Enter warranty months"
                 />
               </Form.Group>
@@ -195,7 +275,11 @@ const CreateAd = () => {
                 controlId="exampleForm.ControlTextarea1"
               >
                 <Form.Label>Description/Specification</Form.Label>
-                <Form.Control as="textarea" rows={3} />
+                <Form.Control
+                  className="CreateAdInput"
+                  as="textarea"
+                  rows={3}
+                />
               </Form.Group>
 
               {/* Area */}
@@ -206,7 +290,14 @@ const CreateAd = () => {
                     <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
                   </sup>
                 </Form.Label>
-                <Form.Select id="disabledSelect">
+                <Form.Select
+                  className="CreateAdInput"
+                  value={adLocation}
+                  onChange={handleAdLocationChange}
+                >
+                  <option defaultValue selected disabled>
+                    Select Area
+                  </option>
                   <option value="Ampara">Ampara</option>
                   <option value="Anuradhapura">Anuradhapura</option>
                   <option value="Badulla">Badulla</option>
@@ -243,10 +334,17 @@ const CreateAd = () => {
                     <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
                   </sup>
                 </Form.Label>
-                <Form.Select>
-                  <option>Free Delivery</option>
-                  <option>Need to pay for Delivery</option>
-                  <option>Not Available</option>
+                <Form.Select
+                  className="CreateAdInput"
+                  value={adDelivery}
+                  onChange={handleAdDeliveryChange}
+                >
+                  <option defaultValue selected disabled>
+                    Select Delivery Option
+                  </option>
+                  <option value="Free Delivery">Free Delivery</option>
+                  <option value="Need To Pay">Need to pay for Delivery</option>
+                  <option value="Not Available">Not Available</option>
                 </Form.Select>
               </Form.Group>
 
@@ -258,7 +356,7 @@ const CreateAd = () => {
                 />
               </Form.Group>
               <div className="d-flex justify-content-center">
-                <Button className="d-grid" type="submit">
+                <Button className="d-grid" onClick={handleSubmit} type="submit">
                   Submit
                 </Button>
               </div>

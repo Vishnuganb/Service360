@@ -8,6 +8,223 @@ import '../../../style/Customer/Viewvacancy.css';
 import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
+import { Document, Page, pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+const PDFViewer = () => {
+    const [numPages, setNumPages] = useState(null);
+
+    const onDocumentLoadSuccess = ({ numPages }) => {
+        setNumPages(numPages);
+    };
+
+    const pdfUrl = process.env.PUBLIC_URL + '/pdf/Customer.pdf';
+
+    return (
+        <div className="pdf-viewer">
+            <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                {Array.from(new Array(numPages), (el, index) => (
+                    <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfpopup' />
+                ))}
+            </Document>
+        </div>
+    );
+};
+
+
+
+const Accept = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" style={{
+                 width: '15%',
+                 height: '28px',
+                 border: '1px solid #ced4da',
+                 fontSize: '14px',
+                 padding: '0 5px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                fontWeight: '500',
+                textTransform: 'none',
+                background: 'black',
+                '@media (max-width: 768px)': {
+                    width: '100%',
+                }
+            }} onClick={handleShow} >
+                <i className="my-customer-table-icon bi bi-check2-square h7"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>Accept Quotation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center><p>You are accepting this Quotation.</p></center>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="btn btn-viewvacancy-form-a" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'black',
+                        '@media (max-width: 768px)': {
+                            width: '70%',
+                        }
+                    }} onClick={handleClose}>
+                        Accept
+                    </Button>
+                    <Button variant="btn btn-viewvacancy-form-r" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'rgb(126, 123, 123)',
+                        '@media (max-width: 768px)': {
+                            width: '70%',
+                        }
+                    }} onClick={handleClose}>
+                        Cancel
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+};
+
+
+const View = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" style={{
+                 width: '15%',
+                 height: '28px',
+                 border: '1px solid #ced4da',
+                 fontSize: '14px',
+                 padding: '0 5px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                fontWeight: '500',
+                textTransform: 'none',
+                background: 'black',
+                '@media (max-width: 768px)': {
+                    width: '100%',
+                }
+            }} onClick={handleShow} >
+                <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title> Quotation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body >
+                    <PDFViewer />
+                </Modal.Body>
+
+
+            </Modal>
+        </>
+    );
+};
+
+
+const Reject = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" style={{
+                width: '15%',
+                height: '28px',
+                border: '1px solid #ced4da',
+                fontSize: '14px',
+                padding: '0 5px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                fontWeight: '500',
+                textTransform: 'none',
+                background: 'black',
+                '@media (max-width: 768px)': {
+                    width: '100%',
+                }
+            }} onClick={handleShow} >
+                <i className="my-customer-table-icon bi bi-trash h7"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>Delete Quotation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center><p>Are you sure to delete?</p></center>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="btn btn-viewvacancy-form-a" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'black',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }} onClick={handleClose}>
+                        Yes
+                    </Button>
+                    <Button variant="btn btn-viewvacancy-form-r" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'rgb(126, 123, 123)',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }} onClick={handleClose}>
+                        No
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+};
+
 
 export default function ReceivedQuotation() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,14 +235,14 @@ export default function ReceivedQuotation() {
     const [toDate, setToDate] = useState(null);
 
     const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Ac Repair', status: 'Pending' },
-        { date: '26/07/2023', serviceTitle: 'Ac Repair', status: 'Checked' },
-        { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Accepted' },
-        { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Rejected' },
-        { date: '24/07/2023', serviceTitle: 'Tile fitting', status: 'Rejected' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Rejected' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Accepted' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Rejected' },
+        { date: '27/07/2023', serviceTitle: 'Ac Repair', status: 'Pending', serviceProvider: 'Vijay Deva', amount: 'Rs.8000', },
+        { date: '26/07/2023', serviceTitle: 'Ac Repair', status: 'Pending', serviceProvider: 'Ashwin Kumar', amount: 'Rs.7000' },
+        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', status: 'Accepted', serviceProvider: 'Alex Kumar', amount: 'Rs.3000' },
+        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', status: 'Pending', serviceProvider: 'Arun Kumar', amount: 'Rs.4000' },
+        { date: '24/07/2023', serviceTitle: 'Sofa cleaning', status: 'Pending', serviceProvider: 'Varun Kumar', amount: 'Rs.4000' },
+        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Pending', serviceProvider: 'Tharun Kumar', amount: 'Rs.5000' },
+        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Accepted', serviceProvider: 'Vijay Deva', amount: 'Rs.4000' },
+        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Pending', serviceProvider: 'Karthik Kumar', amount: 'Rs.4000' },
     ];
 
     const filteredQuotations = quotations.filter((quotation) => {
@@ -36,6 +253,8 @@ export default function ReceivedQuotation() {
             isDateMatch &&
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 quotation.status.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     });
@@ -122,49 +341,54 @@ export default function ReceivedQuotation() {
 
 
 
-                <div className="my-customer-table-container col-11">
+                <div className="my-customer-table-container" >
                     <Table className="my-customer-table" striped bordered hover>
                         <thead>
                             <tr>
-                                <th className="my-customer-table-th-1"><b>Date</b></th>
-                                <th className="my-customer-table-th-1"><b>Service Title</b></th>
-                                <th className="my-customer-table-th-2"><b>Status</b></th>
-                                <th className="my-customer-table-th-2"><b>Action</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Date</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Title</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Provider</b></th>
+                                {/* <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Amount</b></th> */}
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Status</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentQuotations.map((quotation, index) => (
                                 <tr key={index}>
-                                    <td>{quotation.date}</td>
-                                    <td>{quotation.serviceTitle}</td>
-                                    <td>{quotation.status}</td>
-                                    <td>
-                                        <Button variant="primary" className="my-customer-table-btn">
-                                            <Link style={{ color: 'white' }} to={`/customer/ViewAQuotation`}>
-                                                <i className="my-customer-table-icon bi bi-pencil-square h5"></i>
-                                            </Link>
-                                        </Button>
+                                    <td style={{ width: '16.67%' }}>{quotation.date}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.serviceProvider}</td>
+                                    {/* <td style={{ width: '16.67%' }}>{quotation.amount}</td> */}
+                                    <td style={{ width: '16.67%' }}>{quotation.status}</td>
+                                    <td style={{ width: '16.67%' }}>
+                                        <View />
+                                        &nbsp; &nbsp;
+                                        <Accept />
+                                        &nbsp; &nbsp;
+                                        <Reject />
                                     </td>
+
+
                                 </tr>
                             ))}
                         </tbody>
                     </Table>
                 </div>
+            </div>
+            <br></br>
 
-                <br></br>
-
-                <div className="pagination justify-content-center">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
-                            style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div>
+            <div className="pagination justify-content-center">
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index + 1}
+                        className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
+                        style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </>
     );

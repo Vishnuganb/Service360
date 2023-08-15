@@ -73,3 +73,12 @@ span {
 .side-bar-sub-container {
   background-color: #282b3d;
 }
+.custom-dropdown .bi-briefcase {
+  color: white;
+}
+.custom-dropdown .bi-file-text {
+  color: white;
+}
+.custom-dropdown .bi-receipt {
+  color: white;
+}

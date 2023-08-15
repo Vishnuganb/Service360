@@ -8,74 +8,184 @@ import '../../../style/Customer/Viewvacancy.css';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
 
-const View = () => {
+function ComplaintPopup() {
     const [show, setShow] = useState(false);
-  
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
+
     return (
-      <>
-        <Button variant="btn btn-viewvacancy-form-t" style={{
-          width: '16%',
-          height: '38px',
-          border: '1px solid #ced4da',
-          fontSize: '14px',
-          padding: '0 8px',
-          backgroundColor: '#007bff',
-          color: '#fff',
-          fontWeight: '500',
-          textTransform: 'none',
-          background: 'black',
-          '@media (max-width: 768px)': {
-            width: '100%',
-          }
-        }} onClick={handleShow} >
-          <i className="my-customer-table-icon bi bi-eye-fill h5"></i>
-        </Button>
-  
-        <Modal show={show} onHide={handleClose} centered>
-          <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-            <Modal.Title>Complaint</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <center><p>I am writing to express my dissatisfaction with the plumbing service provided by <b>Alex Kumar</b> on <b>27.07.2023 </b>at my residence located at <b>wellawatte</b>.</p></center>
-          </Modal.Body>
-          <Modal.Footer>
-           
-          </Modal.Footer>
-        </Modal>
-      </>
+        <>
+            <Button variant='secondary' style={{ background: "#292d32" }} onClick={handleShow}>
+                Add Complaints
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>Make Complaints</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form className="vacancy-form">
+
+                        <div className="vacancy-form-group">
+                            <label for="complaint">Complaint <span style={{ color: "red" }}>&nbsp;*</span> </label>                        <input type="text" name="complaint" className="form-control" id="title" placeholder="Enter your Complaint" /> </div>                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary' style={{ background: "#292d32" }}>
+                        Submit
+                    </Button>
+                    <Button variant="secondary" style={{ background: "#687699" }} onClick={handleClose}>
+                        Cancel
+                    </Button>
+
+                </Modal.Footer>
+            </Modal>
+        </>
     );
-  };
+}
+
+const View = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" style={{
+                width: '13%',
+                height: '34px',
+                border: '1px solid #ced4da',
+                fontSize: '14px',
+                padding: '0 8px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                fontWeight: '500',
+                textTransform: 'none',
+                background: 'black',
+                '@media (max-width: 768px)': {
+                    width: '100%',
+                }
+            }} onClick={handleShow} >
+                <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>Reply</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center><p>We will take action</p></center>
+                </Modal.Body>
+
+            </Modal>
+        </>
+    );
+};
+
+const Delete = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" style={{
+                width: '13%',
+                height: '34px',
+                border: '1px solid #ced4da',
+                fontSize: '14px',
+                padding: '0 8px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                fontWeight: '500',
+                textTransform: 'none',
+                background: 'black',
+                '@media (max-width: 768px)': {
+                    width: '100%',
+                }
+            }} onClick={handleShow} >
+                <i className="my-customer-table-icon bi bi-trash h7"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
+                    <Modal.Title>Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center><p>Are you sure to delete?</p></center>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="btn btn-viewvacancy-form-a" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'black',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }} onClick={handleClose}>
+                        Yes
+                    </Button>
+                    <Button variant="btn btn-viewvacancy-form-r" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'rgb(126, 123, 123)',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }} onClick={handleClose}>
+                        No
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
+};
 
 export default function CustomerComplaintPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Adjust this value based on how many items you want per page
+    const [selectedStatus, setSelectedStatus] = useState('All');
 
     const [searchTerm, setSearchTerm] = useState('');
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
 
     const complaints = [
-        { date: '27/07/2023', complaintCategory: 'Services provided by service providers' },
-        { date: '26/07/2023', complaintCategory: 'Billing Issues' },
-        { date: '25/07/2023', complaintCategory: 'System quality' },
-        { date: '25/07/2023', complaintCategory: 'System quality' },
-        { date: '24/07/2023', complaintCategory: 'Services provided by service providers' },
-        { date: '24/07/2023', complaintCategory: 'Services provided by service providers' },
-        { date: '24/07/2023', complaintCategory: 'Services provided by service providers' },
+        { date: '27/07/2023', complaint: 'Dissatisfaction with the plumbing service provided by Alex Kumar on 27.07.2023 at wellawatte.', status: 'Pending' },
+        { date: '26/07/2023', complaint: 'Billing Issues', status: 'Pending' },
+        { date: '25/07/2023', complaint: 'System quality', status: 'Replied' },
+        { date: '25/07/2023', complaint: 'System quality', status: 'Pending' },
+        { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Replied' },
+        { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Pending' },
 
     ];
 
-    const filteredComplaints = complaints.filter((complaints) => {
-        const isDateMatch = (!fromDate || new Date(complaints.date) >= new Date(fromDate)) &&
-            (!toDate || new Date(complaints.date) <= new Date(toDate));
+    const filteredComplaints = complaints.filter((complaint) => {
+        const isDateMatch =
+            (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
+            (!toDate || new Date(complaint.date) <= new Date(toDate));
 
         return (
             isDateMatch &&
-            (complaints.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                complaints.complaintCategory.toLowerCase().includes(searchTerm.toLowerCase())
+            (complaint.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                complaint.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                complaint.complaint.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
     });
@@ -107,23 +217,24 @@ export default function CustomerComplaintPage() {
 
     return (
         <>
+
             <div className='vacancybackground' style={{ backgroundImage: `url(${BgImage})` }}>
                 <div className="vacancy-container background-total accordion " >
                     <div className="col d-flex flex-row justify-content-between">
-                        <div className='d-flex flex-row gap-4 p-3 '>
-                            <h3 className="text-dark fs-4 fw-bold vacancytext">Complaints</h3>
+                        <div className='d-flex flex-row gap-4 p-3'>
+                            <h3 className="text-dark fs-4 fw-bold vacancytext">Complaint</h3>
+
+                        </div>
+                        <div className='d-flex justify-content-center justify-content-md-end gap-4 p-4'>
+                            <ComplaintPopup />
                         </div>
                     </div>
-                    <div className='d-flex justify-content-center justify-content-md-end gap-4 p-3' style={{ marginRight: '60px' }}>
-                        <Link style={{ color: 'white' }} to={`/customer/CustomerComplaints`}>
-                            <Button variant="secondary">Add Complaints</Button>
-                        </Link>
-                    </div>
+
 
 
                     <Form className="nav-search">
                         <div className="d-flex flex-wrap justify-content-center">
-                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3'>
+                            <div className='col-md-3 col-sm-6 m-2'>
                                 <div className="input-group m-0">
                                     <Form.Control
                                         type="search"
@@ -138,7 +249,19 @@ export default function CustomerComplaintPage() {
                                     </span>
                                 </div>
                             </div>
-                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3 date-picker-container'>
+                            <div className='col-md-2 col-sm-6 m-2'>
+                                <Form.Control
+                                    as="select"
+                                    value={selectedStatus}
+                                    onChange={(e) => setSelectedStatus(e.target.value)}
+                                    style={{ height: '45px' }}
+                                >
+                                    <option value="All">All Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Replied">Replied</option>
+                                </Form.Control>
+                            </div>
+                            <div className='col-md-2 col-sm-6 m-2 date-picker-container'>
                                 <div className="input-group">
                                     <Form.Control
                                         type="date"
@@ -146,12 +269,10 @@ export default function CustomerComplaintPage() {
                                         value={fromDate}
                                         onChange={handleFromDateChange}
                                         style={{ height: '45px' }}
-
                                     />
-
                                 </div>
                             </div>
-                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3 date-picker-container'>
+                            <div className='col-md-2 col-sm-6 m-2 date-picker-container'>
                                 <div className="input-group">
                                     <Form.Control
                                         type="date"
@@ -164,26 +285,32 @@ export default function CustomerComplaintPage() {
                             </div>
                         </div>
                     </Form>
+
                 </div>
 
 
 
-                <div className="my-customer-table-container col-11">
+                <div className="my-customer-table-container">
                     <Table className="my-customer-table" striped bordered hover>
                         <thead>
                             <tr>
                                 <th className="my-customer-table-th-1"><b>Date</b></th>
-                                <th className="my-customer-table-th-1"><b>Complaint Category</b></th>
+                                <th className="my-customer-table-th-1"><b>Complaint</b></th>
+                                <th className="my-customer-table-th-1"><b>Status</b></th>
                                 <th className="my-customer-table-th-2"><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentComplaints.map((quotation, index) => (
+                            {currentComplaints.map((complaints, index) => (
                                 <tr key={index}>
-                                    <td>{quotation.date}</td>
-                                    <td>{quotation.complaintCategory}</td>
+                                    <td>{complaints.date}</td>
+                                    <td>{complaints.complaint}</td>
+                                    <td>{complaints.status}</td>
                                     <td>
-                                        <View/>
+                                        {complaints.status === 'Replied' && (
+                                            <View />
+                                        )}&nbsp;&nbsp;
+                                        <Delete />
 
                                     </td>
                                 </tr>

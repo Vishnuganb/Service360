@@ -41,7 +41,7 @@ const Contact = ( ) => {
         </div>
 
         <div className="AboutImageContainer">
-          <Image src={TouchImg} alt="Hand" className="AboutTitleImg" />
+          <Image src={TouchImg} alt="Hand" className="AboutTitleImg" rounded />
         </div>
       </div>
     );

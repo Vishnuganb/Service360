@@ -20,7 +20,7 @@ function AppHeader1() {
                         <Nav.Link as={Link}  to="/" className='fw-bold navLink'>Home</Nav.Link>
                         <Nav.Link as={Link} to="/jobs" className='fw-bold navLink'>Job</Nav.Link>
                         <Nav.Link as={Link} to="/services" className='fw-bold navLink'>Services</Nav.Link>
-                        <Nav.Link as={Link} to="#about" className='fw-bold navLink'>About</Nav.Link>
+                        <Nav.Link as={Link} to="/about" className='fw-bold navLink'>About</Nav.Link>
                         <Nav.Link as={Link} to="#contact" className='fw-bold navLink'>Contact</Nav.Link>
                         <Nav.Link as={Link} to="login" className='fw-bold navLink'>Login</Nav.Link>
                         <NavDropdown className='fw-bold' title="SignUp" id="basic-nav-dropdown">

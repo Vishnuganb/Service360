@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/login.png'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styled from 'styled-components';
-import { Modal} from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import '../../style/Login.css'
 import image from '../../assets/images/header/Background.png'
 import { ReactLinkContext } from "../../ContextFiles/ReactLinkContext";
@@ -171,11 +171,11 @@ const Login = () => {
                                                                 >
                                                                     {isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
                                                                 </button>
-                                                            </span>  
+                                                            </span>
                                                         </div>
                                                         {errorMessage && <p className="text-danger p-0 m-0">{errorMessage}</p>}
                                                     </div>
-                                                    
+
 
                                                 </div>
 
@@ -195,7 +195,7 @@ const Login = () => {
                                                         <Link
                                                             className="text-primary mb-2 font-medium-bold"
                                                             style={{ textDecoration: 'none' }}
-                                                            to = { forgotPasswordLink}
+                                                            to={forgotPasswordLink}
                                                         >
                                                             Forgot password?
                                                         </Link>
@@ -215,21 +215,21 @@ const Login = () => {
                                                         <Modal.Body>
                                                             <div className="d-flex flex-column justify-content-between mb-3">
                                                                 <Link
-                                                                    to= {CustomerSignUpLink}
+                                                                    to={CustomerSignUpLink}
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', background: '#f2f2f2', color: '#000' }}
                                                                 >
                                                                     Customer
                                                                 </Link>
                                                                 <Link
-                                                                    to= {ServiceProviderSignUpLink} 
+                                                                    to={ServiceProviderSignUpLink}
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
                                                                 >
                                                                     Service Provider
                                                                 </Link>
                                                                 <Link
-                                                                    to= {AdvertiserSignUpLink} 
+                                                                    to={AdvertiserSignUpLink}
                                                                     className="text-primary mb-2 font-medium-bold p-2 m-2 rounded custom-link"
                                                                     style={{ textDecoration: 'none', color: '#000', background: '#f2f2f2' }}
                                                                 >

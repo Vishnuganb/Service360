@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ServiceProvideimg from '../../../assets/images/Customer/ServiceProvider1.png';
+import img1 from '../../../assets/images/Customer/img2.jpeg';
+import img2 from '../../../assets/images/Customer/img3.jpeg';
+import img3 from '../../../assets/images/Customer/img4.jpeg';
 import '../../../style/Customer/ViewServiceProvider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faComment, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Carousel from 'react-bootstrap/Carousel';
 
 function ViewServiceProvider() {
   const rating = 4;
+
   return (
     <div className="SPBox ">
       <img className='SPImg' src={ServiceProvideimg} alt="profile-image" />
@@ -26,22 +31,64 @@ function ViewServiceProvider() {
 
         <div className='SPContact'>
           <div className='contacticon'>
-            <FontAwesomeIcon icon={faPhone} />
+            <a href="#getcall" className='SPNo'>
+              <FontAwesomeIcon icon={faPhone} />
+              &nbsp; &nbsp; 0705844693
+            </a>
           </div>
-          <p className='SPNo'> 0705844693 </p>
-        </div>
-        <hr className='line'></hr>
-        <div className='SPContact'>
-          <div className='contacticon'>
-            <FontAwesomeIcon icon={faComment} />
-          </div>
-          <p className='SPNo'> Chat </p> <br></br>
+
         </div>
         <hr className='line'></hr>
 
+        <div className='SPContact'>
+          <div className='contacticon'>
+            <a href='#Chat' className='SPNo'>
+              <FontAwesomeIcon icon={faComment} />
+              &nbsp; &nbsp; Chat
+            </a>
+          </div>
+          <br></br>
+        </div>
+        <hr className='line'></hr>
+
+        <div className='SPImageCarousel'>
+          <Carousel>
+            <Carousel.Item>
+            <img
+                className="d-block w-100 img-fluid"
+                src={img1}
+                alt="Third slide"
+                style={{ maxHeight: '300px', objectFit: 'cover' }}
+              />
+            </Carousel.Item>
+            <Carousel.Item>
+            <img
+                className="d-block w-100 img-fluid"
+                src={img3}
+                alt="Third slide"
+                style={{ maxHeight: '300px', objectFit: 'cover' }}
+              />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100 img-fluid"
+                src={img2}
+                alt="Third slide"
+                style={{ maxHeight: '300px', objectFit: 'cover' }}
+              />
+            </Carousel.Item>
+
+          </Carousel>
+        </div>
+
         <div className='SPReqButtons'>
-          <Button className='SPRequestjob'> Request for job </Button>{' '}
-          <Button className='SPRequestquotation'> Request for quotation</Button>{' '}
+          <a href="JobRequest">
+            <button className='SPRequestjob'> Request for job </button>{' '}
+          </a>
+
+          <a href="Quotation">
+            <button className='SPRequestquotation'> Request for quotation</button>{' '}
+          </a>
         </div>
 
         <div className='SPRatings'>
@@ -105,6 +152,7 @@ function ViewServiceProvider() {
         </div>
       </div>
     </div>
+
   );
 }
 

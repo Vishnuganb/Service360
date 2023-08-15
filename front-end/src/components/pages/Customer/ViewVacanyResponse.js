@@ -8,10 +8,10 @@ import BgImage from '../../../assets/images/header/Background.png';
 
 
 function ViewVacancyResponse() {
-    return (<div className='card2'style={{ backgroundImage: `url(${BgImage})` }}>
+    return (<div className='card2'>
         <p> <Link to="/customer/ViewVacancy" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none' style={{color:"Black"}}><i className="bi bi-arrow-left-circle-fill"></i>
             &nbsp;&nbsp;Back</Link></p>
-        <div className="VacancyForm-container">
+        <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <h3>Ac Repair</h3>
 

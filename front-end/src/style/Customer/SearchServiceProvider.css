@@ -123,7 +123,8 @@
     align-items: center;
   } 
   
-  .custom-button {
+  .custom-button,
+  .custom-button2 {
     display: flex;
     background-color: #fff;
     color: rgb(13, 13, 77);
@@ -136,7 +137,12 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: background-color 0.2s;
     margin-left: 20px;
+    white-space: nowrap;
   } 
+
+  .custom-button2{
+    margin-left: 45%;
+  }
   
   .custom-button:hover {
     background-color: #a19c9c;
@@ -146,6 +152,13 @@
     margin-right: 8px;
   }
   
+  .bodyPageContainer-SP{
+    display: flex;
+    background-image: url("../../assets/images/header/Background.png");
+    border: 1px solid #ccc;
+    padding: 2px;
+    border-radius: 10px;
+  }
   .profile-box {
     background-color: white;
     margin-top: 35px;
@@ -198,6 +211,8 @@
     padding: 10px;
   }
    
+  /*filter*/
+  
   .bottombutton2{
     margin-left: 50px;
   }
@@ -236,6 +251,11 @@
       margin: 10px 0;
     }
   }
+
+  /* sorting */
+
+
+  
   
  
 

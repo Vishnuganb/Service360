@@ -5,46 +5,11 @@ import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
+import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
 
-function ComplaintPopup() {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-        <>
-            <Button variant='secondary' style={{ background: "#292d32" }} onClick={handleShow}>
-                Add Complaints
-            </Button>
-
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                    <Modal.Title>Make Complaints</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form className="vacancy-form">
-
-                        <div className="vacancy-form-group">
-                            <label for="complaint">Complaint <span style={{ color: "red" }}>&nbsp;*</span> </label>                        <input type="text" name="complaint" className="form-control" id="title" placeholder="Enter your Complaint" /> </div>                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant='secondary' style={{ background: "#292d32" }}>
-                        Submit
-                    </Button>
-                    <Button variant="secondary" style={{ background: "#687699" }} onClick={handleClose}>
-                        Cancel
-                    </Button>
-
-                </Modal.Footer>
-            </Modal>
-        </>
-    );
-}
-
-const View = () => {
+function VacancyPopup() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -53,11 +18,11 @@ const View = () => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" style={{
-                width: '13%',
-                height: '34px',
+                width: '10%',
+                height: '28px',
                 border: '1px solid #ced4da',
                 fontSize: '14px',
-                padding: '0 8px',
+                padding: '0 3px',
                 backgroundColor: '#007bff',
                 color: '#fff',
                 fontWeight: '500',
@@ -70,19 +35,48 @@ const View = () => {
                 <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
             </Button>
 
-            <Modal show={show} onHide={handleClose} centered>
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                    <Modal.Title>Reply</Modal.Title>
+                    <Modal.Title>Vacancy</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <center><p>We will take action</p></center>
+                    <form className="vacancy-form">
+
+                        <div className="vacancy-form-group">
+                            <Row> <Col className='col-4'><label for="title">Comapany Name </label></Col>
+                                <Col className='col-8'><input type="text" name="name" className="form-control" id="name" Value="ABC private Limited" />
+                                </Col> </Row>
+                        </div>
+                        <div className="vacancy-form-group">
+                            <Row> <Col className='col-4'><label for="title">serviceName </label></Col>
+                                <Col className='col-8'><input type="text" name="servicename" className="form-control" id="servicename" Value="Sofa Cleaner" />
+                                </Col> </Row>
+                        </div>
+                        
+                        <div className="vacancy-form-group">
+                            <Row> <Col className='col-4'>  <label for="location">Location</label></Col>
+                                <Col className='col-8'>  <input type="text" name="location" className="form-control" id="location" Value="Wellawatte" />
+                                </Col> </Row>
+                        </div>
+                        
+                        <div className="vacancy-form-group">
+                           <label for="qualification">Skill & Qualification Expect</label>
+                               <input type="text" name="qualification" className="form-control" id="qualification" Value="Atleast have one year experience" />
+                               
+                        </div>
+                        <div className="vacancy-form-group">
+                             <label for="experience">Responsibilities Expect</label>
+                                <input type="text" name="responsibilities" className="form-control" id="responsibilities" Value="Nothing" />
+                                
+                        </div>
+
+                    </form>
                 </Modal.Body>
 
             </Modal>
         </>
     );
-};
-
+}
 const Delete = () => {
     const [show, setShow] = useState(false);
 
@@ -92,11 +86,11 @@ const Delete = () => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" style={{
-                width: '13%',
-                height: '34px',
+                width: '10%',
+                height: '28px',
                 border: '1px solid #ced4da',
                 fontSize: '14px',
-                padding: '0 8px',
+                padding: '0 5px',
                 backgroundColor: '#007bff',
                 color: '#fff',
                 fontWeight: '500',
@@ -110,11 +104,12 @@ const Delete = () => {
             </Button>
 
             <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
                     <Modal.Title>Delete</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <center><p>Are you sure to delete?</p></center>
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="btn btn-viewvacancy-form-a" style={{
@@ -157,44 +152,40 @@ const Delete = () => {
     );
 };
 
-export default function CustomerComplaintPage() {
+
+export default function PostedVacancies() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Adjust this value based on how many items you want per page
-    const [selectedStatus, setSelectedStatus] = useState('All');
 
     const [searchTerm, setSearchTerm] = useState('');
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
 
-    const complaints = [
-        { date: '27/07/2023', complaint: 'Dissatisfaction with the plumbing service provided by Alex Kumar on 27.07.2023 at wellawatte.', status: 'Pending' },
-        { date: '26/07/2023', complaint: 'Billing Issues', status: 'Pending' },
-        { date: '25/07/2023', complaint: 'System quality', status: 'Replied' },
-        { date: '25/07/2023', complaint: 'System quality', status: 'Pending' },
-        { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Replied' },
-        { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Pending' },
-
+    const quotations = [
+        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', duedate: '02/08/2023' },
+        { date: '26/07/2023', serviceTitle: 'Electrician', duedate: '02/08/2023' },
+        { date: '23/07/2023', serviceTitle: 'Plumbing', duedate: '02/08/2023' },
     ];
 
-    const filteredComplaints = complaints.filter((complaint) => {
-        const isDateMatch =
-            (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
-            (!toDate || new Date(complaint.date) <= new Date(toDate));
+    const filteredQuotations = quotations.filter((quotation) => {
+        const isDateMatch = (!fromDate || new Date(quotation.date) >= new Date(fromDate)) &&
+            (!toDate || new Date(quotation.date) <= new Date(toDate));
 
         return (
             isDateMatch &&
-            (complaint.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                complaint.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                complaint.complaint.toLowerCase().includes(searchTerm.toLowerCase())
+            (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
     });
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentComplaints = filteredComplaints.slice(indexOfFirstItem, indexOfLastItem);
+    const currentQuotations = filteredQuotations.slice(indexOfFirstItem, indexOfLastItem);
 
-    const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredQuotations.length / itemsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -217,24 +208,17 @@ export default function CustomerComplaintPage() {
 
     return (
         <>
-
             <div className='vacancybackground' style={{ backgroundImage: `url(${BgImage})` }}>
                 <div className="vacancy-container background-total accordion " >
                     <div className="col d-flex flex-row justify-content-between">
-                        <div className='d-flex flex-row gap-4 p-3'>
-                            <h3 className="text-dark fs-4 fw-bold vacancytext">Complaint</h3>
-
-                        </div>
-                        <div className='d-flex justify-content-center justify-content-md-end gap-4 p-4'>
-                            <ComplaintPopup />
+                        <div className='d-flex flex-row gap-4 p-3 '>
+                            <p className="text-dark fs-4 fw-bold vacancytext"> Posted Vacancies</p>
                         </div>
                     </div>
 
-
-
                     <Form className="nav-search">
                         <div className="d-flex flex-wrap justify-content-center">
-                            <div className='col-md-3 col-sm-6 m-2'>
+                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3'>
                                 <div className="input-group m-0">
                                     <Form.Control
                                         type="search"
@@ -249,19 +233,7 @@ export default function CustomerComplaintPage() {
                                     </span>
                                 </div>
                             </div>
-                            <div className='col-md-2 col-sm-6 m-2'>
-                                <Form.Control
-                                    as="select"
-                                    value={selectedStatus}
-                                    onChange={(e) => setSelectedStatus(e.target.value)}
-                                    style={{ height: '45px' }}
-                                >
-                                    <option value="All">All Status</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Replied">Replied</option>
-                                </Form.Control>
-                            </div>
-                            <div className='col-md-2 col-sm-6 m-2 date-picker-container'>
+                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3 date-picker-container'>
                                 <div className="input-group">
                                     <Form.Control
                                         type="date"
@@ -269,10 +241,12 @@ export default function CustomerComplaintPage() {
                                         value={fromDate}
                                         onChange={handleFromDateChange}
                                         style={{ height: '45px' }}
+
                                     />
+
                                 </div>
                             </div>
-                            <div className='col-md-2 col-sm-6 m-2 date-picker-container'>
+                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3 date-picker-container'>
                                 <div className="input-group">
                                     <Form.Control
                                         type="date"
@@ -285,59 +259,52 @@ export default function CustomerComplaintPage() {
                             </div>
                         </div>
                     </Form>
-
                 </div>
 
 
 
-                <div className="my-customer-table-container">
+                <div className="my-customer-table-container" >
                     <Table className="my-customer-table" striped bordered hover>
                         <thead>
                             <tr>
-                                <th className="my-customer-table-th-1"><b>Date</b></th>
-                                <th className="my-customer-table-th-1"><b>Complaint</b></th>
-                                <th className="my-customer-table-th-1"><b>Status</b></th>
-                                <th className="my-customer-table-th-2"><b>Action</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Date</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Title</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Due Date</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentComplaints.map((complaints, index) => (
+                            {currentQuotations.map((quotation, index) => (
                                 <tr key={index}>
-                                    <td>{complaints.date}</td>
-                                    <td>{complaints.complaint}</td>
-                                    <td>{complaints.status}</td>
-                                    <td>
-                                        {complaints.status === 'Replied' && (
-                                            <View />
-                                        )}&nbsp;&nbsp;
+                                    <td style={{ width: '16.67%' }}>{quotation.date}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
+                                    <td style={{ width: '16.67%' }}>
+                                        <VacancyPopup />
+                                        &nbsp; &nbsp;
                                         <Delete />
-
                                     </td>
+
                                 </tr>
                             ))}
                         </tbody>
                     </Table>
                 </div>
+            </div>
+            <br></br>
 
-                <br></br>
-
-
-                <div className="pagination justify-content-center">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
-                            style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div>
-
-
+            <div className="pagination justify-content-center">
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index + 1}
+                        className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
+                        style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
         </>
     );
 }
-

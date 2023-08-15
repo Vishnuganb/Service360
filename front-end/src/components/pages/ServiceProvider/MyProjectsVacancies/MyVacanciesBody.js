@@ -3,181 +3,17 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import UserImg from '../../../../assets/images/header/user.jpg';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function MyProjectsBody(){
+    const [MyProjectsVacanciesData, setMyProjectsVacanciesData] = useState(null);
+
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const initialActiveTab = queryParams.get('tab') || 'defaultTab'; // 'defaultTab' is the fallback
-    
-    //Vacancy objects with properties
-    const MyProjectsVacanciesData = [
-        {
-            profile: UserImg,
-            id: 1,
-            vacancyTitle: 'Electronics Technician',
-            Posted: '2 days ago',
-            dueDate: '2023-09-29',
-            serviceName: 'Electrical Wiring',
-            location: 'Battaramulla',
-            customerName: 'Aptinex',
-            status:'Invite',
-        },
-        {
-            profile: UserImg,
-            id: 2,
-            vacancyTitle: 'Cleaning Staff',
-            Posted: '5 days ago',
-            dueDate: '2023-09-07',
-            serviceName: 'Sofa Cleaning',
-            location: 'Colombo',
-            customerName: 'Hayleys',
-            status:'Ongoing',
-        },
-        {
-            profile: UserImg,
-            id: 3,
-            vacancyTitle: 'Security Staff',
-            Posted: '21 days ago',
-            dueDate: '2023-09-12',
-            serviceName: 'CCTV Systems Repair',
-            location: 'Mount Lavinia',
-            customerName: 'Emerald',
-            status:'Invite',
-        },
-        {
-            profile: UserImg,
-            id: 4,
-            vacancyTitle: 'Masonry Worker',
-            Posted: '29 days ago',
-            dueDate: '2023-09-10',
-            serviceName: 'Masonry',
-            location: 'Dehiwala',
-            customerName: 'Arinos',
-            status:'Rejected',
-        },
-        {
-            profile: UserImg,
-            id: 5,
-            vacancyTitle: 'Wooden furniture cleaner',
-            Posted: '1 month ago',
-            dueDate: '2023-08-15',
-            serviceName: 'Carpentry',
-            location: 'Nugegoda',
-            customerName: 'Payzy',
-            status:'Invite',
-        },
-        {
-            profile: UserImg,
-            id: 6,
-            vacancyTitle: 'Electronics Technician',
-            Posted: '2 month ago',
-            dueDate: '2023-08-11',
-            serviceName: 'Ac Repair',
-            location: 'Rajagiriya',
-            customerName: 'Veracity',
-            status:'Completed',
-        },
-        {
-            profile: UserImg,
-            id: 7,
-            vacancyTitle: 'Plumber',
-            Posted: '2 month ago ago',
-            dueDate: '2023-08-27',
-            serviceName: 'Plumbing',
-            location: 'Battaramulla',
-            customerName: 'Wallspan',
-            status:'Ongoing',
-        },
-        {
-            profile: UserImg,
-            id: 8,
-            vacancyTitle: 'Security Assistant Staff',
-            Posted: '21 days ago',
-            dueDate: '2023-09-09',
-            serviceName: 'CCTV Systems Repair',
-            location: 'Mount Lavinia',
-            customerName: 'Emerald',
-            status:'Rejected',
-        },
-        {
-            profile: UserImg,
-            id: 9,
-            vacancyTitle: 'Civil Engineer',
-            Posted: '29 days ago',
-            dueDate: '2023-09-30',
-            serviceName: 'Masonry',
-            location: 'Mannar',
-            customerName: 'Arinos',
-            status:'Rejected',
-        },
-        {
-            profile: UserImg,
-            id: 10,
-            vacancyTitle: 'Furniture Polishing',
-            Posted: '2 month ago',
-            dueDate: '2023-08-15',
-            serviceName: 'Carpentry',
-            location: 'Rathmalana',
-            customerName: 'Payzy',
-            status:'Completed',
-        },
-        {
-            profile: UserImg,
-            id: 11,
-            vacancyTitle: 'AC Wiring Technician',
-            Posted: '1 month ago',
-            dueDate: '2023-08-11',
-            serviceName: 'Ac Repair',
-            location: 'Galle',
-            customerName: 'Veracity',
-            status:'Rejected',
-        },
-        {
-            profile: UserImg,
-            id: 12,
-            vacancyTitle: 'Plumber',
-            Posted: '1 month ago ago',
-            dueDate: '2023-10-12',
-            serviceName: 'Plumbing',
-            location: 'Jaffna',
-            customerName: 'IBC',
-            status:'Invite',
-        },
-        {
-            profile: UserImg,
-            id: 13,
-            vacancyTitle: 'Electrician',
-            Posted: '2 weeks ago',
-            dueDate: '2023-09-15',
-            serviceName: 'Electrical Services',
-            location: 'Kandy',
-            customerName: 'Energix',
-            status: 'Pending',
-        },
-        {
-            profile: UserImg,
-            id: 14,
-            vacancyTitle: 'Painter',
-            Posted: '3 weeks ago',
-            dueDate: '2023-09-20',
-            serviceName: 'Painting',
-            location: 'Negombo',
-            customerName: 'ColorWave',
-            status: 'Pending',
-        },
-        {
-            profile: UserImg,
-            id: 15,
-            vacancyTitle: 'Gardener',
-            Posted: '4 weeks ago',
-            dueDate: '2023-09-25',
-            serviceName: 'Gardening',
-            location: 'Anuradhapura',
-            customerName: 'GreenScape',
-            status: 'Pending',
-        }        
-    ];
 
     const MyServices= [
         "Electrical Wiring",
@@ -219,19 +55,28 @@ function MyProjectsBody(){
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
 
+    useEffect(() => {
+        axios.get('http://localhost:8080/auth/viewVacancies').then((res) => {
+            console.log(res.data);
+            setMyProjectsVacanciesData(res.data);
+        });
+    }   , []);
+
+    if (!MyProjectsVacanciesData) return 'No jobs found!';
+
     // Filter training sessions based on search term and selected date
     const filteredCards = MyProjectsVacanciesData.filter((card) => {
         return (
         ( !filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
-           (card.serviceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.vacancyTitle.toLowerCase().includes(searchTerm.toLowerCase()))
+           (card.servicename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.vacancylocation.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.customername.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.vacancytitle.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     });
 
     // Filter training sessions based on the active tab's status
-    const filteredAndSortedCards = filteredCards.filter((job) => job.status === activeTab);
+    const filteredAndSortedCards = filteredCards.filter((vacancy) => vacancy.vacancystatus === activeTab);
 
     // Calculate the total number of pages based on the filtered and sorted cards
     const totalNumPages = Math.ceil(filteredAndSortedCards.length / cardsPerPage);
@@ -246,7 +91,6 @@ function MyProjectsBody(){
     // Create a subset of training sessions to be displayed on the current page
     const displayedCards = filteredAndSortedCards.slice(startIndex, endIndex);
     
-    
     return(
         <div>
             
@@ -258,32 +102,20 @@ function MyProjectsBody(){
                 <Navbar className="MyProjects-top-nav me-lg-4" expand="lg md sm">
                     <Nav className="ms-3">
                         <Nav.Link 
-                            active={activeTab === 'Invite'} 
-                            onClick={() => setActiveTab('Invite')}
+                            active={activeTab === 'invite'} 
+                            onClick={() => setActiveTab('invite')}
                         >
                             Invites
                         </Nav.Link>
                         <Nav.Link 
-                            active={activeTab === 'Pending'} 
-                            onClick={() => setActiveTab('Pending')}
-                        >
-                            Pending
-                        </Nav.Link>
-                        <Nav.Link 
-                            active={activeTab === 'Ongoing'} 
-                            onClick={() => setActiveTab('Ongoing')} 
+                            active={activeTab === 'ongoing'} 
+                            onClick={() => setActiveTab('ongoing')} 
                         >
                             Ongoing
                         </Nav.Link>
                         <Nav.Link 
-                            active={activeTab === 'Completed'} 
-                            onClick={() => setActiveTab('Completed')}
-                        >
-                            Completed
-                        </Nav.Link>
-                        <Nav.Link 
-                            active={activeTab === 'Rejected'} 
-                            onClick={() => setActiveTab('Rejected')} 
+                            active={activeTab === 'rejected'} 
+                            onClick={() => setActiveTab('rejected')} 
                         >
                             Rejected
                         </Nav.Link>
@@ -323,8 +155,8 @@ function MyProjectsBody(){
                 </Navbar>
             </div>
             
-            {/* only display ongoing, completed, rejected vacancies */}
-            {activeTab !== 'Invite' && displayedCards.filter((vacancy) => vacancy.status === 'Pending'|| vacancy.status === 'Ongoing'|| vacancy.status === 'Completed'|| vacancy.status ==='Rejected').map((vacancy) => (
+            {/* only display ongoing vacancies */}
+            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing').map((vacancy) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
@@ -338,13 +170,13 @@ function MyProjectsBody(){
                             </div>
                             <div className='d-flex flex-column'>
                                 <div className='ms-sm-3'>
-                                    <span className="job-card-title">{vacancy.vacancyTitle}</span>
+                                    <span className="job-card-title">{vacancy.vacancytitle}</span>
                                 </div>
                                 <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.customerName}</span>
+                                    <span className="job-card-date">{vacancy.customername}</span>
                                 </div>
                                 <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.Posted}</span>
+                                    <span className="job-card-date">{vacancy.posteddate}</span>
                                 </div>
                             </div>
                         </div>
@@ -352,31 +184,82 @@ function MyProjectsBody(){
                     <div className="my-vacancy-card-body">
                         <div className="my-vacancy-card-body-left d-flex flex-column">
                             <div>
-                                <span className="sinlge-my-vacancy-sub-info">{vacancy.dueDate} | {vacancy.serviceName}</span>
+                                <span className="sinlge-my-vacancy-sub-info">{vacancy.duedate} | {vacancy.servicename}</span>
                             </div>
                             <div>
                                 <span className="my-vacancy-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.location}
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.vacancylocation}
                                 </span>
                             </div>
                         </div>
                     </div>
                     <hr />
                     <div className="my-vacancy-card-footer d-flex flex-row">
-                        <span
+                        <Link to={`../OngoingVacancy/${vacancy.vacancyid}` }
                             className="btn btn-default my-vacancy-card-footer-btn"
                             id="my-vacancy-card-footer-btn-view"
                         >
                             <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                             <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
-                        </span>
+                        </Link>
+                    </div>
+                </div>
+            ))}
+
+            {/* only display rejected vacancies */}
+            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus ==='rejected').map((vacancy) => (
+                <div className="single-vacancy-card mx-auto mt-3">
+                    <div className="vacancy-card-header">
+                        <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
+                            <div className='d-flex justify-content-center align-items-center'>
+                                <img
+                                            src={vacancy.profile}
+                                            alt="avatar"
+                                            className="rounded-circle my-projects-vacancies-rounded-circle"
+                                            style={{ width: "42px", height: "42px" }}
+                                />
+                            </div>
+                            <div className='d-flex flex-column'>
+                                <div className='ms-sm-3'>
+                                    <span className="job-card-title">{vacancy.vacancytitle}</span>
+                                </div>
+                                <div className='ms-sm-3 d-flex'>
+                                    <span className="job-card-date">{vacancy.customername}</span>
+                                </div>
+                                <div className='ms-sm-3 d-flex'>
+                                    <span className="job-card-date">{vacancy.posteddate}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="my-vacancy-card-body">
+                        <div className="my-vacancy-card-body-left d-flex flex-column">
+                            <div>
+                                <span className="sinlge-my-vacancy-sub-info">{vacancy.duedate} | {vacancy.servicename}</span>
+                            </div>
+                            <div>
+                                <span className="my-vacancy-location-info">
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.vacancylocation}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div className="my-vacancy-card-footer d-flex flex-row">
+                        <Link to={`../ViewAVacancy/${vacancy.vacancyid}` }
+                            className="btn btn-default my-vacancy-card-footer-btn"
+                            id="my-vacancy-card-footer-btn-view"
+                        >
+                            <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
+                        </Link>
                     </div>
                 </div>
             ))}
 
 
                {/* only display vacancy invites for me */}
-               {activeTab === 'Invite' && displayedCards.filter((vacancy) => vacancy.status === 'Invite').map((vacancy) => (
+               {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
@@ -390,13 +273,13 @@ function MyProjectsBody(){
                             </div>
                             <div className='d-flex flex-column'>
                                 <div className='ms-sm-3'>
-                                    <span className="job-card-title">{vacancy.vacancyTitle}</span>
+                                    <span className="job-card-title">{vacancy.vacancytitle}</span>
                                 </div>
                                 <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.customerName}</span>
+                                    <span className="job-card-date">{vacancy.customername}</span>
                                 </div>
                                 <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.Posted}</span>
+                                    <span className="job-card-date">{vacancy.posteddate}</span>
                                 </div>
                             </div>
                         </div>
@@ -404,11 +287,11 @@ function MyProjectsBody(){
                     <div className="my-vacancy-card-body">
                         <div className="my-vacancy-card-body-left d-flex flex-column">
                             <div>
-                                <span className="sinlge-my-vacancy-sub-info">{vacancy.dueDate} | {vacancy.serviceName}</span>
+                                <span className="sinlge-my-vacancy-sub-info">{vacancy.duedate} | {vacancy.servicename}</span>
                             </div>
                             <div>
                                 <span className="my-vacancy-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.location}
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.vacancylocation}
                                 </span>
                             </div>
                         </div>

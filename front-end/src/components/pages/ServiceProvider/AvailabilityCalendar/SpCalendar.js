@@ -3,6 +3,8 @@ import UserImg from '../../../../assets/images/header/user.jpg'
 import { Button, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import { Modal, Form } from "react-bootstrap";
+import { useEffect } from "react";
+import axios from "axios";
 
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
@@ -20,6 +22,7 @@ import {
 } from "date-fns";
 
 function SpCalendar(){
+    const [viewServiceProviderCalendarData, setViewServiceProviderCalendarData] = useState(null);
 
     const [show, setShow] = useState(false);
 
@@ -29,6 +32,7 @@ function SpCalendar(){
         setSelectedModalDate(date); // Set the selected date for the modal
         setShow(true);
     };
+
     const [selectedModalDate, setSelectedModalDate] = useState(new Date());
     
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -37,98 +41,21 @@ function SpCalendar(){
 
     const [selectedSchedules, setSelectedSchedules] = useState([]);    // New state for selected date's schedules
 
-    const availabilityCalenderSingleDayData = [
-        {
-            profile: UserImg,
-            id: 5,
-            customerName: 'Rahul',
-            startTime: '9.30',
-            endTime: '12.00',
-            location: 'Colombo',
-            description: 'Plumbing work',
-            date: '2023-08-012',
-        },
-        {
-            profile: UserImg,
-            id: 6,
-            customerName: 'Samantha',
-            startTime: '14.00',
-            endTime: '16.00',
-            location: 'Kandy',
-            description: 'Electrical work',
-            date: '2023-08-12',
-        },
-        {
-            profile: UserImg,
-            id: 7,
-            customerName: 'Nimal',
-            startTime: '11.00',
-            endTime: '12.30',
-            location: 'Galle',
-            description: 'Painting',
-            date: '2023-08-16',
-        },
-        {
-            profile: UserImg,
-            id: 8,
-            customerName: 'Lakshmi',
-            startTime: '9.00',
-            endTime: '10.30',
-            location: 'Negombo',
-            description: 'Carpentry work',
-            date: '2023-08-16',
-        },
-        {
-            profile: UserImg,
-            id: 9,
-            customerName: 'Dilshan',
-            startTime: '15.00',
-            endTime: '17.00',
-            location: 'Kurunegala',
-            description: 'Roof repair',
-            date: '2023-08-20',
-        },
-        {
-            profile: UserImg,
-            id: 10,
-            customerName: 'Priya',
-            startTime: '12.00',
-            endTime: '13.30',
-            location: 'Matara',
-            description: 'Gardening',
-            date: '2023-08-24',
-        },
-        {
-            profile: UserImg,
-            id: 11,
-            customerName: 'Aruna',
-            startTime: '8.30',
-            endTime: '10.30',
-            location: 'Anuradhapura',
-            description: 'Window cleaning',
-            date: '2023-08-24',
-        },
-        {
-            profile: UserImg,
-            id: 12,
-            customerName: 'Sanjeewa',
-            startTime: '14.00',
-            endTime: '16.00',
-            location: 'Gampaha',
-            description: 'Floor polishing',
-            date: '2023-08-27',
-        },
-        {
-            profile: UserImg,
-            id: 13,
-            customerName: 'Thilini',
-            startTime: '10.00',
-            endTime: '12.00',
-            location: 'Kotte',
-            description: 'Plastering work',
-            date: '2023-08-29',
-        },
-    ];
+    const [scheduleFormData, setScheduleFormData] = useState({
+        eventdate: format(selectedDate, "yyyy-MM-dd"),
+        eventstarttime: "",
+        eventendtime: "",
+        eventdescription: "",
+    });
+    
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setScheduleFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
 
 
     const getHeader = () => {
@@ -212,35 +139,109 @@ function SpCalendar(){
           currentDate = addDays(currentDate, 1);
         }
         return <>{week}</>;
-      };
+    };
 
-      const getSchedulesForDate = (date) => {
-        const formattedDate = format(date, "yyyy-MM-dd");
-        return availabilityCalenderSingleDayData.filter((work) => work.date === formattedDate);
-      };
+
+    const handleSchedule = () => {
+        const newScheduleData = {
+            ...scheduleFormData,
+            serviceproviderid: 1,
+        };
+
+        axios.post('http://localhost:8080/auth/createServiceProviderCalendar', newScheduleData).then((response) => {
+                console.log('Schedule created successfully:', response.data);
+                handleClose();
+                refreshCalendarData();
+            })
+            .catch((error) => {
+                console.error('Error creating schedule:', error);
+            });
+    };
+
+
+    const convertTo24HourFormat = (time12Hour) => {
+        const [time, modifier] = time12Hour.split(' ');
+        let [hours, minutes] = time.split(':');
     
-      const getDates = () => {
+        if (hours === '12') {
+            hours = '00';
+        }
+    
+        if (modifier === 'PM') {
+            hours = String(parseInt(hours, 10) + 12);
+        }
+    
+        return `${hours}:${minutes}`;
+    };
+
+
+
+    const refreshCalendarData = () => {
+        axios.get('http://localhost:8080/auth/viewServiceProviderCalendar')
+            .then((res) => {
+                console.log(res.data);
+                setViewServiceProviderCalendarData(res.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching calendar data:', error);
+            });
+    };
+
+
+    useEffect(() => {
+        refreshCalendarData();
+    }, []);
+
+
+    const handleDelete = (eventId) => {
+        axios.delete(`http://localhost:8080/auth/deleteServiceProviderCalendar/${eventId}`)
+            .then(() => {
+                console.log('Event deleted successfully');
+                refreshCalendarData();
+            })
+            .catch((error) => {
+                console.error('Error deleting event:', error);
+            });
+    };
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/auth/viewServiceProviderCalendar').then((res) => {
+            console.log(res.data);
+            setViewServiceProviderCalendarData(res.data);
+        });
+    }   , []);
+
+    if (!viewServiceProviderCalendarData) return 'No Calandar data found!';
+
+
+    const getSchedulesForDate = (date) => {
+        const formattedDate = format(date, "yyyy-MM-dd");
+        return viewServiceProviderCalendarData.filter((work) => work.eventdate === formattedDate);
+    };
+
+    
+    const getDates = () => {
         const startOfTheSelectedMonth = startOfMonth(activeDate);
         const endOfTheSelectedMonth = endOfMonth(activeDate);
         const startDate = startOfWeek(startOfTheSelectedMonth);
         const endDate = endOfWeek(endOfTheSelectedMonth);
-    
+
         let currentDate = startDate;
-    
+
         const allWeeks = [];
-    
+
         while (currentDate <= endDate) {
-          allWeeks.push(
+            allWeeks.push(
             generateDatesForCurrentWeek(currentDate, selectedDate, activeDate)
-          );
-          currentDate = addDays(currentDate, 7);
+            );
+            currentDate = addDays(currentDate, 7);
         }
-    
+
         return <div className="weekContainer">{allWeeks}</div>;
-      };
+    };
       
 
-    
     return(
         <div className="ms-lg-4">
              {/* Page Title*/}
@@ -268,21 +269,12 @@ function SpCalendar(){
                                         <Row>
                                             <div className="mt-3 p-3" style={{border:"1px solid black",borderRadius:"15px"}}>
                                                 <div className=" d-flex flex-row">
-                                                    <div>
-                                                        <img
-                                                        src={work.profile}
-                                                        alt="avatar"
-                                                        className="spCalendar-avatar rounded-circle"
-                                                        style={{ width: "40px", height: "40px" }}
-                                                        />
-                                                    </div>
                                                     <div className="d-flex flex-column spCalendar-username-container ms-4">
-                                                        <span className="spCalendar-username" style={{fontWeight:"650"}}>{work.customerName}</span>
-                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.startTime} - {work.endTime}</span>
-                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.description}</span>
+                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.eventstarttime} - {work.eventendtime}</span>
+                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.eventdescription}</span>
                                                     </div>
                                                     <div className="ms-auto d-flex flex-column justify-content-center align-items-center">
-                                                        <i className="bi bi-x-circle-fill" style={{fontSize:"26px"}}></i>
+                                                        <i className="bi bi-x-circle-fill" style={{fontSize:"26px",cursor:"pointer"}} onClick={() => handleDelete(work.eventid)}></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,17 +294,16 @@ function SpCalendar(){
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Date</Form.Label>
-                        <Form.Control className='mb-2' type="date" value={format(selectedDate, "yyyy-MM-dd")}  onChange={(e)=>setSelectedDate(new Date(e.target.value))} autoFocus />
+                        <Form.Control className='mb-2' type="date" name="eventdate" value={scheduleFormData.eventdate}  onChange={(e)=>setSelectedDate(new Date(e.target.value))} autoFocus />
 
                         <Form.Label>Start Time</Form.Label>
-                        <Form.Control className='mb-2' type="time" placeholder="" autoFocus/>
+                        <Form.Control className='mb-2' type="time" name="eventstarttime" value={scheduleFormData.eventstarttime} onChange={handleInputChange} autoFocus/>
                         
                         <Form.Label>End Time</Form.Label>
-                        <Form.Control className='mb-2' type="time" placeholder="" autoFocus/>
+                        <Form.Control className='mb-2' type="time" name="eventendtime" value={scheduleFormData.eventendtime} onChange={handleInputChange} autoFocus/>
 
                         <Form.Label>Description</Form.Label>
-                        <Form.Control className='mb-2' type="text" placeholder="" autoFocus/>
-
+                        <Form.Control className='mb-2' type="text" name="eventdescription" value={scheduleFormData.eventdescription} onChange={handleInputChange} autoFocus/>
                         </Form.Group>
 
                     </Form>
@@ -322,7 +313,7 @@ function SpCalendar(){
                     <Button className='btn-ServiceProvider-2' onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className='btn-ServiceProvider-1' onClick={handleClose}>
+                    <Button className='btn-ServiceProvider-1' onClick={handleSchedule}>
                         Schedule
                     </Button>
                     </Modal.Footer>

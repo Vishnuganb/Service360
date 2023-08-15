@@ -37,13 +37,15 @@ import SpMyProjectsVacancies from './components/pages/ServiceProvider/MyProjects
 import SpViewTrainingSessions from './components/pages/ServiceProvider/ViewTrainingSessions/Index.js';
 import SpViewATrainingSession from './components/pages/ServiceProvider/ViewATrainingSession/Index.js';
 import SpMyProjectStates from './components/pages/ServiceProvider/MyProjectStates.js';
-import SpAcceptedJob from './components/pages/ServiceProvider/AcceptedJob/Index.js';
+import SpOngoingJob from './components/pages/ServiceProvider/OngoingJob/Index.js';
 import SpAcceptedVacancy from './components/pages/ServiceProvider/AcceptedVacancy/Index.js';
 import SpStartJob from './components/pages/ServiceProvider/StartJob/Index.js';
 import SpAvailabilityCalendar from './components/pages/ServiceProvider/AvailabilityCalendar/Index.js';
 import SpMyTrainingSessions from './components/pages/ServiceProvider/MyTrainingSessions/Index.js';
 import SpViewHistory from './components/pages/ServiceProvider/ViewHistory/Index.js';
 import SpPendingJob from './components/pages/ServiceProvider/PendingJob/Index.js';
+import SpOngoingVacancy from './components/pages/ServiceProvider/OngoingVacancy/Index.js';
+import SpViewJobsHome from './components/pages/User/ViewAjob.js';
 import SpChat from './components/pages/User/Chat/ChatPage.js';
 
 import RootLayout from './components/layout/RootLayout.js';
@@ -95,7 +97,7 @@ import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import JobRequest from './components/pages/Customer/JobRequest.js';
 import Forum from './components/pages/Forum/Forum.js';
 import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
-import ToDoList from './components/pages/Customer/CreateToDo';
+import ToDoList from './components/pages/ServiceProvider/CreateToDo.js';
 import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
 import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
 
@@ -107,6 +109,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
+        <Route path="/jobs" element={<SpViewJobsHome />} />        
         <Route path="/services/ViewAservice" element={<ViewAservice />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
@@ -172,31 +175,34 @@ const router = createBrowserRouter(
         <Route path="JobRequest" element={<JobRequest />} />
       </Route>
 
-       <Route path="/ServiceProvider" element={<SpLayout />}>
-        <Route path="Dashboard" element={<SpDashboard />} />
+      <Route path="/ServiceProvider" element={<SpLayout />}>
+        <Route index element={<SpDashboard />} />
         <Route path="ViewJobs" element={<SpViewJobs />} />
         <Route path="ViewVacancies" element={<SpViewVacancies />} />
-        <Route path="ApplyVacancy" element={<SpApplyVacancy />} />
+        <Route path="ApplyVacancy/:id" element={<SpApplyVacancy />} />
         <Route path="MyServices" element={<SpServices />} />
         <Route path="ViewAJob/:id" element={<SpViewAJob />} />
-        <Route path="ViewAVacancy" element={<SpViewAVacancy />} />
+        <Route path="ViewAVacancy/:id" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
         <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
         <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
         <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
-        <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
+        <Route path="ViewATrainingSession/:id" element={<SpViewATrainingSession/>} />
         <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
-        <Route path="AcceptedJob" element={<SpAcceptedJob/>} />
+        <Route path="OngoingJob/:id" element={<SpOngoingJob/>} />
         <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
         <Route path="StartJob" element={<SpStartJob/>} />
         <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
         <Route path="ViewHistory" element={<SpViewHistory/>} />
-        <Route path="PendingJob" element={<SpPendingJob/>} />
+        <Route path="PendingJob/:id" element={<SpPendingJob/>} />
+        <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="ToDoList/:id" element={<ToDoList />} />
         <Route path="Chat" element={<SpChat/>} />
-
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />

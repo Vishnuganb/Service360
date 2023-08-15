@@ -78,8 +78,6 @@ import AddReviewandRating from './components/pages/User/Customer/AddReviewandRat
 import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js';
 import CustomerChat from './components/pages/User/Chat/ChatPage.js';
 
-import Forum from './components/pages/Forum/Forum.js';
-import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
 import ToDoForm from './components/pages/Customer/ToDoForm.js';
@@ -91,7 +89,6 @@ import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
 import CustomerComplaintPage from './components/pages/Customer/CustomerComplaintPage.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
-import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import JobRequest from './components/pages/Customer/JobRequest.js';
 import Forum from './components/pages/Forum/Forum.js';
 import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'

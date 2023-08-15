@@ -15,10 +15,10 @@ const AddReviewandRating = () => {
 
   const ratingsData = [
     { stars: 5, count: 5000 },
-    { stars: 4, count: 1000 },
-    { stars: 3, count: 100 },
-    { stars: 2, count: 0 },
-    { stars: 1, count: 0 },
+    { stars: 4, count: 3000 },
+    { stars: 3, count: 2000 },
+    { stars: 2, count: 1000 },
+    { stars: 1, count: 5000 },
   ];
 
   const totalRatings = ratingsData.reduce(
@@ -76,7 +76,7 @@ const AddReviewandRating = () => {
 
   return (
     <Container>
-      <h2>View Reviews And Ratings</h2>
+      <h2>View Reviews And Ratings About Our System</h2>
       <Form
         className="block py-5  "
         style={{ backgroundImage: `url(${BgImage})` }}
@@ -101,7 +101,7 @@ const AddReviewandRating = () => {
             <Card className="block py-5  ">
               <div className="text-center">
                 <div style={{ fontWeight: 50, fontSize: 30 }}>
-                  Total Reviews:
+                  Total Reviews And Rating:
                 </div>
                 <div className="mt-4" style={{ fontWeight: 50, fontSize: 30 }}>
                   {" "}
@@ -115,27 +115,42 @@ const AddReviewandRating = () => {
         <Card className="mt-5" style={{ fontWeight: 50, fontSize: 30 }}>
           {ratingsData.map((rating) => (
             <star key={rating.stars}>
-              <div className="rating-item">
-                <span
-                  style={{ fontWeight: 500, fontSize: 30 }}
-                  className="star-count"
-                >
-                  {rating.stars}
-                  <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-                  <Col className="rating-bar">
-                    <Col
-                      className="fill-bar"
+              <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ marginRight: "20px",marginLeft:"10px" }}>
+                    <span style={{ fontWeight: 500, fontSize: 30 ,marginLeft: "20px"  }}>
+                      {rating.stars}
+                      <FontAwesomeIcon
+                        icon={faStar}
+                        style={{ color: "gold", marginLeft: "20px" }}
+                      />
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      flex: 2,
+                      height: 15,
+                      borderRadius: 15,
+                      overflow: "hidden",
+                      backgroundColor: "rgb(231, 227, 227)",
+                     marginLeft:"10px",
+                     
+                    }}
+                  >
+                    <div
                       style={{
                         width: `${(rating.count / totalRatings) * 100}%`,
+                        height: 15,
                         backgroundColor: "#333F7D",
                       }}
-                    ></Col>
-                  </Col>
-
-                  {rating.count}
-                </span>
-
-                <div className="star-value-count"></div>
+                    ></div>
+                  </div>
+                  <div >
+                    <span style={{ fontWeight: 500, fontSize: 30 }}>
+                      {rating.count}
+                    </span>
+                  </div>
+                </div>
               </div>
             </star>
           ))}
@@ -170,7 +185,7 @@ const AddReviewandRating = () => {
             </span>
           </Col>
         </Row>
-        <Card className="mt-5 mb-5 text-center display: 'flex'">
+        <Card className="mt-5 mb-5 text-center display: 'flex'"  style={{ backgroundImage: `url(${BgImage})` }}>
           <Row className="mt-5 ">
             <Col>
               <div>
@@ -207,11 +222,13 @@ const AddReviewandRating = () => {
             <Col style={{ fontWeight: 50, fontSize: 20 }}>
               <h3>Review and Rating</h3>
               Very Helpful And Thank You
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
+              <div>
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+              </div>
             </Col>
           </Row>
 
@@ -245,10 +262,12 @@ const AddReviewandRating = () => {
 
             <Col style={{ fontWeight: 50, fontSize: 20 }}>
               Very Helpful And Thank You
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
+              <div>
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+              </div>
             </Col>
           </Row>
 
@@ -282,10 +301,12 @@ const AddReviewandRating = () => {
 
             <Col style={{ fontWeight: 50, fontSize: 20 }}>
               Very Helpful And Thank You
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
+              <div>
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+              </div>
             </Col>
           </Row>
         </Card>

@@ -10,6 +10,7 @@ import AdvertiserSignUp from './components/loginForm/AdvertiserSignUP.js';
 import ViewServices from './components/pages/User/ViewServices.js';
 import ServicePage from './components/pages/User/ServicePage.js';
 
+
 import CreateAd from './components/pages/advertiser/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
 import AdDashbord from './components/pages/advertiser/AdDashboard.js';
@@ -21,6 +22,7 @@ import YetToVerifyAds from './components/pages/advertiser/Ads/YetToVerifyAds.js'
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
 import Subscribtion from './components/pages/advertiser/subscription.js';
+import AdvertiserChat from './components/pages/User/Chat/ChatPage.js';
 
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
@@ -45,7 +47,7 @@ import SpAvailabilityCalendar from './components/pages/ServiceProvider/Availabil
 import SpMyTrainingSessions from './components/pages/ServiceProvider/MyTrainingSessions/Index.js';
 import SpViewHistory from './components/pages/ServiceProvider/ViewHistory/Index.js';
 import SpPendingJob from './components/pages/ServiceProvider/PendingJob/Index.js';
-
+import SpChat from './components/pages/User/Chat/ChatPage.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -65,7 +67,7 @@ import AdminReport from './components/pages/Admin/AdminReport/AdminReport.js';
 import AdminAdvertisements from './components/pages/Admin/AdminAdvertisements/AdminAdvertisements.js';
 import AdminViewHistory from './components/pages/User/Admin/ViewHistory.js';
 import ViewReviewandRating from './components/pages/User/Admin/ViewReviewandRating.js';
-import Chat from './components/pages/User/Chat/ChatPage.js';
+import AdminChat from './components/pages/User/Chat/ChatPage.js';
 import AdminSessions from './components/pages/Admin/AdminSessions/AdminSessions.js';
 
 
@@ -79,6 +81,7 @@ import ViewVacancy from './components/pages/Customer/ViewVacancy.js';
 import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP.js';
 import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
 import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js';
+import CustomerChat from './components/pages/User/Chat/ChatPage.js';
 
 import Forum from './components/pages/Forum/Forum.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
@@ -123,8 +126,9 @@ const router = createBrowserRouter(
         <Route path="advertisements" element={<AdminAdvertisements />} />
         <Route path="history" element={<AdminViewHistory /> } />
         <Route path="review" element={<ViewReviewandRating/>}  />  
-        <Route path="chat" element={<Chat/>}  /> 
+        <Route path="chat" element={<AdminChat/>}  /> 
         <Route path="sessions" element={<AdminSessions />} />
+      
      
       </Route>
 
@@ -137,6 +141,7 @@ const router = createBrowserRouter(
         <Route path="RejectedAds" element={<RejectedAds />} />
         <Route path="YetToVerifyAds" element={<YetToVerifyAds />} />
         <Route path="Subscribtion" element={<Subscribtion />} />
+        <Route path="Chat" element ={<AdvertiserChat/>}/>
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -159,6 +164,8 @@ const router = createBrowserRouter(
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+        <Route path="Chat" element={<CustomerChat />} />
+
        
         
         <Route path="Forum" element={<Forum />} />
@@ -188,6 +195,7 @@ const router = createBrowserRouter(
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
         <Route path="ViewHistory" element={<SpViewHistory/>} />
         <Route path="PendingJob" element={<SpPendingJob/>} />
+        <Route path="Chat" element={<SpChat/>} />
       </Route>
 
       <Route

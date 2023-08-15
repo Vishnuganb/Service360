@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../assets/images/header/Frame 2.png";
 import profileIcon from "../../assets/images/header/user.jpg";
+import { Link } from 'react-router-dom';
 
 function AdvertiserHeader() {
   return (
@@ -34,7 +35,7 @@ function AdvertiserHeader() {
               <i className="bi bi-bell-fill"></i>
             </Nav.Link>
             <Nav.Link
-              href="#chat"
+              href="#chat"  as={Link} to="/Advertiser/Chat"
               className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
             >
               <i className="bi bi-chat-fill"></i>

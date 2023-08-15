@@ -218,7 +218,9 @@ function AcceptedJobDetails() {
         <span>Todo List</span>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
                 <Button className="btn-ServiceProvider-1">Start Todo List</Button>
-                <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
+                <Link className="d-flex ms-auto" to={`../ToDoList/${jobId}`}>
+                  <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
+                </Link>
         </div>
         <hr/>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">

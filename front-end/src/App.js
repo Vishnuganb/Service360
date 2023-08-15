@@ -89,7 +89,7 @@ import Searchserviceprovider from './components/pages/Customer/SearchServiceProv
 import JobRequest from './components/pages/Customer/JobRequest.js';
 import Forum from './components/pages/Forum/Forum.js';
 import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
-import ToDoList from './components/pages/Customer/CreateToDo';
+import ToDoList from './components/pages/ServiceProvider/CreateToDo.js';
 import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
 import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
 
@@ -156,7 +156,6 @@ const router = createBrowserRouter(
         <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
-        <Route path="ToDoList" element={<ToDoList />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
         <Route path="RequestedQuotation" element={<RequestedQuotation />} />
         <Route path="PostedVacancies" element={<PostedVacancies />} />
@@ -190,6 +189,7 @@ const router = createBrowserRouter(
         <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="ToDoList/:id" element={<ToDoList />} />
       </Route>
 
 

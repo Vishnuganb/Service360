@@ -146,8 +146,6 @@ function SpCalendar(){
         const newScheduleData = {
             ...scheduleFormData,
             serviceproviderid: 1,
-            eventstarttime: convertTo24HourFormat(scheduleFormData.eventstarttime),
-            eventendtime: convertTo24HourFormat(scheduleFormData.eventendtime),
         };
 
         axios.post('http://localhost:8080/auth/createServiceProviderCalendar', newScheduleData).then((response) => {

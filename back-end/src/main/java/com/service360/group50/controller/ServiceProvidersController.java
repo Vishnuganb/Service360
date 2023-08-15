@@ -1,6 +1,7 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.entity.Jobs;
+import com.service360.group50.entity.TrainingSession;
 import com.service360.group50.entity.Vacancies;
 import com.service360.group50.entity.ServiceProviderCalendar;
 import com.service360.group50.service.ServiceProviderService;
@@ -79,4 +80,16 @@ public class ServiceProvidersController {
     public void deleteServiceProviderCalendarEvent(@PathVariable Long id) {
         serviceProviderService.deleteServiceProviderCalendarEvent(id);
     }
+
+    //TRAINING SESSIONS
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("auth/viewTrainingSessions")
+    public List<TrainingSession> viewTrainingSessions() {
+        return serviceProviderService.viewTrainingSessions();
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("auth/viewTrainingSessions/{id}")
+    public TrainingSession viewATrainingSession(@PathVariable Long id) {return serviceProviderService.viewATrainingSession(id);}
+
 }

@@ -47,7 +47,7 @@ function JobDetails() {
     });
   }   , []);
 
-  if (!viewJobData) return 'No job found!';
+  if (!viewJobData) return 'No training sessions found!';
 
   return (
     <>
@@ -69,12 +69,12 @@ function JobDetails() {
         </div>
         <div>
           {/* <Link to="/ServiceProvider/AcceptedJob"> */}
-            <Button
+            {/* <Button
               className="jobDetails-apply-btn btn-ServiceProvider-1 mt-2 mb-4"
               style={{ fontFamily: "'Rubik', sans-serif" }}
             >
               Apply
-            </Button>
+            </Button> */}
           {/* </Link> */}
           </div>
 

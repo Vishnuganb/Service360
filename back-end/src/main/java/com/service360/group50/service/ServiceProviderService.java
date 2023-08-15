@@ -1,8 +1,10 @@
 package com.service360.group50.service;
 
 import com.service360.group50.entity.Jobs;
+import com.service360.group50.entity.TrainingSession;
 import com.service360.group50.entity.Vacancies;
 import com.service360.group50.entity.ServiceProviderCalendar;
+import com.service360.group50.repo.TrainingSessionRepository;
 import com.service360.group50.repo.JobsRepository;
 import com.service360.group50.repo.ServiceProviderCalendarRepository;
 import com.service360.group50.repo.VacanciesRepository;
@@ -20,6 +22,8 @@ public class ServiceProviderService {
     private VacanciesRepository vacanciesRepository;
     @Autowired
     private ServiceProviderCalendarRepository serviceProviderCalendarRepository;
+    @Autowired
+    private TrainingSessionRepository trainingSessionRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -80,4 +84,16 @@ public class ServiceProviderService {
     public void deleteServiceProviderCalendarEvent(Long id){
         serviceProviderCalendarRepository.deleteById(id);
     }
+
+    public List<TrainingSession> viewTrainingSessions() {
+        List<TrainingSession> TrainingSessionList = new ArrayList<>();
+        trainingSessionRepository.findAll().forEach(TrainingSessionList::add);
+        return TrainingSessionList;
+    }
+
+    public TrainingSession viewATrainingSession(Long id){
+        return trainingSessionRepository.findById(id).orElse(null);
+    }
+
+
 }

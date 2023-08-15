@@ -170,7 +170,7 @@ const router = createBrowserRouter(
         <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
         <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
         <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
-        <Route path="ViewATrainingSession" element={<SpViewATrainingSession/>} />
+        <Route path="ViewATrainingSession/:id" element={<SpViewATrainingSession/>} />
         <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
         <Route path="OngoingJob/:id" element={<SpOngoingJob/>} />
         <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />

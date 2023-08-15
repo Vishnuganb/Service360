@@ -8,13 +8,124 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+import { Link } from "react-router-dom";
 
 function AcceptedJobDetails() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+
+    const viewJobsData = [
+      {
+      profile: UserImg,
+      id: 1,
+      customerName: 'Viyaasan',
+      lastSeen: '2 days ago',
+      jobTitle: 'Tv Repair',
+      dueDate: '2023-08-29',
+      serviceName: 'Electrical Wiring',
+      jobStatus: 'new',
+      description: 'As a printer repair technician, your primary responsibility is to diagnose, troubleshoot, and repair a wide range of printer issues. You will be the go-to expert for resolving technical problems, ensuring that printers operate at peak performance. From laser printers to inkjet models, you will handle various makes and models, addressing both hardware and software-related concerns.',
+      location: 'Wellawatte',
+      posted: '2023-08-02',
+      images:[printer1,printer2,printer1,printer2,printer1,printer2],
+      jobsCount:6,
+      jobCommentId:1,
+      },
+      {
+      profile: UserImg,
+      id: 2,
+      customerName: 'Pranavan',
+      lastSeen: '1 day ago',
+      jobTitle: 'tiles fitting at House',
+      dueDate: '2023-08-28',
+      serviceName: 'Tiles Fitting',
+      jobStatus: 'new',
+      description: 'Fit tiles for full house. Ensure precise alignment and create a visually appealing pattern. Use high-quality adhesive to ensure long-lasting results. Experience with different types of tiles and materials is preferred.',
+      location: 'Colombo',
+      images:[printer1,printer2,printer1,printer2,printer1,printer2],
+      jobsCount:13,
+      jobCommentId:2,
+      },
+      {
+      profile: UserImg,
+      id: 3,
+      customerName: 'Kavin',
+      lastSeen: '3 days ago',
+      jobTitle: 'Build Wall',
+      dueDate: '2023-08-30',
+      serviceName: 'Masonry',
+      jobStatus: 'new',
+      description: 'Construct a concrete wall around the house. Ensure strong foundation and proper alignment. Use high-quality materials for durability. Experience in bricklaying and mortar mixing is required.',
+      location: 'Mount Lavinia',
+      images:[printer1,printer2,printer1,printer2,printer1,printer2],
+      jobsCount:1,
+      jobCommentId:3,
+      },
+      {
+      profile: UserImg,
+      id: 4,
+      customerName: 'Tharun',
+      lastSeen: '1 week ago',
+      jobTitle: 'House Cleaning',
+      dueDate: '2023-08-25',
+      serviceName: 'Cleaning',
+      jobStatus: 'new',
+      description: 'Perform thorough cleaning of the entire house. Focus on areas such as kitchen, bathrooms, living spaces, and bedrooms. Use eco-friendly cleaning products for a safe and healthy environment. Pay attention to details and ensure a spotless finish',
+      location: 'Dehiwala',
+      images:[printer1,printer2,printer1,printer2,printer1,printer2],
+      jobsCount:7,
+      jobCommentId:4,
+      },
+      {
+      profile: UserImg,
+      id: 5,
+      customerName: 'Umai vanan',
+      lastSeen: '4 days ago',
+      jobTitle: 'Build House',
+      dueDate: '2023-08-27',
+      serviceName: 'Masonry',
+      jobStatus: 'completed',
+      description: 'Undertake the construction of a multi-room house within a strict timeline. Coordinate with other professionals, including architects and engineers, to ensure smooth execution. Monitor construction progress and address any issues that may arise',
+      location: 'Nugegoda',
+      images:[printer1,printer2,printer1,printer2,printer1,printer2],
+      jobsCount:19,
+      jobCommentId:5,
+      },
+      {
+      profile: UserImg,
+      id: 6,
+      customerName: 'Vithakan',
+      lastSeen: '2 weeks ago',
+      jobTitle: 'Ground Cleaning',
+      dueDate: '2023-08-24',
+      serviceName: 'Cleaning',
+      jobStatus: 'completed',
+      description: 'Perform deep cleaning of a cricket ground. Remove debris, litter, and dirt from the field. Ensure the ground is safe and ready for matches. Use appropriate cleaning equipment and techniques to achieve desired results',
+      location: 'Rajagiriya',
+      images:[printer1,printer2,printer1,printer2,printer1,printer2],
+      jobsCount:21,
+      jobCommentId:6,
+      },
+      {
+      profile: UserImg,
+      id: 7,
+      customerName: 'Vathusan',
+      lastSeen: '5 days ago',
+      jobTitle: 'Fix Fridge',
+      dueDate: '2023-08-26',
+      serviceName: 'Electrical Wiring',
+      jobStatus: 'completed',
+      description: 'Diagnose and repair a broken refrigerator. Identify faulty components and replace them with genuine parts. Ensure the fridge is functioning optimally and maintains the desired temperature. Perform thorough testing before completing the job',
+      location: 'Battaramulla',
+      images:[printer1,printer2,printer1,printer2,printer1,printer2],
+      jobsCount:10,
+      jobCommentId:7,
+      },
+  ];
+
 
   return (
     <div>
@@ -33,21 +144,6 @@ function AcceptedJobDetails() {
                 style={{ fontSize:"18px",fontFamily: "'Rubik', sans-serif" }}
                 >
                 Umai Vanan
-                </div>
-                <div
-                className="AcceptedJobDetails-ratings mb-1"
-                style={{ fontFamily: "'Rubik', sans-serif" }}
-                >
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                </div>
-                <div
-                className="AcceptedJobDetails-ratings-count"
-                style={{ fontFamily: "'Rubik', sans-serif" }}
-                >
-                (for 5 jobs)
                 </div>
                 <div className="d-flex flex-row">
                     <div className="me-3">
@@ -147,24 +243,10 @@ function AcceptedJobDetails() {
                 <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
         </div>
         <hr/>
-        <span>Quatation</span>
-        <div className="mt-2 d-flex flex-column">
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Control type="file" placeholder="Password" /> 
-                    </Form.Group>
-                    <Form.Text className="text-muted d-block mb-3">
-                      Visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
-                    </Form.Text>
-                    <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
-                        Send Quotation
-                    </Button>
-                </Form>
-        </div>
-        <hr/>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button className="btn-ServiceProvider-1" onClick={handleShow}>Schedule Visitation</Button>
-                <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
+                <Link className="ms-auto" to="../StartJob">
+                  <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
+                </Link>
         </div>
 
 

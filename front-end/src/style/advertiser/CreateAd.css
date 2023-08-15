@@ -52,14 +52,14 @@
 
 
 .Adprice{
-    color: #643A3A;
+    color: #292D32;
     font-weight: bold;
 
 }
 
 .AdViewButton{
     all: unset;
-    background-color: #9F390D;
+    background-color: #292D32;
     color: #ffffff;
     font-weight: bold;
     width:5em;
@@ -70,7 +70,7 @@
 
 .AdViewButton:hover{
     background-color: #ffffff;
-    border: 1px solid #9F390D;
+    border: 1px solid #292D32;
     color: black;
 }
 
@@ -94,3 +94,18 @@
     border: 1px solid #357DEA;
     
 }
+
+.CreateAdInput{
+    background-color: unset;
+}
+
+.BrowseImageInput{
+    /* all:unset; */
+    
+    /* background-color: #292D32; */
+}
+
+.AddeleteImg:hover{
+scale: 1.1;
+}
+

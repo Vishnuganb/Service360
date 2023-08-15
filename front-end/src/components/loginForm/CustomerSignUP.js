@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from "react-router-dom";
 import loginPhoto from '../../assets/images/home/customerSignUP.png'
 import styled from 'styled-components';
@@ -6,10 +6,11 @@ import validator from "validator";
 import '../../style/Login.css'
 import { Alert } from 'react-bootstrap';
 import image from '../../assets/images/header/Background.png'
+import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
 
 const customFontStyle = {
     fontFamily: "Roboto",
-    color: '#9F390D' // Replace 'Your_Custom_Font' with the font name you want to use
+    color: '#9F390D' 
 };
 
 const StyledButton = styled.button`
@@ -26,26 +27,12 @@ const StyledButton = styled.button`
         }
     `;
 
-const StyledButton2 = styled.button`
-        background-color: #292D32;
-        width: 30%;
-        @media (max-width: 768px) {
-            width: 100%; 
-            margin-top: 1rem; 
-        }
-        &:hover {
-            background: #fff;
-            border-color: #2596be;
-            color: #9f390d;
-        }
-    `;
-
 
 const CustomerSignUP = () => {
 
-    const { LoginLink } = ''
+    const { login } = useContext(AuthenticationContext);
 
-    const { signUp } = ''
+    const { customerSignUp } = useContext(AuthenticationContext);
 
     const [data, setdata] = useState({
         email: '',
@@ -202,13 +189,13 @@ const CustomerSignUP = () => {
         });
 
         if (!isError) {
-            signUp({
+            customerSignUp({
                 email: data.email,
                 password: data.password,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                nicNumber: data.nicNumber,
-                contactNumber: data.contactNumber,
+                firstname: data.firstName,
+                lastname: data.lastName,
+                nic: data.nicNumber,
+                phonenumber: data.contactNumber,
                 address: data.address,
             });
         }
@@ -411,7 +398,7 @@ const CustomerSignUP = () => {
 
                                                     </div>
 
-                                                    <p> Have an account? <Link className="text-primary" to="/login"> Login </Link>  </p>
+                                                    <p> Have an account? <Link className="text-primary" to={login}> Login </Link>  </p>
 
                                                 </div>
 

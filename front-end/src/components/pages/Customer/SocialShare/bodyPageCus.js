@@ -2,6 +2,7 @@ import '../../../../style/Customer/ViewSPCard.css';
 import Pagination from 'react-bootstrap/Pagination';
 import ViewSPCard  from './ViewSPCard';
 import Row from 'react-bootstrap/esm/Row';
+import BgImage from '../../../../assets/images/header/Background.png';
 
 function BodyPageCus() {
 

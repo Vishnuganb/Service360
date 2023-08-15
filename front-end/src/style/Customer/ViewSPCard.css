@@ -1,4 +1,10 @@
 
+  .SPRatings .ratereview{
+    font-weight: 500;
+  }
+  .SPRatings{
+    margin-top: 30px;
+  }
 #navbarScroll{
     justify-content: space-between;
     width: 100%;

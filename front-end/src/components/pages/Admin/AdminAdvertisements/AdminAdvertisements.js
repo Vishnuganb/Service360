@@ -7,33 +7,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-import Ad1_1 from '../../../../assets/images/admin/Driller_1.jpg';
-import Ad1_2 from '../../../../assets/images/admin/Driller_2.jpg';
-import Ad1_3 from '../../../../assets/images/admin/Driller_3.jpg';
-import Ad2_1 from '../../../../assets/images/admin/Screw_1.jpeg';
-import Ad2_2 from '../../../../assets/images/admin/Screw_2.jpeg';
-import Ad2_3 from '../../../../assets/images/admin/Screw_3.jpeg';
-import Ad3_1 from '../../../../assets/images/admin/Grinder_1.jpeg';
-import Ad3_2 from '../../../../assets/images/admin/Grinder_2.jpeg';
-import Ad3_3 from '../../../../assets/images/admin/Grinder_3.jpeg';
-import Ad4_1 from '../../../../assets/images/admin/drills_2.jpeg';
-import Ad4_2 from '../../../../assets/images/admin/drills_1.jpeg';
-import Ad4_3 from '../../../../assets/images/admin/drills_3.jpeg';
-import Ad5_1 from '../../../../assets/images/admin/handsaw_1.jpeg';
-import Ad5_2 from '../../../../assets/images/admin/handsaw_2.jpeg';
-import Ad5_3 from '../../../../assets/images/admin/handsaw_3.jpeg';
-import Ad6_1 from '../../../../assets/images/admin/hammer_1.jpeg';
-import Ad6_2 from '../../../../assets/images/admin/hammer_2.jpeg';
-import Ad6_3 from '../../../../assets/images/admin/hammer_3.jpeg';
-import Ad7_1 from '../../../../assets/images/admin/disk_2.jpeg';
-import Ad7_2 from '../../../../assets/images/admin/disk_1.jpeg';
-import Ad7_3 from '../../../../assets/images/admin/disk_3.jpeg';
-import Ad8_1 from '../../../../assets/images/admin/plier_1.jpeg';
-import Ad8_2 from '../../../../assets/images/admin/plier_2.jpeg';
-import Ad8_3 from '../../../../assets/images/admin/plier_3.jpeg';
-import Ad9_1 from '../../../../assets/images/admin/wrench_1.jpeg';
-import Ad9_2 from '../../../../assets/images/admin/wrench_2.jpeg';
-import Ad9_3 from '../../../../assets/images/admin/wrench_3.jpeg';
+import Ad1_1 from '../../../../assets/images/admin/ads/Driller_1.jpg';
+import Ad1_2 from '../../../../assets/images/admin/ads/Driller_2.jpg';
+import Ad1_3 from '../../../../assets/images/admin/ads/Driller_3.jpg';
+import Ad2_1 from '../../../../assets/images/admin/ads/Screw_1.jpeg';
+import Ad2_2 from '../../../../assets/images/admin/ads/Screw_2.jpeg';
+import Ad2_3 from '../../../../assets/images/admin/ads/Screw_3.jpeg';
+import Ad3_1 from '../../../../assets/images/admin/ads/Grinder_1.jpeg';
+import Ad3_2 from '../../../../assets/images/admin/ads/Grinder_2.jpeg';
+import Ad3_3 from '../../../../assets/images/admin/ads/Grinder_3.jpeg';
+import Ad4_1 from '../../../../assets/images/admin/ads/drills_2.jpeg';
+import Ad4_2 from '../../../../assets/images/admin/ads/drills_1.jpeg';
+import Ad4_3 from '../../../../assets/images/admin/ads/drills_3.jpeg';
+import Ad5_1 from '../../../../assets/images/admin/ads/handsaw_1.jpeg';
+import Ad5_2 from '../../../../assets/images/admin/ads/handsaw_2.jpeg';
+import Ad5_3 from '../../../../assets/images/admin/ads/handsaw_3.jpeg';
+import Ad6_1 from '../../../../assets/images/admin/ads/hammer_1.jpeg';
+import Ad6_2 from '../../../../assets/images/admin/ads/hammer_2.jpeg';
+import Ad6_3 from '../../../../assets/images/admin/ads/hammer_3.jpeg';
+import Ad7_1 from '../../../../assets/images/admin/ads/disk_2.jpeg';
+import Ad7_2 from '../../../../assets/images/admin/ads/disk_1.jpeg';
+import Ad7_3 from '../../../../assets/images/admin/ads/disk_3.jpeg';
+import Ad8_1 from '../../../../assets/images/admin/ads/plier_1.jpeg';
+import Ad8_2 from '../../../../assets/images/admin/ads/plier_2.jpeg';
+import Ad8_3 from '../../../../assets/images/admin/ads/plier_3.jpeg';
+import Ad9_1 from '../../../../assets/images/admin/ads/wrench_1.jpeg';
+import Ad9_2 from '../../../../assets/images/admin/ads/wrench_2.jpeg';
+import Ad9_3 from '../../../../assets/images/admin/ads/wrench_3.jpeg';
 import { set } from 'lodash';
 
 const searchInputStyle = {
@@ -59,6 +59,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-01',
             service: 'Carpentry',
             category: 'Tools',
+            shopName: 'The Handyman Hub',
+            shopAddress: '123 Main Street, City',
             images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Pending',
             uploadedFiles: [
@@ -78,6 +80,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-02',
             service: 'AC Repair',
             category: 'Tools',
+            shopName: 'Electric Fixers',
+            shopAddress: '456 Oak Avenue, Town',
             images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Accepted',
             uploadedFiles: [
@@ -97,6 +101,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-03',
             service: 'Masonry',
             category: 'Tools',
+            shopName: 'Creative Carpentry',
+            shopAddress: '789 Maple Lane, Village',
             images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Rejected',
             uploadedFiles: [
@@ -116,6 +122,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-04',
             service: 'CCTV Repair',
             category: 'Tools',
+            shopName: 'Master Plumbers',
+            shopAddress: '101 Pine Street, City',
             images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Pending',
             uploadedFiles: [
@@ -135,6 +143,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-05',
             service: 'Sofa cleaning',
             category: 'Tools',
+            shopName: 'All Seasons Cleaners',
+            shopAddress: '222 Oak Road, Town',
             images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Accepted',
             uploadedFiles: [
@@ -154,6 +164,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-06',
             service: 'Painting',
             category: 'Tools',
+            shopName: 'Artisan Masons',
+            shopAddress: '333 Maple Street, Village',
             images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Rejected',
             uploadedFiles: [
@@ -173,6 +185,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-07',
             service: 'Electrical Wiring',
             category: 'Spare Parts',
+            shopName: 'SecureTech Solutions',
+            shopAddress: '444 Pine Avenue, City',
             images: [Ad4_1, Ad4_2, Ad4_3],
             status: 'Pending',
             uploadedFiles: [
@@ -191,7 +205,9 @@ function AdminAdvertisements() {
             address: '555 Oak Lane, Town',
             registeredDate: '2023-08-08',
             service: 'Tools',
-            category: 'Construction',
+            category: 'Tools',
+            shopName: 'Elite Interior Design',
+            shopAddress: '555 Oak Lane, Town',
             images: [Ad5_1, Ad5_2, Ad5_3],
             status: 'Accepted',
             uploadedFiles: [
@@ -211,6 +227,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-09',
             service: 'Fire Alarm',
             category: 'Tools',
+            shopName: 'GreenThumb Landscaping',
+            shopAddress: '666 Maple Road, Village',
             images: [Ad6_1, Ad6_2, Ad6_3],
             status: 'Rejected',
             uploadedFiles: [
@@ -230,6 +248,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-10',
             service: 'Carpentry',
             category: 'Tools',
+            shopName: 'TopNotch Roofing',
+            shopAddress: '777 Main Street, City',
             images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Pending',
             uploadedFiles: [
@@ -249,6 +269,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-11',
             service: 'AC Repair',
             category: 'Tools',
+            shopName: 'TechZone Electronics',
+            shopAddress: '888 Oak Avenue, Town',
             images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Accepted',
             uploadedFiles: [
@@ -268,6 +290,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-12',
             service: 'Masonry',
             category: 'Tools',
+            shopName: 'AquaFlow Plumbing',
+            shopAddress: '999 Maple Lane, Village',
             images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Rejected',
             uploadedFiles: [
@@ -287,6 +311,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-13',
             service: 'CCTV Repair',
             category: 'Spare Parts',
+            shopName: 'SparkleClean Services',
+            shopAddress: '1010 Pine Street, City',
             images: [Ad7_1, Ad7_2, Ad7_3],
             status: 'Pending',
             uploadedFiles: [
@@ -306,6 +332,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-14',
             service: 'Sofa cleaning',
             category: 'Tools',
+            shopName: 'Precision Builders',
+            shopAddress: '111 Oak Road, Town',
             images: [Ad8_1, Ad8_2, Ad8_3],
             status: 'Accepted',
             uploadedFiles: [
@@ -325,6 +353,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-15',
             service: 'Painting',
             category: 'Tools',
+            shopName: 'SkyHigh Air Conditioning',
+            shopAddress: '1212 Maple Street, Village',
             images: [Ad9_1, Ad9_2, Ad9_3],
             status: 'Rejected',
             uploadedFiles: [
@@ -344,6 +374,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-16',
             service: 'Electrical Wiring',
             category: 'Tools',
+            shopName: 'Golden Hammer Construction',
+            shopAddress: '1313 Pine Avenue, City',
             images: [Ad3_1, Ad3_2, Ad3_3],
             status: 'Pending',
             uploadedFiles: [
@@ -363,6 +395,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-17',
             service: 'Tiles Fitting',
             category: 'Tools',
+            shopName: 'SilverLock Security',
+            shopAddress: '1414 Oak Lane, Town',
             images: [Ad1_1, Ad1_2, Ad1_3],
             status: 'Accepted',
             uploadedFiles: [
@@ -382,6 +416,8 @@ function AdminAdvertisements() {
             registeredDate: '2023-08-18',
             service: 'Fire Alarm',
             category: 'Tools',
+            shopName: 'Elegant Designs',
+            shopAddress: '1515 Maple Road, Village',
             images: [Ad2_1, Ad2_2, Ad2_3],
             status: 'Rejected',
             uploadedFiles: [
@@ -408,7 +444,7 @@ function AdminAdvertisements() {
         totalPages: 1,
         searchTerm: '',
         activeTab: 'Pending',
-        filteredServiceProviders: [],
+        filteredAdvertisements: [],
         displayedServices: [],
         showDetailsModal: false,
         selectedAdvertisement: null,
@@ -438,7 +474,7 @@ function AdminAdvertisements() {
     const handlePageChange = (page) => {
         const startIndex = (page - 1) * data.cardsPerPage;
         const endIndex = startIndex + data.cardsPerPage;
-        const filteredData = data.filteredServiceProviders[data.activeTab];
+        const filteredData = data.filteredAdvertisements[data.activeTab];
         const displayedServices = filteredData.slice(startIndex, endIndex);
 
         setData({
@@ -458,7 +494,7 @@ function AdminAdvertisements() {
         }));
     };
 
-    const filterServiceProviders = (status) => {
+    const filterAdvertisements = (status) => {
         const filteredServices = data.selectedCategory !== 'default'
             ? advertisementsData.filter((advertisement) => advertisement.category === data.selectedCategory)
             : advertisementsData;
@@ -466,8 +502,7 @@ function AdminAdvertisements() {
         const filteredProviders = filteredServices.filter((advertisement) =>
             advertisement.status === status && (
                 advertisement.adName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                advertisement.category.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                advertisement.service.toLowerCase().includes(data.searchTerm.toLowerCase())
+                advertisement.category.toLowerCase().includes(data.searchTerm.toLowerCase()) 
             )
         );
 
@@ -505,9 +540,9 @@ function AdminAdvertisements() {
 
     useEffect(() => {
         const filteredServicesByStatus = {
-            Pending: filterServiceProviders('Pending'),
-            Accepted: filterServiceProviders('Accepted'),
-            Rejected: filterServiceProviders('Rejected'),
+            Pending: filterAdvertisements('Pending'),
+            Accepted: filterAdvertisements('Accepted'),
+            Rejected: filterAdvertisements('Rejected'),
         };
 
         const filteredProviders = filteredServicesByStatus[data.activeTab];
@@ -516,7 +551,7 @@ function AdminAdvertisements() {
         setData((prevState) => ({
             ...prevState,
             totalPages,
-            filteredServiceProviders: filteredServicesByStatus,
+            filteredAdvertisements: filteredServicesByStatus,
             displayedServices: filteredProviders.slice(0, data.cardsPerPage),
             currentPage: 1,
         }));
@@ -737,36 +772,9 @@ function AdminAdvertisements() {
                                         ))}
                                     </Carousel>
                                 </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertisement ID: </span>Ads000{data.selectedAdvertisement.id}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertiser ID: </span> Adv000{data.selectedAdvertisement.id}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Category:</span> {data.selectedAdvertisement.category}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedAdvertisement.firstName}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Last Name: </span> {data.selectedAdvertisement.lastName}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>NIC: </span> {data.selectedAdvertisement.nic}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Email: </span> {data.selectedAdvertisement.email}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Address: </span> {data.selectedAdvertisement.address}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Registered Date: </span> {data.selectedAdvertisement.registeredDate}
-                                </div>    
                             </div>
                             <div className="col-md-4">
-                                <div className="p-3 " style={{ marginTop: '100px' }}>
+                                <div className="p-3 ">
                                     <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
                                         <h6 className="text-center">Warranty Card And Documents</h6>
                                     </div>
@@ -774,7 +782,7 @@ function AdminAdvertisements() {
                                         {data.selectedAdvertisement.uploadedFiles.map((file, index) => (
                                             <li key={index}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
-                                                    <i class="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
+                                                    <i className="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
                                                     <a href={file.url} download className="text-decoration-none text-dark fw-bold">
                                                         {file.fileName}
                                                     </a>
@@ -783,6 +791,31 @@ function AdminAdvertisements() {
                                         ))}
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Advertiser Full Name: </span>{data.selectedAdvertisement.firstName}{' '}{data.selectedAdvertisement.lastName}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Shop Name:</span> {data.selectedAdvertisement.shopName}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Shop Address: </span> {data.selectedAdvertisement.shopAddress}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>contact Number: </span> {data.selectedAdvertisement.contactNumber}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Category:</span> {data.selectedAdvertisement.category}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>NIC: </span> {data.selectedAdvertisement.nic}
+                                </div>
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Email: </span> {data.selectedAdvertisement.email}
+                                </div> 
                             </div>
                         </div>
                     </Modal.Body>

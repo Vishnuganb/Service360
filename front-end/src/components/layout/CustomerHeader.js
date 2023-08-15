@@ -31,7 +31,7 @@ function CustomerHeader() {
                         <NavDropdown title="Tharsana" className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item href="#" className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item as={Link} to="#" className="fw-bold no-hover">Logout</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/" className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
                         <img src={profileIcon} alt="Profile" className="profileIcon" />
                     </Nav>

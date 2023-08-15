@@ -1,17 +1,45 @@
 import React, { useState, useContext } from 'react'
-import { Link, useNavigate } from "react-router-dom";
-import loginPhoto from '../../assets/images/home/login.jpeg'
+import { Link } from "react-router-dom";
+import loginPhoto from '../../assets/images/home/login.png'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styled from 'styled-components';
 import { Modal } from 'react-bootstrap';
 import '../../style/Login.css'
 import image from '../../assets/images/header/Background.png'
 import { ReactLinkContext } from "../../ContextFiles/ReactLinkContext";
+import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
 
+    const StyledButton = styled.button`
+        background-color: #292D32;
+        width: 70%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+    }
+    `;
+    
+    const StyledButton2 = styled.button`
+        background-color: #292D32;
+        width: 30%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+        }
+    `;
 
 const Login = () => {
 
-    const navigate = useNavigate();
+    const { login } = useContext(AuthenticationContext)
 
     const { CustomerSignUpLink, ServiceProviderSignUpLink, AdvertiserSignUpLink } = useContext(ReactLinkContext)
 
@@ -27,18 +55,26 @@ const Login = () => {
 
     const [errorMessage, setErrorMessage] = useState(null)
 
-    const login = (email, password) => {
+    const LoginLink = (email, password) => {
 
-        let isError = false
-
-        if (email === '' || password === '') {
-            isError = true
+        if (email === '' && password === '') {
             setErrorMessage('Please fill in all the fields')
+<<<<<<< HEAD
         }
 
         if (!isError) {
             navigate('/')
         }
+=======
+        }else if (email === '') {
+            setErrorMessage('Please enter the email address')
+        }else if (email === '' && password === '') {
+            setErrorMessage('Please enter the password')
+        } else {
+             login(email, password);
+             console.log(email, password)
+        } 
+>>>>>>> 71291c652dc127cf7b1d46bd2eaf339fcf262ea9
 
     }
 
@@ -60,9 +96,10 @@ const Login = () => {
 
     const customFontStyle = {
         fontFamily: "Roboto",
-        color: '#9F390D' // Replace 'Your_Custom_Font' with the font name you want to use
+        color: '#9F390D' 
     };
 
+<<<<<<< HEAD
     const StyledButton = styled.button`
         background-color: #292D32;
         width: 70%;
@@ -91,6 +128,8 @@ const Login = () => {
         }
     `;
 
+=======
+>>>>>>> 71291c652dc127cf7b1d46bd2eaf339fcf262ea9
     const [showModal, setShowModal] = useState(false);
 
     const toggleModal = () => setShowModal(!showModal);
@@ -183,7 +222,7 @@ const Login = () => {
                                                     <StyledButton
                                                         className="btn btn-dark btn-block"
                                                         type="button"
-                                                        onClick={() => login(email, password)}
+                                                        onClick={() => LoginLink(email, password)}
                                                     >
                                                         Sign in
                                                     </StyledButton>
@@ -262,7 +301,7 @@ const Login = () => {
 
                                             <div className="text-center">
 
-                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" />
+                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" style={{backgroundColor:'none'}}/>
 
                                             </div>
 

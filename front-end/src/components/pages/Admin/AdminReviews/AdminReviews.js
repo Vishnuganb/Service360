@@ -278,30 +278,37 @@ export default function AdminReviews() {
             </Tabs>
             <section className="block review-block" style={{ backgroundImage: `url(${BgImage})` }}>
 
-                <h2 className='ms-5 fw-bold align-self-start'>System Reviews</h2>
+                {/* <h2 className='ms-5 fw-bold align-self-start'>System Reviews</h2> */}
 
-                {data.activeTab === "All" && (
-                    <div className="d-flex justify-content-end  w-100">
-                        <div className='col-xs-2 col-sm-5 col-md-3 col-lg-3 col-xl-2 mx-5'>
-                            <div className="input-group">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Search Reviews"
-                                    value={data.searchTerm}
-                                    onChange={handleSearchChange}
-                                />
-                                <span className="input-group-text">
-                                    <FontAwesomeIcon icon={faSearch} />
-                                </span>
+                {data.activeTab === "All" ? (
+                    <>
+                        <h2 className='ms-5 fw-bold align-self-start'>System Reviews</h2>
+                        <div className="d-flex justify-content-end  w-100">
+                            <div className='col-xs-2 col-sm-5 col-md-3 col-lg-3 col-xl-2 mx-5'>
+                                <div className="input-group">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search Reviews"
+                                        value={data.searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                    <span className="input-group-text">
+                                        <FontAwesomeIcon icon={faSearch} />
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </>
+                ) : (
+                    <>
+                        <h2 className='ms-5 fw-bold align-self-start'>Selected Reviews</h2>
+                    </>
                 )}
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
                     {data.displayedReviews && data.displayedReviews.map((review) => (
-                        <Card key={review.id}>
+                        <Card key={review.id} className="col-xs-12">
                             <Card.Body className="py-3" style={{ backgroundImage: `url(${Bg2Image})` }}>
                                 <div className="d-flex">
                                     <div className="flex-shrink-0">

@@ -61,7 +61,7 @@ import AdminReviews from './components/pages/Admin/AdminReviews/AdminReviews.js'
 import AdminComplaints from './components/pages/Admin/AdminComplaints/AdminComplaints.js';
 import AdminReport from './components/pages/Admin/AdminReport/AdminReport.js';
 import AdminAdvertisements from './components/pages/Admin/AdminAdvertisements/AdminAdvertisements.js';
-import AdminViewHistory from './components/pages/User/Admin/ViewHistory.js';
+import AdminViewHistory from './components/pages/Admin/AdminHistory/AdminHistory.js';
 import ViewReviewandRating from './components/pages/User/Admin/ViewReviewandRating.js';
 import AdminChat from './components/pages/User/Chat/ChatPage.js';
 import AdminSessions from './components/pages/Admin/AdminSessions/AdminSessions.js';

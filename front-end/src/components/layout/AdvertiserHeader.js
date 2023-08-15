@@ -7,13 +7,11 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../assets/images/header/Frame 2.png";
 import profileIcon from "../../assets/images/header/user.jpg";
 
-import ChatApp from "../pages/Chat/ChatApp";
+import AdvertiserEditProfile from "../pages/advertiser/EditProfile/AdvertiserEditProfile";
 
 function AdvertiserHeader() {
-  const [showChatApp, setShowChatApp] = useState(false);
-  const HideChatApp = () => {
-    setShowChatApp(false);
-  };
+ const [showEditProfile, setShowEditProfile] = useState(false);
+
 
   return (
     <Navbar expand="lg" bg="light" className="navbar">
@@ -31,12 +29,12 @@ function AdvertiserHeader() {
               <i className="bi bi-bell-fill"></i>
             </Nav.Link>
             <Nav.Link
-              onClick={() => setShowChatApp(true)}
+             
               className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
             >
               <i className="bi bi-chat-fill"></i>
             </Nav.Link>
-            <ChatApp show={showChatApp} onHide={HideChatApp} />
+            
 
             <Nav.Link
               href="#notifications"
@@ -56,14 +54,11 @@ function AdvertiserHeader() {
               className="fw-bold"
               id="basic-nav-dropdown"
             >
-              <NavDropdown.Item href="#" className="fw-bold no-hover">
+              <NavDropdown.Item href="#" className="fw-bold no-hover" onClick={() => setShowEditProfile(true)}>
                 View Profile
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#" className="fw-bold no-hover">
-                FAQ
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
+              <AdvertiserEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)}/>
               <NavDropdown.Item href="#" className="fw-bold no-hover">
                 Logout
               </NavDropdown.Item>

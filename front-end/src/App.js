@@ -135,7 +135,6 @@ const router = createBrowserRouter(
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
         <Route path="CreateAd" element={<CreateAd />} />
-        <Route path="AdsPage" element={<AdsPage />} />
         <Route path="View" element={<ViewAd />} />
         <Route index element={<AdDashbord />} />
         <Route path="Subscribtion" element={<Subscribtion />} />
@@ -170,6 +169,8 @@ const router = createBrowserRouter(
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+
+        <Route path="AdsPage" element={<AdsPage />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -210,6 +211,7 @@ const router = createBrowserRouter(
 
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="AdsPage" element={<AdsPage />} />
       </Route>
 
       <Route

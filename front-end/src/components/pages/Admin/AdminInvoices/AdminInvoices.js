@@ -9,12 +9,15 @@ const AdminInvoices = () => {
   return (
     <div className="App">
       <div className="p-4">
+        <h2>Payments</h2>
         <AnalysisInvoices />
       </div>
-      <h1>Invoice Generator</h1>
-      <div className="p-4" >
+      <div className="px-4">
+        {" "}
+        <h2>Invoice Generator</h2>
+      </div>
+      <div className="p-4">
         <GenerateInvoice />
-        
       </div>
     </div>
   );

@@ -13,21 +13,9 @@ import cus3 from "./../../../assets/images/home/Customer_3.png";
 
 import "./../../../style/Chat/chat.css";
 
-const ChatApp = ({ show, onHide }) => {
+const ChatApp = () => {
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="xl"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header
-        closeButton
-        style={{ backgroundColor: "#292D32", color: "#FFFFFF" }}
-      >
-        <h3 style={{ margin: "unset" }}>Chat</h3>
-      </Modal.Header>
+    
       <div fluid>
         <Row>
           <Col md="12">
@@ -468,7 +456,6 @@ const ChatApp = ({ show, onHide }) => {
           </Col>
         </Row>
       </div>
-    </Modal>
   );
 };
 

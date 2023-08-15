@@ -187,6 +187,7 @@ const EditAd = () => {
 
   return (
     <Container>
+      <h2>Edit Your Ad</h2>
       <Row className="AdsHome-mainCont">
         <Col className="AdsHome-left-cont d-flex justify-content-center align-items-center">
           <Row>
@@ -445,11 +446,14 @@ const EditAd = () => {
                   label="I accept the policy"
                 />
               </Form.Group>
-              <div className="d-flex justify-content-center">
-                <Button className="d-grid" onClick={handleSubmit} type="submit">
-                  Submit
-                </Button>
-              </div>
+             
+             
+                <Row className="d-flex justify-content-center ">
+                  <button className="AdViewButton mb-3" onClick={handleSubmit}>
+                    Update
+                  </button>
+                </Row>
+             
             </fieldset>
           </Form>
         </Col>

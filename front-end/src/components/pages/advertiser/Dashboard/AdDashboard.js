@@ -162,7 +162,7 @@ const AdDashbord = () => {
           </div>
 
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartDataToShow}>
+            <BarChart data={chartDataToShow} >
               <defs>{colorGradient()}</defs>
               <CartesianGrid vertical={false} />
               <XAxis

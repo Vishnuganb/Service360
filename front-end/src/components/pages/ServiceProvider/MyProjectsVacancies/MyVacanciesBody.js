@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
+import company1 from '../../../../assets/images/ServiceProvider/company1.jpg';
+import company2 from '../../../../assets/images/ServiceProvider/company2.jpg';
+import company3 from '../../../../assets/images/ServiceProvider/company3.jpg';
 
 function MyProjectsBody(){
     const [MyProjectsVacanciesData, setMyProjectsVacanciesData] = useState(null);
@@ -20,6 +23,12 @@ function MyProjectsBody(){
         "Masonry",
         "Sofa Cleaning",
         "Tiles Fitting",
+    ];
+
+    const CompanyImages= [
+        company1,
+        company2,
+        company3,
     ];
 
     // Number of cards (training sessions) to display per page
@@ -162,7 +171,7 @@ function MyProjectsBody(){
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={vacancy.profile}
+                                            src={CompanyImages[displayedCards.indexOf(vacancy) % CompanyImages.length]}
                                             alt="avatar"
                                             className="rounded-circle my-projects-vacancies-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -213,7 +222,7 @@ function MyProjectsBody(){
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={vacancy.profile}
+                                            src={CompanyImages[displayedCards.indexOf(vacancy) % CompanyImages.length]}
                                             alt="avatar"
                                             className="rounded-circle my-projects-vacancies-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -265,7 +274,7 @@ function MyProjectsBody(){
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={vacancy.profile}
+                                            src={CompanyImages[displayedCards.indexOf(vacancy) % CompanyImages.length]}
                                             alt="avatar"
                                             className="rounded-circle"
                                             style={{ width: "42px", height: "42px" }}

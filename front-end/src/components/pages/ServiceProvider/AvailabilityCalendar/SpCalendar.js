@@ -32,7 +32,17 @@ function SpCalendar(){
 
     const handleShow = (date) => {
         setSelectedModalDate(date); // Set the selected date for the modal
+        resetScheduleForm();
         setShow(true);
+    };
+
+    const resetScheduleForm = () => {
+        setScheduleFormData({
+            eventdate: format(selectedDate, "yyyy-MM-dd"),
+            eventstarttime: "",
+            eventendtime: "",
+            eventdescription: "",
+        });
     };
 
     const [selectedModalDate, setSelectedModalDate] = useState(new Date());
@@ -227,6 +237,15 @@ function SpCalendar(){
         return <div className="weekContainer">{allWeeks}</div>;
     }; 
 
+    const format12Hour = (time) => {
+        const [hours, minutes] = time.split(":");
+        const parsedHours = parseInt(hours, 10);
+        const period = parsedHours >= 12 ? "PM" : "AM";
+        const formattedHours = parsedHours > 12 ? parsedHours - 12 : parsedHours;
+        return `${formattedHours}:${minutes} ${period}`;
+    };
+
+
     return(
         <div className="ms-lg-4">
              {/* Page Title*/}
@@ -269,7 +288,7 @@ function SpCalendar(){
                                             <div className="mt-3 p-3" style={{border:"1px solid black",borderRadius:"15px"}}>
                                                 <div className=" d-flex flex-row">
                                                     <div className="d-flex flex-column spCalendar-username-container ms-4">
-                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.eventstarttime} - {work.eventendtime}</span>
+                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{format12Hour(work.eventstarttime)} - {format12Hour(work.eventendtime)}</span>
                                                         <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.eventdescription}</span>
                                                     </div>
                                                     <div className="ms-auto d-flex flex-column justify-content-center align-items-center">

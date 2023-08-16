@@ -7,6 +7,13 @@ import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import customer1 from '../../../../assets/images/ServiceProvider/customer1.jpg';
+import customer2 from '../../../../assets/images/ServiceProvider/customer2.jpg';
+import customer3 from '../../../../assets/images/ServiceProvider/customer3.jpg';
+import customer4 from '../../../../assets/images/ServiceProvider/customer4.jpg';
+import customer5 from '../../../../assets/images/ServiceProvider/customer5.jpg';
+import customer6 from '../../../../assets/images/ServiceProvider/customer6.jpg';
+import customer7 from '../../../../assets/images/ServiceProvider/customer7.jpg';
 
 function MyProjectsBody(){
     const [MyProjectsJobsData, setMyProjectsJobsData] = useState(null);
@@ -20,6 +27,16 @@ function MyProjectsBody(){
         "Masonry",
         "Sofa Cleaning",
         "Tiles Fitting",
+    ];
+
+    const CustomersImages= [
+        customer1,
+        customer2,
+        customer3,
+        customer4,
+        customer5,
+        customer6,
+        customer7,
     ];
 
     // Number of cards (training sessions) to display per page
@@ -196,7 +213,7 @@ function MyProjectsBody(){
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={job.profile}
+                                            src={CustomersImages[displayedCards.indexOf(job) % CustomersImages.length]}
                                             alt="avatar"
                                             className="rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -244,7 +261,7 @@ function MyProjectsBody(){
                     <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                         <div className='d-flex justify-content-center align-items-center'>
                             <img
-                                        src={job.profile}
+                                        src={CustomersImages[displayedCards.indexOf(job) % CustomersImages.length]}
                                         alt="avatar"
                                         className="rounded-circle"
                                         style={{ width: "42px", height: "42px" }}
@@ -293,7 +310,7 @@ function MyProjectsBody(){
                     <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                         <div className='d-flex justify-content-center align-items-center'>
                             <img
-                                        src={job.profile}
+                                        src={CustomersImages[displayedCards.indexOf(job) % CustomersImages.length]}
                                         alt="avatar"
                                         className="rounded-circle"
                                         style={{ width: "42px", height: "42px" }}
@@ -342,7 +359,7 @@ function MyProjectsBody(){
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={job.profile}
+                                            src={CustomersImages[displayedCards.indexOf(job) % CustomersImages.length]}
                                             alt="avatar"
                                             className="rounded-circle my-projects-jobs-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}

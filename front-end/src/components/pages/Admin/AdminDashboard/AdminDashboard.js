@@ -435,7 +435,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="dashboard-container align-items-center justify-content-center w-100 mt-" style={{ backgroundImage: `url(${BgImage})` }}>
+        <div className="dashboard-container align-items-center justify-content-center w-100 mt-4" style={{ backgroundImage: `url(${BgImage})` }}>
 
           <div className="d-flex justify-content-between w-100 align-items-center">
             <div className="d-flex align-items-center">

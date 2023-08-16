@@ -1,6 +1,6 @@
 package com.service360.group50.config;
 
-import com.service360.group50.repo.CustomersRepository;
+import com.service360.group50.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final CustomersRepository customersRepository;
+    private final UserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService () {
-        return username -> customersRepository.findByEmail ( username )
-                .orElseThrow ( () -> new RuntimeException ( "User not found" ) );
+        return username -> userRepository.findByEmail ( username )
+                .orElseThrow ( () -> new RuntimeException ( "Users not found" ) );
     }
 
     @Bean

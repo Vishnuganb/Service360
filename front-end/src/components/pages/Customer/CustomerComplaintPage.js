@@ -28,7 +28,16 @@ function ComplaintPopup() {
                     <form className="vacancy-form">
 
                         <div className="vacancy-form-group">
-                            <label for="complaint">Complaint <span style={{ color: "red" }}>&nbsp;*</span> </label>                        <input type="text" name="complaint" className="form-control" id="title" placeholder="Enter your Complaint" /> </div>                    </form>
+                            <label for="complaint">Complaint Category<span style={{ color: "red" }}>&nbsp;*</span> </label>
+                            <input type="text" name="complaint" className="form-control" id="title" placeholder="Enter your Complaint" />
+                            <label for="complaint">Description <span style={{ color: "red" }}>&nbsp;*</span> </label>
+                            <textarea
+                                name="description"
+                                className="form-control"
+                                id="description"
+                                placeholder="Enter your Description"
+                            />                             </div>
+                    </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' style={{ background: "#292d32" }}>
@@ -53,8 +62,8 @@ const View = () => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" style={{
-                width: '13%',
-                height: '34px',
+                width: '15%',
+                height: '30px',
                 border: '1px solid #ced4da',
                 fontSize: '14px',
                 padding: '0 8px',
@@ -92,8 +101,8 @@ const Delete = () => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" style={{
-                width: '13%',
-                height: '34px',
+                width: '15%',
+                height: '30px',
                 border: '1px solid #ced4da',
                 fontSize: '14px',
                 padding: '0 8px',
@@ -157,6 +166,30 @@ const Delete = () => {
     );
 };
 
+const More = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+        <>
+            <Button variant="btn btn-viewvacancy-form-t" onClick={handleShow} >
+                <i className="bi bi-three-dots-vertical fs-6"></i>
+            </Button>
+
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
+                    <Modal.Title>Complaint</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <center><p>Dissatisfaction with the plumbing service provided by <b>Alex</b> on <b>27.07.2023</b> at my resident at<b>wellawatte.</b></p></center>
+                </Modal.Body>
+
+            </Modal>
+        </>
+    );
+};
 export default function CustomerComplaintPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Adjust this value based on how many items you want per page
@@ -167,11 +200,11 @@ export default function CustomerComplaintPage() {
     const [toDate, setToDate] = useState(null);
 
     const complaints = [
-        { date: '27/07/2023', complaint: 'Dissatisfaction with the plumbing service provided by Alex Kumar on 27.07.2023 at wellawatte.', status: 'Pending' },
+        { date: '27/07/2023', complaint: 'About service providers', status: 'Pending' },
         { date: '26/07/2023', complaint: 'Billing Issues', status: 'Pending' },
         { date: '25/07/2023', complaint: 'System quality', status: 'Replied' },
         { date: '25/07/2023', complaint: 'System quality', status: 'Pending' },
-        { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Replied' },
+        { date: '24/07/2023', complaint: 'Billing Issues', status: 'Replied' },
         { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Pending' },
 
     ];
@@ -180,6 +213,7 @@ export default function CustomerComplaintPage() {
         const isDateMatch =
             (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
             (!toDate || new Date(complaint.date) <= new Date(toDate));
+
 
         return (
             isDateMatch &&
@@ -294,19 +328,20 @@ export default function CustomerComplaintPage() {
                     <Table className="my-customer-table" striped bordered hover>
                         <thead>
                             <tr>
-                                <th className="my-customer-table-th-1"><b>Date</b></th>
-                                <th className="my-customer-table-th-1"><b>Complaint</b></th>
-                                <th className="my-customer-table-th-1"><b>Status</b></th>
-                                <th className="my-customer-table-th-2"><b>Action</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Date</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '18.67%' }}><b>Complaint</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Status</b></th>
+                                <th className="my-customer-table-th-2" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentComplaints.map((complaints, index) => (
                                 <tr key={index}>
                                     <td>{complaints.date}</td>
-                                    <td>{complaints.complaint}</td>
+                                    <td>{complaints.complaint}<More /></td>
                                     <td>{complaints.status}</td>
                                     <td>
+
                                         {complaints.status === 'Replied' && (
                                             <View />
                                         )}&nbsp;&nbsp;

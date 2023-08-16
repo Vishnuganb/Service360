@@ -4,12 +4,23 @@ import { Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/PostVacancyForm.css';
 import BgImage from '../../../assets/images/header/Background.png';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function Quotation() {
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+      navigate(-1);
+  };
     return (
         <div className='card2'>
-            <p> <a href="#" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></a>
-                &nbsp;&nbsp;Back</p>
+           <div className="back-button" onClick={handleBackClick} style={{marginLeft:'10px'}}>
+                <div className="back-icon">
+                    <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                </div>
+                <div className="back-text">
+                    <p className="m-0 p-0">Back</p>
+                </div>
+            </div>
             <div className="VacancyForm-container"  style={{ backgroundImage: `url(${BgImage})` }}>
 
                 <h3>Request for Quotation</h3>

@@ -13,27 +13,26 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
-
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "customers",
+        name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "customer_email_unique",
+                        name = "user_email_unique",
                         columnNames = "email"
                 )
         }
 )
-public class Customers implements UserDetails {
+public class Users implements UserDetails {
 
     @Id
     @GeneratedValue()
     @Column(updatable = false)
-    private Long customerid;
+    private Long userid;
 
     @Column( columnDefinition = "TEXT")
     private String firstname;
@@ -62,15 +61,10 @@ public class Customers implements UserDetails {
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
 
-    @Column(name = "isEnabled", nullable = false)
-    private boolean isenabled = true;
-
-
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();
         isactive = true;
-        isenabled = true;
     }
 
     @Enumerated(EnumType.STRING)
@@ -83,10 +77,6 @@ public class Customers implements UserDetails {
 
     public String getPassword () {
         return password;
-    }
-
-    public String getAddress () {
-        return address;
     }
 
     @Override
@@ -113,6 +103,5 @@ public class Customers implements UserDetails {
     public boolean isEnabled () {
         return true;
     }
-
 
 }

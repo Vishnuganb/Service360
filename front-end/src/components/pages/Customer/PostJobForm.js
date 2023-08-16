@@ -2,12 +2,12 @@ import React from 'react';
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import '../../../style/Customer/JobRequestform.css';
+import '../../../style/Customer/PostVacancyForm.css';
 import BgImage from '../../../assets/images/header/Background.png';
 import { BsCloudUpload } from 'react-icons/bs';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function Quotation() {
+function PostJobForm() {
     const navigate = useNavigate();
     const handleBackClick = () => {
       navigate(-1);
@@ -24,7 +24,7 @@ function Quotation() {
             </div>
             <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
 
-                <h3>Request for Job</h3>
+                <h3>Job Creation Form</h3>
                 <br></br>
                 <form className="vacancy-form">
                     <div className="vacancy-form-group">
@@ -37,7 +37,13 @@ function Quotation() {
                         <label for="description">Description <span style={{ color: "red" }}>&nbsp;*</span> </label>
                         <input type="text" name="description" className="form-control" id="description" placeholder="Enter your job details here" />
                     </div>
+                    <div className="vacancy-form-group">
+                        <Row><Col className="col-4">
+                            <label for="duedate">Due Date <span style={{ color: "red" }}>&nbsp;*</span> </label></Col>
+                            <Col className="col-6">  <input type="date" name="duedate" className="form-control" id="duedate" />
+                            </Col></Row>
 
+                    </div>
                     <div className="vacancy-form-group">
                         <Row>
                             <Col className="col-4">
@@ -77,7 +83,7 @@ function Quotation() {
                             </Col>
                         </Row>
                     </div>
-
+                 
                     <div className="vacancy-form-group">
                         <Row>
                             <Col className="col-4">
@@ -129,6 +135,6 @@ function Quotation() {
 
 };
 
-export default Quotation;
+export default PostJobForm;
 
 

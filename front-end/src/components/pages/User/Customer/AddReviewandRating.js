@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
-import Rating from "react-rating-stars-component"; 
+import {
+  Container,
+  Col,
+  Row,
+  Form,
+  Button,
+  Card,
+  Modal,
+} from "react-bootstrap";
+import Rating from "react-rating-stars-component";
 import BgImage from "../../../../assets/images/header/Background.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker from "react-datepicker";
-const AddReviewandRating = () => {
+const AddReviewandRating = (props) => {
   const [rating, setRating] = useState(0);
 
   const handleRatingChange = (newRating) => {
@@ -18,8 +26,6 @@ const AddReviewandRating = () => {
     // Process the form submission here
   };
 
- 
-
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
@@ -27,11 +33,24 @@ const AddReviewandRating = () => {
   const [startDate, setStartDate] = useState(null);
 
   return (
-    <Container>
-      <h2>Add Review And Rating For System</h2>
-      <Form onSubmit={handleSubmit} className="block py-3">
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header
+        closeButton
+        style={{ backgroundColor: "#292D32", color: "#ffffff" }}
+      >
+        <Modal.Title id="contained-modal-title-vcenter">
+          <h2>Add Review And Rating</h2>
+        </Modal.Title>
+      </Modal.Header>
+
+      <Form onSubmit={handleSubmit}>
         <Card
-          className="block  py-5"
+          className="py-4 px-2"
           style={{ backgroundImage: `url(${BgImage})` }}
         >
           <Card.Body>
@@ -44,24 +63,24 @@ const AddReviewandRating = () => {
                   count={5}
                   value={rating}
                   onChange={handleRatingChange}
-                  size={24}
+                  size={40}
                   activeColor="#ffd700"
                 />
               </Col>
-              <Col>
-                <div className="input-group ">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={handleStartDateChange}
-                    placeholderText="Select Date"
-                    dateFormat="dd/MM/yyyy"
-                    className="form-control"
-                  />
-                  <span className="input-group-text">
-                    <i class="bi bi-calendar2-week"></i>
-                  </span>
-                </div>
-              </Col>
+              {/* <Col>
+                  <div className="input-group ">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={handleStartDateChange}
+                      placeholderText="Select Date"
+                      dateFormat="dd/MM/yyyy"
+                      className="form-control"
+                    />
+                    <span className="input-group-text">
+                      <i class="bi bi-calendar2-week"></i>
+                    </span>
+                  </div>
+                </Col> */}
             </Row>
 
             <div className="mt-3">
@@ -84,7 +103,7 @@ const AddReviewandRating = () => {
           </Card.Body>
         </Card>
       </Form>
-    </Container>
+    </Modal>
   );
 };
 

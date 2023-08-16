@@ -4,9 +4,20 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {useState, useEffect} from "react";
 import axios from "axios";
+import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
+import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
+import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
+import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 
 function TrainingSession(){
     const [viewTrainingSessionData, setviewTrainingSessionData] = useState(null);
+
+    const Trainingimages=[
+        electrical,
+        masonry2,
+        plumping1,
+        carpentry1,
+    ]
 
     const { id } = useParams();
     const trainingsessionId = parseInt(id, 10);

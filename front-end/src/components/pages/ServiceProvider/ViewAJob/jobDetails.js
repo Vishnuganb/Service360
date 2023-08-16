@@ -119,6 +119,8 @@ function JobDetails() {
           
           
           <div className="jobDetails-images-container-box row mt-2">
+           
+            
           {/* {viewJobData.images.map((image, index) => (
             <div key={index} className="col-6 col-md-4 col-lg-3">
               <img
@@ -128,6 +130,8 @@ function JobDetails() {
               />
             </div>
           ))} */}
+
+
           </div>
         </div>
       </Col>

@@ -165,13 +165,13 @@ function MyProjectsBody(){
             </div>
             
             {/* only display ongoing vacancies */}
-            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing').map((vacancy) => (
+            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={CompanyImages[displayedCards.indexOf(vacancy) % CompanyImages.length]}
+                                            src={company1}
                                             alt="avatar"
                                             className="rounded-circle my-projects-vacancies-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -216,13 +216,13 @@ function MyProjectsBody(){
             ))}
 
             {/* only display rejected vacancies */}
-            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus ==='rejected').map((vacancy) => (
+            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus ==='rejected').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={CompanyImages[displayedCards.indexOf(vacancy) % CompanyImages.length]}
+                                            src={company2}
                                             alt="avatar"
                                             className="rounded-circle my-projects-vacancies-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -268,13 +268,13 @@ function MyProjectsBody(){
 
 
                {/* only display vacancy invites for me */}
-               {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy) => (
+               {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={CompanyImages[displayedCards.indexOf(vacancy) % CompanyImages.length]}
+                                            src={company3}
                                             alt="avatar"
                                             className="rounded-circle"
                                             style={{ width: "42px", height: "42px" }}

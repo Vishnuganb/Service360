@@ -1,6 +1,9 @@
 import react, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import  Cookies from 'js-cookie'
+import { first } from "lodash";
+import { First } from "react-bootstrap/esm/PageItem";
 
 export const AuthenticationContext = createContext(undefined)
 
@@ -40,10 +43,10 @@ const AuthenticationContextProvider = (props) => {
         if (!authenticated) { navigate("/login") }
         else {
 
-            if (userType === 'customer') { if (userDetailsAfterAuthentication.type !== 'customer') { logout(); navigate("/login") } }
-            else if (userType === 'admin') { if (userDetailsAfterAuthentication.type !== 'admin') { logout(); navigate("/login") } }
-            else if (userType === 'serviceProvider') { if (userDetailsAfterAuthentication.type !== 'serviceProvider') { navigate("/login") } }
-            else if (userType === 'advertiser') { if (userDetailsAfterAuthentication.employee.type !== 'advertiser') { navigate("/login") } }
+            if (userType === 'customer') { if (userDetailsAfterAuthentication.role !== 'customer') { logout(); navigate("/login") } }
+            else if (userType === 'admin') { if (userDetailsAfterAuthentication.role !== 'admin') { logout(); navigate("/login") } }
+            else if (userType === 'serviceProvider') { if (userDetailsAfterAuthentication.role !== 'serviceProvider') { logout(); navigate("/login") } }
+            else if (userType === 'advertiser') { if (userDetailsAfterAuthentication.employee.role !== 'advertiser') { logout(); navigate("/login") } }
 
         }
 
@@ -131,12 +134,19 @@ const AuthenticationContextProvider = (props) => {
             (response) => {
                 authenticated = true;
                 userDetailsAfterAuthentication = response.data;
-                console.log("hii")
+                console.log(userDetailsAfterAuthentication)
 
-                if (userDetailsAfterAuthentication.role === 'CUSTOMER') { navigate("/Customer/CustomerDashboard", { state: { authenticated, userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.role === 'ADMIN') { navigate("/admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.role === 'SERVICEPROVIDER') { navigate("/admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.role === 'ADVERTISER') { navigate("/admin", { state: { authenticated, userDetailsAfterAuthentication } }) }
+                Cookies.set('FirstName', userDetailsAfterAuthentication.firstname, { expires: 1 });
+
+                const userName= Cookies.get('FirstName')
+
+                console.log(userName)
+
+
+                if (userDetailsAfterAuthentication.role === 'CUSTOMER') { navigate("/Customer", { state: { userDetailsAfterAuthentication } }) }
+                else if (userDetailsAfterAuthentication.role === 'ADMIN') { navigate("/admin", { state: {userDetailsAfterAuthentication } }) }
+                else if (userDetailsAfterAuthentication.role === 'SERVICEPROVIDER') { navigate("/ServiceProvider", { state: { userDetailsAfterAuthentication } }) }
+                else if (userDetailsAfterAuthentication.role === 'ADVERTISER') { navigate("/Advertiser", { state: { userDetailsAfterAuthentication } }) }
 
             }
 
@@ -183,6 +193,7 @@ const AuthenticationContextProvider = (props) => {
     const logout = () => {
 
         sessionStorage.removeItem('authenticatedUser');
+        Cookies.remove('FirstName');
         authenticated = false;
         userDetailsAfterAuthentication = null;
         navigate("/login");
@@ -207,7 +218,7 @@ const AuthenticationContextProvider = (props) => {
 
     return (
 
-        <AuthenticationContext.Provider value={{ authenticated, authenticateUser, login, customerSignUp, advertiserSignUp, serviceProviderSignUp, contentVisible, changeContentVisible, logout, packagesDetail, changePackageDetails, userDetailsAfterAuthentication, eventDetails, assignEventDetails, assignEventId, eventId }}>
+        <AuthenticationContext.Provider value={{ authenticated, authenticateUser, login, customerSignUp, advertiserSignUp, serviceProviderSignUp, contentVisible, changeContentVisible, logout, packagesDetail, changePackageDetails, eventDetails, assignEventDetails, assignEventId, eventId }}>
 
             {props.children}
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import Card from "react-bootstrap/Card";
 import { Row } from 'react-bootstrap';
 import '../../../../style/Customer/CustomerDashboard.css'
@@ -11,9 +11,13 @@ import { Modal, Button, Col } from 'react-bootstrap';
 import ServiceProvider1 from '../../../../assets/images/Customer/ServiceProvider1.jpg';
 import ServiceProvider2 from '../../../../assets/images/Customer/ServiceProvider1.png';
 import ServiceProvider3 from '../../../../assets/images/Customer/ServiceProvider3.jpg';
+import { AuthenticationContext } from './../../../../ContextFiles/Authentication/AuthenticationContextProvider';
+import { useLocation } from "react-router-dom";
 
 function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
     const [show, setShow] = useState(false);
+    const location = useLocation()
+    const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

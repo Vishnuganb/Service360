@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import '../../style/ServiceProvider/ServiceProviderHeader.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -10,12 +10,16 @@ import chat from '../../assets/images/header/chat.png';
 import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 import EditProfile from '../pages/User/SeviceProvider/EditProfile';
-
 import ChatApp from '../pages/Chat/ChatApp';
+import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
+import { useLocation } from "react-router-dom";
 
 function ServiceProviderHeader() {
 
+    const location = useLocation()
+    const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
     const [modalShow, setModalShow] = React.useState(false);
+
     return (
         <Navbar expand="lg" bg="light" className="navbar">
             <Container>
@@ -34,16 +38,13 @@ function ServiceProviderHeader() {
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
 
-                        <NavDropdown title="Pranavan" className='fw-bold' id="basic-nav-dropdown">
+                        <NavDropdown title={location.state.userDetailsAfterAuthentication.lastname} className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item href="#"  onClick={() => setModalShow(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#" className="fw-bold no-hover">Logout</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
 
-                        <EditProfile
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                        />
+                        <EditProfile show={modalShow} onHide={() => setModalShow(false)}/>
                         <img src={profileIcon} alt="Profile" className="profileIcon" />
                     </Nav>
                 </Navbar.Collapse>

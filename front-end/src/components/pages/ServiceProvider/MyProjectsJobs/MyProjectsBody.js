@@ -64,6 +64,35 @@ function MyProjectsBody(){
 
     if (!MyProjectsJobsData) return 'No jobs found!';
 
+
+    const handleAccept = (jobId, isQuotation) => {
+        const newStatus = isQuotation ? 'pending' : 'ongoing';
+        const apiUrl = isQuotation
+          ? `http://localhost:8080/auth/updateJobStatusInviteToPending/${jobId}`
+          : `http://localhost:8080/auth/updateJobStatusInviteToOngoing/${jobId}`;
+    
+        axios.put(apiUrl)
+          .then((res) => {
+            // Update the state or trigger a reload of the component if necessary
+          })
+          .catch((error) => {
+            // Handle errors
+          });
+    };
+
+    const handleReject = (jobId) => {
+    const apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToRejected/${jobId}`;
+
+    axios.put(apiUrl)
+        .then((res) => {
+        // Update the state or trigger a reload of the component if necessary
+        })
+        .catch((error) => {
+        // Handle errors
+        });
+    };
+
+
     // Filter training sessions based on search term and selected date
     const filteredCards = MyProjectsJobsData.filter((card) => {
         return (
@@ -356,14 +385,16 @@ function MyProjectsBody(){
                     <div className="my-job-card-footer d-flex flex-row">
                         <span
                             className="btn btn-default my-job-card-footer-btn"
-                            id="my-job-card-footer-btn-view"
+                            id="my-job-card-footer-btn-view" 
+                            onClick={() => handleAccept(job.jobid, job.isquotation === 'quotation')}
                         >
                             <i className="bi bi-check-circle h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                             <span style={{ position: "relative", bottom: "1.5px" }}>Accept</span>
                         </span>
                         <span
                             className="btn btn-default my-job-card-footer-btn"
-                            id="my-job-card-footer-btn-view"
+                            id="my-job-card-footer-btn-view" 
+                            onClick={() => handleReject(job.jobid)}
                         >
                             <i className="bi bi-x-circle h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                             <span style={{ position: "relative", bottom: "1.5px" }}>Reject</span>

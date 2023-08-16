@@ -13,12 +13,21 @@ import EditProfile from '../pages/User/SeviceProvider/EditProfile';
 import ChatApp from '../pages/Chat/ChatApp';
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
 import { useLocation } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 function ServiceProviderHeader() {
 
     const location = useLocation()
     const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
     const [modalShow, setModalShow] = React.useState(false);
+    const [userName, setUserName] = useState('')
+
+    useEffect(() => {
+        const savedUserName = Cookies.get('FirstName'); // Corrected variable name
+        if (savedUserName) {
+            setUserName(savedUserName);
+        }
+    }, []);
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">
@@ -31,14 +40,18 @@ function ServiceProviderHeader() {
                     <Nav className="me-auto">
                         <Nav.Link href="/ServiceProvider/ViewJobs" className='fw-bold navLink'>Jobs</Nav.Link>
                         <Nav.Link href="/ServiceProvider/ViewVacancies" className='fw-bold navLink'>Vacancies</Nav.Link>
-
+                        <Nav.Link href="#Riviews" className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none" onClick={() => setShowAddReview(true)}> <i className="fas fa-star-half-alt"></i></Nav.Link>
+                        <AddReviewandRating
+                        show={showAddReview}
+                        onHide={() => setShowAddReview(false)}
+                        />
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
                         <Nav.Link href="#chat" as={Link} to="/ServiceProvider/Chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
 
-                        <NavDropdown title={location.state.userDetailsAfterAuthentication.lastname} className='fw-bold' id="basic-nav-dropdown">
+                        <NavDropdown title={userName} className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item href="#"  onClick={() => setModalShow(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>

@@ -10,11 +10,20 @@ import { Link } from 'react-router-dom';
 import AdvertiserEditProfile from "../pages/advertiser/EditProfile/AdvertiserEditProfile";
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
 import { useLocation } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 function AdvertiserHeader() {
   const location = useLocation()
   const [showEditProfile, setShowEditProfile] = useState(false);
   const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
+  const [userName, setUserName] = useState('')
+
+  useEffect(() => {
+    const savedUserName = Cookies.get('FirstName'); // Corrected variable name
+    if (savedUserName) {
+      setUserName(savedUserName);
+    }
+  }, []);
 
   return (
     <Navbar expand="lg" bg="light" className="navbar">
@@ -25,6 +34,18 @@ function AdvertiserHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav className="me-auto">
+            <Nav.Link
+              href="#Riviews"
+              className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
+              onClick={() => setShowAddReview(true)}
+            >
+              <i className="fas fa-star-half-alt"></i>
+            </Nav.Link>
+            <AddReviewandRating
+              show={showAddReview}
+              onHide={() => setShowAddReview(false)}
+            />
+
             <Nav.Link
               href="#notifications"
               className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
@@ -42,7 +63,7 @@ function AdvertiserHeader() {
               Chat
             </Nav.Link>
 
-            <NavDropdown title={location.state.userDetailsAfterAuthentication.lastname} className="fw-bold" id="basic-nav-dropdown">
+            <NavDropdown title={userName} className="fw-bold" id="basic-nav-dropdown">
               <NavDropdown.Item href="#" className="fw-bold no-hover" onClick={() => setShowEditProfile(true)}>
                 View Profile
               </NavDropdown.Item>

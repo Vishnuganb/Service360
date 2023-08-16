@@ -39,9 +39,9 @@ function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
                         </Col>
                         <Col>Service Provider: {serviceProvider}</Col>
                         <Col>Due Date: {dueDate}</Col>
-                        <Button variant='secondary' style={{ background: "#292d32", marginRight: '10px' }}>
-                            <i className="bi bi-list-task"></i>                    </Button>
-                        <Button variant='secondary' style={{ background: "#292d32" }}>
+                        <Link to={`/customer/todoform`}> <Button variant='secondary' style={{ background: "#292d32", marginRight: '10px' }}>
+                            <i className="bi bi-list-task"></i>  </Button></Link>
+                             <Button variant='secondary' style={{ background: "#292d32" }}>
                             <i className="bi bi-chat-fill"></i>                    </Button>
                     </center>
                 </Modal.Body>
@@ -222,7 +222,7 @@ const CustomerDashboard = () => {
         <div className="row" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <div className="col-12">
-            <h4>Welcome back, Tharsana!</h4>
+           <div style={{padding:'10px'}}><h4>Welcome back !</h4></div> 
                 <div className='d-flex flex-column flex-lg-row flex-md-row '>
                     <div className="d-flex flex-row col-7">
                         <Card className="card-cus-dashboard dashboard-button-1" >

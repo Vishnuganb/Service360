@@ -4,7 +4,7 @@ const Services = [
     { name: 'AC Repair' },
     { name: 'Plumbing' },
     { name: 'Mansonry'},
-    { name: 'Tiles Fitting'},
+    { name: 'Tile Fitting'},
     { name: 'Iron Work'},
     { name: 'Glass Aluminum'},
     { name: 'CCTV Services'},

@@ -59,7 +59,7 @@ function AdvertiserSidebar() {
 
               <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
                 <Link
-                  to="/Advertiser/AdsPage"
+                  to="/Advertiser/Ads"
                   className="nav-link nav-link-sidebar text-white"
                 >
                   <i className="bi bi-window-stack"></i>

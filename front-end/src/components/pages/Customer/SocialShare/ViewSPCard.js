@@ -28,54 +28,52 @@ const Popup = () => {
           Share
         </span>
       </Button>
-   
+
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton style={{backgroundColor:'#303841',color:'#fff'}}> 
+        <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
           <Modal.Title>Share through</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <center><p><i className="bi bi-whatsapp"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i className="bi bi-facebook"></i> &nbsp;&nbsp;&nbsp;&nbsp;<i className="bi bi-instagram"></i></p></center>
         </Modal.Body>
-        
+
       </Modal>
     </>
   );
 };
 
-function ViewSPCard() {
-  const rating = 4;
+function ViewSPCard({ spCard }) {
+  const rating = spCard.review;
   return (
     <div className="single-SP-card" style={{ backgroundColor: '#ffffff;' }}>
       <div className="SP-card-header">
         <Row>
           <Col>
-            <img src={ServiceProvideimg} alt="avatar" className="SP-card-avatar" />
+            <img src={spCard.profilepic} alt="avatar" className="SP-card-avatar" />
           </Col>
           <Col>
-            <span className="SP-card-title">VinothKhan</span>
+            <span className="SP-card-title">{spCard.name}</span>
           </Col>
 
           <Col className='star'>
             <div className='rating'>
-              <span className={`star ${rating >= 1 ? 'filled' : ''}`}>&#9733;</span>
-              <span className={`star ${rating >= 2 ? 'filled' : ''}`}>&#9733;</span>
-              <span className={`star ${rating >= 3 ? 'filled' : ''}`}>&#9733;</span>
-              <span className={`star ${rating >= 4 ? 'filled' : ''}`}>&#9733;</span>
-              <span className={`star ${rating >= 5 ? 'filled' : ''}`}>&#9733;</span>
+              {[1, 2, 3, 4, 5].map((index) => (
+                <span key={index} className={`star ${rating >= index ? 'filled' : ''}`}>&#9733;</span>
+              ))}
             </div>
           </Col>
         </Row>
       </div>
       <div className="SP-card-body">
         <div className="SP-card-body-left">
-          <span className="sinlge-SP-sub-info">Tile Fitting | Member since june 23 2022</span>
+          <span className="sinlge-SP-sub-info">{spCard.service} | Member since  {spCard.joinDate}</span>
           <br />
-          <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: Wellawatte
+          <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {spCard.location}
           </span>
           <br />
           <span className="SP-contact-info">
-            Contact number: 0713622131
+            Contact number: {spCard.contactNumber}
           </span>
           <br />
         </div>

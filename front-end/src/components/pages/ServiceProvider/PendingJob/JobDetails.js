@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
 import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
+import customer1 from "../../../../assets/images/ServiceProvider/customer1.jpg";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -144,7 +145,7 @@ function PendingJobDetails() {
             <Col className="AcceptedJobDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
                 <div className="AcceptedJobDetails-avatar-container mb-2">
                     <img
-                    src={viewJobData.profile}
+                    src={customer1}
                     alt="avatar"
                     className="AcceptedJobDetails-avatar rounded-circle"
                     style={{ width: "50px", height: "50px" }}

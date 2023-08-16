@@ -15,7 +15,7 @@ const CustomerLayout = () => {
                     <CustomerHeader />
                     <div style={{ flex: 1, display: 'flex' }}>
                         <CustomerSideBar />
-                        <div className="classoutlet" style={{ flex: 1, overflow: 'auto' }}>
+                        <div className="classoutlet" style={{ flex: 1 }}>
                             <Outlet />
                         </div>
                     </div>

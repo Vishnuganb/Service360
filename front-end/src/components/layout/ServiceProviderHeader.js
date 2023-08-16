@@ -11,11 +11,13 @@ import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 import EditProfile from '../pages/User/SeviceProvider/EditProfile';
 
-import ChatApp from '../pages/Chat/ChatApp';
+import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 
 function ServiceProviderHeader() {
 
     const [modalShow, setModalShow] = React.useState(false);
+    const [showAddReview, setShowAddReview] = useState(false);
+
     return (
         <Navbar expand="lg" bg="light" className="navbar">
             <Container>
@@ -27,7 +29,11 @@ function ServiceProviderHeader() {
                     <Nav className="me-auto">
                         <Nav.Link href="/ServiceProvider/ViewJobs" className='fw-bold navLink'>Jobs</Nav.Link>
                         <Nav.Link href="/ServiceProvider/ViewVacancies" className='fw-bold navLink'>Vacancies</Nav.Link>
-
+                        <Nav.Link href="#Riviews" className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none" onClick={() => setShowAddReview(true)}> <i className="fas fa-star-half-alt"></i></Nav.Link>
+                        <AddReviewandRating
+                        show={showAddReview}
+                        onHide={() => setShowAddReview(false)}
+                        />
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
                         <Nav.Link href="#chat" as={Link} to="/ServiceProvider/Chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 

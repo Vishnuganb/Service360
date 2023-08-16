@@ -9,10 +9,11 @@ import profileIcon from "../../assets/images/header/user.jpg";
 import { Link } from 'react-router-dom';
 
 import AdvertiserEditProfile from "../pages/advertiser/EditProfile/AdvertiserEditProfile";
+import AddReviewandRating from "../pages/User/Customer/AddReviewandRating";
 
 function AdvertiserHeader() {
  const [showEditProfile, setShowEditProfile] = useState(false);
-
+ const [showAddReview, setShowAddReview] = useState(false);
 
   return (
     <Navbar expand="lg" bg="light" className="navbar">
@@ -24,18 +25,31 @@ function AdvertiserHeader() {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav className="me-auto">
             <Nav.Link
+              href="#Riviews"
+              className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
+              onClick={() => setShowAddReview(true)}
+            >
+              <i className="fas fa-star-half-alt"></i>
+            </Nav.Link>
+            <AddReviewandRating
+              show={showAddReview}
+              onHide={() => setShowAddReview(false)}
+            />
+
+            <Nav.Link
               href="#notifications"
               className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
             >
               <i className="bi bi-bell-fill"></i>
             </Nav.Link>
             <Nav.Link
-              href="#chat"  as={Link} to="/Advertiser/Chat"
+              href="#chat"
+              as={Link}
+              to="/Advertiser/Chat"
               className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"
             >
               <i className="bi bi-chat-fill"></i>
             </Nav.Link>
-            
 
             <Nav.Link
               href="#notifications"
@@ -55,11 +69,18 @@ function AdvertiserHeader() {
               className="fw-bold"
               id="basic-nav-dropdown"
             >
-              <NavDropdown.Item href="#" className="fw-bold no-hover" onClick={() => setShowEditProfile(true)}>
+              <NavDropdown.Item
+                href="#"
+                className="fw-bold no-hover"
+                onClick={() => setShowEditProfile(true)}
+              >
                 View Profile
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <AdvertiserEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)}/>
+              <AdvertiserEditProfile
+                show={showEditProfile}
+                onHide={() => setShowEditProfile(false)}
+              />
               <NavDropdown.Item href="#" className="fw-bold no-hover">
                 Logout
               </NavDropdown.Item>

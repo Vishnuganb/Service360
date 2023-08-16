@@ -327,6 +327,11 @@ function MyProjectsBody(){
                                     <span className="job-card-date">{job.posteddate}</span>
                                 </div>
                             </div>
+                            {job.isquotation === 'quotation' && (
+                            <div className="isquatation ms-3 mt-2">
+                                <span className="single-job-status" id="job-status">Quotation</span>
+                            </div>
+                            )}
                         </div>
                     </div>
                     <div className="my-job-card-body">

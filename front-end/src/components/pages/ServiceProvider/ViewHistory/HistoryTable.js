@@ -262,9 +262,9 @@ function HistoryTable() {
                 <tr key={project.id}>
                   <td>{project.servicename}</td>
                   <td>{project.customername}</td>
-                  <td>{project.date}</td>
-                  <td>{project.startTime}</td>
-                  <td>{project.endTime}</td>
+                  <td>{project.jobdate}</td>
+                  <td>{project.jobstarttime}</td>
+                  <td>{project.jobendtime}</td>
                   <td>{project.joblocation}</td>
                   <td>{project.paymentstatus}</td>
                   <td className="d-flex justify-content-center">

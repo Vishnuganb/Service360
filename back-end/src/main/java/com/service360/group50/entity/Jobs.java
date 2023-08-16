@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,9 +31,9 @@ public class Jobs {
     @Column
     private Long jobcommentid;
 
-    @OneToOne
-    @JoinColumn(name = "detailsid", referencedColumnName = "jobdetailsid")
-    private JobDetails jobDetails;
+//    @OneToOne
+//    @JoinColumn(name = "detailsid", referencedColumnName = "jobdetailsid")
+    private Long jobDetails;
 
     @Column( columnDefinition = "TEXT")
     private String profile;
@@ -69,4 +70,17 @@ public class Jobs {
 
     @Column( columnDefinition = "TEXT")
     private String paymentstatus;
+
+    @Column( columnDefinition = "TEXT")
+    private String isquotation;
+
+
+    @Column( columnDefinition = "DATE")
+    private LocalDate jobdate;
+
+    @Column( columnDefinition = "Time")
+    private Time jobstarttime;
+
+    @Column( columnDefinition = "Time")
+    private Time jobendtime;
 }

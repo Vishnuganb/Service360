@@ -34,7 +34,8 @@ public class ServiceProviderService {
 
     public List<Jobs> viewHistoryJobs(){
         List<Jobs> JobList = new ArrayList<>();
-        jobsRepository.findCompletedJobsWithDetails().forEach(JobList::add);
+//        jobsRepository.findCompletedJobsWithDetails().forEach(JobList::add);
+        jobsRepository.findAllByjobstatus("completed").forEach(JobList::add);
         return JobList;
     }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import powerImage from '../../../../assets/images/ServiceProvider/power.jpg';
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import {useState, useEffect} from "react";
 import axios from "axios";
 
@@ -64,8 +65,10 @@ function TrainingSession(){
                 <span className="ViewATraining-details-title h5">Guests</span>
                 <div className="ViewATraining-details-body-left mt-2 d-flex flex-row flex-wrap">
                     <div className="col-lg-4 col-md-6 col-12">
-                        <span>interested</span>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.guests}</span>
+                        <Link to="#">
+                        <span style={{color:"black"}}>interested</span>&nbsp;&nbsp;&nbsp;
+                        </Link>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.interested}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-center">
                         <span>on going</span>&nbsp;&nbsp;&nbsp;

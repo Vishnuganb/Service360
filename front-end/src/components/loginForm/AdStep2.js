@@ -64,7 +64,8 @@ const AdStep2 = ({
         passwordErrorMessage,
         selectedFiles,
         selectedFileCount,
-        fileErrorMessage
+        fileErrorMessage,
+        filePaths,
     },
     handleChange,
     handleShowHidePassword,
@@ -74,8 +75,12 @@ const AdStep2 = ({
     validateConfirmPassword,
     handleFileInputChange,
     handleRemoveFile,
-    // fileInputRef
 }) => {
+
+    const getFileNameFromPath = (path) => {
+        const parts = path.split('/');
+        return parts[parts.length - 1];
+    };
 
     return (
         <form className="my-2 mx-4">
@@ -97,9 +102,8 @@ const AdStep2 = ({
 
 
             <div className="mb-3">
-                <p className="mb-0">Upload Bussiness Registration and Municipal Licenses<span style={{ color: 'red' }}>*</span></p>
+                <label className="mb-0">Upload Business Registration and Municipal Licenses<span style={{ color: 'red' }}>*</span></label>
                 <input
-                    // ref={fileInputRef}
                     type="file"
                     className="form-control"
                     onChange={handleFileInputChange}
@@ -107,25 +111,26 @@ const AdStep2 = ({
                     required
                 />
                 {fileErrorMessage && <p className="text-danger p-0 m-0">{fileErrorMessage}</p>}
-                {Array.isArray(selectedFiles) && selectedFiles.length > 0 && (
+                {Array.isArray(filePaths) && filePaths.length > 0 && (
                     <>
-                        <p>{selectedFileCount} file{selectedFileCount !== 1 ? 's' : ''} selected</p>
                         <ul className="list-group mt-2">
-                            {selectedFiles.map((file, index) => (
+                            {filePaths.map((path, index) => (
                                 <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{file.name}</span>
+                                    <span>{getFileNameFromPath(path)}</span>
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveFile(index)}
                                         className="btn-close"
-                                        aria-label="Close"
+                                        aria-label="Remove"
                                     ></button>
                                 </li>
                             ))}
                         </ul>
+
                     </>
                 )}
             </div>
+
 
             <div className="mb-3 d-flex justify-content-between">
                 <div className='me-3'>

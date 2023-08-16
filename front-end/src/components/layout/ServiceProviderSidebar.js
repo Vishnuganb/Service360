@@ -32,7 +32,7 @@ function ServiceProviderSideBar() {
 
 
                             <li className="nav-item text-white fs-4 mt-4 py-2 py-xs-1">
-                                <Link to="/ServiceProvider/Dashboard" className="nav-link nav-link-sidebar text-white">
+                                <Link to="/ServiceProvider" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-grid"></i>
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Dashboard</span>
                                 </Link>
@@ -120,7 +120,6 @@ function ServiceProviderSideBar() {
                                     <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Create Blog</span>
                                 </Link>
                             </li>
-                        
                         </ul>
                     </div>
                 </div>

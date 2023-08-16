@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { Modal } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-
 import { Link } from "react-router-dom";
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,} from 'recharts';
-import styled from "styled-components";
-
 import "../../../../style/advertiser/AdIndex.css";
 
 
@@ -40,9 +35,7 @@ const generateMonthlyData = () => {
   return data;
 };
 
-const StyledModalFooter = styled(Modal.Footer)`
-        justify-content: flex-end;
-    `;
+
 
 
 
@@ -50,33 +43,11 @@ const AdDashbord = () => {
  
 
 
-  const [datas, setDatas] = useState({
-    showModal: false,
-    showDetailsModal: false,
-    selectedProvider: null,
-    enable: true,
-
-  });
+ 
 
   const [view, setView] = useState('daily');
 
-  const [selectedOption, setSelectedOption] = useState('weekly');
-
-
-
-  const advertisementDataWeekly = [
-    { category: 'Spare parts', value: 120 },
-    { category: 'Tools', value: 200 },
-    { category: 'Equipment', value: 150 },
-    { category: 'Others', value: 80 },
-  ];
-
-  const advertisementDataMonthly = [
-    { category: 'Spare parts', value: 220 },
-    { category: 'Tools', value: 180 },
-    { category: 'Equipment', value: 250 },
-    { category: 'Others', value: 120 },
-  ];
+ 
 
 
   const chartDataToShow = view === 'daily' ? generateDailyData() : generateMonthlyData();
@@ -114,7 +85,7 @@ const AdDashbord = () => {
   );
 
   return (
-    <Container
+    <div
       className="p-3 px-5"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
@@ -129,7 +100,7 @@ const AdDashbord = () => {
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <p className="AdTotal">Total</p>
-          <p className="adNo">10</p>
+          <p className="adNo">20</p>
         </div>
 
         <div
@@ -144,12 +115,27 @@ const AdDashbord = () => {
           className="AdCountCol shadow  bg-white rounded"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
+          <p className="AdTotal">Pending</p>
+          <p className="adNo">6</p>
+        </div>
+        <div
+          className="AdCountCol shadow  bg-white rounded"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
           <p className="AdTotal">Rejected</p>
-          <p className="adRejNo">1</p>
+          <p className="adNo">1</p>
+        </div>
+        <div
+          className="AdCountCol shadow  bg-white rounded"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
+          <p className="AdTotal">Disabled</p>
+          <p className="adNo">4</p>
         </div>
       </div>
+
       <div className="adCenterCont mt-3">
-        <Link to="/advertiser/CreateAd" >
+        <Link to="/advertiser/CreateAd">
           <button className="PostAd">Post New Ad</button>
         </Link>
       </div>
@@ -176,7 +162,7 @@ const AdDashbord = () => {
           </div>
 
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartDataToShow}>
+            <BarChart data={chartDataToShow} >
               <defs>{colorGradient()}</defs>
               <CartesianGrid vertical={false} />
               <XAxis
@@ -221,7 +207,7 @@ const AdDashbord = () => {
             </div>
             <div className="d-flex  gap-3">
               <div style={{ height: "fit-content" }}>
-                <h3 className='GreenDate'>Thu Aug 10 2023</h3>
+                <h3 className="GreenDate">Thu Aug 10 2023</h3>
               </div>
             </div>
           </div>
@@ -233,12 +219,25 @@ const AdDashbord = () => {
               <h4 className="text-center">End Date</h4>
             </div>
             <div className="d-flex align-items-center gap-3">
-              <h3 className='redDate'> Sun Sep 10 2023</h3>
+              <h3 className="redDate"> Sun Sep 10 2023</h3>
+            </div>
+          </div>
+          <div
+            style={{ width: "fit-content" }}
+            className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
+          >
+            <div>
+              <h4 className="text-center">Remaining Days</h4>
+            </div>
+            <div className="d-flex  gap-3">
+              <div style={{ height: "fit-content" }}>
+                <h3 className="GreenDate">15 Days</h3>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

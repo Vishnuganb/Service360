@@ -131,3 +131,16 @@
   margin-top: 1em;
   font-size:large;
 }
+
+
+.AdSubCard{
+  scale: 1.05;
+  color: #FFFFFF;
+  background-color: #292D32;
+  width: fit-content;
+
+}
+
+ .AdCardMP{
+  color: #c9c4c4;
+}

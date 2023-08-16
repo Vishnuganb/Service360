@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../../style/ServiceProvider/ServiceProviderHeader.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -8,10 +8,13 @@ import logo from '../../assets/images/header/Frame 2.png';
 import bell from '../../assets/images/header/bell.png';
 import chat from '../../assets/images/header/chat.png';
 import profileIcon from '../../assets/images/header/user.jpg';
-
+import { Link } from 'react-router-dom';
 import EditProfile from '../pages/User/SeviceProvider/EditProfile';
 
+import ChatApp from '../pages/Chat/ChatApp';
+
 function ServiceProviderHeader() {
+
     const [modalShow, setModalShow] = React.useState(false);
     return (
         <Navbar expand="lg" bg="light" className="navbar">
@@ -26,7 +29,7 @@ function ServiceProviderHeader() {
                         <Nav.Link href="/ServiceProvider/ViewVacancies" className='fw-bold navLink'>Vacancies</Nav.Link>
 
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
-                        <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
+                        <Nav.Link href="#chat" as={Link} to="/ServiceProvider/Chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 

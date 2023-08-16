@@ -32,7 +32,12 @@
 }
 
 .SPNo{
-    margin-left: 10px;
+  color: black;
+}
+
+.SPNo:hover,
+.SPNo:focus{
+  color: black;
 }
 
 .line{
@@ -43,37 +48,37 @@
 }
 
 .SPReqButtons{
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
+  position: absolute;
+  top: 25%;
+  right: 5%;
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
  }
 
-.SPRequestjob{
+.SPRequestjob,
+.SPRequestquotation{
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   background-color: rgb(122, 117, 117);
   color: white;
   padding: 5px 15px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(240, 218, 218, 0.2);
   transition: background-color 0.2s;
 }
 
-.SPRequestquotation{
-    display: flex;
-    justify-content: center;
-    background-color: rgb(122, 117, 117);
-    color: white;
-    margin-left: 20px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(240, 218, 218, 0.2);
-    transition: background-color 0.2s;
+.SPRequestjob:hover,
+.SPRequestquotation:hover
+{
+  background-color: #535151;
 }
 
-.SPRequestjob:hover,
-.SPRequestquotation:hover {
+.SPRequestjob:focus,
+.SPRequestquotation:focus{
   background-color: #535151;
 }
 
@@ -84,8 +89,7 @@
 
 .rating {
     font-size: 24px; 
-    color: #dbdbd9; 
-   
+    color: #dbdbd9;
   }
 
   .star.filled {

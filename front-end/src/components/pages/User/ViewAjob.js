@@ -10,8 +10,13 @@ import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
-
 import JobCard from './JobCard';
+import Customer1 from '../../../assets/images/ServiceProvider/customer1.jpg'; 
+import Customer2 from '../../../assets/images/ServiceProvider/customer2.jpg'; 
+import Customer3 from '../../../assets/images/ServiceProvider/customer3.jpg'; 
+import Customer4 from '../../../assets/images/ServiceProvider/customer4.jpg'; 
+import Customer5 from '../../../assets/images/ServiceProvider/customer5.jpg'; 
+
 
 function ViewAjob() {
 
@@ -23,42 +28,53 @@ function ViewAjob() {
     const handleBackClick = () => {
       navigate(-1);
   };
-    const serviceCardData = [
+
+    const jobsCardData = [
       {
-        avatarImage: ServiceProvideimg1,
-        title: 'Alex',
-        subInfo: 'Tile Fitting | Member since june 23 2022',
+        avatarImage: Customer1,
+        customername: 'Pranavan',
+        title: 'Tv Repair',
+        subInfo: 'Need to fix Tv and wiring',
         location: 'Wellawatte',
-        contactNumber: '0713622131'
+        dateposted: '2 days ago',
+        duedate: '2021-08-19',
       },
   
       {
-        avatarImage: ServiceProvideimg1,
-        title: 'JohnDoe',
-        subInfo: 'Tile Fitting | Member since june 23 2022',
-        location: 'Colombo',
-        contactNumber: '0713622131'
+        avatarImage: Customer2,
+        customername:'Visnugan',
+        title: 'Tiles fitting at House',
+        subInfo: 'Fit tiles for full house',
+        location: 'Dehiwala',
+        dateposted: '6 days ago',
+        duedate: '2021-08-01',
       },
       {
-        avatarImage: ServiceProvideimg1,
-        title: 'VinothKhan',
-        subInfo: 'Tile Fitting | Member since june 23 2022',
-        location: 'Wellawatte',
-        contactNumber: '0713622131'
+        avatarImage: Customer3,
+        customername:'Karthikeyan',
+        title: 'Build Wall',
+        subInfo: 'Build a Congrete wall around house',
+        location: 'Colombo',
+        dateposted: '12 day ago',
+        duedateposted: '8 days ago'
       },
       {
-        avatarImage: ServiceProvideimg1,
-        title: 'JohnDoe',
-        subInfo: 'Tile Fitting | Member since june 23 2022',
-        location: 'Colombo',
-        contactNumber: '0713622131'
+        avatarImage: Customer4,
+        customername:'Mithilan',
+        title: 'House Cleaning',
+        subInfo: 'Fix electrical outlets in the kitchen',
+        location: 'Galle',
+        dateposted: '1 day ago',
+        duedate: '2021-08-02',
       },
       {
-        avatarImage: ServiceProvideimg1,
-        title: 'JohnDoe',
-        subInfo: 'Tile Fitting | Member since june 23 2022',
+        avatarImage: Customer5,
+        customername:'Naresh',
+        title: 'Build House',
+        subInfo: 'Build a House with five rooms within two month',
         location: 'Colombo',
-        contactNumber: '0713622131'
+        dateposted: '5 days ago',
+        duedate: '2021-08-12',
       },
     ];
   
@@ -66,7 +82,7 @@ function ViewAjob() {
     const startIndex = (activePage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
   
-    const filteredServiceCardData = serviceCardData.filter((cardData) =>
+    const filteredServiceCardData = jobsCardData.filter((cardData) =>
       cardData.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (locationFilter === '' || cardData.location.toLowerCase() === locationFilter.toLowerCase())
     );
@@ -168,7 +184,10 @@ function ViewAjob() {
                   title={cardData.title}
                   subInfo={cardData.subInfo}
                   location={cardData.location}
+                  dateposted= {cardData.dateposted}
                   contactNumber={cardData.contactNumber}
+                  customername={cardData.customername}
+                  duedate={cardData.duedate}
                 />
               ))}
             </div>

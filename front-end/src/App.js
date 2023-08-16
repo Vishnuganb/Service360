@@ -7,7 +7,10 @@ import SpSignUp from './components/loginForm/ServiceProviderSignupContextProvide
 import CustSignUp from './components/loginForm/CustomerSignupContextProviderInterface.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignupContextProviderInterface.js';
 import ViewServices from './components/pages/User/ViewServices.js';
+import ViewServicesJobs from './components/pages/User/ViewServicesJob.js';
 import ServicePage from './components/pages/User/ServicePage.js';
+import ServicePageJob from './components/pages/User/ServicePageJob.js';
+
 
 import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
@@ -46,6 +49,7 @@ import SpPendingJob from './components/pages/ServiceProvider/PendingJob/Index.js
 import SpOngoingVacancy from './components/pages/ServiceProvider/OngoingVacancy/Index.js';
 import SpViewJobsHome from './components/pages/User/ViewAjob.js';
 import SpChat from './components/pages/User/Chat/ChatPage.js';
+import SpViewAserviceJob from './components/pages/User/ViewAjob.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -112,9 +116,12 @@ const router = createBrowserRouter(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="/services" element={<ViewServices />} />
-        <Route path="/services/:serviceName" element={<ServicePage />} />
-        <Route path="/jobs" element={<SpViewJobsHome />} />
+        <Route path="/services/:serviceName" element={<ServicePage />} />       
         <Route path="/services/ViewAservice" element={<ViewAservice />} />
+
+        <Route path="/jobs" element={<ViewServicesJobs />} /> 
+        <Route path="/jobs/:serviceName" element={<ServicePageJob />} />       
+        <Route path="/jobs/ViewAjob" element={<SpViewAserviceJob />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />

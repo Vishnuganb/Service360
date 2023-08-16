@@ -203,7 +203,9 @@ function JobDetails() {
           
           
           <div className="jobDetails-images-container-box row mt-2">
-          {singleJobData.images && singleJobData.images.map((image, index) => (
+           
+            
+          {/* {viewJobData.images.map((image, index) => (
             <div key={index} className="col-6 col-md-4 col-lg-3">
               <img
                 src={image}
@@ -211,8 +213,9 @@ function JobDetails() {
                 className="jobDetails-images-value-img"
               />
             </div>
-          ))}
-            
+          ))} */}
+
+
           </div>
         </div>
       </Col>

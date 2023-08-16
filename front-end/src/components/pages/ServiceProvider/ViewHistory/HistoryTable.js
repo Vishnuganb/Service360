@@ -196,6 +196,14 @@ function HistoryTable() {
 
     // Create a subset of training sessions to be displayed on the current page
     const displayedProjects = filteredProjects.slice(startIndex, endIndex);
+
+    const format12Hour = (time) => {
+      const [hours, minutes] = time.split(":");
+      const parsedHours = parseInt(hours, 10);
+      const period = parsedHours >= 12 ? "PM" : "AM";
+      const formattedHours = parsedHours > 12 ? parsedHours - 12 : parsedHours;
+      return `${formattedHours}:${minutes} ${period}`;
+  };
   
 
   return (
@@ -262,9 +270,9 @@ function HistoryTable() {
                 <tr key={project.id}>
                   <td>{project.servicename}</td>
                   <td>{project.customername}</td>
-                  <td>{project.date}</td>
-                  <td>{project.startTime}</td>
-                  <td>{project.endTime}</td>
+                  <td>{project.jobdate}</td>
+                  <td>{format12Hour(project.jobstarttime)}</td>
+                  <td>{format12Hour(project.jobendtime)}</td>
                   <td>{project.joblocation}</td>
                   <td>{project.paymentstatus}</td>
                   <td className="d-flex justify-content-center">

@@ -8,6 +8,14 @@ import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import customer1 from '../../../../assets/images/ServiceProvider/customer1.jpg';
+import customer2 from '../../../../assets/images/ServiceProvider/customer2.jpg';
+import customer3 from '../../../../assets/images/ServiceProvider/customer3.jpg';
+import customer4 from '../../../../assets/images/ServiceProvider/customer4.jpg';
+import customer5 from '../../../../assets/images/ServiceProvider/customer5.jpg';
+import customer6 from '../../../../assets/images/ServiceProvider/customer6.jpg';
+import customer7 from '../../../../assets/images/ServiceProvider/customer7.jpg';
+
 
 function JobsBodyPage() {
     const [viewJobsData, setViewJobsData] = useState(null);
@@ -17,6 +25,16 @@ function JobsBodyPage() {
         "Masonry",
         "Cleaning",
         "Tiles Fitting",
+    ];
+
+    const CustomersImages= [
+        customer1,
+        customer2,
+        customer3,
+        customer4,
+        customer5,
+        customer6,
+        customer7,
     ];
 
     // Number of cards to display per page
@@ -119,16 +137,16 @@ function JobsBodyPage() {
 
             {/* Job Cards */}
 
-            {displayedCards.map((job) => (      
+            {displayedCards.map((job,index) => (      
                 
-                    <div className="single-job-card mx-auto mt-3"> 
+                    <div className="single-job-card mx-auto mt-3">
 
                         <div className="job-card-header">
                             <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                                 <div className='d-flex justify-content-center align-items-center'>
                                     {/* <img src={job.profile} alt="avatar" className="job-card-avatar" /> */}
                                     <img
-                                            src={job.profile}
+                                            src={CustomersImages[index % CustomersImages.length]}
                                             alt="avatar"
                                             className="rounded-circle view-jobs-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}

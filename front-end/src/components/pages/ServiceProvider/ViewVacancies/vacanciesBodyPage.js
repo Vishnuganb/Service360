@@ -7,6 +7,17 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
+import customer1 from '../../../../assets/images/ServiceProvider/customer1.jpg';
+import customer2 from '../../../../assets/images/ServiceProvider/customer2.jpg';
+import customer3 from '../../../../assets/images/ServiceProvider/customer3.jpg';
+import customer4 from '../../../../assets/images/ServiceProvider/customer4.jpg';
+import customer5 from '../../../../assets/images/ServiceProvider/customer5.jpg';
+import customer6 from '../../../../assets/images/ServiceProvider/customer6.jpg';
+import customer7 from '../../../../assets/images/ServiceProvider/customer7.jpg';
+
+import company1 from '../../../../assets/images/ServiceProvider/company1.jpg';
+import company2 from '../../../../assets/images/ServiceProvider/company2.jpg';
+import company3 from '../../../../assets/images/ServiceProvider/company3.jpg';
 
 function VacanciesBodyPage() {
     const [viewVacanciesData, setviewVacanciesData] = useState(null);
@@ -16,6 +27,22 @@ function VacanciesBodyPage() {
         "Masonry",
         "Sofa Cleaning",
         "Tiles Fitting",
+    ];
+
+    const CustomersImages= [
+        customer1,
+        customer2,
+        customer3,
+        customer4,
+        customer5,
+        customer6,
+        customer7,
+    ];
+
+    const CompanyImages= [
+        company1,
+        company2,
+        company3,
     ];
 
     // Number of cards to display per page
@@ -122,14 +149,14 @@ function VacanciesBodyPage() {
 
     {/* Vacancy Cards */}
 
-    {displayedCards.map((Vacancy) => (
+    {displayedCards.map((Vacancy,index) => (
         <div className='single-vacancy-card mx-auto mt-3' >
             <div className='vacancy-card-header'>
                 <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                     <div className='d-flex justify-content-center align-items-center'>
                         {/* <img src={CompanyImg} alt='avatar' className='vacancy-card-avatar'/> */}
                         <img
-                                src={Vacancy.profile}
+                                src={CompanyImages[index % CompanyImages.length]}
                                 alt="avatar"
                                 className="rounded-circle"
                                 style={{ width: "42px", height: "42px" }}

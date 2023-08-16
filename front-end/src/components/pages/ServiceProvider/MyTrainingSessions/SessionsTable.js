@@ -7,7 +7,9 @@ import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 
+
 function MyTrainingSessions() {
+  
 
     const [show, setShow] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null); 
@@ -18,6 +20,19 @@ function MyTrainingSessions() {
       setShow(true); // Show the modal
     };
 
+    // State to control the user registration modal
+    const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
+    // Function to open the user registration modal
+    const handleShowRegistrationModal = () => {
+      setShowRegistrationModal(true);
+    };
+
+    // Function to close the user registration modal
+    const handleCloseRegistrationModal = () => {
+      setShowRegistrationModal(false);
+    };
+
     //training session objects with properties
     const trainingSessionData = [       
         {
@@ -26,7 +41,7 @@ function MyTrainingSessions() {
           date: '2023-08-20',
           startTime: '09:00',
           endTime: '12:00',
-          location: 'Room 101',
+          location: 'Marino mall',
           status: 'Published',
         },
         {
@@ -35,7 +50,7 @@ function MyTrainingSessions() {
           date: '2023-08-25',
           startTime: '10:00',
           endTime: '15:00',
-          location: 'Online',
+          location: 'One Galle Face',
           status: 'Accepted',
         },
         {
@@ -44,7 +59,7 @@ function MyTrainingSessions() {
           date: '2023-08-25',
           startTime: '14:00',
           endTime: '17:00',
-          location: 'Room 202',
+          location: 'Colombo City Center',
           status: 'Published',
         },
         {
@@ -53,7 +68,7 @@ function MyTrainingSessions() {
           date: '2023-08-22',
           startTime: '09:30',
           endTime: '11:30',
-          location: 'Room 201',
+          location: 'Taj Samudra',
           status: 'Accepted',
         },
         {
@@ -71,7 +86,7 @@ function MyTrainingSessions() {
           date: '2023-08-28',
           startTime: '13:00',
           endTime: '15:30',
-          location: 'Room 303',
+          location: 'Majestic City',
           status: 'Published',
         },
         {
@@ -80,7 +95,7 @@ function MyTrainingSessions() {
           date: '2023-09-02',
           startTime: '10:00',
           endTime: '12:00',
-          location: 'Lab 1',
+          location: 'Crescat Boulevard',
           status: 'Accepted',
         },
         {
@@ -89,7 +104,7 @@ function MyTrainingSessions() {
           date: '2023-09-05',
           startTime: '15:00',
           endTime: '17:00',
-          location: 'Online',
+          location: 'Arcade Independence Square',
           status: 'Payment Pending',
         },
         {
@@ -98,7 +113,7 @@ function MyTrainingSessions() {
           date: '2023-09-09',
           startTime: '11:30',
           endTime: '13:30',
-          location: 'Room 202',
+          location: 'Liberty Plaza',
           status: 'Published',
         },
         {
@@ -107,7 +122,7 @@ function MyTrainingSessions() {
           date: '2023-09-12',
           startTime: '09:00',
           endTime: '12:00',
-          location: 'Room 301',
+          location: 'Majestic City',
           status: 'Accepted',
         },
         {
@@ -116,7 +131,7 @@ function MyTrainingSessions() {
           date: '2023-09-15',
           startTime: '14:00',
           endTime: '16:30',
-          location: 'Online',
+          location: 'Liberty Plaza',
           status: 'Payment Pending',
         },
         {
@@ -125,7 +140,7 @@ function MyTrainingSessions() {
           date: '2023-09-18',
           startTime: '12:00',
           endTime: '14:00',
-          location: 'Robotics Lab',
+          location: 'Arcade Independence Square',
           status: 'Published',
         },
         {
@@ -134,9 +149,42 @@ function MyTrainingSessions() {
           date: '2023-09-22',
           startTime: '09:30',
           endTime: '12:30',
-          location: 'Room 205',
+          location: 'Liberty Plaza',
           status: 'Accepted',
         },
+    ];
+
+    const registeredUsers = [
+      {
+        email: 'pranavan@gmail.com',
+        phoneNumber: '0771319093',
+        registrationDate: '2023-08-16 10:00 AM',
+        status: 'Confirmed',
+      },
+      {
+        email: 'visnugan@gmail.com',
+        phoneNumber: '070983783',
+        registrationDate: '2023-08-16 11:00 AM',
+        status: 'Confirmed',
+      },
+      {
+        email: 'karthikeyan@gmail.com',
+        phoneNumber: '0773499921',
+        registrationDate: '2023-08-16 12:00 PM',
+        status: 'Pending',
+      },
+      {
+        email: 'mithilan@gmail.com',
+        phoneNumber: '0751209321',
+        registrationDate: '2023-08-16 01:00 PM',
+        status: 'Confirmed',
+      },
+      {
+        email: 'naresh@gmail.com',
+        phoneNumber: '0701912299',
+        registrationDate: '2023-08-16 02:00 PM',
+        status: 'Confirmed',
+      },
     ];
       
     // Number of cards (training sessions) to display per page
@@ -193,6 +241,32 @@ function MyTrainingSessions() {
 
   return (
     <div>
+
+      {/* Custom styles */}
+      <style>
+        {`
+          /* Customize the width of the modal for different screen sizes */
+          @media (max-width: 768px) {
+            .custom-modal {
+              max-width: 90%;
+            }
+          }
+
+          @media (min-width: 769px) and (max-width: 1200px) {
+            .custom-modal {
+              max-width: 70%;
+            }
+          }
+
+          @media (min-width: 1201px) {
+            .custom-modal {
+              max-width: 50%;
+            }
+          }
+
+          /* Add any additional custom styles here */
+        `}
+      </style>
       
       {/* Page Title*/}
       <span className="ms-3 align-self-start" style={{fontSize:"28px",fontWeight:"600"}}>My Training Sessions</span>
@@ -239,8 +313,8 @@ function MyTrainingSessions() {
             <thead className="text-center">
               <tr>
                 <th>Session ID</th>
-                <th>Training Session Title</th>
-                <th>Date</th>
+                <th style={{ width: '25%' }}>Training Session Title</th>
+                <th style={{ width: '13%' }}>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Location</th>
@@ -253,8 +327,8 @@ function MyTrainingSessions() {
               {displayedSessions.map((session) => (
                 <tr key={session.id} className="custom-table-row">
                   <td>{String(session.id).padStart(3, '0')}</td>
-                  <td>{session.sessionTitle}</td>
-                  <td>{session.date}</td>
+                  <td style={{ width: '25%' }}>{session.sessionTitle}</td>
+                  <td style={{ width: '13%' }}>{session.date}</td>
                   <td>{session.startTime}</td>
                   <td>{session.endTime}</td>
                   <td>{session.location}</td>
@@ -263,7 +337,7 @@ function MyTrainingSessions() {
                       {session.status === 'Payment Pending' ? (
                         <i 
                           className={`bi bi-cash fs-4 mx-2 my-2`} 
-                          onClick={handleShow}
+                          onClick={() => handleShow(session)}
                         ></i>
                       ) : session.status === 'Accepted' ? (
                         <i
@@ -272,6 +346,7 @@ function MyTrainingSessions() {
                       ) : session.status === 'Published' ? (
                         <i 
                           className={`bi bi-eye fs-4 mx-2 my-2`}
+                          onClick={handleShowRegistrationModal}
                         ></i>
                       ) : null 
                     }
@@ -302,7 +377,7 @@ function MyTrainingSessions() {
       </div>
 
 
-
+      {/* Modal for Payment Confirmation */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Pay for Training Session</Modal.Title>
@@ -313,12 +388,12 @@ function MyTrainingSessions() {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Group className="mb-3" controlId="sessionTitle">
                     <Form.Label>Session Title</Form.Label>
-                    <Form.Control type="text" value="" readOnly />
+                    <Form.Control type="text" value={selectedRow ? selectedRow.sessionTitle : ''} readOnly />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="amount">
                   <Form.Label>Amount</Form.Label>
-                  <Form.Control type="text" value="" readOnly />
+                  <Form.Control type="text" value="1000.00 LKR" readOnly />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="paymentConfirmation">
@@ -332,7 +407,7 @@ function MyTrainingSessions() {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button className='btn-ServiceProvider-2' >
+          <Button className='btn-ServiceProvider-2' onClick={handleClose}>
             Close
           </Button>
           <Button className='btn-ServiceProvider-1' >
@@ -342,6 +417,40 @@ function MyTrainingSessions() {
       </Modal>
 
 
+      {/* Modal for ServiceProviders Registration */}
+      <Modal show={showRegistrationModal} onHide={handleCloseRegistrationModal} dialogClassName="custom-modal">
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+          <Modal.Title>Registered Users</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* Display the registered users table */}
+          <Table striped bordered hover size="sm">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th >Registration Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {registeredUsers.map((user, index) => (
+                <tr key={index}>
+                  <td>{user.email}</td>
+                  <td>{user.phoneNumber}</td>
+                  <td >{user.registrationDate}</td>
+                  <td>{user.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className='btn-ServiceProvider-2' onClick={handleCloseRegistrationModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </div>
     

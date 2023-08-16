@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
+import company1 from '../../../../assets/images/ServiceProvider/company1.jpg';
+import company2 from '../../../../assets/images/ServiceProvider/company2.jpg';
+import company3 from '../../../../assets/images/ServiceProvider/company3.jpg';
 
 function MyProjectsBody(){
     const [MyProjectsVacanciesData, setMyProjectsVacanciesData] = useState(null);
@@ -20,6 +23,12 @@ function MyProjectsBody(){
         "Masonry",
         "Sofa Cleaning",
         "Tiles Fitting",
+    ];
+
+    const CompanyImages= [
+        company1,
+        company2,
+        company3,
     ];
 
     // Number of cards (training sessions) to display per page
@@ -156,13 +165,13 @@ function MyProjectsBody(){
             </div>
             
             {/* only display ongoing vacancies */}
-            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing').map((vacancy) => (
+            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={vacancy.profile}
+                                            src={company1}
                                             alt="avatar"
                                             className="rounded-circle my-projects-vacancies-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -207,13 +216,13 @@ function MyProjectsBody(){
             ))}
 
             {/* only display rejected vacancies */}
-            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus ==='rejected').map((vacancy) => (
+            {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus ==='rejected').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={vacancy.profile}
+                                            src={company2}
                                             alt="avatar"
                                             className="rounded-circle my-projects-vacancies-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -259,13 +268,13 @@ function MyProjectsBody(){
 
 
                {/* only display vacancy invites for me */}
-               {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy) => (
+               {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
                     <div className="vacancy-card-header">
                         <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                            src={vacancy.profile}
+                                            src={company3}
                                             alt="avatar"
                                             className="rounded-circle"
                                             style={{ width: "42px", height: "42px" }}

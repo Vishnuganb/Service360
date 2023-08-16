@@ -3,15 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ServiceProvideimg from '../../../assets/images/Customer/ServiceProvider1.png';
-import img1 from '../../../assets/images/Customer/img2.jpeg';
-import img2 from '../../../assets/images/Customer/img3.jpeg';
-import img3 from '../../../assets/images/Customer/img4.jpeg';
+import img1 from '../../../assets/images/Customer/sofaclean1.jpg';
+import img2 from '../../../assets/images/Customer/sofaclean2.jpg';
+import img3 from '../../../assets/images/Customer/sofaclean3.jpeg';
 import '../../../style/Customer/ViewServiceProvider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faComment, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
 
 function ViewServiceProvider() {
   const rating = 4;
@@ -24,7 +25,7 @@ function ViewServiceProvider() {
         <span className='SPActive'> Last Active 5 days ago </span>
         <div class="SPDetail">
           <p className='p1'> Member Since 2022 </p>
-          <p className='p1'>Service : Phone Repair &nbsp; | &nbsp; Location : Dehiwala</p>
+          <p className='p1'>Service : Sofa Cleaning &nbsp; | &nbsp; Location : Colombo 1, Colombo</p>
           <p className='p1'>Description </p>
           <p className='Des border p-3' >Iphone unlocking Software and hardware, Display replacing, Battery replacing, All kind Mobile can be repaired</p>
         </div>
@@ -33,7 +34,7 @@ function ViewServiceProvider() {
           <div className='contacticon'>
             <a href="#getcall" className='SPNo'>
               <FontAwesomeIcon icon={faPhone} />
-              &nbsp; &nbsp; 0705844693
+              &nbsp; &nbsp; 0775869807
             </a>
           </div>
 
@@ -64,7 +65,7 @@ function ViewServiceProvider() {
             <Carousel.Item>
             <img
                 className="d-block w-100 img-fluid"
-                src={img3}
+                src={img2}
                 alt="Third slide"
                 style={{ maxHeight: '300px', objectFit: 'cover' }}
               />
@@ -72,7 +73,7 @@ function ViewServiceProvider() {
             <Carousel.Item>
               <img
                 className="d-block w-100 img-fluid"
-                src={img2}
+                src={img3}
                 alt="Third slide"
                 style={{ maxHeight: '300px', objectFit: 'cover' }}
               />
@@ -82,13 +83,13 @@ function ViewServiceProvider() {
         </div>
 
         <div className='SPReqButtons'>
-          <a href="JobRequest">
-            <button className='SPRequestjob'> Request for job </button>{' '}
-          </a>
+          <Link to={`/customer/JobRequest`}> 
+            <button className='SPRequestjob'> Request for job </button></Link>
+          
 
-          <a href="Quotation">
-            <button className='SPRequestquotation'> Request for quotation</button>{' '}
-          </a>
+         <Link to={`/customer/Quotation`}> 
+            <button className='SPRequestquotation'> Request for quotation</button>
+          </Link>
         </div>
 
         <div className='SPRatings'>

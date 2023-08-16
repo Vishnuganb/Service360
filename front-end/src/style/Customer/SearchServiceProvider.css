@@ -158,6 +158,9 @@
     border: 1px solid #ccc;
     padding: 2px;
     border-radius: 10px;
+    height: 100%;
+   
+   
   }
   .profile-box {
     background-color: white;
@@ -193,7 +196,7 @@
   .profile-details .date {
     color: rgb(187, 187, 202);
     font-size: 14px;
-    font-family: roboto;
+    font-family: "roboto";
   }
   
   .profile-details .phone_no {
@@ -212,7 +215,6 @@
   }
    
   /*filter*/
-  
   .bottombutton2{
     margin-left: 50px;
   }
@@ -252,7 +254,55 @@
     }
   }
 
-  /* sorting */
+  /* Apply black background and white text color to the pagination container */
+.paginationContainer-customer {
+  display: flex;
+  justify-content: center;
+}
+
+/* Apply styles to pagination elements */
+.pagination-element-customer li a {
+  color: white;
+  background-color: black;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid black;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Apply styles on hover */
+.pagination-element-customer li a:hover {
+  background-color: #333;
+  border-color: #333;
+  color: #ffffff;
+}
+
+/* Apply styles to active page */
+.pagination-element-customer .active a {
+  background-color: #989ea5;
+  color: white;
+  border-color: #989ea5;
+}
+
+/* .card-container-fixed-height {
+  height: auto; 
+  overflow-y: auto; 
+} */
+
+.no-results{
+  display: flex;
+  justify-content: center;
+  color: grey;
+  font-size: 20px;
+  gap: 10px;
+}
+
+.error-icon{
+  margin-top: 6.5px;
+}
+
+
+
 
 
   

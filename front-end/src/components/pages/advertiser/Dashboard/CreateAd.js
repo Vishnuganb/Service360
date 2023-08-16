@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -97,6 +96,7 @@ const CreateAd = () => {
 
   return (
     <Container>
+      <h2>Create Your Ad</h2>
       <Row className="AdsHome-mainCont">
         <Col className="AdsHome-left-cont d-flex justify-content-center align-items-center">
           <Row>
@@ -355,11 +355,12 @@ const CreateAd = () => {
                   label="I accept the policy"
                 />
               </Form.Group>
-              <div className="d-flex justify-content-center">
-                <Button className="d-grid" onClick={handleSubmit} type="submit">
+
+              <Row className="d-flex justify-content-center ">
+                <button className="AdViewButton mb-3" onClick={handleSubmit} type="submit">
                   Submit
-                </Button>
-              </div>
+                </button>
+              </Row>
             </fieldset>
           </Form>
         </Col>

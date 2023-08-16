@@ -88,6 +88,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    height: fit-content;
 }
 
 .pagination-element{
@@ -100,19 +101,23 @@
 .single-SP-card{
     display: flex;
     flex-direction: column;
-    border-radius: 4px;
+    border-radius: 5px;
     width: 90%;
-    height: 30%;
-    margin-bottom: 20px;
+    height: 45% ;
+    margin-bottom: 30px;
     padding: 20px 20px 0 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    transition: transform .3s;
+    box-shadow: 0 4px 8px rgba(116, 112, 112, 0.2);
+    transition: transform 0.4s ease-in-out, background-color 0.3s ease-in-out; 
+   
+   
 }
+
 /* .single-SP-card:hover{
-    transform: scale(1.005);
-    z-index: 2;
-    border: 0.2px solid #29435cf0;
-} */
+    background-color: none;
+    cursor: pointer;
+    transform: scale(1.1);
+ } */
+
 .SP-card-avatar{
     width: 50px;
     height: 50px;
@@ -245,3 +250,5 @@
     font-size: 24px; 
     color: #3d3d3d;
   }
+
+

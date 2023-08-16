@@ -10,21 +10,29 @@ import chat from '../../assets/images/header/chat.png';
 import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
+import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 
+  
 function CustomerHeader() {
     const [showEditProfile, setShowEditProfile] = useState(false);
+    const [showAddReview, setShowAddReview] = useState(false);
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">
             <Container>
-                <Navbar.Brand href="#home">
-                    <img src={logo} alt="Service 360 Logo" className="logo" />
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
-                    <Nav className="me-auto">
+                        <Navbar.Brand href="#home">
+                            <img src={logo} alt="Service 360 Logo" className="logo" />
+                        </Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
+                        <Nav className="me-auto">
+                        <Nav.Link href="#Riviews" className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none" onClick={() => setShowAddReview(true)}> <i className="fas fa-star-half-alt"></i></Nav.Link>
+                        <AddReviewandRating
+                        show={showAddReview}
+                        onHide={() => setShowAddReview(false)}
+                        />
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
-                        <Nav.Link href="#chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
+                        <Nav.Link href="#chat" as={Link} to="/Customer/Chat"  className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link href="#History" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">History</Nav.Link> 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>

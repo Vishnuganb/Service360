@@ -1,15 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import image from '../../assets/images/header/Background.png';
 import loginPhoto from '../../assets/images/home/SpSignUP.jpeg';
 import validator from 'validator';
+import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
 
 import Step1 from './Step1';
 import Step2 from './Step2';
 
 const ServiceProviderSignUP = () => {
     const [step, setStep] = useState(1);
+    const { login } = useContext(AuthenticationContext);
+    const { serviceProviderSignUp } = useContext(AuthenticationContext);
 
-    // Step 1 state variables and handlers
+    
     const [step1Data, setStep1Data] = useState({
         email: '',
         firstName: '',
@@ -252,15 +255,12 @@ const ServiceProviderSignUP = () => {
         }
 
         if (selectedCategories.length === 0) {
-            isError = true;
-        }
-
-        if (selectedServices.length > 0 || selectedCategories.length === 0) {
-            isError = true;
+            isError = true; 
             categoryErrorMessage = 'Select the category(S) you provide';
         }
 
-        
+        console.log(selectedCategories.length)
+        console.log(selectedServices.length)
 
         setStep2Data((prevData) => ({
             ...prevData,
@@ -272,7 +272,15 @@ const ServiceProviderSignUP = () => {
         }));
 
         if(!isError) {
-            console.log('Form submitted!');
+            serviceProviderSignUp({
+                email: step1Data.email,
+                password: step2Data.password,
+                firstname: step1Data.firstName,
+                lastname: step1Data.lastName,
+                nic: step1Data.nicNumber,
+                address: step1Data.address,
+                phonenumber: step1Data.contactNumber,
+            });
         }
 
     };

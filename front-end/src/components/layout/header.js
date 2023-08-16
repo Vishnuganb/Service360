@@ -18,7 +18,7 @@ function AppHeader1() {
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav>
                         <Nav.Link as={Link}  to="/" className='fw-bold navLink'>Home</Nav.Link>
-                        <Nav.Link as={Link} to="/job" className='fw-bold navLink'>Job</Nav.Link>
+                        <Nav.Link as={Link} to="/jobs" className='fw-bold navLink'>Job</Nav.Link>
                         <Nav.Link as={Link} to="/services" className='fw-bold navLink'>Services</Nav.Link>
                         <Nav.Link as={Link} to="/about" className='fw-bold navLink'>About</Nav.Link>
                         <Nav.Link as={Link} to="#contact" className='fw-bold navLink'>Contact</Nav.Link>

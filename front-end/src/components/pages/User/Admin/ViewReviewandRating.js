@@ -7,6 +7,7 @@ import "../../../../style/User/Admin/ViewReviewandRating.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import profileIcon from "../../../../assets/images/header/user.jpg";
+import reviewImg from "../../../../assets/images/header/reviews.png"
 
 const AddReviewandRating = () => {
   const [startDate, setStartDate] = useState(null);
@@ -15,10 +16,10 @@ const AddReviewandRating = () => {
 
   const ratingsData = [
     { stars: 5, count: 5000 },
-    { stars: 4, count: 1000 },
-    { stars: 3, count: 100 },
-    { stars: 2, count: 0 },
-    { stars: 1, count: 0 },
+    { stars: 4, count: 3000 },
+    { stars: 3, count: 2000 },
+    { stars: 2, count: 1000 },
+    { stars: 1, count: 1000 },
   ];
 
   const totalRatings = ratingsData.reduce(
@@ -76,70 +77,90 @@ const AddReviewandRating = () => {
 
   return (
     <Container>
-      <h2>View Reviews And Ratings</h2>
+      <h2>View Reviews And Ratings About Our System</h2>
       <Form
         className="block py-5  "
-        style={{ backgroundImage: `url(${BgImage})` }}
+        style={{ backgroundImage: `url(${BgImage})`}}
       >
         <Row className="mt-5 d-justify flex-content-around">
           <Col>
-            <Card className="block py-5  ">
+            <Card style={{ backgroundImage: `url(${BgImage})`, height:'190px'  }} className="block">
               <div className="text-center">
-                <div style={{ fontWeight: 50, fontSize: 30 }}>
+              <div className="d-flex justify-content-center fs-3 px-2">
                   Average Rating:
                 </div>
-                <div className="mt-4" style={{ fontWeight: 50, fontSize: 30 }}>
-                  {" "}
-                  {renderStars(averageRating)}
+                <div className="fs-1 d-flex justify-content-center fw-bold px-2">
                   {averageRating.toFixed(1)}
+                </div>
+                <div className="d-flex justify-content-center fs-1 px-2">
+                  {renderStars(averageRating)}
                 </div>
               </div>
             </Card>
           </Col>
 
           <Col>
-            <Card className="block py-5  ">
+            <Card style={{ backgroundImage: `url(${BgImage})`, height:'190px' }} className="block">
               <div className="text-center">
-                <div style={{ fontWeight: 50, fontSize: 30 }}>
-                  Total Reviews:
-                </div>
-                <div className="mt-4" style={{ fontWeight: 50, fontSize: 30 }}>
+              <div className="fs-3 d-flex justify-content-center px-2">
                   {" "}
+                  Reviews
+                </div>
+                <div className="fs-1 d-flex justify-content-center fw-bold px-2">
                   {totalRatings}
+                </div>
+                <div className="fs-1 d-flex justify-content-center fw-bold px-2">
+                  <img src={reviewImg} style={{height:'50px', width:'50px'}}/>
                 </div>
               </div>
             </Card>
           </Col>
-        </Row>
 
-        <Card className="mt-5" style={{ fontWeight: 50, fontSize: 30 }}>
-          {ratingsData.map((rating) => (
-            <star key={rating.stars}>
-              <div className="rating-item">
-                <span
-                  style={{ fontWeight: 500, fontSize: 30 }}
-                  className="star-count"
-                >
-                  {rating.stars}
-                  <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-                  <Col className="rating-bar">
-                    <Col
-                      className="fill-bar"
-                      style={{
-                        width: `${(rating.count / totalRatings) * 100}%`,
-                        backgroundColor: "#333F7D",
-                      }}
-                    ></Col>
-                  </Col>
+          <Col>
+            <Card  className="block"  style={{backgroundImage: `url(${BgImage})`, height:'190px'}}>
+              <div className="px-2">
+              {ratingsData.map((rating) => ( 
+                <star key={rating.stars}>
+                  <div className="" >
+                    <div className="" style={{ display: "flex", alignItems: "center" }}>
+                      <div className="" style={{ marginRight: "20px",marginLeft:"10px" }}>
+                        <span style={{ fontWeight: 500, fontSize: 20 ,marginLeft: "20px"  }}>
+                          {rating.stars}
+                          <FontAwesomeIcon
+                            icon={faStar}
+                            style={{ color: "gold", marginLeft: "20px" }}
+                          />
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          flex: 2,
+                          height: 15,
+                          borderRadius: 15,
+                          overflow: "hidden",
+                          backgroundColor: "rgb(231, 227, 227)",
+                        marginLeft:"10px",
+                        
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: `${(rating.count / totalRatings) * 100}%`,
+                            height: 15,
+                            backgroundColor: "#333F7D",
+                        }}
+                      ></div>
+                    </div>
 
-                  {rating.count}
-                </span>
+                  </div>
+                </div>
+              </star>
+            ))}
+            </div>
+          </Card>
+        </Col>
+      </Row>
 
-                <div className="star-value-count"></div>
-              </div>
-            </star>
-          ))}
-        </Card>
 
         <Row className="mt-5">
           <Col className="d-flex justify-content-center  input-group">
@@ -170,7 +191,7 @@ const AddReviewandRating = () => {
             </span>
           </Col>
         </Row>
-        <Card className="mt-5 mb-5 text-center display: 'flex'">
+        <Card className="mt-5 mb-5 text-center display: 'flex'"  style={{ backgroundImage: `url(${BgImage})` }}>
           <Row className="mt-5 ">
             <Col>
               <div>
@@ -207,11 +228,13 @@ const AddReviewandRating = () => {
             <Col style={{ fontWeight: 50, fontSize: 20 }}>
               <h3>Review and Rating</h3>
               Very Helpful And Thank You
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
+              <div>
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+              </div>
             </Col>
           </Row>
 
@@ -245,10 +268,12 @@ const AddReviewandRating = () => {
 
             <Col style={{ fontWeight: 50, fontSize: 20 }}>
               Very Helpful And Thank You
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
+              <div>
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+              </div>
             </Col>
           </Row>
 
@@ -282,10 +307,12 @@ const AddReviewandRating = () => {
 
             <Col style={{ fontWeight: 50, fontSize: 20 }}>
               Very Helpful And Thank You
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
-              <FontAwesomeIcon icon={faStar} className="star-icon gold" />
+              <div>
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+                <FontAwesomeIcon icon={faStar} style={{ color: "gold" }} />
+              </div>
             </Col>
           </Row>
         </Card>

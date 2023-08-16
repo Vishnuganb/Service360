@@ -43,7 +43,7 @@ function AdvertiserSidebar() {
 
               <li className="nav-item text-white fs-4 mt-4 py-2 py-xs-1">
                 <Link
-                  to="/advertiser/Dashboard"
+                  to="/advertiser"
                   className="nav-link nav-link-sidebar text-white"
                 >
                   <i className="bi bi-grid"></i>

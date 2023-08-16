@@ -1,4 +1,4 @@
-import React, {useState,useContext} from 'react';
+import React, {useState,useContext,useEffect} from 'react';
 import '../../style/ServiceProvider/ServiceProviderHeader.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -14,16 +14,18 @@ import ChatApp from '../pages/Chat/ChatApp';
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
 import { useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
+import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 
 function ServiceProviderHeader() {
 
     const location = useLocation()
     const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
     const [modalShow, setModalShow] = React.useState(false);
+    const [showAddReview, setShowAddReview] = useState(false);
     const [userName, setUserName] = useState('')
 
     useEffect(() => {
-        const savedUserName = Cookies.get('FirstName'); // Corrected variable name
+        const savedUserName = Cookies.get('FirstName'); 
         if (savedUserName) {
             setUserName(savedUserName);
         }

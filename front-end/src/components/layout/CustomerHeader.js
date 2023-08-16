@@ -13,6 +13,7 @@ import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
 import { useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
+import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 
   
 function CustomerHeader() {
@@ -21,15 +22,14 @@ function CustomerHeader() {
     const [showEditProfile, setShowEditProfile] = useState(false);
     const { logout, userDetailsAfterAuthentication } = useContext(AuthenticationContext)
     const [userName, setUserName] = useState('')
+    const [showAddReview, setShowAddReview] = useState(false);
 
     useEffect(() => {
         const savedUserName = Cookies.get('FirstName'); // Corrected variable name
         if (savedUserName) {
             setUserName(savedUserName);
         }
-    }, []);
-
-
+    }, []); 
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">

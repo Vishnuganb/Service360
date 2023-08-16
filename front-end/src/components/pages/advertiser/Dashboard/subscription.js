@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import { Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import "../../../../style/advertiser/AdIndex.css";
 
@@ -67,6 +68,13 @@ const Subscribtion = () => {
       duration: 1,
     },
   ];
+
+   const navigate = useNavigate();
+
+   const handleOpenSubscripedModal = (id) => {
+     // Navigate to the editAd route with the id as a parameter
+     navigate(`/Advertiser/Subscribed/${id}`);
+   };
 
   return (
     <Container
@@ -149,6 +157,7 @@ const Subscribtion = () => {
             <p className="AdBillDetailsP">
               Price: <b>{chosenPlan.price}</b>
             </p>
+            {console.log("chosenPlan.id:" + chosenPlan.id)}
             {chosenPlan.title === "Bronze" ? (
               <div>
                 <p className="AdBillDetailsP text-center">
@@ -158,6 +167,14 @@ const Subscribtion = () => {
                     plan.
                   </b>
                 </p>
+                <div className={` d-flex justify-content-center`}>
+                  <button
+                    className="ChooseSubBut py-2 px-4"
+                    onClick={() => handleOpenSubscripedModal(chosenPlan.id)}
+                  >
+                    Activate
+                  </button>
+                </div>
               </div>
             ) : (
               <div>
@@ -175,7 +192,12 @@ const Subscribtion = () => {
                   </p>
                 )}
                 <div className={` d-flex justify-content-center`}>
-                  <button className="ChooseSubBut py-2 px-4">Pay</button>
+                  <button
+                    className="ChooseSubBut py-2 px-4"
+                    onClick={() => handleOpenSubscripedModal(chosenPlan.id)}
+                  >
+                    Pay
+                  </button>
                 </div>
               </div>
             )}

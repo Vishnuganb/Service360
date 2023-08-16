@@ -3,133 +3,136 @@ import { Table, Container } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Navbar from 'react-bootstrap/Navbar';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function HistoryTable() {
 
+  const [viewHistoryData, setViewHistoryData] = useState(null);
+
     //training session objects with properties
-    const viewHistoryData = [
-      {
-        id: 1,
-        serviceName: 'Masonry',
-        customerName: 'John Doe',
-        date: '2023-08-20',
-        startTime: '09:00',
-        endTime: '12:00',
-        location: 'Wellawatte',
-        paymentStatus: 'Pending',
-      },
-      {
-        id: 2,
-        serviceName: 'Tiles fitting',
-        customerName: 'Jane Smith',
-        date: '2023-08-25',
-        startTime: '10:00',
-        endTime: '15:00',
-        location: 'Dehiwala',
-        paymentStatus: 'Accepted',
-      },
-      {
-        id: 3,
-        serviceName: 'Masonry',
-        customerName: 'Michael Johnson',
-        date: '2023-08-25',
-        startTime: '14:00',
-        endTime: '17:00',
-        location: 'Dehiwala',
-        paymentStatus: 'Published',
-      },
-      {
-        id: 4,
-        serviceName: 'Masonry',
-        customerName: 'Emily Brown',
-        date: '2023-08-22',
-        startTime: '09:30',
-        endTime: '11:30',
-        location: 'Kohuwala',
-        paymentStatus: 'Accepted',
-      },
-      {
-        id: 5,
-        serviceName: 'Tiles fitting',
-        customerName: 'David Lee',
-        date: '2023-08-24',
-        startTime: '14:00',
-        endTime: '16:00',
-        location: 'Wellawatte',
-        paymentStatus: 'Pending',
-      },
-      {
-        id: 6,
-        serviceName: 'Iron works',
-        customerName: 'Sophia Wilson',
-        date: '2023-08-28',
-        startTime: '13:00',
-        endTime: '15:30',
-        location: 'Moratuwa',
-        paymentStatus: 'Published',
-      },
-      {
-        id: 7,
-        serviceName: 'Iron Works',
-        customerName: 'William Johnson',
-        date: '2023-09-02',
-        startTime: '10:00',
-        endTime: '12:00',
-        location: 'Galle',
-        paymentStatus: 'Accepted',
-      },
-      {
-        id: 8,
-        serviceName: 'Tiles fitting',
-        customerName: 'Olivia Davis',
-        date: '2023-09-05',
-        startTime: '15:00',
-        endTime: '17:00',
-        location: 'Dehiwala',
-        paymentStatus: 'Pending',
-      },
-      {
-        id: 9,
-        serviceName: 'Iron Works',
-        customerName: 'James Wilson',
-        date: '2023-09-09',
-        startTime: '11:30',
-        endTime: '13:30',
-        location: 'Wellawatte',
-        paymentStatus: 'Published',
-      },
-      {
-        id: 10,
-        serviceName: 'Glass & Aluminium',
-        customerName: 'Ava Martin',
-        date: '2023-09-12',
-        startTime: '09:00',
-        endTime: '12:00',
-        location: 'Moratuwa',
-        paymentStatus: 'Accepted',
-      },
-      {
-        id: 11,
-        serviceName: 'Masonry',
-        customerName: 'Liam Miller',
-        date: '2023-09-15',
-        startTime: '14:00',
-        endTime: '16:30',
-        location: 'Moratuwa',
-        paymentStatus: 'Pending',
-      },
-      {
-        id: 12,
-        serviceName: 'Masonry',
-        customerName: 'Ella Clark',
-        date: '2023-09-18',
-        startTime: '12:00',
-        endTime: '14:00',
-        location: 'Wellaawatte',
-        paymentStatus: 'Published',
-      },
-    ];
-    
+    // const viewHistoryData = [
+    //   {
+    //     id: 1,
+    //     serviceName: 'Masonry',
+    //     customerName: 'John Doe',
+    //     date: '2023-08-20',
+    //     startTime: '09:00',
+    //     endTime: '12:00',
+    //     location: 'Wellawatte',
+    //     paymentStatus: 'Pending',
+    //   },
+    //   {
+    //     id: 2,
+    //     serviceName: 'Tiles fitting',
+    //     customerName: 'Jane Smith',
+    //     date: '2023-08-25',
+    //     startTime: '10:00',
+    //     endTime: '15:00',
+    //     location: 'Dehiwala',
+    //     paymentStatus: 'Accepted',
+    //   },
+    //   {
+    //     id: 3,
+    //     serviceName: 'Masonry',
+    //     customerName: 'Michael Johnson',
+    //     date: '2023-08-25',
+    //     startTime: '14:00',
+    //     endTime: '17:00',
+    //     location: 'Dehiwala',
+    //     paymentStatus: 'Published',
+    //   },
+    //   {
+    //     id: 4,
+    //     serviceName: 'Masonry',
+    //     customerName: 'Emily Brown',
+    //     date: '2023-08-22',
+    //     startTime: '09:30',
+    //     endTime: '11:30',
+    //     location: 'Kohuwala',
+    //     paymentStatus: 'Accepted',
+    //   },
+    //   {
+    //     id: 5,
+    //     serviceName: 'Tiles fitting',
+    //     customerName: 'David Lee',
+    //     date: '2023-08-24',
+    //     startTime: '14:00',
+    //     endTime: '16:00',
+    //     location: 'Wellawatte',
+    //     paymentStatus: 'Pending',
+    //   },
+    //   {
+    //     id: 6,
+    //     serviceName: 'Iron works',
+    //     customerName: 'Sophia Wilson',
+    //     date: '2023-08-28',
+    //     startTime: '13:00',
+    //     endTime: '15:30',
+    //     location: 'Moratuwa',
+    //     paymentStatus: 'Published',
+    //   },
+    //   {
+    //     id: 7,
+    //     serviceName: 'Iron Works',
+    //     customerName: 'William Johnson',
+    //     date: '2023-09-02',
+    //     startTime: '10:00',
+    //     endTime: '12:00',
+    //     location: 'Galle',
+    //     paymentStatus: 'Accepted',
+    //   },
+    //   {
+    //     id: 8,
+    //     serviceName: 'Tiles fitting',
+    //     customerName: 'Olivia Davis',
+    //     date: '2023-09-05',
+    //     startTime: '15:00',
+    //     endTime: '17:00',
+    //     location: 'Dehiwala',
+    //     paymentStatus: 'Pending',
+    //   },
+    //   {
+    //     id: 9,
+    //     serviceName: 'Iron Works',
+    //     customerName: 'James Wilson',
+    //     date: '2023-09-09',
+    //     startTime: '11:30',
+    //     endTime: '13:30',
+    //     location: 'Wellawatte',
+    //     paymentStatus: 'Published',
+    //   },
+    //   {
+    //     id: 10,
+    //     serviceName: 'Glass & Aluminium',
+    //     customerName: 'Ava Martin',
+    //     date: '2023-09-12',
+    //     startTime: '09:00',
+    //     endTime: '12:00',
+    //     location: 'Moratuwa',
+    //     paymentStatus: 'Accepted',
+    //   },
+    //   {
+    //     id: 11,
+    //     serviceName: 'Masonry',
+    //     customerName: 'Liam Miller',
+    //     date: '2023-09-15',
+    //     startTime: '14:00',
+    //     endTime: '16:30',
+    //     location: 'Moratuwa',
+    //     paymentStatus: 'Pending',
+    //   },
+    //   {
+    //     id: 12,
+    //     serviceName: 'Masonry',
+    //     customerName: 'Ella Clark',
+    //     date: '2023-09-18',
+    //     startTime: '12:00',
+    //     endTime: '14:00',
+    //     location: 'Wellaawatte',
+    //     paymentStatus: 'Published',
+    //   },
+    // ];
       
     // Number of cards (training sessions) to display per page
     const cardsPerPage = 10;
@@ -161,6 +164,15 @@ function HistoryTable() {
       setEndDate(date);
       setCurrentPage(1); // Reset current page to 1 when end date changes
     };
+
+    useEffect(() => {
+      axios.get('http://localhost:8080/auth/viewHistory').then((res) => {
+          console.log(res.data);
+          setViewHistoryData(res.data);
+      });
+    }, []);
+
+    if (!viewHistoryData) return 'No History found!';
 
     // Filter training sessions based on the selected date range
     const filteredProjects = viewHistoryData.filter((project) => {
@@ -234,7 +246,6 @@ function HistoryTable() {
           <Table striped bordered hover size="sm" className="training-session-table">
             <thead className="text-center">
               <tr>
-                <th>Project ID</th>
                 <th>Service Name</th>
                 <th>Customer Name</th>
                 <th>Date</th>
@@ -249,14 +260,13 @@ function HistoryTable() {
             {/* Map through the displayed training sessions and render each row */}
               {displayedProjects.map((project) => (
                 <tr key={project.id}>
-                  <td>{String(project.id).padStart(3, '0')}</td>
-                  <td>{project.serviceName}</td>
-                  <td>{project.customerName}</td>
+                  <td>{project.servicename}</td>
+                  <td>{project.customername}</td>
                   <td>{project.date}</td>
                   <td>{project.startTime}</td>
                   <td>{project.endTime}</td>
-                  <td>{project.location}</td>
-                  <td>{project.paymentStatus}</td>
+                  <td>{project.joblocation}</td>
+                  <td>{project.paymentstatus}</td>
                   <td className="d-flex justify-content-center">
                     <i className="bi bi-eye-fill fs-4"></i>  
                   </td>

@@ -1,13 +1,30 @@
 import '../../../../style/ServiceProvider/ApplyVacancy.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useState, useEffect } from 'react';
+import {useParams} from 'react-router-dom';
+import axios from 'axios';
 
 function ApplyVacancy(){
+    const [viewVacancyData, setviewVacancyData] = useState(null);
+
+    const { id } = useParams();
+    const vacancyId = parseInt(id, 10);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewVacancies/${vacancyId}`).then((res) => {
+            console.log(res.data);
+            setviewVacancyData(res.data);
+        });
+      }   , []);
+    
+      if (!viewVacancyData) return 'No Vacancy found!';
+
     return(
         <div className="ms-lg-4 me-lg-4">
             <div className='d-flex flex-column'>
-              <span style={{fontSize:"30px",fontWeight:"600"}}>Electronics Technician</span>
-              <span style={{fontSize:"26px",fontWeight:"600"}}>Aptinex</span>
+              <span style={{fontSize:"30px",fontWeight:"600"}}>{viewVacancyData.vacancytitle}</span>
+              <span style={{fontSize:"26px",fontWeight:"600"}}>{viewVacancyData.customername}</span>
             </div>
             <Form className="mt-4">
                 <Form.Group className="mb-3" controlId="formBasicTitle">
@@ -18,11 +35,6 @@ function ApplyVacancy(){
                 <Form.Group className="mb-3" controlId="formBasicTitle">
                     <Form.Label>Last Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter your Last name" />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicTitle">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your first name" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicTitle">

@@ -99,7 +99,9 @@ function CustomerSideBar() {
                                 >
                                     <NavDropdown.Item as={Link} to="/Customer/PostJob" className="no-hover">Post Jobs</NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item as={Link} to="/Customer/JobListings" className="no-hover">Posted Jobs</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/Customer/PostedJobs" className="no-hover">Posted Jobs</NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item as={Link} to="/Customer/RequestedJobs" className="no-hover">Requested Jobs</NavDropdown.Item>
                                 </NavDropdown>
 
                                 {/* Add Jobs submenu */}
@@ -110,7 +112,8 @@ function CustomerSideBar() {
                                 >
                                     <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
                                         <Link to="/Customer/PostJobForm" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Post Jobs </Link>
-                                        <Link to="/Customer/JobListings" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Posted Jobs </Link>
+                                        <Link to="/Customer/PostedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Posted Jobs </Link>
+                                        <Link to="/Customer/RequestedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Requested Jobs </Link>
                                     </li>
                                 </ul>
                             </li>
@@ -150,16 +153,16 @@ function CustomerSideBar() {
                             </li>
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="/" className="nav-link nav-link-sidebar text-white" >
-                                    <i className="bi bi-window-stack"></i>
-                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Ads</span>
+                                <Link to="/Customer/CustomerComplaintPage" className="nav-link nav-link-sidebar text-white" >
+                                    <i className="bi bi-file-earmark-text"></i>
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Complaints</span>
                                 </Link>
                             </li>
 
                             <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                                <Link to="/Customer/CustomerComplaintPage" className="nav-link nav-link-sidebar text-white" >
-                                    <i className="bi bi-file-earmark-text"></i>
-                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Complaints</span>
+                                <Link to="/Customer/History" className="nav-link nav-link-sidebar text-white" >
+                                    <i className="fas fa-history"></i>
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>View History</span>
                                 </Link>
                             </li>
 

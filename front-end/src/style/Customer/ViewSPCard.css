@@ -102,13 +102,17 @@
     flex-direction: column;
     border-radius: 4px;
     width: 90%;
-    height: 45% ;
+    height: 30%;
     margin-bottom: 20px;
     padding: 20px 20px 0 20px;
-    box-shadow: 0 4px 8px rgba(116, 112, 112, 0.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     transition: transform .3s;
 }
-
+/* .single-SP-card:hover{
+    transform: scale(1.005);
+    z-index: 2;
+    border: 0.2px solid #29435cf0;
+} */
 .SP-card-avatar{
     width: 50px;
     height: 50px;

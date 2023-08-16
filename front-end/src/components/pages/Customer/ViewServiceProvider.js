@@ -12,6 +12,7 @@ import { faPhone, faComment, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
 
 function ViewServiceProvider() {
   const rating = 4;
@@ -82,13 +83,13 @@ function ViewServiceProvider() {
         </div>
 
         <div className='SPReqButtons'>
-          <a href="JobRequest">
-            <button className='SPRequestjob'> Request for job </button>{' '}
-          </a>
+          <Link to={`/customer/JobRequest`}> 
+            <button className='SPRequestjob'> Request for job </button></Link>
+          
 
-          <a href="Quotation">
-            <button className='SPRequestquotation'> Request for quotation</button>{' '}
-          </a>
+         <Link to={`/customer/Quotation`}> 
+            <button className='SPRequestquotation'> Request for quotation</button>
+          </Link>
         </div>
 
         <div className='SPRatings'>

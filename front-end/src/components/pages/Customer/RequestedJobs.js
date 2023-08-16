@@ -19,7 +19,7 @@ const Delete = () => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" style={{
-                width: '10%',
+                width: '13%',
                 height: '28px',
                 border: '1px solid #ced4da',
                 fontSize: '14px',
@@ -86,7 +86,7 @@ const Delete = () => {
 };
 
 
-export default function PostedJobs() {
+export default function RequestedJobs() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Adjust this value based on how many items you want per page
 
@@ -95,9 +95,9 @@ export default function PostedJobs() {
     const [toDate, setToDate] = useState(null);
 
     const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', duedate: '21/08/2023' },
-        { date: '26/07/2023', serviceTitle: 'Electrician', duedate: '18/08/2023' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', duedate: '15/08/2023' },
+        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', status: 'Accepted',serviceProvider:'Alex' },
+        { date: '26/07/2023', serviceTitle: 'Electrician', status: 'Pending',serviceProvider:'Charles' },
+        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Accepted',serviceProvider:'Vinothkhan' },
     ];
 
     const filteredQuotations = quotations.filter((quotation) => {
@@ -107,7 +107,9 @@ export default function PostedJobs() {
         return (
             isDateMatch &&
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) 
+                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.status.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
     });
@@ -143,7 +145,7 @@ export default function PostedJobs() {
                 <div className="vacancy-container background-total accordion " >
                     <div className="col d-flex flex-row justify-content-between">
                         <div className='d-flex flex-row gap-4 p-3 '>
-                            <p className="text-dark fs-4 fw-bold vacancytext"> Vacancy Responses</p>
+                            <p className="text-dark fs-4 fw-bold vacancytext">Requested Jobs</p>
                         </div>
                     </div>
 
@@ -198,35 +200,22 @@ export default function PostedJobs() {
                     <Table className="my-customer-table" striped bordered hover>
                         <thead>
                             <tr>
-                               <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Due Date</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Date</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Title</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Provider</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Status</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentQuotations.map((quotation, index) => (
                                 <tr key={index}>
-                                    <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.date}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.serviceProvider}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.status}</td>
                                     <td style={{ width: '16.67%' }}>
-                                    <Link to={`/customer/ViewVacancyReply`}>  <Button variant="btn btn-viewvacancy-form-t" style={{
-                                            width: '10%',
-                                            height: '28px',
-                                            border: '1px solid #ced4da',
-                                            fontSize: '14px',
-                                            padding: '0 3px',
-                                            backgroundColor: '#007bff',
-                                            color: '#fff',
-                                            fontWeight: '500',
-                                            textTransform: 'none',
-                                            background: 'black',
-                                            '@media (max-width: 768px)': {
-                                                width: '100%',
-                                            }
-                                        }} >
-                                            <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
-                                        </Button></Link>
-                                        &nbsp; &nbsp;
+                                    
                                         <Delete />
                                     </td>
 

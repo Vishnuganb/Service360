@@ -80,17 +80,22 @@ import RatenReview from './components/pages/Customer/RatenReview.js';
 import ViewAservice from './components/pages/User/ViewAservice.js';
 import ReceivedQuotation from './components/pages/Customer/ReceivedQuotation.js';
 import ViewAQuotation from './components/pages/Customer/ViewAQuotation.js';
-import ViewVacancyResponse from './components/pages/Customer/ViewVacanyResponse.js';
 import CustomerComplaints from './components/pages/Customer/Complaints.js';
 import CustomerComplaintPage from './components/pages/Customer/CustomerComplaintPage.js';
 import PostVacancyForm from './components/pages/Customer/PostVacancyForm.js';
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import JobRequest from './components/pages/Customer/JobRequest.js';
 import Forum from './components/pages/Forum/Forum.js';
-import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
+import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js';
 import ToDoList from './components/pages/Customer/CreateToDo';
 import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
 import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
+import PostJobForm from './components/pages/Customer/PostJobForm.js';
+import PostedJobs from './components/pages/Customer/PostedJobs.js';
+import ViewPostedJobs from './components/pages/Customer/ViewPostedJobs.js';
+import RequestedJobs from './components/pages/Customer/RequestedJobs.js';
+import ViewVacancyReply from './components/pages/Customer/ViewVacancyReply.js';
+import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js';
 
 
 const router = createBrowserRouter(
@@ -149,17 +154,20 @@ const router = createBrowserRouter(
         <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="ViewAQuotation" element={<ViewAQuotation/>} />
-        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse/>} />
         <Route path="CustomerComplaints" element={<CustomerComplaints/>} />  
         <Route path="CustomerComplaintPage" element={<CustomerComplaintPage/>} />  
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
-        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="ToDoList" element={<ToDoList />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
         <Route path="RequestedQuotation" element={<RequestedQuotation />} />
         <Route path="PostedVacancies" element={<PostedVacancies />} />
         <Route path="JobRequest" element={<JobRequest />} />
-       
+        <Route path="PostJobForm" element={<PostJobForm />} />
+        <Route path="PostedJobs" element={<PostedJobs />} />
+        <Route path="ViewPostedJobs" element={<ViewPostedJobs />} />
+        <Route path="RequestedJobs" element={<RequestedJobs />} />
+        <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
+        <Route path="History" element={<CustomerViewHistory />} />
       </Route>
 
        <Route path="/ServiceProvider" element={<SpLayout />}>

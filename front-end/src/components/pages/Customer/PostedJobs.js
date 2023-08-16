@@ -95,9 +95,9 @@ export default function PostedJobs() {
     const [toDate, setToDate] = useState(null);
 
     const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', duedate: '21/08/2023' },
-        { date: '26/07/2023', serviceTitle: 'Electrician', duedate: '18/08/2023' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', duedate: '15/08/2023' },
+        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', duedate: '02/08/2023' },
+        { date: '26/07/2023', serviceTitle: 'Electrician', duedate: '02/08/2023' },
+        { date: '23/07/2023', serviceTitle: 'Plumbing', duedate: '02/08/2023' },
     ];
 
     const filteredQuotations = quotations.filter((quotation) => {
@@ -107,8 +107,8 @@ export default function PostedJobs() {
         return (
             isDateMatch &&
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) 
-            )
+            quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) 
+        )
         );
     });
 
@@ -143,7 +143,7 @@ export default function PostedJobs() {
                 <div className="vacancy-container background-total accordion " >
                     <div className="col d-flex flex-row justify-content-between">
                         <div className='d-flex flex-row gap-4 p-3 '>
-                            <p className="text-dark fs-4 fw-bold vacancytext"> Vacancy Responses</p>
+                            <p className="text-dark fs-4 fw-bold vacancytext"> Posted Jobs</p>
                         </div>
                     </div>
 
@@ -194,22 +194,24 @@ export default function PostedJobs() {
 
 
 
-                <div className="my-customer-table-container" >
+                <div className="my-customer-table-container"  >
                     <Table className="my-customer-table" striped bordered hover>
                         <thead>
                             <tr>
-                               <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Due Date</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Date</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Title</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Due Date</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentQuotations.map((quotation, index) => (
                                 <tr key={index}>
-                                    <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.date}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
                                     <td style={{ width: '16.67%' }}>
-                                    <Link to={`/customer/ViewVacancyReply`}>  <Button variant="btn btn-viewvacancy-form-t" style={{
+                                    <Link to={`/customer/ViewPostedJobs`}>  <Button variant="btn btn-viewvacancy-form-t" style={{
                                             width: '10%',
                                             height: '28px',
                                             border: '1px solid #ced4da',
@@ -238,7 +240,7 @@ export default function PostedJobs() {
             </div>
             <br></br>
 
-            <div className="pagination justify-content-center">
+            <div className="pagination justify-content-center" >
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index + 1}

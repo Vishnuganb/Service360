@@ -5,6 +5,9 @@ import UserImg from "../../../../assets/images/header/user.jpg";
 import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
 import customer1 from "../../../../assets/images/ServiceProvider/customer1.jpg";
+import tiles1 from "../../../../assets/images/ServiceProvider/tiles1.jpg";
+import tiles2 from "../../../../assets/images/ServiceProvider/tiles2.jpg";
+import tiles3 from "../../../../assets/images/ServiceProvider/tiles3.jpg";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -17,6 +20,8 @@ import { useParams } from 'react-router-dom';
 
 function PendingJobDetails() {
   const [viewJobData, setViewJobData] = useState(null);
+
+  const jobimages =[tiles1, tiles2, tiles3]
 
   const { id } = useParams();
   const jobId = parseInt(id, 10);
@@ -203,15 +208,15 @@ function PendingJobDetails() {
                 {/* LOOP WILL COME HERE */}
                 
                 <div className="AcceptedJobDetails-images-container-box row mt-2">
-                {/* {viewJobData.images.map((image, index) => (
-                      <div key={index} className="col-6 col-md-4 col-lg-3">
-                        <img
-                          src={image}
-                          alt={`job detail image ${index}`}
-                          className="jobDetails-images-value-img"
-                        />
-                      </div>
-                    ))} */}                    
+                {jobimages.map((image) => (
+                  <div className="col-6 col-md-4 col-lg-3">
+                    <img
+                      src={image}
+                      alt={'job detail image'}
+                      className="jobDetails-images-value-img"
+                    />
+                  </div>
+                ))}                 
                 </div>
                 </div>
             </Col>
@@ -225,9 +230,11 @@ function PendingJobDetails() {
                     <Form.Text className="text-muted d-block mb-3">
                       Visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
                     </Form.Text>
-                    <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
-                        Send Quotation
-                    </Button>
+                    <Link to="../CreateQuotation">
+                      <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
+                          Create Quotation
+                      </Button>
+                    </Link>
                 </Form>
         </div>      
     </div>

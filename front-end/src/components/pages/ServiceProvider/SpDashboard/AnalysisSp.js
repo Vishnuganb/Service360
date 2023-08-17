@@ -36,8 +36,9 @@ function AnalysisSp() {
   const earningsData = [
     { session: "Advanced Electrical Wiring", earnings: 14000, date: "2023-07-01" },
     { session: "Common Electrical Issues", earnings: 18000, date: "2023-06-12" },
+    { session: "Energy-Efficient Systems", earnings: 10000, date: "2023-04-02" },
     { session: "Smart Home Automation", earnings: 17000, date: "2023-08-03" },
-    { session: "Safety Practices in Electricity", earnings: 25000, date: "2023-05-12" },
+    { session: "Safety Practices in Electricity", earnings: 20000, date: "2023-05-12" },
   ];
 
   const [view, setView] = useState('daily');

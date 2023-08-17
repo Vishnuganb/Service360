@@ -95,6 +95,8 @@ function MyProjectsBody(){
           .catch((error) => {
             // Handle errors
           });
+
+          setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));           //PAGE REFRESH
     };
 
     const handleReject = (jobId) => {
@@ -107,6 +109,8 @@ function MyProjectsBody(){
         .catch((error) => {
         // Handle errors
         });
+        setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));
+        
     };
 
 
@@ -121,7 +125,7 @@ function MyProjectsBody(){
     });
 
     // Filter training sessions based on the active tab's status
-    const filteredAndSortedCards = filteredCards.filter((job) => job.jobstatus === activeTab);
+    const filteredAndSortedCards = filteredCards.filter((job) => job.jobstatus === activeTab);              //PAGE REFRESH
 
     // Calculate the total number of pages based on the filtered and sorted cards
     const totalNumPages = Math.ceil(filteredAndSortedCards.length / cardsPerPage);

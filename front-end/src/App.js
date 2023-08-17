@@ -50,6 +50,7 @@ import SpOngoingVacancy from './components/pages/ServiceProvider/OngoingVacancy/
 import SpViewJobsHome from './components/pages/User/ViewAjob.js';
 import SpChat from './components/pages/User/Chat/ChatPage.js';
 import SpViewAserviceJob from './components/pages/User/ViewAjob.js';
+import CreateQuotation from './components/pages/ServiceProvider/CreateQuotation/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -228,6 +229,7 @@ const router = createBrowserRouter(
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
+        <Route path="CreateQuotation" element={<CreateQuotation />} />
       </Route>
 
 

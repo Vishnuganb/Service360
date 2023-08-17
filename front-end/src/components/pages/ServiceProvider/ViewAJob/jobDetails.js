@@ -5,6 +5,9 @@ import UserImg from "../../../../assets/images/header/user.jpg";
 import customerimage from "../../../../assets/images/ServiceProvider/customer1.jpg";
 import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
+import tiles1 from "../../../../assets/images/ServiceProvider/tiles1.jpg";
+import tiles2 from "../../../../assets/images/ServiceProvider/tiles2.jpg";
+import tiles3 from "../../../../assets/images/ServiceProvider/tiles3.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
@@ -37,6 +40,8 @@ function JobDetails() {
       dateposted: '2021-08-04',
     },
 ];
+
+  const jobimages =[tiles1, tiles2, tiles3]
 
   const { id } = useParams();
   const jobId = parseInt(id, 10);
@@ -120,15 +125,15 @@ function JobDetails() {
           
           
           <div className="jobDetails-images-container-box row mt-2">
-          {/* {viewJobData.images.map((image, index) => (
-            <div key={index} className="col-6 col-md-4 col-lg-3">
+          {jobimages.map((image) => (
+            <div className="col-6 col-md-4 col-lg-3">
               <img
                 src={image}
-                alt={`job detail image ${index}`}
+                alt={'job detail image'}
                 className="jobDetails-images-value-img"
               />
             </div>
-          ))} */}
+          ))}
           </div>
         </div>
       </Col>

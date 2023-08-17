@@ -5,6 +5,9 @@ import UserImg from "../../../../assets/images/header/user.jpg";
 import customerimage from "../../../../assets/images/ServiceProvider/customer2.jpg";
 import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
 import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
+import tiles1 from "../../../../assets/images/ServiceProvider/tiles1.jpg";
+import tiles2 from "../../../../assets/images/ServiceProvider/tiles2.jpg";
+import tiles3 from "../../../../assets/images/ServiceProvider/tiles3.jpg";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -17,6 +20,8 @@ import { useParams } from 'react-router-dom';
 
 function AcceptedJobDetails() {
   const [viewJobData, setViewJobData] = useState(null);
+
+  const jobimages =[tiles1, tiles2, tiles3]
 
   const { id } = useParams();
   const jobId = parseInt(id, 10);
@@ -203,22 +208,20 @@ function AcceptedJobDetails() {
                 {/* LOOP WILL COME HERE */}
                 
                 <div className="AcceptedJobDetails-images-container-box row mt-2">
-                {/* {viewJobData.images.map((image, index) => (
-                        <div key={index} className="col-6 col-md-4 col-lg-3">
-                          <img
-                            src={image}
-                            alt={`job detail image ${index}`}
-                            className="jobDetails-images-value-img"
-                          />
-                        </div>
-                      ))} */}
+                {jobimages.map((image) => (
+                  <div className="col-6 col-md-4 col-lg-3">
+                    <img
+                      src={image}
+                      alt={'job detail image'}
+                      className="jobDetails-images-value-img"
+                    />
+                  </div>
+                ))}
                 </div>
                 </div>
             </Col>
         </Row>
-        <span>Todo List</span>
         <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-                <Button className="btn-ServiceProvider-1">Start Todo List</Button>
                 <Link className="d-flex ms-auto" to={`../ToDoList/${jobId}`}>
                   <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
                 </Link>

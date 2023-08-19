@@ -15,3 +15,18 @@
         margin-top: 5px;
     }
 }
+
+/* Add these styles to your CSS stylesheet or style tag */
+.ViewATraining-image-container {
+    border: 1px solid #ccc;
+    border-radius: 15px; 
+}
+
+.ViewATraining-image-container .carousel-inner {
+    border-radius: 10px;
+}
+
+.ViewATraining-image-container .carousel {
+    border-radius: 10px; 
+    overflow: hidden; 
+}

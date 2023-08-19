@@ -41,7 +41,7 @@ function ServiceProviderHeader() {
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav className="me-auto">
                         <Nav.Link href="/ServiceProvider/ViewJobs" className='fw-bold navLink'>Jobs</Nav.Link>
-                        <Nav.Link href="/ServiceProvider/ViewVacancies" className='fw-bold navLink'>Vacancies</Nav.Link>
+                        {/* <Nav.Link href="/ServiceProvider/ViewVacancies" className='fw-bold navLink'>Vacancies</Nav.Link> */}
                         <Nav.Link href="#Riviews" className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none" onClick={() => setShowAddReview(true)}> <i className="fas fa-star-half-alt"></i></Nav.Link>
                         <AddReviewandRating
                         show={showAddReview}

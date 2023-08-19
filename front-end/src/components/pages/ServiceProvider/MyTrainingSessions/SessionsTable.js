@@ -6,10 +6,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
-
+import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
+import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
+import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
+import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 
 function MyTrainingSessions() {
   
+  const Trainingimages=[
+      electrical,
+      plumping1,
+      carpentry1,
+  ]
 
     const [show, setShow] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null); 

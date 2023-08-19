@@ -219,25 +219,25 @@ const Delete = () => {
 
 const CustomerDashboard = () => {
     return (
-        <div className="row" style={{ backgroundImage: `url(${BgImage})` }}>
+        <div className="row ps-lg-5 pe-lg-5 pt-lg-5" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <div className="col-12">
            <div style={{padding:'10px'}}><h4>Welcome back !</h4></div> 
                 <div className='d-flex flex-column flex-lg-row flex-md-row '>
                     <div className="d-flex flex-row col-7">
-                        <Card className="card-cus-dashboard dashboard-button-1" >
+                        <Card className="card-cus-dashboard dashboard-button-1"  style={{width:"255px"}}>
                             <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
                                 <Card.Body >
                                     <Card.Title>8</Card.Title>
                                     <Card.Text className="card-body-container">
-                                        Pending vacancy Application
+                                        Pending vacancy 
                                         <i className="bi bi-rocket-takeoff"></i>
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
                         </Card>
                     &nbsp; &nbsp; &nbsp;
-                        <Card className="card-cus-dashboard dashboard-button-2">
+                        <Card className="card-cus-dashboard dashboard-button-2"  style={{width:"255px"}}>
                             <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
                                 <Card.Body>
                                     <Card.Title>3</Card.Title>

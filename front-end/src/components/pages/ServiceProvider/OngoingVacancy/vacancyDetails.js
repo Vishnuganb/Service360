@@ -43,6 +43,14 @@ function VacancyDetails() {
           >
             {viewVacancyData.customername}
           </div>
+          <div className="d-flex flex-row">
+                    <div className="me-3">
+                        <i class="bi bi-telephone-fill"></i>
+                    </div>
+                    <div>
+                        <i class="bi bi-chat-fill"></i>
+                    </div>
+            </div>
         </Col>
 
         <Col className="vacancyDetails-details-container col-12 col-lg-10 d-flex flex-column">

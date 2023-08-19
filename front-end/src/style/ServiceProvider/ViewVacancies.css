@@ -77,6 +77,10 @@
         height: 30px;
         border-radius: 20px;
     }
+
+    .vacancy-card-tag-container{
+        flex-direction: column !important;
+    }
 }
 
 
@@ -120,7 +124,9 @@
     margin-right: 10px;
 }
 
-
+.vacancy-card-tag-container{
+    flex-direction: row;
+}
 
 
 
@@ -131,6 +137,7 @@
     width: 100%;
 
 }
+
 
 .single-vacancy-type{
     font-size: 16px;
@@ -147,7 +154,7 @@
 
 .sinlge-vacancy-expiry-info{
     font-size: 15px;
-    font-weight: 900;
+    font-weight: 500;
 }
 
 .vacancy-location-info{
@@ -161,28 +168,7 @@
 }
 
 
-.vacancy-card-footer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    position: relative;
-    bottom: 5px;
-}
-
-@media only screen and (max-width: 424px){
-    .vacancy-card-footer{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 100%;
-        position: relative;
-        /* bottom: 20px; */
-    }
-}
-
-
-@media only screen and (min-width: 424px) and (max-width: 428px){
+/* @media only screen and (min-width: 424px) and (max-width: 428px){
     .vacancy-card-footer{
         display: flex;
         flex-direction: row;
@@ -192,9 +178,9 @@
         bottom: 20px;
         vertical-align: middle;
     }
-}
+} */
 
-@media only screen and (min-width: 429px) and (max-width: 458px){
+/* @media only screen and (min-width: 429px) and (max-width: 458px){
     .vacancy-card-footer{
         display: flex;
         flex-direction: column;
@@ -203,9 +189,21 @@
         position: relative;
         bottom: 20px;
     }
+} */
+
+.custom-pagination-vacancy .page-link {
+    color: #292D32;
 }
 
-.vacancy-card-footer-btn{
+/* newly added */
+
+@media only screen and (max-width: 650px) {
+    .vacancy-card-body-inner-flex{
+        flex-direction: column !important;
+    }
+}
+
+/* .vacancy-card-footer-btn{
     display: flex;
     flex-direction: row;
     color: black;
@@ -217,16 +215,25 @@
 
 .vacancy-card-footer-btn:hover{
     color: #5f7085;
-}
+} */
 
-.custom-pagination-vacancy .page-link {
-    color: #292D32;
-}
 
-/* newly added */
+/* .vacancy-card-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    bottom: 5px;
+} */
 
-@media only screen and (max-width: 650px) {
-    .vacancy-card-body-inner-flex{
+@media only screen and (max-width: 424px){
+    .vacancy-card-footer{
+        display: flex;
         flex-direction: column !important;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+        bottom: 4px;
     }
 }

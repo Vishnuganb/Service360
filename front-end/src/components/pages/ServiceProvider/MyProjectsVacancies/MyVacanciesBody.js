@@ -2,33 +2,23 @@ import React, { useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import UserImg from '../../../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
-import company1 from '../../../../assets/images/ServiceProvider/company1.jpg';
-import company2 from '../../../../assets/images/ServiceProvider/company2.jpg';
-import company3 from '../../../../assets/images/ServiceProvider/company3.jpg';
 
 function MyProjectsBody(){
     const [MyProjectsVacanciesData, setMyProjectsVacanciesData] = useState(null);
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const initialActiveTab = queryParams.get('tab') || 'defaultTab'; // 'defaultTab' is the fallback
+    const initialActiveTab = queryParams.get('tab') || 'defaultTab';
 
     const MyServices= [
         "Electrical Wiring",
         "Masonry",
         "Sofa Cleaning",
         "Tiles Fitting",
-    ];
-
-    const CompanyImages= [
-        company1,
-        company2,
-        company3,
     ];
 
     // Number of cards (training sessions) to display per page
@@ -167,40 +157,23 @@ function MyProjectsBody(){
             {/* only display ongoing vacancies */}
             {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
-                    <div className="vacancy-card-header">
-                        <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
-                            <div className='d-flex justify-content-center align-items-center'>
-                                <img
-                                            src={company1}
-                                            alt="avatar"
-                                            className="rounded-circle my-projects-vacancies-rounded-circle"
-                                            style={{ width: "42px", height: "42px" }}
-                                />
-                            </div>
+                    <div className="ms-sm-3">
                             <div className='d-flex flex-column'>
-                                <div className='ms-sm-3'>
+                                <div >
                                     <span className="job-card-title">{vacancy.vacancytitle}</span>
                                 </div>
-                                <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.customername}</span>
+                                <div className='d-flex'>
+                                    <span className="job-card-date">By {vacancy.customername}</span>
                                 </div>
-                                <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.posteddate}</span>
+                                <div>
+                                    <span className="my-job-location-info">
+                                        <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {vacancy.vacancylocation}
+                                    </span>
+                                    <span className="my-job-location-info ms-4">
+                                        <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
+                                    </span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="my-vacancy-card-body">
-                        <div className="my-vacancy-card-body-left d-flex flex-column">
-                            <div>
-                                <span className="sinlge-my-vacancy-sub-info">{vacancy.duedate} | {vacancy.servicename}</span>
-                            </div>
-                            <div>
-                                <span className="my-vacancy-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.vacancylocation}
-                                </span>
-                            </div>
-                        </div>
                     </div>
                     <hr />
                     <div className="my-vacancy-card-footer d-flex flex-row">
@@ -218,37 +191,20 @@ function MyProjectsBody(){
             {/* only display rejected vacancies */}
             {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus ==='rejected').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
-                    <div className="vacancy-card-header">
-                        <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
-                            <div className='d-flex justify-content-center align-items-center'>
-                                <img
-                                            src={company2}
-                                            alt="avatar"
-                                            className="rounded-circle my-projects-vacancies-rounded-circle"
-                                            style={{ width: "42px", height: "42px" }}
-                                />
-                            </div>
-                            <div className='d-flex flex-column'>
-                                <div className='ms-sm-3'>
-                                    <span className="job-card-title">{vacancy.vacancytitle}</span>
-                                </div>
-                                <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.customername}</span>
-                                </div>
-                                <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.posteddate}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="my-vacancy-card-body">
-                        <div className="my-vacancy-card-body-left d-flex flex-column">
+                    <div className="ms-sm-3">
+                        <div className='d-flex flex-column'>
                             <div>
-                                <span className="sinlge-my-vacancy-sub-info">{vacancy.duedate} | {vacancy.servicename}</span>
+                                <span className="job-card-title">{vacancy.vacancytitle}</span>
+                            </div>
+                            <div className='d-flex'>
+                                <span className="job-card-date">By {vacancy.customername}</span>
                             </div>
                             <div>
-                                <span className="my-vacancy-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.vacancylocation}
+                                <span className="my-job-location-info">
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {vacancy.vacancylocation}
+                                </span>
+                                <span className="my-job-location-info ms-4">
+                                    <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
                                 </span>
                             </div>
                         </div>
@@ -270,37 +226,33 @@ function MyProjectsBody(){
                {/* only display vacancy invites for me */}
                {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy,index) => (
                 <div className="single-vacancy-card mx-auto mt-3">
-                    <div className="vacancy-card-header">
-                        <div className='vacancy-card-header-inner-container d-flex flex-row flex-wrap'>
-                            <div className='d-flex justify-content-center align-items-center'>
-                                <img
-                                            src={company3}
-                                            alt="avatar"
-                                            className="rounded-circle"
-                                            style={{ width: "42px", height: "42px" }}
-                                />
-                            </div>
-                            <div className='d-flex flex-column'>
-                                <div className='ms-sm-3'>
-                                    <span className="job-card-title">{vacancy.vacancytitle}</span>
+                    <div className="">
+                        <div className="d-flex flex-column ms-sm-3">
+                            <div className="invite-header-container d-flex flex-row">
+                                <div>
+                                    <span className="my-job-card-title">{vacancy.vacancytitle}</span>
                                 </div>
-                                <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.customername}</span>
-                                </div>
-                                <div className='ms-sm-3 d-flex'>
-                                    <span className="job-card-date">{vacancy.posteddate}</span>
+                                <div className="isquatation ms-auto me-sm-3">
+                                        <span className="single-job-status ms-2" id="job-status">Long-Term</span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="my-vacancy-card-body">
-                        <div className="my-vacancy-card-body-left d-flex flex-column">
-                            <div>
-                                <span className="sinlge-my-vacancy-sub-info">{vacancy.duedate} | {vacancy.servicename}</span>
+                            <div className='d-flex'>
+                                <span className="job-card-date">By {vacancy.customername}</span>
                             </div>
-                            <div>
+                            <div className='mt-1'>
+                                <span className="single-job-description">
+                                    {vacancy.vacancydescription}
+                                </span>
+                            </div>
+                            <div className='mt-1'>
+                                <span className="sinlge-my-job-sub-info"><i className="bi bi-calendar-event"></i>&nbsp;&nbsp; Due Date - {vacancy.duedate}</span>
+                            </div>
+                            <div className='mt-1'>
                                 <span className="my-vacancy-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {vacancy.vacancylocation}
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; Location: {vacancy.vacancylocation}
+                                </span>
+                                <span className="my-job-location-info ms-4">
+                                    <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
                                 </span>
                             </div>
                         </div>

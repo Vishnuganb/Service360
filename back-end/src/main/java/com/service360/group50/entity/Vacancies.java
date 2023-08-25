@@ -23,14 +23,10 @@ public class Vacancies {
     @Column(updatable = false)
     private Long vacancyid;
 
-    @Column( columnDefinition = "TEXT")
-    private String profile;
-
-    @Column( columnDefinition = "TEXT")
-    private String customername;
-
-    @Column( columnDefinition = "TEXT")
-    private String lastseen;
+    //profile
+    //customername
+    //lastseen
+    //address
 
     @Column( columnDefinition = "TEXT")
     private String vacancytitle;
@@ -55,9 +51,6 @@ public class Vacancies {
 
     @Column( columnDefinition = "TEXT")
     private String vacancytype;
-
-    @Column( columnDefinition = "TEXT")
-    private String address;
 
     @Column( columnDefinition = "TEXT")
     private String qualifications;

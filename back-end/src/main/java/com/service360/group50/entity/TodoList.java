@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
-import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,26 +14,27 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "jobdetails"
+        name = "todolist"
 )
 
-public class JobDetails {
+public class TodoList {
     @Id
     @GeneratedValue()
     @Column(updatable = false)
-    private Long jobdetailsid;
+    private Long todolistid;
 
+    //customer id
+    //service provider id
+    @ManyToMany(mappedBy = "todolist")
+    private List<Users> users;
+
+    //job id
     @OneToOne
     @JoinColumn(name = "jobid")
     private Jobs jobs;
 
-    @Column( columnDefinition = "DATE")
-    private LocalDate jobdate;
-
-    @Column( columnDefinition = "Time")
-    private Time jobstarttime;
-
-    @Column( columnDefinition = "Time")
-    private Time jobendtime;
-
+    //vacancy id
+    @OneToOne
+    @JoinColumn(name = "vacancyid")
+    private Vacancies vacancies;
 }

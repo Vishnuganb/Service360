@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Table(
         name = "reviewandrating"
 )
-public class ReviewAndRating {
+public class SystemReview {
     @Id
     @GeneratedValue()
     @Column(updatable = false)
@@ -33,4 +33,7 @@ public class ReviewAndRating {
 
     //user name
     //profile
+    @OneToOne
+    @JoinColumn(name = "userid")
+    private Users users;
 }

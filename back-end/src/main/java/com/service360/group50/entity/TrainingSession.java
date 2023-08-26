@@ -57,6 +57,8 @@ public class TrainingSession {
     @Column( columnDefinition = "TEXT")
     private String interested;
 
-
     //service provider name
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users users;
 }

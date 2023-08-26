@@ -61,6 +61,28 @@ public class Users implements UserDetails {
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Blogs> blogs;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Complaints> complaints;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_vacancy", // Name of the join table
+            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
+            inverseJoinColumns = @JoinColumn(name = "vacancyid") // FK column in user_vacancy table
+    )
+    private List<Vacancies> vacancies;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_todolist", // Name of the join table
+            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
+            inverseJoinColumns = @JoinColumn(name = "todolistid") // FK column in user_vacancy table
+    )
+    private List<TodoList> todolist;
+
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();

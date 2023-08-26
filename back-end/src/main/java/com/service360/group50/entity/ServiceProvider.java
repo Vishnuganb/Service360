@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "jobs"
+        name = "serviceprovider"
 )
 
 public class ServiceProvider {

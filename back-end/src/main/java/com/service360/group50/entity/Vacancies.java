@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,11 +23,6 @@ public class Vacancies {
     @GeneratedValue()
     @Column(updatable = false)
     private Long vacancyid;
-
-    //profile
-    //customername
-    //lastseen
-    //address
 
     @Column( columnDefinition = "TEXT")
     private String vacancytitle;
@@ -57,4 +53,11 @@ public class Vacancies {
 
     @Column( columnDefinition = "TEXT")
     private String responsibilities;
+
+    //profile
+    //customername
+    //lastseen
+    //address
+    @ManyToMany(mappedBy = "vacancies")
+    private List<Users> users;
 }

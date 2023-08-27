@@ -239,7 +239,7 @@ function MyProjectsBody(){
                             {job.jobstatus === 'pending' && (
                             <Link to={`../PendingJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
                               <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                  <span class="view-jobs-page-btn-label">
+                                  <span class="my-jobs-page-btn-label">
                                   <i class="bi bi-eye"></i>
                                   </span>
                                   View
@@ -249,7 +249,7 @@ function MyProjectsBody(){
                             {job.jobstatus === 'ongoing' && (
                             <Link to={`../OngoingJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="view-jobs-page-btn-label">
+                                    <span class="my-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
                                     </span>
                                     View
@@ -260,7 +260,7 @@ function MyProjectsBody(){
                             {job.jobstatus === 'rejected' && (
                             <Link to={`../ViewAJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="view-jobs-page-btn-label">
+                                    <span class="my-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
                                     </span>
                                     View
@@ -271,7 +271,7 @@ function MyProjectsBody(){
                     </div>
                 ))}
 
-                {/* only display ongoing vacancies */}
+                {/* only display ongoing, rejected vacancies */}
                 {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing' || vacancy.vacancystatus === 'rejected').map((vacancy) => (
                     <div className="single-my-vacancy-card mx-auto mt-3">
                         <div className="ms-sm-3">
@@ -297,7 +297,7 @@ function MyProjectsBody(){
                             {vacancy.vacancystatus === 'ongoing' && (
                             <Link to={`../OngoingVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="view-jobs-page-btn-label">
+                                    <span class="my-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
                                     </span>
                                     View
@@ -307,7 +307,7 @@ function MyProjectsBody(){
                             {vacancy.vacancystatus === 'rejected' && (
                             <Link to={`../ViewAVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="view-jobs-page-btn-label">
+                                    <span class="my-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
                                     </span>
                                     View
@@ -417,7 +417,7 @@ function MyProjectsBody(){
                         Accept
                     </button>
 
-                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-3" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
+                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
                         <span class="view-jobs-page-btn-label" onClick="">
                                 <i class="bi bi-x-circle"></i>
                         </span>

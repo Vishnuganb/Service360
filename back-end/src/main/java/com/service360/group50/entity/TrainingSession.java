@@ -52,12 +52,13 @@ public class TrainingSession {
     private String servicename;
 
     @Column( columnDefinition = "TEXT")
-    private String serviceprovidername;
-
-    @Column( columnDefinition = "TEXT")
     private String going;
 
     @Column( columnDefinition = "TEXT")
     private String interested;
 
+    //service provider name
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users users;
 }

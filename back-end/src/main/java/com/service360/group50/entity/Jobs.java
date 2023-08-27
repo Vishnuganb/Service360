@@ -26,19 +26,6 @@ public class Jobs {
     @Column(updatable = false)
     private Long jobid;
 
-    @OneToOne
-    @JoinColumn(name = "detailsid", referencedColumnName = "jobdetailsid")
-    private JobDetails jobDetails;
-
-    @Column( columnDefinition = "TEXT")
-    private String profile;
-
-    @Column( columnDefinition = "TEXT")
-    private String customername;
-
-    @Column( columnDefinition = "TEXT")
-    private String lastseen;
-
     @Column( columnDefinition = "TEXT")
     private String jobtitle;
 
@@ -69,4 +56,7 @@ public class Jobs {
     @Column( columnDefinition = "TEXT")
     private String isquotation;
 
+    //profile
+    //customername
+    //lastseen
 }

@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+import service360logo from '../../../../assets/images/header/logo.png';
 
 function ActivityReport() {
+
+    const customerdetails = [
+        {
+            name: 'Pranavan',
+            address: 'No 11, Nelson Place Colombo'
+        }
+    ];
+
     const [activityReports, setActivityReports] = useState([]);
     const [quotationData, setQuotationData] = useState({
         customerName: '',
@@ -14,6 +25,7 @@ function ActivityReport() {
     });
 
     const [quoteId, setQuoteId] = useState(null); // Initialize quoteId as null
+    const [subtotalAmount, setSubtotalAmount] = useState(0);
 
     useEffect(() => {
         // Generate the quote ID only once when the component mounts
@@ -25,27 +37,55 @@ function ActivityReport() {
         event.preventDefault();
         const newReport = { ...quotationData };
         newReport.amount = (parseInt(newReport.quantity) * parseFloat(newReport.unitPrice)).toFixed(2);
+
+        // Update subtotal when adding a new item
+        setSubtotalAmount(prevSubtotal => prevSubtotal + parseFloat(newReport.amount));
+
         setActivityReports([...activityReports, newReport]);
         setQuotationData({
-        ...quotationData,
-        item: '',
-        quantity: '',
-        unitPrice: '',
+            ...quotationData,
+            item: '',
+            quantity: '',
+            unitPrice: '',
         });
     };
 
-    // const handleCompleteAndSend = (event) => {
-    //     event.preventDefault();
-    //     const newReport = { ...quotationData };
-    //     newReport.amount = (parseInt(newReport.quantity) * parseFloat(newReport.unitPrice)).toFixed(2);
-    //     setActivityReports([...activityReports, newReport]);
-    //     setQuotationData({
-    //     ...quotationData,
-    //     item: '',
-    //     quantity: '',
-    //     unitPrice: '',
-    //     });
-    // };
+    // Handle "Complete and Send" button click event
+    const handleCompleteAndSend = () => {
+        const pdf = new jsPDF('p', 'mm', 'a4'); // Specify page size and orientation
+        const pdfElement = document.querySelector('.quotation-pdf');
+    
+        if (pdfElement) {
+            // Apply padding and other styles for printing
+            pdfElement.style.padding = '25px 20px';
+            pdfElement.style.border = '1px solid #000'; // Add a border for visibility
+    
+            // Use html2canvas to convert the content of .quotation-pdf to an image
+            html2canvas(pdfElement).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png'); // Convert canvas to base64 image
+    
+                // Reset styles after capturing
+                pdfElement.style.padding = '';
+                pdfElement.style.border = '';
+    
+                // Calculate the dimensions for scaling the image to fit the PDF page
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = canvas.width;
+                const imgHeight = canvas.height;
+    
+                // Calculate scaling factors for width and height
+                const scaleX = pdfWidth / imgWidth;
+                const scaleY = pdfHeight / imgHeight;
+                const scale = Math.min(scaleX, scaleY); // Choose the smaller scale factor
+    
+                // Add the image to the PDF with scaling
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth * scale, imgHeight * scale);
+                pdf.save('quotation.pdf'); // Save the PDF
+            });
+        }
+    };
+    
 
     // Calculate the subtotal and total
     const subtotal = activityReports.reduce((acc, report) => acc + parseFloat(report.amount), 0);
@@ -62,40 +102,52 @@ function ActivityReport() {
                 {/* Complete and Send Button */}
             </div>
 
-            {/* Bill to section */}
-            <div className="row mt-2mb-3">
-                <div className="col-md-6 d-flex flex-row">
-                    <div className='d-flex flex-column ms-1'>
-                        <p>Pranavan</p>
-                        <p>No 11, Nelson Place Colombo</p>
+            <div className='quotation-pdf border mb-3 px-4 py-4'>
+                {/*logo*/}
+                <div className="d-flex me-auto">
+                    <img src={service360logo} alt="Service360 Logo" style={{ maxWidth: "100px" }} />
+                </div>
+                <hr className='primary' />
+                {/* Bill to section */}
+                <div className="row mt-4 mb-3">
+                    <div className="col-md-6 d-flex flex-row">
+                        <div className='d-flex flex-column ms-1 d-flex flex-column'>       {/* customer details */}
+                            <span>{customerdetails[0].name}</span>
+                            <span>{customerdetails[0].address}</span>
+                        </div>
+                    </div>
+                    <div className="col-md-6 text-md-end d-flex flex-column">
+                        <span>Quote Date: {today}</span>
+                        <span>Quote ID: {quoteId}</span>
                     </div>
                 </div>
-                <div className="col-md-6 text-md-end">
-                    <p>Quote Date: {today}</p>
-                    <p>Quote ID: {quoteId}</p>
-                </div>
-            </div>
 
-            <table className="table table-bordered">
-                <thead className="thead-dark">
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {activityReports.map((report, index) => (
-                        <tr key={index}>
-                            <td>{report.item}</td>
-                            <td>{report.quantity}</td>
-                            <td>LKR {report.unitPrice}</td>
-                            <td>LKR {report.amount}</td>
+                <table className="table table-bordered border-dark">
+                    <thead className="thead-dark">
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Amount</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {activityReports.map((report, index) => (
+                            <tr key={index}>
+                                <td>{report.item}</td>
+                                <td>{report.quantity}</td>
+                                <td>LKR {report.unitPrice}</td>
+                                <td>LKR {report.amount}</td>
+                            </tr>
+                        ))}
+                        {/* Subtotal row */}
+                        <tr>
+                            <td colSpan="3" className="text-end"><strong>Subtotal</strong></td>
+                            <td><strong>LKR {subtotalAmount.toFixed(2)}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <form onSubmit={handleSubmit} className="mb-5">
                 <div className="form-group">
@@ -131,7 +183,7 @@ function ActivityReport() {
                 </div>
                 <div className='d-flex flex-row mt-2'>
                     <Button type="submit" className="btn-ServiceProvider-1">Add Item</Button>
-                    <Button className="btn-ServiceProvider-2 d-flex ms-auto">Complete and Send</Button>
+                    <Button onClick={handleCompleteAndSend} className="btn-ServiceProvider-2 d-flex ms-auto">Complete</Button>
                 </div>
             </form>
         </div>

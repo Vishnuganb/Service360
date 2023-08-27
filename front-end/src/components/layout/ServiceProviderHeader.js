@@ -22,14 +22,9 @@ function ServiceProviderHeader() {
     const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
     const [modalShow, setModalShow] = React.useState(false);
     const [showAddReview, setShowAddReview] = useState(false);
-    const [userName, setUserName] = useState('')
 
-    useEffect(() => {
-        const savedUserName = Cookies.get('FirstName'); 
-        if (savedUserName) {
-            setUserName(savedUserName);
-        }
-    }, []);
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userDetail = JSON.parse(response);
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">
@@ -53,7 +48,7 @@ function ServiceProviderHeader() {
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
 
-                        <NavDropdown title={userName} className='fw-bold' id="basic-nav-dropdown">
+                        <NavDropdown title={userDetail.firstname} className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item href="#"  onClick={() => setModalShow(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>

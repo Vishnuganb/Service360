@@ -24,6 +24,9 @@ public class JobDetails {
     @Column(updatable = false)
     private Long jobdetailsid;
 
+    @OneToOne(mappedBy = "jobDetails")
+    private Jobs jobs;
+
     @Column( columnDefinition = "DATE")
     private LocalDate jobdate;
 

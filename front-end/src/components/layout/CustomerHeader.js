@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
 import { useLocation } from "react-router-dom";
-import Cookies from 'js-cookie';
 import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 
   
@@ -20,16 +19,13 @@ function CustomerHeader() {
 
     const location = useLocation()
     const [showEditProfile, setShowEditProfile] = useState(false);
-    const { logout, userDetailsAfterAuthentication } = useContext(AuthenticationContext)
-    const [userName, setUserName] = useState('')
+    const { logout } = useContext(AuthenticationContext);
     const [showAddReview, setShowAddReview] = useState(false);
 
-    useEffect(() => {
-        const savedUserName = Cookies.get('FirstName'); // Corrected variable name
-        if (savedUserName) {
-            setUserName(savedUserName);
-        }
-    }, []); 
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userDetail = JSON.parse(response);
+
+    console.log(userDetail);
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">
@@ -52,7 +48,7 @@ function CustomerHeader() {
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
 
-                        <NavDropdown title={userName} className='fw-bold' id="basic-nav-dropdown">
+                        <NavDropdown title={userDetail.firstname} className='fw-bold' id="basic-nav-dropdown">
                         <NavDropdown.Item onClick={() => setShowEditProfile(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>

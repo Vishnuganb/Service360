@@ -63,9 +63,7 @@ const AdStep2 = ({
         errorMessage,
         passwordErrorMessage,
         selectedFiles,
-        selectedFileCount,
         fileErrorMessage,
-        filePaths,
     },
     handleChange,
     handleShowHidePassword,
@@ -111,12 +109,12 @@ const AdStep2 = ({
                     required
                 />
                 {fileErrorMessage && <p className="text-danger p-0 m-0">{fileErrorMessage}</p>}
-                {Array.isArray(filePaths) && filePaths.length > 0 && (
+                {Array.isArray(selectedFiles) && selectedFiles.length > 0 && (
                     <>
                         <ul className="list-group mt-2">
-                            {filePaths.map((path, index) => (
+                            {selectedFiles.map((file, index) => (
                                 <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{getFileNameFromPath(path)}</span>
+                                    <span>{file.name}</span>
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveFile(index)}
@@ -126,7 +124,6 @@ const AdStep2 = ({
                                 </li>
                             ))}
                         </ul>
-
                     </>
                 )}
             </div>

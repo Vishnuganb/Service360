@@ -115,14 +115,6 @@ const ServiceProviderSignUP = () => {
         }
     };
 
-    const handleGramaniladahriFileChange = (e) => {
-        const file = e.target.files[0];
-        setStep2Data((prevData) => ({
-            ...prevData,
-            gramaniladahriFile: file,
-        }));
-    };
-
     const handleServiceCategoryChange = (e) => {
         const selectedService = e.target.value;
 
@@ -356,6 +348,8 @@ const ServiceProviderSignUP = () => {
             addressErrorMessage = 'Address is required';
         }
 
+        isError = false;
+
         if (!isError) {
             setStep(2);
         }
@@ -413,7 +407,6 @@ const ServiceProviderSignUP = () => {
                                                 validateConfirmPassword={validateConfirmPassword}
                                                 handleFileInputChange={handleFileInputChange}
                                                 handleRemoveFile={handleRemoveFile}
-                                                handleGramaniladahriFileChange={handleGramaniladahriFileChange}
                                                 handleServiceCategoryChange={handleServiceCategoryChange}
                                                 handleCategory2Change={handleCategory2Change}
                                                 handleRemoveService={handleRemoveService}

@@ -75,7 +75,6 @@ const Step2 = ({
     validateConfirmPassword,
     handleFileInputChange,
     handleRemoveFile,
-    handleGramaniladahriFileChange,
     handleServiceCategoryChange,
     handleCategory2Change,
     handleRemoveService,
@@ -210,18 +209,7 @@ const Step2 = ({
             </div>
 
             <div className="mb-3">
-                <p className="mb-0">Upload Gramaniladahri Certified document (One file only)<span style={{ color: 'red' }}>*</span></p>
-                <input
-                    type="file"
-                    className="form-control"
-                    onChange={handleGramaniladahriFileChange}
-                    required
-                />
-                {fileErrorMessage && <p className="text-danger p-0 m-0">{fileErrorMessage}</p>}
-            </div>
-
-            <div className="mb-3">
-                <p className="mb-0">Upload Qualification Certificates</p>
+                <p className="mb-0">Upload Gramaniladahri Certified document & Qualification Certificates<span style={{ color: 'red' }}>*</span></p>
                 <input
                     type="file"
                     className="form-control"

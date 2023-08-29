@@ -12,25 +12,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "service"
+        name = "services"
 )
+public class Services {
 
-public class Service {
     @Id
     @GeneratedValue()
     @Column(updatable = false)
     private Long serviceid;
 
-    @Id
-    @GeneratedValue()
-    @Column(updatable = false)
-    private Long servicecategoryid;
-
     @Column( columnDefinition = "TEXT")
-    private String name;
+    private String serviceName;
 
-    @Column( columnDefinition = "TEXT")
-    private String image;
+    @Column(columnDefinition = "BYTEA")
+    private byte[] serviceImage;
 
-    //servicecategoryid
+    @ManyToOne
+    @JoinColumn(name = "servicecategoryid")
+    private ServiceCategory serviceCategory;
 }

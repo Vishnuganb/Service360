@@ -11,94 +11,92 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class ServiceProvidersController {
     @Autowired
     private ServiceProviderService serviceProviderService;
 
     //JOBS
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("auth/viewNewJobs")
     public List<Jobs> viewNewJobs() {
         return serviceProviderService.viewNewJobs();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("auth/viewHistory")
-    public List<Jobs> viewHistoryJobs(){
-        return serviceProviderService.viewHistoryJobs();
-    }
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @GetMapping("auth/viewHistory")
+//    public List<Jobs> viewHistoryJobs(){
+//        return serviceProviderService.viewHistoryJobs();
+//    }
+//
+
+//    @GetMapping("auth/viewJobs")
+//    public List<Jobs> viewMyJobs() {         // NEED TO FIND FOR LOGGED IN SP
+//        return serviceProviderService.viewMyJobs();
+//    }
+
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("auth/viewJobs")
-    public List<Jobs> viewJobs() {
-        return serviceProviderService.viewJobs();
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("auth/viewJobs/{id}")
+    @GetMapping("auth/viewNewJobs/{id}")
     public Jobs viewAJob(@PathVariable Long id) {
         return serviceProviderService.viewAJob(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping("auth/updateJobStatusInviteToPending/{id}")
-    public Jobs updateJobInvitetoPending(@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoPending(id);
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping("auth/updateJobStatusInviteToOngoing/{id}")
-    public Jobs updateJobInvitetoOngoing(@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoOngoing(id);
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping("auth/updateJobStatusInviteToRejected/{id}")
-    public Jobs updateJobInvitetoRejected(@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoRejected(id);
-    }
-
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @PutMapping("auth/updateJobStatusInviteToPending/{id}")
+//    public Jobs updateJobInvitetoPending(@PathVariable Long id) {
+//        return serviceProviderService.updateJobInvitetoPending(id);
+//    }
+//
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @PutMapping("auth/updateJobStatusInviteToOngoing/{id}")
+//    public Jobs updateJobInvitetoOngoing(@PathVariable Long id) {
+//        return serviceProviderService.updateJobInvitetoOngoing(id);
+//    }
+//
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @PutMapping("auth/updateJobStatusInviteToRejected/{id}")
+//    public Jobs updateJobInvitetoRejected(@PathVariable Long id) {
+//        return serviceProviderService.updateJobInvitetoRejected(id);
+//    }
+//
     //VACANCIES
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("auth/viewNewVacancies")
     public List<Vacancies> viewNewVacancies() {
         return serviceProviderService.viewNewVacancies();
     }
-
+//
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @GetMapping("auth/viewVacancies")
+//    public List<Vacancies> viewVacancies() {
+//        return serviceProviderService.viewVacancies();
+//    }
+//
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("auth/viewVacancies")
-    public List<Vacancies> viewVacancies() {
-        return serviceProviderService.viewVacancies();
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("auth/viewVacancies/{id}")
+    @GetMapping("auth/viewNewVacancies/{id}")
     public Vacancies viewAVacancy(@PathVariable Long id) {return serviceProviderService.viewAVacancy(id);}
-
+//
     //SP CALENDAR
     //read
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("auth/viewServiceProviderCalendar")
     public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
         return serviceProviderService.viewServiceProviderCalendar();
     }
 
-    //create
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("auth/createServiceProviderCalendar")
-    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
-        return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
-    }
-
-    //delete
-    @CrossOrigin(origins = "http://localhost:3000")
-    @DeleteMapping("auth/deleteServiceProviderCalendar/{id}")
-    public void deleteServiceProviderCalendarEvent(@PathVariable Long id) {
-        serviceProviderService.deleteServiceProviderCalendarEvent(id);
-    }
-
-    //TRAINING SESSIONS
-    @CrossOrigin(origins = "http://localhost:3000")
+//    //create
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @PostMapping("auth/createServiceProviderCalendar")
+//    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
+//        return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
+//    }
+//
+//    //delete
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @DeleteMapping("auth/deleteServiceProviderCalendar/{id}")
+//    public void deleteServiceProviderCalendarEvent(@PathVariable Long id) {
+//        serviceProviderService.deleteServiceProviderCalendarEvent(id);
+//    }
+//
+//    //TRAINING SESSIONS
     @GetMapping("auth/viewTrainingSessions")
     public List<TrainingSession> viewTrainingSessions() {
         return serviceProviderService.viewTrainingSessions();

@@ -47,7 +47,7 @@ function JobDetails() {
   const jobId = parseInt(id, 10);
  
   useEffect(() => {
-    axios.get(`http://localhost:8080/auth/viewJobs/${jobId}`).then((res) => {
+    axios.get(`http://localhost:8080/auth/viewNewJobs/${jobId}`).then((res) => {
         console.log(res.data);
         setViewJobData(res.data);
     });
@@ -71,7 +71,7 @@ function JobDetails() {
           className="jobDetails-username mb-1"
           style={{ fontSize:"18px",fontFamily: "'Rubik', sans-serif" }}
         >
-          {viewJobData.customername}
+          {viewJobData.customer.firstname}
         </div>
         <div>
           {/* <Link to="/ServiceProvider/AcceptedJob"> */}
@@ -88,7 +88,7 @@ function JobDetails() {
       <Col className="jobDetails-details-container col-12 col-lg-10 d-flex flex-column">
         <div className="jobDetails-status-container mb-2">
           <span className="jobDetails-status" id="job-status" style={{fontSize:"16px",fontWeight:"400",padding:"4px 6px",border:"2px solid rgb(37, 199, 37)",borderRadius:"8px"}}>
-            {viewJobData.jobstatus}
+            new
           </span>
         </div>
         <div className="jobDetails-title-container mb-2">

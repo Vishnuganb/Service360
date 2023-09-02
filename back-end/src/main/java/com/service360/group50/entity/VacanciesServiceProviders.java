@@ -12,21 +12,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "serviceproviderfiles"
+        name = "vacanciesserviceproviders"
 )
 
-public class ServiceProviderFiles {
-    @Id
-    @GeneratedValue()
-    @Column(updatable = false)
-    private Long fileid;
-
+public class VacanciesServiceProviders {
     @Column( columnDefinition = "TEXT")
-    private String files;
+    private String vacancystatus;
 
-    //serviceproviderid
+    //Applied Service Provider IDs
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
-    private ServiceProvider serviceProvider;
+    private Users users;
+
+    //Vacancy IDs
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "vacancyid")
+    private Vacancies vacancies;
 }

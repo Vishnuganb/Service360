@@ -38,7 +38,7 @@ public class Complaints {
     private LocalDate posteddate;
 
     //user name
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private Users users;
+//    @ManyToOne
+//    @JoinColumn(name = "userid")
+//    private Users users;
 }

@@ -78,7 +78,7 @@ function TrainingSession(){
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-center">
                         <i className="bi bi-person-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.serviceprovidername}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.serviceprovider.firstname}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-end">
                         <i className="bi bi-cash"></i>&nbsp;&nbsp;&nbsp;

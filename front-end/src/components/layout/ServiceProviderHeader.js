@@ -48,7 +48,7 @@ function ServiceProviderHeader() {
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link> 
 
-                        <NavDropdown title={userDetail.firstname} className='fw-bold' id="basic-nav-dropdown">
+                        <NavDropdown title="Pranavan" className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item href="#"  onClick={() => setModalShow(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>

@@ -34,7 +34,7 @@ public class Blogs {
     private String servicename;
 
     //serviceproviderid
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private Users users;
+//    @ManyToOne
+//    @JoinColumn(name = "userid")
+//    private Users users;
 }

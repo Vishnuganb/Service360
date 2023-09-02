@@ -59,6 +59,6 @@ public class TrainingSession {
 
     //service provider name
     @ManyToOne
-    @JoinColumn(name = "userid")
-    private Users users;
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users serviceprovider;
 }

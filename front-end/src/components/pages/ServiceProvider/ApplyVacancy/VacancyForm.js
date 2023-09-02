@@ -12,7 +12,7 @@ function ApplyVacancy(){
     const vacancyId = parseInt(id, 10);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/auth/viewVacancies/${vacancyId}`).then((res) => {
+        axios.get(`http://localhost:8080/auth/viewNewVacancies/${vacancyId}`).then((res) => {
             console.log(res.data);
             setviewVacancyData(res.data);
         });
@@ -24,7 +24,7 @@ function ApplyVacancy(){
         <div className="ms-lg-4 me-lg-4">
             <div className='d-flex flex-column'>
               <span style={{fontSize:"30px",fontWeight:"600"}}>{viewVacancyData.vacancytitle}</span>
-              <span style={{fontSize:"26px",fontWeight:"600"}}>{viewVacancyData.customername}</span>
+              <span style={{fontSize:"26px",fontWeight:"600"}}>{viewVacancyData.customer.firstname}</span>
             </div>
             <Form className="mt-4">
                 <Form.Group className="mb-3" controlId="formBasicTitle">

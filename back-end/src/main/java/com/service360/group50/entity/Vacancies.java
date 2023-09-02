@@ -37,9 +37,6 @@ public class Vacancies {
     private String servicename;
 
     @Column( columnDefinition = "TEXT")
-    private String vacancystatus;
-
-    @Column( columnDefinition = "TEXT")
     private String vacancydescription;
 
     @Column( columnDefinition = "TEXT")
@@ -54,10 +51,8 @@ public class Vacancies {
     @Column( columnDefinition = "TEXT")
     private String responsibilities;
 
-    //profile
-    //customername
-    //lastseen
-    //address
-    @ManyToMany(mappedBy = "vacancies")
-    private List<Users> users;
+    //customerid
+    @ManyToOne
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users customer;
 }

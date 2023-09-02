@@ -171,7 +171,7 @@ function JobsBodyPage() {
                                 </div>
                                 <div className='d-flex flex-column'>
                                     <div className='ms-sm-3'>
-                                        <span className="job-card-title">{job.customername}</span>
+                                        <span className="job-card-title">{job.customer.firstname}</span>
                                     </div>
                                     <div className='ms-sm-3 d-flex'>
                                         <span className="job-card-date">{job.lastseen}</span>
@@ -254,7 +254,7 @@ function JobsBodyPage() {
                             </div>
                             <div className='d-flex flex-column'>
                                 <div className='ms-sm-3'>
-                                    <span className='vacancy-card-title'>{vacancy.customername}</span>
+                                    <span className='vacancy-card-title'>{vacancy.customer.firstname}</span>
                                 </div>
                                 <div className='ms-sm-3 d-flex'>
                                     <span className='vacancy-card-date'>{vacancy.lastseen}</span>
@@ -294,7 +294,7 @@ function JobsBodyPage() {
                     <hr style={{margin:"0.5rem"}} />
                     <div className='vacancy-card-footer d-flex flex-row justify-content-between mb-sm-2 mx-auto mt-md-0 mt-1 mb-2'>
 
-                        <Link to="">
+                        <Link to={`../ViewAVacancy/${vacancy.vacancyid}` }>
                             <button type="button" class="btn view-jobs-page-btn-labeled vacancy-card-footer-btn" id="vacancy-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(13, 100, 69)"}}>
                                 <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-file-earmark-plus"></i>

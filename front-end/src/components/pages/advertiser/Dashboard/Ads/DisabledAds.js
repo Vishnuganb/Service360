@@ -41,7 +41,6 @@ const VerifiedAdCont = ({
               <img
                 src={profileIcon}
                 alt="Profile of Advertiser"
-                roundedCircle
                 className="AdProfilePic"
               />
             </div>

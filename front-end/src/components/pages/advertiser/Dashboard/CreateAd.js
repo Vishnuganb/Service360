@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../../../../style/advertiser/AdIndex.css";
@@ -14,45 +15,17 @@ import adImage from "./../../../../assets/images/advertiser/41CKlQ1b08S.jpg";
 import backgroundImage from "../../../../assets/images/header/Background.png";
 
 const CreateAd = () => {
-  const [adName, setAdName] = useState("");
-  const handleAdNameChange = (event) => {
-    setAdName(event.target.value);
-  };
-
-  const [adPrice, setAdPrice] = useState("");
-  const handleAdPriceChange = (event) => {
-    setAdPrice(event.target.value);
-  };
-
-  const [adLocation, setAdLocation] = useState("");
-  const handleAdLocationChange = (event) => {
-    setAdLocation(event.target.value);
-  };
-
-  const [adDelivery, setAdDelivery] = useState("");
-  const handleAdDeliveryChange = (event) => {
-    setAdDelivery(event.target.value);
-  };
-
   // Ad Image useState
 
   const [selectedAdImages, setSelectedAdImages] = useState([]);
   const [previewImage, setPreviewImage] = useState(adImage);
 
-  // console.log("adImages:" + adImages);
-  console.log("selectedAdImages:"+selectedAdImages);
-  // console.log("previewImage:"+previewImage);
-
-  //Validation UseState
-  const [AdImageInputErr, setAdImageInputErr] = useState(false);
-
   // Ad Image
 
-
   const PreviewAdImage = (selectedImages) => {
-    // setAdImages(selectedImages);
-
-    if (selectedAdImages.length === 0 && selectedImages.length > 0) {
+    if (selectedImages.length === 0) {
+      setPreviewImage(adImage);
+    } else {
       const reader = new FileReader();
       reader.onload = () => {
         setPreviewImage(reader.result);
@@ -63,12 +36,13 @@ const CreateAd = () => {
 
   const handleAdimages = (event) => {
     const selectedImages = Array.from(event.target.files);
-
+    setAdImageInputErr(false);
     if (selectedAdImages.length + selectedImages.length <= 3) {
       setSelectedAdImages((prevSelectedAdImages) => [
         ...prevSelectedAdImages,
         ...selectedImages,
       ]);
+
       PreviewAdImage([...selectedAdImages, ...selectedImages]);
     } else {
       alert("You can only select up to 3 files.");
@@ -78,21 +52,140 @@ const CreateAd = () => {
   const handleRemoveAdImages = (index) => {
     const updatedAdImages = selectedAdImages.filter((_, i) => i !== index);
     setSelectedAdImages(updatedAdImages);
-    setPreviewImage(
-      updatedAdImages.length > 0 ? selectedAdImages[0] : adImage
-    );
+    PreviewAdImage(updatedAdImages);
+  };
 
+  // .........................................................................
+  const [AdImageInputErr, setAdImageInputErr] = useState(false);
+  const [AdNameInputErr, setAdNameInputErr] = useState(false);
+  const [category, setCategory] = useState("Select Category");
+  const [CatError, setCatError] = useState(false);
+  const [PriceError, setPriceError] = useState(false);
+  const [warrantyProvided, setWarrantyProvided] = useState("select");
+  const [warrentyError, setWarrentyError] = useState(false);
+  const [warentyMonth, setWarentyMonth] = useState(0);
+  const [warentyMonthErr, setWarentyMonthErr] = useState(false);
+  const [AreaError, setAreaError] = useState(false);
+  const [DeliveryError, setdDeliveryError] = useState(false);
+  const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
+  const [policyErr, setPolicyErr] = useState(false);
+
+  const [adName, setAdName] = useState("");
+  const handleAdNameChange = (event) => {
+    setAdName(event.target.value);
+    setAdNameInputErr(false);
+  };
+
+  const [adPrice, setAdPrice] = useState("");
+  const handleAdPriceChange = (event) => {
+    setAdPrice(event.target.value);
+    setPriceError(false);
+  };
+
+  const [adLocation, setAdLocation] = useState("Area");
+  const handleAdLocationChange = (event) => {
+    setAdLocation(event.target.value);
+    setAreaError(false);
+  };
+
+  const [adDelivery, setAdDelivery] = useState("Delivery");
+  const handleAdDeliveryChange = (event) => {
+    setAdDelivery(event.target.value);
+    setdDeliveryError(false);
   };
 
   // Validation
+  // ........................................................................................................................................
+
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+    setCatError(false);
+  };
+
+  const handleWarrantyChange = (event) => {
+    setWarrantyProvided(event.target.value);
+    setWarrentyError(false);
+  };
+
+  const handleWarrentyMonths = (event) => {
+    setWarentyMonth(event.target.value);
+    setWarentyMonthErr(false);
+  };
+
+  const handleCheckboxChange = (event) => {
+    setIsPolicyAccepted(event.target.checked);
+  };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (selectedAdImages.length === 0) {
       setAdImageInputErr(true);
-      return;
     }
+
+    if (adName.length === 0) {
+      setAdNameInputErr(true);
+    }
+
+    if (category === "Select Category") {
+      setCatError(true);
+    }
+
+    if (adPrice < 1) {
+      setPriceError(true);
+    }
+
+    if (warrantyProvided === "select") {
+      setWarrentyError(true);
+    } else if (warrantyProvided === "yes") {
+      if (warentyMonth < 1) {
+        setWarentyMonthErr(true);
+      }
+    }
+
+    if (adLocation === "Area") {
+      setAreaError(true);
+    }
+
+    if (adDelivery === "Delivery") {
+      setdDeliveryError(true);
+    }
+
+    if (isPolicyAccepted) {
+      setPolicyErr(false);
+    } else {
+      setPolicyErr(true);
+    }
+
+    event.preventDefault();
+    const formData = new FormData();
+
+    formData.append("adsName", adName);
+    formData.append("price", adPrice);
+    formData.append("category", category);
+    formData.append("warrantyMonths", warentyMonth);
+    formData.append("description", "This is a sample description");
+    formData.append("area", adLocation);
+    formData.append("delivery", adDelivery);
+
+    // Append each selected image file to the FormData object
+    for (const imageFile of selectedAdImages) {
+      formData.append("adsImages", imageFile);
+    }
+
+    // Send a POST request to your Spring Boot backend
+    axios
+      .post("http://localhost:8080/auth/createAd", formData)
+      .then((response) => {
+        // Handle a successful response, e.g., show a success message
+        console.log("Ad created successfully!", response.data);
+      })
+      .catch((error) => {
+        // Handle errors, e.g., show an error message
+        console.error("Failed to create ad", error);
+      });
   };
+
+  // ..........................................................................................................................................
 
   return (
     <Container>
@@ -170,6 +263,11 @@ const CreateAd = () => {
                   value={adName}
                   onChange={handleAdNameChange}
                 />
+                {AdNameInputErr && (
+                  <p className="px-3 text-danger">
+                    Please Enter The Item Name.
+                  </p>
+                )}
               </Form.Group>
 
               <div className="mb-3">
@@ -216,18 +314,25 @@ const CreateAd = () => {
                 <Form.Label>
                   Category{" "}
                   <sup>
-                    <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
+                    <i className="fa-solid fa-asterisk fa-sm AdAstric" />
                   </sup>
                 </Form.Label>
-                <Form.Select className="CreateAdInput">
+                <Form.Select
+                  className="CreateAdInput"
+                  onChange={handleCategoryChange}
+                >
                   <option defaultValue disabled selected>
-                    Select Category
+                    {" "}
+                    Select Category{" "}
                   </option>
                   <option>Tools</option>
                   <option>Spare Parts</option>
                   <option>Equipment</option>
                   <option>Others</option>
                 </Form.Select>
+                {CatError && (
+                  <p className="px-3 text-danger">Please Select Category.</p>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3">
@@ -245,6 +350,11 @@ const CreateAd = () => {
                   value={adPrice}
                   onChange={handleAdPriceChange}
                 />
+                {PriceError && (
+                  <p className="px-3 text-danger">
+                    Please Enter A Valid Number.
+                  </p>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3">
@@ -254,20 +364,36 @@ const CreateAd = () => {
                     <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
                   </sup>
                 </Form.Label>
-                <Form.Select className="CreateAdInput">
+                <Form.Select
+                  className="CreateAdInput"
+                  onChange={handleWarrantyChange}
+                >
+                  <option defaultValue disabled selected>
+                    Select Yes/No
+                  </option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </Form.Select>
+                {warrentyError && (
+                  <p className="px-3 text-danger">Please Select Yes or No.</p>
+                )}
               </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Warranty Months</Form.Label>
-                <Form.Control
-                  type="number"
-                  className="CreateAdInput"
-                  placeholder="Enter warranty months"
-                />
-              </Form.Group>
+              {warrantyProvided === "yes" && (
+                <Form.Group className="mb-3">
+                  <Form.Label>Warranty Months</Form.Label>
+                  <Form.Control
+                    type="number"
+                    className="CreateAdInput"
+                    placeholder="Enter warranty months"
+                    onChange={handleWarrentyMonths}
+                  />
+                  {warentyMonthErr && (
+                    <p className="px-3 text-danger">
+                      Please Enter Number of Months.
+                    </p>
+                  )}
+                </Form.Group>
+              )}
 
               {/* Description */}
               <Form.Group
@@ -295,7 +421,7 @@ const CreateAd = () => {
                   value={adLocation}
                   onChange={handleAdLocationChange}
                 >
-                  <option defaultValue selected disabled>
+                  <option value="Area" selected disabled>
                     Select Area
                   </option>
                   <option value="Ampara">Ampara</option>
@@ -324,6 +450,9 @@ const CreateAd = () => {
                   <option value="Trincomalee">Trincomalee</option>
                   <option value="Vavuniya">Vavuniya</option>
                 </Form.Select>
+                {AreaError && (
+                  <p className="px-3 text-danger">Please Select Area.</p>
+                )}
               </Form.Group>
 
               {/* Delivery Option */}
@@ -339,13 +468,18 @@ const CreateAd = () => {
                   value={adDelivery}
                   onChange={handleAdDeliveryChange}
                 >
-                  <option defaultValue selected disabled>
+                  <option value="" disabled selected>
                     Select Delivery Option
                   </option>
                   <option value="Free Delivery">Free Delivery</option>
                   <option value="Need To Pay">Need to pay for Delivery</option>
                   <option value="Not Available">Not Available</option>
                 </Form.Select>
+                {DeliveryError && (
+                  <p className="px-3 text-danger">
+                    Please Select Delivery Option.
+                  </p>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3">
@@ -353,11 +487,17 @@ const CreateAd = () => {
                   type="checkbox"
                   id="disabledFieldsetCheck"
                   label="I accept the policy"
+                  checked={isPolicyAccepted}
+                  onChange={handleCheckboxChange}
                 />
               </Form.Group>
 
               <Row className="d-flex justify-content-center ">
-                <button className="AdViewButton mb-3" onClick={handleSubmit} type="submit">
+                <button
+                  className="AdViewButton mb-3"
+                  onClick={handleSubmit}
+                  type="submit"
+                >
                   Submit
                 </button>
               </Row>

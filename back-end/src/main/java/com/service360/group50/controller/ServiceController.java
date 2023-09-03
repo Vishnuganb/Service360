@@ -56,11 +56,11 @@ public class ServiceController {
             @RequestParam(value = "serviceImage", required = false) MultipartFile serviceImage,
             @RequestParam(value = "serviceName", required = false) String serviceName,
             @RequestParam(value = "serviceCategoryName", required = false) String serviceCategoryName,
-            @RequestParam(value = "ServiceId") Long ServiceId
+            @RequestParam(value = "ServiceId") Long serviceId
     ) {
         try {
             if (serviceImage != null || serviceName != null || serviceCategoryName != null) {
-                adminService.updateService(ServiceId, serviceCategoryName, serviceName, serviceImage);
+                adminService.updateService(serviceId, serviceCategoryName, serviceName, serviceImage);
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Service updated successfully"));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Some parameters are missing"));

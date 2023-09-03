@@ -19,7 +19,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import { set } from 'lodash';
+import axios from 'axios';
+
 
 const StyledButton2 = styled(Button)`
         background-color: #282b3d;
@@ -42,6 +43,8 @@ const StyledModalFooter = styled(Modal.Footer)`
 const searchInputStyle = {
     height: '38px',
 };
+
+const serverLink = 'http://localhost:8080'
 
 function AdminServices() {
 
@@ -97,10 +100,10 @@ function AdminServices() {
 
 
     const cardsPerPage = 9;
-    const totalPages = Math.ceil(servicesData.length / cardsPerPage);
+    const totalPages = Math.ceil(data.servicesData.length / cardsPerPage);
     const startIndex = (data.currentPage - 1) * cardsPerPage; // 
     const endIndex = startIndex + cardsPerPage;
-    const displayedServices = servicesData.slice(startIndex, endIndex);
+    const displayedServices = data.servicesData.slice(startIndex, endIndex);
 
     const handleServiceCategoryChange = (e) => {
         const selectedCategory = e.target.value;
@@ -181,8 +184,16 @@ function AdminServices() {
         }));
     };
 
+    const handleCategoryImageChange = (e) => {
+        const file = e.target.files[0];
+        setData((prevState) => ({
+            ...prevState,
+            categoryImage: file,
+        }));
+    };
+
     useEffect(() => {
-        // Calculate the total pages based on whether a category is selected or not
+        
         const filteredServices = data.selectedCategory !== 'default'
             ? data.servicesData.filter((service) => service.category === data.selectedCategory)
             : data.servicesData;
@@ -315,7 +326,7 @@ function AdminServices() {
                 };
 
 
-                const updatedServicesData = servicesData.map((service) => (
+                const updatedServicesData = data.servicesData.map((service) => (
                     service.id === data.selectedService.id ? updatedService : service
                 ));
 
@@ -394,9 +405,9 @@ function AdminServices() {
                         <Card className="card d-flex flex-column align-items-center justify-content-center h-100" onClick={() => (
                             setData({ ...data, selectedService: service, showServiceModal: true })
                         )}>
-                            <Card.Img src={service.image} variant="top" alt="home" />
+                            <Card.Img src={'data:image/png;base64,' + service.serviceImage} variant="top" alt="home" />
                             <Card.Body>
-                                <Card.Text>{service.text}</Card.Text>
+                                <Card.Text>{service.service}</Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>

@@ -314,6 +314,14 @@ function AdminCustomer() {
         },
     ];
 
+    const serviceCategories = {
+        "Interior Works": ["Carpentry", "Painting"],
+        "Electrical & Plumbing": ["AC Repair", "Electrical Wiring", "Plumbing"],
+        "Construction": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
+        "Security": ["CCTV Repair", "Fire Alarm", "Video Surveillance"],
+        "cleaning": ["Sofa cleaning", "Carpet cleaning"],
+    };
+
     const [data, setData] = useState({
         currentPage: 1,
         totalPages: 1,
@@ -432,7 +440,7 @@ function AdminCustomer() {
 
             </div>
 
-            <div className="mt-4 d-flex flex-column w-100" style={{width:'100%'}}>
+            <div className="mt-4 d-flex flex-column w-100" style={{ width: '100%' }}>
                 <Container className="table-responsive">
                     <Table striped bordered hover size="sm" className="custom-table">
                         <thead className='text-center'>

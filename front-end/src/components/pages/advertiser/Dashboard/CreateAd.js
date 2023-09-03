@@ -40,7 +40,7 @@ const CreateAd = () => {
   const [previewImage, setPreviewImage] = useState(adImage);
 
   // console.log("adImages:" + adImages);
-  console.log("selectedAdImages:"+selectedAdImages);
+  console.log("selectedAdImages:" + selectedAdImages);
   // console.log("previewImage:"+previewImage);
 
   //Validation UseState

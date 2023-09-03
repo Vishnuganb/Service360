@@ -36,7 +36,7 @@ export default function AppContact() {
 
                 </Form>
             </Container>
-            
+
             <Container fluid>
                 <div className="contact-info">
                     <ul>

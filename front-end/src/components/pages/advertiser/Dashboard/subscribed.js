@@ -8,7 +8,7 @@ import HistoryModal from "./subscriptionHistory";
 import backgroundImage from "../../../../assets/images/header/Background.png";
 
 const Subscriped = () => {
-// History Modal
+  // History Modal
   const subscriptionHistory = [
     {
       planName: "Bronze",
@@ -31,7 +31,7 @@ const Subscriped = () => {
       startDate: "2023-08-15",
       expirationDate: "2023-04-15",
     },
- 
+
     {
       planName: "Bronze",
       amount: "0 LKR",
@@ -82,15 +82,15 @@ const Subscriped = () => {
       expirationDate: "2023-11-18",
     },
   ];
- const [historyModal, setHistoryModal] = React.useState(false);
+  const [historyModal, setHistoryModal] = React.useState(false);
 
- const openHistoryModal = () => {
-   setHistoryModal(true);
- };
+  const openHistoryModal = () => {
+    setHistoryModal(true);
+  };
 
- const closeHistoryModal = () => {
-   setHistoryModal(false);
- };
+  const closeHistoryModal = () => {
+    setHistoryModal(false);
+  };
 
 
   const plans = [
@@ -137,7 +137,7 @@ const Subscriped = () => {
     return <div>Subscription plan not found</div>;
   }
 
-  
+
 
   return (
     <Container

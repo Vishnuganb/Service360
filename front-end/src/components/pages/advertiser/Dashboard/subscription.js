@@ -69,12 +69,12 @@ const Subscribtion = () => {
     },
   ];
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-   const handleOpenSubscripedModal = (id) => {
-     // Navigate to the editAd route with the id as a parameter
-     navigate(`/Advertiser/Subscribed/${id}`);
-   };
+  const handleOpenSubscripedModal = (id) => {
+    // Navigate to the editAd route with the id as a parameter
+    navigate(`/Advertiser/Subscribed/${id}`);
+  };
 
   return (
     <Container
@@ -97,11 +97,10 @@ const Subscribtion = () => {
         {plans.map((plan, index) => (
           <Card
             key={index}
-            className={`AdSubDiv ${
-              selectedPlanIndex === index ? "selectedAdSub" : ""
-            }`}
+            className={`AdSubDiv ${selectedPlanIndex === index ? "selectedAdSub" : ""
+              }`}
             onClick={() => handleSelectPlan(index)}
-            // style={{ backgroundImage: `url(${backgroundImage})` }}
+          // style={{ backgroundImage: `url(${backgroundImage})` }}
           >
             <Card.Body>
               <Card.Title className="text-center d-flex align-items-center gap-2">

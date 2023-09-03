@@ -107,7 +107,7 @@ const EditAd = () => {
 
 
   // ................................................................................................
-  
+
   const [adName, setAdName] = useState("");
   const handleAdNameChange = (event) => {
     setAdName(event.target.value);
@@ -445,14 +445,14 @@ const EditAd = () => {
                   label="I accept the policy"
                 />
               </Form.Group>
-             
-             
-                <Row className="d-flex justify-content-center ">
-                  <button className="AdViewButton mb-3" onClick={handleSubmit}>
-                    Update
-                  </button>
-                </Row>
-             
+
+
+              <Row className="d-flex justify-content-center ">
+                <button className="AdViewButton mb-3" onClick={handleSubmit}>
+                  Update
+                </button>
+              </Row>
+
             </fieldset>
           </Form>
         </Col>

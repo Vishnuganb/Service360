@@ -6,14 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(
-        name = "servicecategory"
-)
+@Table(name = "servicecategory")
 public class ServiceCategory {
     @Id
     @GeneratedValue()
@@ -21,8 +21,12 @@ public class ServiceCategory {
     private Long servicecategoryid;
 
     @Column( columnDefinition = "TEXT")
-    private String name;
+    private String serviceCategoryName;
 
-    @Column( columnDefinition = "TEXT")
-    private String image;
+    @Column(columnDefinition = "BYTEA")
+    private byte[] categoryImage;
+
+    @OneToMany(mappedBy = "serviceCategory", fetch = FetchType.EAGER)
+    private List<Services> services;
+
 }

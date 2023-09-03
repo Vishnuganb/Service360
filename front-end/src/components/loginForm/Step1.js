@@ -90,29 +90,29 @@ const Step1 = ({
       <div className="justify-content-between mb-3 d-flex ">
         <div className='me-0 col-xs-6'>
           <p className="mb-0">NIC Number<span style={{ color: 'red' }}>*</span></p>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter NIC number"
-              value={nicNumber}
-              onChange={(e) => handleChange('nicNumber', e.target.value)}
-              required
-            />
-            {nicNumberErrorMessage && <p className="text-danger p-0 m-0">{nicNumberErrorMessage}</p>}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter NIC number"
+            value={nicNumber}
+            onChange={(e) => handleChange('nicNumber', e.target.value)}
+            required
+          />
+          {nicNumberErrorMessage && <p className="text-danger p-0 m-0">{nicNumberErrorMessage}</p>}
         </div>
 
         <div className='col-xs-5'>
           <p className="mb-0">Contact Number<span style={{ color: 'red' }}>*</span></p>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="0771234567"
-              value={contactNumber}
-              onChange={(e) => handleChange('contactNumber', e.target.value)}
-              required
-              maxLength={10}
-            />
-            {contactNumberErrorMessage && <p className="text-danger p-0 m-0">{contactNumberErrorMessage}</p>}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="0771234567"
+            value={contactNumber}
+            onChange={(e) => handleChange('contactNumber', e.target.value)}
+            required
+            maxLength={10}
+          />
+          {contactNumberErrorMessage && <p className="text-danger p-0 m-0">{contactNumberErrorMessage}</p>}
         </div>
       </div>
 

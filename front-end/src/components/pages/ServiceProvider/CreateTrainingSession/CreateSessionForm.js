@@ -22,19 +22,19 @@ function CreateSessionForm() {
         );
     };
 
-    return(
+    return (
         <div className="ms-lg-4 me-lg-4">
-            <span style={{fontSize:"28px",fontWeight:"bold"}}>Create a Training Session</span>
+            <span style={{ fontSize: "28px", fontWeight: "bold" }}>Create a Training Session</span>
 
-            <Form className="mt-4">    
+            <Form className="mt-4">
                 <Form.Group className="mb-3" controlId="formBasicJobCategory">
                     <Form.Control as="select">
-                    <option value="">Select the service category</option>
-                    {subscribedJobCategories.map((category) => (
-                        <option key={category} value={category}>
-                        {category}
-                        </option>
-                    ))}
+                        <option value="">Select the service category</option>
+                        {subscribedJobCategories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
                     </Form.Control>
                 </Form.Group>
 
@@ -47,7 +47,7 @@ function CreateSessionForm() {
                     <Form.Label>Description</Form.Label>
                     <Form.Control as="textarea" rows={5} placeholder="Provide a detailed description of the training session" />
                 </Form.Group>
-                
+
                 <div className="CreateSession-Time d-flex flex-row">
                     <Form.Group className="mb-3 col-md-2" controlId="formBasicDate">
                         <Form.Label>Date</Form.Label>
@@ -69,14 +69,14 @@ function CreateSessionForm() {
                     <Form.Label>Location</Form.Label>
                     <Form.Control type="text" placeholder="Enter the location of the training session" />
                 </Form.Group>
-                
+
                 <Form.Group className="mb-3" controlId="formBasicEntranceFee">
                     <Form.Label>Entrance Fee</Form.Label>
                     <Form.Control type="text" placeholder="Enter the entrance fee or cost for the training session (if applicable)" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicFiles">
-                    <Form.Label>Upload Relevant Media </Form.Label><Form.Text className="text-muted">&nbsp;&nbsp;( Please upload images that showcase your ts rning session and its content ).</Form.Text><br/>
+                    <Form.Label>Upload Relevant Media </Form.Label><Form.Text className="text-muted">&nbsp;&nbsp;( Please upload images that showcase your ts rning session and its content ).</Form.Text><br />
                     <Button className="btn-ServiceProvider-1" onClick={() => document.getElementById('fileInput').click()}>Select Images</Button>
                     <input
                         type="file"

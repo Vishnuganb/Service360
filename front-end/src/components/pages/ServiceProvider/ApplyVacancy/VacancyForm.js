@@ -2,10 +2,10 @@ import '../../../../style/ServiceProvider/ApplyVacancy.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState, useEffect } from 'react';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-function ApplyVacancy(){
+function ApplyVacancy() {
     const [viewVacancyData, setviewVacancyData] = useState(null);
 
     const { id } = useParams();
@@ -16,15 +16,15 @@ function ApplyVacancy(){
             console.log(res.data);
             setviewVacancyData(res.data);
         });
-      }   , []);
-    
-      if (!viewVacancyData) return 'No Vacancy found!';
+    }, []);
 
-    return(
+    if (!viewVacancyData) return 'No Vacancy found!';
+
+    return (
         <div className="ms-lg-4 me-lg-4">
             <div className='d-flex flex-column'>
-              <span style={{fontSize:"30px",fontWeight:"600"}}>{viewVacancyData.vacancytitle}</span>
-              <span style={{fontSize:"26px",fontWeight:"600"}}>{viewVacancyData.customername}</span>
+                <span style={{ fontSize: "30px", fontWeight: "600" }}>{viewVacancyData.vacancytitle}</span>
+                <span style={{ fontSize: "26px", fontWeight: "600" }}>{viewVacancyData.customername}</span>
             </div>
             <Form className="mt-4">
                 <Form.Group className="mb-3" controlId="formBasicTitle">
@@ -48,34 +48,34 @@ function ApplyVacancy(){
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicJobCategory">
-                  <Form.Label>Education Qualification</Form.Label>
-                  <Form.Select aria-label="Education Qualification">
-                      <option value="1">Ordinary Level</option>
-                      <option value="2">Advanced Level</option>
-                      <option value="3">Undergraduate</option>
-                      <option value="4">Postgraduate</option>
-                      <option value="5">None</option>
-                  </Form.Select>
+                    <Form.Label>Education Qualification</Form.Label>
+                    <Form.Select aria-label="Education Qualification">
+                        <option value="1">Ordinary Level</option>
+                        <option value="2">Advanced Level</option>
+                        <option value="3">Undergraduate</option>
+                        <option value="4">Postgraduate</option>
+                        <option value="5">None</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicJobCategory">
-                  <Form.Label>Do you have work experience</Form.Label>
-                  <Form.Select aria-label="Education Qualification">
-                      <option value="1">Yes</option>
-                      <option value="2">No</option>
-                  </Form.Select>
+                    <Form.Label>Do you have work experience</Form.Label>
+                    <Form.Select aria-label="Education Qualification">
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                    </Form.Select>
                 </Form.Group>
 
 
                 <Form.Group className="mb-3" controlId="formBasicJobCategory">
-                  <Form.Label>How Many Years of Work Experience Do You Possess</Form.Label>
-                  <Form.Select aria-label="Education Qualification">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3-5</option>
-                      <option value="4">5-10</option>
-                      <option value="5">{'>'}10</option>
-                  </Form.Select>
+                    <Form.Label>How Many Years of Work Experience Do You Possess</Form.Label>
+                    <Form.Select aria-label="Education Qualification">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3-5</option>
+                        <option value="4">5-10</option>
+                        <option value="5">{'>'}10</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicTitle">

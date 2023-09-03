@@ -6,15 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(
         name = "advertiser"
 )
-
 public class Advertiser {
     @Id
     @GeneratedValue()
@@ -24,8 +25,13 @@ public class Advertiser {
     @Column( columnDefinition = "TEXT")
     private String shopname;
 
-    @Column( columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String shopaddress;
 
-    //user id
+    @OneToOne
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users users;
+
+    @OneToMany(mappedBy = "advertiser")
+    private List<AdvertiserFiles> advertiserFiles;
 }

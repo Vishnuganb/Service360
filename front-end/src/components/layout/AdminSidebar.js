@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/js/dist/dropdown'
@@ -13,12 +13,12 @@ function AdminSideBar() {
 
     const [isOpen, setIsOpen] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
-    
+
 
     return (
         <div className={`${styles.containerFluid4} ps-2 m-0 d-flex ${isOpen ? styles.largeScreen : styles.smallScreen}`}>
             <div className="row h-100">
-                <div className={`side-bar-sub-container col-auto col-md-2.5 min-vh-100 d-xs-inline justify-content-between`} style={{ backgroundImage: `url(${Image})`}}>
+                <div className={`side-bar-sub-container col-auto col-md-2.5 min-vh-100 d-xs-inline justify-content-between`} style={{ backgroundImage: `url(${Image})` }}>
                     <div className="sidebar-content">
                         <ul className={`nav nav-pills flex-column`} id="parentM">
 
@@ -56,7 +56,7 @@ function AdminSideBar() {
                                 </Link>
 
                                 <NavDropdown
-                                    title={<> <i className="bi bi-people ps-3"></i> </> }
+                                    title={<> <i className="bi bi-people ps-3"></i> </>}
                                     id="basic-nav-dropdown"
                                     className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
                                 >
@@ -66,7 +66,7 @@ function AdminSideBar() {
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item as={Link} to="/admin/advertisers" className="no-hover"> Advertisers </NavDropdown.Item>
                                 </NavDropdown>
-                                
+
                                 <ul
                                     className="nav collapse ms-4.5 flex-column"
                                     id="submenu-1"
@@ -83,7 +83,7 @@ function AdminSideBar() {
                             <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
                                 <Link to="/admin/advertisements" className="nav-link nav-link-sidebar text-white">
                                     <i className="bi bi-window-stack"></i>
-                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Advertisements </span> 
+                                    <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Advertisements </span>
                                 </Link>
                             </li>
 

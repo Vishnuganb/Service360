@@ -17,7 +17,7 @@ const PDFViewer = () => {
     setNumPages(numPages);
   };
 
-  const pdfUrl = process.env.PUBLIC_URL+'/pdf/Customer.pdf';
+  const pdfUrl = process.env.PUBLIC_URL + '/pdf/Customer.pdf';
 
   return (
     <div className="pdf-viewer">
@@ -30,16 +30,16 @@ const PDFViewer = () => {
   );
 };
 function CustomerComplaints() {
-    return (
-        <div className='card2'>
-             <p> <Link to="" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></Link>
+  return (
+    <div className='card2'>
+      <p> <Link to="" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></Link>
         &nbsp;&nbsp;Back</p>
-               <h3>Quotation</h3>
-            <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
-            <PDFViewer />
+      <h3>Quotation</h3>
+      <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
+        <PDFViewer />
 
-                </div></div>
-    );
+      </div></div>
+  );
 
 
 
@@ -47,5 +47,4 @@ function CustomerComplaints() {
 };
 
 export default CustomerComplaints;
-
 

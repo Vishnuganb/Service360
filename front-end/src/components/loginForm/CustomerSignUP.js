@@ -10,7 +10,7 @@ import { AuthenticationContext } from "../../ContextFiles/Authentication/Authent
 
 const customFontStyle = {
     fontFamily: "Roboto",
-    color: '#9F390D' 
+    color: '#9F390D'
 };
 
 const StyledButton = styled.button`
@@ -94,7 +94,7 @@ const CustomerSignUP = () => {
 
     const validateEmail = (emailInputValue) => {
         if (validator.isEmail(emailInputValue)) {
-            setdata({ ...data, email: emailInputValue, emailStatus: true, emailErrorMessage: ''});
+            setdata({ ...data, email: emailInputValue, emailStatus: true, emailErrorMessage: '' });
         } else {
             setdata({ ...data, email: emailInputValue, emailStatus: false, emailErrorMessage: 'Invalid email' });
         }
@@ -130,7 +130,7 @@ const CustomerSignUP = () => {
             isError = true;
             contactNumberErrorMessage = 'Should contain only digits';
         }
-        
+
         if (data.contactNumber.length !== 10) {
             isError = true;
             contactNumberErrorMessage = 'Invalid contact number';
@@ -338,7 +338,7 @@ const CustomerSignUP = () => {
                                                                 value={data.password}
                                                                 onChange={(e) => validatePassword(e.target.value)}
                                                                 required
-                                                            />  
+                                                            />
                                                             <span className="input-group-text">
                                                                 <button
                                                                     className="btn btn-outline-dark border-0"
@@ -403,7 +403,7 @@ const CustomerSignUP = () => {
                                                 </div>
 
                                             </form>
-                                            
+
                                             <div>
 
                                             </div>

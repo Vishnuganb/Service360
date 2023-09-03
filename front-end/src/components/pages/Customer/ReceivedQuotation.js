@@ -43,11 +43,11 @@ const Accept = () => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" style={{
-                 width: '15%',
-                 height: '28px',
-                 border: '1px solid #ced4da',
-                 fontSize: '14px',
-                 padding: '0 5px',
+                width: '15%',
+                height: '28px',
+                border: '1px solid #ced4da',
+                fontSize: '14px',
+                padding: '0 5px',
                 backgroundColor: '#007bff',
                 color: '#fff',
                 fontWeight: '500',
@@ -118,11 +118,11 @@ const View = () => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" style={{
-                 width: '15%',
-                 height: '28px',
-                 border: '1px solid #ced4da',
-                 fontSize: '14px',
-                 padding: '0 5px',
+                width: '15%',
+                height: '28px',
+                border: '1px solid #ced4da',
+                fontSize: '14px',
+                padding: '0 5px',
                 backgroundColor: '#007bff',
                 color: '#fff',
                 fontWeight: '500',

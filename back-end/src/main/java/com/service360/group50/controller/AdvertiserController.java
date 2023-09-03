@@ -1,4 +1,5 @@
 package com.service360.group50.controller;
+<<<<<<< HEAD
 import com.service360.group50.service.GoogleDriveService;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
@@ -34,11 +35,11 @@ public class AdvertiserController {
 //    public String getAllAudio() throws IOException, GeneralSecurityException{
 //        return service.getfiles();
 //    }
-    public String uploadAudio(MultipartFile file) throws IOException, GeneralSecurityException{
-        System.out.println(file.getOriginalFilename());
-
-        return service.uploadFile(file);
-    }
+//    public String uploadAudio(MultipartFile file) throws IOException, GeneralSecurityException{
+//        System.out.println(file.getOriginalFilename());
+//
+//        return service.uploadFile(file);
+//    }
 
     @CrossOrigin(origins = "http://localhost:3000/")
     @PostMapping("auth/createAd")
@@ -154,3 +155,17 @@ public class AdvertiserController {
 
 
 }
+=======
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/auth")
+public class AdvertiserController {
+}
+>>>>>>> main

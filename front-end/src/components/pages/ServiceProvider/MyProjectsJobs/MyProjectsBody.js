@@ -7,13 +7,13 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-function MyProjectsBody(){
+function MyProjectsBody() {
     const [MyProjectsJobsData, setMyProjectsJobsData] = useState(null);
     const [MyProjectsVacanciesData, setMyProjectsVacanciesData] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [activeTab, setActiveTab] = useState(''); 
+    const [activeTab, setActiveTab] = useState('');
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -28,8 +28,8 @@ function MyProjectsBody(){
         setSearchTerm('');  // Reset search term when active tab changes
         setFilterCategoryTerm('');  // Reset category filter when active tab changes
     }, [activeTab]);
-    
-    const MyServices= [
+
+    const MyServices = [
         "Electrical Wiring",
         "Masonry",
         "Sofa Cleaning",
@@ -46,7 +46,7 @@ function MyProjectsBody(){
             console.log(res.data);
             setMyProjectsVacanciesData(res.data);
         });
-    },[]);
+    }, []);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -57,32 +57,32 @@ function MyProjectsBody(){
     const handleAccept = (jobId, isQuotation) => {
         const newStatus = isQuotation ? 'pending' : 'ongoing';
         const apiUrl = isQuotation
-          ? `http://localhost:8080/auth/updateJobStatusInviteToPending/${jobId}`
-          : `http://localhost:8080/auth/updateJobStatusInviteToOngoing/${jobId}`;
-    
-        axios.put(apiUrl)
-          .then((res) => {
-            // Update the state or trigger a reload of the component if necessary
-          })
-          .catch((error) => {
-            // Handle errors
-          });
+            ? `http://localhost:8080/auth/updateJobStatusInviteToPending/${jobId}`
+            : `http://localhost:8080/auth/updateJobStatusInviteToOngoing/${jobId}`;
 
-          setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));           //PAGE REFRESH
+        axios.put(apiUrl)
+            .then((res) => {
+                // Update the state or trigger a reload of the component if necessary
+            })
+            .catch((error) => {
+                // Handle errors
+            });
+
+        setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));           //PAGE REFRESH
     };
 
     const handleReject = (jobId) => {
-    const apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToRejected/${jobId}`;
+        const apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToRejected/${jobId}`;
 
-    axios.put(apiUrl)
-        .then((res) => {
-        // Update the state or trigger a reload of the component if necessary
-        })
-        .catch((error) => {
-        // Handle errors
-        });
+        axios.put(apiUrl)
+            .then((res) => {
+                // Update the state or trigger a reload of the component if necessary
+            })
+            .catch((error) => {
+                // Handle errors
+            });
         setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));
-        
+
     };
 
     const allCards = [...MyProjectsJobsData, ...MyProjectsVacanciesData];
@@ -99,7 +99,7 @@ function MyProjectsBody(){
             card.vacancytitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             card.customername?.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        
+
         return serviceMatch && searchTermMatch;
     });
 
@@ -113,7 +113,7 @@ function MyProjectsBody(){
     });
 
     const cardsPerPage = 3;
-    
+
     // Calculate the total number of pages based on the filtered and sorted cards
     const totalNumPages = Math.ceil(filteredAndSortedCards.length / cardsPerPage);
 
@@ -126,7 +126,7 @@ function MyProjectsBody(){
 
     // Create a subset of training sessions to be displayed on the current page
     const displayedCards = filteredAndSortedCards.slice(startIndex, endIndex);
-    
+
     // Function to handle page change when the user clicks on pagination buttons
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -138,44 +138,44 @@ function MyProjectsBody(){
         setSearchTerm(value);
         setCurrentPage(1);   // Reset current page to 1 when search term changes
     };
-    
+
     // Function to handle filter by category changes
     const handlefilterCategoryChange = (category) => {
         setFilterCategoryTerm(category);
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
 
-    return(
+    return (
         <div>
-            
+
             {/* Page Title*/}
-            <span className="ms-4 align-self-start" style={{fontSize:"28px",fontWeight:"600"}}>My Jobs</span>
+            <span className="ms-4 align-self-start" style={{ fontSize: "28px", fontWeight: "600" }}>My Jobs</span>
 
             {/* Nav Bar */}
             <div className="mt-4 ms-lg-4 me-md-4">
                 <Navbar className="MyProjects-top-nav me-lg-4" expand="lg md sm">
                     <Nav className="ms-3">
-                        <Nav.Link 
-                            active={activeTab === 'invite'} 
+                        <Nav.Link
+                            active={activeTab === 'invite'}
                             onClick={() => setActiveTab('invite')}
                         >
                             Invites
                         </Nav.Link>
-                        <Nav.Link 
-                            active={activeTab === 'pending'} 
-                            onClick={() => setActiveTab('pending')} 
+                        <Nav.Link
+                            active={activeTab === 'pending'}
+                            onClick={() => setActiveTab('pending')}
                         >
                             Pending
                         </Nav.Link>
-                        <Nav.Link 
-                            active={activeTab === 'ongoing'} 
-                            onClick={() => setActiveTab('ongoing')} 
+                        <Nav.Link
+                            active={activeTab === 'ongoing'}
+                            onClick={() => setActiveTab('ongoing')}
                         >
                             Ongoing
                         </Nav.Link>
-                        <Nav.Link 
-                            active={activeTab === 'rejected'} 
-                            onClick={() => setActiveTab('rejected')} 
+                        <Nav.Link
+                            active={activeTab === 'rejected'}
+                            onClick={() => setActiveTab('rejected')}
                         >
                             Rejected
                         </Nav.Link>
@@ -201,7 +201,7 @@ function MyProjectsBody(){
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handlefilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (          
+                            {MyServices.map((service) => (
                                 <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
@@ -214,7 +214,7 @@ function MyProjectsBody(){
                     </Nav>
                 </Navbar>
             </div>
-            
+
             {/* only display pending, ongoing, rejected jobs */}
             <div className="row my-projects-jobs-row-wrap">
                 {activeTab !== 'invite' && displayedCards.filter((job) => job.jobstatus === 'pending' || job.jobstatus === 'ongoing' || job.jobstatus === 'rejected').map((job) => (
@@ -234,38 +234,38 @@ function MyProjectsBody(){
                                 </div>
                             </div>
                         </div>
-                        <hr style={{margin:"0.5rem"}} />
+                        <hr style={{ margin: "0.5rem" }} />
                         <div className="my-job-card-footer d-flex flex-row mb-sm-2 mx-auto mt-md-0 mt-1 mb-2">
                             {job.jobstatus === 'pending' && (
-                            <Link to={`../PendingJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
-                              <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                  <span class="my-jobs-page-btn-label">
-                                  <i class="bi bi-eye"></i>
-                                  </span>
-                                  View
-                              </button>
-                            </Link>  
+                                <Link to={`../PendingJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
+                                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(11, 133, 160)" }}>
+                                        <span class="my-jobs-page-btn-label">
+                                            <i class="bi bi-eye"></i>
+                                        </span>
+                                        View
+                                    </button>
+                                </Link>
                             )}
                             {job.jobstatus === 'ongoing' && (
-                            <Link to={`../OngoingJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
-                                <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="my-jobs-page-btn-label">
-                                    <i class="bi bi-eye"></i>
-                                    </span>
-                                    View
-                                </button>
-                            </Link>
-                                                   
+                                <Link to={`../OngoingJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
+                                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(11, 133, 160)" }}>
+                                        <span class="my-jobs-page-btn-label">
+                                            <i class="bi bi-eye"></i>
+                                        </span>
+                                        View
+                                    </button>
+                                </Link>
+
                             )}
                             {job.jobstatus === 'rejected' && (
-                            <Link to={`../ViewAJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
-                                <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="my-jobs-page-btn-label">
-                                    <i class="bi bi-eye"></i>
-                                    </span>
-                                    View
-                                </button>
-                            </Link>
+                                <Link to={`../ViewAJob/${job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
+                                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(11, 133, 160)" }}>
+                                        <span class="my-jobs-page-btn-label">
+                                            <i class="bi bi-eye"></i>
+                                        </span>
+                                        View
+                                    </button>
+                                </Link>
                             )}
                         </div>
                     </div>
@@ -275,44 +275,44 @@ function MyProjectsBody(){
                 {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing' || vacancy.vacancystatus === 'rejected').map((vacancy) => (
                     <div className="single-my-vacancy-card mx-auto mt-3">
                         <div className="ms-sm-3">
-                                <div className='d-flex flex-column'>
-                                    <div >
-                                        <span className="job-card-title">{vacancy.vacancytitle}</span>
-                                    </div>
-                                    <div className='d-flex'>
-                                        <span className="job-card-date">By {vacancy.customername}</span>
-                                    </div>
-                                    <div>
-                                        <span className="my-job-location-info">
-                                            <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {vacancy.vacancylocation}
-                                        </span>
-                                        <span className="my-job-location-info ms-4">
-                                            <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
-                                        </span>
-                                    </div>
+                            <div className='d-flex flex-column'>
+                                <div >
+                                    <span className="job-card-title">{vacancy.vacancytitle}</span>
                                 </div>
+                                <div className='d-flex'>
+                                    <span className="job-card-date">By {vacancy.customername}</span>
+                                </div>
+                                <div>
+                                    <span className="my-job-location-info">
+                                        <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {vacancy.vacancylocation}
+                                    </span>
+                                    <span className="my-job-location-info ms-4">
+                                        <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <hr style={{margin:"0.5rem"}} />
+                        <hr style={{ margin: "0.5rem" }} />
                         <div className="my-job-card-footer d-flex flex-row mb-sm-2 mx-auto mt-md-0 mt-1 mb-2">
                             {vacancy.vacancystatus === 'ongoing' && (
-                            <Link to={`../OngoingVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
-                                <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="my-jobs-page-btn-label">
-                                    <i class="bi bi-eye"></i>
-                                    </span>
-                                    View
-                                </button>
-                            </Link>
+                                <Link to={`../OngoingVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
+                                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(11, 133, 160)" }}>
+                                        <span class="my-jobs-page-btn-label">
+                                            <i class="bi bi-eye"></i>
+                                        </span>
+                                        View
+                                    </button>
+                                </Link>
                             )}
                             {vacancy.vacancystatus === 'rejected' && (
-                            <Link to={`../ViewAVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
-                                <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                                    <span class="my-jobs-page-btn-label">
-                                    <i class="bi bi-eye"></i>
-                                    </span>
-                                    View
-                                </button>
-                            </Link>
+                                <Link to={`../ViewAVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
+                                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(11, 133, 160)" }}>
+                                        <span class="my-jobs-page-btn-label">
+                                            <i class="bi bi-eye"></i>
+                                        </span>
+                                        View
+                                    </button>
+                                </Link>
                             )}
                         </div>
                     </div>
@@ -328,7 +328,7 @@ function MyProjectsBody(){
                                 <div>
                                     <span className="my-job-card-title">{job.jobtitle}</span>
                                 </div>
-                                
+
                                 <div className="isquatation d-flex flex-row ms-auto me-sm-3">
                                     {job.isquotation === 'quotation' && (
                                         <span className="single-job-status" id="job-status">Quotation</span>
@@ -355,18 +355,18 @@ function MyProjectsBody(){
                             </div>
                         </div>
                     </div>
-                    <hr style={{margin:"0.5rem"}} />
+                    <hr style={{ margin: "0.5rem" }} />
                     <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
-                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(11, 133, 160)" }}>
                             <span class="view-jobs-page-btn-label" onClick={() => handleAccept(job.jobid, job.isquotation === 'quotation')}>
                                 <i class="bi bi-check-circle"></i>
                             </span>
                             Accept
                         </button>
 
-                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(182, 14, 14)" }}>
                             <span class="view-jobs-page-btn-label" onClick={() => handleReject(job.jobid)}>
-                                    <i class="bi bi-x-circle"></i>
+                                <i class="bi bi-x-circle"></i>
                             </span>
                             Reject
                         </button>
@@ -376,55 +376,55 @@ function MyProjectsBody(){
 
             {/* only display vacancy invites for me */}
             {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy) => (
-            <div className="single-vacancy-card mx-auto mt-3">
-                <div className="">
-                    <div className="d-flex flex-column ms-sm-3">
-                        <div className="invite-header-container d-flex flex-row">
-                            <div>
-                                <span className="my-job-card-title">{vacancy.vacancytitle}</span>
-                            </div>
-                            <div className="isquatation ms-auto me-sm-3">
+                <div className="single-vacancy-card mx-auto mt-3">
+                    <div className="">
+                        <div className="d-flex flex-column ms-sm-3">
+                            <div className="invite-header-container d-flex flex-row">
+                                <div>
+                                    <span className="my-job-card-title">{vacancy.vacancytitle}</span>
+                                </div>
+                                <div className="isquatation ms-auto me-sm-3">
                                     <span className="single-job-status ms-2" id="job-status">Long-Term</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className='d-flex'>
-                            <span className="job-card-date">By {vacancy.customername}</span>
-                        </div>
-                        <div className='mt-1'>
-                            <span className="single-job-description">
-                                {vacancy.vacancydescription}
-                            </span>
-                        </div>
-                        <div className='mt-1'>
-                            <span className="sinlge-my-job-sub-info"><i className="bi bi-calendar-event"></i>&nbsp;&nbsp; Due Date - {vacancy.duedate}</span>
-                        </div>
-                        <div className='mt-1'>
-                            <span className="my-vacancy-location-info">
-                                <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; Location: {vacancy.vacancylocation}
-                            </span>
-                            <span className="my-job-location-info ms-4">
-                                <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
-                            </span>
+                            <div className='d-flex'>
+                                <span className="job-card-date">By {vacancy.customername}</span>
+                            </div>
+                            <div className='mt-1'>
+                                <span className="single-job-description">
+                                    {vacancy.vacancydescription}
+                                </span>
+                            </div>
+                            <div className='mt-1'>
+                                <span className="sinlge-my-job-sub-info"><i className="bi bi-calendar-event"></i>&nbsp;&nbsp; Due Date - {vacancy.duedate}</span>
+                            </div>
+                            <div className='mt-1'>
+                                <span className="my-vacancy-location-info">
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; Location: {vacancy.vacancylocation}
+                                </span>
+                                <span className="my-job-location-info ms-4">
+                                    <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr style={{margin:"0.5rem"}} />
-                <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
-                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                        <span class="view-jobs-page-btn-label" onClick="">
-                            <i class="bi bi-check-circle"></i>
-                        </span>
-                        Accept
-                    </button>
+                    <hr style={{ margin: "0.5rem" }} />
+                    <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(11, 133, 160)" }}>
+                            <span class="view-jobs-page-btn-label" onClick="">
+                                <i class="bi bi-check-circle"></i>
+                            </span>
+                            Accept
+                        </button>
 
-                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
-                        <span class="view-jobs-page-btn-label" onClick="">
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{ color: "white", backgroundColor: "rgb(182, 14, 14)" }}>
+                            <span class="view-jobs-page-btn-label" onClick="">
                                 <i class="bi bi-x-circle"></i>
-                        </span>
-                        Reject
-                    </button>
+                            </span>
+                            Reject
+                        </button>
+                    </div>
                 </div>
-            </div>
             ))}
 
 
@@ -432,14 +432,14 @@ function MyProjectsBody(){
             <div className="pagination justify-content-center">
                 {/* Create pagination buttons for each page */}
                 {pageNumbers.map((pageNumber) => (
-                <button
-                    key={pageNumber}
-                    className={`page-link ${currentPage === pageNumber ? 'active' : ''}`}
-                    style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-                    onClick={() => handlePageChange(pageNumber)}
-                >
-                    {pageNumber}
-                </button>
+                    <button
+                        key={pageNumber}
+                        className={`page-link ${currentPage === pageNumber ? 'active' : ''}`}
+                        style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
+                        onClick={() => handlePageChange(pageNumber)}
+                    >
+                        {pageNumber}
+                    </button>
                 ))}
             </div>
         </div>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Card, Table,Modal, Form, Button } from "react-bootstrap";
+import { Card, Table, Modal, Form, Button } from "react-bootstrap";
 import BgImage from '../../../../assets/images/header/Background.png';
 import BgImage2 from '../../../../assets/images/header/footer.png';
 import PopupBgImage from '../../../../assets/images/header/popupBg.png';
 import '../../../../style/Admin/AdminDashboard.css';
-import { BarChart, Bar, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,} from 'recharts';
+import { BarChart, Bar, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, } from 'recharts';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -403,33 +403,33 @@ const AdminDashboard = () => {
               </div>
 
               <Card.Body className='pieChartContainerClass'>
-                  <ResponsiveContainer width="100%" height='100%'>
-                    <PieChart>
-                      <Pie
-                        data={dataToShow}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        label={renderCustomizedLabel}
-                        innerRadius={60}
-                        outerRadius={120}
-                        fill="#8884d8"
-                        dataKey="value"
-                        isAnimationActive={true}
-                      >
-                        {dataToShow.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Legend
+                <ResponsiveContainer width="100%" height='100%'>
+                  <PieChart>
+                    <Pie
+                      data={dataToShow}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={renderCustomizedLabel}
+                      innerRadius={60}
+                      outerRadius={120}
+                      fill="#8884d8"
+                      dataKey="value"
+                      isAnimationActive={true}
+                    >
+                      {dataToShow.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Legend
                       formatter={(value, entry) => `${entry.payload.category}`}
-                      layout="vertical" 
-                      align="right"     
-                      verticalAlign="middle" 
-                      />
-                      <Tooltip />
-                    </PieChart>
-                  </ResponsiveContainer>
+                      layout="vertical"
+                      align="right"
+                      verticalAlign="middle"
+                    />
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
               </Card.Body>
             </Card>
           </div>
@@ -530,29 +530,29 @@ const AdminDashboard = () => {
               </div>
             </Modal.Body>
           )}
-          <StyledModalFooter>  
-              <>
+          <StyledModalFooter>
+            <>
 
-                <Form.Check
-                  type="radio"
-                  name="enableDisableRadio"
-                  id="enableRadio"
-                  label="Enable"
-                  checked={data.enable}
-                  onChange={() => setData({ ...data, enable: true })}
-                  className='ms-0 me-1 custom-radio'
-                />
-                <Form.Check
-                  type="radio"
-                  name="enableDisableRadio"
-                  id="disableRadio"
-                  label="Disable"
-                  checked={!data.enable}
-                  onChange={() => setData({ ...data, enable: false })}
-                  className='ms-0 me-5 custom-radio'
-                />
+              <Form.Check
+                type="radio"
+                name="enableDisableRadio"
+                id="enableRadio"
+                label="Enable"
+                checked={data.enable}
+                onChange={() => setData({ ...data, enable: true })}
+                className='ms-0 me-1 custom-radio'
+              />
+              <Form.Check
+                type="radio"
+                name="enableDisableRadio"
+                id="disableRadio"
+                label="Disable"
+                checked={!data.enable}
+                onChange={() => setData({ ...data, enable: false })}
+                className='ms-0 me-5 custom-radio'
+              />
 
-              </>
+            </>
             <div className="col-sm-6 d-flex justify-content-end align-items-end m-0">
               <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showDetailsModal: false })}>
                 Cancel

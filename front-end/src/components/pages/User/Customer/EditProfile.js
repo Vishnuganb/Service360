@@ -57,7 +57,7 @@ const CustomerProfile = () => {
         <div className="name-container">
           <Form.Group className="fName">
             <Form.Label>First Name</Form.Label>
-            <Form.Control  placeholder="Sinnaththamby"  style={{ width: "375px" }} />
+            <Form.Control placeholder="Sinnaththamby" style={{ width: "375px" }} />
           </Form.Group>
 
           <Form.Group className="lName">
@@ -70,7 +70,7 @@ const CustomerProfile = () => {
           <Form.Label>Residential Address</Form.Label>
           <Form.Control
             placeholder="Kachchai South Kodikamam"
-          
+
           />
         </Form.Group>
 
@@ -79,7 +79,7 @@ const CustomerProfile = () => {
           <Form.Control
             type="tel"
             placeholder="+94 775794064"
-           
+
           />
         </Form.Group>
 
@@ -88,7 +88,7 @@ const CustomerProfile = () => {
           <Form.Control
             type="email"
             placeholder="mithilan999@gmail.com"
-            
+
             readOnly
           />
         </Form.Group>

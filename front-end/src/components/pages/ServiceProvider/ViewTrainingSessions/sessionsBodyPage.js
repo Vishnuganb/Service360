@@ -10,17 +10,17 @@ import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
 import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
 import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 
-function SessionsBodyPage(){
+function SessionsBodyPage() {
     const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
 
-    const Trainingimages=[
+    const Trainingimages = [
         wiring,
         masonry2,
         plumping1,
         carpentry1,
     ]
-    
-    const MyServices= [
+
+    const MyServices = [
         "Electrical Wiring",
         "Masonry",
         "Cleaning",
@@ -34,7 +34,7 @@ function SessionsBodyPage(){
     const [currentPage, setCurrentPage] = useState(1);
 
     // State to store the search term
-    const [searchTerm, setSearchTerm] = useState(''); 
+    const [searchTerm, setSearchTerm] = useState('');
 
     // State to store the filter by category
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
@@ -50,7 +50,7 @@ function SessionsBodyPage(){
         setSearchTerm(value);
         setCurrentPage(1);   // Reset current page to 1 when search term changes
     };
-    
+
     // Function to handle filter by category changes
     const handlefilterCategoryChange = (category) => {
         setFilterCategoryTerm(category);
@@ -62,16 +62,16 @@ function SessionsBodyPage(){
             console.log(res.data);
             setviewTrainingSessionsData(res.data);
         });
-    }   , []);
+    }, []);
 
     if (!viewTrainingSessionsData) return 'No jobs found!';
 
     // Filter training sessions based on search term and selected date
     const filteredCards = viewTrainingSessionsData.filter((card) => {
         return (
-        (!filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
+            (!filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
             (card.servicename.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.trainingtitle.toLowerCase().includes(searchTerm.toLowerCase()))
+                card.trainingtitle.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     });
 
@@ -82,11 +82,11 @@ function SessionsBodyPage(){
     // Create a subset of training sessions to be displayed on the current page
     const displayedCards = filteredCards.slice(startIndex, endIndex);
 
-    return(
+    return (
         <div>
 
             {/* Page Title*/}
-            <span className="ms-4 align-self-start" style={{fontSize:"28px",fontWeight:"600"}}>View Training Sessions</span>
+            <span className="ms-4 align-self-start" style={{ fontSize: "28px", fontWeight: "600" }}>View Training Sessions</span>
 
             {/* Nav Bar */}
             <Navbar className='mt-4 mb-3 ms-lg-4 me-md-4'>
@@ -110,7 +110,7 @@ function SessionsBodyPage(){
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handlefilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (          
+                            {MyServices.map((service) => (
                                 <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
@@ -126,7 +126,7 @@ function SessionsBodyPage(){
 
             {/* Training Session Cards */}
 
-            {displayedCards.map((TrainingSession,index) => (
+            {displayedCards.map((TrainingSession, index) => (
                 <div className="single-my-training-card mx-auto mt-3">
                     <div className="row">
                         <div className="col-md-5 col-12 my-training-card-body-left d-flex justify-content-center justify-content-md-start">
@@ -142,7 +142,7 @@ function SessionsBodyPage(){
                             <span className="single-my-training-time">
                                 <i className="bi bi-clock-fill"></i>&nbsp; {TrainingSession.trainingdate} At {TrainingSession.trainingtime}
                             </span>
-                            <br/>
+                            <br />
                             <div className="single-traning-guests border border-dark mt-2 mb-4 col">
                                 <div className="custom-training-row row align-itmes-center">
                                     <span className="single-my-training-guests border border-primary col-12">Guests</span>
@@ -178,16 +178,15 @@ function SessionsBodyPage(){
             <div className="pagination justify-content-center">
                 {/* Create pagination buttons for each page */}
                 {Array.from({ length: Math.ceil(filteredCards.length / cardsPerPage) }, (_, index) => (
-                <button
-                    key={index + 1}
-                    className={`page-link ${
-                    currentPage === index + 1 ? 'active' : ''
-                    }`}
-                    style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-                    onClick={() => handlePageChange(index + 1)}
-                >
-                    {index + 1}
-                </button>
+                    <button
+                        key={index + 1}
+                        className={`page-link ${currentPage === index + 1 ? 'active' : ''
+                            }`}
+                        style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
                 ))}
             </div>
 

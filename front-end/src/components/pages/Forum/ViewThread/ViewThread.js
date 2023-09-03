@@ -27,7 +27,7 @@ const ViewThread = () => {
 
   const Question = [
     {
-      id:1,
+      id: 1,
       profileIcon: profileIcon,
       forumImage: ForumImage,
       username: "Adam",
@@ -45,7 +45,7 @@ const ViewThread = () => {
 
   const Answers = [
     {
-      id:2,
+      id: 2,
       profileIcon: AnswerPro,
       forumImage: AnsImages1,
       username: "Simith",
@@ -59,7 +59,7 @@ const ViewThread = () => {
       answerCount: 18,
     },
     {
-      id:3,
+      id: 3,
       profileIcon: sara,
       forumImage: AnsImages2,
       username: "Sara Arjun",

@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../style/Admin/AdminHeader.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -18,14 +18,9 @@ function AdvertiserHeader() {
   const [showEditProfile, setShowEditProfile] = useState(false);
   const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
   const [showAddReview, setShowAddReview] = useState(false);
-  const [userName, setUserName] = useState('')
 
-  useEffect(() => {
-    const savedUserName = Cookies.get('FirstName');
-    if (savedUserName) {
-      setUserName(savedUserName);
-    }
-  }, []);
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userDetail = JSON.parse(response);
 
   return (
     <Navbar expand="lg" bg="light" className="navbar">
@@ -74,7 +69,7 @@ function AdvertiserHeader() {
             </Nav.Link>
 
             <NavDropdown
-              title={userName}
+              title={userDetail.firstname}
               className="fw-bold"
               id="basic-nav-dropdown"
             >

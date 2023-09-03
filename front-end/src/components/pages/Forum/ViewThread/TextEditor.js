@@ -20,46 +20,46 @@ const TextEditor = () => {
     setText(newText);
   };
 
-   const handleItalicClick = () => {
-     const textArea = textAreaRef.current;
-     const startPos = textArea.selectionStart;
-     const endPos = textArea.selectionEnd;
+  const handleItalicClick = () => {
+    const textArea = textAreaRef.current;
+    const startPos = textArea.selectionStart;
+    const endPos = textArea.selectionEnd;
 
-     const selectedText = text.substring(startPos, endPos);
-     const newText =
-       text.slice(0, startPos) + `<i>${selectedText}</i>` + text.slice(endPos);
+    const selectedText = text.substring(startPos, endPos);
+    const newText =
+      text.slice(0, startPos) + `<i>${selectedText}</i>` + text.slice(endPos);
 
-     setText(newText);
-   };
+    setText(newText);
+  };
 
-    const handleUnderLineClick = () => {
-      const textArea = textAreaRef.current;
-      const startPos = textArea.selectionStart;
-      const endPos = textArea.selectionEnd;
+  const handleUnderLineClick = () => {
+    const textArea = textAreaRef.current;
+    const startPos = textArea.selectionStart;
+    const endPos = textArea.selectionEnd;
 
-      const selectedText = text.substring(startPos, endPos);
-      const newText =
-        text.slice(0, startPos) + `<u>${selectedText}</u>` + text.slice(endPos);
+    const selectedText = text.substring(startPos, endPos);
+    const newText =
+      text.slice(0, startPos) + `<u>${selectedText}</u>` + text.slice(endPos);
 
-      setText(newText);
-    };
+    setText(newText);
+  };
 
 
-    const boldTooltip = (props) => (
-      <Tooltip id="button-tooltip" {...props}>
-       Bold
-      </Tooltip>
-    );
-    const italicTooltip = (props) => (
-      <Tooltip id="button-tooltip" {...props}>
-        Italic
-      </Tooltip>
-    );
-    const underTooltip = (props) => (
-      <Tooltip id="button-tooltip" {...props}>
-        underline
-      </Tooltip>
-    );
+  const boldTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Bold
+    </Tooltip>
+  );
+  const italicTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Italic
+    </Tooltip>
+  );
+  const underTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      underline
+    </Tooltip>
+  );
 
   return (
     <div>

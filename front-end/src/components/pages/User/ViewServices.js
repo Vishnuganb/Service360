@@ -76,7 +76,7 @@ function ViewServices() {
 
             <div className="title-holder">
                 <h2>What do you need to be done</h2>
-                <div className="subtitle" style={{ color:"	#5A5A5A"}}>Need your services done quickly and efficiently ? <br></br>
+                <div className="subtitle" style={{ color: "	#5A5A5A" }}>Need your services done quickly and efficiently ? <br></br>
                     Look no further! Explore a wide variety of services
                     offered by professionals who can deliver exceptional results. </div>
             </div>

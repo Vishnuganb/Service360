@@ -21,11 +21,6 @@ public class Blogs {
     @Column(updatable = false)
     private Long blogid;
 
-    @Id
-    @GeneratedValue()
-    @Column(updatable = false)
-    private Long serviceproviderid;
-
     @Column( columnDefinition = "TEXT")
     private String blogtitle;
 
@@ -39,4 +34,7 @@ public class Blogs {
     private String servicename;
 
     //serviceproviderid
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users users;
 }

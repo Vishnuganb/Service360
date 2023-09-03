@@ -34,8 +34,7 @@ public class ServiceProviderService {
 
     public List<Jobs> viewHistoryJobs(){
         List<Jobs> JobList = new ArrayList<>();
-//        jobsRepository.findCompletedJobsWithDetails().forEach(JobList::add);
-        jobsRepository.findAllByjobstatus("completed").forEach(JobList::add);
+        jobsRepository.findCompletedJobsWithDetails().forEach(JobList::add);
         return JobList;
     }
 
@@ -47,24 +46,6 @@ public class ServiceProviderService {
 
     public Jobs viewAJob(Long id){
         return jobsRepository.findById(id).orElse(null);
-    }
-
-    public Jobs updateJobInvitetoPending(Long id) {
-        Jobs existingJob = jobsRepository.findById(id).orElse(null);
-        existingJob.setJobstatus("pending");
-        return jobsRepository.save(existingJob);
-    }
-
-    public Jobs updateJobInvitetoOngoing(Long id) {
-        Jobs existingJob = jobsRepository.findById(id).orElse(null);
-        existingJob.setJobstatus("ongoing");
-        return jobsRepository.save(existingJob);
-    }
-
-    public Jobs updateJobInvitetoRejected(Long id) {
-        Jobs existingJob = jobsRepository.findById(id).orElse(null);
-        existingJob.setJobstatus("rejected");
-        return jobsRepository.save(existingJob);
     }
 
 

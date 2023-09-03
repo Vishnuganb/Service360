@@ -95,14 +95,14 @@ export default function RequestedQuotation() {
     const [toDate, setToDate] = useState(null);
 
     const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Ac Repair',  serviceProvider: 'Vijay Deva', amount: 'Rs.8000', duedate:'02/08/2023' },
-        { date: '26/07/2023', serviceTitle: 'Ac Repair',  serviceProvider: 'Ashwin Kumar', amount: 'Rs.7000',duedate:'02/08/2023' },
-        { date: '25/07/2023', serviceTitle: 'Sofa cleaning',  serviceProvider: 'Alex Kumar', amount: 'Rs.3000',duedate:'02/08/2023' },
-        { date: '25/07/2023', serviceTitle: 'Sofa cleaning',  serviceProvider: 'Arun Kumar', amount: 'Rs.4000',duedate:'02/08/2023' },
-        { date: '24/07/2023', serviceTitle: 'Sofa cleaning',  serviceProvider: 'Varun Kumar', amount: 'Rs.4000',duedate:'02/08/2023' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing',  serviceProvider: 'Tharun Kumar', amount: 'Rs.5000',duedate:'02/08/2023' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing',  serviceProvider: 'Vijay Deva', amount: 'Rs.4000', duedate:'02/08/2023'},
-        { date: '23/07/2023', serviceTitle: 'Plumbing',  serviceProvider: 'Karthik Kumar', amount: 'Rs.4000',duedate:'02/08/2023' },
+        { date: '27/07/2023', serviceTitle: 'Ac Repair', serviceProvider: 'Vijay Deva', amount: 'Rs.8000', duedate: '02/08/2023' },
+        { date: '26/07/2023', serviceTitle: 'Ac Repair', serviceProvider: 'Ashwin Kumar', amount: 'Rs.7000', duedate: '02/08/2023' },
+        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', serviceProvider: 'Alex Kumar', amount: 'Rs.3000', duedate: '02/08/2023' },
+        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', serviceProvider: 'Arun Kumar', amount: 'Rs.4000', duedate: '02/08/2023' },
+        { date: '24/07/2023', serviceTitle: 'Sofa cleaning', serviceProvider: 'Varun Kumar', amount: 'Rs.4000', duedate: '02/08/2023' },
+        { date: '24/07/2023', serviceTitle: 'Plumbing', serviceProvider: 'Tharun Kumar', amount: 'Rs.5000', duedate: '02/08/2023' },
+        { date: '24/07/2023', serviceTitle: 'Plumbing', serviceProvider: 'Vijay Deva', amount: 'Rs.4000', duedate: '02/08/2023' },
+        { date: '23/07/2023', serviceTitle: 'Plumbing', serviceProvider: 'Karthik Kumar', amount: 'Rs.4000', duedate: '02/08/2023' },
     ];
 
     const filteredQuotations = quotations.filter((quotation) => {
@@ -114,8 +114,8 @@ export default function RequestedQuotation() {
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase()) 
-                )
+                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase())
+            )
         );
     });
 
@@ -210,7 +210,7 @@ export default function RequestedQuotation() {
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Provider</b></th>
                                 {/* <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Amount</b></th> */}
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Due Date</b></th>
-                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>                           
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>

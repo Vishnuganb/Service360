@@ -1,7 +1,6 @@
-import react, { createContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import react, { createContext, useState, useEffect } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
-import  Cookies from 'js-cookie'
 import { first } from "lodash";
 import { First } from "react-bootstrap/esm/PageItem";
 
@@ -15,50 +14,11 @@ const AuthenticationContextProvider = (props) => {
 
     let authenticated = false
 
-    let userDetailsAfterAuthentication = null
-
-    const [packagesDetail, setPackageDetail] = useState(null)
-
-    const [eventDetails, setEventDetails] = useState(null)
-
-    const assignEventDetails = (event) => {
-
-        setEventDetails(event);
-
-    }
-
-    const [eventId, setEventId] = useState(null);
-
-    const assignEventId = (eventId) => {
-
-        setEventId(eventId)
-
-    }
-
-    const authenticateUser = (userType, setAuthenticated, setUserDetailsAfterAuthentication) => {
-
-        authenticated = setAuthenticated;
-        userDetailsAfterAuthentication = setUserDetailsAfterAuthentication;
-
-        if (!authenticated) { navigate("/login") }
-        else {
-
-            if (userType === 'customer') { if (userDetailsAfterAuthentication.role !== 'customer') { logout(); navigate("/login") } }
-            else if (userType === 'admin') { if (userDetailsAfterAuthentication.role !== 'admin') { logout(); navigate("/login") } }
-            else if (userType === 'serviceProvider') { if (userDetailsAfterAuthentication.role !== 'serviceProvider') { logout(); navigate("/login") } }
-            else if (userType === 'advertiser') { if (userDetailsAfterAuthentication.employee.role !== 'advertiser') { logout(); navigate("/login") } }
-
-        }
-
-    }
-
     const customerSignUp = (data) => {
 
         axios.post(serverLink + '/auth/signup/customer', data).then(
 
             (response) => {
-
-                console.log(response.data)
 
                 login(data.email, data.password)
 
@@ -78,8 +38,6 @@ const AuthenticationContextProvider = (props) => {
 
             (response) => {
 
-                console.log(response.data)
-
                 login(data.email, data.password)
 
             }
@@ -94,10 +52,31 @@ const AuthenticationContextProvider = (props) => {
 
     const advertiserSignUp = (data) => {
 
-        axios.post(serverLink + '/auth/signup/advertiser', data).then(
+        const formData = new FormData();
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('firstname', data.firstname);
+        formData.append('lastname', data.lastname);
+        formData.append('nic', data.nic);
+        formData.append('phonenumber', data.phonenumber);
+        formData.append('shopaddress', data.shopaddress);
+        formData.append('shopname', data.shopname);
+
+        console.log(data.files);
+
+        for (let i = 0; i < data.files.length; i++) {
+            formData.append('files', data.files[i]);
+        }
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        axios.post(serverLink + '/auth/signup/advertiser', formData).then(
 
             (response) => {
 
+                console.log(response.data);
                 login(data.email, data.password)
 
             }
@@ -110,43 +89,32 @@ const AuthenticationContextProvider = (props) => {
 
     }
 
-    const login = (username, password) => {
-        console.log(username, password)
-        axios.post(serverLink + '/auth/login', {email: username, password: password})
+    const login = (email, password) => {
+        axios.post(serverLink + '/auth/login', { email: email, password: password })
             .then((response) => {
                 const token = response.data.token;
-                storeSessionJWT(username, token);
-                authenticated = true;
-                getUserDetailsAfterAuthenticated(username);
-                console.log(token)
+                getUserDetailsAfterAuthenticated(email, token);
+
             })
             .catch((error) => {
-                alert("ERROR!!! 1");
-                console.log('An error occurred during login.',error);
+                alert("Check your email and password!!!");
+                console.log('An error occurred during login.', error);
             });
     }
 
 
-    const getUserDetailsAfterAuthenticated = (email) => {
+    const getUserDetailsAfterAuthenticated = async (email, token) => {
 
         axios.get(serverLink + '/auth/login/' + email).then(
 
             (response) => {
                 authenticated = true;
-                userDetailsAfterAuthentication = response.data;
-                console.log(userDetailsAfterAuthentication)
+                storeSessionJWT(response.data, token);
 
-                Cookies.set('FirstName', userDetailsAfterAuthentication.firstname, { expires: 1 });
-
-                const userName= Cookies.get('FirstName')
-
-                console.log(userName)
-
-
-                if (userDetailsAfterAuthentication.role === 'CUSTOMER') { navigate("/Customer", { state: { userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.role === 'ADMIN') { navigate("/admin", { state: {userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.role === 'SERVICEPROVIDER') { navigate("/ServiceProvider", { state: { userDetailsAfterAuthentication } }) }
-                else if (userDetailsAfterAuthentication.role === 'ADVERTISER') { navigate("/Advertiser", { state: { userDetailsAfterAuthentication } }) }
+                if (response.data.role === 'CUSTOMER') navigate("/Customer");
+                else if (response.data.role === 'ADMIN') navigate("/admin");
+                else if (response.data.role === 'SERVICEPROVIDER') navigate("/ServiceProvider");
+                else if (response.data.role === 'ADVERTISER') navigate("/Advertiser");
 
             }
 
@@ -154,7 +122,7 @@ const AuthenticationContextProvider = (props) => {
 
             () => {
 
-                alert("Error!!! 4")
+                alert("User Not Found!!!")
 
             }
 
@@ -181,8 +149,8 @@ const AuthenticationContextProvider = (props) => {
 
     }
 
-    const storeSessionJWT = (username, token) => {
-        sessionStorage.setItem('authenticatedUser', username);
+    const storeSessionJWT = (userdetails, token) => {
+        sessionStorage.setItem('authenticatedUser', JSON.stringify(userdetails));
         setupAxiosInterceptors(createJWTToken(token));
     }
 
@@ -191,34 +159,16 @@ const AuthenticationContextProvider = (props) => {
     }
 
     const logout = () => {
-
-        sessionStorage.removeItem('authenticatedUser');
-        Cookies.remove('FirstName');
-        authenticated = false;
-        userDetailsAfterAuthentication = null;
         navigate("/login");
+        sessionStorage.removeItem('authenticatedUser');
+        authenticated = false;
         console.log("Logged out successfully!!!")
-
-    }
-
-
-    const [contentVisible, setContentVisible] = useState(0)
-
-    const changeContentVisible = (value) => {
-
-        setContentVisible(value)
-
-    }
-
-    const changePackageDetails = (value) => {
-
-        setPackageDetail(value)
 
     }
 
     return (
 
-        <AuthenticationContext.Provider value={{ authenticated, authenticateUser, login, customerSignUp, advertiserSignUp, serviceProviderSignUp, contentVisible, changeContentVisible, logout, packagesDetail, changePackageDetails, eventDetails, assignEventDetails, assignEventId, eventId }}>
+        <AuthenticationContext.Provider value={{ authenticated, login, logout, customerSignUp, advertiserSignUp, serviceProviderSignUp }}>
 
             {props.children}
 

@@ -47,8 +47,8 @@ function ToDoList() {
 
 
     const isWithintwohrs = (task) => {
-        const ONE_DAY_IN_MS = 4; 
-        // const ONE_DAY_IN_MS = 2 * 60 * 60 * 1000; 
+        // const ONE_DAY_IN_MS = 4; 
+        const ONE_DAY_IN_MS = 2 * 60 * 60 * 1000;
         const taskCreationDate = new Date(task.id);
         const currentDate = new Date();
         return currentDate - taskCreationDate <= ONE_DAY_IN_MS;
@@ -95,7 +95,7 @@ function ToDoList() {
                         placeholder="Enter a task..."
                         value={taskInput}
                         onChange={(e) => setTaskInput(e.target.value)}
-                        style={{ marginBottom: "10px", width: "600px" }} 
+                        style={{ marginBottom: "10px", width: "600px" }}
                     />
                     <DatePicker
                         selected={dueDate}
@@ -121,7 +121,7 @@ function ToDoList() {
 
                 </div>
 
-               
+
                 <Button variant="secondary" style={{ background: "#292d32" }} onClick={handleAddTask}>Add Task</Button>
             </div>
             <ul>
@@ -150,9 +150,9 @@ function ToDoList() {
                                     </span>
                                 )}
                             </Col>
-                           
+
                         </Row>
-                        
+
 
                         <Row>
                             <Col>
@@ -178,13 +178,13 @@ function ToDoList() {
                                 ) : (
                                     <span>Reminder Date: {task.reminderDate ? task.reminderDate.toDateString() : 'Not set'}</span>
                                 )}
-                              &nbsp; &nbsp;
+                                &nbsp; &nbsp;
                                 {editingTaskId === task.id ? (
                                     <Button variant="secondary" style={{ background: "#292d32" }} onClick={() => handleEditTask(task.id, editingText)}>Save</Button>
                                 ) : (
                                     isWithintwohrs(task) && (
                                         <>
-                                        <Button variant="btn btn-viewvacancy-form-t" style={{
+                                            <Button variant="btn btn-viewvacancy-form-t" style={{
                                                 width: '5%',
                                                 height: '20px',
                                                 border: '1px solid #ced4da',

@@ -12,14 +12,15 @@ Geocode.enableDebug();
 
 // Set custom marker icon for Leaflet
 L.Marker.prototype.options.icon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
+  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
 });
 
 const routeDetails = [
   {
-    cutomerLocation: "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
-    serviceProviderLocation: "no 11 5/4 Nelson Place, Colombo 06"
-  }
+    cutomerLocation:
+      "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
+    serviceProviderLocation: "no 11 5/4 Nelson Place, Colombo 06",
+  },
 ];
 
 export default function Routing() {
@@ -44,10 +45,11 @@ export default function Routing() {
       const customerLocation = routeDetails[0].cutomerLocation;
       const serviceProviderLocation = routeDetails[0].serviceProviderLocation;
       const customerLatLng = await convertAddressToLatLng(customerLocation);
-      const serviceProviderLatLng = await convertAddressToLatLng(serviceProviderLocation);     
-      return [serviceProviderLatLng,customerLatLng];
+      const serviceProviderLatLng = await convertAddressToLatLng(
+        serviceProviderLocation
+      );
+      return [serviceProviderLatLng, customerLatLng];
     };
-
 
     convertRouteDetailsToWaypoints().then((waypoints) => {
       setWaypoints(waypoints);
@@ -59,7 +61,7 @@ export default function Routing() {
 
     const routingControl = L.Routing.control({
       waypoints,
-      routeWhileDragging: true
+      routeWhileDragging: true,
     }).addTo(map);
 
     return () => {

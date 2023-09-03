@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {Carousel } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Carousel } from "react-bootstrap";
 
 
 import ABoutBgImg from "./../../../../assets/images/About/BGPic1.jpg";
 
 
 const AboutUs = () => {
-      const [isTypingDone, setIsTypingDone] = useState(false);
+  const [isTypingDone, setIsTypingDone] = useState(false);
 
-      useEffect(() => {
-        // Set a timeout to mark the typing animation as done
-        setTimeout(() => setIsTypingDone(true), 3000);
-      }, []);
+  useEffect(() => {
+    // Set a timeout to mark the typing animation as done
+    setTimeout(() => setIsTypingDone(true), 3000);
+  }, []);
   return (
-    <div  className="aboutUs-block ">
+    <div className="aboutUs-block ">
       <Carousel className="hide-navigation-icons">
         <Carousel.Item>
           <img className="d-block w-100" src={ABoutBgImg} alt={"bacground"} />
@@ -49,4 +49,3 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
-

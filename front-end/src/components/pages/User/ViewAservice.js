@@ -10,14 +10,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 
 function ViewAservice() {
-  const itemsPerPage = 4; 
+  const itemsPerPage = 4;
   const [activePage, setActivePage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
   const navigate = useNavigate();
   const handleBackClick = () => {
     navigate(-1);
-};
+  };
   const serviceCardData = [
     {
       avatarImage: ServiceProvideimg1,
@@ -77,30 +77,30 @@ function ViewAservice() {
   const handleSearchChange = (event) => {
     const { value } = event.target;
     setSearchQuery(value);
-    setActivePage(1); 
+    setActivePage(1);
   };
 
   const handleLocationFilterChange = (event) => {
     const { value } = event.target;
     setLocationFilter(value);
-    setActivePage(1); 
+    setActivePage(1);
   };
   return (
     <div className="bodyPageContainer-SP">
       <div className="bodyPageContainer-SP">
-        
+
         <Row id="bodyPageRow1">
-        <div className="back-button" onClick={handleBackClick} style={{marginLeft:'120px'}}>
-                <div className="back-icon">
-                    <i className="bi bi-arrow-left-circle-fill fs-3"></i>
-                </div>
-                <div className="back-text">
-                    <p className="m-0 p-0">Back</p>
-                </div>
+          <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '120px' }}>
+            <div className="back-icon">
+              <i className="bi bi-arrow-left-circle-fill fs-3"></i>
             </div>
+            <div className="back-text">
+              <p className="m-0 p-0">Back</p>
+            </div>
+          </div>
           <div className="ServiceCardContainer col-lg-12 col-md-12 col-sm-12" style={{ overflow: 'auto', height: '50%' }}>
             <div className="search-container">
-           
+
               <Row><Col>  <div className="d-flex flex-row">  <input
                 type="text"
                 placeholder="Search"
@@ -109,11 +109,11 @@ function ViewAservice() {
                 onChange={handleSearchChange}
                 style={{
                   width: '200px',
-                  marginright:'200px'
+                  marginright: '200px'
                 }}
               /> <span className="input-group-text training-nav-input">
-              <i class="fas fa-search"></i>
-          </span></div></Col>
+                  <i class="fas fa-search"></i>
+                </span></div></Col>
                 <Col><div className="d-flex flex-row">
                   <select
                     value={locationFilter}
@@ -122,7 +122,7 @@ function ViewAservice() {
                     style={{
                       marginLeft: '300px',
                       height: '43px',
-                      width:'200px'
+                      width: '200px'
                     }}
                   >
                     <option value="">Filter by Locations</option>

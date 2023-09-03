@@ -2,7 +2,6 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
-import companyimage from "../../../../assets/images/ServiceProvider/company3.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
@@ -31,7 +30,7 @@ function VacancyDetails() {
         <Col className="vacancyDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
           <div className="vacancyDetails-avatar-container mb-2">
               <img
-              src={companyimage}
+              src={viewVacancyData.profile}
               alt="avatar"
               className="vacancyDetails-avatar rounded-circle"
               style={{ width: "50px", height: "50px" }}
@@ -43,14 +42,6 @@ function VacancyDetails() {
           >
             {viewVacancyData.customername}
           </div>
-          <div className="d-flex flex-row">
-                    <div className="me-3">
-                        <i class="bi bi-telephone-fill"></i>
-                    </div>
-                    <div>
-                        <i class="bi bi-chat-fill"></i>
-                    </div>
-            </div>
         </Col>
 
         <Col className="vacancyDetails-details-container col-12 col-lg-10 d-flex flex-column">

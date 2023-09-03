@@ -21,7 +21,7 @@ function Index(){
 
                 <Form.Group className="mt-2" controlId="formBasicPassword">
                     <Form.Label>Amount Payable</Form.Label>
-                    <Form.Control type="text" value="LKR 1000.00" disabled/>
+                    <Form.Control type="text" value="LKR 200.00" disabled/>
                 </Form.Group>
                 <div class="form-check mt-3">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1"/>

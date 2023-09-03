@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Card, Col, Button, Modal, Form } from 'react-bootstrap';
-import axios from "axios";
-
 import image1 from '../../../../assets/images/home/AC-Repair.jpeg'
 import image2 from '../../../../assets/images/home/ElectricalWiring.jpeg';
 import image3 from '../../../../assets/images/home/plumbing.jpeg';
@@ -45,17 +43,12 @@ const searchInputStyle = {
     height: '38px',
 };
 
-
-
 function AdminServices() {
-
-    const serverLink = 'http://localhost:8080'
 
     const [data, setData] = useState({
         category: 'default',
         service: '',
         image: null,
-        categoryImage: null,
         selectedCategory: 'default',
         selectedNewCategory: 'default',
         selectedEditCategory: 'default',
@@ -104,10 +97,10 @@ function AdminServices() {
 
 
     const cardsPerPage = 9;
-    const totalPages = Math.ceil(data.servicesData.length / cardsPerPage);
+    const totalPages = Math.ceil(servicesData.length / cardsPerPage);
     const startIndex = (data.currentPage - 1) * cardsPerPage; // 
     const endIndex = startIndex + cardsPerPage;
-    const displayedServices = data.servicesData.slice(startIndex, endIndex);
+    const displayedServices = servicesData.slice(startIndex, endIndex);
 
     const handleServiceCategoryChange = (e) => {
         const selectedCategory = e.target.value;
@@ -140,17 +133,16 @@ function AdminServices() {
         setData({ ...data, showModal: false });
     };
 
+    // Function to handle input field changes in the modal
     const handleNewServiceChange = (e) => {
         const { name, value } = e.target;
 
         if (value === "new") {
-
             setData((prevState) => ({
                 ...prevState,
                 selectedNewCategory: 'new',
             }));
         } else {
-
             setData((prevState) => ({
                 ...prevState,
                 [name]: value,
@@ -189,16 +181,8 @@ function AdminServices() {
         }));
     };
 
-    const handleCategoryImageChange = (e) => {
-        const file = e.target.files[0];
-        setData((prevState) => ({
-            ...prevState,
-            categoryImage: file,
-        }));
-    };
-
     useEffect(() => {
-
+        // Calculate the total pages based on whether a category is selected or not
         const filteredServices = data.selectedCategory !== 'default'
             ? data.servicesData.filter((service) => service.category === data.selectedCategory)
             : data.servicesData;
@@ -219,6 +203,7 @@ function AdminServices() {
         }));
     }, [data.selectedCategory, data.searchTerm]);
 
+    // Function to handle form submission
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
@@ -240,18 +225,6 @@ function AdminServices() {
         if (data.image === null) {
             isError = true;
             imageErrorMessage = 'Please select an image';
-        }
-
-        if (data.selectedNewCategory === 'new') {
-            if (data.newCategoryName.trim() === '') {
-                isError = true;
-                serviceCategoryErrorMessage = 'Please enter a category name';
-            }
-
-            if (data.categoryImage === null) {
-                isError = true;
-                imageErrorMessage = 'Please select an image';
-            }
         }
 
         setData({
@@ -313,7 +286,6 @@ function AdminServices() {
                 )
             }
         }
-
     };
 
     const handleServiceFormSubmit = (e) => {
@@ -343,7 +315,7 @@ function AdminServices() {
                 };
 
 
-                const updatedServicesData = data.servicesData.map((service) => (
+                const updatedServicesData = servicesData.map((service) => (
                     service.id === data.selectedService.id ? updatedService : service
                 ));
 
@@ -396,7 +368,7 @@ function AdminServices() {
                         </span>
                     </div>
                 </div>
-
+ 
                 <div className='me-xs-2 col-xs-2 col-md-3 m-3 d-flex justify-content-start align-items-start'>
                     <button
                         className="btn btn-primary me-2 d-block d-md-none"
@@ -422,9 +394,9 @@ function AdminServices() {
                         <Card className="card d-flex flex-column align-items-center justify-content-center h-100" onClick={() => (
                             setData({ ...data, selectedService: service, showServiceModal: true })
                         )}>
-                            <Card.Img src={'data:image/png;base64,' + service.serviceImage} variant="top" alt="home" />
+                            <Card.Img src={service.image} variant="top" alt="home" />
                             <Card.Body>
-                                <Card.Text>{service.service}</Card.Text>
+                                <Card.Text>{service.text}</Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>

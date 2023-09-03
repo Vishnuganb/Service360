@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -20,7 +17,4 @@ public class UserRegisterRequest {
     private String phonenumber;
     private String address;
     private String nic;
-    private String shopname;
-    private String shopaddress;
-    private List<MultipartFile> files;
 }

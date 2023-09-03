@@ -1,7 +1,5 @@
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel';
-// import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
-import { Link } from 'react-router-dom';
 
 var heroData = [
     {
@@ -33,8 +31,6 @@ var heroData = [
 ]
 
 function AppHero() {
-    // const { login } = useContext(AuthenticationContext)
-    
     return (
         <section id='home' className="hero-block mt-0">
             <Carousel>
@@ -50,7 +46,7 @@ function AppHero() {
                                 <Carousel.Caption>
                                     <h1 style={{fontSize:'3.5em'}}>{item.title}</h1>
                                     <p>{item.description}</p>
-                                    <Link className='btn btn-primary d-none d-sm-inline' to="/login">{item.buttonTitle} <i className="fas fa-chevron-right"></i></Link>
+                                    <a className='btn btn-primary d-none d-sm-inline' href={item.link}>{item.buttonTitle} <i className="fas fa-chevron-right"></i></a>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         );

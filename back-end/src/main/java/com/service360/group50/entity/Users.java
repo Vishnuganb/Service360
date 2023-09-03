@@ -58,9 +58,6 @@ public class Users implements UserDetails {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
 
-    @Column(columnDefinition = "TEXT")
-    private String status;
-
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
 
@@ -90,7 +87,6 @@ public class Users implements UserDetails {
     protected void onCreate() {
         registrationdate = LocalDate.now();
         isactive = true;
-        status = "pending";
     }
 
     @Enumerated(EnumType.STRING)

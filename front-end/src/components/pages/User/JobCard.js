@@ -39,7 +39,7 @@ const Popup = () => {
 
 
 function JobCard(props) {
-    const { avatarImage, dateposted, customername, title, subInfo, duedate, location, contactNumber,serviceId } = props;
+    const { avatarImage, title, subInfo, location, contactNumber,serviceId } = props;
 
     return (
         <div className="single-Service-card" style={{ backgroundImage: `url(${BgImage})`, height:'50%'}}>
@@ -48,9 +48,8 @@ function JobCard(props) {
                     <Col>
                         <img src={avatarImage} alt="avatar" className="Service-card-avatar" />
                     </Col>
-                    <Col className='d-flex flex-column'>
-                        <span className="Service-card-title1">{customername}</span>
-                        <span className="Service-card-date">{dateposted}</span>
+                    <Col>
+                        <span className="Service-card-title1">{title}</span>
                     </Col>
                     <Col></Col>
                     <Col className='star' style={{ width: "200px", marginTop: '-40px' }}>
@@ -60,11 +59,11 @@ function JobCard(props) {
             </div>
             <div className="Service-card-body">
                 <div className="Service-card-body-left">
-                    <span className="sinlge-Service-title fw-3" style={{fontWeight:"600"}}>{title}</span>
+                    <span className="sinlge-Service-sub-info">{subInfo}</span>
                     <br />
-                    <span className="sinlge-Service-sub-info" style={{fontWeight:"400"}}>{subInfo}</span>
+                    <span className="sinlge-Service-sub-info"><i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {location}</span>
                     <br />
-                    <span className="sinlge-Service-sub-info"><i className="bi bi-geo-alt-fill"></i>&nbsp; Location : {location} &nbsp;&nbsp;  <i className="bi bi-calendar-event">&nbsp;&nbsp;</i>Due Date : {duedate}</span>
+                    <span className="Service-contact-info">Contact number: {contactNumber}</span>
                     <br />
                 </div>
             </div>

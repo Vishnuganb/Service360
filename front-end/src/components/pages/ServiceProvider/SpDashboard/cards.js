@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 function BasicExample() {
   return (
-      <div className='dashboard-bottom-card-container d-flex flex-row ms-lg-4 me-lg-4 mt-3'>
+      <div className='dashboard-bottom-card-container d-flex flex-row ms-lg-4 me-lg-4'>
  
             <Card className="dashboard-pages col-md-3 col-12">
                 <img className="card-img-top" src={services_img} alt="my profile" />

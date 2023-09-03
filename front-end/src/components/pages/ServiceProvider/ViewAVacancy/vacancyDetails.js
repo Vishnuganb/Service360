@@ -2,7 +2,6 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
-import Companyimage from "../../../../assets/images/ServiceProvider/company1.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
@@ -12,7 +11,6 @@ import axios from "axios";
 
 function VacancyDetails() {
   const [viewVacancyData, setviewVacancyData] = useState(null);
-
 //     {
 //         profile: UserImg,
 //         id: 1,
@@ -159,7 +157,7 @@ function VacancyDetails() {
         <Col className="vacancyDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
           <div className="vacancyDetails-avatar-container mb-2">
               <img
-              src={Companyimage}
+              src={viewVacancyData.profile}
               alt="avatar"
               className="vacancyDetails-avatar rounded-circle"
               style={{ width: "50px", height: "50px" }}

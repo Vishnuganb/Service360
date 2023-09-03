@@ -20,12 +20,9 @@ import java.time.LocalDate;
 
 public class ServiceProviderCalendar {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column
     private Long eventid;
-
-    @Column
-    private Long serviceproviderid;
 
     @Column( columnDefinition = "DATE")
     private LocalDate eventdate;
@@ -38,4 +35,6 @@ public class ServiceProviderCalendar {
 
     @Column( columnDefinition = "TEXT")
     private String eventdescription;
+
+    //service provider id
 }

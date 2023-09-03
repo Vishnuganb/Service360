@@ -5,6 +5,9 @@ import com.service360.group50.auth.AuthenticationRequest;
 import com.service360.group50.auth.AuthenticationResponse;
 import com.service360.group50.auth.UserRegisterRequest;
 import com.service360.group50.config.JwtService;
+import com.service360.group50.dto.UsersDTO;
+import com.service360.group50.entity.Advertiser;
+import com.service360.group50.entity.AdvertiserFiles;
 import com.service360.group50.entity.Role;
 import com.service360.group50.entity.Users;
 import com.service360.group50.repo.UserRepository;
@@ -105,9 +108,26 @@ public class LoginService {
                 .build ( );
     }
 
-    public Object getUserDetails ( String email ) {
-        return userRepository.findByEmail ( email )
+    public UsersDTO getUserDetails ( String email ) {
+        var a = userRepository.findByEmail ( email )
                 .orElseThrow ( () -> new RuntimeException ( "Users not found" ) );
+
+        UsersDTO usersDTO = new UsersDTO ();
+
+        usersDTO.setUserid ( a.getUserid () );
+        usersDTO.setFirstname ( a.getFirstname () );
+        usersDTO.setLastname ( a.getLastname () );
+        usersDTO.setEmail ( a.getEmail () );
+        usersDTO.setNic ( a.getNic () );
+        usersDTO.setPhonenumber ( a.getPhonenumber () );
+        usersDTO.setAddress ( a.getAddress () );
+        usersDTO.setRegistrationdate ( a.getRegistrationdate () );
+        usersDTO.setPassword ( a.getPassword () );
+        usersDTO.setRole ( String.valueOf ( a.getRole () ) );
+        usersDTO.setStatus ( a.getStatus () );
+
+        return usersDTO;
+
     }
 
 }

@@ -314,14 +314,6 @@ function AdminCustomer() {
         },
     ];
 
-    const serviceCategories = {
-        "Interior Works": ["Carpentry", "Painting"],
-        "Electrical & Plumbing": ["AC Repair", "Electrical Wiring", "Plumbing"],
-        "Construction": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
-        "Security": ["CCTV Repair", "Fire Alarm", "Video Surveillance"],
-        "cleaning": ["Sofa cleaning", "Carpet cleaning"],
-    };
-
     const [data, setData] = useState({
         currentPage: 1,
         totalPages: 1,

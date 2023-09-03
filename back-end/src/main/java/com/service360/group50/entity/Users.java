@@ -58,13 +58,39 @@ public class Users implements UserDetails {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String status;
+
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Blogs> blogs;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Complaints> complaints;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_vacancy",
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "vacancyid")
+    )
+    private List<Vacancies> vacancies;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_todolist",
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "todolistid")
+    )
+    private List<TodoList> todolist;
 
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();
         isactive = true;
+        status = "pending";
     }
 
     @Enumerated(EnumType.STRING)

@@ -1,5 +1,6 @@
 package com.service360.group50.service;
 
+import com.service360.group50.dto.CategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
 import com.service360.group50.entity.ServiceCategory;
 import com.service360.group50.entity.Services;
@@ -25,30 +26,6 @@ public class AdminService {
 
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final ServiceRepository serviceRepository;
-
-    public ServiceCategory addNewServiceCategory( String serviceCategoryName, MultipartFile file) {
-
-        ServiceCategory serviceCategory = new ServiceCategory();
-
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
-        if(fileName.contains(".."))
-        {
-            System.out.println("not a a valid file");
-        }
-
-        try {
-            byte[] fileBytes = file.getBytes();
-            serviceCategory.setCategoryImage(fileBytes);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        serviceCategory.setServiceCategoryName(serviceCategoryName);
-
-        return  serviceCategoryRepository.save(serviceCategory);
-
-    }
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -103,8 +80,6 @@ public class AdminService {
 
             Optional<ServiceCategory> existingCategory = serviceCategoryRepository.findByServiceCategoryName(serviceCategoryName);
 
-            System.out.println ( "existingCategory = " + existingCategory );
-
             if (existingCategory.isPresent()) {
                 serviceCategory = existingCategory.get();
             } else {
@@ -141,18 +116,86 @@ public class AdminService {
         }
     }
 
+    public Services updateService(long serviceId, String serviceCategoryName,String serviceName, MultipartFile serviceImage) {
+        try {
+
+            Optional<Services> existingServiceOptional = serviceRepository.findById(serviceId);
+
+            if (existingServiceOptional.isEmpty()) {
+                System.out.println("Service not found");
+                return null;
+            }
+
+            Services existingService = existingServiceOptional.get();
+
+            if (serviceName != null) {
+                existingService.setServiceName(serviceName);
+            }
+
+            if (serviceCategoryName != null){
+
+                ServiceCategory serviceCategory = serviceCategoryRepository.findByServiceCategoryName(serviceCategoryName).get();
+                existingService.setServiceCategory ( serviceCategory );
+
+                System.out.println (serviceCategory );
+
+            }
+
+            if (serviceImage != null) {
+                String fileName = StringUtils.cleanPath(serviceImage.getOriginalFilename());
+
+                if (fileName.contains("..")) {
+                    System.out.println("Not a valid serviceImage");
+                    return null;
+                }
+
+                try (InputStream imageStream = new ByteArrayInputStream(serviceImage.getBytes())) {
+                    byte[] imageBytes = StreamUtils.copyToByteArray(imageStream);
+                    existingService.setServiceImage(imageBytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            existingService = serviceRepository.save(existingService);
+
+            return existingService;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
     public List<ServiceWithCategoryDTO> getAllServicesWithCategories() {
         List<Services> services = serviceRepository.findAll();
 
         return services.stream().map(service -> {
             ServiceWithCategoryDTO dto = new ServiceWithCategoryDTO();
-            dto.setId(service.getServiceid()); // Use the correct field name
+            dto.setId(service.getServiceid());
             dto.setServiceImage(service.getServiceImage());
             dto.setService (service.getServiceName());
             dto.setCategory(service.getServiceCategory().getServiceCategoryName());
             dto.setCategoryImage(service.getServiceCategory().getCategoryImage());
+            dto.setEnable(service.getEnable());
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    public List<CategoryDTO> getAllServiceCategories() {
+
+        List<ServiceCategory> categories = serviceCategoryRepository.findAll();
+
+        return categories.stream().map(category -> {
+            CategoryDTO dto = new CategoryDTO();
+            dto.setId(category.getServicecategoryid());
+            dto.setServiceCategoryName(category.getServiceCategoryName());
+            dto.setCategoryImage(category.getCategoryImage());
+            return dto;
+        }).collect(Collectors.toList());
+
     }
 
 }

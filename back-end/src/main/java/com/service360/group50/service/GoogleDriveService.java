@@ -1,4 +1,4 @@
-package com.service360.group50.service;
+//package com.service360.group50.service;
 //
 //import com.google.api.client.http.InputStreamContent;
 //import com.google.api.client.http.javanet.NetHttpTransport;
@@ -64,46 +64,3 @@ package com.service360.group50.service;
 //        return null;
 //    }
 //}
-
-
-import com.google.api.client.http.FileContent;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.model.File;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
-
-@Service
-public class GoogleDriveService {
-
-    private final Drive driveService;
-
-    public GoogleDriveService(Drive driveService) {
-        this.driveService = driveService;
-    }
-
-    public File uploadFile(MultipartFile multipartFile) throws IOException {
-        File fileMetadata = new File();
-        fileMetadata.setName(multipartFile.getOriginalFilename());
-
-        FileContent mediaContent = new FileContent(multipartFile.getContentType(), multipartFile.getInputStream());
-
-        return driveService.files().create(fileMetadata, mediaContent)
-                .setFields("id")
-                .execute();
-    }
-
-    public List<File> listFiles() throws IOException {
-        return driveService.files().list()
-                .setPageSize(10)
-                .setFields("nextPageToken, files(id, name)")
-                .execute()
-                .getFiles();
-    }
-
-    public File getFileMetadata(String fileId) throws IOException {
-        return driveService.files().get(fileId).execute();
-    }
-}

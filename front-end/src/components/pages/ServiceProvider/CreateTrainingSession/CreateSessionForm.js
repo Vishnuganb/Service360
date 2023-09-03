@@ -1,7 +1,6 @@
 import React from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
 
 const subscribedJobCategories = [
     'Masonry',
@@ -10,18 +9,6 @@ const subscribedJobCategories = [
 ];
 
 function CreateSessionForm() {
-    const [selectedFiles, setSelectedFiles] = useState([]);
-
-    const handleFileInputChange = (e) => {
-        setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...Array.from(e.target.files)]);
-    };
-
-    const handleRemoveFile = (indexToRemove) => {
-        setSelectedFiles((prevSelectedFiles) =>
-            prevSelectedFiles.filter((_, index) => index !== indexToRemove)
-        );
-    };
-
     return(
         <div className="ms-lg-4 me-lg-4">
             <span style={{fontSize:"28px",fontWeight:"bold"}}>Create a Training Session</span>
@@ -76,24 +63,9 @@ function CreateSessionForm() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicFiles">
-                    <Form.Label>Upload Relevant Media </Form.Label><Form.Text className="text-muted">&nbsp;&nbsp;( Please upload images that showcase your ts rning session and its content ).</Form.Text><br/>
-                    <Button className="btn-ServiceProvider-1" onClick={() => document.getElementById('fileInput').click()}>Select Images</Button>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        id="fileInput"
-                        style={{ display: 'none' }}
-                        onChange={handleFileInputChange}
-                    />
-                    <div className="selected-images">
-                        {selectedFiles.map((file, index) => (
-                            <div key={index} className="selected-image">
-                                <span>{file.name}</span>
-                                <Button variant="link" onClick={() => handleRemoveFile(index)}>Remove</Button>
-                            </div>
-                        ))}
-                    </div>
+                    <Form.Label>Upload Relevant Media</Form.Label>
+                    <Form.Control type="file" accept="image/*" />
+                    <Form.Text className="text-muted">Please upload images that showcase your training session and its content.</Form.Text>
                 </Form.Group>
 
                 <div className="CreateBlog-button-container d-flex flex-row">

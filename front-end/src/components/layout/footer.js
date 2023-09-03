@@ -55,14 +55,14 @@ export default function AppFooter() {
             <Col md={2} lg={4} xl={3} className="mx-auto mb-4 mt-4">
               <h6 className="text-uppercase fw-bold mb-4">Quick Links</h6>
               <p>
-                <Link to="/about" className="text-reset">
+                <a href="#!" className="text-reset">
                   About our Company
-                </Link>
+                </a>
               </p>
               <p>
-                <Link to="/services" className="text-reset">
+                <a href="#!" className="text-reset">
                   Services we provide
-                </Link>
+                </a>
               </p>
               <p>
                 <Link as={Link} to="/admin/review" className="text-reset">

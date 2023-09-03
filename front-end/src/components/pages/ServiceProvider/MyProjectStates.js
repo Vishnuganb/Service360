@@ -84,6 +84,43 @@ function MyProjectsJobsStates() {
                         </Link>
                     </div>
                 </Row>
+
+
+                <Row className='mb-3 mt-xs-4 mt-3'>
+                    <span className="ms-lg-4 align-self-start" style={{fontSize:"24px",fontWeight:"600"}}>Vacancies</span>
+                </Row>
+                <Row className='MyProjectsStates-Vacancy-Container d-flex flex-row ms-lg-2 me-lg-2'>
+                    <div className='col-lg-3 col-sm-6 col-12'>
+                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=invite">
+                        <Card className="MyProjectsStates-card mb-3" >
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.VacancyInvites.image} />
+                            <Card.Body>
+                                <span >{serviceCategories.VacancyInvites.title}</span>
+                            </Card.Body>
+                        </Card>
+                        </Link>
+                    </div>
+                    <div className='col-lg-3 col-sm-6 col-12'>
+                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=ongoing">
+                        <Card className="MyProjectsStates-card mb-3">
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.processingVacancies.image} />
+                            <Card.Body>
+                                <span >{serviceCategories.processingVacancies.title}</span>
+                            </Card.Body>
+                        </Card>
+                        </Link>
+                    </div>
+                    <div className='col-lg-3 col-sm-6 col-12'>
+                        <Link to="/ServiceProvider/MyprojectsVacancies?tab=rejected">
+                        <Card className="MyProjectsStates-card">
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.rejectedVacancies.image} />
+                            <Card.Body>
+                                <span >{serviceCategories.rejectedVacancies.title}</span>
+                            </Card.Body>
+                        </Card>
+                        </Link>
+                    </div>
+                </Row>
         </div>
     );
 }

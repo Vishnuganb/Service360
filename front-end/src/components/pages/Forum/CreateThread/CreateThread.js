@@ -1,96 +1,117 @@
-import React from "react";
-import { Modal, Form } from "react-bootstrap";
-
-import "../../../../style/advertiser/AdIndex.css";
+import React, { useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
 import backgroundImage from "../../../../assets/images/header/Background.png";
-import userProfileIcon from "../../../../assets/images/advertiser/proAd.jpg";
 
+function ForumPopUp(props) {
+  // State to track selected files
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const selectedFileCount = selectedFiles.length;
 
-const Comment = (props) => {
-  const { commentData } = props;
-  console.log(commentData[0]);
+  // Handler for file input change
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedFiles(files);
+  };
 
-  if (!commentData || commentData.length === 0) {
-    return (
-      <div>
-        <p>No comments available.</p>
-      </div>
-    );
-  }
+  // Handler for removing a file from the selected files list
+  const handleRemoveFile = (index) => {
+    const updatedFiles = [...selectedFiles];
+    updatedFiles.splice(index, 1);
+    setSelectedFiles(updatedFiles);
+  };
 
+  // Handler for form submission (Not implemented in this code)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Implement your submit logic here
+  };
   return (
-    <div>
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton style={{ backgroundColor: "#292D32" }}>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <p className="AskQPop">Ask Your Question</p>
+        </Modal.Title>
+      </Modal.Header>
+
+      <div
+        className="InnerCreateForum"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <Modal.Header closeButton style={{ backgroundColor: "#292D32" }}>
-          <Modal.Title id="contained-modal-title-vcenter">
-            <p className="AskQPop">Comments</p>
-          </Modal.Title>
-        </Modal.Header>
-        <div
-          className="InnerCreateForum"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        >
-          <Form>
-            <fieldset>
-              {commentData.map((comment) => (
-                <div key={comment.id}>
-                  <div>
-                    <div className="d-flex align-items-center  ">
-                      <div>
-                        <img
-                          src={comment.profileIcon}
-                          alt="Comment User"
-                          className="AdProfilePic"
-                        />
-                      </div>
-                      <div className="namediv text-muted">
-                        <p className="small">{comment.author}</p>
-                      </div>
-                    </div>
+        <Form>
+          <fieldset>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="disabledTextInput">Title</Form.Label>
+              <Form.Control
+                id="disabledTextInput"
+                required
+                placeholder="Title"
+              />
+            </Form.Group>
 
-                    <div
-                      className="p-3 ms-3 mb-1  border shadow-sm  rounded"
-                      style={{ backgroundColor: "#f5f6f7" }}
-                    >
-                      {comment.content}
-                    </div>
-                    <div className="d-flex justify-content-end text-muted">
-                      <p style={{ fontSize: "x-small" }}>{comment.timestamp}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <div className="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
-                <img
-                  src={userProfileIcon}
-                  alt="User Profile"
-                  className="AdProfilePic m-2"
-                />
-                <input
-                  type="text"
-                  className="form-control form-control-lg ForummessageInput"
-                  id="exampleFormControlInput2"
-                  placeholder="Type message"
-                />
-                <a className="ms-3" href="#!">
-                  <i
-                    className="fa-solid fa-paper-plane fa-lg"
-                    style={{ color: "#292D32" }}
-                  ></i>
-                </a>
-              </div>
-            </fieldset>
-          </Form>
-        </div>
-      </Modal>
-    </div>
+            <div className="mb-3">
+              <p className="mb-0">Upload Releated Pictures ( Not required )</p>
+              <input type="file" className="form-control" multiple required />
+              {Array.isArray(selectedFiles) && selectedFiles.length > 0 && (
+                <>
+                  <p>
+                    {selectedFileCount} file
+                    {selectedFileCount !== 1 ? "s" : ""} selected
+                  </p>
+                  <ul className="list-group mt-2">
+                    {selectedFiles.map((file, index) => (
+                      <li
+                        key={index}
+                        className="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        <span>{file.name}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFile(index)}
+                          className="btn-close"
+                          aria-label="Close"
+                        ></button>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Category</Form.Label>
+              <Form.Select required>
+                <option>Electician</option>
+                <option>Plumber</option>
+                <option>Mechanic</option>
+              </Form.Select>
+            </Form.Group>
+
+            {/* Description */}
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Description/Specification</Form.Label>
+              <Form.Control as="textarea" required rows={3} />
+            </Form.Group>
+
+            {/* Area */}
+
+            <div className="d-flex justify-content-center">
+              <button className="PostAd">Post</button>
+            </div>
+          </fieldset>
+        </Form>
+      </div>
+    </Modal>
   );
-};
+}
 
-export default Comment;
+export default ForumPopUp;

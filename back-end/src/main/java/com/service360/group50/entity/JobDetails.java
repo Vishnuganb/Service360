@@ -24,6 +24,10 @@ public class JobDetails {
     @Column(updatable = false)
     private Long jobdetailsid;
 
+    @OneToOne
+    @JoinColumn(name = "jobid")
+    private Jobs jobs;
+
     @Column( columnDefinition = "DATE")
     private LocalDate jobdate;
 

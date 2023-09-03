@@ -30,7 +30,7 @@ function AdminHeader() {
 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none " >Chat</Nav.Link>
-                       
+
                         <NavDropdown title="Vishnugan" className='fw-bold' id="basic-nav-dropdown">
                             <NavDropdown.Item onClick={() => setShowEditProfile(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
@@ -41,7 +41,7 @@ function AdminHeader() {
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-            
+
         </Navbar>
     );
 }

@@ -55,6 +55,7 @@ function AdminServices() {
         selectedCategory: 'default',
         selectedNewCategory: 'default',
         selectedEditCategory: 'default',
+        editedServiceName: '',
         currentPage: 1,
         showModal: false,
         serviceCategoryErrorMessage: '',
@@ -101,7 +102,7 @@ function AdminServices() {
 
     const cardsPerPage = 9;
     const totalPages = Math.ceil(data.servicesData.length / cardsPerPage);
-    const startIndex = (data.currentPage - 1) * cardsPerPage; // 
+    const startIndex = (data.currentPage - 1) * cardsPerPage; 
     const endIndex = startIndex + cardsPerPage;
     const displayedServices = data.servicesData.slice(startIndex, endIndex);
 
@@ -136,7 +137,6 @@ function AdminServices() {
         setData({ ...data, showModal: false });
     };
 
-    // Function to handle input field changes in the modal
     const handleNewServiceChange = (e) => {
         const { name, value } = e.target;
 
@@ -153,29 +153,6 @@ function AdminServices() {
         }
     };
 
-    const handleEditServiceChange = (e, selectedService, previousCategory) => {
-        const { name, value } = e.target;
-
-        console.log('Selected service:', selectedService);
-        console.log('Previous category:', previousCategory);
-
-        if (name === 'selectedEditCategory') {
-            const updatedService = { ...selectedService, category: null };
-
-            setData((prevState) => ({
-                ...prevState,
-                selectedService: updatedService,
-                selectedEditCategory: value,
-            }));
-        } else {
-            setData((prevState) => ({
-                ...prevState,
-                [name]: value,
-            }));
-        }
-    };
-
-    // Function to handle image file selection
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setData((prevState) => ({
@@ -193,7 +170,7 @@ function AdminServices() {
     };
 
     useEffect(() => {
-        
+
         const filteredServices = data.selectedCategory !== 'default'
             ? data.servicesData.filter((service) => service.category === data.selectedCategory)
             : data.servicesData;
@@ -214,7 +191,18 @@ function AdminServices() {
         }));
     }, [data.selectedCategory, data.searchTerm]);
 
-    // Function to handle form submission
+    useEffect(() => {
+        if (data.showServiceModal && data.selectedService) {
+            setData({
+                ...data,
+                editedServiceName: data.selectedService.service,
+                selectedEditCategory: data.selectedService.category,
+                enable: data.selectedService.enable,
+            });
+        }
+    }, [data.showServiceModal, data.selectedService]);
+
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
@@ -246,13 +234,10 @@ function AdminServices() {
         });
 
         if (!isError) {
-            setData({ ...data, showModal: false });
 
             const formData = new FormData();
             formData.append('serviceImage', data.image);
             formData.append('serviceName', data.service);
-
-
 
             if (data.selectedNewCategory === 'new') {
                 formData.append('serviceCategoryName', data.newCategoryName);
@@ -296,6 +281,8 @@ function AdminServices() {
 
                 )
             }
+
+            setData({ ...data, showModal: false });
         }
     };
 
@@ -305,7 +292,7 @@ function AdminServices() {
         let isError = false;
         let editserviceErrorMessage = '';
 
-        if (data.service === '') {
+        if (data.editedServiceName === '') {
             isError = true;
             editserviceErrorMessage = 'Please enter a service name';
         }
@@ -315,27 +302,47 @@ function AdminServices() {
             editserviceErrorMessage,
         });
 
-        if(!isError) {
+        if (!isError) {
 
             if (data.selectedService) {
-                const updatedService = {
-                    ...data.selectedService,
-                    category: data.selectedNewCategory,
-                    text: data.service,
-                    image: data.image ? URL.createObjectURL(data.image) : data.selectedService.image,
-                };
 
+                const formData = new FormData();
 
-                const updatedServicesData = data.servicesData.map((service) => (
-                    service.id === data.selectedService.id ? updatedService : service
-                ));
+                if (data.image) {
+                    formData.append('serviceImage', data.image);
+                }
 
+                if (data.editedServiceName) {
+                    formData.append('serviceName', data.editedServiceName);
+                }
+
+                formData.append('serviceId', data.selectedService.id);
+                formData.append('enable', data.enable);
+
+                if (data.selectedEditCategory !== 'default') {
+                    formData.append('serviceCategoryName', data.selectedEditCategory);
+                }
+
+                axios.put(serverLink + '/auth/updateService', formData).then(
+                    
+                    (response) => {
+
+                        console.log(response.data);
+                        window.location.reload();
+
+                    }
+
+                ).catch(
+
+                    () => { alert("Error!!!") }
+
+                )
+                
                 setData({
                     ...data,
                     showModal: false,
                     showServiceModal: false,
                     selectedService: null,
-                    data: updatedServicesData,
                 });
             }
 
@@ -379,7 +386,7 @@ function AdminServices() {
                         </span>
                     </div>
                 </div>
- 
+
                 <div className='me-xs-2 col-xs-2 col-md-3 m-3 d-flex justify-content-start align-items-start'>
                     <button
                         className="btn btn-primary me-2 d-block d-md-none"
@@ -454,9 +461,8 @@ function AdminServices() {
                             <Form.Label>Change the Service Category</Form.Label>
                             <select
                                 className='form-select'
-                                name="selectedEditCategory"
-                                value={data.selectedService ? data.selectedService.category : data.category}
-                                onChange={(e) => handleEditServiceChange(e, data.selectedService, data.selectedService ? data.selectedService.category : data.category)}
+                                value={data.selectedEditCategory}
+                                onChange={(e) => setData({ ...data, selectedEditCategory: e.target.value })}
                                 required
                             >
                                 {data.serviceCategories.map((category) => (
@@ -471,9 +477,8 @@ function AdminServices() {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="service"
-                                value={data.selectedService ? data.selectedService.service : data.service}
-                                onChange={handleEditServiceChange}
+                                value={data.editedServiceName}
+                                onChange={(e) => setData({ ...data, editedServiceName: e.target.value })}
                                 required
                             />
                             {data.editserviceErrorMessage && <p className="text-danger p-0 m-0">{data.editserviceErrorMessage}</p>}
@@ -488,7 +493,7 @@ function AdminServices() {
                                             name="enableDisableRadio"
                                             id="enableRadio"
                                             label="Enable"
-                                            checked={data.selectedService && data.selectedService.enable}
+                                            checked={data.enable}
                                             onChange={() => setData({ ...data, enable: true })}
                                             className='ms-0 me-1 custom-radio'
                                         />
@@ -497,7 +502,7 @@ function AdminServices() {
                                             name="enableDisableRadio"
                                             id="disableRadio"
                                             label="Disable"
-                                            checked={data.selectedService && !data.selectedService.enable}
+                                            checked={!data.enable}
                                             onChange={() => setData({ ...data, enable: false })}
                                             className='ms-0 me-1 custom-radio'
                                         />

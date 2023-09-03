@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../style/Admin/AdminHeader.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -7,13 +7,20 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../assets/images/header/Frame 2.png";
 import profileIcon from "../../assets/images/header/user.jpg";
 import { Link } from 'react-router-dom';
-
 import AdvertiserEditProfile from "../pages/advertiser/EditProfile/AdvertiserEditProfile";
+import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
+import { useLocation } from "react-router-dom";
 import AddReviewandRating from "../pages/User/Customer/AddReviewandRating";
+import Cookies from 'js-cookie';
 
 function AdvertiserHeader() {
- const [showEditProfile, setShowEditProfile] = useState(false);
- const [showAddReview, setShowAddReview] = useState(false);
+  const location = useLocation()
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
+  const [showAddReview, setShowAddReview] = useState(false);
+
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userDetail = JSON.parse(response);
 
   return (
     <Navbar expand="lg" bg="light" className="navbar">
@@ -57,15 +64,12 @@ function AdvertiserHeader() {
             >
               Notifications
             </Nav.Link>
-            <Nav.Link
-              href="#chat"
-              className="fw-bold navLink d-sm-inline d-md-inline d-lg-none "
-            >
+            <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none">
               Chat
             </Nav.Link>
 
             <NavDropdown
-              title="Adam"
+              title={userDetail.firstname}
               className="fw-bold"
               id="basic-nav-dropdown"
             >
@@ -81,7 +85,7 @@ function AdvertiserHeader() {
                 show={showEditProfile}
                 onHide={() => setShowEditProfile(false)}
               />
-              <NavDropdown.Item href="#" className="fw-bold no-hover">
+              <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">
                 Logout
               </NavDropdown.Item>
             </NavDropdown>

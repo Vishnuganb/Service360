@@ -1,5 +1,6 @@
 package com.service360.group50.controller;
 
+import com.service360.group50.dto.CategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
 import com.service360.group50.entity.Services;
 import com.service360.group50.entity.ServiceCategory;
@@ -20,14 +21,6 @@ import java.util.List;
 public class ServiceController {
 
     public final AdminService adminService;
-
-    @PostMapping("/addNewServiceCategory")
-    public ServiceCategory addNewServiceCategory(
-            @RequestParam("image") MultipartFile image,
-            @RequestParam("serviceCategoryName") String serviceCategoryName
-    ) {
-       return adminService.addNewServiceCategory ( serviceCategoryName, image ) ;
-    }
 
     @PostMapping("/addNewService")
     public ResponseEntity<ResponseMessage> addNewService(
@@ -58,10 +51,36 @@ public class ServiceController {
         }
     }
 
+    @PutMapping("/updateService")
+    public ResponseEntity<ResponseMessage> updateService(
+            @RequestParam(value = "serviceImage", required = false) MultipartFile serviceImage,
+            @RequestParam(value = "serviceName", required = false) String serviceName,
+            @RequestParam(value = "serviceCategoryName", required = false) String serviceCategoryName,
+            @RequestParam(value = "ServiceId") Long ServiceId
+    ) {
+        try {
+            if (serviceImage != null || serviceName != null || serviceCategoryName != null) {
+                adminService.updateService(ServiceId, serviceCategoryName, serviceName, serviceImage);
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Service updated successfully"));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Some parameters are missing"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("Service could not be updated"));
+        }
+    }
+
+
     @GetMapping("/allServices")
     public ResponseEntity<List<ServiceWithCategoryDTO>> getAllServicesWithCategories() {
         List<ServiceWithCategoryDTO> services =  adminService.getAllServicesWithCategories();
         return new ResponseEntity<> (services, HttpStatus.OK);
+    }
+
+    @GetMapping("/allCategories")
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+        List<CategoryDTO> categories =  adminService.getAllServiceCategories();
+        return new ResponseEntity<> (categories, HttpStatus.OK);
     }
 
 

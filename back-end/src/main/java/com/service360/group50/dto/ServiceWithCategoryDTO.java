@@ -11,18 +11,21 @@ public class ServiceWithCategoryDTO {
 
     private String categoryImage;
 
-    private String service; // Service name
-    private String category; // Service category name
+    private String service;
+    private String category;
+
+    private Boolean enable;
 
     public ServiceWithCategoryDTO() {
     }
 
-    public ServiceWithCategoryDTO(Long id, String serviceImage,String categoryImage, String service, String category) {
+    public ServiceWithCategoryDTO(Long id, String serviceImage,String categoryImage, String service, String category, Boolean enable) {
         this.id = id;
         this.serviceImage = serviceImage;
         this.categoryImage = categoryImage;
         this.service = service;
         this.category = category;
+        this.enable = enable;
     }
 
     public Long getId() {
@@ -45,6 +48,10 @@ public class ServiceWithCategoryDTO {
         return category;
     }
 
+    public Boolean getEnable() {
+        return enable;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -63,5 +70,9 @@ public class ServiceWithCategoryDTO {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 }

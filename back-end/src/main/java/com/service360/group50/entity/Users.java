@@ -72,17 +72,17 @@ public class Users implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-            name = "user_vacancy", // Name of the join table
-            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
-            inverseJoinColumns = @JoinColumn(name = "vacancyid") // FK column in user_vacancy table
+            name = "user_vacancy",
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "vacancyid")
     )
     private List<Vacancies> vacancies;
 
     @ManyToMany
     @JoinTable(
-            name = "user_todolist", // Name of the join table
-            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
-            inverseJoinColumns = @JoinColumn(name = "todolistid") // FK column in user_vacancy table
+            name = "user_todolist",
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "todolistid")
     )
     private List<TodoList> todolist;
 

@@ -11,13 +11,11 @@ import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
-import { useLocation } from "react-router-dom";
 import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 
 
 function CustomerHeader() {
 
-    const location = useLocation()
     const [showEditProfile, setShowEditProfile] = useState(false);
     const { logout } = useContext(AuthenticationContext);
     const [showAddReview, setShowAddReview] = useState(false);

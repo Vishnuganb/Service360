@@ -1,5 +1,6 @@
 package com.service360.group50.controller;
 
+import com.service360.group50.dto.JobWithStatusDTO;
 import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.TrainingSession;
 import com.service360.group50.entity.Vacancies;
@@ -29,10 +30,11 @@ public class ServiceProvidersController {
 //    }
 //
 
-//    @GetMapping("auth/viewJobs")
-//    public List<Jobs> viewMyJobs() {         // NEED TO FIND FOR LOGGED IN SP
-//        return serviceProviderService.viewMyJobs();
-//    }
+    // NEED TO FIND FOR LOGGED IN SP
+    @GetMapping("auth/viewMyJobs")
+    public List<JobWithStatusDTO> viewMyJobs() {
+        return serviceProviderService.viewMyJobs();
+    }
 
 
     @CrossOrigin(origins = "http://localhost:3000")

@@ -21,13 +21,11 @@ public interface JobsRepository extends CrudRepository<Jobs,Long> {
     @Query("SELECT j FROM Jobs j INNER JOIN j.customer u where j.jobid = :id")
     Jobs findAJobWithCustomerDetails(@Param("id") Long id);
 
+    @Query("SELECT j FROM Jobs j INNER JOIN j.customer u WHERE j.jobid IN :jobIds")
+    List<Object[]> findMyJobs(@Param("jobIds") List<Long> jobIds);
+
+
 //    @Query("SELECT j FROM Jobs j INNER JOIN j.serviceprovider u where u.userid = :id")
 //    List<Jobs> findMyJobsWithCustomerDetails(@Param("id") Long id);
 
-    @Query("SELECT DISTINCT j, jsp.jobstatus, u " +
-            "FROM Jobs j " +
-            "INNER JOIN JobsServiceProviders jsp ON j.jobid = jsp.jobs.jobid " +
-            "INNER JOIN j.customer u " +
-            "WHERE EXISTS (SELECT 1 FROM JobsServiceProviders jsp2 WHERE j.jobid = jsp2.jobs.jobid) ")
-    List<Object[]> findAllJobsWithStatusAndCustomer();
 }

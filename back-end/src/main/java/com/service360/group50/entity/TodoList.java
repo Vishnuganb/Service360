@@ -25,8 +25,8 @@ public class TodoList {
 
     //customer id
     //service provider id
-    @ManyToMany(mappedBy = "todolist")
-    private List<Users> users;
+//    @ManyToMany(mappedBy = "todolist")
+//    private List<Users> users;
 
     //job id
     @OneToOne

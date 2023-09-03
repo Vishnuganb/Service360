@@ -107,8 +107,8 @@ export default function PostedJobs() {
         return (
             isDateMatch &&
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) 
-        )
+                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase())
+            )
         );
     });
 
@@ -211,7 +211,7 @@ export default function PostedJobs() {
                                     <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
                                     <td style={{ width: '16.67%' }}>
-                                    <Link to={`/customer/ViewPostedJobs`}>  <Button variant="btn btn-viewvacancy-form-t" style={{
+                                        <Link to={`/customer/ViewPostedJobs`}>  <Button variant="btn btn-viewvacancy-form-t" style={{
                                             width: '10%',
                                             height: '28px',
                                             border: '1px solid #ced4da',

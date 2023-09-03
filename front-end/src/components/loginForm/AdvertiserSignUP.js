@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import image from '../../assets/images/header/Background.png';
 import loginPhoto from '../../assets/images/home/Advertiser.jpeg';
 import validator from 'validator';
@@ -8,7 +8,7 @@ import Step1 from './AdStep1';
 import Step2 from './AdStep2';
 import { set } from 'lodash';
 
-const ServiceProviderSignUP = () => {
+const AdvertiserSignUP = () => {
     const [step, setStep] = useState(1);
 
     const { login } = useContext(AuthenticationContext);
@@ -54,7 +54,7 @@ const ServiceProviderSignUP = () => {
         selectedFiles: [],
         selectedFileCount: 0,
         fileErrorMessage: '',
-        filePaths: [],
+        files: '',
     });
 
     const handleStep2Change = (field, value) => {
@@ -129,36 +129,30 @@ const ServiceProviderSignUP = () => {
 
     const handleFileInputChange = (event) => {
         const files = event.target.files;
-        const fileListArray = [...files];
-        const paths = fileListArray.map(file => file.name);
 
         setStep2Data((prevData) => ({
             ...prevData,
-            filePaths: paths,
-        }));
-
-        setStep2Data((prevData) => ({
-            ...prevData,
-            selectedFileCount: fileListArray.length,
-        }));
-    };
-
-    const handleRemoveFile = (index) => {
-
-        const updatedPaths = step2Data.filePaths.filter((_, i) => i !== index);
-
-        setSelectedFileCount(updatedPaths.length);
-
-        setStep2Data((prevData) => ({
-            ...prevData,
-            filePaths: updatedPaths,
+            selectedFiles: files,
+            selectedFileCount: files.length,
         }));
 
         if (fileInputRef.current) {
-            if (updatedPaths.length === 0) {
+            fileInputRef.current.value = `${files.length} files selected`;
+        }
+    };
+
+    const handleRemoveFile = (index) => {
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedFiles: prevData.selectedFiles.filter((_, i) => i !== index),
+            selectedFileCount: prevData.selectedFileCount - 1,
+        }));
+
+        if (fileInputRef.current) {
+            if (step2Data.selectedFiles.length === 0) {
                 fileInputRef.current.value = '';
             } else {
-                fileInputRef.current.value = `${updatedPaths.length} files selected`;
+                fileInputRef.current.value = `${step2Data.selectedFiles.length} files selected`;
             }
         }
     };
@@ -175,7 +169,7 @@ const ServiceProviderSignUP = () => {
         let passwordErrorMessage = '';
         let confirmPasswordErrorMessage = '';
         let addressErrorMessage = '';
-        
+
         let fileErrorMessage = '';
 
 
@@ -187,7 +181,7 @@ const ServiceProviderSignUP = () => {
         if (confirmPassword.trim() === '') {
             isError = true;
             confirmPasswordErrorMessage = 'Confirm password is required';
-        }    
+        }
 
         if (password !== confirmPassword) {
             isError = true;
@@ -213,18 +207,6 @@ const ServiceProviderSignUP = () => {
         }));
 
         if (!isError) {
-            console.log('Form submitted!');
-            console.log('Step 1 data:', step1Data);
-            console.log('Step 2 data:', step2Data);
-            console.log(`email:`, step1Data.email,
-                `password: `,step2Data.password,
-                `firstname:`, step1Data.firstName,
-                `lastname:`, step1Data.lastName,
-                `nic:`, step1Data.nicNumber,
-                `phonenumber:`, step1Data.contactNumber,
-                `address:`, step2Data.address,
-                `shopname:`, step1Data.shopName,
-                `files:`, step2Data.filePaths,)
             advertiserSignUp({
                 email: step1Data.email,
                 password: step2Data.password,
@@ -234,13 +216,14 @@ const ServiceProviderSignUP = () => {
                 phonenumber: step1Data.contactNumber,
                 shopaddress: step2Data.address,
                 shopname: step1Data.shopName,
+                files: step2Data.selectedFiles,
             });
         }
 
     };
 
     const handleStep1NextClick = () => {
-        const { email, firstName, lastName, nicNumber, contactNumber,shopName } = step1Data;
+        const { email, firstName, lastName, nicNumber, contactNumber, shopName } = step1Data;
 
         let isError = false;
         let emailErrorMessage = '';
@@ -367,7 +350,6 @@ const ServiceProviderSignUP = () => {
                                                     validateConfirmPassword={validateConfirmPassword}
                                                     handleFileInputChange={handleFileInputChange}
                                                     handleRemoveFile={handleRemoveFile}
-                                                // fileInputRef={fileInputRef}
                                                 />
                                             )}
                                         </div>
@@ -385,4 +367,4 @@ const ServiceProviderSignUP = () => {
     );
 };
 
-export default ServiceProviderSignUP;
+export default AdvertiserSignUP;

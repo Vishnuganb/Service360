@@ -43,7 +43,7 @@ function VacancyPopup() {
                     <form className="vacancy-form">
 
                         <div className="vacancy-form-group">
-                            <Row> <Col className='col-4'><label for="title">Comapany Name </label></Col>
+                            <Row> <Col className='col-4'><label for="title">client Name </label></Col>
                                 <Col className='col-8'><input type="text" name="name" className="form-control" id="name" Value="ABC private Limited" />
                                 </Col> </Row>
                         </div>
@@ -52,22 +52,22 @@ function VacancyPopup() {
                                 <Col className='col-8'><input type="text" name="servicename" className="form-control" id="servicename" Value="Sofa Cleaner" />
                                 </Col> </Row>
                         </div>
-                        
+
                         <div className="vacancy-form-group">
                             <Row> <Col className='col-4'>  <label for="location">Location</label></Col>
                                 <Col className='col-8'>  <input type="text" name="location" className="form-control" id="location" Value="Wellawatte" />
                                 </Col> </Row>
                         </div>
-                        
+
                         <div className="vacancy-form-group">
-                           <label for="qualification">Skill & Qualification Expect</label>
-                               <input type="text" name="qualification" className="form-control" id="qualification" Value="Atleast have one year experience" />
-                               
+                            <label for="qualification">Skill & Qualification Expect</label>
+                            <input type="text" name="qualification" className="form-control" id="qualification" Value="Atleast have one year experience" />
+
                         </div>
                         <div className="vacancy-form-group">
-                             <label for="experience">Responsibilities Expect</label>
-                                <input type="text" name="responsibilities" className="form-control" id="responsibilities" Value="Nothing" />
-                                
+                            <label for="experience">Responsibilities Expect</label>
+                            <input type="text" name="responsibilities" className="form-control" id="responsibilities" Value="Nothing" />
+
                         </div>
 
                     </form>
@@ -174,9 +174,7 @@ export default function PostedVacancies() {
         return (
             isDateMatch &&
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase())
+                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
     });

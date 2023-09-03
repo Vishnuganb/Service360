@@ -1,6 +1,7 @@
 package com.service360.group50.service;
 
 import com.service360.group50.dto.JobWithStatusDTO;
+import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.entity.*;
 import com.service360.group50.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class ServiceProviderService {
     private TrainingSessionRepository trainingSessionRepository;
     @Autowired
     private JobsServiceProvidersRepository jobsServiceProvidersRepository;
+    @Autowired
+    private VacanciesServiceProvidersRepository vacanciesServiceProvidersRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -115,14 +118,42 @@ public class ServiceProviderService {
         return VacancyList;
     }
 
-/*
-    public List<Vacancies> viewVacancies() {
-        List<Vacancies> VacancyList = new ArrayList<>();
-        vacanciesRepository.findAll().forEach(VacancyList::add);
-        return VacancyList;
+
+    public List<VacancyWithStatusDTO> viewMyVacancies() {
+        List<VacancyWithStatusDTO> vacancyList = new ArrayList<>();
+
+        // Step 1: Retrieve job IDs with statuses
+        List<Object[]> vacancyIdsWithStatus = vacanciesServiceProvidersRepository.findMyVacanciesIdsWithStatus();
+
+        // Extract job IDs from the result
+        List<Long> vacancyIds = vacancyIdsWithStatus.stream()
+                .map(result -> (Long) result[0])
+                .collect(Collectors.toList());
+
+        // Extract job statuses from the result
+        List<String> vacancyStatuses = vacancyIdsWithStatus.stream()
+                .map(result -> (String) result[1])
+                .collect(Collectors.toList());
+
+        // Step 2: Retrieve vacancy details for those vacancy IDs
+        if (!vacancyIds.isEmpty()) {
+            List<Object[]> vacancyDetails = vacanciesRepository.findMyVacancies(vacancyIds);
+
+            // Create JobWithStatusDTO objects and add to the jobList
+            for (int i = 0; i < vacancyDetails.size(); i++) {
+                Object[] vacancyData = vacancyDetails.get(i);
+                Vacancies vacancy = (Vacancies) vacancyData[0];
+
+                // Create a new JobWithStatusDTO object and add it to the list
+                VacancyWithStatusDTO vacancyWithStatus = new VacancyWithStatusDTO(vacancy, vacancyStatuses.get(i));
+                vacancyList.add(vacancyWithStatus);
+            }
+        }
+
+        return vacancyList;
     }
 
- */
+
 
     public Vacancies viewAVacancy(Long id){
         return vacanciesRepository.findAVacancyWithCustomerDetails(id);

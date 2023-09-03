@@ -1,5 +1,6 @@
 package com.service360.group50.entity;
 
+import com.service360.group50.compositekeys.VacanciesServiceProvidersId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
         name = "vacanciesserviceproviders"
 )
 
+@IdClass(VacanciesServiceProvidersId.class)
 public class VacanciesServiceProviders {
     @Column( columnDefinition = "TEXT")
     private String vacancystatus;
@@ -23,7 +25,7 @@ public class VacanciesServiceProviders {
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
-    private Users users;
+    private Users serviceproviders;
 
     //Vacancy IDs
     @Id

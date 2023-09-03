@@ -1,6 +1,7 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.JobWithStatusDTO;
+import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.TrainingSession;
 import com.service360.group50.entity.Vacancies;
@@ -66,12 +67,11 @@ public class ServiceProvidersController {
     public List<Vacancies> viewNewVacancies() {
         return serviceProviderService.viewNewVacancies();
     }
-//
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @GetMapping("auth/viewVacancies")
-//    public List<Vacancies> viewVacancies() {
-//        return serviceProviderService.viewVacancies();
-//    }
+
+    @GetMapping("auth/viewMyVacancies")
+    public List<VacancyWithStatusDTO> viewMyVacancies() {
+        return serviceProviderService.viewMyVacancies();
+    }
 //
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("auth/viewNewVacancies/{id}")

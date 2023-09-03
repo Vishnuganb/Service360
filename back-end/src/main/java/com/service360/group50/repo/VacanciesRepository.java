@@ -19,5 +19,6 @@ public interface VacanciesRepository extends CrudRepository<Vacancies,Long> {
     @Query("SELECT v FROM Vacancies v INNER JOIN v.customer u where v.vacancyid = :id")
     Vacancies findAVacancyWithCustomerDetails(@Param("id") Long id);
 
-
+    @Query("SELECT v FROM Vacancies v INNER JOIN v.customer u WHERE v.vacancyid IN :vacancyIds")
+    List<Object[]> findMyVacancies(@Param("vacancyIds") List<Long> vacancyIds);
 }

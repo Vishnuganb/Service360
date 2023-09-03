@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
 import ViewAd from "./ViewAd";
-import AdsImages from "./AdsImages";
+// import AdsImages from "./AdsImages";
 
 import "../../../../../style/advertiser/AdIndex.css";
 

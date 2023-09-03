@@ -5,8 +5,6 @@ import { useState } from "react";
 import { Modal, Form } from "react-bootstrap";
 import { useEffect } from "react";
 import axios from "axios";
-import { FaRegCalendarTimes } from "react-icons/fa";
-
 
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
@@ -32,40 +30,23 @@ function SpCalendar(){
 
     const handleShow = (date) => {
         setSelectedModalDate(date); // Set the selected date for the modal
-        resetScheduleForm();
         setShow(true);
-    };
-
-    const resetScheduleForm = () => {
-        setScheduleFormData({
-            eventdate: format(selectedDate, "yyyy-MM-dd"),
-            eventstarttime: "",
-            eventendtime: "",
-            eventdescription: "",
-        });
     };
 
     const [selectedModalDate, setSelectedModalDate] = useState(new Date());
     
     const [selectedDate, setSelectedDate] = useState(new Date());
-
     const [activeDate, setActiveDate] = useState(new Date());
+
 
     const [selectedSchedules, setSelectedSchedules] = useState([]);    // New state for selected date's schedules
 
     const [scheduleFormData, setScheduleFormData] = useState({
-        eventdate: "",
+        eventdate: format(selectedDate, "yyyy-MM-dd"),
         eventstarttime: "",
         eventendtime: "",
         eventdescription: "",
     });
-
-    useEffect(() => {
-        setScheduleFormData((prevData) => ({
-            ...prevData,
-            eventdate: format(selectedDate, "yyyy-MM-dd"),
-        }));
-    }, [selectedDate]);
     
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -74,6 +55,8 @@ function SpCalendar(){
             [name]: value,
         }));
     };
+
+
 
     const getHeader = () => {
         return (
@@ -117,6 +100,7 @@ function SpCalendar(){
         }
         return <div className="weekContainer">{weekDays}</div>;
     };
+    
     
     const generateDatesForCurrentWeek = (date, selectedDate, activeDate) => {
         let currentDate = date;
@@ -172,6 +156,24 @@ function SpCalendar(){
             });
     };
 
+
+    const convertTo24HourFormat = (time12Hour) => {
+        const [time, modifier] = time12Hour.split(' ');
+        let [hours, minutes] = time.split(':');
+    
+        if (hours === '12') {
+            hours = '00';
+        }
+    
+        if (modifier === 'PM') {
+            hours = String(parseInt(hours, 10) + 12);
+        }
+    
+        return `${hours}:${minutes}`;
+    };
+
+
+
     const refreshCalendarData = () => {
         axios.get('http://localhost:8080/auth/viewServiceProviderCalendar')
             .then((res) => {
@@ -191,11 +193,6 @@ function SpCalendar(){
         axios.delete(`http://localhost:8080/auth/deleteServiceProviderCalendar/${eventId}`)
             .then(() => {
                 console.log('Event deleted successfully');
-
-                setSelectedSchedules((prevSchedules) =>
-                    prevSchedules.filter((work) => work.eventid !== eventId)
-                );
-                
                 refreshCalendarData();
             })
             .catch((error) => {
@@ -217,6 +214,7 @@ function SpCalendar(){
         return viewServiceProviderCalendarData.filter((work) => work.eventdate === formattedDate);
     };
 
+    
     const getDates = () => {
         const startOfTheSelectedMonth = startOfMonth(activeDate);
         const endOfTheSelectedMonth = endOfMonth(activeDate);
@@ -235,16 +233,8 @@ function SpCalendar(){
         }
 
         return <div className="weekContainer">{allWeeks}</div>;
-    }; 
-
-    const format12Hour = (time) => {
-        const [hours, minutes] = time.split(":");
-        const parsedHours = parseInt(hours, 10);
-        const period = parsedHours >= 12 ? "PM" : "AM";
-        const formattedHours = parsedHours > 12 ? parsedHours - 12 : parsedHours;
-        return `${formattedHours}:${minutes} ${period}`;
     };
-
+      
 
     return(
         <div className="ms-lg-4">
@@ -267,28 +257,14 @@ function SpCalendar(){
                                         <span style={{fontSize:"24px"}}>Schedule for {format(selectedDate, "yyyy-MM-dd")}</span>    {/* date is not rendering */}      
                             </div>
 
-
-                            {selectedSchedules.length === 0 ? (
-                                <div className="col-lg-10 ms-lg-5 px-3 mt-1">
-                                    <Row>
-                                    <div
-                                    className="mt-3 p-3 d-flex justify-content-center align-items-center"
-                                    style={{ border: "1px solid black", borderRadius: "15px" }}
-                                >
-                                        <FaRegCalendarTimes /> &nbsp;&nbsp;
-                                        No schedules for this date
-                                    </div>
-                                    </Row>
-                                </div>
-                            ) : (
-                            selectedSchedules.map((work) => (
+                            {selectedSchedules.map((work) => (
                                 <Col key={work.id} className="col-lg-12 col-12 ms-lg-5">
                                     <div className="col-lg-10 px-3 mt-1">
                                         <Row>
                                             <div className="mt-3 p-3" style={{border:"1px solid black",borderRadius:"15px"}}>
                                                 <div className=" d-flex flex-row">
                                                     <div className="d-flex flex-column spCalendar-username-container ms-4">
-                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{format12Hour(work.eventstarttime)} - {format12Hour(work.eventendtime)}</span>
+                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.eventstarttime} - {work.eventendtime}</span>
                                                         <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.eventdescription}</span>
                                                     </div>
                                                     <div className="ms-auto d-flex flex-column justify-content-center align-items-center">
@@ -299,7 +275,6 @@ function SpCalendar(){
                                         </Row>
                                     </div>
                                 </Col>     
-                            )
                             ))}
                     </div>  
                 </div>
@@ -313,13 +288,13 @@ function SpCalendar(){
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Date</Form.Label>
-                        <Form.Control className='mb-2' type="date" name="eventdate" value={format(selectedDate, "yyyy-MM-dd")}  onChange={(e)=>setSelectedDate(new Date(e.target.value))} autoFocus />
+                        <Form.Control className='mb-2' type="date" name="eventdate" value={scheduleFormData.eventdate}  onChange={(e)=>setSelectedDate(new Date(e.target.value))} autoFocus />
 
                         <Form.Label>Start Time</Form.Label>
-                        <Form.Control className='mb-2' type="time" step={1} name="eventstarttime" value={scheduleFormData.eventstarttime} onChange={handleInputChange} autoFocus/>
+                        <Form.Control className='mb-2' type="time" name="eventstarttime" value={scheduleFormData.eventstarttime} onChange={handleInputChange} autoFocus/>
                         
                         <Form.Label>End Time</Form.Label>
-                        <Form.Control className='mb-2' type="time" step={1} name="eventendtime" value={scheduleFormData.eventendtime} onChange={handleInputChange} autoFocus/>
+                        <Form.Control className='mb-2' type="time" name="eventendtime" value={scheduleFormData.eventendtime} onChange={handleInputChange} autoFocus/>
 
                         <Form.Label>Description</Form.Label>
                         <Form.Control className='mb-2' type="text" name="eventdescription" value={scheduleFormData.eventdescription} onChange={handleInputChange} autoFocus/>

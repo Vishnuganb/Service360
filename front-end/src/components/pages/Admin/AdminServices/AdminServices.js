@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Card, Col, Button, Modal, Form } from 'react-bootstrap';
-import axios from "axios";
-
 import image1 from '../../../../assets/images/home/AC-Repair.jpeg'
 import image2 from '../../../../assets/images/home/ElectricalWiring.jpeg';
 import image3 from '../../../../assets/images/home/plumbing.jpeg';
@@ -24,20 +22,20 @@ import styled from 'styled-components';
 import { set } from 'lodash';
 
 
-// const data.servicesData = [
-//     { id: 1, image: image1, text: 'AC Repair', category: 'Electrical & Plumbing' },
-//     { id: 2, image: image2, text: 'Electrical Wiring', category: 'Electrical & Plumbing' },
-//     { id: 3, image: image3, text: 'Plumbing', category: 'Electrical & Plumbing' },
-//     { id: 4, image: image4, text: 'Tiles Fitting', category: 'Construction' },
-//     { id: 5, image: image5, text: 'Carpentry', category: 'Interior Works' },
-//     { id: 6, image: image6, text: 'Painting', category: 'Interior Works' },
-//     { id: 7, image: image7, text: 'Masonry', category: 'Construction' },
-//     { id: 8, image: image8, text: 'Glass & Aluminum', category: 'Construction' },
-//     { id: 9, image: image9, text: 'Iron Works', category: 'Construction' },
-//     { id: 10, image: image10, text: 'CCTV Repair', category: 'Security' },
-//     { id: 11, image: image11, text: 'Fire Alarm', category: 'Security' },
-//     { id: 12, image: image12, text: 'Video Surveillance', category: 'Security' },
-// ];
+const servicesData = [
+    { id: 1, image: image1, text: 'AC Repair', category: 'Electrical & Plumbing' },
+    { id: 2, image: image2, text: 'Electrical Wiring', category: 'Electrical & Plumbing' },
+    { id: 3, image: image3, text: 'Plumbing', category: 'Electrical & Plumbing' },
+    { id: 4, image: image4, text: 'Tiles Fitting', category: 'Construction' },
+    { id: 5, image: image5, text: 'Carpentry', category: 'Interior Works' },
+    { id: 6, image: image6, text: 'Painting', category: 'Interior Works' },
+    { id: 7, image: image7, text: 'Masonry', category: 'Construction' },
+    { id: 8, image: image8, text: 'Glass & Aluminum', category: 'Construction' },
+    { id: 9, image: image9, text: 'Iron Works', category: 'Construction' },
+    { id: 10, image: image10, text: 'CCTV Repair', category: 'Security' },
+    { id: 11, image: image11, text: 'Fire Alarm', category: 'Security' },
+    { id: 12, image: image12, text: 'Video Surveillance', category: 'Security' },
+];
 
 const serviceCategories = {
     "Interior Works": [
@@ -88,17 +86,12 @@ const searchInputStyle = {
     height: '38px',
 };
 
-
-
 function AdminServices() {
-
-    const serverLink = 'http://localhost:8080'
 
     const [data, setData] = useState({
         category: 'default',
         service: '',
         image: null,
-        categoryImage: null,
         selectedCategory: 'default',
         selectedNewCategory: 'default',
         selectedEditCategory: 'default',
@@ -116,32 +109,13 @@ function AdminServices() {
         selectedService: null,
         showServiceModal: false,
         enable: true,
-        servicesData: [],
-        newCategoryName: '',
     });
 
-    useEffect(() => {
-        axios.get(serverLink + '/auth/allServices')
-            .then(response => {
-                const fetchedServicesData = response.data
-
-                setData({
-                    ...data,
-                    servicesData: fetchedServicesData,
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
-
-    console.log(data.servicesData);
-
     const cardsPerPage = 9;
-    const totalPages = Math.ceil(data.servicesData.length / cardsPerPage);
+    const totalPages = Math.ceil(servicesData.length / cardsPerPage);
     const startIndex = (data.currentPage - 1) * cardsPerPage; // 
     const endIndex = startIndex + cardsPerPage;
-    const displayedServices = data.servicesData.slice(startIndex, endIndex);
+    const displayedServices = servicesData.slice(startIndex, endIndex);
 
     const handleServiceCategoryChange = (e) => {
         const selectedCategory = e.target.value;
@@ -175,25 +149,22 @@ function AdminServices() {
         setData({ ...data, showModal: false });
     };
 
+    // Function to handle input field changes in the modal
     const handleNewServiceChange = (e) => {
         const { name, value } = e.target;
 
         if (value === "new") {
-
             setData((prevState) => ({
                 ...prevState,
                 selectedNewCategory: 'new',
             }));
         } else {
-
             setData((prevState) => ({
                 ...prevState,
                 [name]: value,
             }));
         }
     };
-
-
 
     const handleEditServiceChange = (e, selectedService, previousCategory) => {
         const { name, value } = e.target;
@@ -226,21 +197,13 @@ function AdminServices() {
         }));
     };
 
-    const handleCategoryImageChange = (e) => {
-        const file = e.target.files[0];
-        setData((prevState) => ({
-            ...prevState,
-            categoryImage: file,
-        }));
-    };
-
     useEffect(() => {
-
+        // Calculate the total pages based on whether a category is selected or not
         const filteredServices = data.selectedCategory !== 'default'
-            ? data.servicesData.filter((service) => service.category === data.selectedCategory)
-            : data.servicesData;
+            ? servicesData.filter((service) => service.category === data.selectedCategory)
+            : servicesData;
 
-
+        // Filter based on the search term if it's not empty
         const searchedServices = data.searchTerm.trim() === ''
             ? filteredServices
             : filteredServices.filter((service) =>
@@ -258,6 +221,7 @@ function AdminServices() {
         }));
     }, [data.selectedCategory, data.searchTerm]);
 
+    // Function to handle form submission
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
@@ -281,18 +245,6 @@ function AdminServices() {
             imageErrorMessage = 'Please select an image';
         }
 
-        if (data.selectedNewCategory === 'new') {
-            if (data.newCategoryName.trim() === '') {
-                isError = true;
-                serviceCategoryErrorMessage = 'Please enter a category name';
-            }
-
-            if (data.categoryImage === null) {
-                isError = true;
-                imageErrorMessage = 'Please select an image';
-            }
-        }
-
         setData({
             ...data,
             serviceCategoryErrorMessage,
@@ -302,52 +254,7 @@ function AdminServices() {
 
         if (!isError) {
             setData({ ...data, showModal: false });
-
-            const formData = new FormData();
-            formData.append('serviceImage', data.image);
-            if (data.selectedNewCategory === 'new') {
-                formData.append('serviceCategoryName', data.newCategoryName);
-                formData.append('categoryImage', data.categoryImage);
-            } else {
-                formData.append('serviceCategoryName', data.selectedNewCategory);
-            }
-            formData.append('serviceName', data.service);
-
-            if (data.selectedNewCategory === 'new') {
-
-                axios.post(serverLink + '/auth/addNewServiceWithCategoryImage', formData).then(
-
-                    (response) => {
-
-                        console.log(response.data);
-                        window.location.reload();
-
-                    }
-
-                ).catch(
-
-                    () => { alert("Error!!!") }
-
-                )
-            } else {
-
-                axios.post(serverLink + '/auth/addNewService', formData).then(
-
-                    (response) => {
-
-                        console.log(response.data);
-                        window.location.reload();
-
-                    }
-
-                ).catch(
-
-                    () => { alert("Error!!!") }
-
-                )
-            }
         }
-
     };
 
     const handleServiceFormSubmit = (e) => {
@@ -391,7 +298,7 @@ function AdminServices() {
                 };
 
 
-                const updatedServicesData = data.servicesData.map((service) => (
+                const updatedServicesData = servicesData.map((service) => (
                     service.id === data.selectedService.id ? updatedService : service
                 ));
 
@@ -402,11 +309,10 @@ function AdminServices() {
                     selectedService: null,
                     data: updatedServicesData,
                 });
-
             } else {
 
                 const newService = {
-                    id: data.servicesData.length + 1,
+                    id: servicesData.length + 1,
                     category: data.selectedNewCategory,
                     text: data.service,
                     image: data.image ? URL.createObjectURL(data.image) : null,
@@ -417,9 +323,8 @@ function AdminServices() {
                     showModal: false,
                     showServiceModal: false,
                     selectedService: null,
-                    data: [...data.servicesData, newService],
+                    data: [...servicesData, newService],
                 });
-
             }
         }
     };
@@ -461,7 +366,7 @@ function AdminServices() {
                         </span>
                     </div>
                 </div>
-
+ 
                 <div className='me-xs-2 col-xs-2 col-md-3 m-3 d-flex justify-content-start align-items-start'>
                     <button
                         className="btn btn-primary me-2 d-block d-md-none"
@@ -482,14 +387,14 @@ function AdminServices() {
             </div>
 
             <Row className="cardflex">
-                {displayedServices && displayedServices.map((service) => (
+                {data.displayedServices && data.displayedServices.map((service) => (
                     <Col key={service.id} xs={8} sm={6} md={4} lg={3} xl={3}>
                         <Card className="card d-flex flex-column align-items-center justify-content-center h-100" onClick={() => (
                             setData({ ...data, selectedService: service, showServiceModal: true })
                         )}>
-                            <Card.Img src={'data:image/png;base64,' + service.serviceImage} variant="top" alt="home" />
+                            <Card.Img src={service.image} variant="top" alt="home" />
                             <Card.Body>
-                                <Card.Text>{service.service}</Card.Text>
+                                <Card.Text>{service.text}</Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -629,30 +534,20 @@ function AdminServices() {
                             </select>
                             {data.serviceCategoryErrorMessage && <p className="text-danger p-0 m-0">{data.serviceCategoryErrorMessage}</p>}
                         </Form.Group>
-                        <Form.Group className="mb-3">
-                            {data.selectedNewCategory === "new" && (
-                                <div className="mb-3">
-                                    <div className="mb-3">
-                                        <Form.Label htmlFor="newCategory">New Category Name<span style={{ color: 'red' }}>*</span></Form.Label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="newCategory"
-                                            name="newCategoryName"
-                                            value={data.newCategoryName}
-                                            onChange={handleNewServiceChange}
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="mb-3">
-                                        <Form.Label>Choose an Image<span style={{ color: 'red' }}>*</span></Form.Label>
-                                        <Form.Control type="file" name="categoryImage" onChange={handleCategoryImageChange} required />
-                                        {data.imageErrorMessage && <p className="text-danger p-0 m-0">{data.imageErrorMessage}</p>}
-                                    </div>
-                                </div>
-                            )}
-                        </Form.Group>
+                        {data.selectedNewCategory === "new" && (
+                            <div className="mb-3">
+                                <label htmlFor="newCategory">New Category Name<span style={{ color: 'red' }}>*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="newCategory"
+                                    name="selectedNewCategory"
+                                    value={data.category}
+                                    onChange={handleNewServiceChange}
+                                    required
+                                />
+                            </div>
+                        )}
                         <Form.Group className="mb-3">
                             <Form.Label>Service Name<span style={{ color: 'red' }}>*</span></Form.Label>
                             <input

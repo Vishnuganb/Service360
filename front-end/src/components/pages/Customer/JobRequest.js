@@ -5,24 +5,13 @@ import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/JobRequestform.css';
 import BgImage from '../../../assets/images/header/Background.png';
 import { BsCloudUpload } from 'react-icons/bs';
-import { useParams, useNavigate } from 'react-router-dom';
 
 function Quotation() {
-    const navigate = useNavigate();
-    const handleBackClick = () => {
-      navigate(-1);
-  };
     return (
-        <div className='card2' >
-           <div className="back-button" onClick={handleBackClick} style={{marginLeft:'10px'}}>
-                <div className="back-icon">
-                    <i className="bi bi-arrow-left-circle-fill fs-3"></i>
-                </div>
-                <div className="back-text">
-                    <p className="m-0 p-0">Back</p>
-                </div>
-            </div>
-            <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
+        <div className='card2' style={{ backgroundImage: `url(${BgImage})` }}>
+            <p> <a href="#" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></a>
+                &nbsp;&nbsp;Back</p>
+            <div className="VacancyForm-container">
 
                 <h3>Request for Job</h3>
                 <br></br>
@@ -115,10 +104,10 @@ function Quotation() {
 
                     <Row className="vacancy-form-group-buttons mt-3">
                         <Col>
-                            <input type="Submit" value="Send" className="btn btn-vacancy-form-k" />
+                            <a id="send-link" href="#"><button> Send </button></a>
                         </Col>
                         <Col>
-                            <a id="cancel-link" href="#"><button>Cancel</button></a>
+                            <a id="cancelbtn-link" href="#"><button>Cancel</button></a>
                         </Col>
                     </Row>
                 </form>

@@ -122,14 +122,14 @@ function VacanciesBodyPage() {
 
     {/* Vacancy Cards */}
 
-    {displayedCards.map((Vacancy,index) => (
+    {displayedCards.map((Vacancy) => (
         <div className='single-vacancy-card mx-auto mt-3' >
             <div className='vacancy-card-header'>
                 <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                     <div className='d-flex justify-content-center align-items-center'>
                         {/* <img src={CompanyImg} alt='avatar' className='vacancy-card-avatar'/> */}
                         <img
-                                src=""
+                                src={Vacancy.profile}
                                 alt="avatar"
                                 className="rounded-circle"
                                 style={{ width: "42px", height: "42px" }}
@@ -165,7 +165,7 @@ function VacanciesBodyPage() {
                         <span className='single-vacancy-description'>{Vacancy.vacancydescription}</span>
                     </div>
                     <div>
-                        <span className='sinlge-vacancy-expiry-info'>Due Date - {Vacancy.duedate} | {Vacancy.servicename}</span>
+                        <span className='sinlge-vacancy-expiry-info'>{Vacancy.duedate} | {Vacancy.servicename}</span>
                     </div>
                 </div>
             </div>

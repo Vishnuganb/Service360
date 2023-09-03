@@ -43,7 +43,7 @@ function VacancyPopup() {
                     <form className="vacancy-form">
 
                         <div className="vacancy-form-group">
-                            <Row> <Col className='col-4'><label for="title">client Name </label></Col>
+                            <Row> <Col className='col-4'><label for="title">Comapany Name </label></Col>
                                 <Col className='col-8'><input type="text" name="name" className="form-control" id="name" Value="ABC private Limited" />
                                 </Col> </Row>
                         </div>
@@ -174,7 +174,9 @@ export default function PostedVacancies() {
         return (
             isDateMatch &&
             (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) 
+                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
     });

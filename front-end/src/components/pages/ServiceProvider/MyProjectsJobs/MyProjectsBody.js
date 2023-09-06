@@ -88,29 +88,30 @@ function MyProjectsBody(){
     const allCards = [...MyProjectsJobsData, ...MyProjectsVacanciesData];
 
     const filteredCards = allCards.filter((card) => {
-        const serviceMatch = !filterCategoryTerm || card.servicename === filterCategoryTerm;
+        const serviceMatch = !filterCategoryTerm || card.job?.servicename === filterCategoryTerm || card.vacancy?.servicename === filterCategoryTerm; // Check servicename in job or vacancy
         const searchTermMatch = (
-            card.servicename?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.joblocation?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.jobdescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.jobtitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.vacancylocation?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.vacancydescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.vacancytitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.customername?.toLowerCase().includes(searchTerm.toLowerCase())
+            (card.job?.servicename && card.job.servicename.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (card.job?.joblocation && card.job.joblocation.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (card.job?.jobdescription && card.job.jobdescription.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (card.job?.jobtitle && card.job.jobtitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (card.vacancy?.vacancylocation && card.vacancy.vacancylocation.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (card.vacancy?.vacancydescription && card.vacancy.vacancydescription.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (card.vacancy?.vacancytitle && card.vacancy.vacancytitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (card.customer?.firstname && card.customer.firstname.toLowerCase().includes(searchTerm.toLowerCase()))
         );
-        
+    
         return serviceMatch && searchTermMatch;
     });
-
+    
     const filteredAndSortedCards = filteredCards.filter((card) => {
-        if (card.jobstatus) {
-            return card.jobstatus === activeTab; // Check job status
-        } else if (card.vacancystatus) {
-            return card.vacancystatus === activeTab; // Check vacancy status
+        if (card.jobStatus) {
+            return card.jobStatus === activeTab; // Check job status
+        } else if (card.vacancyStatus) {
+            return card.vacancyStatus === activeTab; // Check vacancy status
         }
         return false; // Exclude cards without valid status
     });
+    
 
     const cardsPerPage = 3;
     
@@ -144,6 +145,8 @@ function MyProjectsBody(){
         setFilterCategoryTerm(category);
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
+
+    console.log(displayedCards);
 
     return(
         <div>
@@ -225,7 +228,7 @@ function MyProjectsBody(){
                                     <span className="job-card-title">{job.job.jobtitle}</span>
                                 </div>
                                 <div className='d-flex'>
-                                    <span className="my-job-card-customer-name">By {job.job.customername}</span>
+                                    <span className="my-job-card-customer-name">By {job.job.customer.firstname}</span>
                                 </div>
                                 <div>
                                     <span className="my-job-location-info">
@@ -272,30 +275,30 @@ function MyProjectsBody(){
                 ))}
 
                 {/* only display ongoing, rejected vacancies */}
-                {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'ongoing' || vacancy.vacancystatus === 'rejected').map((vacancy) => (
+                {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancyStatus === 'ongoing' || vacancy.vacancyStatus === 'rejected').map((vacancy) => (
                     <div className="single-my-vacancy-card mx-auto mt-3">
                         <div className="ms-sm-3">
                                 <div className='d-flex flex-column'>
                                     <div >
-                                        <span className="job-card-title">{vacancy.vacancytitle}</span>
+                                        <span className="job-card-title">{vacancy.vacancy.vacancytitle}</span>
                                     </div>
                                     <div className='d-flex'>
-                                        <span className="job-card-date">By {vacancy.customername}</span>
+                                        <span className="job-card-date">By {vacancy.vacancy.customer.firstname}</span>
                                     </div>
                                     <div>
                                         <span className="my-job-location-info">
-                                            <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {vacancy.vacancylocation}
+                                            <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancylocation}
                                         </span>
                                         <span className="my-job-location-info ms-4">
-                                            <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
+                                            <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancytype}
                                         </span>
                                     </div>
                                 </div>
                         </div>
                         <hr style={{margin:"0.5rem"}} />
                         <div className="my-job-card-footer d-flex flex-row mb-sm-2 mx-auto mt-md-0 mt-1 mb-2">
-                            {vacancy.vacancystatus === 'ongoing' && (
-                            <Link to={`../OngoingVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
+                            {vacancy.vacancyStatus === 'ongoing' && (
+                            <Link to={`../OngoingVacancy/${vacancy.vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
                                     <span class="my-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
@@ -304,8 +307,8 @@ function MyProjectsBody(){
                                 </button>
                             </Link>
                             )}
-                            {vacancy.vacancystatus === 'rejected' && (
-                            <Link to={`../ViewAVacancy/${vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
+                            {vacancy.vacancyStatus === 'rejected' && (
+                            <Link to={`../ViewAVacancy/${vacancy.vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
                                     <span class="my-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
@@ -320,17 +323,17 @@ function MyProjectsBody(){
             </div>
 
             {/* only display job invites for me */}
-            {activeTab === 'invite' && displayedCards.filter((job) => job.jobstatus === 'invite').map((job) => (
+            {activeTab === 'invite' && displayedCards.filter((job) => job.jobStatus === 'invite').map((job) => (
                 <div className="single-job-card mx-auto mt-3">
                     <div className="">
                         <div className='d-flex flex-column ms-sm-3'>
                             <div className="invite-header-container d-flex flex-row">
                                 <div>
-                                    <span className="my-job-card-title">{job.jobtitle}</span>
+                                    <span className="my-job-card-title">{job.job.jobtitle}</span>
                                 </div>
                                 
                                 <div className="isquatation d-flex flex-row ms-auto me-sm-3">
-                                    {job.isquotation === 'quotation' && (
+                                    {job.job.isquotation === 'quotation' && (
                                         <span className="single-job-status" id="job-status">Quotation</span>
                                     )}
                                     <span className="single-job-status ms-2" id="job-status">Short-Term</span>
@@ -338,11 +341,11 @@ function MyProjectsBody(){
 
                             </div>
                             <div className='d-flex'>
-                                <span className="my-job-card-customer-name">By {job.customername}</span>
+                                <span className="my-job-card-customer-name">By {job.job.customer.firstname}</span>
                             </div>
                             <div className='mt-1'>
                                 <span className="single-job-description">
-                                    {job.jobdescription}
+                                    {job.job.jobdescription}
                                 </span>
                             </div>
                             <div className='mt-1'>
@@ -350,7 +353,7 @@ function MyProjectsBody(){
                             </div>
                             <div className='mt-1'>
                                 <span className="my-job-location-info">
-                                    <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {job.joblocation}
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {job.job.joblocation}
                                 </span>
                             </div>
                         </div>
@@ -358,14 +361,14 @@ function MyProjectsBody(){
                     <hr style={{margin:"0.5rem"}} />
                     <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
                         <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                            <span class="view-jobs-page-btn-label" onClick={() => handleAccept(job.jobid, job.isquotation === 'quotation')}>
+                            <span class="view-jobs-page-btn-label" onClick={() => handleAccept(job.job.jobid, job.job.isquotation === 'quotation')}>
                                 <i class="bi bi-check-circle"></i>
                             </span>
                             Accept
                         </button>
 
                         <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
-                            <span class="view-jobs-page-btn-label" onClick={() => handleReject(job.jobid)}>
+                            <span class="view-jobs-page-btn-label" onClick={() => handleReject(job.job.jobid)}>
                                     <i class="bi bi-x-circle"></i>
                             </span>
                             Reject
@@ -375,35 +378,35 @@ function MyProjectsBody(){
             ))}
 
             {/* only display vacancy invites for me */}
-            {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancystatus === 'invite').map((vacancy) => (
+            {activeTab === 'invite' && displayedCards.filter((vacancy) => vacancy.vacancyStatus === 'invite').map((vacancy) => (
             <div className="single-vacancy-card mx-auto mt-3">
                 <div className="">
                     <div className="d-flex flex-column ms-sm-3">
                         <div className="invite-header-container d-flex flex-row">
                             <div>
-                                <span className="my-job-card-title">{vacancy.vacancytitle}</span>
+                                <span className="my-job-card-title">{vacancy.vacancy.vacancytitle}</span>
                             </div>
                             <div className="isquatation ms-auto me-sm-3">
                                     <span className="single-job-status ms-2" id="job-status">Long-Term</span>
                             </div>
                         </div>
                         <div className='d-flex'>
-                            <span className="job-card-date">By {vacancy.customername}</span>
+                            <span className="job-card-date">By {vacancy.vacancy.customername}</span>
                         </div>
                         <div className='mt-1'>
                             <span className="single-job-description">
-                                {vacancy.vacancydescription}
+                                {vacancy.vacancy.vacancydescription}
                             </span>
                         </div>
                         <div className='mt-1'>
-                            <span className="sinlge-my-job-sub-info"><i className="bi bi-calendar-event"></i>&nbsp;&nbsp; Due Date - {vacancy.duedate}</span>
+                            <span className="sinlge-my-job-sub-info"><i className="bi bi-calendar-event"></i>&nbsp;&nbsp; Due Date - {vacancy.vacancy.duedate}</span>
                         </div>
                         <div className='mt-1'>
                             <span className="my-vacancy-location-info">
-                                <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; Location: {vacancy.vacancylocation}
+                                <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; Location: {vacancy.vacancy.vacancylocation}
                             </span>
                             <span className="my-job-location-info ms-4">
-                                <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancytype}
+                                <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancytype}
                             </span>
                         </div>
                     </div>

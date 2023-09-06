@@ -83,20 +83,20 @@ const AdStep2 = ({
     return (
         <form className="my-2 mx-4">
 
-                <div className="mb-3">
+            <div className="mb-3">
                 <p className="mb-0">Enter your shop Address<span style={{ color: 'red' }}>*</span></p>
-                    <div className="align-items-center">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
-                            value={address}
-                            onChange={(e) => handleChange('address', e.target.value)}
-                            required
-                        />
-                        {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
-                    </div>
+                <div className="align-items-center">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
+                        value={address}
+                        onChange={(e) => handleChange('address', e.target.value)}
+                        required
+                    />
+                    {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
                 </div>
+            </div>
 
 
             <div className="mb-3">

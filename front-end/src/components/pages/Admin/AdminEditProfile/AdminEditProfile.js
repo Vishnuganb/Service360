@@ -212,7 +212,7 @@ const AdminEditProfile = (props) => {
                                             id="button-addon1"
                                             onClick={showHidePassword}
                                         >
-                                        {data.isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
+                                            {data.isPasswordHidden ? <i className="bi bi-eye-slash-fill"></i> : <i className="bi bi-eye-fill"></i>}
                                         </button>
                                     </span>
                                 </div>
@@ -221,7 +221,7 @@ const AdminEditProfile = (props) => {
 
                             <>
                                 <div className="mt-3">
-                                    
+
 
                                     {data.showMore && (
                                         <>
@@ -278,7 +278,7 @@ const AdminEditProfile = (props) => {
                                     )}
 
                                     <div className="mt-3">
-                                        <Button className="btn-effect3" type="button" onClick={() => setdata({ ...data, showMore: !data.showMore })} style={{width:'auto'}}>
+                                        <Button className="btn-effect3" type="button" onClick={() => setdata({ ...data, showMore: !data.showMore })} style={{ width: 'auto' }}>
                                             {data.showMore ? 'Show Less' : 'Change Password'}
                                         </Button>
                                     </div>

@@ -63,60 +63,60 @@ const SearchServiceProvider = () => {
 
   const serviceProviderCards = [
     {
-    id: 1,
-    name: "Alex",
-    service: "Sofa Cleaning",
-    location: "Colombo 1, Colombo",
-    review: 4,
-    contactNumber: "0775869807",
-    joinDate: "23 July 2020",
-    profilepic: require("../../../assets/images/Customer/ServiceProvider1.png")
-  },
+      id: 1,
+      name: "Alex",
+      service: "Sofa Cleaning",
+      location: "Colombo 1, Colombo",
+      review: 4,
+      contactNumber: "0775869807",
+      joinDate: "23 July 2020",
+      profilepic: require("../../../assets/images/Customer/ServiceProvider1.png")
+    },
 
-  {
-    id: 2,
-    name: "Vinoth",
-    service: "Painting",
-    location: "Batticaloa",
-    review: 3.8,
-    contactNumber: "0775888756",
-    joinDate: "14 December 2022",
-    profilepic: require("../../../assets/images/Customer/ServiceProvider3.jpg")
-  },
+    {
+      id: 2,
+      name: "Vinoth",
+      service: "Painting",
+      location: "Batticaloa",
+      review: 3.8,
+      contactNumber: "0775888756",
+      joinDate: "14 December 2022",
+      profilepic: require("../../../assets/images/Customer/ServiceProvider3.jpg")
+    },
 
-  {
-    id: 3,  
-    name: "Kumar",
-    service: "Mansonry",
-    location: "Batticaloa",
-    review: 5,
-    contactNumber: "0779988756",
-    joinDate: "14 December 2022",
-    profilepic: require("../../../assets/images/Customer/ServiceProvider1.jpg")
-  },
+    {
+      id: 3,
+      name: "Kumar",
+      service: "Mansonry",
+      location: "Batticaloa",
+      review: 5,
+      contactNumber: "0779988756",
+      joinDate: "14 December 2022",
+      profilepic: require("../../../assets/images/Customer/ServiceProvider1.jpg")
+    },
 
-  {
-    id: 4,
-    name: "Shakthi",
-    service: "Tile Fitting",
-    location: "Vavuniya",
-    review: 2,
-    contactNumber: "0773366587",
-    joinDate: "14 December 2022",
-    profilepic: require("../../../assets/images/Customer/serviceprovider5.webp")
-  },
+    {
+      id: 4,
+      name: "Shakthi",
+      service: "Tile Fitting",
+      location: "Vavuniya",
+      review: 2,
+      contactNumber: "0773366587",
+      joinDate: "14 December 2022",
+      profilepic: require("../../../assets/images/Customer/serviceprovider5.webp")
+    },
 
-  {
-    id: 5,
-    name: "David",
-    service: "Carpet Cleaning",
-    location: "Gampaha",
-    review: 5,
-    contactNumber: "0778698742",
-    joinDate: "11 January 2019",
-    profilepic: require("../../../assets/images/Customer/Serp.jpeg")
-  },
-  
+    {
+      id: 5,
+      name: "David",
+      service: "Carpet Cleaning",
+      location: "Gampaha",
+      review: 5,
+      contactNumber: "0778698742",
+      joinDate: "11 January 2019",
+      profilepic: require("../../../assets/images/Customer/Serp.jpeg")
+    },
+
   ];
 
   const filteredSPCards = serviceProviderCards.filter(card => {
@@ -137,7 +137,7 @@ const SearchServiceProvider = () => {
   return (
     <div className="content">
       <div className="selectionpanel">
-      <button className="custom-button" onClick={toggleCategoryPopup}>
+        <button className="custom-button" onClick={toggleCategoryPopup}>
           <div className="icon">
             <FontAwesomeIcon icon={faTags} />
           </div>
@@ -179,7 +179,7 @@ const SearchServiceProvider = () => {
 
       <div className="bodyPageContainer-SP">
         <Row id='bodyPageRow1'>
-        {sortedSPCards.length > 0 ? (
+          {sortedSPCards.length > 0 ? (
             <div className="SPCardContainer">
               {sortedSPCards.map((spCard, index) => (
                 <ViewSPCard key={index} spCard={spCard} />
@@ -187,7 +187,7 @@ const SearchServiceProvider = () => {
             </div>
           ) : (
             <div className="no-results">
-              <FontAwesomeIcon icon={faExclamationCircle} className="error-icon"/>
+              <FontAwesomeIcon icon={faExclamationCircle} className="error-icon" />
               <p>No results Found</p>
             </div>
           )}

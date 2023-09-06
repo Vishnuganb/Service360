@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import image from '../../assets/images/header/Background.png';
 import loginPhoto from '../../assets/images/home/Advertiser.jpeg';
 import validator from 'validator';
@@ -8,7 +8,7 @@ import Step1 from './AdStep1';
 import Step2 from './AdStep2';
 import { set } from 'lodash';
 
-const ServiceProviderSignUP = () => {
+const AdvertiserSignUP = () => {
     const [step, setStep] = useState(1);
 
     const { login } = useContext(AuthenticationContext);
@@ -169,7 +169,7 @@ const ServiceProviderSignUP = () => {
         let passwordErrorMessage = '';
         let confirmPasswordErrorMessage = '';
         let addressErrorMessage = '';
-        
+
         let fileErrorMessage = '';
 
 
@@ -181,7 +181,7 @@ const ServiceProviderSignUP = () => {
         if (confirmPassword.trim() === '') {
             isError = true;
             confirmPasswordErrorMessage = 'Confirm password is required';
-        }    
+        }
 
         if (password !== confirmPassword) {
             isError = true;
@@ -223,7 +223,7 @@ const ServiceProviderSignUP = () => {
     };
 
     const handleStep1NextClick = () => {
-        const { email, firstName, lastName, nicNumber, contactNumber,shopName } = step1Data;
+        const { email, firstName, lastName, nicNumber, contactNumber, shopName } = step1Data;
 
         let isError = false;
         let emailErrorMessage = '';
@@ -367,4 +367,4 @@ const ServiceProviderSignUP = () => {
     );
 };
 
-export default ServiceProviderSignUP;
+export default AdvertiserSignUP;

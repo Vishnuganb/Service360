@@ -27,7 +27,15 @@ public class Services {
     @Column(columnDefinition = "BYTEA")
     private byte[] serviceImage;
 
+    @Column(columnDefinition = "BOOLEAN")
+    private Boolean enable;
+
     @ManyToOne
     @JoinColumn(name = "servicecategoryid")
     private ServiceCategory serviceCategory;
+
+    @PrePersist
+    public void prePersist() {
+        this.enable = true;
+    }
 }

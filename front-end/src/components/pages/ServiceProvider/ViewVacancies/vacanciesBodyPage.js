@@ -10,8 +10,8 @@ import axios from 'axios';
 
 function VacanciesBodyPage() {
     const [viewVacanciesData, setviewVacanciesData] = useState(null);
-    
-    const MyServices= [
+
+    const MyServices = [
         "Electrical Wiring",
         "Masonry",
         "Sofa Cleaning",
@@ -25,7 +25,7 @@ function VacanciesBodyPage() {
     const [currentPage, setCurrentPage] = useState(1);
 
     // State to store the search term
-    const [searchTerm, setSearchTerm] = useState(''); 
+    const [searchTerm, setSearchTerm] = useState('');
 
     // State to store the filter by category
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
@@ -41,7 +41,7 @@ function VacanciesBodyPage() {
         setSearchTerm(value);
         setCurrentPage(1);   // Reset current page to 1 when search term changes
     };
-    
+
     // Function to handle filter by category changes
     const handlefilterCategoryChange = (category) => {
         setFilterCategoryTerm(category);
@@ -53,19 +53,19 @@ function VacanciesBodyPage() {
             console.log(res.data);
             setviewVacanciesData(res.data);
         });
-    }   , []);
+    }, []);
 
     if (!viewVacanciesData) return 'No Vacancies found!';
 
     // Filter training sessions based on search term and selected date
     const filteredCards = viewVacanciesData.filter((card) => {
         return (
-        (!filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
+            (!filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
             (card.customername.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.vacancylocation.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.vacancydescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.vacancytitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.servicename.toLowerCase().includes(searchTerm.toLowerCase()))
+                card.vacancylocation.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                card.vacancydescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                card.vacancytitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                card.servicename.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     });
 
@@ -82,7 +82,7 @@ function VacanciesBodyPage() {
         <div>
 
             {/* Page Title*/}
-            <span className="ms-4 align-self-start" style={{fontSize:"28px",fontWeight:"600"}}>View Vacancies</span>
+            <span className="ms-4 align-self-start" style={{ fontSize: "28px", fontWeight: "600" }}>View Vacancies</span>
 
             {/* Nav Bar */}
             <Navbar className='mt-4 mb-3 ms-lg-4 me-md-4'>
@@ -106,7 +106,7 @@ function VacanciesBodyPage() {
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handlefilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (          
+                            {MyServices.map((service) => (
                                 <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
@@ -120,84 +120,83 @@ function VacanciesBodyPage() {
                 </div>
             </Navbar>
 
-    {/* Vacancy Cards */}
+            {/* Vacancy Cards */}
 
-    {displayedCards.map((Vacancy,index) => (
-        <div className='single-vacancy-card mx-auto mt-3' >
-            <div className='vacancy-card-header'>
-                <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
-                    <div className='d-flex justify-content-center align-items-center'>
-                        {/* <img src={CompanyImg} alt='avatar' className='vacancy-card-avatar'/> */}
-                        <img
-                                src=""
-                                alt="avatar"
-                                className="rounded-circle"
-                                style={{ width: "42px", height: "42px" }}
-                        />
+            {displayedCards.map((Vacancy, index) => (
+                <div className='single-vacancy-card mx-auto mt-3' >
+                    <div className='vacancy-card-header'>
+                        <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
+                            <div className='d-flex justify-content-center align-items-center'>
+                                {/* <img src={CompanyImg} alt='avatar' className='vacancy-card-avatar'/> */}
+                                <img
+                                    src=""
+                                    alt="avatar"
+                                    className="rounded-circle"
+                                    style={{ width: "42px", height: "42px" }}
+                                />
+                            </div>
+                            <div className='d-flex flex-column'>
+                                <div className='ms-sm-3'>
+                                    <span className='vacancy-card-title'>{Vacancy.customername}</span>
+                                </div>
+                                <div className='ms-sm-3 d-flex'>
+                                    <span className='vacancy-card-date'>{Vacancy.lastseen}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className='d-flex flex-column'>
-                        <div className='ms-sm-3'>
-                            <span className='vacancy-card-title'>{Vacancy.customername}</span>
+                    <div className='vacancy-card-body'>
+                        <div className='vacancy-card-body-left d-flex flex-column'>
+                            <div>
+                                <span className='vacancy-location-info'>
+                                    <i className="bi bi-geo-alt-fill"></i>&nbsp;
+                                    Location: {Vacancy.vacancylocation}
+                                </span>
+                            </div>
+                            <div className='vacancy-card-body-inner-flex d-flex flex-row'>
+                                <div>
+                                    <span className='single-vacancy-title '>{Vacancy.vacancytitle}</span>&nbsp;&nbsp;
+                                </div>
+                                <div>
+                                    <span className='single-vacancy-type d-flex justify-contents-center' id='vacancy-status'>{Vacancy.vacancytype}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <span className='single-vacancy-description'>{Vacancy.vacancydescription}</span>
+                            </div>
+                            <div>
+                                <span className='sinlge-vacancy-expiry-info'>Due Date - {Vacancy.duedate} | {Vacancy.servicename}</span>
+                            </div>
                         </div>
-                        <div className='ms-sm-3 d-flex'>
-                            <span className='vacancy-card-date'>{Vacancy.lastseen}</span>
-                        </div>
+                    </div>
+                    <hr />
+                    <div className='vacancy-card-footer'>
+
+                        <Link to={`/ServiceProvider/ViewAVacancy/${Vacancy.vacancyid}`} className="btn btn-default job-card-footer-btn" id="job-card-footer-btn-view">
+                            <span className='btn btn-default vacancy-card-footer-btn' id='vacancy-card-footer-btn-view'>
+                                <i className="bi bi-file-earmark-plus h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style={{ position: "relative", bottom: "1.5px" }}>Apply for Job</span>
+                            </span>
+                        </Link>
+
                     </div>
                 </div>
-            </div>
-            <div className='vacancy-card-body'>
-                <div className='vacancy-card-body-left d-flex flex-column'>
-                    <div>
-                        <span className='vacancy-location-info'>
-                            <i className="bi bi-geo-alt-fill"></i>&nbsp;
-                            Location: {Vacancy.vacancylocation}
-                        </span>
-                    </div>
-                    <div className='vacancy-card-body-inner-flex d-flex flex-row'>
-                        <div>
-                            <span className='single-vacancy-title '>{Vacancy.vacancytitle}</span>&nbsp;&nbsp;
-                        </div>
-                        <div>
-                            <span className='single-vacancy-type d-flex justify-contents-center' id='vacancy-status'>{Vacancy.vacancytype}</span>
-                        </div>
-                    </div>
-                    <div>
-                        <span className='single-vacancy-description'>{Vacancy.vacancydescription}</span>
-                    </div>
-                    <div>
-                        <span className='sinlge-vacancy-expiry-info'>Due Date - {Vacancy.duedate} | {Vacancy.servicename}</span>
-                    </div>
-                </div>
-            </div>
-            <hr/>
-            <div className='vacancy-card-footer'>
-               
-                <Link to={`/ServiceProvider/ViewAVacancy/${Vacancy.vacancyid}`} className="btn btn-default job-card-footer-btn" id="job-card-footer-btn-view">
-                    <span className='btn btn-default vacancy-card-footer-btn' id='vacancy-card-footer-btn-view'>
-                        <i className="bi bi-file-earmark-plus h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span style={{position:"relative",bottom:"1.5px"}}>Apply for Job</span>
-                    </span>
-                </Link>
-
-            </div>
-        </div>
-    ))}
+            ))}
 
 
-          {/* Pagination */}
-          <div className="pagination justify-content-center">
+            {/* Pagination */}
+            <div className="pagination justify-content-center">
                 {/* Create pagination buttons for each page */}
                 {Array.from({ length: Math.ceil(filteredCards.length / cardsPerPage) }, (_, index) => (
-                <button
-                    key={index + 1}
-                    className={`page-link ${
-                    currentPage === index + 1 ? 'active' : ''
-                    }`}
-                    style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-                    onClick={() => handlePageChange(index + 1)}
-                >
-                    {index + 1}
-                </button>
+                    <button
+                        key={index + 1}
+                        className={`page-link ${currentPage === index + 1 ? 'active' : ''
+                            }`}
+                        style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
                 ))}
             </div>
 

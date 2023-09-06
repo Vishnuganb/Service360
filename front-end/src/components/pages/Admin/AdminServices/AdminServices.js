@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Card, Col, Button, Modal, Form } from 'react-bootstrap';
-import axios from "axios";
-
 import image1 from '../../../../assets/images/home/AC-Repair.jpeg'
 import image2 from '../../../../assets/images/home/ElectricalWiring.jpeg';
 import image3 from '../../../../assets/images/home/plumbing.jpeg';
@@ -21,50 +19,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import { set } from 'lodash';
+import axios from 'axios';
 
-
-// const data.servicesData = [
-//     { id: 1, image: image1, text: 'AC Repair', category: 'Electrical & Plumbing' },
-//     { id: 2, image: image2, text: 'Electrical Wiring', category: 'Electrical & Plumbing' },
-//     { id: 3, image: image3, text: 'Plumbing', category: 'Electrical & Plumbing' },
-//     { id: 4, image: image4, text: 'Tiles Fitting', category: 'Construction' },
-//     { id: 5, image: image5, text: 'Carpentry', category: 'Interior Works' },
-//     { id: 6, image: image6, text: 'Painting', category: 'Interior Works' },
-//     { id: 7, image: image7, text: 'Masonry', category: 'Construction' },
-//     { id: 8, image: image8, text: 'Glass & Aluminum', category: 'Construction' },
-//     { id: 9, image: image9, text: 'Iron Works', category: 'Construction' },
-//     { id: 10, image: image10, text: 'CCTV Repair', category: 'Security' },
-//     { id: 11, image: image11, text: 'Fire Alarm', category: 'Security' },
-//     { id: 12, image: image12, text: 'Video Surveillance', category: 'Security' },
-// ];
-
-const serviceCategories = {
-    "Interior Works": [
-        "Carpentry",
-        "Painting",
-    ],
-    "Electrical & Plumbing": [
-        "AC Repair",
-        "Electrical Wiring",
-        "Plumbing",
-    ],
-    "Construction": [
-        "Masonry",
-        "Tiles Fitting",
-        "Iron Works",
-        "Glass & Aluminum",
-    ],
-    "Security": [
-        "CCTV Repair",
-        "Fire Alarm",
-        "Video Surveillance",
-    ],
-    "cleaning": [
-        "Sofa cleaning",
-        "Carpet cleaning",
-    ],
-};
 
 const StyledButton2 = styled(Button)`
         background-color: #282b3d;
@@ -88,20 +44,18 @@ const searchInputStyle = {
     height: '38px',
 };
 
-
+const serverLink = 'http://localhost:8080'
 
 function AdminServices() {
-
-    const serverLink = 'http://localhost:8080'
 
     const [data, setData] = useState({
         category: 'default',
         service: '',
         image: null,
-        categoryImage: null,
         selectedCategory: 'default',
         selectedNewCategory: 'default',
         selectedEditCategory: 'default',
+        editedServiceName: '',
         currentPage: 1,
         showModal: false,
         serviceCategoryErrorMessage: '',
@@ -118,28 +72,37 @@ function AdminServices() {
         enable: true,
         servicesData: [],
         newCategoryName: '',
+        serviceCategories: [],
+        displayedServices: [],
     });
 
     useEffect(() => {
-        axios.get(serverLink + '/auth/allServices')
-            .then(response => {
-                const fetchedServicesData = response.data
+        const fetchData = async () => {
+            try {
+                const servicesResponse = await axios.get(serverLink + '/auth/allServices');
+                const categoriesResponse = await axios.get(serverLink + '/auth/allCategories');
+
+                const fetchedServicesData = servicesResponse.data;
+                const serviceCategoriesData = categoriesResponse.data;
 
                 setData({
                     ...data,
                     servicesData: fetchedServicesData,
+                    serviceCategories: serviceCategoriesData,
+                    displayedServices: fetchedServicesData.slice(0, cardsPerPage),
                 });
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error fetching data:', error);
-            });
+            }
+        };
+
+        fetchData();
     }, []);
 
-    console.log(data.servicesData);
 
     const cardsPerPage = 9;
     const totalPages = Math.ceil(data.servicesData.length / cardsPerPage);
-    const startIndex = (data.currentPage - 1) * cardsPerPage; // 
+    const startIndex = (data.currentPage - 1) * cardsPerPage; 
     const endIndex = startIndex + cardsPerPage;
     const displayedServices = data.servicesData.slice(startIndex, endIndex);
 
@@ -166,7 +129,6 @@ function AdminServices() {
         }));
     };
 
-    // Function to handle opening and closing the modal
     const handleModalOpen = () => {
         setData({ ...data, showModal: true });
     };
@@ -179,13 +141,11 @@ function AdminServices() {
         const { name, value } = e.target;
 
         if (value === "new") {
-
             setData((prevState) => ({
                 ...prevState,
                 selectedNewCategory: 'new',
             }));
         } else {
-
             setData((prevState) => ({
                 ...prevState,
                 [name]: value,
@@ -193,31 +153,6 @@ function AdminServices() {
         }
     };
 
-
-
-    const handleEditServiceChange = (e, selectedService, previousCategory) => {
-        const { name, value } = e.target;
-
-        console.log('Selected service:', selectedService);
-        console.log('Previous category:', previousCategory);
-
-        if (name === 'selectedEditCategory') {
-            const updatedService = { ...selectedService, category: null };
-
-            setData((prevState) => ({
-                ...prevState,
-                selectedService: updatedService,
-                selectedEditCategory: value,
-            }));
-        } else {
-            setData((prevState) => ({
-                ...prevState,
-                [name]: value,
-            }));
-        }
-    };
-
-    // Function to handle image file selection
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setData((prevState) => ({
@@ -240,15 +175,13 @@ function AdminServices() {
             ? data.servicesData.filter((service) => service.category === data.selectedCategory)
             : data.servicesData;
 
-
         const searchedServices = data.searchTerm.trim() === ''
             ? filteredServices
             : filteredServices.filter((service) =>
-                service.text.toLowerCase().includes(data.searchTerm.toLowerCase())
+                service.service.toLowerCase().includes(data.searchTerm.toLowerCase())
             );
 
         const totalPages = Math.ceil(searchedServices.length / cardsPerPage);
-
 
         setData((prevState) => ({
             ...prevState,
@@ -257,6 +190,18 @@ function AdminServices() {
             displayedServices: searchedServices.slice(0, cardsPerPage),
         }));
     }, [data.selectedCategory, data.searchTerm]);
+
+    useEffect(() => {
+        if (data.showServiceModal && data.selectedService) {
+            setData({
+                ...data,
+                editedServiceName: data.selectedService.service,
+                selectedEditCategory: data.selectedService.category,
+                enable: data.selectedService.enable,
+            });
+        }
+    }, [data.showServiceModal, data.selectedService]);
+
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -281,18 +226,6 @@ function AdminServices() {
             imageErrorMessage = 'Please select an image';
         }
 
-        if (data.selectedNewCategory === 'new') {
-            if (data.newCategoryName.trim() === '') {
-                isError = true;
-                serviceCategoryErrorMessage = 'Please enter a category name';
-            }
-
-            if (data.categoryImage === null) {
-                isError = true;
-                imageErrorMessage = 'Please select an image';
-            }
-        }
-
         setData({
             ...data,
             serviceCategoryErrorMessage,
@@ -301,17 +234,18 @@ function AdminServices() {
         });
 
         if (!isError) {
-            setData({ ...data, showModal: false });
 
             const formData = new FormData();
             formData.append('serviceImage', data.image);
+            formData.append('serviceName', data.service);
+
             if (data.selectedNewCategory === 'new') {
                 formData.append('serviceCategoryName', data.newCategoryName);
                 formData.append('categoryImage', data.categoryImage);
             } else {
                 formData.append('serviceCategoryName', data.selectedNewCategory);
             }
-            formData.append('serviceName', data.service);
+
 
             if (data.selectedNewCategory === 'new') {
 
@@ -320,6 +254,7 @@ function AdminServices() {
                     (response) => {
 
                         console.log(response.data);
+                        setData({ ...data, selectedNewCategory: 'default' });
                         window.location.reload();
 
                     }
@@ -346,81 +281,71 @@ function AdminServices() {
 
                 )
             }
-        }
 
+            setData({ ...data, showModal: false });
+        }
     };
 
     const handleServiceFormSubmit = (e) => {
         e.preventDefault();
 
         let isError = false;
-        let editserviceCategoryErrorMessage = '';
         let editserviceErrorMessage = '';
-        let editimageErrorMessage = '';
 
-        if (data.selectedNewCategory === 'default') {
-            isError = true;
-            editserviceCategoryErrorMessage = 'Please select a service category';
-        }
-
-        if (data.service.trim() === '') {
+        if (data.editedServiceName === '') {
             isError = true;
             editserviceErrorMessage = 'Please enter a service name';
         }
 
-        if (data.image === null) {
-            isError = true;
-            editimageErrorMessage = 'Please select an image';
-        }
-
         setData({
             ...data,
-            editserviceCategoryErrorMessage,
             editserviceErrorMessage,
-            editimageErrorMessage,
         });
 
         if (!isError) {
 
             if (data.selectedService) {
-                const updatedService = {
-                    ...data.selectedService,
-                    category: data.selectedNewCategory,
-                    text: data.service,
-                    image: data.image ? URL.createObjectURL(data.image) : data.selectedService.image,
-                };
 
+                const formData = new FormData();
 
-                const updatedServicesData = data.servicesData.map((service) => (
-                    service.id === data.selectedService.id ? updatedService : service
-                ));
+                if (data.image) {
+                    formData.append('serviceImage', data.image);
+                }
 
+                if (data.editedServiceName) {
+                    formData.append('serviceName', data.editedServiceName);
+                }
+
+                formData.append('serviceId', data.selectedService.id);
+                formData.append('enable', data.enable);
+
+                if (data.selectedEditCategory !== 'default') {
+                    formData.append('serviceCategoryName', data.selectedEditCategory);
+                }
+
+                axios.put(serverLink + '/auth/updateService', formData).then(
+                    
+                    (response) => {
+
+                        console.log(response.data);
+                        window.location.reload();
+
+                    }
+
+                ).catch(
+
+                    () => { alert("Error!!!") }
+
+                )
+                
                 setData({
                     ...data,
                     showModal: false,
                     showServiceModal: false,
                     selectedService: null,
-                    data: updatedServicesData,
                 });
-
-            } else {
-
-                const newService = {
-                    id: data.servicesData.length + 1,
-                    category: data.selectedNewCategory,
-                    text: data.service,
-                    image: data.image ? URL.createObjectURL(data.image) : null,
-                };
-
-                setData({
-                    ...data,
-                    showModal: false,
-                    showServiceModal: false,
-                    selectedService: null,
-                    data: [...data.servicesData, newService],
-                });
-
             }
+
         }
     };
 
@@ -437,9 +362,9 @@ function AdminServices() {
                             required
                         >
                             <option value="default">Select a Service Category</option>
-                            {Object.keys(serviceCategories).map((service) => (
-                                <option key={service} value={service}>
-                                    {service}
+                            {data.serviceCategories.map((category) => (
+                                <option key={category.id} value={category.serviceCategoryName}>
+                                    {category.serviceCategoryName}
                                 </option>
                             ))}
                         </select>
@@ -482,7 +407,7 @@ function AdminServices() {
             </div>
 
             <Row className="cardflex">
-                {displayedServices && displayedServices.map((service) => (
+                {data.displayedServices && data.displayedServices.map((service) => (
                     <Col key={service.id} xs={8} sm={6} md={4} lg={3} xl={3}>
                         <Card className="card d-flex flex-column align-items-center justify-content-center h-100" onClick={() => (
                             setData({ ...data, selectedService: service, showServiceModal: true })
@@ -511,7 +436,7 @@ function AdminServices() {
 
             <Modal show={data.showServiceModal} onHide={() => setData({ ...data, showServiceModal: false })} centered>
                 <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
-                    <Modal.Title>{data.selectedService ? 'Edit Service' : 'Add New Service'}</Modal.Title>
+                    <Modal.Title>{'Edit Service'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{ backgroundImage: `url(${BgImage})` }}>
                     <Form>
@@ -519,7 +444,7 @@ function AdminServices() {
                             <Form.Label>Current Image</Form.Label>
                             {data.selectedService ? (
                                 <img
-                                    src={data.selectedService.image}
+                                    src={'data:image/png;base64,' + data.selectedService.serviceImage}
                                     alt="Current Service"
                                     style={{ width: '100%', maxHeight: '100px', objectFit: 'contain' }}
                                     className='rounded'
@@ -531,35 +456,29 @@ function AdminServices() {
                         <Form.Group className="mb-3">
                             <Form.Label>Choose a New Image</Form.Label>
                             <Form.Control type="file" name="image" onChange={handleImageChange} required />
-                            {data.editimageErrorMessage && <p className="text-danger p-0 m-0">{data.editimageErrorMessage}</p>}
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Change the Service Category</Form.Label>
                             <select
                                 className='form-select'
-                                name="selectedEditCategory"
-                                value={data.selectedService ? data.selectedService.category : data.category}
-                                onChange={(e) => handleEditServiceChange(e, data.selectedService, data.selectedService ? data.selectedService.category : data.category)}
+                                value={data.selectedEditCategory}
+                                onChange={(e) => setData({ ...data, selectedEditCategory: e.target.value })}
                                 required
                             >
-                                <option value="default">Select a Service Category</option>
-                                {Object.keys(serviceCategories).map((category) => (
-                                    <option key={category} value={category}>
-                                        {category}
+                                {data.serviceCategories.map((category) => (
+                                    <option key={category.id} value={category.serviceCategoryName}>
+                                        {category.serviceCategoryName}
                                     </option>
                                 ))}
                             </select>
-
-                            {data.editserviceCategoryErrorMessage && <p className="text-danger p-0 m-0">{data.editserviceCategoryErrorMessage}</p>}
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Change Service Name</Form.Label>
                             <input
                                 type="text"
                                 className="form-control"
-                                name="service"
-                                value={data.selectedService ? data.selectedService.text : data.service}
-                                onChange={handleEditServiceChange}
+                                value={data.editedServiceName}
+                                onChange={(e) => setData({ ...data, editedServiceName: e.target.value })}
                                 required
                             />
                             {data.editserviceErrorMessage && <p className="text-danger p-0 m-0">{data.editserviceErrorMessage}</p>}
@@ -620,9 +539,9 @@ function AdminServices() {
                                 required
                             >
                                 <option value="default">Select a Service Category</option>
-                                {Object.keys(serviceCategories).map((service) => (
-                                    <option key={service} value={service}>
-                                        {service}
+                                {data.serviceCategories.map((category) => (
+                                    <option key={category.id} value={category.serviceCategoryName}>
+                                        {category.serviceCategoryName}
                                     </option>
                                 ))}
                                 <option value="new">Add New Category</option>
@@ -647,7 +566,7 @@ function AdminServices() {
 
                                     <div className="mb-3">
                                         <Form.Label>Choose an Image<span style={{ color: 'red' }}>*</span></Form.Label>
-                                        <Form.Control type="file" name="categoryImage" onChange={handleCategoryImageChange} required />
+                                        <Form.Control type="file" name="categoryImage" onChange={handleCategoryImageChange} accept=".jpg, .jpeg, .png" required />
                                         {data.imageErrorMessage && <p className="text-danger p-0 m-0">{data.imageErrorMessage}</p>}
                                     </div>
                                 </div>
@@ -667,7 +586,7 @@ function AdminServices() {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Choose an Image<span style={{ color: 'red' }}>*</span></Form.Label>
-                            <Form.Control type="file" name="image" onChange={handleImageChange} required />
+                            <Form.Control type="file" name="image" onChange={handleImageChange} accept=".jpg, .jpeg, .png" required />
                             {data.imageErrorMessage && <p className="text-danger p-0 m-0">{data.imageErrorMessage}</p>}
                         </Form.Group>
                         <Modal.Footer >

@@ -9,7 +9,7 @@ import image from '../../assets/images/header/Background.png'
 import { ReactLinkContext } from "../../ContextFiles/ReactLinkContext";
 import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
 
-    const StyledButton = styled.button`
+const StyledButton = styled.button`
         background-color: #292D32;
         width: 70%;
         @media (max-width: 768px) {
@@ -22,8 +22,8 @@ import { AuthenticationContext } from "../../ContextFiles/Authentication/Authent
             color: #9f390d;
     }
     `;
-    
-    const StyledButton2 = styled.button`
+
+const StyledButton2 = styled.button`
         background-color: #292D32;
         width: 30%;
         @media (max-width: 768px) {
@@ -59,14 +59,14 @@ const Login = () => {
 
         if (email === '' && password === '') {
             setErrorMessage('Please fill in all the fields')
-        }else if (email === '') {
+        } else if (email === '') {
             setErrorMessage('Please enter the email address')
-        }else if (email === '' && password === '') {
+        } else if (email === '' && password === '') {
             setErrorMessage('Please enter the password')
         } else {
-             login(email, password);
-             console.log(email, password)
-        } 
+            login(email, password);
+            console.log(email, password)
+        }
 
     }
 
@@ -88,7 +88,7 @@ const Login = () => {
 
     const customFontStyle = {
         fontFamily: "Roboto",
-        color: '#9F390D' 
+        color: '#9F390D'
     };
 
     const [showModal, setShowModal] = useState(false);
@@ -262,7 +262,7 @@ const Login = () => {
 
                                             <div className="text-center">
 
-                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" style={{backgroundColor:'none'}}/>
+                                                <img className="img-fluid rounded-3 h-100" src={loginPhoto} alt="LoginImage" style={{ backgroundColor: 'none' }} />
 
                                             </div>
 

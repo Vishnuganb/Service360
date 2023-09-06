@@ -4,7 +4,7 @@ import '../../../../style/ServiceProvider/Dashboard.css'
 
 
 function Overview() {
-  return (
+    return (
         <div className="dashboard-top-cards-container d-flex flex-row mt-3 ms-lg-4 me-lg-4">
             <Card className="card-sp-dashboard dashboard-button-1 col-3">
                 <Card.Body className="d-flex flex-column">
@@ -43,7 +43,7 @@ function Overview() {
                 </Card.Body>
             </Card>
         </div>
-  );
+    );
 }
 
 export default Overview;

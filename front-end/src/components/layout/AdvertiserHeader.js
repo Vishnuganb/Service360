@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../style/Admin/AdminHeader.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -9,14 +9,12 @@ import profileIcon from "../../assets/images/header/user.jpg";
 import { Link } from 'react-router-dom';
 import AdvertiserEditProfile from "../pages/advertiser/EditProfile/AdvertiserEditProfile";
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
-import { useLocation } from "react-router-dom";
 import AddReviewandRating from "../pages/User/Customer/AddReviewandRating";
-import Cookies from 'js-cookie';
+
 
 function AdvertiserHeader() {
-  const location = useLocation()
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
+  const { logout } = useContext(AuthenticationContext);
   const [showAddReview, setShowAddReview] = useState(false);
 
   const response = sessionStorage.getItem('authenticatedUser');

@@ -1,7 +1,9 @@
 package com.service360.group50.controller;
 
-import com.service360.group50.auth.*;
-import com.service360.group50.message.ResponseMessage;
+import com.service360.group50.auth.AuthenticationRequest;
+import com.service360.group50.auth.AuthenticationResponse;
+import com.service360.group50.auth.UserRegisterRequest;
+import com.service360.group50.dto.UsersDTO;
 import com.service360.group50.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,8 +54,9 @@ public class LoginController {
     }
 
     @GetMapping("/login/{email}")
-    public ResponseEntity<UserDetails> getUserDetailsByEmail(@PathVariable String email) {
-        UserDetails userDetails = (UserDetails) loginService.getUserDetails(email);
+    public ResponseEntity<UsersDTO> getUserDetailsByEmail( @PathVariable String email) {
+
+        UsersDTO userDetails = loginService.getUserDetails(email);
         if (userDetails != null) {
             return ResponseEntity.ok(userDetails);
         } else {

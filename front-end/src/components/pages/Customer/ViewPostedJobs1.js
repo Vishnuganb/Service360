@@ -28,18 +28,18 @@ function ViewPostedJobs1() {
     <Row className="JobDetails-Col-container">
       <Col className="jobDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
         <div className="jobDetails-avatar-container mb-2">
-         
+
         </div>
         <div
           className="jobDetails-username mb-1"
           style={{ fontSize: "18px", fontFamily: "'Rubik', sans-serif" }}
         >
         </div>
-        
+
       </Col>
       <Col className="jobDetails-details-container col-12 col-lg-10 d-flex flex-column">
         <div className="jobDetails-status-container mb-2">
-          
+
         </div>
         <div className="jobDetails-title-container mb-2">
           <span className="jobDetails-title" style={{ fontWeight: "650" }}>{singleJobData.jobTitle}</span>

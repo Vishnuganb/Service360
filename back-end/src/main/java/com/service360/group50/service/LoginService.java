@@ -5,6 +5,7 @@ import com.service360.group50.auth.AuthenticationRequest;
 import com.service360.group50.auth.AuthenticationResponse;
 import com.service360.group50.auth.UserRegisterRequest;
 import com.service360.group50.config.JwtService;
+import com.service360.group50.dto.UsersDTO;
 import com.service360.group50.entity.Advertiser;
 import com.service360.group50.entity.AdvertiserFiles;
 import com.service360.group50.entity.Role;
@@ -56,15 +57,15 @@ public class LoginService {
     public AuthenticationResponse advertiserRegister(UserRegisterRequest request, MultipartFile[] files) throws IOException {
 
 
-            var advertiserUser = Users.builder ( )
-                    .firstname ( request.getFirstname ( ) )
-                    .lastname ( request.getLastname ( ) )
-                    .phonenumber ( request.getPhonenumber ( ) )
-                    .email ( request.getEmail ( ) )
-                    .nic ( request.getNic ( ) )
-                    .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
-                    .role ( Role.ADVERTISER )
-                    .build ( );
+        var advertiserUser = Users.builder ( )
+                .firstname ( request.getFirstname ( ) )
+                .lastname ( request.getLastname ( ) )
+                .phonenumber ( request.getPhonenumber ( ) )
+                .email ( request.getEmail ( ) )
+                .nic ( request.getNic ( ) )
+                .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
+                .role ( Role.ADVERTISER )
+                .build ( );
 
         userRepository.save(advertiserUser);
 
@@ -86,32 +87,32 @@ public class LoginService {
             advertiserFileRepository.save(advertiserFile);
         }
 
-            var jwtToken = jwtService.generateToken (advertiserUser);
-            return AuthenticationResponse.builder ( )
-                    .token ( jwtToken )
-                    .build ( );
+        var jwtToken = jwtService.generateToken (advertiserUser);
+        return AuthenticationResponse.builder ( )
+                .token ( jwtToken )
+                .build ( );
 
     }
 
     public AuthenticationResponse serviceProviderRegister(UserRegisterRequest request) {
 
 
-            var serviceprovider = Users.builder ( )
-                    .firstname ( request.getFirstname ( ) )
-                    .lastname ( request.getLastname ( ) )
-                    .phonenumber ( request.getPhonenumber ( ) )
-                    .email ( request.getEmail ( ) )
-                    .nic ( request.getNic ( ) )
-                    .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
-                    .role ( Role.SERVICEPROVIDER )
-                    .build ( );
+        var serviceprovider = Users.builder ( )
+                .firstname ( request.getFirstname ( ) )
+                .lastname ( request.getLastname ( ) )
+                .phonenumber ( request.getPhonenumber ( ) )
+                .email ( request.getEmail ( ) )
+                .nic ( request.getNic ( ) )
+                .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
+                .role ( Role.SERVICEPROVIDER )
+                .build ( );
 
         userRepository.save(serviceprovider);
 
-            var jwtToken = jwtService.generateToken ( serviceprovider);
-            return AuthenticationResponse.builder ( )
-                    .token ( jwtToken )
-                    .build ( );
+        var jwtToken = jwtService.generateToken ( serviceprovider);
+        return AuthenticationResponse.builder ( )
+                .token ( jwtToken )
+                .build ( );
 
     }
 
@@ -132,11 +133,25 @@ public class LoginService {
                 .build ( );
     }
 
-    public Object getUserDetails ( String email ) {
+    public UsersDTO getUserDetails ( String email ) {
         var a = userRepository.findByEmail ( email )
                 .orElseThrow ( () -> new RuntimeException ( "Users not found" ) );
 
-        return a;
+        UsersDTO usersDTO = new UsersDTO ();
+
+        usersDTO.setUserid ( a.getUserid () );
+        usersDTO.setFirstname ( a.getFirstname () );
+        usersDTO.setLastname ( a.getLastname () );
+        usersDTO.setEmail ( a.getEmail () );
+        usersDTO.setNic ( a.getNic () );
+        usersDTO.setPhonenumber ( a.getPhonenumber () );
+        usersDTO.setAddress ( a.getAddress () );
+        usersDTO.setRegistrationdate ( a.getRegistrationdate () );
+        usersDTO.setPassword ( a.getPassword () );
+        usersDTO.setRole ( String.valueOf ( a.getRole () ) );
+        usersDTO.setStatus ( a.getStatus () );
+
+        return usersDTO;
 
     }
 

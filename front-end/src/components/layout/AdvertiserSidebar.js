@@ -14,9 +14,8 @@ function AdvertiserSidebar() {
 
   return (
     <div
-      className={`${styles.containerFluid4} ps-2 m-0 d-flex ${
-        isOpen ? styles.largeScreen : styles.smallScreen
-      }`}
+      className={`${styles.containerFluid4} ps-2 m-0 d-flex ${isOpen ? styles.largeScreen : styles.smallScreen
+        }`}
     >
       <div className="row h-100">
         <div
@@ -26,9 +25,8 @@ function AdvertiserSidebar() {
           <div className="sidebar-content">
             <ul className={`nav nav-pills flex-column`} id="parentM">
               <li
-                className={`fs-4 mt-3 py-2 d-flex d-none d-lg-inline ${
-                  isOpen ? "align-self-end" : "mx-3"
-                }`}
+                className={`fs-4 mt-3 py-2 d-flex d-none d-lg-inline ${isOpen ? "align-self-end" : "mx-3"
+                  }`}
                 onClick={toggle}
                 style={{
                   position: "relative",
@@ -48,9 +46,8 @@ function AdvertiserSidebar() {
                 >
                   <i className="bi bi-grid"></i>
                   <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     Dashboard
                   </span>
@@ -64,9 +61,8 @@ function AdvertiserSidebar() {
                 >
                   <i className="bi bi-window-stack"></i>
                   <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     {" "}
                     Ads{" "}
@@ -85,9 +81,8 @@ function AdvertiserSidebar() {
                     style={{ fill: "none" }}
                   ></i>
                   <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     Subcription
                   </span>

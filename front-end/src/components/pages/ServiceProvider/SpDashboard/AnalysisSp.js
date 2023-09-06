@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../../../../style/ServiceProvider/Dashboard.css";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,  Cell } from 'recharts';
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 
 const getLastDayOfMonth = (date) => {
   const nextMonth = new Date(date);
@@ -75,7 +75,7 @@ function AnalysisSp() {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload; // Assuming the first payload item is enough
-  
+
       return (
         <div className="custom-tooltip">
           <p className="label">{data.session}</p>
@@ -84,56 +84,56 @@ function AnalysisSp() {
         </div>
       );
     }
-  
+
     return null;
   };
 
   return (
     <>
       <div className="dashboard-container align-items-center justify-content-center w-95 ms-lg-4 me-lg-4 my-4" >
-          <div className="d-flex justify-content-between w-100">
-            <h2 className="chart-title mb-4 ms-5 fs-4">
+        <div className="d-flex justify-content-between w-100">
+          <h2 className="chart-title mb-4 ms-5 fs-4">
             Earnings from Customer Services
-            </h2>
-            <div className="col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-2 m-3 me-xs-5  align-items-end">
-              <div className="input-group">
-                <select
-                  value={view}
-                  onChange={handleViewChange}
-                  className="form-select"
-                >
-                  <option value="daily">Daily</option>
-                  <option value="monthly">Monthly</option>
-                </select>
-              </div>
+          </h2>
+          <div className="col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-2 m-3 me-xs-5  align-items-end">
+            <div className="input-group">
+              <select
+                value={view}
+                onChange={handleViewChange}
+                className="form-select"
+              >
+                <option value="daily">Daily</option>
+                <option value="monthly">Monthly</option>
+              </select>
             </div>
           </div>
+        </div>
 
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartDataToShow} >
-              <defs>{colorGradient()}</defs>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey={view === "daily" ? "day" : "month"}
-                tick={{ fontSize: 12 }}
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis tickLine={false} axisLine={false} strokeWidth={0.1} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="income" fill="url(#colorGradient)" barSize={15} />
-            </BarChart>
-          </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartDataToShow} >
+            <defs>{colorGradient()}</defs>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey={view === "daily" ? "day" : "month"}
+              tick={{ fontSize: 12 }}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis tickLine={false} axisLine={false} strokeWidth={0.1} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="income" fill="url(#colorGradient)" barSize={15} />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
 
 
       <div className="dashboard-container align-items-center justify-content-center w-95 ms-lg-4 me-lg-4 my-4" >
-          <div className="d-flex justify-content-between w-100">
-            <h2 className="chart-title mb-4 ms-5 fs-4">
+        <div className="d-flex justify-content-between w-100">
+          <h2 className="chart-title mb-4 ms-5 fs-4">
             Earnings from Training Sessions
-            </h2>
-          </div>
+          </h2>
+        </div>
 
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={earningsData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>

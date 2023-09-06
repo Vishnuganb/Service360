@@ -12,23 +12,23 @@ import { useParams, useNavigate } from 'react-router-dom';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PDFViewer = () => {
-    const [numPages, setNumPages] = useState(null);
+  const [numPages, setNumPages] = useState(null);
 
-    const onDocumentLoadSuccess = ({ numPages }) => {
-        setNumPages(numPages);
-    };
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+  };
 
-    const pdfUrl = process.env.PUBLIC_URL + '/pdf/pdfs.pdf';
+  const pdfUrl = process.env.PUBLIC_URL + '/pdf/pdfs.pdf';
 
-    return (
-        <div className="pdf-viewer">
-            <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-                {Array.from(new Array(numPages), (el, index) => (
-                    <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfCVpopup' />
-                ))}
-            </Document>
-        </div>
-    );
+  return (
+    <div className="pdf-viewer">
+      <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+        {Array.from(new Array(numPages), (el, index) => (
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfCVpopup' />
+        ))}
+      </Document>
+    </div>
+  );
 };
 
 const Pdf = () => {
@@ -38,36 +38,36 @@ const Pdf = () => {
   const handleShow = () => setShow(true);
 
   return (
-      <>
-          <Button variant="btn btn-viewvacancy-form-t" style={{
-               width: '9%',
-               height: '28px',
-               border: '1px solid #ced4da',
-               fontSize: '14px',
-               padding: '0 5px',
-              backgroundColor: '#007bff',
-              color: '#fff',
-              fontWeight: '500',
-              textTransform: 'none',
-              background: 'black',
-              '@media (max-width: 768px)': {
-                  width: '100%',
-              }
-          }} onClick={handleShow} >
-              <i className="my-customer-table-icon bi bi-file-pdf-fill h7"></i>
-          </Button>
+    <>
+      <Button variant="btn btn-viewvacancy-form-t" style={{
+        width: '9%',
+        height: '28px',
+        border: '1px solid #ced4da',
+        fontSize: '14px',
+        padding: '0 5px',
+        backgroundColor: '#007bff',
+        color: '#fff',
+        fontWeight: '500',
+        textTransform: 'none',
+        background: 'black',
+        '@media (max-width: 768px)': {
+          width: '100%',
+        }
+      }} onClick={handleShow} >
+        <i className="my-customer-table-icon bi bi-file-pdf-fill h7"></i>
+      </Button>
 
-          <Modal show={show} onHide={handleClose} centered>
-              <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                  <Modal.Title> Cv of ServiceProvider</Modal.Title>
-              </Modal.Header>
-              <Modal.Body >
-                  <PDFViewer />
-              </Modal.Body>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+          <Modal.Title> Cv of ServiceProvider</Modal.Title>
+        </Modal.Header>
+        <Modal.Body >
+          <PDFViewer />
+        </Modal.Body>
 
 
-          </Modal>
-      </>
+      </Modal>
+    </>
   );
 };
 function VacancyPopup() {
@@ -133,7 +133,7 @@ function VacancyPopup() {
                 <Col className='col-8'> <input type="text" name="experience" className="form-control" id="experience" Value="3 yrs" />
                 </Col> </Row>
             </div>
-            
+
 
           </form>
         </Modal.Body>
@@ -201,11 +201,11 @@ const Accept = () => {
             Accept
           </Button>
           <Button variant="btn btn-viewvacancy-form-r" style={{
-           width: '15%',
-           height: '38px',
-           border: '1px solid #ced4da',
-           fontSize: '14px',
-           padding: '0 8px',
+            width: '15%',
+            height: '38px',
+            border: '1px solid #ced4da',
+            fontSize: '14px',
+            padding: '0 8px',
             backgroundColor: '#007bff',
             color: '#fff',
             fontWeight: '500',
@@ -300,8 +300,8 @@ const Reject = () => {
 
 export default function ViewVacancyReply() {
   const navigate = useNavigate();
-    const handleBackClick = () => {
-      navigate(-1);
+  const handleBackClick = () => {
+    navigate(-1);
   };
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Adjust this value based on how many items you want per page
@@ -362,22 +362,22 @@ export default function ViewVacancyReply() {
   return (
     <>
       <div className='vacancybackground' style={{ backgroundImage: `url(${BgImage})` }}>
-      <div className="back-button" onClick={handleBackClick} style={{marginLeft:'10px'}}>
-                <div className="back-icon">
-                    <i className="bi bi-arrow-left-circle-fill fs-3"></i>
-                </div>
-                <div className="back-text">
-                    <p className="m-0 p-0">Back</p>
-                </div>
-            </div>
+        <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
+          <div className="back-icon">
+            <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+          </div>
+          <div className="back-text">
+            <p className="m-0 p-0">Back</p>
+          </div>
+        </div>
         <div className="vacancy-container background-total accordion " >
           <div className="col d-flex flex-row justify-content-between">
-        
+
             <div className='d-flex flex-row gap-4 p-3 '>
               <p className="text-dark fs-4 fw-bold vacancytext">Vacancy Responses</p>
             </div>
           </div>
-          
+
           <Form className="nav-search">
             <div className="d-flex flex-wrap justify-content-center">
               <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3'>
@@ -447,9 +447,9 @@ export default function ViewVacancyReply() {
                                                 <i className="my-customer-table-icon bi bi-eye-fill h6"></i>
                                             </Link>
                                         </Button> */}
-                < VacancyPopup/>
-                &nbsp; &nbsp;
-                    <Pdf/>
+                    < VacancyPopup />
+                    &nbsp; &nbsp;
+                    <Pdf />
                     &nbsp; &nbsp;
                     <Accept />
                     &nbsp; &nbsp;
@@ -482,4 +482,3 @@ export default function ViewVacancyReply() {
     </>
   );
 }
-

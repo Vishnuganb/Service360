@@ -32,4 +32,9 @@ public class JobsServiceProviders {
     @ManyToOne
     @JoinColumn(name = "jobid")
     private Jobs jobs;
+
+    // Setter method for jobstatus
+    public void setJobstatus(String jobstatus) {
+        this.jobstatus = jobstatus;
+    }
 }

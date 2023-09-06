@@ -349,7 +349,7 @@ function MyProjectsBody(){
                                 </span>
                             </div>
                             <div className='mt-1'>
-                                <span className="sinlge-my-job-sub-info"><i className="bi bi-calendar-event"></i>&nbsp;&nbsp; Due Date - {job.duedate}</span>
+                                <span className="sinlge-my-job-sub-info"><i className="bi bi-calendar-event"></i>&nbsp;&nbsp; Due Date - {job.job.duedate}</span>
                             </div>
                             <div className='mt-1'>
                                 <span className="my-job-location-info">
@@ -391,7 +391,7 @@ function MyProjectsBody(){
                             </div>
                         </div>
                         <div className='d-flex'>
-                            <span className="job-card-date">By {vacancy.vacancy.customername}</span>
+                            <span className="job-card-date">By {vacancy.vacancy.customer.firstname}</span>
                         </div>
                         <div className='mt-1'>
                             <span className="single-job-description">

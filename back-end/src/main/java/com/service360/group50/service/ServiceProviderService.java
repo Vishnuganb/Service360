@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,17 +38,6 @@ public class ServiceProviderService {
         return JobList;
     }
 
-
-/*
-
-    public List<Jobs> viewHistoryJobs(){
-        List<Jobs> JobList = new ArrayList<>();
-//        jobsRepository.findCompletedJobsWithDetails().forEach(JobList::add);
-        jobsRepository.findAllByjobstatus("completed").forEach(JobList::add);
-        return JobList;
-    }
-
- */
 
     // NEED TO FIND FOR LOGGED IN SP
     public List<JobWithStatusDTO> viewMyJobs() {
@@ -85,31 +75,49 @@ public class ServiceProviderService {
     }
 
 
+    public List<Jobs> viewHistoryJobs() {
+        // Step 1: Retrieve job IDs
+        List<Long> completedJobIds = jobsServiceProvidersRepository.findAllByjobstatus("completed");
+
+        // Step 2: Retrieve job details for those job IDs
+        if (!completedJobIds.isEmpty()) {
+            List<Object[]> jobDetails = jobsRepository.findMyJobs(completedJobIds);
+
+            // Extract Jobs objects and return them
+            return jobDetails.stream()
+                    .map(jobData -> (Jobs) jobData[0])
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList(); // Return an empty list if no jobs found
+    }
+
+
     public Jobs viewAJob(Long id){
         return jobsRepository.findAJobWithCustomerDetails(id);
     }
 
-    /*
 
-    public Jobs updateJobInvitetoPending(Long id) {
-        Jobs existingJob = jobsRepository.findById(id).orElse(null);
-//        existingJob.setJobstatus("pending");
-        return jobsRepository.save(existingJob);
+    public JobsServiceProviders updateJobInvitetoPending(Long id) {
+        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
+        existingJob.setJobstatus("pending");
+        return jobsServiceProvidersRepository.save(existingJob);
     }
 
-    public Jobs updateJobInvitetoOngoing(Long id) {
-        Jobs existingJob = jobsRepository.findById(id).orElse(null);
-//        existingJob.setJobstatus("ongoing");
-        return jobsRepository.save(existingJob);
+
+    public JobsServiceProviders updateJobInvitetoOngoing(Long id) {
+        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
+        existingJob.setJobstatus("ongoing");
+        return jobsServiceProvidersRepository.save(existingJob);
     }
 
-    public Jobs updateJobInvitetoRejected(Long id) {
-        Jobs existingJob = jobsRepository.findById(id).orElse(null);
-//        existingJob.setJobstatus("rejected");
-        return jobsRepository.save(existingJob);
+
+    public JobsServiceProviders updateJobInvitetoRejected(Long id) {
+        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
+        existingJob.setJobstatus("rejected");
+        return jobsServiceProvidersRepository.save(existingJob);
     }
 
-*/
 
     //VACANCIES
     public List<Vacancies> viewNewVacancies() {
@@ -154,6 +162,23 @@ public class ServiceProviderService {
     }
 
 
+    public List<Vacancies> viewHistoryVacancies() {
+        // Step 1: Retrieve job IDs
+        List<Long> completedVacancyIds = vacanciesServiceProvidersRepository.findAllByvacancystatus("completed");
+
+        // Step 2: Retrieve job details for those job IDs
+        if (!completedVacancyIds.isEmpty()) {
+            List<Object[]> vacancyDetails = vacanciesRepository.findMyVacancies(completedVacancyIds);
+
+            // Extract Jobs objects and return them
+            return vacancyDetails.stream()
+                    .map(vacancyData -> (Vacancies) vacancyData[0])
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList(); // Return an empty list if no jobs found
+    }
+
 
     public Vacancies viewAVacancy(Long id){
         return vacanciesRepository.findAVacancyWithCustomerDetails(id);
@@ -168,19 +193,18 @@ public class ServiceProviderService {
         return ServiceProviderCalendarList;
     }
 
-    /*
 
     //create
     public ServiceProviderCalendar createServiceProviderCalendarEvent(ServiceProviderCalendar serviceProviderCalendar){
         return serviceProviderCalendarRepository.save(serviceProviderCalendar);
     }
 
+
     //delete
     public void deleteServiceProviderCalendarEvent(Long id){
         serviceProviderCalendarRepository.deleteById(id);
     }
 
-     */
 
     public List<TrainingSession> viewTrainingSessions() {
         List<TrainingSession> TrainingSessionList = new ArrayList<>();

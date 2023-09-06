@@ -2,10 +2,7 @@ package com.service360.group50.controller;
 
 import com.service360.group50.dto.JobWithStatusDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
-import com.service360.group50.entity.Jobs;
-import com.service360.group50.entity.TrainingSession;
-import com.service360.group50.entity.Vacancies;
-import com.service360.group50.entity.ServiceProviderCalendar;
+import com.service360.group50.entity.*;
 import com.service360.group50.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +21,12 @@ public class ServiceProvidersController {
         return serviceProviderService.viewNewJobs();
     }
 
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @GetMapping("auth/viewHistory")
-//    public List<Jobs> viewHistoryJobs(){
-//        return serviceProviderService.viewHistoryJobs();
-//    }
-//
+
+    @GetMapping("auth/viewHistoryJobs")
+    public List<Jobs> viewHistoryJobs(){
+        return serviceProviderService.viewHistoryJobs();
+    }
+
 
     // NEED TO FIND FOR LOGGED IN SP
     @GetMapping("auth/viewMyJobs")
@@ -38,34 +35,39 @@ public class ServiceProvidersController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("auth/viewNewJobs/{id}")
     public Jobs viewAJob(@PathVariable Long id) {
         return serviceProviderService.viewAJob(id);
     }
 
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @PutMapping("auth/updateJobStatusInviteToPending/{id}")
-//    public Jobs updateJobInvitetoPending(@PathVariable Long id) {
-//        return serviceProviderService.updateJobInvitetoPending(id);
-//    }
-//
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @PutMapping("auth/updateJobStatusInviteToOngoing/{id}")
-//    public Jobs updateJobInvitetoOngoing(@PathVariable Long id) {
-//        return serviceProviderService.updateJobInvitetoOngoing(id);
-//    }
-//
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @PutMapping("auth/updateJobStatusInviteToRejected/{id}")
-//    public Jobs updateJobInvitetoRejected(@PathVariable Long id) {
-//        return serviceProviderService.updateJobInvitetoRejected(id);
-//    }
-//
+    @PutMapping("auth/updateJobStatusInviteToPending/{id}")
+    public JobsServiceProviders updateJobInvitetoPending(@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoPending(id);
+    }
+
+
+    @PutMapping("auth/updateJobStatusInviteToOngoing/{id}")
+    public JobsServiceProviders updateJobInvitetoOngoing(@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoOngoing(id);
+    }
+
+
+    @PutMapping("auth/updateJobStatusInviteToRejected/{id}")
+    public JobsServiceProviders updateJobInvitetoRejected(@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoRejected(id);
+    }
+
+
     //VACANCIES
     @GetMapping("auth/viewNewVacancies")
     public List<Vacancies> viewNewVacancies() {
         return serviceProviderService.viewNewVacancies();
+    }
+
+
+    @GetMapping("auth/viewHistoryVacancies")
+    public List<Vacancies> viewHistoryVacancies(){
+        return serviceProviderService.viewHistoryVacancies();
     }
 
     @GetMapping("auth/viewMyVacancies")
@@ -84,20 +86,18 @@ public class ServiceProvidersController {
         return serviceProviderService.viewServiceProviderCalendar();
     }
 
-//    //create
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @PostMapping("auth/createServiceProviderCalendar")
-//    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
-//        return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
-//    }
-//
-//    //delete
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @DeleteMapping("auth/deleteServiceProviderCalendar/{id}")
-//    public void deleteServiceProviderCalendarEvent(@PathVariable Long id) {
-//        serviceProviderService.deleteServiceProviderCalendarEvent(id);
-//    }
-//
+    //create
+    @PostMapping("auth/createServiceProviderCalendar")
+    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
+        return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
+    }
+
+    //delete
+    @DeleteMapping("auth/deleteServiceProviderCalendar/{id}")
+    public void deleteServiceProviderCalendarEvent(@PathVariable Long id) {
+        serviceProviderService.deleteServiceProviderCalendarEvent(id);
+    }
+
 //    //TRAINING SESSIONS
     @GetMapping("auth/viewTrainingSessions")
     public List<TrainingSession> viewTrainingSessions() {

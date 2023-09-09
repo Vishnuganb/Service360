@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import ViewServiceProvider from '../ViewServiceProvider';
 import ServiceProvideimg from '../../../../assets/images/Customer/ServiceProvider1.png'
+import imagePath from "../../../../assets/images/Customer/ServiceProvider1.jpg"
 
 const Popup = () => {
   const [show, setShow] = useState(false);
@@ -50,10 +51,10 @@ function ViewSPCard({ spCard }) {
       <div className="SP-card-header">
         <Row>
           <Col>
-            <img src={spCard.profilepic} alt="avatar" className="SP-card-avatar" />
+            <img src={require(`../../../../assets/images/Customer/ServiceProvider${spCard.serviceproviderid}.jpg`)} alt="avatar" className="SP-card-avatar" />
           </Col>
           <Col>
-            <span className="SP-card-title">{spCard.name}</span>
+            <span className="SP-card-title">{spCard.serviceprovidername}</span>
           </Col>
 
           <Col className='star'>
@@ -67,13 +68,13 @@ function ViewSPCard({ spCard }) {
       </div>
       <div className="SP-card-body">
         <div className="SP-card-body-left">
-          <span className="sinlge-SP-sub-info">{spCard.service} | Member since  {spCard.joinDate}</span>
+          <span className="sinlge-SP-sub-info">{spCard.service} | Member since  {spCard.membershipdate}</span>
           <br />
           <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {spCard.location}
           </span>
           <br />
           <span className="SP-contact-info">
-            Contact number: {spCard.contactNumber}
+            Contact number: {spCard.contact}
           </span>
           <br />
         </div>

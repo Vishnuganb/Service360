@@ -32,6 +32,40 @@ function TrainingSession() {
 
     if (!viewTrainingSessionData) return 'No training session found!';
 
+    function convertTo12HourFormat(time24) {
+        const [hour, minute] = time24.split(":");
+        const hourInt = parseInt(hour);
+        const amPm = hourInt >= 12 ? "PM" : "AM";
+        const hour12 = hourInt > 12 ? hourInt - 12 : hourInt === 0 ? 12 : hourInt;
+      
+        return `${hour12}:${minute} ${amPm}`;
+    }
+
+    // Calculate the duration in hours and minutes
+    const startTimeParts = viewTrainingSessionData.trainingstarttime.split(':');
+    const endTimeParts = viewTrainingSessionData.trainingendtime.split(':');
+
+    const startHours = parseInt(startTimeParts[0], 10);
+    const startMinutes = parseInt(startTimeParts[1], 10);
+    const endHours = parseInt(endTimeParts[0], 10);
+    const endMinutes = parseInt(endTimeParts[1], 10);
+
+    const hoursDiff = endHours - startHours;
+    const minutesDiff = endMinutes - startMinutes;
+
+    // Construct the duration string
+    let durationString = '';
+    if (hoursDiff > 0) {
+    durationString += `${hoursDiff} hour${hoursDiff !== 1 ? 's' : ''}`;
+    if (minutesDiff > 0) {
+        durationString += ` and ${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
+    }
+    } else if (minutesDiff > 0) {
+        durationString += `${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
+    } else {
+        durationString = '0 minutes';
+    }
+
     return (
         <div className="ms-lg-4 me-lg-4">
             <div className="ViewATraining-image-container d-flex justify-content-center mt-4 mb-3">
@@ -66,11 +100,11 @@ function TrainingSession() {
                     </div>
                     <div className="col-lg-4 col-md-6 col-12  d-lg-flex justify-content-center">
                         <i className="bi bi-clock-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingtime}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{convertTo12HourFormat(viewTrainingSessionData.trainingstarttime)}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-end">
                         <i className="bi bi-hourglass-top"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingduration}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{durationString}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
                         <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp;&nbsp;

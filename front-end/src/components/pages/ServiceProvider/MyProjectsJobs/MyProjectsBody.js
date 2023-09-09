@@ -54,7 +54,7 @@ function MyProjectsBody(){
 
     if (!MyProjectsJobsData || !MyProjectsVacanciesData) return 'No jobs found!';
 
-    const handleAccept = (jobId, isQuotation) => {
+    const handleAcceptJob = (jobId, isQuotation) => {
         const newStatus = isQuotation ? 'pending' : 'ongoing';
         const apiUrl = isQuotation
           ? `http://localhost:8080/auth/updateJobStatusInviteToPending/${jobId}`
@@ -67,23 +67,50 @@ function MyProjectsBody(){
           .catch((error) => {
             // Handle errors
           });
-
           setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));           //PAGE REFRESH
     };
 
-    const handleReject = (jobId) => {
-    const apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToRejected/${jobId}`;
+    const handleRejectJob = (jobId) => {
+        const apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToRejected/${jobId}`;
 
-    axios.put(apiUrl)
-        .then((res) => {
-        // Update the state or trigger a reload of the component if necessary
-        })
-        .catch((error) => {
-        // Handle errors
-        });
-        setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));
+        axios.put(apiUrl)
+            .then((res) => {
+            // Update the state or trigger a reload of the component if necessary
+            })
+            .catch((error) => {
+            // Handle errors
+            });
+            setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));
         
     };
+
+    const handleAcceptVacancy = (vacancyId) => {
+        const apiUrl = `http://localhost:8080/auth/updateVacancyStatusInviteToOngoing/${vacancyId}`;
+    
+        axios.put(apiUrl)
+            .then((res) => {
+                // Update the state or trigger a reload of the component if necessary
+            })
+            .catch((error) => {
+                // Handle errors
+            });
+            setMyProjectsJobsData(prevData => prevData.filter(vacancy => vacancy.vacancyid !== vacancyId));           //PAGE REFRESH
+    };
+    
+    const handleRejectVacancy = (vacancyId) => {
+        const apiUrl = `http://localhost:8080/auth/updateVacancyStatusInviteToRejected/${vacancyId}`;
+    
+        axios.put(apiUrl)
+            .then((res) => {
+                // Update the state or trigger a reload of the component if necessary
+            })
+            .catch((error) => {
+                // Handle errors
+            });
+            setMyProjectsJobsData(prevData => prevData.filter(vacancy => vacancy.vacancyid !== vacancyId));
+
+    };
+
 
     const allCards = [...MyProjectsJobsData, ...MyProjectsVacanciesData];
 
@@ -333,7 +360,7 @@ function MyProjectsBody(){
                                 </div>
                                 
                                 <div className="isquatation d-flex flex-row ms-auto me-sm-3">
-                                    {job.job.isquotation === 'quotation' && (
+                                    {job.job.isquotation === 'true' && (
                                         <span className="single-job-status" id="job-status">Quotation</span>
                                     )}
                                     <span className="single-job-status ms-2" id="job-status">Short-Term</span>
@@ -361,14 +388,14 @@ function MyProjectsBody(){
                     <hr style={{margin:"0.5rem"}} />
                     <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
                         <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                            <span class="view-jobs-page-btn-label" onClick={() => handleAccept(job.job.jobid, job.job.isquotation === 'quotation')}>
+                            <span class="view-jobs-page-btn-label" onClick={() => handleAcceptJob(job.job.jobid, job.job.isquotation === 'quotation')}>
                                 <i class="bi bi-check-circle"></i>
                             </span>
                             Accept
                         </button>
 
                         <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
-                            <span class="view-jobs-page-btn-label" onClick={() => handleReject(job.job.jobid)}>
+                            <span class="view-jobs-page-btn-label" onClick={() => handleRejectJob(job.job.jobid)}>
                                     <i class="bi bi-x-circle"></i>
                             </span>
                             Reject
@@ -414,14 +441,14 @@ function MyProjectsBody(){
                 <hr style={{margin:"0.5rem"}} />
                 <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
                     <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                        <span class="view-jobs-page-btn-label" onClick="">
+                        <span class="view-jobs-page-btn-label" onClick={() => handleAcceptVacancy(vacancy.vacancy.vacancyid)}>
                             <i class="bi bi-check-circle"></i>
                         </span>
                         Accept
                     </button>
 
                     <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
-                        <span class="view-jobs-page-btn-label" onClick="">
+                        <span class="view-jobs-page-btn-label" onClick={() => handleRejectVacancy(vacancy.vacancy.vacancyid)}>
                                 <i class="bi bi-x-circle"></i>
                         </span>
                         Reject

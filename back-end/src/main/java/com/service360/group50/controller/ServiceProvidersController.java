@@ -3,17 +3,22 @@ package com.service360.group50.controller;
 import com.service360.group50.dto.JobWithStatusDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.entity.*;
+import com.service360.group50.repo.UserRepository;
+import com.service360.group50.request.TrainingSessionRequest;
 import com.service360.group50.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class ServiceProvidersController {
     @Autowired
     private ServiceProviderService serviceProviderService;
+    @Autowired
+    private UserRepository userRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -74,25 +79,37 @@ public class ServiceProvidersController {
     public List<VacancyWithStatusDTO> viewMyVacancies() {
         return serviceProviderService.viewMyVacancies();
     }
-//
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping("auth/viewNewVacancies/{id}")
     public Vacancies viewAVacancy(@PathVariable Long id) {return serviceProviderService.viewAVacancy(id);}
-//
+
+
+    @PostMapping("auth/ApplyVacancy")
+
+
+    @PutMapping("auth/updateVacancyStatusInviteToOngoing/{id}")
+    public VacanciesServiceProviders updateVacancyInvitetoOngoing(@PathVariable Long id) {
+        return serviceProviderService.updateVacancyInvitetoOngoing(id);
+    }
+
+
+    @PutMapping("auth/updateVacancyStatusInviteToRejected/{id}")
+    public VacanciesServiceProviders updateVacancyInvitetoRejected(@PathVariable Long id) {
+        return serviceProviderService.updateVacancyInvitetoRejected(id);
+    }
+
+
     //SP CALENDAR
-    //read
     @GetMapping("auth/viewServiceProviderCalendar")
     public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
         return serviceProviderService.viewServiceProviderCalendar();
     }
 
-    //create
     @PostMapping("auth/createServiceProviderCalendar")
     public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
         return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
     }
 
-    //delete
     @DeleteMapping("auth/deleteServiceProviderCalendar/{id}")
     public void deleteServiceProviderCalendarEvent(@PathVariable Long id) {
         serviceProviderService.deleteServiceProviderCalendarEvent(id);
@@ -104,8 +121,43 @@ public class ServiceProvidersController {
         return serviceProviderService.viewTrainingSessions();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    // NEED TO FIND FOR LOGGED IN SP
+    @GetMapping("auth/viewMyTrainingSessions")
+    public List<TrainingSession> viewMyTrainingSessions() {
+        return serviceProviderService.viewMyTrainingSessions();
+    }
+
     @GetMapping("auth/viewTrainingSessions/{id}")
     public TrainingSession viewATrainingSession(@PathVariable Long id) {return serviceProviderService.viewATrainingSession(id);}
+
+    @PostMapping("auth/createTrainingSession")
+    public TrainingSession createTrainingSession(@RequestBody TrainingSessionRequest trainingSessionRequest) {
+        // Load the Users (service provider) entity by ID
+        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
+        Optional<Users> userOptional = userRepository.findById(userId);
+        Users serviceProvider = userOptional.orElse(null);
+
+        // Create a TrainingSession entity
+        TrainingSession trainingSession = new TrainingSession();
+        trainingSession.setTrainingimage(trainingSessionRequest.getTrainingimage());
+        trainingSession.setTrainingtitle(trainingSessionRequest.getTrainingtitle());
+        trainingSession.setTrainingdescription(trainingSessionRequest.getTrainingdescription());
+        trainingSession.setTrainingdate(trainingSessionRequest.getTrainingdate());
+        trainingSession.setTrainingstarttime(trainingSessionRequest.getTrainingstarttime());
+        trainingSession.setTrainingendtime(trainingSessionRequest.getTrainingendtime());
+        trainingSession.setTraininglocation(trainingSessionRequest.getTraininglocation());
+        trainingSession.setTrainingcost(trainingSessionRequest.getTrainingcost());
+        trainingSession.setServicename(trainingSessionRequest.getServicename());
+        trainingSession.setStatus(trainingSessionRequest.getStatus());
+        trainingSession.setGoing(trainingSessionRequest.getGoing());
+        trainingSession.setInterested(trainingSessionRequest.getInterested());
+
+        // Set the service provider for the training session
+        trainingSession.setServiceprovider(serviceProvider);
+
+        // Save the TrainingSession entity
+        return serviceProviderService.createTrainingSession(trainingSession);
+    }
+
 
 }

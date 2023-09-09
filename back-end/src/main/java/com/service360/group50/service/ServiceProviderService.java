@@ -98,21 +98,21 @@ public class ServiceProviderService {
     }
 
 
-    public JobsServiceProviders updateJobInvitetoPending(Long id) {
+    public JobsServiceProviders updateJobInvitetoPending(Long id) {             // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
         JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
         existingJob.setJobstatus("pending");
         return jobsServiceProvidersRepository.save(existingJob);
     }
 
 
-    public JobsServiceProviders updateJobInvitetoOngoing(Long id) {
+    public JobsServiceProviders updateJobInvitetoOngoing(Long id) {             // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
         JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
         existingJob.setJobstatus("ongoing");
         return jobsServiceProvidersRepository.save(existingJob);
     }
 
 
-    public JobsServiceProviders updateJobInvitetoRejected(Long id) {
+    public JobsServiceProviders updateJobInvitetoRejected(Long id) {            // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
         JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
         existingJob.setJobstatus("rejected");
         return jobsServiceProvidersRepository.save(existingJob);
@@ -185,27 +185,39 @@ public class ServiceProviderService {
     }
 
 
+
+    public VacanciesServiceProviders updateVacancyInvitetoOngoing(Long id) {             // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
+        VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByvacancyid(id);
+        existingVacancy.setVacancystatus("ongoing");
+        return vacanciesServiceProvidersRepository.save(existingVacancy);
+    }
+
+
+    public VacanciesServiceProviders updateVacancyInvitetoRejected(Long id) {            // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
+        VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByvacancyid(id);
+        existingVacancy.setVacancystatus("rejected");
+        return vacanciesServiceProvidersRepository.save(existingVacancy);
+    }
+
+
+
     //SP CALENDAR
-    //read
     public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
         List<ServiceProviderCalendar> ServiceProviderCalendarList = new ArrayList<>();
         serviceProviderCalendarRepository.findAll().forEach(ServiceProviderCalendarList::add);      // NEED TO FIND FOR LOGGED IN SP
         return ServiceProviderCalendarList;
     }
 
-
-    //create
     public ServiceProviderCalendar createServiceProviderCalendarEvent(ServiceProviderCalendar serviceProviderCalendar){
         return serviceProviderCalendarRepository.save(serviceProviderCalendar);
     }
 
-
-    //delete
     public void deleteServiceProviderCalendarEvent(Long id){
         serviceProviderCalendarRepository.deleteById(id);
     }
 
 
+    //TRAINING SESSION
     public List<TrainingSession> viewTrainingSessions() {
         List<TrainingSession> TrainingSessionList = new ArrayList<>();
         trainingSessionRepository.findAllTrainingSessionsWithSpDetails().forEach(TrainingSessionList::add);
@@ -214,6 +226,16 @@ public class ServiceProviderService {
 
     public TrainingSession viewATrainingSession(Long id){
         return trainingSessionRepository.findATrainingSessionWithSpDetails(id);
+    }
+
+    public List<TrainingSession> viewMyTrainingSessions() {
+        List<TrainingSession> TrainingSessionList = new ArrayList<>();
+        trainingSessionRepository.findAllTrainingSessionsWithSpDetails().forEach(TrainingSessionList::add);          // NEED TO FIND FOR LOGGED IN SP
+        return TrainingSessionList;
+    }
+
+    public TrainingSession createTrainingSession(TrainingSession trainingSession){
+        return trainingSessionRepository.save(trainingSession);
     }
 
 }

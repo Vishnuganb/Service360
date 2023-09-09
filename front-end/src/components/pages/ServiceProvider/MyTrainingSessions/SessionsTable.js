@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Table, Container } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useEffect } from 'react';
+import axios from 'axios';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
@@ -12,6 +14,9 @@ import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
 import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 
 function MyTrainingSessions() {
+
+  const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
+
 
   const Trainingimages = [
     electrical,
@@ -225,19 +230,35 @@ function MyTrainingSessions() {
     setCurrentPage(1); // Reset current page to 1 when date changes
   };
 
+  useEffect(() => {
+    axios.get('http://localhost:8080/auth/viewMyTrainingSessions').then((res) => {
+        console.log(res.data);
+        setviewTrainingSessionsData(res.data);
+    });
+  }, []);
+
+  if (!viewTrainingSessionsData) return 'No jobs found!';
+
   // Filter training sessions based on search term and selected date
-  const filteredSessions = trainingSessionData.filter((session) => {
-    const sessionDate = new Date(session.date);
+  const filteredSessions = viewTrainingSessionsData.filter((session) => {
+    const sessionDate = new Date(session.trainingdate);
     const selected = selectedDate ? new Date(selectedDate) : null;
 
     return (
       (!selected || sessionDate.toDateString() === selected.toDateString()) &&
-      (session.sessionTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        session.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        session.status.toLowerCase().includes(searchTerm.toLowerCase()))
+      (session.trainingtitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        session.traininglocation.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
 
+  function convertTo12HourFormat(time24) {
+    const [hour, minute] = time24.split(":");
+    const hourInt = parseInt(hour);
+    const amPm = hourInt >= 12 ? "PM" : "AM";
+    const hour12 = hourInt > 12 ? hourInt - 12 : hourInt === 0 ? 12 : hourInt;
+  
+    return `${hour12}:${minute} ${amPm}`;
+  }
 
   // Calculate the start and end indices of the displayed training sessions for the current page
   const startIndex = (currentPage - 1) * cardsPerPage;
@@ -323,8 +344,7 @@ function MyTrainingSessions() {
                 <th>Session ID</th>
                 <th style={{ width: '25%' }}>Training Session Title</th>
                 <th style={{ width: '13%' }}>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
+                <th>Time</th>
                 <th>Location</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -333,13 +353,12 @@ function MyTrainingSessions() {
             <tbody>
               {/* Map through the displayed training sessions and render each row */}
               {displayedSessions.map((session) => (
-                <tr key={session.id} className="custom-table-row">
-                  <td>{String(session.id).padStart(3, '0')}</td>
-                  <td style={{ width: '25%' }}>{session.sessionTitle}</td>
-                  <td style={{ width: '13%' }}>{session.date}</td>
-                  <td>{session.startTime}</td>
-                  <td>{session.endTime}</td>
-                  <td>{session.location}</td>
+                <tr key={session.trainingid} className="custom-table-row">
+                  <td>{String(session.trainingid).padStart(3, '0')}</td>
+                  <td style={{ width: '25%' }}>{session.trainingtitle}</td>
+                  <td style={{ width: '13%' }}>{session.trainingdate}</td>
+                  <td>{convertTo12HourFormat(session.trainingstarttime)} - {convertTo12HourFormat(session.trainingendtime)}</td>
+                  <td>{session.traininglocation}</td>
                   <td>{session.status}</td>
                   <td className="d-flex justify-content-center">
                     {session.status === 'Payment Pending' ? (

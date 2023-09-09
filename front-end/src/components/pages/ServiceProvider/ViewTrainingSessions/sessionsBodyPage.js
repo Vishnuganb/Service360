@@ -66,6 +66,15 @@ function SessionsBodyPage() {
 
     if (!viewTrainingSessionsData) return 'No jobs found!';
 
+    function convertTo12HourFormat(time24) {
+        const [hour, minute] = time24.split(":");
+        const hourInt = parseInt(hour);
+        const amPm = hourInt >= 12 ? "PM" : "AM";
+        const hour12 = hourInt > 12 ? hourInt - 12 : hourInt === 0 ? 12 : hourInt;
+      
+        return `${hour12}:${minute} ${amPm}`;
+    }
+
     // Filter training sessions based on search term and selected date
     const filteredCards = viewTrainingSessionsData.filter((card) => {
         return (
@@ -140,7 +149,7 @@ function SessionsBodyPage() {
                             </span>
                             <br />
                             <span className="single-my-training-time">
-                                <i className="bi bi-clock-fill"></i>&nbsp; {TrainingSession.trainingdate} At {TrainingSession.trainingtime}
+                                <i className="bi bi-clock-fill"></i>&nbsp; {TrainingSession.trainingdate} At {convertTo12HourFormat(TrainingSession.trainingstarttime)} - {convertTo12HourFormat(TrainingSession.trainingendtime)}
                             </span>
                             <br />
                             <div className="single-traning-guests border border-dark mt-2 mb-4 col">

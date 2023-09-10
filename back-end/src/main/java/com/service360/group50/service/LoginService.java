@@ -15,6 +15,7 @@ import com.service360.group50.repo.AdvertiserRepository;
 import com.service360.group50.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -117,16 +117,25 @@ public class LoginService {
 
     }
 
-    public AuthenticationResponse login ( AuthenticationRequest request ) {
-        authenticationManager.authenticate (
-                new UsernamePasswordAuthenticationToken (
-                        request.getEmail ( ),
-                        request.getPassword ( )
-                )
-        );
+    public AuthenticationResponse login(AuthenticationRequest request) {
+        System.out.println ( request.getEmail ( ) + " " + request.getPassword ( ) );
+
+        try {
+            authenticationManager.authenticate (
+                    new UsernamePasswordAuthenticationToken (
+                            request.getEmail ( ),
+                            request.getPassword ( )
+                    )
+            );
+            System.out.println ( "Authentication successful" );
+
+        } catch (BadCredentialsException e) {
+            System.out.println ( "Authentication failed: " + e.getMessage ( ) );
+            throw new RuntimeException ( "Authentication failed" );
+        }
 
         var user = userRepository.findByEmail ( request.getEmail ( ) )
-                .orElseThrow ( () -> new RuntimeException ( "Users not found" ) );
+                .orElseThrow ( () -> new RuntimeException ( "User not found" ) );
 
         var jwtToken = jwtService.generateToken ( user );
         return AuthenticationResponse.builder ( )

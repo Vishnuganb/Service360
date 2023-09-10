@@ -9,7 +9,6 @@ import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
 import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
 import axios from 'axios';
-
 import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
 
 const serverLink = 'http://localhost:8080';

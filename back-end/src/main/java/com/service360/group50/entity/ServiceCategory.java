@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "servicecategory")
 public class ServiceCategory {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long servicecategoryid;
 

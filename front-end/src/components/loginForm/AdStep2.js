@@ -52,8 +52,10 @@ const serviceCategories = {
 
 const AdStep2 = ({
     data: {
-        address,
-        addressErrorMessage,
+        shopAddress,
+        shopAddressErrorMessage,
+        shopName,
+        shopNameErrorMessage,
         password,
         passwordType,
         isPasswordHidden,
@@ -84,17 +86,32 @@ const AdStep2 = ({
         <form className="my-2 mx-4">
 
             <div className="mb-3">
+                <p className="mb-0">Shop Name<span style={{ color: 'red' }}>*</span></p>
+                <div className="align-items-center">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your shop name"
+                        value={shopName}
+                        onChange={(e) => handleChange('shopName', e.target.value)}
+                        required
+                    />
+                    {shopNameErrorMessage && <p className="text-danger p-0 m-0">{shopNameErrorMessage}</p>}
+                </div>
+            </div>
+
+            <div className="mb-3">
                 <p className="mb-0">Enter your shop Address<span style={{ color: 'red' }}>*</span></p>
                 <div className="align-items-center">
                     <input
                         type="text"
                         className="form-control"
                         placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
-                        value={address}
-                        onChange={(e) => handleChange('address', e.target.value)}
+                        value={shopAddress}
+                        onChange={(e) => handleChange('shopAddress', e.target.value)}
                         required
                     />
-                    {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
+                    {shopAddressErrorMessage && <p className="text-danger p-0 m-0">{shopAddressErrorMessage}</p>}
                 </div>
             </div>
 

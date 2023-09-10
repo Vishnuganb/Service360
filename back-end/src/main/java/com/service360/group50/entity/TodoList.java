@@ -19,7 +19,7 @@ import java.util.List;
 
 public class TodoList {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long todolistid;
 

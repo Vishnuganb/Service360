@@ -63,6 +63,7 @@ public class LoginService {
                 .lastname ( request.getLastname ( ) )
                 .phonenumber ( request.getPhonenumber ( ) )
                 .email ( request.getEmail ( ) )
+                .address ( request.getAddress ( ) )
                 .nic ( request.getNic ( ) )
                 .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
                 .role ( Role.ADVERTISER )

@@ -119,8 +119,7 @@ public class LoginService {
     }
 
     public AuthenticationResponse login(AuthenticationRequest request) {
-        System.out.println ( request.getEmail ( ) + " " + request.getPassword ( ) );
-
+        System.out.println ( request.getEmail ( ) );
         try {
             authenticationManager.authenticate (
                     new UsernamePasswordAuthenticationToken (
@@ -135,7 +134,9 @@ public class LoginService {
             throw new RuntimeException ( "Authentication failed" );
         }
 
-        var user = userRepository.findByEmail ( request.getEmail ( ) )
+        System.out.println ("hello" );
+
+        var user = userRepository.findByEmailIgnoreCase ( request.getEmail ( ) )
                 .orElseThrow ( () -> new RuntimeException ( "User not found" ) );
 
         var jwtToken = jwtService.generateToken ( user );
@@ -145,8 +146,8 @@ public class LoginService {
     }
 
     public UsersDTO getUserDetails ( String email ) {
-        var a = userRepository.findByEmail ( email )
-                .orElseThrow ( () -> new RuntimeException ( "Users not found" ) );
+        var a = userRepository.findByEmailIgnoreCase (email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         UsersDTO usersDTO = new UsersDTO ();
 

@@ -65,9 +65,6 @@ public class Users implements UserDetails {
     private boolean isactive = true;
 
 //    @OneToMany(mappedBy = "users")
-//    private List<Blogs> blogs;
-
-//    @OneToMany(mappedBy = "users")
 //    private List<Complaints> complaints;
 
 //    @ManyToMany

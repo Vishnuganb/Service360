@@ -1,5 +1,6 @@
 package com.service360.group50.entity;
 
+import com.service360.group50.compositekeys.BlogsId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,12 +16,8 @@ import lombok.NoArgsConstructor;
         name = "blogs"
 )
 
+@IdClass(BlogsId.class)
 public class Blogs {
-    @Id
-    @GeneratedValue()
-    @Column(updatable = false)
-    private Long blogid;
-
     @Column( columnDefinition = "TEXT")
     private String blogtitle;
 
@@ -28,13 +25,21 @@ public class Blogs {
     private String blogdescription;
 
     @Column( columnDefinition = "TEXT")
-    private String blogimage;
+    private String blogimages;
 
     @Column( columnDefinition = "TEXT")
     private String servicename;
 
     //serviceproviderid
-//    @ManyToOne
-//    @JoinColumn(name = "userid")
-//    private Users users;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users serviceproviders;
+
+    //blogid
+    @Id
+    @GeneratedValue
+    @Column(updatable = false)
+    private Long blogid;
+
 }

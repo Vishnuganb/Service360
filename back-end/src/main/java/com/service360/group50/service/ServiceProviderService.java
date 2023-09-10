@@ -30,6 +30,10 @@ public class ServiceProviderService {
     private JobsServiceProvidersRepository jobsServiceProvidersRepository;
     @Autowired
     private VacanciesServiceProvidersRepository vacanciesServiceProvidersRepository;
+    @Autowired
+    private VacancyApplicationsRepository vacancyApplicationsRepository;
+    @Autowired
+    private BlogsRepository blogsRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -184,7 +188,9 @@ public class ServiceProviderService {
         return vacanciesRepository.findAVacancyWithCustomerDetails(id);
     }
 
-
+    public VacancyApplications applyvacancy(VacancyApplications vacancyApplication){
+        return vacancyApplicationsRepository.save(vacancyApplication);
+    }
 
     public VacanciesServiceProviders updateVacancyInvitetoOngoing(Long id) {             // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
         VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByvacancyid(id);
@@ -236,6 +242,17 @@ public class ServiceProviderService {
 
     public TrainingSession createTrainingSession(TrainingSession trainingSession){
         return trainingSessionRepository.save(trainingSession);
+    }
+
+    //Blogs
+    public List<Blogs> viewBlogs() {
+        List<Blogs> BlogsList = new ArrayList<>();
+        blogsRepository.findAll().forEach(BlogsList::add);
+        return BlogsList;
+    }
+
+    public Blogs createBlog(Blogs blog){
+        return blogsRepository.save(blog);
     }
 
 }

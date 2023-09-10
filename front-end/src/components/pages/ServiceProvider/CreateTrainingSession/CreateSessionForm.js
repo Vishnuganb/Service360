@@ -210,7 +210,7 @@ function CreateSessionForm() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicFiles">
-                    <Form.Label>Upload Relevant Media </Form.Label><Form.Text className="text-muted">&nbsp;&nbsp;( Please upload images that showcase your ts rning session and its content ).</Form.Text><br />
+                    <Form.Label>Upload Relevant Media </Form.Label><Form.Text className="text-muted">&nbsp;&nbsp;( Please upload images that showcase your training session and its contents )</Form.Text><br />
                     <Button className="btn-ServiceProvider-1" onClick={() => document.getElementById('fileInput').click()}>Select Images</Button>
                     <input
                         type="file"
@@ -223,8 +223,8 @@ function CreateSessionForm() {
                     <div className="selected-images">
                         {selectedFiles.map((file, index) => (
                             <div key={index} className="selected-image">
-                                <span>{file.name}</span>
-                                <Button variant="link" onClick={() => handleRemoveFile(index)}>Remove</Button>
+                                <span>{file}</span>
+                                <Button variant="link" onClick={() => handleRemoveFile(index)}><i class="bi bi-x bi-lg" style={{ color: 'black' }}></i></Button>
                             </div>
                         ))}
                     </div>

@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -150,6 +151,7 @@ public class LoginService {
         usersDTO.setPassword ( a.getPassword () );
         usersDTO.setRole ( String.valueOf ( a.getRole () ) );
         usersDTO.setStatus ( a.getStatus () );
+        usersDTO.setProfilePic (  a.getProfilePic () );
 
         return usersDTO;
 

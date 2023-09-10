@@ -23,8 +23,6 @@ function CustomerHeader() {
     const response = sessionStorage.getItem('authenticatedUser');
     const userDetail = JSON.parse(response);
 
-    console.log(userDetail);
-
     return (
         <Navbar expand="lg" bg="light" className="navbar">
             <Container>

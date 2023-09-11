@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,23 +9,38 @@ import img3 from '../../../assets/images/Customer/sofaclean3.jpeg';
 import '../../../style/Customer/ViewServiceProvider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faComment, faStar } from '@fortawesome/free-solid-svg-icons';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
+// import axios from 'axios';
+import { error } from 'jquery';
 
-function ViewServiceProvider() {
+function ViewServiceProvider(spCard) {
   const rating = 4;
+  // const [userData, setUserData] = useState({});
+
+  // useEffect(() => {
+  //   axios.get("http://localhost:8080/auth/details")
+  //   .then((Response) => {
+  //     setUserData(Response.data);
+  //   })
+
+  //   .catch((error) => {
+  //     console.error('Error Fetching user Data', error);
+  //   });
+  // }, []
+  // );
 
   return (
     <div className="SPBox ">
       <img className='SPImg' src={ServiceProvideimg} alt="profile-image" />
       <div className='SPProfile'>
-        <span className='SPname'> Alex </span>
+        <span className='SPname'> {spCard.serviceprovidername} </span>
         <span className='SPActive'> Last Active 5 days ago </span>
         <div class="SPDetail">
           <p className='p1'> Member Since 2022 </p>
-          <p className='p1'>Service : Sofa Cleaning &nbsp; | &nbsp; Location : Colombo 1, Colombo</p>
+          <p className='p1'>Service : {spCard.service} &nbsp; | &nbsp; Location : Colombo 1, Colombo</p>
           <p className='p1'>Description </p>
           <p className='Des border p-3' >Iphone unlocking Software and hardware, Display replacing, Battery replacing, All kind Mobile can be repaired</p>
         </div>
@@ -37,8 +52,8 @@ function ViewServiceProvider() {
               &nbsp; &nbsp; 0775869807
             </a>
           </div>
-
         </div>
+
         <hr className='line'></hr>
 
         <div className='SPContact'>

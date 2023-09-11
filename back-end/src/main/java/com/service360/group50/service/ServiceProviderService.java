@@ -245,14 +245,15 @@ public class ServiceProviderService {
     }
 
     //Blogs
-    public List<Blogs> viewBlogs() {
-        List<Blogs> BlogsList = new ArrayList<>();
-        blogsRepository.findAll().forEach(BlogsList::add);
-        return BlogsList;
-    }
 
     public Blogs createBlog(Blogs blog){
         return blogsRepository.save(blog);
+    }
+
+    public List<Blogs> viewServiceProviderBlogs() {
+        List<Blogs> BlogsList = new ArrayList<>();
+        blogsRepository.findAll().forEach(BlogsList::add);
+        return BlogsList;
     }
 
 }

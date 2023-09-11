@@ -219,7 +219,10 @@ public class ServiceProvidersController {
         return serviceProviderService.createBlog(blog);
     }
 
-
+    @GetMapping("auth/viewServiceProviderBlogs")
+    public List<Blogs> viewServiceProviderBlogs() {
+        return serviceProviderService.viewServiceProviderBlogs();
+    }
 
 
 }

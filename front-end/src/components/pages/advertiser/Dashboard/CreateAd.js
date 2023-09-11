@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthenticationContext } from "../../../../ContextFiles/Authentication/AuthenticationContextProvider";
 
 import "../../../../style/advertiser/AdIndex.css";
 
@@ -15,6 +16,11 @@ import adImage from "./../../../../assets/images/advertiser/41CKlQ1b08S.jpg";
 import backgroundImage from "../../../../assets/images/header/Background.png";
 
 const CreateAd = () => {
+
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
+
+
   // Ad Image useState
 
   const [selectedAdImages, setSelectedAdImages] = useState([]);
@@ -166,6 +172,8 @@ const CreateAd = () => {
     formData.append("description", "This is a sample description");
     formData.append("area", adLocation);
     formData.append("delivery", adDelivery);
+    formData.append("role", userDetail.role);
+    formData.append("userId", userDetail.userid);
 
     // Append each selected image file to the FormData object
     for (const imageFile of selectedAdImages) {

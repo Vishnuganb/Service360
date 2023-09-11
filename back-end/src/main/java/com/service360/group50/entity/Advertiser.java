@@ -22,6 +22,7 @@ public class Advertiser {
     @Column(updatable = false)
     private Long advertiserid;
 
+
     @Column( columnDefinition = "TEXT")
     private String shopname;
 
@@ -34,4 +35,8 @@ public class Advertiser {
 
     @OneToMany(mappedBy = "advertiser")
     private List<AdvertiserFiles> advertiserFiles;
+
+
+
+
 }

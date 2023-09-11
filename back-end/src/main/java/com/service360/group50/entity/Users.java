@@ -86,6 +86,10 @@ public class Users implements UserDetails {
     )
     private List<TodoList> todolist;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Ads> ads;
+
+
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();

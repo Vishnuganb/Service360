@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import backgroundImage from "../../../../../assets/images/header/Background.png";
-
+import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
 import "../../../../../style/advertiser/AdIndex.css";
 
 const ShopDetailsModal = ({ show, onHide, shopData }) => {
@@ -105,17 +105,36 @@ const ConfirmDisabled = (props) => {
 
 const ViewAd = ({
   id,
-  profileIcon,
-  proName,
-  adName,
-  adImages,
-  price,
-  location,
-  Reason,
   modalVisible,
   closeModal,
 
 }) => {
+
+  
+  const [ad, setAd] = useState([]);
+
+
+  // get ad from back-end
+   useEffect(() => {
+     const apiUrl = `http://localhost:8080/auth/getAd/${id}`;
+
+     fetch(apiUrl)
+       .then((response) => response.json())
+       .then((data) => setAd(data))
+       .catch((error) => console.error("Error fetching data:", error));
+   }, []);
+
+
+   console.log(ad);
+
+
+
+
+
+
+
+
+
 
   // disable disable pop
   const [DisableModalShow, setDisableModalShow] = React.useState(false);
@@ -138,7 +157,7 @@ const ViewAd = ({
   };
 
   const [, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(adImages[0]);
+  const [selectedImage, setSelectedImage] = useState(ad.adImages[0]);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -232,12 +251,12 @@ const ViewAd = ({
                     src={selectedImage}
                     alt="Main image"
                     fluid
-                    onClick={() => handleImageClick(adImages[0])}
+                    onClick={() => handleImageClick(ad.adImages[0])}
                   />
 
                   <div className="py-3 ">
                     <div className="d-flex justify-content-center AdsRowImg">
-                      {adImages.map((image, index) => (
+                      {ad.adImages.map((image, index) => (
                         <div key={index} className="m-3 AdsColImg">
                           <Image
                             src={image}
@@ -255,7 +274,7 @@ const ViewAd = ({
 
               <div>
                 <div className="d-flex justify-content-center">
-                  <h1 className="AdSlideHeading">{adName}</h1>
+                  <h1 className="AdSlideHeading">{ad.adsName}</h1>
                 </div>
                 <div>
                   <p>
@@ -266,7 +285,7 @@ const ViewAd = ({
                   <p> category: Electrical</p>
                   <p> Warranty: 12 Months</p>
                   <p> Delivery: Free Delivery</p>
-                  <h1 className="AdPrice text-center">{price} LKR</h1>
+                  <h1 className="AdPrice text-center">{ad.price} LKR</h1>
                 </div>
 
                 <div className="d-flex justify-content-center mb-3">
@@ -288,7 +307,7 @@ const ViewAd = ({
             shopData={shopData}
           />
         </Container>
-        <div> {Reason && <h3 className="AdrejectP p-4">{Reason}</h3>}</div>
+        {/* <div> {ad.Reason && <h3 className="AdrejectP p-4">{ad.Reason}</h3>}</div> */}
       </Modal>
     </div>
   );

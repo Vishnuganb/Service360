@@ -9,7 +9,7 @@ spring:
     #    hibernate:
     #      ddl-auto: create-drop
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     open-in-view: false
     properties:
@@ -17,9 +17,10 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-google:
-  api:
-    key=AIzaSyBGnJNyNL8BYXCmV7mkW8T9lYgYwbP2CYg:
+
+
+
+
 
 
 

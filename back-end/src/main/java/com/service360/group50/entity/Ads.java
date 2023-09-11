@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Ads {
     @Id
     @GeneratedValue()
-    @Column(updatable = false)
+    @Column(updatable = false ,name = "adsId")
     private Long adsId;
 
     @Column( columnDefinition = "TEXT")
@@ -53,7 +53,12 @@ public class Ads {
     @Column( columnDefinition = "TEXT", nullable = true)
     private String verifyImages;
 
+    @Column( columnDefinition = "TEXT", nullable = true)
+    private String Reason;
 
-    // Advertiser id want foriegn key
+
+    @ManyToOne
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users user;
 
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -12,6 +12,11 @@ function PostJobForm() {
     const handleBackClick = () => {
       navigate(-1);
   };
+  const [selectedDuration, setSelectedDuration] = useState('');
+
+    const handleDurationChange = (event) => {
+        setSelectedDuration(event.target.value);
+    };
     return (
         <div className='card2' >
            <div className="back-button" onClick={handleBackClick} style={{marginLeft:'10px'}}>
@@ -114,6 +119,79 @@ function PostJobForm() {
                         </Row>
                     </div>
 
+                    <div className="vacancy-form-group">
+                        <Row>
+                            <Col className="col-4">
+                                <label htmlFor="Duration"> Duration <span style={{ color: "red" }}>*</span></label>
+                            </Col>
+                            <Col className="col-6">
+                                <Form.Group className="mb-3">
+                                    <Form.Select
+                                        id="durationSelect"
+                                        className="select-small-text"
+                                        defaultValue=""
+                                        onChange={handleDurationChange}
+                                    >
+                                        <option value="" disabled>Select a duration period</option>
+                                        <option value="Long_term">Long term</option>
+                                        <option value="Short_term">Short term</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </div>
+
+                    {selectedDuration === 'Long_term' && (
+                        <div className="vacancy-form-group">
+                            <div className="vacancy-form-group">
+                                <Row>
+                                    <Col className="col-4">
+                                        <label htmlFor="category">Employment Type <span style={{ color: "red" }}>*</span></label>
+                                    </Col>
+                                    <Col className="col-6">
+                                        <select className="form-control" id="category" name="category">
+                                            <option value="Full_Time">Full Time</option>
+                                            <option value="Hours_based">Hours based</option>
+                                            <option value="none">None</option>
+                                        </select>
+                                    </Col>
+                                </Row>
+                            </div>
+
+                            <div className="vacancy-form-group">
+                                <Row>
+                                    <Col className="col-4">
+                                        <label htmlFor="title">Salary <span style={{ color: "red" }}>*</span></label>
+                                    </Col>
+                                    <Col className="col-6">
+                                        <input type="text" name="salary" className="form-control" id="salary" placeholder="Enter the salary" />
+                                    </Col>
+                                </Row>
+                            </div>
+
+                            <div className="vacancy-form-group">
+                                <Row>
+                                    <Col className="col-4">
+                                        <label htmlFor="title">Skill & Qualification Expect <span style={{ color: "red" }}>*</span></label>
+                                    </Col>
+                                    <Col className="col-6">
+                                        <input type="text" name="qualification" className="form-control" id="qualification" placeholder="Type here" />
+                                    </Col>
+                                </Row>
+                            </div>
+
+                            <div className="vacancy-form-group">
+                                <Row>
+                                    <Col className="col-4">
+                                        <label htmlFor="title">Responsibilities Expect <span style={{ color: "red" }}>*</span></label>
+                                    </Col>
+                                    <Col className="col-6">
+                                        <input type="text" name="responsibilities" className="form-control" id="responsibilities" placeholder="Type here" />
+                                    </Col>
+                                </Row>
+                            </div>
+                        </div>
+                    )}
                     <div className="vacancy-form-group">
                         <label for="file" >Upload image of need</label>
                         <input type="file" name="file" className="form-control" id="file" />

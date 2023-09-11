@@ -190,6 +190,8 @@ function CustomerSideBar() {
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item as={Link} to="/Customer/PostedJobs" className="no-hover">Posted Jobs</NavDropdown.Item>
                                         <NavDropdown.Divider />
+                                        <NavDropdown.Item as={Link} to="/Customer/ViewVacancy" className="no-hover">Responses</NavDropdown.Item>
+                                        <NavDropdown.Divider />
                                         <NavDropdown.Item as={Link} to="/Customer/RequestedJobs" className="no-hover">Requested Jobs</NavDropdown.Item>
                                     </NavDropdown>
 
@@ -202,6 +204,7 @@ function CustomerSideBar() {
                                         <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
                                             <Link to="/Customer/PostJobForm" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Post Jobs </Link>
                                             <Link to="/Customer/PostedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Posted Jobs </Link>
+                                            <Link to="/Customer/ViewVacancy" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4">Responses </Link>
                                             <Link to="/Customer/RequestedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Requested Jobs </Link>
                                         </li>
                                     </ul>

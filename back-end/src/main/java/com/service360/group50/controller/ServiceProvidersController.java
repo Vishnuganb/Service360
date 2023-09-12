@@ -220,7 +220,7 @@ public class ServiceProvidersController {
 
 
     @PostMapping("auth/registerTrainingSession/{id}")
-    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest, @PathVariable Long id) {
+    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest, @PathVariable Long id) throws Exception {
         // Load the Users (service provider) entity by ID
         Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
         Optional<Users> userOptional = userRepository.findById(userId);
@@ -243,10 +243,13 @@ public class ServiceProvidersController {
 
         boolean isPaymentSuccessful= true;         //sample data
 
+        // Generate a unique content for the QR code
+        String qrCodeContent = trainingSessionRegistrationRequest.getMobilenumber();
+
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
             trainingSessionRegistration.setPaymentstatus("paid");
-            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail());
+            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail(), qrCodeContent);
         } else {
             trainingSessionRegistration.setPaymentstatus("not paid");
         }

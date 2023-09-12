@@ -61,6 +61,8 @@ function TrainingSession() {
                     email: "",
                     mobilenumber: "",
                 });
+
+                alert("Registration successful!");
     
                 // Update singleJobReplies with the newly added comment
                 // setSingleJobReplies([...singleJobReplies, response.data]);

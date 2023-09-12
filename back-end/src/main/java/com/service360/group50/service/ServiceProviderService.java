@@ -273,7 +273,7 @@ public class ServiceProviderService {
         return blogsRepository.save(blog);
     }
 
-    public List<Blogs> viewServiceProviderBlogs() {
+    public List<Blogs> viewServiceProviderBlogs() {         //LOOP IT ACCORDING TO THE SERVICE PROVIDER ID
         List<Blogs> BlogsList = new ArrayList<>();
         blogsRepository.findAll().forEach(BlogsList::add);
         return BlogsList;

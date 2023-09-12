@@ -14,12 +14,13 @@ public class UsersDTO {
     private String password;
     private String role;
     private String status;
+    private String profilePic;
 
     public UsersDTO() {
     }
 
     public UsersDTO(Long userid, String firstname, String lastname, String email, String nic, String phonenumber,
-                    String address, LocalDate registrationdate, String password, String role, String status) {
+                    String address, LocalDate registrationdate, String password, String role, String status, String profilePic) {
         this.userid = userid;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -31,6 +32,7 @@ public class UsersDTO {
         this.password = password;
         this.role = role;
         this.status = status;
+        this.profilePic = profilePic;
     }
 
     public Long getUserid() {
@@ -119,5 +121,13 @@ public class UsersDTO {
 
     public void setStatus ( String status ) {
         this.status = status;
+    }
+
+    public String getProfilePic () {
+        return profilePic;
+    }
+
+    public void setProfilePic ( String profilePic ) {
+        this.profilePic = profilePic;
     }
 }

@@ -1,8 +1,7 @@
 import react, { createContext, useState, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
-import { first } from "lodash";
-import { First } from "react-bootstrap/esm/PageItem";
+
 
 export const AuthenticationContext = createContext(undefined)
 
@@ -58,6 +57,7 @@ const AuthenticationContextProvider = (props) => {
         formData.append('firstname', data.firstname);
         formData.append('lastname', data.lastname);
         formData.append('nic', data.nic);
+        formData.append('address', data.address);
         formData.append('phonenumber', data.phonenumber);
         formData.append('shopaddress', data.shopaddress);
         formData.append('shopname', data.shopname);

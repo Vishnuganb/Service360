@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 public class ServiceProviderServices {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long serviceid;
 

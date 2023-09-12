@@ -18,6 +18,11 @@ import java.util.List;
 )
 
 public class ServiceProvider {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false)
+    private Long serviceproviderid;
+
     @Column( columnDefinition = "TEXT")
     private String giramaniladarifile;
 

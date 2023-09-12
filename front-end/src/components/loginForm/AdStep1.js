@@ -1,3 +1,4 @@
+import { add } from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -23,8 +24,8 @@ const AdStep1 = ({
         lastName,
         nicNumber,
         contactNumber,
-        shopName,
-        shopNameErrorMessage,
+        address,
+        addressErrorMessage,
         emailErrorMessage,
         firstNameErrorMessage,
         lastNameErrorMessage,
@@ -117,16 +118,16 @@ const AdStep1 = ({
             </div>
 
             <div className='mb-3'>
-                <p className="mb-0">Shop Name<span style={{ color: 'red' }}>*</span></p>
+                <p className="mb-0">Address<span style={{ color: 'red' }}>*</span></p>
                 <input
                     type="text"
                     className="form-control"
-                    placeholder="Shop Name"
-                    value={shopName}
-                    onChange={(e) => handleChange('shopName', e.target.value)}
+                    placeholder="N0-06, Nelson Place, Colombo, Sri Lanka"
+                    value={address}
+                    onChange={(e) => handleChange('address', e.target.value)}
                     required
                 />
-                {shopNameErrorMessage && <p className="text-danger p-0 m-0">{shopNameErrorMessage}</p>}
+                {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
             </div>
 
             <div className="text-center">

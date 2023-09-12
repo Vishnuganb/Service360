@@ -10,9 +10,19 @@ import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
 import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
 import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
 import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 function TrainingSession() {
     const [viewTrainingSessionData, setviewTrainingSessionData] = useState(null);
+
+    const [registrationData, setRegistrationData] = useState({
+        email: "",
+        mobilenumber:""
+      });
+
+    const [isChecked, setIsChecked] = useState(false);
+
 
     const Trainingimages = [
         electrical,
@@ -31,6 +41,47 @@ function TrainingSession() {
     }, []);
 
     if (!viewTrainingSessionData) return 'No training session found!';
+
+    const handleRegistration = (event) => {
+        event.preventDefault();
+
+        // Check if the checkbox is checked before proceeding with registration
+        if (!isChecked) {
+          alert("Please verify the event name, venue, and time before proceeding.");
+          return;
+        }
+
+        // Proceed with registration if the checkbox is checked
+        axios
+            .post(`http://localhost:8080/auth/registerTrainingSession/${trainingsessionId}`, registrationData)
+            .then((response) => {
+                console.log('Registration successfully:', response.data);
+                // Clear the input fields by resetting registrationData
+                setRegistrationData({
+                    email: "",
+                    mobilenumber: "",
+                });
+    
+                // Update singleJobReplies with the newly added comment
+                // setSingleJobReplies([...singleJobReplies, response.data]);
+            })
+            .catch((error) => {
+                console.error('Error Registration:', error);
+        }); 
+    };
+    
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+    
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setRegistrationData({
+            ...registrationData,
+            [name]: value,
+        });
+    };
 
     function convertTo12HourFormat(time24) {
         const [hour, minute] = time24.split(":");
@@ -135,6 +186,51 @@ function TrainingSession() {
                     </div>
                 </div>
             </div>
+            
+            <br/>
+
+            <div>
+                <span className="h5 ViewATraining-title">Registration</span>
+            </div>
+            <Form onSubmit={handleRegistration}>
+                <Form.Group className="mt-2" controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control 
+                        type="email" 
+                        placeholder="Enter email" 
+                        name="email" 
+                        value={registrationData.email}
+                        onChange={handleInputChange} 
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group className="mt-2" controlId="formBasicPassword">
+                    <Form.Label>Mobile Number</Form.Label>
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Enter mobile number" 
+                        name="mobilenumber" 
+                        value={registrationData.mobilenumber}
+                        onChange={handleInputChange} 
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group className="mt-2" controlId="formBasicPassword">
+                    <Form.Label>Amount Payable</Form.Label>
+                    <Form.Control type="text" value={`LKR ${viewTrainingSessionData.trainingcost}`} disabled />
+                </Form.Group>
+                <div class="form-check mt-3">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" checked={isChecked} onChange={handleCheckboxChange}/>
+                    <label class="form-check-label" for="exampleCheck1">I have verified the event name, venue and time before proceeding my payment.</label>
+                </div>
+                <div className="ViewATraining-button-container mt-4 d-flex flex-row">
+                    <Button className="btn-ServiceProvider-1" type="submit">Register</Button>
+                    <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto">Back</Button>
+                </div>
+            </Form>
+
         </div>
     );
 }

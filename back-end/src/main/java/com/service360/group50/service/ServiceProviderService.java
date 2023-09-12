@@ -36,6 +36,8 @@ public class ServiceProviderService {
     private BlogsRepository blogsRepository;
     @Autowired
     private JobRepliesRepository jobRepliesRepository;
+    @Autowired
+    private TrainingSessionRegistrationRepository trainingSessionRegistrationRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -247,6 +249,10 @@ public class ServiceProviderService {
         return trainingSessionRepository.findATrainingSessionWithSpDetails(id);
     }
 
+    public TrainingSessionRegistration registerTrainingSession(TrainingSessionRegistration trainingSessionRegistration){
+        return trainingSessionRegistrationRepository.save(trainingSessionRegistration);
+    }
+
     public List<TrainingSession> viewMyTrainingSessions() {
         List<TrainingSession> TrainingSessionList = new ArrayList<>();
         trainingSessionRepository.findAllTrainingSessionsWithSpDetails().forEach(TrainingSessionList::add);          // NEED TO FIND FOR LOGGED IN SP
@@ -254,6 +260,10 @@ public class ServiceProviderService {
     }
 
     public TrainingSession createTrainingSession(TrainingSession trainingSession){
+        return trainingSessionRepository.save(trainingSession);
+    }
+
+    public TrainingSession publishTrainingSession(TrainingSession trainingSession) {
         return trainingSessionRepository.save(trainingSession);
     }
 

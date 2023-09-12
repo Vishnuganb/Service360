@@ -2,16 +2,17 @@ package com.service360.group50.controller;
 
 import com.service360.group50.dto.JobWithStatusDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
+import com.service360.group50.email.StarterMail;
 import com.service360.group50.entity.*;
 import com.service360.group50.repo.JobsRepository;
+import com.service360.group50.repo.TrainingSessionRepository;
 import com.service360.group50.repo.UserRepository;
 import com.service360.group50.repo.VacanciesRepository;
-import com.service360.group50.request.BlogsRequest;
-import com.service360.group50.request.JobRepliesRequest;
-import com.service360.group50.request.TrainingSessionRequest;
-import com.service360.group50.request.VacancyApplicationsRequest;
+import com.service360.group50.request.*;
 import com.service360.group50.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -31,6 +32,10 @@ public class ServiceProvidersController {
     private VacanciesRepository vacanciesRepository;
     @Autowired
     private JobsRepository jobsRepository;
+    @Autowired
+    private TrainingSessionRepository trainingSessionRepository;
+    @Autowired
+    private StarterMail starterMail;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -213,6 +218,50 @@ public class ServiceProvidersController {
     @GetMapping("auth/viewTrainingSessions/{id}")
     public TrainingSession viewATrainingSession(@PathVariable Long id) {return serviceProviderService.viewATrainingSession(id);}
 
+
+    @PostMapping("auth/registerTrainingSession/{id}")
+    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest, @PathVariable Long id) {
+        // Load the Users (service provider) entity by ID
+        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
+        Optional<Users> userOptional = userRepository.findById(userId);
+        Users serviceProvider = userOptional.orElse(null);
+
+        // Load the TrainingSession entity by ID
+        Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
+        TrainingSession trainingSession = trainingSessionOptional.orElse(null);
+
+        // Create a TrainingSessionRegistration entity
+        TrainingSessionRegistration trainingSessionRegistration = new TrainingSessionRegistration();
+        trainingSessionRegistration.setMobilenumber(trainingSessionRegistrationRequest.getMobilenumber());
+        trainingSessionRegistration.setEmail(trainingSessionRegistrationRequest.getEmail());
+
+
+        /*
+        // Payment gateway Api call here
+        boolean isPaymentSuccessful = processPayment(); // This function should return true if payment is successful
+         */
+
+        boolean isPaymentSuccessful= true;         //sample data
+
+        // Set the payment status based on the result of the payment gateway
+        if (isPaymentSuccessful) {
+            trainingSessionRegistration.setPaymentstatus("paid");
+            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail());
+        } else {
+            trainingSessionRegistration.setPaymentstatus("not paid");
+        }
+
+        // Set the service provider for the training session registration
+        trainingSessionRegistration.setServiceprovider(serviceProvider);
+
+        // Set the training session for the training session registration
+        trainingSessionRegistration.setTrainingsession(trainingSession);
+
+        // Save the TrainingSessionRegistration entity
+        return serviceProviderService.registerTrainingSession(trainingSessionRegistration);
+    }
+
+
     @PostMapping("auth/createTrainingSession")
     public TrainingSession createTrainingSession(@RequestBody TrainingSessionRequest trainingSessionRequest) {
         // Load the Users (service provider) entity by ID
@@ -241,6 +290,29 @@ public class ServiceProvidersController {
         // Save the TrainingSession entity
         return serviceProviderService.createTrainingSession(trainingSession);
     }
+
+    @PutMapping("auth/publishTrainingSession/{id}")
+    public TrainingSession publishTrainingSession(@PathVariable Long id) {
+        // Load the TrainingSession entity by ID
+        Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
+        TrainingSession trainingSession = trainingSessionOptional.orElse(null);
+
+        /*
+            // Payment gateway Api call here
+            boolean isPaymentSuccessful = processPayment(); // This function should return true if payment is successful
+        */
+
+        boolean isPaymentSuccessful= true;         //sample data
+
+        // Set the payment status based on the result of the payment gateway
+        if (isPaymentSuccessful) {
+            trainingSession.setStatus("Ready to publish");
+            return serviceProviderService.publishTrainingSession(trainingSession);
+        } else {
+            return null;
+        }
+    }
+
 
     //BLOGS
     @PostMapping("auth/createBlog")

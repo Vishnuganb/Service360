@@ -60,6 +60,7 @@ public class TrainingSession {
     @Column( columnDefinition = "INT")
     private Integer interested;
 
+    //IS THIS REQUIRED TO BE A PRIMARY KEY ?
     //service provider name
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")

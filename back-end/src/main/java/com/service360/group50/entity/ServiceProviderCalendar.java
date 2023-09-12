@@ -37,4 +37,7 @@ public class ServiceProviderCalendar {
     private String eventdescription;
 
     //service provider id
+    @ManyToOne
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users serviceprovider;
 }

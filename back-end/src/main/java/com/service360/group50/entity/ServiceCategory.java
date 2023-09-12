@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Data
 @Entity
 @Table(name = "servicecategory")
 public class ServiceCategory {
@@ -28,5 +28,14 @@ public class ServiceCategory {
 
     @OneToMany(mappedBy = "serviceCategory", fetch = FetchType.EAGER)
     private List<Services> services;
+
+    @Override
+    public String toString() {
+        return "ServiceCategory{" +
+                "servicecategoryid=" + servicecategoryid +
+                ", serviceCategoryName='" + serviceCategoryName + '\'' +
+                ", categoryImage=" + categoryImage +
+                '}';
+    }
 
 }

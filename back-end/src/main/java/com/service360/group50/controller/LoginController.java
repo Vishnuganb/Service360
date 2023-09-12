@@ -43,9 +43,17 @@ public class LoginController {
     }
     @PostMapping("/signup/serviceprovider")
     public ResponseEntity<AuthenticationResponse> serviceProviderRegister(
-            @RequestBody UserRegisterRequest request
+            @ModelAttribute  UserRegisterRequest request,
+            @RequestParam("files") MultipartFile[] files
     ) {
-        return ResponseEntity.ok(loginService.serviceProviderRegister(request));
+        String message = "";
+        try{
+            message = "Uploaded the files successfully: ";
+            return ResponseEntity.ok ( loginService.serviceProviderRegister ( request, files ) );
+        } catch (Exception e) {
+            message = "Could not upload the files: ";
+            return ResponseEntity.status( HttpStatus.EXPECTATION_FAILED).body(new AuthenticationResponse (message));
+        }
     }
 
     @PostMapping("/login")

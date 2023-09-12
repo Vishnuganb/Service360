@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,10 +23,14 @@ public class ServiceProvider {
     @Column(updatable = false)
     private Long serviceproviderid;
 
-    @Column( columnDefinition = "TEXT")
-    private String giramaniladarifile;
+    @OneToOne
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users users;
 
-    //serviceid
-    //fileid
-    //user id
+    @OneToMany(mappedBy = "serviceProvider")
+    private List<ServiceProviderFiles> serviceProviderFiles;
+
+    @OneToMany(mappedBy = "serviceProvider")
+    private List<ServiceProviderServices> serviceProviderServices;
+
 }

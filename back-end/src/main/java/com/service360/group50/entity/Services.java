@@ -6,10 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Builder
 @Entity
 @Table(
         name = "services"
@@ -37,5 +37,15 @@ public class Services {
     @PrePersist
     public void prePersist() {
         this.enable = true;
+    }
+
+    @Override
+    public String toString() {
+        return "Services{" +
+                "serviceid=" + serviceid +
+                ", serviceName='" + serviceName + '\'' +
+                ", serviceImage=" + serviceImage +
+                ", enable=" + enable +
+                '}';
     }
 }

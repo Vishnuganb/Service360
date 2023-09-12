@@ -33,10 +33,32 @@ const AuthenticationContextProvider = (props) => {
 
     const serviceProviderSignUp = (data) => {
 
-        axios.post(serverLink + '/auth/signup/serviceprovider', data).then(
+        const formData = new FormData();
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('firstname', data.firstname);
+        formData.append('lastname', data.lastname);
+        formData.append('nic', data.nic);
+        formData.append('address', data.address);
+        formData.append('phonenumber', data.phonenumber);
+        formData.append('categories', data.categories);
+        formData.append('services', data.services);
+
+        console.log(data.files);
+
+        for (let i = 0; i < data.files.length; i++) {
+            formData.append('files', data.files[i]);
+        }
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        axios.post(serverLink + '/auth/signup/serviceprovider', formData).then(
 
             (response) => {
 
+                console.log(response.data);
                 login(data.email, data.password)
 
             }

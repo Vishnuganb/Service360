@@ -52,7 +52,6 @@ const ServiceProviderSignUP = () => {
         selectedFiles: [],
         selectedFileCount: 0,
         fileErrorMessage: '',
-        gramaniladahriFile: null,
         selectedServices: [],
         selectedCategories: [],
     });
@@ -145,10 +144,9 @@ const ServiceProviderSignUP = () => {
         }));
     };
 
-    const fileInputRef = useRef(null); // Ref to access the file input element
+    const fileInputRef = useRef(null); 
 
     useEffect(() => {
-        // Update the input field value whenever the selectedFileCount changes
         if (fileInputRef.current) {
             fileInputRef.current.value = step2Data.selectedFileCount > 0 ? `${step2Data.selectedFileCount}` : '';
         }
@@ -192,13 +190,10 @@ const ServiceProviderSignUP = () => {
             selectedFiles: updatedFiles,
         }));
 
-        // Reset the file input value to trigger the change event
         if (fileInputRef.current) {
             if (updatedFiles.length === 0) {
-                // If all files are removed, set the file input value to an empty string
                 fileInputRef.current.value = '';
             } else {
-                // Otherwise, set the file input value to display the number of selected files
                 fileInputRef.current.value = `${updatedFiles.length} files selected`;
             }
         }
@@ -212,7 +207,7 @@ const ServiceProviderSignUP = () => {
 
     const handleStep2Submit = () => {
 
-        const { password, confirmPassword, gramaniladahriFile, selectedServices, selectedCategories } = step2Data;
+        const { password, confirmPassword, selectedServices, selectedCategories } = step2Data;
 
         let isError = false;
         let passwordErrorMessage = '';
@@ -223,36 +218,33 @@ const ServiceProviderSignUP = () => {
 
         if (password.trim() === '') {
             isError = true;
+            console.log('1')
             passwordErrorMessage = 'Password is required';
         }
 
         if (confirmPassword.trim() === '') {
             isError = true;
+            console.log('2')
             confirmPasswordErrorMessage = 'Confirm password is required';
         }
 
         if (password !== confirmPassword) {
             isError = true;
+            console.log('3')
             confirmPasswordErrorMessage = 'Passwords do not match';
-        }
-
-        if (!gramaniladahriFile || gramaniladahriFile.length === 0) {
-            isError = true;
-            fileErrorMessage = 'Upload the certified document';
         }
 
         if (selectedServices.length === 0) {
             isError = true;
-            serviceErrorMessage = 'Select the service(S) you provide';
+            console.log('5')
+            serviceErrorMessage = 'Select the service(s) you provide';
         }
 
         if (selectedCategories.length === 0) {
             isError = true;
-            categoryErrorMessage = 'Select the category(S) you provide';
+            console.log('6')
+            categoryErrorMessage = 'Select the category(s) you provide';
         }
-
-        console.log(selectedCategories.length)
-        console.log(selectedServices.length)
 
         setStep2Data((prevData) => ({
             ...prevData,
@@ -272,7 +264,12 @@ const ServiceProviderSignUP = () => {
                 nic: step1Data.nicNumber,
                 address: step1Data.address,
                 phonenumber: step1Data.contactNumber,
+                files: step2Data.selectedFiles,
+                services: step2Data.selectedCategories,
+                categories: step2Data.selectedServices,
             });
+            console.log(step1Data)
+            console.log(step2Data)
         }
 
     };
@@ -348,7 +345,7 @@ const ServiceProviderSignUP = () => {
             addressErrorMessage = 'Address is required';
         }
 
-        isError = false;
+        // isError = false;
 
         if (!isError) {
             setStep(2);

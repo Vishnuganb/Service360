@@ -8,131 +8,8 @@ import axios from 'axios';
 
 function HistoryTable() {
 
-  const [viewHistoryData, setViewHistoryData] = useState(null);
-
-  //training session objects with properties
-  // const viewHistoryData = [
-  //   {
-  //     id: 1,
-  //     serviceName: 'Masonry',
-  //     customerName: 'John Doe',
-  //     date: '2023-08-20',
-  //     startTime: '09:00',
-  //     endTime: '12:00',
-  //     location: 'Wellawatte',
-  //     paymentStatus: 'Pending',
-  //   },
-  //   {
-  //     id: 2,
-  //     serviceName: 'Tiles fitting',
-  //     customerName: 'Jane Smith',
-  //     date: '2023-08-25',
-  //     startTime: '10:00',
-  //     endTime: '15:00',
-  //     location: 'Dehiwala',
-  //     paymentStatus: 'Accepted',
-  //   },
-  //   {
-  //     id: 3,
-  //     serviceName: 'Masonry',
-  //     customerName: 'Michael Johnson',
-  //     date: '2023-08-25',
-  //     startTime: '14:00',
-  //     endTime: '17:00',
-  //     location: 'Dehiwala',
-  //     paymentStatus: 'Published',
-  //   },
-  //   {
-  //     id: 4,
-  //     serviceName: 'Masonry',
-  //     customerName: 'Emily Brown',
-  //     date: '2023-08-22',
-  //     startTime: '09:30',
-  //     endTime: '11:30',
-  //     location: 'Kohuwala',
-  //     paymentStatus: 'Accepted',
-  //   },
-  //   {
-  //     id: 5,
-  //     serviceName: 'Tiles fitting',
-  //     customerName: 'David Lee',
-  //     date: '2023-08-24',
-  //     startTime: '14:00',
-  //     endTime: '16:00',
-  //     location: 'Wellawatte',
-  //     paymentStatus: 'Pending',
-  //   },
-  //   {
-  //     id: 6,
-  //     serviceName: 'Iron works',
-  //     customerName: 'Sophia Wilson',
-  //     date: '2023-08-28',
-  //     startTime: '13:00',
-  //     endTime: '15:30',
-  //     location: 'Moratuwa',
-  //     paymentStatus: 'Published',
-  //   },
-  //   {
-  //     id: 7,
-  //     serviceName: 'Iron Works',
-  //     customerName: 'William Johnson',
-  //     date: '2023-09-02',
-  //     startTime: '10:00',
-  //     endTime: '12:00',
-  //     location: 'Galle',
-  //     paymentStatus: 'Accepted',
-  //   },
-  //   {
-  //     id: 8,
-  //     serviceName: 'Tiles fitting',
-  //     customerName: 'Olivia Davis',
-  //     date: '2023-09-05',
-  //     startTime: '15:00',
-  //     endTime: '17:00',
-  //     location: 'Dehiwala',
-  //     paymentStatus: 'Pending',
-  //   },
-  //   {
-  //     id: 9,
-  //     serviceName: 'Iron Works',
-  //     customerName: 'James Wilson',
-  //     date: '2023-09-09',
-  //     startTime: '11:30',
-  //     endTime: '13:30',
-  //     location: 'Wellawatte',
-  //     paymentStatus: 'Published',
-  //   },
-  //   {
-  //     id: 10,
-  //     serviceName: 'Glass & Aluminium',
-  //     customerName: 'Ava Martin',
-  //     date: '2023-09-12',
-  //     startTime: '09:00',
-  //     endTime: '12:00',
-  //     location: 'Moratuwa',
-  //     paymentStatus: 'Accepted',
-  //   },
-  //   {
-  //     id: 11,
-  //     serviceName: 'Masonry',
-  //     customerName: 'Liam Miller',
-  //     date: '2023-09-15',
-  //     startTime: '14:00',
-  //     endTime: '16:30',
-  //     location: 'Moratuwa',
-  //     paymentStatus: 'Pending',
-  //   },
-  //   {
-  //     id: 12,
-  //     serviceName: 'Masonry',
-  //     customerName: 'Ella Clark',
-  //     date: '2023-09-18',
-  //     startTime: '12:00',
-  //     endTime: '14:00',
-  //     location: 'Wellaawatte',
-  //     paymentStatus: 'Published',
-  //   },
-  // ];
+  const [viewHistoryJobsData, setViewHistoryJobsData] = useState(null);
+  const [viewHistoryVacanciesData, setViewHistoryVacanciesData] = useState(null);
 
   // Number of cards (training sessions) to display per page
   const cardsPerPage = 10;
@@ -166,16 +43,25 @@ function HistoryTable() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/viewHistory').then((res) => {
-      console.log(res.data);
-      setViewHistoryData(res.data);
-    });
+      axios.get('http://localhost:8080/auth/viewHistoryJobs').then((res) => {
+        console.log(res.data);
+        setViewHistoryJobsData(res.data);
+      });
+
+      axios.get('http://localhost:8080/auth/viewHistoryVacancies').then((res) => {
+        console.log(res.data);
+        setViewHistoryVacanciesData(res.data);
+      });
   }, []);
 
-  if (!viewHistoryData) return 'No History found!';
+  if (!viewHistoryJobsData || !viewHistoryVacanciesData) return 'Loading...';
+
+  const allCards = [...viewHistoryJobsData, ...viewHistoryVacanciesData];
+
+  if (!allCards) return 'No History found!';
 
   // Filter training sessions based on the selected date range
-  const filteredProjects = viewHistoryData.filter((project) => {
+  const filteredProjects = allCards.filter((project) => {
     if (startDate && endDate) {
       const ProjectDate = new Date(project.date);
       return ProjectDate >= startDate && ProjectDate <= endDate;
@@ -195,7 +81,7 @@ function HistoryTable() {
   const endIndex = startIndex + cardsPerPage;
 
   // Create a subset of training sessions to be displayed on the current page
-  const displayedProjects = filteredProjects.slice(startIndex, endIndex);
+  const displayedProjects = allCards.slice(startIndex, endIndex);
 
   const format12Hour = (time) => {
     const [hours, minutes] = time.split(":");
@@ -205,6 +91,7 @@ function HistoryTable() {
     return `${formattedHours}:${minutes} ${period}`;
   };
 
+  console.log(displayedProjects);
 
   return (
     <div>
@@ -269,12 +156,17 @@ function HistoryTable() {
               {displayedProjects.map((project) => (
                 <tr key={project.id}>
                   <td>{project.servicename}</td>
-                  <td>{project.customername}</td>
-                  <td>{project.jobdate}</td>
+                  <td>{project.customer.firstname}</td>
+
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  {/* <td>{project.jobdate}</td>
                   <td>{format12Hour(project.jobstarttime)}</td>
-                  <td>{format12Hour(project.jobendtime)}</td>
-                  <td>{project.joblocation}</td>
-                  <td>{project.paymentstatus}</td>
+                  <td>{format12Hour(project.jobendtime)}</td> */}
+
+                  <td>{project.joblocation ? project.joblocation : project.vacancylocation}</td>
+                  <td>{project.paymentstatus || "paid"}</td>
                   <td className="d-flex justify-content-center">
                     <i className="bi bi-eye-fill fs-4"></i>
                   </td>

@@ -19,15 +19,14 @@ public class ServiceProviderFiles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private Long serviceproviderid;
-
-    @Id
-    @GeneratedValue()
-    @Column(updatable = false)
     private Long fileid;
 
     @Column( columnDefinition = "TEXT")
     private String files;
 
     //serviceproviderid
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private ServiceProvider serviceProvider;
 }

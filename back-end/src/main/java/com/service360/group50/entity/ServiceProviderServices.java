@@ -19,11 +19,6 @@ public class ServiceProviderServices {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private Long serviceproviderid;
-
-    @Id
-    @GeneratedValue()
-    @Column(updatable = false)
     private Long serviceid;
 
     @Column( columnDefinition = "TEXT")
@@ -33,4 +28,8 @@ public class ServiceProviderServices {
     private String category;
 
     //serviceproviderid
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private ServiceProvider serviceProvider;
 }

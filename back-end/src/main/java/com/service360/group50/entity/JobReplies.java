@@ -1,5 +1,6 @@
 package com.service360.group50.entity;
 
+import com.service360.group50.compositekeys.JobRepliesId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
         name = "jobreplies"
 )
 
+@IdClass(JobRepliesId.class)
 public class JobReplies {
     //Service Provider IDs
     @Id

@@ -12,34 +12,16 @@ import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Form from 'react-bootstrap/Form';
 import axios from "axios";
 
 function JobDetails() {
   const [viewJobData, setViewJobData] = useState(null);
+  const [singleJobReplies, setSingleJobReplies]=useState(null);
 
-  const jobcomments = [
-    {
-      profile: UserImg,
-      customername: 'Pranavan',
-      commentid: 1,
-      description: 'Very satisfied with the service!',
-      dateposted: '2021-08-02',
-    },
-    {
-      profile: UserImg,
-      customername: 'Kavin',
-      commentid: 2,
-      description: 'Professional and efficient.',
-      dateposted: '2021-08-03',
-    },
-    {
-      profile: UserImg,
-      customername: 'Tharun',
-      commentid: 3,
-      description: 'Highly recommended!',
-      dateposted: '2021-08-04',
-    },
-];
+  const [addReplyData, setAddReplyData] = useState({
+    replymessage: "",
+  });
 
   const jobimages =[tiles1, tiles2, tiles3]
 
@@ -51,9 +33,37 @@ function JobDetails() {
         console.log(res.data);
         setViewJobData(res.data);
     });
-  }   , []);
+
+    axios.get(`http://localhost:8080/auth/viewJobReplies/${jobId}`).then((res) => {
+      console.log(res.data);
+      setSingleJobReplies(res.data);
+    });
+  }, []);
 
   if (!viewJobData) return 'No training sessions found!';
+
+  const handleAddReply = () => {
+    axios
+        .post(`http://localhost:8080/auth/AddJobReply/${jobId}`, addReplyData)
+        .then((response) => {
+            console.log('Reply Added successfully:', response.data);
+            setAddReplyData({ replymessage: "" });      // Clear the input field by resetting addReplyData
+
+            // Update singleJobReplies with the newly added comment
+            setSingleJobReplies([...singleJobReplies, response.data]);
+        })
+        .catch((error) => {
+            console.error('Error Adding Reply:', error);
+        });
+};
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setAddReplyData({
+        ...addReplyData,
+        [name]: value,
+    });
+};
 
   return (
     <>
@@ -140,9 +150,27 @@ function JobDetails() {
     </Row>
     <div className="d-flex flex-column col-12  justify-content-center align-items-center">
             <Col className="commentSection-col-container col-12 col-lg-10 col-md-10 col-sm-11 mt-3">
-                <Row className="my-3">
-                    <input type="text" className="commentSection-comment-input" placeholder="Write a comment ..." style={{borderRadius:"10px",border:"1px solid black"}}/>
-                    <Button className="commentSection-comment-btn btn-ServiceProvider-2 col-md-1 col-3 mt-2 ms-auto me-1" >Post</Button>
+                <Row className="my-3 me-lg-1 ms-lg-1">
+                  <Form className="mt-4" onSubmit={(e) => {
+                      e.preventDefault(); 
+                      handleAddReply(); 
+                  }}>
+                      <Form.Group className="mb-3" controlId="formBasicTitle">
+                          <Form.Control 
+                              type="text" 
+                              name="replymessage" 
+                              className="commentSection-comment-input" 
+                              placeholder="Write a comment ..." 
+                              value={addReplyData.replymessage}
+                              onChange={handleInputChange}
+                              style={{borderRadius:"10px",border:"1px solid black"}}
+                              required
+                          />
+                      </Form.Group>
+                      <div className="d-flex">
+                          <Button className="commentSection-comment-btn btn-ServiceProvider-2 ms-auto" type="submit">Post</Button>
+                      </div>
+                  </Form>
                 </Row>
                 
                 <Row>
@@ -150,35 +178,39 @@ function JobDetails() {
                         <span className="commentSection-comment-title" style={{fontWeight:"650"}}>Comments</span>
                     </Col>
                     <Col className="commentSection-comment-count-container d-flex flex-column align-items-end">
-                        <span className="commentSection-comment-count" style={{fontWeight:"650"}}>3 comments</span>
+                        <span className="commentSection-comment-count" style={{fontWeight:"650"}}>{singleJobReplies !== null ? singleJobReplies.length + ' comments' : 'Loading...'}</span>
                     </Col>
                 </Row>
 
-                {jobcomments.map((comment) => (
-                <Row>
-                    <div className="commentSection-comment-container mt-3 p-3" style={{border:"1px solid black",borderRadius:"15px"}}>
-                        <div className="commentSection-comment-header d-flex flex-row">
-                            <div className="commentSection-avatar-container">
-                                <img
-                                src={comment.profile}
-                                alt="avatar"
-                                className="commentSection-avatar rounded-circle"
-                                style={{ width: "40px", height: "40px" }}
-                                />
+                {singleJobReplies !== null ? (
+                    singleJobReplies.map((comment) => (
+                    <Row key={comment.replyid}>
+                        <div className="commentSection-comment-container mt-3 p-3" style={{border:"1px solid black",borderRadius:"15px"}}>
+                            <div className="commentSection-comment-header d-flex flex-row">
+                                <div className="commentSection-avatar-container">
+                                    <img
+                                    src={comment.serviceproviders.profile}
+                                    alt=""
+                                    className="commentSection-avatar rounded-circle"
+                                    style={{ width: "40px", height: "40px" }}
+                                    />
+                                </div>
+                                <div className="commentSection-username-container ms-3">
+                                    <span className="commentSection-username" style={{fontWeight:"650"}}>{comment.serviceproviders.firstname}</span>
+                                </div>
+                                <div className="commentSection-comment-date-container ms-auto ">
+                                <span className="commentSection-comment-date" style={{fontWeight:"650"}}>{comment.replydate}</span>
+                                </div>
                             </div>
-                            <div className="commentSection-username-container ms-3">
-                                <span className="commentSection-username" style={{fontWeight:"650"}}>{comment.customername}</span>
-                            </div>
-                            <div className="commentSection-comment-date-container ms-auto ">
-                            <span className="commentSection-comment-date" style={{fontWeight:"650"}}>{comment.dateposted}</span>
+                            <div className="commentSection-body mt-2">
+                                <span className="commentSection-comment-body-text" style={{fontWeight:"500"}}>{comment.replymessage}</span>
                             </div>
                         </div>
-                        <div className="commentSection-body mt-2">
-                            <span className="commentSection-comment-body-text" style={{fontWeight:"500"}}>{comment.description}</span>
-                        </div>
-                    </div>
-                </Row>
-              ))}
+                    </Row>
+                  ))
+                ):(
+                  <div>0 comments</div>
+                )}
             </Col>         
         </div>
     </>

@@ -5,9 +5,11 @@ import com.service360.group50.entity.VacanciesServiceProviders;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface VacanciesServiceProvidersRepository extends CrudRepository<VacanciesServiceProviders,Long> {
     @Query("SELECT vsp.vacancies.vacancyid, vsp.vacancystatus FROM VacanciesServiceProviders vsp")
     List<Object[]> findMyVacanciesIdsWithStatus();

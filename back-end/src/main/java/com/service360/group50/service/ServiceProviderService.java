@@ -34,6 +34,8 @@ public class ServiceProviderService {
     private VacancyApplicationsRepository vacancyApplicationsRepository;
     @Autowired
     private BlogsRepository blogsRepository;
+    @Autowired
+    private JobRepliesRepository jobRepliesRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -99,6 +101,17 @@ public class ServiceProviderService {
 
     public Jobs viewAJob(Long id){
         return jobsRepository.findAJobWithCustomerDetails(id);
+    }
+
+
+    public List<JobReplies> viewJobReplies(Long jobid){
+        List<JobReplies> JobReplies = new ArrayList<>();
+        jobRepliesRepository.findJobReplies(jobid).forEach(JobReplies::add);
+        return JobReplies;
+    }
+
+    public JobReplies addJobReply(JobReplies jobReply){
+        return jobRepliesRepository.save(jobReply);
     }
 
 

@@ -3,15 +3,19 @@ package com.service360.group50.controller;
 import com.service360.group50.dto.JobWithStatusDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.entity.*;
+import com.service360.group50.repo.JobsRepository;
 import com.service360.group50.repo.UserRepository;
 import com.service360.group50.repo.VacanciesRepository;
 import com.service360.group50.request.BlogsRequest;
+import com.service360.group50.request.JobRepliesRequest;
 import com.service360.group50.request.TrainingSessionRequest;
 import com.service360.group50.request.VacancyApplicationsRequest;
 import com.service360.group50.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.sql.Timestamp;
@@ -25,6 +29,8 @@ public class ServiceProvidersController {
     private UserRepository userRepository;
     @Autowired
     private VacanciesRepository vacanciesRepository;
+    @Autowired
+    private JobsRepository jobsRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -50,6 +56,45 @@ public class ServiceProvidersController {
     public Jobs viewAJob(@PathVariable Long id) {
         return serviceProviderService.viewAJob(id);
     }
+
+
+    @GetMapping("auth/viewJobReplies/{jobid}")
+    public List<JobReplies> viewJobReplies(@PathVariable Long jobid) {
+        return serviceProviderService.viewJobReplies(jobid);
+    }
+
+
+    @PostMapping("auth/AddJobReply/{jobid}")
+    public JobReplies addJobReply(@RequestBody JobRepliesRequest jobRepliesRequest, @PathVariable Long jobid){
+        // Load the Users (service provider) entity by ID
+        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
+        Optional<Users> userOptional = userRepository.findById(userId);
+        Users serviceProvider = userOptional.orElse(null);
+
+        // Load the Jobs entity by ID
+        Optional<Jobs> jobOptional = jobsRepository.findById(jobid);
+        Jobs job = jobOptional.orElse(null);
+
+        // Create a JobReplies entity
+        JobReplies jobReply = new JobReplies();
+        jobReply.setReplymessage(jobRepliesRequest.getReplymessage());
+
+        // Set the dateapplied for the vacancy application
+        LocalDate today = LocalDate.now();
+        jobReply.setReplydate(today);
+
+        // Set the service provider for the job reply
+        jobReply.setServiceproviders(serviceProvider);
+
+        // Set the job for the job reply
+        jobReply.setJobs(job);
+
+        // Save the JobReplies entity
+        return serviceProviderService.addJobReply(jobReply);
+    }
+
+
+
 
     @PutMapping("auth/updateJobStatusInviteToPending/{id}")
     public JobsServiceProviders updateJobInvitetoPending(@PathVariable Long id) {

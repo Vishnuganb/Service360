@@ -98,43 +98,68 @@ public class LoginService {
 
     public AuthenticationResponse advertiserRegister(UserRegisterRequest request, MultipartFile[] files) throws IOException {
 
+        boolean isEmailValid = emailValidatotor.test ( request.getEmail ( ) );
 
-        var advertiserUser = Users.builder ( )
-                .firstname ( request.getFirstname ( ) )
-                .lastname ( request.getLastname ( ) )
-                .phonenumber ( request.getPhonenumber ( ) )
-                .email ( request.getEmail ( ) )
-                .address ( request.getAddress ( ) )
-                .nic ( request.getNic ( ) )
-                .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
-                .role ( Role.ADVERTISER )
-                .build ( );
+        if ( !isEmailValid ) {
+            throw new IllegalStateException ( "Email is not valid" );
+        } else {
+            boolean userExists = userRepository.findByEmailIgnoreCase ( request.getEmail ( ) ).isPresent ();
 
-        userRepository.save(advertiserUser);
+            if ( userExists ) {
+                throw new IllegalStateException ( "Email already exists" );
+            } else {
 
-        System.out.println ( "advertiserUser = " + advertiserUser.getUserid () );
+                var advertiserUser = Users.builder ( )
+                        .firstname ( request.getFirstname ( ) )
+                        .lastname ( request.getLastname ( ) )
+                        .phonenumber ( request.getPhonenumber ( ) )
+                        .email ( request.getEmail ( ) )
+                        .address ( request.getAddress ( ) )
+                        .nic ( request.getNic ( ) )
+                        .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
+                        .role ( Role.ADVERTISER )
+                        .build ( );
 
-        // Create a new Advertiser instance
-        var advertiser = Advertiser.builder()
-                .shopname(request.getShopname())
-                .shopaddress(request.getShopaddress())
-                .users(advertiserUser) // Associate the Advertiser with the Users
-                .build();
+                userRepository.save(advertiserUser);
 
-        advertiserRepository.save(advertiser);
+                System.out.println ( "advertiserUser = " + advertiserUser.getUserid () );
 
-        for (MultipartFile file : files) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            AdvertiserFiles advertiserFile = new AdvertiserFiles (fileName, file.getContentType(), file.getBytes(), advertiser);
+                // Create a new Advertiser instance
+                var advertiser = Advertiser.builder()
+                        .shopname(request.getShopname())
+                        .shopaddress(request.getShopaddress())
+                        .users(advertiserUser) // Associate the Advertiser with the Users
+                        .build();
 
-            advertiserFileRepository.save(advertiserFile);
+                advertiserRepository.save(advertiser);
+
+                for (MultipartFile file : files) {
+                    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                    AdvertiserFiles advertiserFile = new AdvertiserFiles (fileName, file.getContentType(), file.getBytes(), advertiser);
+
+                    advertiserFileRepository.save(advertiserFile);
+                }
+
+                var jwtToken = jwtService.generateToken (advertiserUser);
+
+                ConfirmationToken confirmationToken = new ConfirmationToken (
+                        jwtToken,
+                        LocalDateTime.now ( ),
+                        LocalDateTime.now ( ).plusMinutes ( 15 ),
+                        advertiserUser
+                );
+
+                confirmationTokenService.saveConfirmationToken ( confirmationToken );
+
+                String link = "http://localhost:8080/auth/confirm?token=" + jwtToken;
+                emailSender.send ( request.getEmail ( ), buildEmail ( request.getFirstname ( ), link ) );
+
+                return AuthenticationResponse.builder ( )
+                        .token ( jwtToken )
+                        .build ( );
+
+            }
         }
-
-        var jwtToken = jwtService.generateToken (advertiserUser);
-        return AuthenticationResponse.builder ( )
-                .token ( jwtToken )
-                .build ( );
-
     }
 
     public AuthenticationResponse serviceProviderRegister(UserRegisterRequest request, MultipartFile[] files) throws IOException {

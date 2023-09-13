@@ -19,6 +19,7 @@ const AuthenticationContextProvider = (props) => {
 
             (response) => {
 
+                console.log(response.data);
                 alert("Please verify your email!!!")
                 window.location.href = "http://localhost:3000/login"
 
@@ -26,7 +27,7 @@ const AuthenticationContextProvider = (props) => {
 
         ).catch(
 
-            () => { alert("Error!!! 3") }
+            () => { alert("Chcek the credentials for the customers!!!") }
 
         )
 
@@ -60,13 +61,14 @@ const AuthenticationContextProvider = (props) => {
             (response) => {
 
                 console.log(response.data);
-                login(data.email, data.password)
+                alert("Please verify your email!!!")
+                window.location.href = "http://localhost:3000/login"
 
             }
 
         ).catch(
 
-            () => { alert("Error!!! 3") }
+            () => { alert("Check the Credentials For ServiceProvider!!!") }
 
         )
 
@@ -100,7 +102,8 @@ const AuthenticationContextProvider = (props) => {
             (response) => {
 
                 console.log(response.data);
-                login(data.email, data.password)
+                alert("Please verify your email!!!")
+                window.location.href = "http://localhost:3000/login"
 
             }
 

@@ -19,7 +19,8 @@ const AuthenticationContextProvider = (props) => {
 
             (response) => {
 
-                login(data.email, data.password)
+                alert("Please verify your email!!!")
+                window.location.href = "http://localhost:3000/login"
 
             }
 
@@ -119,8 +120,18 @@ const AuthenticationContextProvider = (props) => {
 
             })
             .catch((error) => {
-                alert("Check your email and password!!!");
-                console.log('An error occurred during login.', error);
+                if (error.response) {
+                    console.error(error.response.data.message);
+                    alert("Invalid Credentials!!! OR Please Verify Your Email!!!");
+                } else if (error.request) {
+                    console.error(error.request);
+                    console.log("hello Hi")
+                    alert(error.request);
+                } else {
+                    console.error('Error', error.message);
+                    console.log("hello Hi Hello")
+                    alert(error.message);
+                }
             });
     }
 

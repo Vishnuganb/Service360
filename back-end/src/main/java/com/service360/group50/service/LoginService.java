@@ -164,85 +164,109 @@ public class LoginService {
 
     public AuthenticationResponse serviceProviderRegister(UserRegisterRequest request, MultipartFile[] files) throws IOException {
 
-        System.out.printf ( "request = %s\n", request );
+        boolean isEmailValid = emailValidatotor.test ( request.getEmail ( ) );
 
-        String[] selectedCategories = request.getCategories();
-        String[] selectedServices = request.getServices();
-        Set<String> uniqueCategories = new HashSet<> ();
+        if ( !isEmailValid ) {
+            throw new IllegalStateException ( "Email is not valid" );
+        } else {
+            boolean userExists = userRepository.findByEmailIgnoreCase ( request.getEmail ( ) ).isPresent ();
 
-        var serviceProviderUser = Users.builder ( )
-                .firstname ( request.getFirstname ( ) )
-                .lastname ( request.getLastname ( ) )
-                .phonenumber ( request.getPhonenumber ( ) )
-                .email ( request.getEmail ( ) )
-                .address ( request.getAddress ( ) )
-                .nic ( request.getNic ( ) )
-                .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
-                .role ( Role.SERVICEPROVIDER )
-                .build ( );
+            if ( userExists ) {
+                throw new IllegalStateException ( "Email already exists" );
+            } else {
 
-        userRepository.save(serviceProviderUser);
+                String[] selectedCategories = request.getCategories();
+                String[] selectedServices = request.getServices();
+                Set<String> uniqueCategories = new HashSet<> ();
 
-        var serviceProvider = ServiceProvider.builder ()
-                .users ( serviceProviderUser )
-                .build ();
+                var serviceProviderUser = Users.builder ( )
+                        .firstname ( request.getFirstname ( ) )
+                        .lastname ( request.getLastname ( ) )
+                        .phonenumber ( request.getPhonenumber ( ) )
+                        .email ( request.getEmail ( ) )
+                        .address ( request.getAddress ( ) )
+                        .nic ( request.getNic ( ) )
+                        .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
+                        .role ( Role.SERVICEPROVIDER )
+                        .build ( );
 
-        serviceProviderRepository.save ( serviceProvider );
+                userRepository.save(serviceProviderUser);
 
-        // Create a Set to keep track of services associated with each category
-        Map<String, Set<String>> categoryServiceMap = new HashMap<> ();
+                var serviceProvider = ServiceProvider.builder ()
+                        .users ( serviceProviderUser )
+                        .build ();
 
-        for (int i = 0; i < selectedCategories.length; i++) {
-            Optional<ServiceCategory> serviceCategory = serviceCategoryRepository.findByServiceCategoryName(selectedCategories[i]);
+                serviceProviderRepository.save ( serviceProvider );
 
-            if (serviceCategory.isPresent()) {
-                ServiceCategory serviceCategoryEntity = serviceCategory.get();
+                // Create a Set to keep track of services associated with each category
+                Map<String, Set<String>> categoryServiceMap = new HashMap<> ();
 
-                for (int j = 0; j < selectedServices.length; j++) {
-                    Services service = serviceRepository.findByServiceNameAndServiceCategory(selectedServices[j], serviceCategoryEntity);
+                for (int i = 0; i < selectedCategories.length; i++) {
+                    Optional<ServiceCategory> serviceCategory = serviceCategoryRepository.findByServiceCategoryName(selectedCategories[i]);
 
-                    if (service != null) {
-                        // Get the set of associated services for this category
-                        Set<String> associatedServices = categoryServiceMap.computeIfAbsent(serviceCategoryEntity.getServiceCategoryName(), k -> new HashSet<>());
+                    if (serviceCategory.isPresent()) {
+                        ServiceCategory serviceCategoryEntity = serviceCategory.get();
 
-                        // Check if the service is already associated with the category
-                        if (!associatedServices.contains(service.getServiceName())) {
-                            // Associate the service with the service category
-                            service.setServiceCategory(serviceCategoryEntity);
+                        for (int j = 0; j < selectedServices.length; j++) {
+                            Services service = serviceRepository.findByServiceNameAndServiceCategory(selectedServices[j], serviceCategoryEntity);
 
-                            ServiceProviderServices serviceProviderService = ServiceProviderServices.builder()
-                                    .serviceProvider(serviceProvider)
-                                    .services(service)
-                                    .serviceCategory(serviceCategoryEntity)
-                                    .build();
+                            if (service != null) {
+                                // Get the set of associated services for this category
+                                Set<String> associatedServices = categoryServiceMap.computeIfAbsent(serviceCategoryEntity.getServiceCategoryName(), k -> new HashSet<>());
 
-                            serviceProviderServicesRepository.save(serviceProviderService);
+                                // Check if the service is already associated with the category
+                                if (!associatedServices.contains(service.getServiceName())) {
+                                    // Associate the service with the service category
+                                    service.setServiceCategory(serviceCategoryEntity);
 
-                            // Add the service to the set of associated services for this category
-                            associatedServices.add(service.getServiceName());
+                                    ServiceProviderServices serviceProviderService = ServiceProviderServices.builder()
+                                            .serviceProvider(serviceProvider)
+                                            .services(service)
+                                            .serviceCategory(serviceCategoryEntity)
+                                            .build();
+
+                                    serviceProviderServicesRepository.save(serviceProviderService);
+
+                                    // Add the service to the set of associated services for this category
+                                    associatedServices.add(service.getServiceName());
+                                }
+                            } else {
+                                System.out.println("Service not found in the specified category");
+                            }
                         }
                     } else {
-                        System.out.println("Service not found in the specified category");
+                        System.out.println("Service Category not found");
                     }
                 }
-            } else {
-                System.out.println("Service Category not found");
+
+
+                for (MultipartFile file : files) {
+                    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                    ServiceProviderFiles serviceProviderFiles = new ServiceProviderFiles (fileName, file.getContentType(), file.getBytes(), serviceProvider);
+
+                    serviceProviderFileRepository.save(serviceProviderFiles);
+                }
+
+                var jwtToken = jwtService.generateToken ( serviceProviderUser);
+
+                ConfirmationToken confirmationToken = new ConfirmationToken (
+                        jwtToken,
+                        LocalDateTime.now ( ),
+                        LocalDateTime.now ( ).plusMinutes ( 15 ),
+                        serviceProviderUser
+                );
+
+                confirmationTokenService.saveConfirmationToken ( confirmationToken );
+
+                String link = "http://localhost:8080/auth/confirm?token=" + jwtToken;
+                emailSender.send ( request.getEmail ( ), buildEmail ( request.getFirstname ( ), link ) );
+
+                return AuthenticationResponse.builder ( )
+                        .token ( jwtToken )
+                        .build ( );
+
             }
         }
-
-
-        for (MultipartFile file : files) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            ServiceProviderFiles serviceProviderFiles = new ServiceProviderFiles (fileName, file.getContentType(), file.getBytes(), serviceProvider);
-
-            serviceProviderFileRepository.save(serviceProviderFiles);
-        }
-
-        var jwtToken = jwtService.generateToken ( serviceProviderUser);
-        return AuthenticationResponse.builder ( )
-                .token ( jwtToken )
-                .build ( );
-
     }
 
     public ResponseEntity<AuthenticationResponse> login(AuthenticationRequest request) {

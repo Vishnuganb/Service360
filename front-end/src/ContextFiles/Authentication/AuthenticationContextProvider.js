@@ -109,7 +109,7 @@ const AuthenticationContextProvider = (props) => {
 
         ).catch(
 
-            () => { alert("Error!!! 3") }
+            () => { alert("Check the Credentials For Advertiser!!!") }
 
         )
 

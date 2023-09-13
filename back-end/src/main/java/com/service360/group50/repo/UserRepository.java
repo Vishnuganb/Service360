@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     List<Users> findAllByRegistrationdateBetween ( LocalDate startDate, LocalDate endDate );
 
     List<Users> findByRole ( String role );
+
+    Optional<Users> findByEmailIgnoreCase(String email);
+
 }

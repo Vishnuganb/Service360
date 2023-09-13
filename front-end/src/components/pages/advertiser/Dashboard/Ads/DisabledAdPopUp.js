@@ -87,11 +87,11 @@ const DisableAdPop = ({
   closeModal,
 }) => {
 
-//Enable Model
- const [EnableModalShow, setEnableModalShow] = React.useState(false);
+  //Enable Model
+  const [EnableModalShow, setEnableModalShow] = React.useState(false);
 
 
-    // Shop Details
+  // Shop Details
 
   const [showShopDetails, setShowShopDetails] = useState(false);
   const [selectedShop, setSelectedShop] = useState(null);

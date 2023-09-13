@@ -24,9 +24,6 @@ public class ServiceProviderCalendar {
     @Column
     private Long eventid;
 
-    @Column
-    private Long serviceproviderid;
-
     @Column( columnDefinition = "DATE")
     private LocalDate eventdate;
 
@@ -38,4 +35,6 @@ public class ServiceProviderCalendar {
 
     @Column( columnDefinition = "TEXT")
     private String eventdescription;
+
+    //service provider id
 }

@@ -511,7 +511,7 @@ function AdminServiceProvider() {
 
         setData({ ...data, rejectReasonErrorMessage });
 
-        if(!isError){
+        if (!isError) {
             setData({ ...data, showRejectConfirmation: false, rejectReason });
         }
     };
@@ -652,7 +652,7 @@ function AdminServiceProvider() {
                             <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
                         </div>
                         <p className='fw-bold pt-4'>Are you sure you want to Reject this service provider?</p>
-                        <p>If you select "Yes," please enter the reason for rejection.<span style={{color: 'red' }}>*</span></p>
+                        <p>If you select "Yes," please enter the reason for rejection.<span style={{ color: 'red' }}>*</span></p>
                         <input type="text" value={data.rejectReason} onChange={(e) => setData({ ...data, rejectReason: e.target.value })} placeholder="Enter Reject Reason" />
                         {data.rejectReasonErrorMessage && <p className="text-danger p-0 m-0">{data.rejectReasonErrorMessage}</p>}
                     </Modal.Body>

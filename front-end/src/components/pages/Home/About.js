@@ -44,7 +44,7 @@ const DecoratorBlob2 = tw(SvgDotPatternIcon)`relative top-0 right-0 w-32 h-32 mt
 
 export default function AppAbout() {
     return (
-        <section className="block about-block" style={{backgroundImage:`url(${BgImage})`}}>
+        <section className="block about-block" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <div className="title-holder">
                 <h2>Customers Says About Us</h2>
@@ -54,13 +54,13 @@ export default function AppAbout() {
             <Container className="py-5 h-100">
                 <Row className="justify-content-center align-items-center h-100">
                     <Col className="xl-10">
-                        <Card>                        
+                        <Card>
                             <Card.Body className="py-3">
                                 <Carousel controls indicators>
                                     {
                                         aboutData.map((item) => {
                                             return (
-                                                <Carousel.Item key={item.id}>                                                
+                                                <Carousel.Item key={item.id}>
                                                     <Row className="justify-content-center">
                                                         <Col md="8" lg="9" xl="8">
                                                             <div className="d-flex">
@@ -100,9 +100,9 @@ export default function AppAbout() {
                                         })
                                     }
                                 </Carousel>
-                            </Card.Body>  
+                            </Card.Body>
                         </Card>
-                        
+
                     </Col>
                 </Row>
             </Container>

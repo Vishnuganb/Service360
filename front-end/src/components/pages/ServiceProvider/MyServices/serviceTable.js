@@ -9,7 +9,7 @@ import { Container } from 'react-bootstrap';
 
 function ServiceTable() {
   const [show, setShow] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null); 
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = (rowData) => {
@@ -19,7 +19,7 @@ function ServiceTable() {
 
 
   //training session objects with properties
-  const myservicesData = [       
+  const myservicesData = [
     {
       id: 1,
       serviceName: 'Masonry',
@@ -44,7 +44,7 @@ function ServiceTable() {
       serviceCategory: 'Construction',
       date: '2023-03-14',
     },
-];
+  ];
 
   return (
     <div>
@@ -61,14 +61,14 @@ function ServiceTable() {
               </tr>
             </thead>
             <tbody>
-            {/* Map through the displayed training sessions and render each row */}
+              {/* Map through the displayed training sessions and render each row */}
               {myservicesData.map((service) => (
                 <tr key={service.id}>
                   <td>{service.serviceName}</td>
                   <td>{service.serviceCategory}</td>
                   <td>{service.date}</td>
                   <td className="d-flex justify-content-center">
-                      <i className="fas fa-pen-square fs-2" onClick={handleShow}></i>
+                    <i className="fas fa-pen-square fs-2" onClick={handleShow}></i>
                   </td>
                 </tr>
               ))}
@@ -78,7 +78,7 @@ function ServiceTable() {
       </div>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Edit Service</Modal.Title>
         </Modal.Header>
 
@@ -86,16 +86,16 @@ function ServiceTable() {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Service</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus disabled/>
+              <Form.Control className='mb-2' type="text" placeholder="" autoFocus disabled />
 
               <Form.Label>Working Area</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus/>
+              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
 
               <Form.Label>Description</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus/>
+              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
 
               <Form.Label>Qualifications</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus/>
+              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
 
               <Form.Label>Working Days</Form.Label>
               <div className='mb-2'>
@@ -110,10 +110,10 @@ function ServiceTable() {
 
 
               <Form.Label>Working Hours</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus/>
+              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
 
               <Form.Label>Qualification Certificate</Form.Label>
-              <Form.Control type="file" placeholder="" autoFocus/>
+              <Form.Control type="file" placeholder="" autoFocus />
             </Form.Group>
 
           </Form>

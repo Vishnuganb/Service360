@@ -52,8 +52,10 @@ const serviceCategories = {
 
 const AdStep2 = ({
     data: {
-        address,
-        addressErrorMessage,
+        shopAddress,
+        shopAddressErrorMessage,
+        shopName,
+        shopNameErrorMessage,
         password,
         passwordType,
         isPasswordHidden,
@@ -63,9 +65,7 @@ const AdStep2 = ({
         errorMessage,
         passwordErrorMessage,
         selectedFiles,
-        selectedFileCount,
         fileErrorMessage,
-        filePaths,
     },
     handleChange,
     handleShowHidePassword,
@@ -85,20 +85,35 @@ const AdStep2 = ({
     return (
         <form className="my-2 mx-4">
 
-                <div className="mb-3">
-                <p className="mb-0">Enter your shop Address<span style={{ color: 'red' }}>*</span></p>
-                    <div className="align-items-center">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
-                            value={address}
-                            onChange={(e) => handleChange('address', e.target.value)}
-                            required
-                        />
-                        {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
-                    </div>
+            <div className="mb-3">
+                <p className="mb-0">Shop Name<span style={{ color: 'red' }}>*</span></p>
+                <div className="align-items-center">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your shop name"
+                        value={shopName}
+                        onChange={(e) => handleChange('shopName', e.target.value)}
+                        required
+                    />
+                    {shopNameErrorMessage && <p className="text-danger p-0 m-0">{shopNameErrorMessage}</p>}
                 </div>
+            </div>
+
+            <div className="mb-3">
+                <p className="mb-0">Enter your shop Address<span style={{ color: 'red' }}>*</span></p>
+                <div className="align-items-center">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="No-06, Nelson Place, Colombo, Sri Lanka"
+                        value={shopAddress}
+                        onChange={(e) => handleChange('shopAddress', e.target.value)}
+                        required
+                    />
+                    {shopAddressErrorMessage && <p className="text-danger p-0 m-0">{shopAddressErrorMessage}</p>}
+                </div>
+            </div>
 
 
             <div className="mb-3">
@@ -111,12 +126,12 @@ const AdStep2 = ({
                     required
                 />
                 {fileErrorMessage && <p className="text-danger p-0 m-0">{fileErrorMessage}</p>}
-                {Array.isArray(filePaths) && filePaths.length > 0 && (
+                {Array.isArray(selectedFiles) && selectedFiles.length > 0 && (
                     <>
                         <ul className="list-group mt-2">
-                            {filePaths.map((path, index) => (
+                            {selectedFiles.map((file, index) => (
                                 <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                                    <span>{getFileNameFromPath(path)}</span>
+                                    <span>{file.name}</span>
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveFile(index)}

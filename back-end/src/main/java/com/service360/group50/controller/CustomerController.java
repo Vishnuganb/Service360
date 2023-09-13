@@ -22,4 +22,6 @@ public class CustomerController {
         // You may want to add exception handling here, e.g., if cServiceProviderService is null
         return cServiceProviderService.getAllDetails();
     }
+
+
 }

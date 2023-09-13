@@ -40,6 +40,23 @@ public class ServiceProvidersController {
         return serviceProviderService.viewAJob(id);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("auth/updateJobStatusInviteToPending/{id}")
+    public Jobs updateJobInvitetoPending(@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoPending(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("auth/updateJobStatusInviteToOngoing/{id}")
+    public Jobs updateJobInvitetoOngoing(@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoOngoing(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("auth/updateJobStatusInviteToRejected/{id}")
+    public Jobs updateJobInvitetoRejected(@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoRejected(id);
+    }
 
     //VACANCIES
     @CrossOrigin(origins = "http://localhost:3000")

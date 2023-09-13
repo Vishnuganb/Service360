@@ -1,6 +1,6 @@
 import "../../../../style/ServiceProvider/Dashboard.css";
 import {
- 
+
   Area,
   AreaChart,
   XAxis,
@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  
+
 } from "recharts";
 
 function AnalysisInvoices() {
@@ -65,21 +65,21 @@ function AnalysisInvoices() {
     }
   ];
 
-    const renderActiveDot = (props) => {
-      const { cx, cy, stroke, key } = props;
+  const renderActiveDot = (props) => {
+    const { cx, cy, stroke, key } = props;
 
-      return (
-        <g key={key}>
-          <circle cx={cx} cy={cy} r={3} stroke={stroke} fill="#8884d8" />
-        </g>
-      );
-    };
+    return (
+      <g key={key}>
+        <circle cx={cx} cy={cy} r={3} stroke={stroke} fill="#8884d8" />
+      </g>
+    );
+  };
 
   return (
     // <div className="graphContainer px-3 py-4">
-    <div className="graphContainer px-3 py-4" style={{ height: 400}}> 
+    <div className="graphContainer px-3 py-4" style={{ height: 400 }}>
       <ResponsiveContainer width="100%" height="90%">
-        
+
         <AreaChart data={data} margin={{ top: 0, right: 30, left: 0, bottom: 42 }}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1" fill="#8884d8">
@@ -88,11 +88,11 @@ function AnalysisInvoices() {
             </linearGradient>
           </defs>
           <CartesianGrid vertical={false} />
-          <XAxis dataKey="month"  tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
+          <XAxis dataKey="month" tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
           <YAxis dataKey="income" domain={['auto', 'auto']} axisLine={false} strokeWidth={0.1} />
           <Tooltip />
-          
-           <Area type="monotone" dataKey="income" stroke="#687699" strokeWidth={3} fillOpacity={1} fill="url(#colorUv)" dot={renderActiveDot} />
+
+          <Area type="monotone" dataKey="income" stroke="#687699" strokeWidth={3} fillOpacity={1} fill="url(#colorUv)" dot={renderActiveDot} />
           <Legend
             verticalAlign="top"
             align="right"

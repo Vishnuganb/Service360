@@ -16,7 +16,7 @@ import "../../../../style/User/Chat/Chat.css";
 const ChatApp = () => {
   return (
     <Container>
- <div   fluid>
+      <div fluid>
         <h1>Chat</h1>
         <Row>
           <Col md="12">
@@ -248,7 +248,7 @@ const ChatApp = () => {
                           src={Aisu}
                           alt="avatar"
                           className="chatProImg d-flex align-self-center me-3"
-                        
+
 
                         />
                         <div>
@@ -418,8 +418,8 @@ const ChatApp = () => {
                         alt="avatar"
                         className="chatProImg d-flex align-self-center me-3"
                       />
-                      <div className="d-flex border align-items-center rounded-3 px-3" 
-                      style={{width:"100%"}}>
+                      <div className="d-flex border align-items-center rounded-3 px-3"
+                        style={{ width: "100%" }}>
                         <input
                           type="text"
                           className="form-control form-control-lg"
@@ -460,7 +460,7 @@ const ChatApp = () => {
         </Row>
       </div>
     </Container>
-     
+
   );
 };
 

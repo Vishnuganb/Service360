@@ -395,7 +395,7 @@ function AdminComplaints() {
                 complaint.nic.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
                 complaint.complaintDate.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
                 complaint.complaint.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                complaint.description.toLowerCase().includes(data.searchTerm.toLowerCase()) 
+                complaint.description.toLowerCase().includes(data.searchTerm.toLowerCase())
             )
         );
 
@@ -458,7 +458,7 @@ function AdminComplaints() {
             replyErrorMessage = 'Please enter a reply.';
         }
 
-        setData({...data, replyErrorMessage})
+        setData({ ...data, replyErrorMessage })
 
         if (!isError) {
 
@@ -468,7 +468,7 @@ function AdminComplaints() {
             }));
 
             setData({ ...data, showDetailsModal: false });
-        } 
+        }
 
     };
 
@@ -477,7 +477,7 @@ function AdminComplaints() {
     };
 
     const handleTabChange = (tab) => {
-        
+
         setData((prevState) => ({
             ...prevState,
             activeTab: tab,
@@ -610,7 +610,7 @@ function AdminComplaints() {
                                         <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint Date: </span> {data.selectedUser.complaintDate}
                                     </div>
                                     <div className="mt-2 rounded">
-                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint: </span> 
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint: </span>
                                         <div>{data.selectedUser.complaint}</div>
                                     </div>
                                     <div className="mt-2 rounded">
@@ -618,7 +618,7 @@ function AdminComplaints() {
                                         <div>{data.selectedUser.description}</div>
                                     </div>
                                     <div className="mt-2">
-                                        <textarea value={data.reply} onChange={handleReplyChange} className="form-control" placeholder="Reply to the complaint..." 
+                                        <textarea value={data.reply} onChange={handleReplyChange} className="form-control" placeholder="Reply to the complaint..."
                                             rows={6}
                                             style={{ resize: 'vertical', height: '100px' }}
                                             autoFocus

@@ -97,7 +97,7 @@ const RejectedAds = () => {
   };
 
   const adsData = [
-      {
+    {
       proName: "Adam",
       profileIcon: profileIcon,
       adImages: [soapImage],

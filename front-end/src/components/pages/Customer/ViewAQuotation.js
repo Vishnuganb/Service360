@@ -22,7 +22,7 @@ const PDFViewer = () => {
     <div className="pdf-viewer">
       <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
-          <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfpopup'/>
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfpopup' />
         ))}
       </Document>
     </div>

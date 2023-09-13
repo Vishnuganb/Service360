@@ -13,7 +13,7 @@ const ReactLinkContextProvider = (props) => {
 
     return (
 
-        <ReactLinkContext.Provider value={{ LoginLink, CustomerSignUpLink,ServiceProviderSignUpLink,AdvertiserSignUpLink, ResetPasswordLink }}>
+        <ReactLinkContext.Provider value={{ LoginLink, CustomerSignUpLink, ServiceProviderSignUpLink, AdvertiserSignUpLink, ResetPasswordLink }}>
 
             {props.children}
 

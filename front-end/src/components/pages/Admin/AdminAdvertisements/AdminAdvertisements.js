@@ -502,7 +502,7 @@ function AdminAdvertisements() {
         const filteredProviders = filteredServices.filter((advertisement) =>
             advertisement.status === status && (
                 advertisement.adName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                advertisement.category.toLowerCase().includes(data.searchTerm.toLowerCase()) 
+                advertisement.category.toLowerCase().includes(data.searchTerm.toLowerCase())
             )
         );
 
@@ -590,7 +590,7 @@ function AdminAdvertisements() {
     };
 
     function handleImageClick(e) {
-        e.target.style.transform = 'scale(2)'; 
+        e.target.style.transform = 'scale(2)';
         e.target.style.filter = 'brightness(1)';
         e.target.style.cursor = 'zoom-out';
     }
@@ -708,7 +708,7 @@ function AdminAdvertisements() {
                 {data.selectedAdvertisement && (
                     <Modal.Body className="centered-body" style={{ backgroundImage: `url(${BgImage})` }}>
                         <div className="d-flex justify-content-center">
-                            <img src={data.selectedAdvertisement.images[0]} alt="Service Provider"  width="150" height="150" />
+                            <img src={data.selectedAdvertisement.images[0]} alt="Service Provider" width="150" height="150" />
                         </div>
                         <p className='fw-bold pt-4'>Are you sure you want to accept this Advertisement?</p>
                     </Modal.Body>
@@ -815,7 +815,7 @@ function AdminAdvertisements() {
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Email: </span> {data.selectedAdvertisement.email}
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </Modal.Body>

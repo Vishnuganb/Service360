@@ -90,7 +90,7 @@ const getServiceProviderCards=async()=>{
   return (
     <div className="content">
       <div className="selectionpanel">
-      <button className="custom-button" onClick={toggleCategoryPopup}>
+        <button className="custom-button" onClick={toggleCategoryPopup}>
           <div className="icon">
             <FontAwesomeIcon icon={faTags} />
           </div>
@@ -132,7 +132,7 @@ const getServiceProviderCards=async()=>{
 
       <div className="bodyPageContainer-SP">
         <Row id='bodyPageRow1'>
-        {sortedSPCards.length > 0 ? (
+          {sortedSPCards.length > 0 ? (
             <div className="SPCardContainer">
               {sortedSPCards.map((spCard, index) => (
                 <ViewSPCard key={index} spCard={spCard} />
@@ -140,7 +140,7 @@ const getServiceProviderCards=async()=>{
             </div>
           ) : (
             <div className="no-results">
-              <FontAwesomeIcon icon={faExclamationCircle} className="error-icon"/>
+              <FontAwesomeIcon icon={faExclamationCircle} className="error-icon" />
               <p>No results Found</p>
             </div>
           )}

@@ -10,11 +10,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 function PostJobForm() {
     const navigate = useNavigate();
     const handleBackClick = () => {
-      navigate(-1);
-  };
+        navigate(-1);
+    };
     return (
         <div className='card2' >
-           <div className="back-button" onClick={handleBackClick} style={{marginLeft:'10px'}}>
+            <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
                 <div className="back-icon">
                     <i className="bi bi-arrow-left-circle-fill fs-3"></i>
                 </div>
@@ -83,7 +83,7 @@ function PostJobForm() {
                             </Col>
                         </Row>
                     </div>
-                 
+
                     <div className="vacancy-form-group">
                         <Row>
                             <Col className="col-4">
@@ -136,5 +136,4 @@ function PostJobForm() {
 };
 
 export default PostJobForm;
-
 

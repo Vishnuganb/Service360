@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import backgroundImage from "../../../assets/images/header/Background.png";
-
+import { Link, useLocation } from "react-router-dom";
 import "../../../style/advertiser/AdIndex.css";
 
 const ShopDetailsModal = ({ show, onHide, shopData }) => {
+  const location = useLocation();
+
+  const hasServiceProvider = location.pathname.includes("ServiceProvider");
   // console.log(shopData);
   return (
     <Modal
@@ -38,9 +41,18 @@ const ShopDetailsModal = ({ show, onHide, shopData }) => {
         </Row>
         <br />
 
-        <Row className="d-flex justify-content-center">
-          <button className="AdSlideButton">Chat</button>
-        </Row>
+        {hasServiceProvider ? (
+          <Link
+            to="/ServiceProvider/Chat"
+            className="d-flex justify-content-center"
+          >
+            <button className="AdSlideButton">Chat</button>
+          </Link>
+        ) : (
+          <Link to="/Customer/Chat" className="d-flex justify-content-center">
+            <button className="AdSlideButton">Chat</button>
+          </Link>
+        )}
       </Modal.Body>
     </Modal>
   );
@@ -58,8 +70,6 @@ const ViewSingleAd = ({
   modalVisible,
   closeModal,
 }) => {
-
-
   //Show Shop details
 
   const [showShopDetails, setShowShopDetails] = useState(false);
@@ -90,7 +100,6 @@ const ViewSingleAd = ({
     address: "No 132, Marain Drive, Bambalapittiya, Colombo",
   };
 
- 
   return (
     <div className="p-5">
       <Modal
@@ -122,7 +131,6 @@ const ViewSingleAd = ({
                   <p>Adam</p>
                 </div>
               </div>
-             
             </div>
 
             <div className="d-flex align-items-center AdsViewCont">

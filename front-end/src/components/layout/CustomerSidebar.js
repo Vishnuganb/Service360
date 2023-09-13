@@ -15,9 +15,8 @@ function CustomerSideBar() {
 
   return (
     <div
-      className={`${styles.containerFluid4} ps-2 m-0 d-flex ${
-        isOpen ? styles.largeScreen : styles.smallScreen
-      }`}
+      className={`${styles.containerFluid4} ps-2 m-0 d-flex ${isOpen ? styles.largeScreen : styles.smallScreen
+        }`}
     >
       <div className="customer-sidebar row h-100">
         <div
@@ -27,9 +26,8 @@ function CustomerSideBar() {
           <div className="sidebar-content">
             <ul className={`nav nav-pills flex-column`} id="parentM">
               <li
-                className={`fs-4 mt-3 py-2 d-flex d-none d-lg-inline ${
-                  isOpen ? "align-self-end" : "mx-3"
-                }`}
+                className={`fs-4 mt-3 py-2 d-flex d-none d-lg-inline ${isOpen ? "align-self-end" : "mx-3"
+                  }`}
                 onClick={toggle}
                 style={{
                   position: "relative",
@@ -48,9 +46,8 @@ function CustomerSideBar() {
                 >
                   <i className="bi bi-grid"></i>
                   <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     Dashboard
                   </span>
@@ -67,9 +64,8 @@ function CustomerSideBar() {
                     style={{ fill: "none" }}
                   ></i>
                   <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     Services
                   </span>
@@ -78,28 +74,24 @@ function CustomerSideBar() {
               {/* <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-1"
-                  className={`nav-link nav-link-sidebar text-white d-none ${
-                    isOpen ? "d-lg-block" : "d-none"
-                  }`}
+                  className={`nav-link nav-link-sidebar text-white d-none ${isOpen ? "d-lg-block" : "d-none"
+                    }`}
                   data-bs-toggle="collapse"
                   aria-current="page"
                 >
                   <i
-                    className={`bi bi-file-text d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`bi bi-file-text d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   ></i>
                   <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     Vacancies
                   </span>
                   <i
-                    className={`bi bi-chevron-down ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    } custom-icon-size`}
+                    className={`bi bi-chevron-down ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      } custom-icon-size`}
                   ></i>
                 </Link>
 
@@ -111,9 +103,8 @@ function CustomerSideBar() {
                     </>
                   }
                   id="basic-nav-dropdown"
-                  className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${
-                    isOpen ? " d-lg-none" : "d-lg-inline"
-                  }`}
+                  className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"
+                    }`}
                 >
                   <NavDropdown.Item
                     as={Link}
@@ -148,9 +139,8 @@ function CustomerSideBar() {
                   data-bs-parent="#parentM"
                 >
                   <li
-                    className={`nav-item fs-5 ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     <Link
                       to="/Customer/PostVacancyFormIndex"
@@ -179,58 +169,25 @@ function CustomerSideBar() {
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-2"
-                  className={`nav-link nav-link-sidebar text-white d-none ${
-                    isOpen ? "d-lg-block" : "d-none"
-                  }`}
+                  className={`nav-link nav-link-sidebar text-white d-none ${isOpen ? "d-lg-block" : "d-none"}`}
                   data-bs-toggle="collapse"
                   aria-current="page"
                 >
-                  <i
-                    className={`bi bi-briefcase d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  ></i>
-                  <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    Jobs
-                  </span>
-                  <i
-                    className={`bi bi-chevron-down ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    } custom-icon-size`}
-                  ></i>
+                  <i className={`bi bi-briefcase d-none ${isOpen ? "d-lg-inline" : "d-none"}`}></i>
+                  <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Jobs</span>
+                  <i className={`bi bi-chevron-down ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"} custom-icon-size`}></i>
                 </Link>
 
                 <NavDropdown
-                  title={
-                    <>
-                      {" "}
-                      <i className="bi bi-briefcase ps-0"></i>{" "}
-                    </>
-                  }
+                  title={<> <i className="bi bi-briefcase ps-0"></i> </>}
                   id="jobs-nav-dropdown"
-                  className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${
-                    isOpen ? " d-lg-none" : "d-lg-inline"
-                  }`}
+                  className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
                 >
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/Customer/PostJob"
-                    className="no-hover"
-                  >
-                    Post Jobs
-                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/Customer/PostJob" className="no-hover">Post Jobs</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/Customer/JobListings"
-                    className="no-hover"
-                  >
-                    Posted Jobs
-                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/Customer/PostedJobs" className="no-hover">Posted Jobs</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item as={Link} to="/Customer/RequestedJobs" className="no-hover">Requested Jobs</NavDropdown.Item>
                 </NavDropdown>
 
                 {/* Add Jobs submenu */}
@@ -239,83 +196,34 @@ function CustomerSideBar() {
                   id="submenu-2"
                   data-bs-parent="#parentM"
                 >
-                  <li
-                    className={`nav-item fs-5 ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    <Link
-                      to="/Customer/PostJobForm"
-                      className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
-                    >
-                      {" "}
-                      Post Jobs{" "}
-                    </Link>
-                    <Link
-                      to="/Customer/JobListings"
-                      className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
-                    >
-                      {" "}
-                      Posted Jobs{" "}
-                    </Link>
+                  <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
+                    <Link to="/Customer/PostJobForm" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Post Jobs </Link>
+                    <Link to="/Customer/PostedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Posted Jobs </Link>
+                    <Link to="/Customer/RequestedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Requested Jobs </Link>
                   </li>
                 </ul>
               </li>
+
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-3"
-                  className={`nav-link nav-link-sidebar text-white d-none ${
-                    isOpen ? "d-lg-block" : "d-none"
-                  }`}
+                  className={`nav-link nav-link-sidebar text-white d-none ${isOpen ? "d-lg-block" : "d-none"}`}
                   data-bs-toggle="collapse"
                   aria-current="page"
                 >
-                  <i
-                    className={`bi bi-receipt d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  ></i>
-                  <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    Quotations
-                  </span>
-                  <i
-                    className={`bi bi-chevron-down ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    } custom-icon-size`}
-                  ></i>
+                  <i className={`bi bi-receipt d-none ${isOpen ? "d-lg-inline" : "d-none"}`}></i>
+                  <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>Quotations</span>
+                  <i className={`bi bi-chevron-down ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"} custom-icon-size`}></i>
                 </Link>
 
                 <NavDropdown
-                  title={
-                    <>
-                      {" "}
-                      <i className="bi bi-receipt ps-0"></i>{" "}
-                    </>
-                  }
+                  title={<> <i className="bi bi-receipt ps-0"></i> </>}
                   id="quotations-nav-dropdown"
-                  className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${
-                    isOpen ? " d-lg-none" : "d-lg-inline"
-                  }`}
+                  className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
                 >
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/Customer/RequestedQuotation"
-                    className="no-hover"
-                  >
-                    Requested
-                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/Customer/RequestedQuotation" className="no-hover">Requested</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/Customer/ReceivedQuotation"
-                    className="no-hover"
-                  >
-                    Received
-                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/Customer/ReceivedQuotation" className="no-hover">Received</NavDropdown.Item>
                 </NavDropdown>
 
                 <ul
@@ -323,55 +231,27 @@ function CustomerSideBar() {
                   id="submenu-3"
                   data-bs-parent="#parentM"
                 >
-                  <li
-                    className={`nav-item fs-5 ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    <Link
-                      to="/Customer/RequestedQuotation"
-                      className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
-                    >
-                      Requested
-                    </Link>
-                    <Link
-                      to="/Customer/ReceivedQuotation"
-                      className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
-                    >
-                      Received
-                    </Link>
+                  <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
+                    <Link to="/Customer/RequestedQuotation" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4">Requested</Link>
+                    <Link to="/Customer/ReceivedQuotation" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4">Received</Link>
                   </li>
                 </ul>
               </li>
+
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                <Link to="/" className="nav-link nav-link-sidebar text-white">
-                  <i className="bi bi-window-stack"></i>
-                  <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    {" "}
-                    Ads
-                  </span>
-                </Link>
-              </li>
-              <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                <Link
-                  to="/Customer/CustomerComplaintPage"
-                  className="nav-link nav-link-sidebar text-white"
-                >
+                <Link to="/Customer/CustomerComplaintPage" className="nav-link nav-link-sidebar text-white" >
                   <i className="bi bi-file-earmark-text"></i>
-                  <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
-                  >
-                    {" "}
-                    Complaints
-                  </span>
+                  <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Complaints</span>
                 </Link>
               </li>
+
+              <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
+                <Link to="/Customer/History" className="nav-link nav-link-sidebar text-white" >
+                  <i className="fas fa-history"></i>
+                  <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>View History</span>
+                </Link>
+              </li>
+
               <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
                 <Link
                   to="/Customer/AdsPage"
@@ -379,19 +259,20 @@ function CustomerSideBar() {
                 >
                   <i className="bi bi-window-stack"></i>
                   <span
-                    className={`ms-3 d-none ${
-                      isOpen ? "d-lg-inline" : "d-none"
-                    }`}
+                    className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"
+                      }`}
                   >
                     Ads
                   </span>
                 </Link>
               </li>
+
             </ul>
           </div>
         </div>
       </div>
     </div>
+
   );
 }
 

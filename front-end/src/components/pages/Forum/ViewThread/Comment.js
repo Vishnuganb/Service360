@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal,Form} from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
 
 import "../../../../style/advertiser/AdIndex.css";
 
@@ -10,7 +10,7 @@ import userProfileIcon from "../../../../assets/images/advertiser/proAd.jpg";
 const Comment = (props) => {
   const { commentData } = props;
   console.log(commentData[0]);
-  
+
   if (!commentData || commentData.length === 0) {
     return (
       <div>

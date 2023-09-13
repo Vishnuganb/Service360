@@ -12,7 +12,7 @@ const ServiceProviderSignUP = () => {
     const { login } = useContext(AuthenticationContext);
     const { serviceProviderSignUp } = useContext(AuthenticationContext);
 
-    
+
     const [step1Data, setStep1Data] = useState({
         email: '',
         firstName: '',
@@ -113,14 +113,6 @@ const ServiceProviderSignUP = () => {
                 confirmPasswordErrorMessage: 'Passwords do not match',
             }));
         }
-    };
-
-    const handleGramaniladahriFileChange = (e) => {
-        const file = e.target.files[0];
-        setStep2Data((prevData) => ({
-            ...prevData,
-            gramaniladahriFile: file,
-        }));
     };
 
     const handleServiceCategoryChange = (e) => {
@@ -255,7 +247,7 @@ const ServiceProviderSignUP = () => {
         }
 
         if (selectedCategories.length === 0) {
-            isError = true; 
+            isError = true;
             categoryErrorMessage = 'Select the category(S) you provide';
         }
 
@@ -271,7 +263,7 @@ const ServiceProviderSignUP = () => {
             fileErrorMessage,
         }));
 
-        if(!isError) {
+        if (!isError) {
             serviceProviderSignUp({
                 email: step1Data.email,
                 password: step2Data.password,
@@ -356,6 +348,8 @@ const ServiceProviderSignUP = () => {
             addressErrorMessage = 'Address is required';
         }
 
+        isError = false;
+
         if (!isError) {
             setStep(2);
         }
@@ -381,49 +375,48 @@ const ServiceProviderSignUP = () => {
                                 <div className="row g-0">
 
                                     <div className='col-xl-6'>
-                                    <div className="p-md-1 mx-xs-2 my-5 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
-                                            style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius: '1rem', objectFit:'cover' }}>
-                                        <div className="mb-0 p-0">
-                                            <div className="d-flex justify-content-between">
-                                                <p className='pt-4 px-4 flex-wrap fs-5'>
-                                                    welcome to <span className="fs-2 fw-bold pb-2" style={{ fontFamily: 'Roboto', color: '#9F390D' }}>Service360</span>
-                                                </p>
+                                        <div className="p-md-1 mx-xs-2 my-5 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
+                                            style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius: '1rem', objectFit: 'cover' }}>
+                                            <div className="mb-0 p-0">
+                                                <div className="d-flex justify-content-between">
+                                                    <p className='pt-4 px-4 flex-wrap fs-5'>
+                                                        welcome to <span className="fs-2 fw-bold pb-2" style={{ fontFamily: 'Roboto', color: '#9F390D' }}>Service360</span>
+                                                    </p>
+                                                </div>
+                                                <div className="d-flex pb-1">
+                                                    <h1 className="fw-bold px-4">SignUp</h1>
+                                                </div>
                                             </div>
-                                            <div className="d-flex pb-1">
-                                                <h1 className="fw-bold px-4">SignUp</h1>
-                                            </div>
-                                        </div>
-                                        {/* Step 1 */}
-                                        {step === 1 && (
-                                            <Step1
-                                                data={step1Data} // Change "data" to "step1Data"
-                                                handleChange={handleStep1Change}
-                                                handleNextClick={handleStep1NextClick}
-                                            />
-                                        )}
-                                        {/* Step 2 */}
-                                        {step === 2 && (
-                                            <Step2
-                                                data={step2Data}
-                                                handleChange={handleStep2Change}
-                                                handleShowHidePassword={handleStep2ShowHidePassword}
-                                                handlePreviousClick={handleStep2PreviousClick}
-                                                handleSubmit={handleStep2Submit}
-                                                handlePasswordValidation={handlePasswordValidation}
-                                                validateConfirmPassword={validateConfirmPassword}
-                                                handleFileInputChange={handleFileInputChange}
-                                                handleRemoveFile={handleRemoveFile}
-                                                handleGramaniladahriFileChange={handleGramaniladahriFileChange}
-                                                handleServiceCategoryChange={handleServiceCategoryChange}
-                                                handleCategory2Change={handleCategory2Change}
-                                                handleRemoveService={handleRemoveService}
-                                                handleRemoveCategory={handleRemoveCategory}
-                                            />
-                                        )}
+                                            {/* Step 1 */}
+                                            {step === 1 && (
+                                                <Step1
+                                                    data={step1Data} // Change "data" to "step1Data"
+                                                    handleChange={handleStep1Change}
+                                                    handleNextClick={handleStep1NextClick}
+                                                />
+                                            )}
+                                            {/* Step 2 */}
+                                            {step === 2 && (
+                                                <Step2
+                                                    data={step2Data}
+                                                    handleChange={handleStep2Change}
+                                                    handleShowHidePassword={handleStep2ShowHidePassword}
+                                                    handlePreviousClick={handleStep2PreviousClick}
+                                                    handleSubmit={handleStep2Submit}
+                                                    handlePasswordValidation={handlePasswordValidation}
+                                                    validateConfirmPassword={validateConfirmPassword}
+                                                    handleFileInputChange={handleFileInputChange}
+                                                    handleRemoveFile={handleRemoveFile}
+                                                    handleServiceCategoryChange={handleServiceCategoryChange}
+                                                    handleCategory2Change={handleCategory2Change}
+                                                    handleRemoveService={handleRemoveService}
+                                                    handleRemoveCategory={handleRemoveCategory}
+                                                />
+                                            )}
                                         </div>
                                     </div>
 
-                                    <div className="col-xl-6 my-5 justify-content-center align-items-center rounded" style={{ background: `url(${loginPhoto})`,objectFit:'cover' }} />
+                                    <div className="col-xl-6 my-5 justify-content-center align-items-center rounded" style={{ background: `url(${loginPhoto})`, objectFit: 'cover' }} />
 
                                 </div>
                             </div>

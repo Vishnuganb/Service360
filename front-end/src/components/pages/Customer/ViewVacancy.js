@@ -5,71 +5,12 @@ import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
+import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
-import { Document, Page, pdfjs } from 'react-pdf';
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
-const PDFViewer = () => {
-    const [numPages, setNumPages] = useState(null);
-
-    const onDocumentLoadSuccess = ({ numPages }) => {
-        setNumPages(numPages);
-    };
-
-    const pdfUrl = process.env.PUBLIC_URL + '/pdf/pdfs.pdf';
-
-    return (
-        <div className="pdf-viewer">
-            <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-                {Array.from(new Array(numPages), (el, index) => (
-                    <Page key={`page_${index + 1}`} pageNumber={index + 1} width={480} className='cuspdfpopup' />
-                ))}
-            </Document>
-        </div>
-    );
-};
-
-const Pdf = () => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-      <>
-          <Button variant="btn btn-viewvacancy-form-t" style={{
-               width: '9%',
-               height: '28px',
-               border: '1px solid #ced4da',
-               fontSize: '14px',
-               padding: '0 5px',
-              backgroundColor: '#007bff',
-              color: '#fff',
-              fontWeight: '500',
-              textTransform: 'none',
-              background: 'black',
-              '@media (max-width: 768px)': {
-                  width: '100%',
-              }
-          }} onClick={handleShow} >
-              <i className="my-customer-table-icon bi bi-file-pdf-fill h7"></i>
-          </Button>
-
-          <Modal show={show} onHide={handleClose} centered>
-              <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                  <Modal.Title> Cv of ServiceProvider</Modal.Title>
-              </Modal.Header>
-              <Modal.Body >
-                  <PDFViewer />
-              </Modal.Body>
 
 
-          </Modal>
-      </>
-  );
-};
-function VacancyPopup() {
+const Delete = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -78,163 +19,11 @@ function VacancyPopup() {
   return (
     <>
       <Button variant="btn btn-viewvacancy-form-t" style={{
-        width: '9%',
+        width: '10%',
         height: '28px',
         border: '1px solid #ced4da',
         fontSize: '14px',
-        padding: '0 3px',
-        backgroundColor: '#007bff',
-        color: '#fff',
-        fontWeight: '500',
-        textTransform: 'none',
-        background: 'black',
-        '@media (max-width: 768px)': {
-          width: '100%',
-        }
-      }} onClick={handleShow} >
-        <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-          <Modal.Title>Vacancy Application</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form className="vacancy-form">
-
-            <div className="vacancy-form-group">
-              <Row> <Col className='col-4'><label for="title">Name </label></Col>
-                <Col className='col-8'><input type="text" name="name" className="form-control" id="name" Value="Vinoth kumar" />
-                </Col> </Row>
-            </div>
-            <div className="vacancy-form-group">
-              <Row> <Col className='col-4'><label for="Mobile_number">Mobile Number </label></Col>
-                <Col className='col-8'> <input type="text" name="mobile_number" className="form-control" id="mobile_number" Value="079-3388311" />
-                </Col> </Row>
-            </div>
-            <div className="vacancy-form-group">
-              <Row> <Col className='col-4'>  <label for="location">Location</label></Col>
-                <Col className='col-8'>  <input type="text" name="location" className="form-control" id="location" Value="Wellawatte" />
-                </Col> </Row>
-            </div>
-            <div className="vacancy-form-group">
-              <Row> <Col className='col-4'><label for="email">Email</label></Col>
-                <Col className='col-8'> <input type="text" name="email" className="form-control" id="email" Value="K5Vino@gmail.com" />
-                </Col> </Row>
-            </div>
-            <div className="vacancy-form-group">
-              <Row> <Col className='col-4'><label for="qualification">Educational Qualification</label></Col>
-                <Col className='col-8'> <input type="text" name="qualification" className="form-control" id="qualification" Value="Ordinary Level" />
-                </Col> </Row>
-            </div>
-            <div className="vacancy-form-group">
-              <Row> <Col className='col-4'> <label for="experience">Work Experience</label></Col>
-                <Col className='col-8'> <input type="text" name="experience" className="form-control" id="experience" Value="3 yrs" />
-                </Col> </Row>
-            </div>
-            <div className="vacancy-form-group">
-              <Row> <Col className='col-4'>  <label htmlFor="file">Files (CV)</label></Col>
-                <Col className='col-8'> <i className="my-customer-table-icon bi bi-file-pdf-fill h6"></i></Col>
-              </Row>
-            </div>
-
-          </form>
-        </Modal.Body>
-
-      </Modal>
-    </>
-  );
-}
-
-const Accept = () => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-    <>
-      <Button variant="btn btn-viewvacancy-form-t" style={{
-        width: '9%',
-        height: '28px',
-        border: '1px solid #ced4da',
-        fontSize: '14px',
-        padding: '0 3px',
-        backgroundColor: '#007bff',
-        color: '#fff',
-        fontWeight: '500',
-        textTransform: 'none',
-        background: 'black',
-        '@media (max-width: 768px)': {
-          width: '100%',
-        }
-      }} onClick={handleShow} >
-        <i className="my-customer-table-icon bi bi-check2-square h7"></i>
-      </Button>
-
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-          <Modal.Title>Accept Application</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <center><p>You are accepting this Application</p></center>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="btn btn-viewvacancy-form-a" style={{
-            width: '15%',
-            height: '38px',
-            border: '1px solid #ced4da',
-            fontSize: '14px',
-            padding: '0 8px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            fontWeight: '500',
-            textTransform: 'none',
-            background: 'black',
-            '@media (max-width: 768px)': {
-              width: '70%',
-            }
-          }} onClick={handleClose}>
-            Accept
-          </Button>
-          <Button variant="btn btn-viewvacancy-form-r" style={{
-           width: '15%',
-           height: '38px',
-           border: '1px solid #ced4da',
-           fontSize: '14px',
-           padding: '0 8px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            fontWeight: '500',
-            textTransform: 'none',
-            background: 'rgb(126, 123, 123)',
-            '@media (max-width: 768px)': {
-              width: '70%',
-            }
-          }} onClick={handleClose}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
-};
-
-
-const Reject = () => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-    <>
-      <Button variant="btn btn-viewvacancy-form-t" style={{
-        width: '9%',
-        height: '28px',
-        border: '1px solid #ced4da',
-        fontSize: '14px',
-        padding: '0 3px',
+        padding: '0 5px',
         backgroundColor: '#007bff',
         color: '#fff',
         fontWeight: '500',
@@ -248,11 +37,12 @@ const Reject = () => {
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
-          <Modal.Title>Delete </Modal.Title>
+        <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+          <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <center><p>Are you sure to delete?</p></center>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="btn btn-viewvacancy-form-a" style={{
@@ -295,7 +85,8 @@ const Reject = () => {
   );
 };
 
-export default function ViewVacancy() {
+
+export default function PostedJobs() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Adjust this value based on how many items you want per page
 
@@ -304,15 +95,9 @@ export default function ViewVacancy() {
   const [toDate, setToDate] = useState(null);
 
   const quotations = [
-    { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', status: 'Pending' },
-    { date: '26/07/2023', serviceTitle: 'Ac Repair', status: 'Pending' },
-    { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Pending' },
-    { date: '25/07/2023', serviceTitle: 'Tile fitting', status: 'Pending' },
-    { date: '24/07/2023', serviceTitle: 'Tile fitting', status: 'Pending' },
-    { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Pending' },
-    { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Pending' },
-    { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Pending' },
-
+    { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', duedate: '21/08/2023' },
+    { date: '26/07/2023', serviceTitle: 'Electrician', duedate: '18/08/2023' },
+    { date: '23/07/2023', serviceTitle: 'Plumbing', duedate: '15/08/2023' },
   ];
 
   const filteredQuotations = quotations.filter((quotation) => {
@@ -322,8 +107,8 @@ export default function ViewVacancy() {
     return (
       isDateMatch &&
       (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quotation.status.toLowerCase().includes(searchTerm.toLowerCase()))
+        quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     );
   });
 
@@ -358,7 +143,7 @@ export default function ViewVacancy() {
         <div className="vacancy-container background-total accordion " >
           <div className="col d-flex flex-row justify-content-between">
             <div className='d-flex flex-row gap-4 p-3 '>
-              <p className="text-dark fs-4 fw-bold vacancytext">Vacancy Response</p>
+              <p className="text-dark fs-4 fw-bold vacancytext"> Vacancy Responses</p>
             </div>
           </div>
 
@@ -409,61 +194,62 @@ export default function ViewVacancy() {
 
 
 
-        <div className="my-customer-table-container">
+        <div className="my-customer-table-container" >
           <Table className="my-customer-table" striped bordered hover>
             <thead>
               <tr>
-                <th className="my-customer-table-th-1"><b>Date</b></th>
-                <th className="my-customer-table-th-1"><b>Service Title</b></th>
-                {/* <th className="my-customer-table-th-2"><b>Status</b></th> */}
-                <th className="my-customer-table-th-2"><b>Action</b></th>
+                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Due Date</b></th>
+                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Title</b></th>
+                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
               </tr>
             </thead>
             <tbody>
               {currentQuotations.map((quotation, index) => (
                 <tr key={index}>
-                  <td>{quotation.date}</td>
-                  <td>{quotation.serviceTitle}</td>
-                  {/* <td>{quotation.status}</td> */}
-                  <td>
-                    {/* <Button variant="primary" className="my-customer-table-btn">
-                                            <Link style={{ color: 'white' }} to={`/customer/ViewVacancyResponse`}>
-                                                <i className="my-customer-table-icon bi bi-eye-fill h6"></i>
-                                            </Link>
-                                        </Button> */}
-                    <VacancyPopup />
+                  <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
+                  <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
+                  <td style={{ width: '16.67%' }}>
+                    <Link to={`/customer/ViewVacancyReply`}>  <Button variant="btn btn-viewvacancy-form-t" style={{
+                      width: '10%',
+                      height: '28px',
+                      border: '1px solid #ced4da',
+                      fontSize: '14px',
+                      padding: '0 3px',
+                      backgroundColor: '#007bff',
+                      color: '#fff',
+                      fontWeight: '500',
+                      textTransform: 'none',
+                      background: 'black',
+                      '@media (max-width: 768px)': {
+                        width: '100%',
+                      }
+                    }} >
+                      <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
+                    </Button></Link>
                     &nbsp; &nbsp;
-                    <Pdf/>
-                    &nbsp; &nbsp;
-                    <Accept />
-                    &nbsp; &nbsp;
-                    <Reject />
+                    <Delete />
                   </td>
+
                 </tr>
               ))}
             </tbody>
           </Table>
         </div>
+      </div>
+      <br></br>
 
-        <br></br>
-
-
-        <div className="pagination justify-content-center">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
-              style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-
-
+      <div className="pagination justify-content-center">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
+            style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </>
   );
 }
-

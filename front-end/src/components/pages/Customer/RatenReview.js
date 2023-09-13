@@ -64,7 +64,7 @@ function RatenReview() {
               className='rnrtextarea'
             />
           </div>
-         
+
         </Modal.Body>
         <Modal.Footer className='rnrfooter'>
           <Button className="rnrbtn1">

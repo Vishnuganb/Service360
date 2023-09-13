@@ -116,9 +116,8 @@ public class AdminService {
         }
     }
 
-    public Services updateService(long serviceId, String serviceCategoryName,String serviceName, MultipartFile serviceImage) {
+    public Services updateService(long serviceId, String serviceCategoryName, String serviceName, MultipartFile serviceImage , Boolean enable) {
         try {
-
             Optional<Services> existingServiceOptional = serviceRepository.findById(serviceId);
 
             if (existingServiceOptional.isEmpty()) {
@@ -128,17 +127,24 @@ public class AdminService {
 
             Services existingService = existingServiceOptional.get();
 
+            if (enable != null) {
+                existingService.setEnable(enable);
+            }
+
             if (serviceName != null) {
                 existingService.setServiceName(serviceName);
             }
 
-            if (serviceCategoryName != null){
+            if (serviceCategoryName != null) {
+                Optional<ServiceCategory> existingCategoryOptional = serviceCategoryRepository.findByServiceCategoryName(serviceCategoryName);
 
-                ServiceCategory serviceCategory = serviceCategoryRepository.findByServiceCategoryName(serviceCategoryName).get();
-                existingService.setServiceCategory ( serviceCategory );
+                if (existingCategoryOptional.isEmpty()) {
+                    System.out.println("Service category not found");
+                    return null;
+                }
 
-                System.out.println (serviceCategory );
-
+                ServiceCategory serviceCategory = existingCategoryOptional.get();
+                existingService.setServiceCategory(serviceCategory);
             }
 
             if (serviceImage != null) {
@@ -166,8 +172,6 @@ public class AdminService {
             return null;
         }
     }
-
-
 
     public List<ServiceWithCategoryDTO> getAllServicesWithCategories() {
         List<Services> services = serviceRepository.findAll();

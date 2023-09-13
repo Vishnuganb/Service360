@@ -1,10 +1,10 @@
 import React from 'react';
 import PostVacancyForm from './PostVacancyForm';
 
-function PostVacancyFormIndex(){
-    return(
+function PostVacancyFormIndex() {
+    return (
         <>
-            <PostVacancyForm/>
+            <PostVacancyForm />
         </>
     );
 }

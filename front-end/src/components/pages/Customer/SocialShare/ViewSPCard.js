@@ -91,7 +91,7 @@ function ViewSPCard({ spCard }) {
             bottom: "1.5px"
           }}>
 
-            <a href='ViewServiceProvider'
+            <a href={`ViewServiceProvider/${spCard.serviceproviderid}`}
               style={{ color: 'black' }}>
               View Profile
             </a>

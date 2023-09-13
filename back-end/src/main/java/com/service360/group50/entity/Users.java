@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StreamUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +33,7 @@ import java.util.List;
 public class Users implements UserDetails {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long userid;
 
@@ -58,8 +61,11 @@ public class Users implements UserDetails {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String status;
+
+    @Column(columnDefinition = "TEXT")
+    private String profilePic;
 
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
@@ -72,17 +78,17 @@ public class Users implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-            name = "user_vacancy",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "vacancyid")
+            name = "user_vacancy", // Name of the join table
+            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
+            inverseJoinColumns = @JoinColumn(name = "vacancyid") // FK column in user_vacancy table
     )
     private List<Vacancies> vacancies;
 
     @ManyToMany
     @JoinTable(
-            name = "user_todolist",
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "todolistid")
+            name = "user_todolist", // Name of the join table
+            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
+            inverseJoinColumns = @JoinColumn(name = "todolistid") // FK column in user_vacancy table
     )
     private List<TodoList> todolist;
 

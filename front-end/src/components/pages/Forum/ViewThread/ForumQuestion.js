@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import forumImage1 from "../../../../assets/images/forum/AC.jpg";
@@ -25,31 +25,31 @@ const ForumQuestion = ({
   liked,
 
 }) => {
-   const [CommentModalShow, setCommentModalShow] = useState(false);
-     const commentData = [
-       {
-         id: 1,
-         author: "John Doe",
-         content: "This is the first comment.",
-         timestamp: "2023-08-05 12:34:56",
-         profileIcon: profileIcon1,
-       },
-       {
-         id: 2,
-         author: "Jane Smith",
-         content: "I agree with John.",
-         timestamp: "2023-08-05 13:45:32",
-         profileIcon: profileIcon2,
-       },
-       {
-         id: 3,
-         author: "Michael Johnson",
-         content: "Nice post!",
-         timestamp: "2023-08-05 14:20:10",
-         profileIcon: profileIcon3,
-       },
-     ];
-    
+  const [CommentModalShow, setCommentModalShow] = useState(false);
+  const commentData = [
+    {
+      id: 1,
+      author: "John Doe",
+      content: "This is the first comment.",
+      timestamp: "2023-08-05 12:34:56",
+      profileIcon: profileIcon1,
+    },
+    {
+      id: 2,
+      author: "Jane Smith",
+      content: "I agree with John.",
+      timestamp: "2023-08-05 13:45:32",
+      profileIcon: profileIcon2,
+    },
+    {
+      id: 3,
+      author: "Michael Johnson",
+      content: "Nice post!",
+      timestamp: "2023-08-05 14:20:10",
+      profileIcon: profileIcon3,
+    },
+  ];
+
   return (
     <div className="shadow-sm p-3" key={id}>
       <div className="ForumHeader d-flex  justify-content-between">

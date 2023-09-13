@@ -114,9 +114,9 @@ const ViewAd = ({
   Reason,
   modalVisible,
   closeModal,
-  
+
 }) => {
- 
+
   // disable disable pop
   const [DisableModalShow, setDisableModalShow] = React.useState(false);
   // show delete details
@@ -157,12 +157,12 @@ const ViewAd = ({
 
 
   // Open Edit Ad Page
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-   const handleOpenAdEditModal = () => {
-     // Navigate to the editAd route with the id as a parameter
-     navigate(`/Advertiser/editAd/${id}`);
-   };
+  const handleOpenAdEditModal = () => {
+    // Navigate to the editAd route with the id as a parameter
+    navigate(`/Advertiser/editAd/${id}`);
+  };
 
   return (
     <div className="p-5">

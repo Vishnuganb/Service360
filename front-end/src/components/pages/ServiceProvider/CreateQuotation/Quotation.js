@@ -54,38 +54,38 @@ function ActivityReport() {
     const handleCompleteAndSend = () => {
         const pdf = new jsPDF('p', 'mm', 'a4'); // Specify page size and orientation
         const pdfElement = document.querySelector('.quotation-pdf');
-    
+
         if (pdfElement) {
             // Apply padding and other styles for printing
             pdfElement.style.padding = '25px 20px';
             pdfElement.style.border = '1px solid #000'; // Add a border for visibility
-    
+
             // Use html2canvas to convert the content of .quotation-pdf to an image
             html2canvas(pdfElement).then((canvas) => {
                 const imgData = canvas.toDataURL('image/png'); // Convert canvas to base64 image
-    
+
                 // Reset styles after capturing
                 pdfElement.style.padding = '';
                 pdfElement.style.border = '';
-    
+
                 // Calculate the dimensions for scaling the image to fit the PDF page
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = pdf.internal.pageSize.getHeight();
                 const imgWidth = canvas.width;
                 const imgHeight = canvas.height;
-    
+
                 // Calculate scaling factors for width and height
                 const scaleX = pdfWidth / imgWidth;
                 const scaleY = pdfHeight / imgHeight;
                 const scale = Math.min(scaleX, scaleY); // Choose the smaller scale factor
-    
+
                 // Add the image to the PDF with scaling
                 pdf.addImage(imgData, 'PNG', 0, 0, imgWidth * scale, imgHeight * scale);
                 pdf.save('quotation.pdf'); // Save the PDF
             });
         }
     };
-    
+
 
     // Calculate the subtotal and total
     const subtotal = activityReports.reduce((acc, report) => acc + parseFloat(report.amount), 0);

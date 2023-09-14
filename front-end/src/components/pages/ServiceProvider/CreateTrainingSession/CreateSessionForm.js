@@ -15,7 +15,6 @@ const subscribedJobCategories = [
 function CreateSessionForm() {
 
     const [trainingSessionFormData, setTrainingSessionFormData] = useState({
-        trainingimage: "",
         trainingtitle: "",
         trainingdescription: "",
         trainingdate: "",        
@@ -26,26 +25,25 @@ function CreateSessionForm() {
         servicename: "",
         going: 0,
         interested: 0,
-        status: "Payment Pending",   
+        status: "Pending",   
     });
     
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const handleFileInputChange = (e) => {
         const selectedFilesArray = Array.from(e.target.files);
-        const selectedFileNames = selectedFilesArray.map((file) => file.name);
+    
+        if (selectedFilesArray.length + selectedFiles.length > 3) {
+            alert('You can select a maximum of 3 images.');
+            return;
+        }
 
+        const selectedFileNames = selectedFilesArray.map((file) => file);
+    
         setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...selectedFileNames]);
-
-        // Join the selected image file names into a comma-separated string
-        const trainingImages = selectedFileNames.join(', ');
-
-        // Update the trainingimage field in trainingSessionFormData
-        setTrainingSessionFormData({
-            ...trainingSessionFormData,
-            trainingimage: trainingImages,
-        });
+    
     };
+    
 
     const handleRemoveFile = (indexToRemove) => {
         setSelectedFiles((prevSelectedFiles) =>
@@ -76,22 +74,48 @@ function CreateSessionForm() {
         return `${hours}:${minutes}:00`;
       }   
 
-    const handleCreateTrainingSession = () => {
-        axios
-            .post('http://localhost:8080/auth/createTrainingSession', trainingSessionFormData)
-            .then((response) => {
-                console.log('Training session created successfully:', response.data);
-            })
-            .catch((error) => {
-                console.error('Error creating training session:', error);
-            });
+    const handleCreateTrainingSession = (event) => {
+        event.preventDefault();
+
+        // Create a FormData object to send the data
+        const formData = new FormData();
+    
+        // Append the training session data to the FormData object
+        for (const key in trainingSessionFormData) {
+            formData.append(key, trainingSessionFormData[key]);
+        }
+    
+        // Append each selected file to the FormData object    
+        selectedFiles.map((file) => {
+            formData.append("images", file);
+        });
+ 
+        // Log the FormData key-value pairs
+        for (const [key, value] of formData.entries()) {
+            console.log(`FormData Key: ${key}, Value: ${value}`);
+        }
+
+        // Make the POST request with Axios
+        axios.post('http://localhost:8080/auth/createTrainingSession', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then((response) => {
+            console.log('Training session created successfully:', response.data);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error('Error creating training session:', error);
+        });
     };
+    
 
     return (
         <div className="ms-lg-4 me-lg-4">
             <span style={{ fontSize: "28px", fontWeight: "bold" }}>Create a Training Session</span>
 
-            <Form className="mt-4" onSubmit={handleCreateTrainingSession}>
+            <Form className="mt-4" method="post">
                 <Form.Group className="mb-3" controlId="formBasicJobCategory">
                     <Form.Control 
                         as="select" 
@@ -223,7 +247,7 @@ function CreateSessionForm() {
                     <div className="selected-images">
                         {selectedFiles.map((file, index) => (
                             <div key={index} className="selected-image">
-                                <span>{file}</span>
+                                <span>{file.name}</span>
                                 <Button variant="link" onClick={() => handleRemoveFile(index)}><i class="bi bi-x bi-lg" style={{ color: 'black' }}></i></Button>
                             </div>
                         ))}
@@ -231,7 +255,7 @@ function CreateSessionForm() {
                 </Form.Group>
 
                 <div className="CreateBlog-button-container d-flex flex-row">
-                    <Button className="btn-ServiceProvider-1" type="submit">Create</Button>
+                    <Button className="btn-ServiceProvider-1" onClick={handleCreateTrainingSession}>Create</Button>
                     <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>

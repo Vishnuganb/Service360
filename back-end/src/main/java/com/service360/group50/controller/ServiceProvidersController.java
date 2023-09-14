@@ -9,17 +9,24 @@ import com.service360.group50.repo.TrainingSessionRepository;
 import com.service360.group50.repo.UserRepository;
 import com.service360.group50.repo.VacanciesRepository;
 import com.service360.group50.request.*;
+import com.service360.group50.service.ImageService;
 import com.service360.group50.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.sql.Timestamp;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -36,6 +43,8 @@ public class ServiceProvidersController {
     private TrainingSessionRepository trainingSessionRepository;
     @Autowired
     private StarterMail starterMail;
+    @Autowired
+    private ImageService imageService;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -210,10 +219,35 @@ public class ServiceProvidersController {
     }
 
     // NEED TO FIND FOR LOGGED IN SP
+
+//    @GetMapping("auth/viewMyTrainingSessions")
+//    public List<TrainingSession> viewMyTrainingSessions() {
+//        return serviceProviderService.viewMyTrainingSessions();
+//    }
+
     @GetMapping("auth/viewMyTrainingSessions")
     public List<TrainingSession> viewMyTrainingSessions() {
-        return serviceProviderService.viewMyTrainingSessions();
+        List<TrainingSession> trainingSessions = serviceProviderService.viewMyTrainingSessions();
+        String baseUrl = "http://localhost:8080/images/trainingsessions/";
+
+        for (TrainingSession session : trainingSessions) {
+            String imageFilenames = session.getTrainingimage(); // Assuming you have a method to get the image filenames
+            if (imageFilenames != null && !imageFilenames.isEmpty()) {
+                // Split the comma-separated filenames
+                String[] filenames = imageFilenames.split(",");
+
+                // Generate full image URLs and set them in the TrainingSession object
+                List<String> imageUrls = Arrays.stream(filenames)
+                        .map(filename -> baseUrl + filename.trim())
+                        .collect(Collectors.toList());
+
+                session.setTrainingImageUrls(imageUrls); // Assuming you have a setter for image URLs
+            }
+        }
+
+        return trainingSessions;
     }
+
 
     @GetMapping("auth/viewTrainingSessions/{id}")
     public TrainingSession viewATrainingSession(@PathVariable Long id) {return serviceProviderService.viewATrainingSession(id);}
@@ -264,35 +298,68 @@ public class ServiceProvidersController {
         return serviceProviderService.registerTrainingSession(trainingSessionRegistration);
     }
 
-
     @PostMapping("auth/createTrainingSession")
-    public TrainingSession createTrainingSession(@RequestBody TrainingSessionRequest trainingSessionRequest) {
+    public TrainingSession createTrainingSession(@RequestParam("trainingtitle") String trainingtitle,
+                                                 @RequestParam("trainingdescription") String trainingdescription,
+                                                 @RequestParam("trainingdate") Date trainingdate,
+                                                 @RequestParam("trainingstarttime") Time trainingstarttime,
+                                                 @RequestParam("trainingendtime") Time trainingendtime,
+                                                 @RequestParam("traininglocation") String traininglocation,
+                                                 @RequestParam("trainingcost") String trainingcost,
+                                                 @RequestParam("servicename") String servicename,
+                                                 @RequestParam("status") String status,
+                                                 @RequestParam("going") Integer going,
+                                                 @RequestParam("interested") Integer interested,
+                                                 @RequestParam("images") MultipartFile[] imageFiles)
+    {
         // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
+        Long userId = 4L; // NEED TO FIND FOR LOGGED IN SP
         Optional<Users> userOptional = userRepository.findById(userId);
         Users serviceProvider = userOptional.orElse(null);
 
+        String uploadDirectory = "src/main/resources/static/images/trainingsessions";
+
         // Create a TrainingSession entity
         TrainingSession trainingSession = new TrainingSession();
-        trainingSession.setTrainingimage(trainingSessionRequest.getTrainingimage());
-        trainingSession.setTrainingtitle(trainingSessionRequest.getTrainingtitle());
-        trainingSession.setTrainingdescription(trainingSessionRequest.getTrainingdescription());
-        trainingSession.setTrainingdate(trainingSessionRequest.getTrainingdate());
-        trainingSession.setTrainingstarttime(trainingSessionRequest.getTrainingstarttime());
-        trainingSession.setTrainingendtime(trainingSessionRequest.getTrainingendtime());
-        trainingSession.setTraininglocation(trainingSessionRequest.getTraininglocation());
-        trainingSession.setTrainingcost(trainingSessionRequest.getTrainingcost());
-        trainingSession.setServicename(trainingSessionRequest.getServicename());
-        trainingSession.setStatus(trainingSessionRequest.getStatus());
-        trainingSession.setGoing(trainingSessionRequest.getGoing());
-        trainingSession.setInterested(trainingSessionRequest.getInterested());
+        trainingSession.setTrainingtitle(trainingtitle);
+        trainingSession.setTrainingdescription(trainingdescription);
+        trainingSession.setTrainingdate(trainingdate);
+        trainingSession.setTrainingstarttime(trainingstarttime);
+        trainingSession.setTrainingendtime(trainingendtime);
+        trainingSession.setTraininglocation(traininglocation);
+        trainingSession.setTrainingcost(trainingcost);
+        trainingSession.setServicename(servicename);
+        trainingSession.setStatus(status);
+        trainingSession.setGoing(going);
+        trainingSession.setInterested(interested);
 
         // Set the service provider for the training session
         trainingSession.setServiceprovider(serviceProvider);
 
+        // Handle image files
+        List<String> imageFileNames = new ArrayList<>();
+
+        for (MultipartFile imageFile : imageFiles) {
+            if (imageFile != null && !imageFile.isEmpty()) {
+                try {
+                    String savedImageFileName = imageService.saveImageToStorageServiceProvider(uploadDirectory, imageFile);
+                    imageFileNames.add(savedImageFileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // Concatenate image file names as a comma-separated string
+        String trainingImageFileNames = String.join(",", imageFileNames);
+        trainingSession.setTrainingimage(trainingImageFileNames);
+
+
         // Save the TrainingSession entity
         return serviceProviderService.createTrainingSession(trainingSession);
     }
+
+
 
     @PutMapping("auth/publishTrainingSession/{id}")
     public TrainingSession publishTrainingSession(@PathVariable Long id) {
@@ -319,21 +386,44 @@ public class ServiceProvidersController {
 
     //BLOGS
     @PostMapping("auth/createBlog")
-    public Blogs createBlog(@RequestBody BlogsRequest blogsRequest){
+    public Blogs createBlog(@RequestParam("blogtitle") String blogtitle,
+                            @RequestParam("blogdescription") String blogdescription,
+                            @RequestParam("servicename") String servicename,
+                            @RequestParam("images") MultipartFile[] imageFiles){
+
         // Load the Users (service provider) entity by ID
         Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
         Optional<Users> userOptional = userRepository.findById(userId);
         Users serviceProvider = userOptional.orElse(null);
 
+        String uploadDirectory = "src/main/resources/static/images/blogs";
+
         //Create a Blog entity
         Blogs blog = new Blogs();
-        blog.setBlogtitle(blogsRequest.getBlogtitle());
-        blog.setBlogdescription(blogsRequest.getBlogdescription());
-        blog.setBlogimages(blogsRequest.getBlogimages());
-        blog.setServicename(blogsRequest.getServicename());
+        blog.setBlogtitle(blogtitle);
+        blog.setBlogdescription(blogdescription);
+        blog.setServicename(servicename);
+
+        // Handle image files
+        List<String> imageFileNames = new ArrayList<>();
+
+        for (MultipartFile imageFile : imageFiles) {
+            if (imageFile != null && !imageFile.isEmpty()) {
+                try {
+                    String savedImageFileName = imageService.saveImageToStorageServiceProvider(uploadDirectory, imageFile);
+                    imageFileNames.add(savedImageFileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         // Set the service provider for the blog
         blog.setServiceproviders(serviceProvider);
+
+        // Concatenate image file names as a comma-separated string
+        String blogImageFileNames = String.join(",", imageFileNames);
+        blog.setBlogimages(blogImageFileNames);
 
         // Save the Blog entity
         return serviceProviderService.createBlog(blog);

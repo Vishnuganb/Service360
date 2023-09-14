@@ -17,25 +17,31 @@ function CreateBlogForm() {
         servicename: "",
         blogtitle: "",
         blogdescription: "",
-        blogimages: "", 
     });
 
     const [selectedFiles, setSelectedFiles] = useState([]);
 
-    const handleImageInputChange = (e) => {
+    const handleFileInputChange = (e) => {
         const selectedFilesArray = Array.from(e.target.files);
-        const selectedFileNames = selectedFilesArray.map((file) => file.name);
+
+            
+        if (selectedFilesArray.length + selectedFiles.length > 5) {
+            alert('You can select a maximum of 5 images.');
+            return;
+        }
+
+        const selectedFileNames = selectedFilesArray.map((file) => file);
 
         setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...selectedFileNames]);
 
         // Join the selected image file names into a comma-separated string
-        const blogImages = selectedFileNames.join(', ');
+        // const blogImages = selectedFileNames.join(', ');
 
         // Update the trainingimage field in trainingSessionFormData
-        setBlogFormData({
-            ...blogFormData,
-            blogimages: blogImages,
-        });
+        // setBlogFormData({
+        //     ...blogFormData,
+        //     blogimages: blogImages,
+        // });
     };
 
     const handleRemoveFile = (indexToRemove) => {
@@ -52,11 +58,32 @@ function CreateBlogForm() {
         });
     };
 
-    const handleCreateBlog = () => {
+    const handleCreateBlog = (event) => {
+        event.preventDefault();
+
+        // Create a FormData object to send the data
+        const formData = new FormData();
+
+        // Append the training session data to the FormData object
+        for (const key in blogFormData) {
+            formData.append(key, blogFormData[key]);
+        }
+    
+        // Append each selected file to the FormData object    
+        selectedFiles.map((file) => {
+            formData.append("images", file);
+        });
+     
+
         axios
-            .post('http://localhost:8080/auth/createBlog', blogFormData)
+            .post('http://localhost:8080/auth/createBlog', formData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             .then((response) => {
                 console.log('Blog created successfully:', response.data);
+                window.location.reload();
             })
             .catch((error) => {
                 console.error('Error creating blog:', error);
@@ -68,7 +95,7 @@ function CreateBlogForm() {
         <div className="ms-lg-4 me-lg-4">
             <span style={{ fontSize: "28px", fontWeight: "bold" }}>Create a Blog</span>
 
-            <Form className="mt-4" onSubmit={handleCreateBlog}>
+            <Form className="mt-4" method="post">
                 <Form.Group className="mb-3" controlId="formBasicJobCategory">
                     <Form.Control 
                         as="select" 
@@ -118,12 +145,12 @@ function CreateBlogForm() {
                         multiple
                         id="fileInput"
                         style={{ display: 'none' }}
-                        onChange={handleImageInputChange}
+                        onChange={handleFileInputChange}
                     />
                     <div className="selected-images">
                         {selectedFiles.map((file, index) => (
                             <div key={index} className="selected-image">
-                                <span>{file}</span>
+                                <span>{file.name}</span>
                                 <Button variant="link" onClick={() => handleRemoveFile(index)}><i class="bi bi-x bi-lg" style={{ color: 'black' }}></i></Button>
                             </div>
                         ))}
@@ -131,7 +158,7 @@ function CreateBlogForm() {
                 </Form.Group>
 
                 <div className="CreateBlog-button-container d-flex flex-row">
-                    <Button className="btn-ServiceProvider-1" type="submit">Publish</Button>
+                    <Button className="btn-ServiceProvider-1" onClick={handleCreateBlog}>Publish</Button>
                     <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>

@@ -5,20 +5,17 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import wiring from '../../../../assets/images/ServiceProvider/wiring.jpg';
-import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
-import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
-import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
+import trainingsessionimage from '../../../../assets/images/ServiceProvider/TrainingSession/default.jpg';
 
 function SessionsBodyPage() {
     const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
 
-    const Trainingimages = [
-        wiring,
-        masonry2,
-        plumping1,
-        carpentry1,
-    ]
+    // const Trainingimages = [
+    //     wiring,
+    //     masonry2,
+    //     plumping1,
+    //     carpentry1,
+    // ]
 
     const MyServices = [
         "Electrical Wiring",
@@ -136,10 +133,16 @@ function SessionsBodyPage() {
             {/* Training Session Cards */}
 
             {displayedCards.map((TrainingSession, index) => (
-                <div className="single-my-training-card mx-auto mt-3">
+                <div className="single-my-training-card mx-auto mt-3" key={index}>
                     <div className="row">
                         <div className="col-md-5 col-12 my-training-card-body-left d-flex justify-content-center justify-content-md-start">
-                            <img className="view-training-image" src={Trainingimages[index % Trainingimages.length]} alt="training images" />
+                        <img
+                            className="view-training-image"
+                            src={TrainingSession.trainingImageUrls && TrainingSession.trainingImageUrls.length > 0
+                                ? TrainingSession.trainingImageUrls[0]
+                                : {trainingsessionimage}
+                            }
+                        />
                         </div>
                         <div className="col-md-7 col-12 my-training-card-body-right">
                             <span className="single-my-training-info">{TrainingSession.trainingtitle}</span>

@@ -30,26 +30,6 @@ const StyledButton2 = styled.button`
     }
   `;
 
-const serviceCategories = {
-    home: [
-        "Electrical wiring and installation",
-        "Plumbing repairs and installation",
-        "Tiles fitting",
-    ],
-    construction: [
-        "Carpentry",
-        "Painting",
-        "Masonry",
-        "Glass & Aluminium",
-        "Iron Works"
-    ],
-    security: [
-        "CCTV systems Repair",
-        "Fire Alarm Systems Repair",
-        "Video Surveillance Systems Repair",
-    ],
-};
-
 const Step2 = ({
     data: {
         password,
@@ -81,6 +61,20 @@ const Step2 = ({
     handleRemoveCategory,
 }) => {
 
+    const [serviceCategories, setServiceCategories] = useState({});
+
+    useEffect(() => {
+        fetch('http://localhost:8080/auth/services')
+            .then((response) => response.json())
+            .then((data) => {
+                setServiceCategories(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching service categories:', error);
+            });
+    }, []);
+
+
     return (
         <form className="my-2 mx-4">
 
@@ -100,7 +94,7 @@ const Step2 = ({
                             </option>
                         ))}
                     </select>
-                    {serviceErrorMessage && <p className="text-danger p-0 m-0">{serviceErrorMessage}</p>}
+                    {categoryErrorMessage && <p className="text-danger p-0 m-0">{categoryErrorMessage}</p>}
                 </div>
 
                 <div className="mb-3 col-5">
@@ -132,7 +126,7 @@ const Step2 = ({
 
                 <div className="me-xs-2 col-6 me-sm-0">
                     <p className="mb-0">Select Services<span style={{ color: 'red' }}>*</span></p>
-                    {categoryErrorMessage && <p className="text-danger p-0 m-0">{categoryErrorMessage}</p>}
+                    {serviceErrorMessage && <p className="text-danger p-0 m-0">{serviceErrorMessage}</p>}
                     {selectedServices.length === 0 ? (
                         <div className='list-group d-flex justify-content-between align-items-center p-1 px-1 text-danger'
                             style={{

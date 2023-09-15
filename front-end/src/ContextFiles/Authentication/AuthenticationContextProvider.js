@@ -19,13 +19,15 @@ const AuthenticationContextProvider = (props) => {
 
             (response) => {
 
-                login(data.email, data.password)
+                console.log(response.data);
+                alert("Please verify your email!!!")
+                window.location.href = "http://localhost:3000/login"
 
             }
 
         ).catch(
 
-            () => { alert("Error!!! 3") }
+            () => { alert("Chcek the credentials for the customers!!!") }
 
         )
 
@@ -33,17 +35,40 @@ const AuthenticationContextProvider = (props) => {
 
     const serviceProviderSignUp = (data) => {
 
-        axios.post(serverLink + '/auth/signup/serviceprovider', data).then(
+        const formData = new FormData();
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('firstname', data.firstname);
+        formData.append('lastname', data.lastname);
+        formData.append('nic', data.nic);
+        formData.append('address', data.address);
+        formData.append('phonenumber', data.phonenumber);
+        formData.append('categories', data.categories);
+        formData.append('services', data.services);
+
+        console.log(data.files);
+
+        for (let i = 0; i < data.files.length; i++) {
+            formData.append('files', data.files[i]);
+        }
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        axios.post(serverLink + '/auth/signup/serviceprovider', formData).then(
 
             (response) => {
 
-                login(data.email, data.password)
+                console.log(response.data);
+                alert("Please verify your email!!!")
+                window.location.href = "http://localhost:3000/login"
 
             }
 
         ).catch(
 
-            () => { alert("Error!!! 3") }
+            () => { alert("Check the Credentials For ServiceProvider!!!") }
 
         )
 
@@ -77,13 +102,14 @@ const AuthenticationContextProvider = (props) => {
             (response) => {
 
                 console.log(response.data);
-                login(data.email, data.password)
+                alert("Please verify your email!!!")
+                window.location.href = "http://localhost:3000/login"
 
             }
 
         ).catch(
 
-            () => { alert("Error!!! 3") }
+            () => { alert("Check the Credentials For Advertiser!!!") }
 
         )
 
@@ -97,8 +123,18 @@ const AuthenticationContextProvider = (props) => {
 
             })
             .catch((error) => {
-                alert("Check your email and password!!!");
-                console.log('An error occurred during login.', error);
+                if (error.response) {
+                    console.error(error.response.data.message);
+                    alert("Invalid Credentials!!! OR Please Verify Your Email!!!");
+                } else if (error.request) {
+                    console.error(error.request);
+                    console.log("hello Hi")
+                    alert(error.request);
+                } else {
+                    console.error('Error', error.message);
+                    console.log("hello Hi Hello")
+                    alert(error.message);
+                }
             });
     }
 

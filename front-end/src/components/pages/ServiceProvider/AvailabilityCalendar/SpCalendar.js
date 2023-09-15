@@ -158,7 +158,7 @@ function SpCalendar() {
     const handleSchedule = () => {
         const newScheduleData = {
             ...scheduleFormData,
-            serviceproviderid: 1,
+            serviceproviderid: 1,         //NEED TO ADD LOGGED IN SP ID
         };
 
         axios.post('http://localhost:8080/auth/createServiceProviderCalendar', newScheduleData).then((response) => {

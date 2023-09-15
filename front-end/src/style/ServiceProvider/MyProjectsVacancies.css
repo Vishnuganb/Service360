@@ -14,12 +14,18 @@
     display: flex;
     flex-direction: column;
     border-radius: 4px;
-    width: 90%;
+    width: 30%;
     height: 30%;
     margin-bottom: 20px;
     padding: 20px 20px 0 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     transition: transform .3s;
+}
+
+@media only screen and (max-width: 900px) {
+    .single-my-vacancy-card{
+        width: 100% !important;
+    }
 }
 
 .single-my-vacancy-card:hover{
@@ -141,7 +147,7 @@
     font-weight: 900;
 }
 
-.my-vacancy-card-footer{
+/* .my-vacancy-card-footer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -149,16 +155,17 @@
     position: relative;
     bottom: 10px;
     vertical-align: middle;
-}
+} */
 
-@media only screen and (max-width: 590px){
+@media only screen and (max-width: 750px){
     .my-vacancy-card-footer{
         display: flex;
         flex-direction: column !important;
         justify-content: space-between;
         width: 100%;
         position: relative;
-        /* bottom: 20px; */
+        bottom: 16.5px;
+        margin-top: 15px;
     }
 }
 

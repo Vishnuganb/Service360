@@ -1,3 +1,8 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/service360
@@ -7,9 +12,9 @@ spring:
 
   jpa:
 #    hibernate:
-#      ddl-aut
+#      ddl-auto
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     open-in-view: false
     properties:
@@ -17,6 +22,24 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username: service.360.50@gmail.com
+#    password: jgarjwrndtbgwxna
+#
+#    properties:
+#      mail:
+#        smtp:
+#          ssl:
+#            trust: "*"
+#          auth: true
+#          starttls:
+#            enable: true
+#          connectiontimeout: 5000
+#          timeout: 3000
+#          writetimeout: 5000
 
 
 

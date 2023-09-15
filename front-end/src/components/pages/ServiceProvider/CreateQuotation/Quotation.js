@@ -104,8 +104,13 @@ function ActivityReport() {
 
             <div className='quotation-pdf border mb-3 px-4 py-4'>
                 {/*logo*/}
-                <div className="d-flex me-auto">
-                    <img src={service360logo} alt="Service360 Logo" style={{ maxWidth: "100px" }} />
+                <div className='d-flex flex-row align-items-center justify-content-center'>
+                    <div className="d-flex me-auto col-2">
+                        <img src={service360logo} alt="Service360 Logo" style={{ maxWidth: "120px" }} />
+                    </div>
+                    <div>
+                        <span className='me-2 fs-4' style={{ color: '#00008B' }}>Quotation</span>
+                    </div>
                 </div>
                 <hr className='primary' />
                 {/* Bill to section */}

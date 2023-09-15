@@ -15,8 +15,14 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Link,useParams } from 'react-router-dom';
 import axios from 'axios';
 import { error } from 'jquery';
+// import { Link } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import axios from 'axios';
 
 function ViewServiceProvider() {
+  const [viewSpBlogs, setViewSpBlogs] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const rating = 4;
   const { id } = useParams();
   // const ViewServiceProvider = ({ match }) => {
@@ -47,6 +53,23 @@ function ViewServiceProvider() {
   useEffect(() => {
     getServiceProvider();
   });
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/auth/viewServiceProviderBlogs').then((res) => {
+        console.log(res.data);
+        setViewSpBlogs(res.data);
+    });
+  }, []);
+
+  if (!viewSpBlogs) return 'No jobs found!';
+
+  const handlePrev = () => {
+    setActiveIndex(activeIndex > 0 ? activeIndex - 1 : viewSpBlogs.length - 1);
+  };
+
+  const handleNext = () => {
+    setActiveIndex(activeIndex < viewSpBlogs.length - 1 ? activeIndex + 1 : 0);
+  };
 
   return (
     <div className="SPBox ">
@@ -82,36 +105,6 @@ function ViewServiceProvider() {
           <br></br>
         </div> */}
         <hr className='line'></hr>
-
-        <div className='SPImageCarousel'>
-          <Carousel>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 img-fluid"
-                src={img1}
-                alt="Third slide"
-                style={{ maxHeight: '300px', objectFit: 'cover' }}
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 img-fluid"
-                src={img2}
-                alt="Third slide"
-                style={{ maxHeight: '300px', objectFit: 'cover' }}
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 img-fluid"
-                src={img3}
-                alt="Third slide"
-                style={{ maxHeight: '300px', objectFit: 'cover' }}
-              />
-            </Carousel.Item>
-
-          </Carousel>
-        </div>
 
         <div className='SPReqButtons'>
           <Link to={`/customer/JobRequest`}>
@@ -182,6 +175,63 @@ function ViewServiceProvider() {
             </Card.Body>
           </Card>
         </div>
+
+        
+        {/* BLOGS SECTION */}
+        <br />
+        <div className='SPblogs'>
+          <p className='blogstitle fs-5'> Blogs </p>
+
+          {viewSpBlogs.map((Blog, index) => (
+            <div
+              key={index}
+              className={`blogs-container border border-secondary p-4 ${index !== activeIndex ? 'd-none' : ''}`}
+              style={{ borderRadius: "5px" }}
+            >
+              <div className='SPImageCarousel'>
+              <Carousel interval={null}>
+                <Carousel.Item>
+                <img
+                  className="d-block w-100 img-fluid"
+                  src={img1}
+                  alt="Blog Image"
+                  style={{ maxHeight: '300px', objectFit: 'cover' }}
+                />
+                </Carousel.Item>
+                <Carousel.Item>
+                <img
+                  className="d-block w-100 img-fluid"
+                  src={img1}
+                  alt="Blog Image"
+                  style={{ maxHeight: '300px', objectFit: 'cover' }}
+                />
+                </Carousel.Item>
+              </Carousel>
+              </div><br />
+
+              <div className="d-flex flex-row">
+                <div>
+                  <p className='blogtitle' style={{ fontWeight: "600" }}> {Blog.blogtitle} </p>
+                </div>
+                <div className='ms-auto'>
+                  <span className='blog-service'>{Blog.servicename}</span>
+                </div>
+              </div>
+              <p className='blogdescription'> {Blog.blogdescription} </p>
+            </div>
+          ))}
+
+          <div className="d-flex blog-bt-container justify-content-center">
+            <div className="blog-bt-left me-3">
+              <Button className='btn-ServiceProvider-2' onClick={handlePrev}>&lt;</Button>
+            </div>
+            <div className="blog-bt-right ms-3">
+              <Button className='btn-ServiceProvider-2' onClick={handleNext}>&gt;</Button>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
 

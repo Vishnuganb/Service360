@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Table, Container } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useEffect } from 'react';
+import axios from 'axios';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
@@ -12,6 +14,8 @@ import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
 import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 
 function MyTrainingSessions() {
+
+  const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
 
   const Trainingimages = [
     electrical,
@@ -40,127 +44,6 @@ function MyTrainingSessions() {
   const handleCloseRegistrationModal = () => {
     setShowRegistrationModal(false);
   };
-
-  //training session objects with properties
-  const trainingSessionData = [
-    {
-      id: 1,
-      sessionTitle: 'Basic Electricity for the Non-Electrician Skills Training',
-      date: '2023-08-20',
-      startTime: '09:00',
-      endTime: '12:00',
-      location: 'Marino mall',
-      status: 'Published',
-    },
-    {
-      id: 2,
-      sessionTitle: 'Introduction to Masonry Techniques',
-      date: '2023-08-25',
-      startTime: '10:00',
-      endTime: '15:00',
-      location: 'One Galle Face',
-      status: 'Accepted',
-    },
-    {
-      id: 3,
-      sessionTitle: 'Plumbing Essentials Workshop',
-      date: '2023-08-25',
-      startTime: '14:00',
-      endTime: '17:00',
-      location: 'Colombo City Center',
-      status: 'Published',
-    },
-    {
-      id: 4,
-      sessionTitle: 'Carpentry Fundamentals: Building Strong Foundations',
-      date: '2023-08-22',
-      startTime: '09:30',
-      endTime: '11:30',
-      location: 'Taj Samudra',
-      status: 'Accepted',
-    },
-    {
-      id: 5,
-      sessionTitle: 'Advanced Electrical Wiring Techniques',
-      date: '2023-08-24',
-      startTime: '14:00',
-      endTime: '16:00',
-      location: 'Online',
-      status: 'Payment Pending',
-    },
-    {
-      id: 6,
-      sessionTitle: 'Mastering Masonry: From Basics to Artistry',
-      date: '2023-08-28',
-      startTime: '13:00',
-      endTime: '15:30',
-      location: 'Majestic City',
-      status: 'Published',
-    },
-    {
-      id: 7,
-      sessionTitle: 'Essential Carpentry Tools and Techniques',
-      date: '2023-09-02',
-      startTime: '10:00',
-      endTime: '12:00',
-      location: 'Crescat Boulevard',
-      status: 'Accepted',
-    },
-    {
-      id: 8,
-      sessionTitle: 'CCTV Best Practices',
-      date: '2023-09-05',
-      startTime: '15:00',
-      endTime: '17:00',
-      location: 'Arcade Independence Square',
-      status: 'Payment Pending',
-    },
-    {
-      id: 9,
-      sessionTitle: 'Masonsry for Beginners',
-      date: '2023-09-09',
-      startTime: '11:30',
-      endTime: '13:30',
-      location: 'Liberty Plaza',
-      status: 'Published',
-    },
-    {
-      id: 10,
-      sessionTitle: 'Network Security Protocols',
-      date: '2023-09-12',
-      startTime: '09:00',
-      endTime: '12:00',
-      location: 'Majestic City',
-      status: 'Accepted',
-    },
-    {
-      id: 11,
-      sessionTitle: 'Introduction to Electrical Engineering',
-      date: '2023-09-15',
-      startTime: '14:00',
-      endTime: '16:30',
-      location: 'Liberty Plaza',
-      status: 'Payment Pending',
-    },
-    {
-      id: 12,
-      sessionTitle: 'Introduction to Civil Engineering',
-      date: '2023-09-18',
-      startTime: '12:00',
-      endTime: '14:00',
-      location: 'Arcade Independence Square',
-      status: 'Published',
-    },
-    {
-      id: 13,
-      sessionTitle: 'Introduction to Mechanical Engineering',
-      date: '2023-09-22',
-      startTime: '09:30',
-      endTime: '12:30',
-      location: 'Liberty Plaza',
-      status: 'Accepted',
-    },
-  ];
 
   const registeredUsers = [
     {
@@ -225,19 +108,55 @@ function MyTrainingSessions() {
     setCurrentPage(1); // Reset current page to 1 when date changes
   };
 
+  const handlePublish = (id) => {
+      console.log(id);
+      axios
+      .put(`http://localhost:8080/auth/publishTrainingSession/${id}`).then((res) => {
+          console.log(res.data);
+
+          if(!res){
+            alert("Payment Failed");
+          }
+          else{
+            alert("Payment Successful");
+            window.location.reload();
+          }
+      })
+      .catch((error) => {
+        // Handle errors
+      });
+  };
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/auth/viewMyTrainingSessions').then((res) => {
+        console.log(res.data);
+        setviewTrainingSessionsData(res.data);
+    });
+  }, []);
+
+  if (!viewTrainingSessionsData) return 'No jobs found!';
+
+  
   // Filter training sessions based on search term and selected date
-  const filteredSessions = trainingSessionData.filter((session) => {
-    const sessionDate = new Date(session.date);
+  const filteredSessions = viewTrainingSessionsData.filter((session) => {
+    const sessionDate = new Date(session.trainingdate);
     const selected = selectedDate ? new Date(selectedDate) : null;
 
     return (
       (!selected || sessionDate.toDateString() === selected.toDateString()) &&
-      (session.sessionTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        session.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        session.status.toLowerCase().includes(searchTerm.toLowerCase()))
+      (session.trainingtitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        session.traininglocation.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
 
+  function convertTo12HourFormat(time24) {
+    const [hour, minute] = time24.split(":");
+    const hourInt = parseInt(hour);
+    const amPm = hourInt >= 12 ? "PM" : "AM";
+    const hour12 = hourInt > 12 ? hourInt - 12 : hourInt === 0 ? 12 : hourInt;
+  
+    return `${hour12}:${minute} ${amPm}`;
+  }
 
   // Calculate the start and end indices of the displayed training sessions for the current page
   const startIndex = (currentPage - 1) * cardsPerPage;
@@ -323,8 +242,7 @@ function MyTrainingSessions() {
                 <th>Session ID</th>
                 <th style={{ width: '25%' }}>Training Session Title</th>
                 <th style={{ width: '13%' }}>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
+                <th>Time</th>
                 <th>Location</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -333,13 +251,12 @@ function MyTrainingSessions() {
             <tbody>
               {/* Map through the displayed training sessions and render each row */}
               {displayedSessions.map((session) => (
-                <tr key={session.id} className="custom-table-row">
-                  <td>{String(session.id).padStart(3, '0')}</td>
-                  <td style={{ width: '25%' }}>{session.sessionTitle}</td>
-                  <td style={{ width: '13%' }}>{session.date}</td>
-                  <td>{session.startTime}</td>
-                  <td>{session.endTime}</td>
-                  <td>{session.location}</td>
+                <tr key={session.trainingid} className="custom-table-row">
+                  <td>{String(session.trainingid).padStart(3, '0')}</td>
+                  <td style={{ width: '25%' }}>{session.trainingtitle}</td>
+                  <td style={{ width: '13%' }}>{session.trainingdate}</td>
+                  <td>{convertTo12HourFormat(session.trainingstarttime)} - {convertTo12HourFormat(session.trainingendtime)}</td>
+                  <td>{session.traininglocation}</td>
                   <td>{session.status}</td>
                   <td className="d-flex justify-content-center">
                     {session.status === 'Payment Pending' ? (
@@ -347,7 +264,7 @@ function MyTrainingSessions() {
                         className={`bi bi-cash fs-4 mx-2 my-2`}
                         onClick={() => handleShow(session)}
                       ></i>
-                    ) : session.status === 'Accepted' ? (
+                    ) : session.status === 'Ready to publish' ? (
                       <i
                         className={`bi bi-upload fs-4 mx-2 my-2`}
                       ></i>
@@ -385,31 +302,39 @@ function MyTrainingSessions() {
 
 
       {/* Modal for Payment Confirmation */}
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show && selectedRow !== null} onHide={handleClose} >
         <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Pay for Training Session</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
+        <p>
+            To publish your training session post on Service360, you need to make a payment of 1000.00 LKR.
+            Please confirm your payment below
+        </p>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Group className="mb-3" controlId="sessionTitle">
-                <Form.Label>Session Title</Form.Label>
-                <Form.Control type="text" value={selectedRow ? selectedRow.sessionTitle : ''} readOnly />
-              </Form.Group>
+              {selectedRow && (
+                <>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Form.Group className="mb-3" controlId="sessionTitle">
+                    <Form.Label>Session Title</Form.Label>
+                    <Form.Control type="text" value={selectedRow ? selectedRow.trainingtitle : ''} readOnly />
+                  </Form.Group>
 
-              <Form.Group className="mb-3" controlId="amount">
-                <Form.Label>Amount</Form.Label>
-                <Form.Control type="text" value="1000.00 LKR" readOnly />
-              </Form.Group>
+                  <Form.Group className="mb-3" controlId="amount">
+                    <Form.Label>Amount</Form.Label>
+                    <Form.Control type="text" value="1000.00 LKR" readOnly />
+                  </Form.Group>
 
-              <Form.Group className="mb-3" controlId="paymentConfirmation">
-                <Form.Check
-                  type="checkbox"
-                  label="I confirm that I want to proceed with the payment."
-                />
-              </Form.Group>
-            </Form.Group>
+                  <Form.Group className="mb-3" controlId="paymentConfirmation">
+                    <Form.Check
+                      type="checkbox"
+                      label="I confirm that I want to proceed with the payment."
+                    />
+                  </Form.Group>
+                </Form.Group>
+                </>
+              )}
           </Form>
         </Modal.Body>
 
@@ -417,7 +342,12 @@ function MyTrainingSessions() {
           <Button className='btn-ServiceProvider-2' onClick={handleClose}>
             Close
           </Button>
-          <Button className='btn-ServiceProvider-1' >
+          <Button className='btn-ServiceProvider-1' onClick={() =>{
+              if(selectedRow) {
+                handlePublish(selectedRow.trainingid);
+              } 
+              handleClose(); 
+          }}>
             Pay Now
           </Button>
         </Modal.Footer>

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,14 +44,22 @@ public class LoginController {
     }
     @PostMapping("/signup/serviceprovider")
     public ResponseEntity<AuthenticationResponse> serviceProviderRegister(
-            @RequestBody UserRegisterRequest request
+            @ModelAttribute  UserRegisterRequest request,
+            @RequestParam("files") MultipartFile[] files
     ) {
-        return ResponseEntity.ok(loginService.serviceProviderRegister(request));
+        String message = "";
+        try{
+            message = "Uploaded the files successfully: ";
+            return ResponseEntity.ok ( loginService.serviceProviderRegister ( request, files ) );
+        } catch (Exception e) {
+            message = "Could not upload the files: ";
+            return ResponseEntity.status( HttpStatus.EXPECTATION_FAILED).body(new AuthenticationResponse (message));
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login( @RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok ( loginService.login ( request) );
+        return ResponseEntity.ok ( loginService.login ( request).getBody ( ) );
     }
 
     @GetMapping("/login/{email}")
@@ -62,6 +71,11 @@ public class LoginController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/confirm")
+    public RedirectView confirm( @RequestParam("token") String token) {
+        return loginService.confirmToken(token);
     }
 
 }

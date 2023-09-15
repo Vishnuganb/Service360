@@ -1,6 +1,7 @@
 package com.service360.group50.service;
 
 import com.service360.group50.dto.UsersDTO;
+import com.service360.group50.entity.Role;
 import com.service360.group50.entity.Users;
 import com.service360.group50.repo.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,8 +22,9 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public List<Users> getAllUsers ( String role ) {
-        return userRepository.findByRole ( role );
+    public List<Users> getAllUsers( Role role) {
+        List<Users> users = userRepository.findByRoleAndEnabled(role, true);
+        return users;
     }
 
     @Transactional
@@ -100,4 +102,18 @@ public class UserService {
 
     }
 
+    public int enableUser ( String email ) {
+        return userRepository.enableUser ( email );
+    }
+
+    public Users updateCustomer ( long userid, boolean enabled ) {
+        Optional<Users> usersOptional = userRepository.findById ( userid );
+        if ( usersOptional.isEmpty () ) {
+            return null;
+        }
+        Users userdata = usersOptional.get ();
+        userdata.setLocked ( enabled );
+        userRepository.save ( userdata );
+        return userdata;
+    }
 }

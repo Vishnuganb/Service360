@@ -81,11 +81,16 @@ public class Users implements UserDetails {
 //    )
 //    private List<TodoList> todolist;
 
+    private Boolean locked;
+    private Boolean enabled;
+
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();
         isactive = true;
         status = "pending";
+        locked = false;
+        enabled = false;
     }
 
     @Enumerated(EnumType.STRING)
@@ -112,7 +117,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked () {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -122,7 +127,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isEnabled () {
-        return true;
+        return enabled;
     }
 
 }

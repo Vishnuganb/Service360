@@ -100,4 +100,7 @@ public class UserService {
 
     }
 
+    public int enableUser ( String email ) {
+        return userRepository.enableUser ( email );
+    }
 }

@@ -80,13 +80,13 @@ const AddReviewandRating = () => {
       <h2>View Reviews And Ratings About Our System</h2>
       <Form
         className="block py-5  "
-        style={{ backgroundImage: `url(${BgImage})`}}
+        style={{ backgroundImage: `url(${BgImage})` }}
       >
         <Row className="mt-5 d-justify flex-content-around">
           <Col>
-            <Card style={{ backgroundImage: `url(${BgImage})`, height:'190px'  }} className="block">
+            <Card style={{ backgroundImage: `url(${BgImage})`, height: '190px' }} className="block">
               <div className="text-center">
-              <div className="d-flex justify-content-center fs-3 px-2">
+                <div className="d-flex justify-content-center fs-3 px-2">
                   Average Rating:
                 </div>
                 <div className="fs-1 d-flex justify-content-center fw-bold px-2">
@@ -100,9 +100,9 @@ const AddReviewandRating = () => {
           </Col>
 
           <Col>
-            <Card style={{ backgroundImage: `url(${BgImage})`, height:'190px' }} className="block">
+            <Card style={{ backgroundImage: `url(${BgImage})`, height: '190px' }} className="block">
               <div className="text-center">
-              <div className="fs-3 d-flex justify-content-center px-2">
+                <div className="fs-3 d-flex justify-content-center px-2">
                   {" "}
                   Reviews
                 </div>
@@ -110,56 +110,56 @@ const AddReviewandRating = () => {
                   {totalRatings}
                 </div>
                 <div className="fs-1 d-flex justify-content-center fw-bold px-2">
-                  <img src={reviewImg} style={{height:'50px', width:'50px'}}/>
+                  <img src={reviewImg} style={{ height: '50px', width: '50px' }} />
                 </div>
               </div>
             </Card>
           </Col>
 
           <Col>
-            <Card  className="block"  style={{backgroundImage: `url(${BgImage})`, height:'190px'}}>
+            <Card className="block" style={{ backgroundImage: `url(${BgImage})`, height: '190px' }}>
               <div className="px-2">
-              {ratingsData.map((rating) => ( 
-                <star key={rating.stars}>
-                  <div className="" >
-                    <div className="" style={{ display: "flex", alignItems: "center" }}>
-                      <div className="" style={{ marginRight: "20px",marginLeft:"10px" }}>
-                        <span style={{ fontWeight: 500, fontSize: 20 ,marginLeft: "20px"  }}>
-                          {rating.stars}
-                          <FontAwesomeIcon
-                            icon={faStar}
-                            style={{ color: "gold", marginLeft: "20px" }}
-                          />
-                        </span>
-                      </div>
-                      <div
-                        style={{
-                          flex: 2,
-                          height: 15,
-                          borderRadius: 15,
-                          overflow: "hidden",
-                          backgroundColor: "rgb(231, 227, 227)",
-                        marginLeft:"10px",
-                        
-                        }}
-                      >
+                {ratingsData.map((rating) => (
+                  <star key={rating.stars}>
+                    <div className="" >
+                      <div className="" style={{ display: "flex", alignItems: "center" }}>
+                        <div className="" style={{ marginRight: "20px", marginLeft: "10px" }}>
+                          <span style={{ fontWeight: 500, fontSize: 20, marginLeft: "20px" }}>
+                            {rating.stars}
+                            <FontAwesomeIcon
+                              icon={faStar}
+                              style={{ color: "gold", marginLeft: "20px" }}
+                            />
+                          </span>
+                        </div>
                         <div
                           style={{
-                            width: `${(rating.count / totalRatings) * 100}%`,
+                            flex: 2,
                             height: 15,
-                            backgroundColor: "#333F7D",
-                        }}
-                      ></div>
-                    </div>
+                            borderRadius: 15,
+                            overflow: "hidden",
+                            backgroundColor: "rgb(231, 227, 227)",
+                            marginLeft: "10px",
 
-                  </div>
-                </div>
-              </star>
-            ))}
-            </div>
-          </Card>
-        </Col>
-      </Row>
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: `${(rating.count / totalRatings) * 100}%`,
+                              height: 15,
+                              backgroundColor: "#333F7D",
+                            }}
+                          ></div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </star>
+                ))}
+              </div>
+            </Card>
+          </Col>
+        </Row>
 
 
         <Row className="mt-5">
@@ -191,7 +191,7 @@ const AddReviewandRating = () => {
             </span>
           </Col>
         </Row>
-        <Card className="mt-5 mb-5 text-center display: 'flex'"  style={{ backgroundImage: `url(${BgImage})` }}>
+        <Card className="mt-5 mb-5 text-center display: 'flex'" style={{ backgroundImage: `url(${BgImage})` }}>
           <Row className="mt-5 ">
             <Col>
               <div>

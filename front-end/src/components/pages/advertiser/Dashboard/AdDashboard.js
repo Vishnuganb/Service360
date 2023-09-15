@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from 'recharts';
 import "../../../../style/advertiser/AdIndex.css";
 
 
@@ -40,14 +40,14 @@ const generateMonthlyData = () => {
 
 
 const AdDashbord = () => {
- 
 
 
- 
+
+
 
   const [view, setView] = useState('daily');
 
- 
+
 
 
   const chartDataToShow = view === 'daily' ? generateDailyData() : generateMonthlyData();

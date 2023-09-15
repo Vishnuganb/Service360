@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
+import axios from "axios";
 
 function ComplaintPopup() {
     const [show, setShow] = useState(false);
@@ -191,63 +192,84 @@ const More = () => {
     );
 };
 export default function CustomerComplaintPage() {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // Adjust this value based on how many items you want per page
-    const [selectedStatus, setSelectedStatus] = useState('All');
+    const apiBaseUrl = "http://localhost:8080";
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [fromDate, setFromDate] = useState(null);
-    const [toDate, setToDate] = useState(null);
+    const axiosInstance = axios.create({
+      baseURL: apiBaseUrl,
+      timeout: 10000,
+    });
+    const [Complaints, setComplaints] = useState([]);
+  
+    useEffect(() => {
+      // Fetch data from your backend API
+      axiosInstance
+        .get("/auth/viewcomplaints")
+        .then((response) => {
+          setComplaints(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("Error fetching data:", error);
+        });
+    }, []);
 
-    const complaints = [
-        { date: '27/07/2023', complaint: 'About service providers', status: 'Pending' },
-        { date: '26/07/2023', complaint: 'Billing Issues', status: 'Pending' },
-        { date: '25/07/2023', complaint: 'System quality', status: 'Replied' },
-        { date: '25/07/2023', complaint: 'System quality', status: 'Pending' },
-        { date: '24/07/2023', complaint: 'Billing Issues', status: 'Replied' },
-        { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Pending' },
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const itemsPerPage = 5; // Adjust this value based on how many items you want per page
+    // const [selectedStatus, setSelectedStatus] = useState('All');
 
-    ];
+    // const [searchTerm, setSearchTerm] = useState('');
+    // const [fromDate, setFromDate] = useState(null);
+    // const [toDate, setToDate] = useState(null);
 
-    const filteredComplaints = complaints.filter((complaint) => {
-        const isDateMatch =
-            (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
-            (!toDate || new Date(complaint.date) <= new Date(toDate));
-
-
-        return (
-            isDateMatch &&
-            (complaint.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                complaint.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                complaint.complaint.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-        );
+    const Cuscomplaints = Complaints.map((complaint) => {
+        return {
+            date: complaint.posteddate,
+            complaint: complaint.complainttitle,
+            status: complaint.complaintstatus
+          
+          
+        };
     });
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentComplaints = filteredComplaints.slice(indexOfFirstItem, indexOfLastItem);
+    // const filteredComplaints = complaints.filter((complaint) => {
+    //     const isDateMatch =
+    //         (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
+    //         (!toDate || new Date(complaint.date) <= new Date(toDate));
 
-    const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    //     return (
+    //         isDateMatch &&
+    //         (complaint.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //             complaint.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //             complaint.complaint.toLowerCase().includes(searchTerm.toLowerCase())
+    //         )
+    //     );
+    // });
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-        setCurrentPage(1);
-    };
+    // const indexOfLastItem = currentPage * itemsPerPage;
+    // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    // const currentComplaints = filteredComplaints.slice(indexOfFirstItem, indexOfLastItem);
 
-    const handleFromDateChange = (e) => {
-        setFromDate(e.target.value);
-        setCurrentPage(1);
-    };
+    // const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
 
-    const handleToDateChange = (e) => {
-        setToDate(e.target.value);
-        setCurrentPage(1);
-    };
+    // const handlePageChange = (pageNumber) => {
+    //     setCurrentPage(pageNumber);
+    // };
+
+    // const handleSearchChange = (e) => {
+    //     setSearchTerm(e.target.value);
+    //     setCurrentPage(1);
+    // };
+
+    // const handleFromDateChange = (e) => {
+    //     setFromDate(e.target.value);
+    //     setCurrentPage(1);
+    // };
+
+    // const handleToDateChange = (e) => {
+    //     setToDate(e.target.value);
+    //     setCurrentPage(1);
+    // };
 
     return (
         <>
@@ -266,7 +288,7 @@ export default function CustomerComplaintPage() {
 
 
 
-                    <Form className="nav-search">
+                    {/* <Form className="nav-search">
                         <div className="d-flex flex-wrap justify-content-center">
                             <div className='col-md-3 col-sm-6 m-2'>
                                 <div className="input-group m-0">
@@ -318,7 +340,7 @@ export default function CustomerComplaintPage() {
                                 </div>
                             </div>
                         </div>
-                    </Form>
+                    </Form> */}
 
                 </div>
 
@@ -335,14 +357,14 @@ export default function CustomerComplaintPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentComplaints.map((complaints, index) => (
+                            {Cuscomplaints.map((complaint, index) => (
                                 <tr key={index}>
-                                    <td>{complaints.date}</td>
-                                    <td>{complaints.complaint}<More /></td>
-                                    <td>{complaints.status}</td>
+                                    <td>{complaint.date}</td>
+                                    <td>{complaint.complaint}<More /></td>
+                                    <td>{complaint.status}</td>
                                     <td>
 
-                                        {complaints.status === 'Replied' && (
+                                        {complaint.status === 'Replied' && (
                                             <View />
                                         )}&nbsp;&nbsp;
                                         <Delete />
@@ -357,7 +379,7 @@ export default function CustomerComplaintPage() {
                 <br></br>
 
 
-                <div className="pagination justify-content-center">
+                {/* <div className="pagination justify-content-center">
                     {Array.from({ length: totalPages }, (_, index) => (
                         <button
                             key={index + 1}
@@ -368,11 +390,10 @@ export default function CustomerComplaintPage() {
                             {index + 1}
                         </button>
                     ))}
-                </div>
+                </div> */}
 
 
             </div>
         </>
     );
 }
-

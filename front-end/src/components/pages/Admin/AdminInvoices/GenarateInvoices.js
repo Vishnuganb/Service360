@@ -63,33 +63,33 @@ const generatePDF = (rowData) => {
   data.push(row);
 
   // Set the title heading
-const Heading =
-  "Service360 Invoice Report";
-doc.setFontSize(40);
-doc.text(Heading ,doc.internal.pageSize.width / 2, 20, { align: "center" });
+  const Heading =
+    "Service360 Invoice Report";
+  doc.setFontSize(40);
+  doc.text(Heading, doc.internal.pageSize.width / 2, 20, { align: "center" });
 
- const tableY = 50; // Adjust this value as needed
+  const tableY = 50; // Adjust this value as needed
 
- const tableData = [];
- for (let i = 0; i < headers.length; i++) {
-   const heading = headers[i];
-   const detail = row[i];
-   tableData.push([heading, detail]);
- }
+  const tableData = [];
+  for (let i = 0; i < headers.length; i++) {
+    const heading = headers[i];
+    const detail = row[i];
+    tableData.push([heading, detail]);
+  }
 
-doc.autoTable({
-  startY: tableY,
-  body: tableData,
-  theme: "grid", 
-  columnStyles: {
-    0: {
-      fillColor: "#282b3d",
-      textColor: "#ffffff",
-      fontStyle: "bold",
-    }, 
-  },
-  styles: { halign: "left" }, 
-});
+  doc.autoTable({
+    startY: tableY,
+    body: tableData,
+    theme: "grid",
+    columnStyles: {
+      0: {
+        fillColor: "#282b3d",
+        textColor: "#ffffff",
+        fontStyle: "bold",
+      },
+    },
+    styles: { halign: "left" },
+  });
 
   // Set footer
   const footerText =
@@ -194,92 +194,92 @@ const GenerateInvoice = () => {
     },
   ];
 
- const goldData = [
-   {
-     referenceId: "B123456789",
-     subscriptionType: "Gold",
-     totalAmount: 299,
-     date: "2023-06-01 12:30:00",
-     firstName: "John",
-     lastName: "Doe",
-     email: "john.doe@example.com",
-     billingAddress: "123 Main St, City, Country",
+  const goldData = [
+    {
+      referenceId: "B123456789",
+      subscriptionType: "Gold",
+      totalAmount: 299,
+      date: "2023-06-01 12:30:00",
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      billingAddress: "123 Main St, City, Country",
 
-     paymentMethod: "Credit Card",
-     cardNumber: "**** **** **** 1234",
-     selectedOption: "Ad",
-   },
-   {
-     referenceId: "G987654321",
-     subscriptionType: "Gold",
-     totalAmount: 299,
-     date: "2023-06-01 08:20:00",
-     firstName: "Jane",
-     lastName: "Smith",
-     email: "jane.smith@example.com",
-     billingAddress: "456 Elm St, City, Country",
+      paymentMethod: "Credit Card",
+      cardNumber: "**** **** **** 1234",
+      selectedOption: "Ad",
+    },
+    {
+      referenceId: "G987654321",
+      subscriptionType: "Gold",
+      totalAmount: 299,
+      date: "2023-06-01 08:20:00",
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "jane.smith@example.com",
+      billingAddress: "456 Elm St, City, Country",
 
-     paymentMethod: "Credit Card",
-     cardNumber: "**** **** **** 5678",
-     selectedOption: "Ad",
-   },
-   {
-     referenceId: "C234567890",
-     subscriptionType: "Gold",
-     totalAmount: 299,
-     date: "2023-06-01 18:30:00",
-     firstName: "Michael",
-     lastName: "Johnson",
-     email: "michael.johnson@example.com",
-     billingAddress: "789 Oak St, City, Country",
+      paymentMethod: "Credit Card",
+      cardNumber: "**** **** **** 5678",
+      selectedOption: "Ad",
+    },
+    {
+      referenceId: "C234567890",
+      subscriptionType: "Gold",
+      totalAmount: 299,
+      date: "2023-06-01 18:30:00",
+      firstName: "Michael",
+      lastName: "Johnson",
+      email: "michael.johnson@example.com",
+      billingAddress: "789 Oak St, City, Country",
 
-     paymentMethod: "Credit Card",
-     cardNumber: "**** **** **** 3456",
-     selectedOption: "Ad",
-   },
-   {
-     referenceId: "H765432109",
-     subscriptionType: "Gold",
-     totalAmount: 299,
-     date: "2023-06-10 20:55:00",
-     firstName: "Emily",
-     lastName: "Williams",
-     email: "emily.williams@example.com",
-     billingAddress: "234 Pine St, City, Country",
+      paymentMethod: "Credit Card",
+      cardNumber: "**** **** **** 3456",
+      selectedOption: "Ad",
+    },
+    {
+      referenceId: "H765432109",
+      subscriptionType: "Gold",
+      totalAmount: 299,
+      date: "2023-06-10 20:55:00",
+      firstName: "Emily",
+      lastName: "Williams",
+      email: "emily.williams@example.com",
+      billingAddress: "234 Pine St, City, Country",
 
-     paymentMethod: "Credit Card",
-     cardNumber: "**** **** **** 8765",
-     selectedOption: "Ad",
-   },
-   {
-     referenceId: "I123456789",
-     subscriptionType: "Gold",
-     totalAmount: 299,
-     date: "2023-06-22 18:30:00",
-     firstName: "David",
-     lastName: "Brown",
-     email: "david.brown@example.com",
-     billingAddress: "567 Maple St, City, Country",
+      paymentMethod: "Credit Card",
+      cardNumber: "**** **** **** 8765",
+      selectedOption: "Ad",
+    },
+    {
+      referenceId: "I123456789",
+      subscriptionType: "Gold",
+      totalAmount: 299,
+      date: "2023-06-22 18:30:00",
+      firstName: "David",
+      lastName: "Brown",
+      email: "david.brown@example.com",
+      billingAddress: "567 Maple St, City, Country",
 
-     paymentMethod: "Credit Card",
-     cardNumber: "**** **** **** 9876",
-     selectedOption: "Ad",
-   },
-   {
-     referenceId: "J987654321",
-     subscriptionType: "Gold",
-     totalAmount: 299,
-     date: "2023-06-27 22:12:00",
-     firstName: "Olivia",
-     lastName: "Davis",
-     email: "olivia.davis@example.com",
-     billingAddress: "890 Elm St, City, Country",
+      paymentMethod: "Credit Card",
+      cardNumber: "**** **** **** 9876",
+      selectedOption: "Ad",
+    },
+    {
+      referenceId: "J987654321",
+      subscriptionType: "Gold",
+      totalAmount: 299,
+      date: "2023-06-27 22:12:00",
+      firstName: "Olivia",
+      lastName: "Davis",
+      email: "olivia.davis@example.com",
+      billingAddress: "890 Elm St, City, Country",
 
-     paymentMethod: "Credit Card",
-     cardNumber: "**** **** **** 5432",
-     selectedOption: "Ad",
-   },
- ];
+      paymentMethod: "Credit Card",
+      cardNumber: "**** **** **** 5432",
+      selectedOption: "Ad",
+    },
+  ];
 
   const platinumData = [
     // Platinum Subscriptions

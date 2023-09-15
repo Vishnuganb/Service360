@@ -3,7 +3,7 @@ import React from "react";
 import sessionImage from '../../../../assets/images/ServiceProvider/masonry2.jpg';
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Carousel from 'react-bootstrap/Carousel';
 import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
@@ -11,10 +11,10 @@ import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
 import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
 import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 
-function TrainingSession(){
+function TrainingSession() {
     const [viewTrainingSessionData, setviewTrainingSessionData] = useState(null);
 
-    const Trainingimages=[
+    const Trainingimages = [
         electrical,
         plumping1,
         carpentry1,
@@ -22,21 +22,21 @@ function TrainingSession(){
 
     const { id } = useParams();
     const trainingsessionId = parseInt(id, 10);
-   
+
     useEffect(() => {
-      axios.get(`http://localhost:8080/auth/viewTrainingSessions/${trainingsessionId}`).then((res) => {
-          console.log(res.data);
-          setviewTrainingSessionData(res.data);
-      });
-    }   , []);
-  
+        axios.get(`http://localhost:8080/auth/viewTrainingSessions/${trainingsessionId}`).then((res) => {
+            console.log(res.data);
+            setviewTrainingSessionData(res.data);
+        });
+    }, []);
+
     if (!viewTrainingSessionData) return 'No training session found!';
 
-    return(
+    return (
         <div className="ms-lg-4 me-lg-4">
             <div className="ViewATraining-image-container d-flex justify-content-center mt-4 mb-3">
                 <Carousel fade style={{ maxHeight: '400px', overflow: 'hidden' }}>
-                    {Trainingimages.map((image,index) => (
+                    {Trainingimages.map((image, index) => (
                         <Carousel.Item key={index}>
                             <img
                                 className="d-block w-100"
@@ -91,7 +91,7 @@ function TrainingSession(){
                 <div className="ViewATraining-details-body-left mt-2 d-flex flex-row flex-wrap">
                     <div className="col-lg-4 col-md-6 col-12">
                         <Link to="#">
-                        <span style={{color:"black"}}>interested</span>&nbsp;&nbsp;&nbsp;
+                            <span style={{ color: "black" }}>interested</span>&nbsp;&nbsp;&nbsp;
                         </Link>
                         <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.interested}</span>
                     </div>

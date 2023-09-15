@@ -14,7 +14,7 @@ import backgroundImage from "../../../../../assets/images/header/Background.png"
 import { Container } from "react-bootstrap";
 
 const Ads = () => {
-     const [key, setKey] = useState("home");
+  const [key, setKey] = useState("home");
   return (
     <Container>
       {" "}
@@ -23,8 +23,8 @@ const Ads = () => {
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="p-5 ">
-          
-            <h1 className="text-center">Unlock Your Potential Create a New Ad Today And Reach a Wider Audience</h1>
+
+          <h1 className="text-center">Unlock Your Potential Create a New Ad Today And Reach a Wider Audience</h1>
           <div className="adCenterCont">
             <Link to="/advertiser/CreateAd">
               <button className="PostAd">Post New Ad</button>

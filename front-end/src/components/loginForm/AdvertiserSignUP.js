@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import image from '../../assets/images/header/Background.png';
 import loginPhoto from '../../assets/images/home/Advertiser.jpeg';
 import validator from 'validator';
@@ -8,7 +8,7 @@ import Step1 from './AdStep1';
 import Step2 from './AdStep2';
 import { set } from 'lodash';
 
-const ServiceProviderSignUP = () => {
+const AdvertiserSignUP = () => {
     const [step, setStep] = useState(1);
 
     const { login } = useContext(AuthenticationContext);
@@ -21,8 +21,8 @@ const ServiceProviderSignUP = () => {
         lastName: '',
         nicNumber: '',
         contactNumber: '',
-        shopName: '',
-        shopNameErrorMessage: '',
+        address: '',
+        addressErrorMessage: '',
         emailStatus: false,
         emailErrorMessage: '',
         firstNameErrorMessage: '',
@@ -40,8 +40,10 @@ const ServiceProviderSignUP = () => {
 
     // Step 2 state variables and handlers
     const [step2Data, setStep2Data] = useState({
-        address: '',
-        addressErrorMessage: '',
+        shopAddress: '',
+        shopAddressErrorMessage: '',
+        shopName: '',
+        shopNameErrorMessage: '',
         password: '',
         confirmPassword: '',
         errorMessage: 'Password requires to have at least one lowercase, one uppercase, one number, one symbol, and be a minimum of 8 characters in length',
@@ -54,7 +56,7 @@ const ServiceProviderSignUP = () => {
         selectedFiles: [],
         selectedFileCount: 0,
         fileErrorMessage: '',
-        filePaths: [],
+        files: '',
     });
 
     const handleStep2Change = (field, value) => {
@@ -129,40 +131,33 @@ const ServiceProviderSignUP = () => {
 
     const handleFileInputChange = (event) => {
         const files = event.target.files;
-        const fileListArray = [...files];
-        const paths = fileListArray.map(file => file.name);
 
         setStep2Data((prevData) => ({
             ...prevData,
-            filePaths: paths,
-        }));
-
-        setStep2Data((prevData) => ({
-            ...prevData,
-            selectedFileCount: fileListArray.length,
-        }));
-    };
-
-    const handleRemoveFile = (index) => {
-
-        const updatedPaths = step2Data.filePaths.filter((_, i) => i !== index);
-
-        setSelectedFileCount(updatedPaths.length);
-
-        setStep2Data((prevData) => ({
-            ...prevData,
-            filePaths: updatedPaths,
+            selectedFiles: files,
+            selectedFileCount: files.length,
         }));
 
         if (fileInputRef.current) {
-            if (updatedPaths.length === 0) {
-                fileInputRef.current.value = '';
-            } else {
-                fileInputRef.current.value = `${updatedPaths.length} files selected`;
-            }
+            fileInputRef.current.value = `${files.length} files selected`;
         }
     };
 
+    const handleRemoveFile = (index) => {
+        setStep2Data((prevData) => ({
+            ...prevData,
+            selectedFiles: prevData.selectedFiles.filter((_, i) => i !== index),
+            selectedFileCount: prevData.selectedFileCount - 1,
+        }));
+
+        if (fileInputRef.current) {
+            if (step2Data.selectedFiles.length === 0) {
+                fileInputRef.current.value = '';
+            } else {
+                fileInputRef.current.value = `${step2Data.selectedFiles.length} files selected`;
+            }
+        }
+    };
 
     const handleStep2PreviousClick = () => {
         setStep(1);
@@ -170,13 +165,14 @@ const ServiceProviderSignUP = () => {
 
     const handleStep2Submit = () => {
 
-        const { password, confirmPassword, selectedFileCount, address } = step2Data;
+        const { password, confirmPassword, selectedFileCount, shopAddress, shopName } = step2Data;
 
         let isError = false;
         let passwordErrorMessage = '';
         let confirmPasswordErrorMessage = '';
-        let addressErrorMessage = '';
-        
+        let shopAddressErrorMessage = '';
+        let shopNameErrorMessage = '';
+
         let fileErrorMessage = '';
 
 
@@ -188,7 +184,7 @@ const ServiceProviderSignUP = () => {
         if (confirmPassword.trim() === '') {
             isError = true;
             confirmPasswordErrorMessage = 'Confirm password is required';
-        }    
+        }
 
         if (password !== confirmPassword) {
             isError = true;
@@ -200,32 +196,26 @@ const ServiceProviderSignUP = () => {
             fileErrorMessage = 'Select at least one file';
         }
 
-        if (address.trim() === '') {
+        if (shopAddress.trim() === '') {
             isError = true;
-            addressErrorMessage = 'Address is required';
+            shopAddressErrorMessage = 'Shop Address is required';
+        }
+
+        if (shopName.trim() === '') {
+            isError = true;
+            shopNameErrorMessage = 'Shop Name is required';
         }
 
         setStep2Data((prevData) => ({
             ...prevData,
             passwordErrorMessage,
             confirmPasswordErrorMessage,
+            shopNameErrorMessage,
             fileErrorMessage,
-            addressErrorMessage,
+            shopAddressErrorMessage,
         }));
 
         if (!isError) {
-            console.log('Form submitted!');
-            console.log('Step 1 data:', step1Data);
-            console.log('Step 2 data:', step2Data);
-            console.log(`email:`, step1Data.email,
-                `password: `,step2Data.password,
-                `firstname:`, step1Data.firstName,
-                `lastname:`, step1Data.lastName,
-                `nic:`, step1Data.nicNumber,
-                `phonenumber:`, step1Data.contactNumber,
-                `address:`, step2Data.address,
-                `shopname:`, step1Data.shopName,
-                `files:`, step2Data.filePaths,)
             advertiserSignUp({
                 email: step1Data.email,
                 password: step2Data.password,
@@ -233,15 +223,18 @@ const ServiceProviderSignUP = () => {
                 lastname: step1Data.lastName,
                 nic: step1Data.nicNumber,
                 phonenumber: step1Data.contactNumber,
-                shopaddress: step2Data.address,
-                shopname: step1Data.shopName,
+                address: step1Data.address,
+                shopaddress: step2Data.shopAddress,
+                shopname: step2Data.shopName,
+                files: step2Data.selectedFiles,
             });
+
         }
 
     };
 
     const handleStep1NextClick = () => {
-        const { email, firstName, lastName, nicNumber, contactNumber,shopName } = step1Data;
+        const { email, firstName, lastName, nicNumber, contactNumber, address } = step1Data;
 
         let isError = false;
         let emailErrorMessage = '';
@@ -249,7 +242,7 @@ const ServiceProviderSignUP = () => {
         let lastNameErrorMessage = '';
         let nicNumberErrorMessage = '';
         let contactNumberErrorMessage = '';
-        let shopNameErrorMessage = '';
+        let addressErrorMessage = '';
 
         if (!validator.isEmail(email)) {
             isError = true;
@@ -276,9 +269,9 @@ const ServiceProviderSignUP = () => {
             contactNumberErrorMessage = 'Should contain only digits';
         }
 
-        if (shopName.trim() === '') {
+        if (address.trim() === '') {
             isError = true;
-            shopNameErrorMessage = 'Shop name is required';
+            addressErrorMessage = 'Residential Address required';
         }
 
         if (contactNumber.length !== 10) {
@@ -322,7 +315,7 @@ const ServiceProviderSignUP = () => {
             lastNameErrorMessage,
             nicNumberErrorMessage,
             contactNumberErrorMessage,
-            shopNameErrorMessage,
+            addressErrorMessage,
         }));
     };
 
@@ -368,7 +361,6 @@ const ServiceProviderSignUP = () => {
                                                     validateConfirmPassword={validateConfirmPassword}
                                                     handleFileInputChange={handleFileInputChange}
                                                     handleRemoveFile={handleRemoveFile}
-                                                // fileInputRef={fileInputRef}
                                                 />
                                             )}
                                         </div>
@@ -386,4 +378,4 @@ const ServiceProviderSignUP = () => {
     );
 };
 
-export default ServiceProviderSignUP;
+export default AdvertiserSignUP;

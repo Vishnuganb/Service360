@@ -17,7 +17,7 @@ function AppHeader1() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav>
-                        <Nav.Link as={Link}  to="/" className='fw-bold navLink'>Home</Nav.Link>
+                        <Nav.Link as={Link} to="/" className='fw-bold navLink'>Home</Nav.Link>
                         <Nav.Link as={Link} to="/jobs" className='fw-bold navLink'>Jobs</Nav.Link>
                         <Nav.Link as={Link} to="/services" className='fw-bold navLink'>Services</Nav.Link>
                         <Nav.Link as={Link} to="/about" className='fw-bold navLink'>About</Nav.Link>
@@ -38,7 +38,6 @@ function AppHeader1() {
 }
 
 export default AppHeader1;
-
 
 
 

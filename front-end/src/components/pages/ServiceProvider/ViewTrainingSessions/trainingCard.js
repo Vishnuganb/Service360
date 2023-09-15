@@ -1,8 +1,8 @@
 import React from "react";
 import powerImage from '../../../../assets/images/ServiceProvider/power.jpg';
 
-function trainingCard(){
-    return(
+function trainingCard() {
+    return (
         <div className="single-my-training-card">
             <div className="row">
                 <div className="col-md-5 col-12 my-training-card-body-left d-flex justify-content-center justify-content-md-start">
@@ -18,7 +18,7 @@ function trainingCard(){
                     <span className="single-my-training-time">
                         <i className="bi bi-clock-fill"></i>&nbsp; Saturday, 15-08-2023 At 10.00 am
                     </span>
-                    <br/>
+                    <br />
                     <div className="single-traning-guests border border-dark mt-2 mb-4 col">
                         <div className="custom-training-row row align-itmes-center">
                             <span className="single-my-training-guests border border-primary col-12">Guests</span>

@@ -22,27 +22,9 @@ import java.util.List;
 public class Jobs {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue
     @Column(updatable = false)
     private Long jobid;
-
-//    @OneToOne
-//    @JoinColumn(name = "commentid")
-    @Column
-    private Long jobcommentid;
-
-//    @OneToOne
-//    @JoinColumn(name = "detailsid", referencedColumnName = "jobdetailsid")
-    private Long jobDetails;
-
-    @Column( columnDefinition = "TEXT")
-    private String profile;
-
-    @Column( columnDefinition = "TEXT")
-    private String customername;
-
-    @Column( columnDefinition = "TEXT")
-    private String lastseen;
 
     @Column( columnDefinition = "TEXT")
     private String jobtitle;
@@ -75,12 +57,7 @@ public class Jobs {
     private String isquotation;
 
 
-    @Column( columnDefinition = "DATE")
-    private LocalDate jobdate;
-
-    @Column( columnDefinition = "Time")
-    private Time jobstarttime;
-
-    @Column( columnDefinition = "Time")
-    private Time jobendtime;
+    //profile
+    //customername
+    //lastseen
 }

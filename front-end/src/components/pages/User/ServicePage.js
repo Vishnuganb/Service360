@@ -15,7 +15,7 @@ function ServicePage() {
     const handleBackClick = () => {
         navigate(-1);
     };
-    
+
 
     return (
         <section id="service-page" className="block service m-5 p-5" style={{ backgroundImage: `url(${BgImage})` }}>

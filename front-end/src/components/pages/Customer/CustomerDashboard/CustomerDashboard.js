@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import Card from "react-bootstrap/Card";
 import { Row } from 'react-bootstrap';
 import '../../../../style/Customer/CustomerDashboard.css'
@@ -41,15 +41,15 @@ function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
                         <Col>Due Date: {dueDate}</Col>
                         <Link to={`/customer/todoform`}> <Button variant='secondary' style={{ background: "#292d32", marginRight: '10px' }}>
                             <i className="bi bi-list-task"></i>  </Button></Link>
-                             <Button variant='secondary' style={{ background: "#292d32" }}>
+                        <Button variant='secondary' style={{ background: "#292d32" }}>
                             <i className="bi bi-chat-fill"></i>                    </Button>
                     </center>
                 </Modal.Body>
                 <Modal.Footer>
-                <Link to={`/Customer/ViewServiceProvider`}>
-                    <Button variant='secondary' style={{ background: "#292d32" }}>
-                        View Profile
-                    </Button></Link>
+                    <Link to={`/Customer/ViewServiceProvider`}>
+                        <Button variant='secondary' style={{ background: "#292d32" }}>
+                            View Profile
+                        </Button></Link>
 
                 </Modal.Footer>
             </Modal>
@@ -88,10 +88,10 @@ function HiredPopup({ title, serviceProvider, durationPeriod, imageSrc, }) {
                 </Modal.Body>
                 <Modal.Footer>
 
-                <Link to={`/Customer/ViewServiceProvider`}>
-                    <Button variant='secondary' style={{ background: "#292d32" }}>
-                        View Profile
-                    </Button></Link>
+                    <Link to={`/Customer/ViewServiceProvider`}>
+                        <Button variant='secondary' style={{ background: "#292d32" }}>
+                            View Profile
+                        </Button></Link>
 
                 </Modal.Footer>
             </Modal>
@@ -132,10 +132,10 @@ function PastPopup({ title, serviceProvider, dueDate, imageSrc }) {
                 </Modal.Body>
                 <Modal.Footer>
 
-                <Link to={`/Customer/ViewServiceProvider`}>
-                    <Button variant='secondary' style={{ background: "#292d32" }}>
-                        View Profile
-                    </Button></Link>
+                    <Link to={`/Customer/ViewServiceProvider`}>
+                        <Button variant='secondary' style={{ background: "#292d32" }}>
+                            View Profile
+                        </Button></Link>
                 </Modal.Footer>
             </Modal>
         </>
@@ -222,22 +222,22 @@ const CustomerDashboard = () => {
         <div className="row ps-lg-5 pe-lg-5 pt-lg-5" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <div className="col-12">
-           <div style={{padding:'10px'}}><h4>Welcome back !</h4></div> 
+                <div style={{ padding: '10px' }}><h4>Welcome back !</h4></div>
                 <div className='d-flex flex-column flex-lg-row flex-md-row '>
                     <div className="d-flex flex-row col-7">
-                        <Card className="card-cus-dashboard dashboard-button-1"  style={{width:"255px"}}>
+                        <Card className="card-cus-dashboard dashboard-button-1" style={{ width: "255px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
                                 <Card.Body >
                                     <Card.Title>8</Card.Title>
                                     <Card.Text className="card-body-container">
-                                        Pending vacancy 
+                                        Pending vacancy
                                         <i className="bi bi-rocket-takeoff"></i>
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
                         </Card>
-                    &nbsp; &nbsp; &nbsp;
-                        <Card className="card-cus-dashboard dashboard-button-2"  style={{width:"255px"}}>
+                        &nbsp; &nbsp; &nbsp;
+                        <Card className="card-cus-dashboard dashboard-button-2" style={{ width: "255px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
                                 <Card.Body>
                                     <Card.Title>3</Card.Title>

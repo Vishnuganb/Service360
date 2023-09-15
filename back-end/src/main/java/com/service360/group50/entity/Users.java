@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StreamUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +33,7 @@ import java.util.List;
 public class Users implements UserDetails {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long userid;
 
@@ -58,13 +61,42 @@ public class Users implements UserDetails {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
 
+    @Column(columnDefinition = "TEXT")
+    private String status;
+
+    @Column(columnDefinition = "TEXT")
+    private String profilePic;
+
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Blogs> blogs;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Complaints> complaints;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_vacancy", // Name of the join table
+            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
+            inverseJoinColumns = @JoinColumn(name = "vacancyid") // FK column in user_vacancy table
+    )
+    private List<Vacancies> vacancies;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_todolist", // Name of the join table
+            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
+            inverseJoinColumns = @JoinColumn(name = "todolistid") // FK column in user_vacancy table
+    )
+    private List<TodoList> todolist;
 
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();
         isactive = true;
+        status = "pending";
     }
 
     @Enumerated(EnumType.STRING)

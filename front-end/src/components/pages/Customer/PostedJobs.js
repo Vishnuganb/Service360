@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
@@ -8,134 +8,122 @@ import '../../../style/Customer/Viewvacancy.css';
 import Pagination from 'react-bootstrap/Pagination';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
-
-
-const Delete = () => {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-        <>
-            <Button variant="btn btn-viewvacancy-form-t" style={{
-                width: '10%',
-                height: '28px',
-                border: '1px solid #ced4da',
-                fontSize: '14px',
-                padding: '0 5px',
-                backgroundColor: '#007bff',
-                color: '#fff',
-                fontWeight: '500',
-                textTransform: 'none',
-                background: 'black',
-                '@media (max-width: 768px)': {
-                    width: '100%',
-                }
-            }} onClick={handleShow} >
-                <i className="my-customer-table-icon bi bi-trash h7"></i>
-            </Button>
-
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
-                    <Modal.Title>Delete</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <center><p>Are you sure to delete?</p></center>
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="btn btn-viewvacancy-form-a" style={{
-                        width: '15%',
-                        height: '38px',
-                        border: '1px solid #ced4da',
-                        fontSize: '14px',
-                        padding: '0 8px',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        fontWeight: '500',
-                        textTransform: 'none',
-                        background: 'black',
-                        '@media (max-width: 768px)': {
-                            width: '60%',
-                        }
-                    }} onClick={handleClose}>
-                        Yes
-                    </Button>
-                    <Button variant="btn btn-viewvacancy-form-r" style={{
-                        width: '15%',
-                        height: '38px',
-                        border: '1px solid #ced4da',
-                        fontSize: '14px',
-                        padding: '0 8px',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        fontWeight: '500',
-                        textTransform: 'none',
-                        background: 'rgb(126, 123, 123)',
-                        '@media (max-width: 768px)': {
-                            width: '60%',
-                        }
-                    }} onClick={handleClose}>
-                        No
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    );
-};
+import axios from "axios";
 
 
 export default function PostedJobs() {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // Adjust this value based on how many items you want per page
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [fromDate, setFromDate] = useState(null);
-    const [toDate, setToDate] = useState(null);
+    const apiBaseUrl = "http://localhost:8080";
 
-    const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', duedate: '02/08/2023' },
-        { date: '26/07/2023', serviceTitle: 'Electrician', duedate: '02/08/2023' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', duedate: '02/08/2023' },
-    ];
+  const axiosInstance = axios.create({
+    baseURL: apiBaseUrl,
+    timeout: 10000,
+  });
+  const [jobs, setJobs] = useState([]);
 
-    const filteredQuotations = quotations.filter((quotation) => {
-        const isDateMatch = (!fromDate || new Date(quotation.date) >= new Date(fromDate)) &&
-            (!toDate || new Date(quotation.date) <= new Date(toDate));
 
-        return (
-            isDateMatch &&
-            (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) 
-        )
-        );
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [jobid, setJobId] = useState("");
+  const [selectedJob, setSelectedJob] = useState([]);
+  
+    const openModalDelete = (jobid) => {
+        setIsDeleteModalOpen(true);
+        setJobId(jobid);
+        setSelectedJob(jobs.find((job) => job.jobid === jobid));
+        console.log("jobid",jobid);
+      };
+    
+      const closeModalDelete = () => {
+        setIsDeleteModalOpen(false);
+      };
+
+  useEffect(() => {
+    // Fetch data from your backend API
+    axiosInstance
+      .get("/auth/viewjobs")
+      .then((response) => {
+        setJobs(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("Error fetching data:", error);
+      });
+  }, []);
+
+  const handleDeleteJobId = (e) => {
+    setJobId(e.target.value);
+  };
+
+  const handleDeleteJob = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosInstance.delete(`/auth/deletejobs/${jobid}`, {});
+
+      if (response.status === 200) {
+        console.log("okkk");
+        closeModalDelete();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("vfvn fjvhfj vfhtv");
+      console.log(error);
+    }
+  };
+  
+
+
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const itemsPerPage = 5; // Adjust this value based on how many items you want per page
+
+    // const [searchTerm, setSearchTerm] = useState('');
+    // const [fromDate, setFromDate] = useState(null);
+    // const [toDate, setToDate] = useState(null);
+
+    const quotations = jobs.map((job) => {
+        return {
+            date: job.posteddate,
+            serviceTitle: job.servicename,
+            duedate: job.duedate,
+            jobid:job.jobid
+        };
     });
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentQuotations = filteredQuotations.slice(indexOfFirstItem, indexOfLastItem);
+    // const filteredQuotations = quotations.filter((quotation) => {
+    //     const isDateMatch = (!fromDate || new Date(quotation.date) >= new Date(fromDate)) &&
+    //         (!toDate || new Date(quotation.date) <= new Date(toDate));
 
-    const totalPages = Math.ceil(filteredQuotations.length / itemsPerPage);
+    //     return (
+    //         isDateMatch &&
+    //         (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //             quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase())
+    //         )
+    //     );
+    // });
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    // const indexOfLastItem = currentPage * itemsPerPage;
+    // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    // const currentQuotations = filteredQuotations.slice(indexOfFirstItem, indexOfLastItem);
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-        setCurrentPage(1);
-    };
+    // const totalPages = Math.ceil(filteredQuotations.length / itemsPerPage);
 
-    const handleFromDateChange = (e) => {
-        setFromDate(e.target.value);
-        setCurrentPage(1);
-    };
+    // const handlePageChange = (pageNumber) => {
+    //     setCurrentPage(pageNumber);
+    // };
 
-    const handleToDateChange = (e) => {
-        setToDate(e.target.value);
-        setCurrentPage(1);
-    };
+    // const handleSearchChange = (e) => {
+    //     setSearchTerm(e.target.value);
+    //     setCurrentPage(1);
+    // };
+
+    // const handleFromDateChange = (e) => {
+    //     setFromDate(e.target.value);
+    //     setCurrentPage(1);
+    // };
+
+    // const handleToDateChange = (e) => {
+    //     setToDate(e.target.value);
+    //     setCurrentPage(1);
+    // };
 
     return (
         <>
@@ -147,7 +135,7 @@ export default function PostedJobs() {
                         </div>
                     </div>
 
-                    <Form className="nav-search">
+                    {/* <Form className="nav-search">
                         <div className="d-flex flex-wrap justify-content-center">
                             <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3'>
                                 <div className="input-group m-0">
@@ -189,7 +177,7 @@ export default function PostedJobs() {
                                 </div>
                             </div>
                         </div>
-                    </Form>
+                    </Form> */}
                 </div>
 
 
@@ -205,13 +193,13 @@ export default function PostedJobs() {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentQuotations.map((quotation, index) => (
+                            {quotations.map((quotation, index) => (
                                 <tr key={index}>
                                     <td style={{ width: '16.67%' }}>{quotation.date}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
                                     <td style={{ width: '16.67%' }}>
-                                    <Link to={`/customer/ViewPostedJobs`}>  <Button variant="btn btn-viewvacancy-form-t" style={{
+                                        <Link to={`/customer/ViewPostedJobs`}  style={{
                                             width: '10%',
                                             height: '28px',
                                             border: '1px solid #ced4da',
@@ -227,9 +215,23 @@ export default function PostedJobs() {
                                             }
                                         }} >
                                             <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
-                                        </Button></Link>
+                                        </Link>
                                         &nbsp; &nbsp;
-                                        <Delete />
+                                        <Link style={{
+                                            width: '10%',
+                                            height: '28px',
+                                            border: '1px solid #ced4da',
+                                            fontSize: '14px',
+                                            padding: '0 3px',
+                                            backgroundColor: '#007bff',
+                                            color: '#fff',
+                                            fontWeight: '500',
+                                            textTransform: 'none',
+                                            background: 'black',
+                                            '@media (max-width: 768px)': {
+                                                width: '100%',
+                                            }
+                                        }} onClick={()=>openModalDelete(quotation.jobid)}><i className="my-customer-table-icon bi bi-trash h7"></i></Link>
                                     </td>
 
                                 </tr>
@@ -240,7 +242,63 @@ export default function PostedJobs() {
             </div>
             <br></br>
 
-            <div className="pagination justify-content-center" >
+            <Modal show={isDeleteModalOpen} onHide={closeModalDelete} centered>
+                <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }}>
+                    <Modal.Title>Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                    <input
+                  type="hidden"
+                  name="jobid"
+                  value={jobid}
+                  onChange={handleDeleteJobId}
+                />
+                    <center><p>Are you sure to delete?</p></center>                    
+                        
+                    </Form>
+                    <div>
+                    <Button method="POST" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'black',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }}
+                  onClick={handleDeleteJob} variant="btn btn-viewvacancy-form-a" >
+                            Yes
+                        </Button>
+                        <Button variant="btn btn-viewvacancy-form-r" style={{
+                        width: '15%',
+                        height: '38px',
+                        border: '1px solid #ced4da',
+                        fontSize: '14px',
+                        padding: '0 8px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        fontWeight: '500',
+                        textTransform: 'none',
+                        background: 'rgb(126, 123, 123)',
+                        '@media (max-width: 768px)': {
+                            width: '60%',
+                        }
+                    }}>
+                            No
+                        </Button>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                </Modal.Footer>
+            </Modal>
+            {/* <div className="pagination justify-content-center" >
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index + 1}
@@ -251,7 +309,7 @@ export default function PostedJobs() {
                         {index + 1}
                     </button>
                 ))}
-            </div>
+            </div> */}
         </>
     );
 }

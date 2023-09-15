@@ -14,20 +14,13 @@
     display: flex;
     flex-direction: column;
     border-radius: 4px;
-    width: 30%;
+    width: 90%;
     height: 30%;
     margin-bottom: 20px;
     padding: 20px 20px 0 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     transition: transform .3s;
 }
-
-@media only screen and (max-width: 900px) {
-    .single-my-job-card{
-        width: 100% !important;
-    }
-}
-
 
 .single-my-job-card:hover{
     transform: scale(1.005);
@@ -53,18 +46,6 @@
     }
 }
 
-@media only screen and (max-width: 765px){          
-    .invite-header-container{
-        flex-direction: column !important;
-    }
-}
-
-@media only screen and (max-width: 465px){          
-    .isquatation{
-        flex-direction: column !important;
-    }
-}
-
 .my-job-card-header{
     display: flex;
     flex-direction: row;
@@ -83,13 +64,13 @@
 }
 
 .my-job-card-title{
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
     margin-top: 1px;
     margin-bottom: 2px;
 }
 
-.my-job-card-customer-name{
+.my-job-card-date{
     font-size: 14px;
     font-weight: 400;
     color: #5f7085;
@@ -138,7 +119,7 @@
 
 .sinlge-my-job-sub-info{
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 900;
 }
 
 .my-job-location-info{
@@ -151,7 +132,7 @@
     font-weight: 900;
 }
 
-/* .my-job-card-footer{
+.my-job-card-footer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -159,29 +140,20 @@
     position: relative;
     bottom: 10px;
     vertical-align: middle;
-} */
+}
 
-@media only screen and (max-width: 750px){
+@media only screen and (max-width: 590px){
     .my-job-card-footer{
         display: flex;
         flex-direction: column !important;
         justify-content: space-between;
         width: 100%;
         position: relative;
-        bottom: 16.5px;
-        margin-top: 15px;
-    }
-
-    .my-job-card-footer-btn{
-        width: 100%;
-    }
-
-    .my-jobs-page-btn-label{
-        display: none !important;
+        /* bottom: 20px; */
     }
 }
 
-/* .my-job-card-footer-btn{
+.my-job-card-footer-btn{
     display: flex;
     flex-direction: row;
     color: black;
@@ -193,7 +165,7 @@
 
 .my-job-card-footer-btn:hover{
     color: #5f7085;
-} */
+}
 
 
 @media only screen and (max-width: 565px){          

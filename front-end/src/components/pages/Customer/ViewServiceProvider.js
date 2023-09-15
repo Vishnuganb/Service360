@@ -55,7 +55,7 @@ function ViewServiceProvider() {
         <div className='SPImageCarousel'>
           <Carousel>
             <Carousel.Item>
-            <img
+              <img
                 className="d-block w-100 img-fluid"
                 src={img1}
                 alt="Third slide"
@@ -63,7 +63,7 @@ function ViewServiceProvider() {
               />
             </Carousel.Item>
             <Carousel.Item>
-            <img
+              <img
                 className="d-block w-100 img-fluid"
                 src={img2}
                 alt="Third slide"
@@ -83,11 +83,11 @@ function ViewServiceProvider() {
         </div>
 
         <div className='SPReqButtons'>
-          <Link to={`/customer/JobRequest`}> 
+          <Link to={`/customer/JobRequest`}>
             <button className='SPRequestjob'> Request for job </button></Link>
-          
 
-         <Link to={`/customer/Quotation`}> 
+
+          <Link to={`/customer/Quotation`}>
             <button className='SPRequestquotation'> Request for quotation</button>
           </Link>
         </div>

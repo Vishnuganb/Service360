@@ -95,9 +95,9 @@ export default function RequestedJobs() {
     const [toDate, setToDate] = useState(null);
 
     const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', status: 'Accepted',serviceProvider:'Alex' },
-        { date: '26/07/2023', serviceTitle: 'Electrician', status: 'Pending',serviceProvider:'Charles' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Accepted',serviceProvider:'Vinothkhan' },
+        { date: '27/07/2023', serviceTitle: 'Sofa Cleaning', status: 'Accepted', serviceProvider: 'Alex' },
+        { date: '26/07/2023', serviceTitle: 'Electrician', status: 'Pending', serviceProvider: 'Charles' },
+        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Accepted', serviceProvider: 'Vinothkhan' },
     ];
 
     const filteredQuotations = quotations.filter((quotation) => {
@@ -215,7 +215,7 @@ export default function RequestedJobs() {
                                     <td style={{ width: '16.67%' }}>{quotation.serviceProvider}</td>
                                     <td style={{ width: '16.67%' }}>{quotation.status}</td>
                                     <td style={{ width: '16.67%' }}>
-                                    
+
                                         <Delete />
                                     </td>
 

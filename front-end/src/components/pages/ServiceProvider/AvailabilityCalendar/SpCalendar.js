@@ -23,7 +23,7 @@ import {
     addMonths
 } from "date-fns";
 
-function SpCalendar(){
+function SpCalendar() {
     const [viewServiceProviderCalendarData, setViewServiceProviderCalendarData] = useState(null);
 
     const [show, setShow] = useState(false);
@@ -46,7 +46,7 @@ function SpCalendar(){
     };
 
     const [selectedModalDate, setSelectedModalDate] = useState(new Date());
-    
+
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     const [activeDate, setActiveDate] = useState(new Date());
@@ -66,7 +66,7 @@ function SpCalendar(){
             eventdate: format(selectedDate, "yyyy-MM-dd"),
         }));
     }, [selectedDate]);
-    
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setScheduleFormData((prevData) => ({
@@ -78,80 +78,79 @@ function SpCalendar(){
     const getHeader = () => {
         return (
 
-        <div className="SpCalendar-header d-flex justify-content-between align-items-center">
-            <div className="d-flex align-items-center">
-                <i
-                    className="bi bi-chevron-left me-2"
-                    onClick={() => setActiveDate(subMonths(activeDate, 1))}
-                />
-                <i
-                    className="bi bi-chevron-right"
-                    onClick={() => setActiveDate(addMonths(activeDate, 1))}
-                />
+            <div className="SpCalendar-header d-flex justify-content-between align-items-center">
+                <div className="d-flex align-items-center">
+                    <i
+                        className="bi bi-chevron-left me-2"
+                        onClick={() => setActiveDate(subMonths(activeDate, 1))}
+                    />
+                    <i
+                        className="bi bi-chevron-right"
+                        onClick={() => setActiveDate(addMonths(activeDate, 1))}
+                    />
+                </div>
+                <span className="currentMonth">{format(activeDate, "MMMM yyyy")}</span>
+                <div
+                    className="SpCalendar-todayButton"
+                    onClick={() => {
+                        setSelectedDate(new Date());
+                        setActiveDate(new Date());
+                    }}
+                >
+                    Today
+                </div>
             </div>
-            <span className="currentMonth">{format(activeDate, "MMMM yyyy")}</span>
-            <div
-                className="SpCalendar-todayButton"
-                onClick={() => {
-                    setSelectedDate(new Date());
-                    setActiveDate(new Date());
-                }}
-            >
-                Today
-            </div>
-        </div>
 
-            
-          );
+
+        );
     };
 
     const getWeekDaysNames = () => {
         const weekStartDate = startOfWeek(activeDate);
         const weekDays = [];
         for (let day = 0; day < 7; day++) {
-        weekDays.push(
-            <div className="day weekNames">
-            {format(addDays(weekStartDate, day), "E")}
-            </div>
-        );
+            weekDays.push(
+                <div className="day weekNames">
+                    {format(addDays(weekStartDate, day), "E")}
+                </div>
+            );
         }
         return <div className="weekContainer">{weekDays}</div>;
     };
-    
+
     const generateDatesForCurrentWeek = (date, selectedDate, activeDate) => {
         let currentDate = date;
         const week = [];
 
         for (let day = 0; day < 7; day++) {
-          const cloneDate = currentDate;
-          const formattedDate = format(currentDate, "yyyy-MM-dd");
-    
-          const schedulesForDate = getSchedulesForDate(cloneDate);
-          const numSchedules = schedulesForDate.length;
-  
-          const hasSchedules = numSchedules > 0;
-          const hasFewSchedules = numSchedules === 1;
-          const hasManySchedules = numSchedules >= 2;
+            const cloneDate = currentDate;
+            const formattedDate = format(currentDate, "yyyy-MM-dd");
 
-          week.push(
-            <div
-              className={`day ${
-                isSameMonth(currentDate, activeDate) ? "" : "inactiveDay"
-              } ${isSameDay(currentDate, selectedDate) ? "selectedDay" : ""}
+            const schedulesForDate = getSchedulesForDate(cloneDate);
+            const numSchedules = schedulesForDate.length;
+
+            const hasSchedules = numSchedules > 0;
+            const hasFewSchedules = numSchedules === 1;
+            const hasManySchedules = numSchedules >= 2;
+
+            week.push(
+                <div
+                    className={`day ${isSameMonth(currentDate, activeDate) ? "" : "inactiveDay"
+                        } ${isSameDay(currentDate, selectedDate) ? "selectedDay" : ""}
               ${isSameDay(currentDate, new Date()) ? "today" : ""}
               ${isSameDay(currentDate, new Date()) ? "" : hasSchedules ? "hasSchedules" : ""}
               ${isSameDay(currentDate, new Date()) ? "" : hasFewSchedules ? "hasFewSchedules" : ""}
               ${isSameDay(currentDate, new Date()) ? "" : hasManySchedules ? "hasManySchedules" : ""}`}
-              onClick={() => {
-                setSelectedDate(cloneDate);
-                setSelectedSchedules(getSchedulesForDate(cloneDate)); // Update selected schedules
-                // setSelectedModalDate(cloneDate); // Pass the selected date to handleShow
-              }}
-            >
-              {format(currentDate, "d")}
-            </div>
-          );
-          currentDate = addDays(currentDate, 1);
+                    onClick={() => {
+                        setSelectedDate(cloneDate);
+                        setSelectedSchedules(getSchedulesForDate(cloneDate)); // Update selected schedules
+                        // setSelectedModalDate(cloneDate); // Pass the selected date to handleShow
+                    }}
+                >
+                    {format(currentDate, "d")}
+                </div>
+            );
+            currentDate = addDays(currentDate, 1);
         }
         return <>{week}</>;
     };
@@ -163,10 +162,10 @@ function SpCalendar(){
         };
 
         axios.post('http://localhost:8080/auth/createServiceProviderCalendar', newScheduleData).then((response) => {
-                console.log('Schedule created successfully:', response.data);
-                handleClose();
-                refreshCalendarData();
-            })
+            console.log('Schedule created successfully:', response.data);
+            handleClose();
+            refreshCalendarData();
+        })
             .catch((error) => {
                 console.error('Error creating schedule:', error);
             });
@@ -195,7 +194,7 @@ function SpCalendar(){
                 setSelectedSchedules((prevSchedules) =>
                     prevSchedules.filter((work) => work.eventid !== eventId)
                 );
-                
+
                 refreshCalendarData();
             })
             .catch((error) => {
@@ -208,7 +207,7 @@ function SpCalendar(){
             console.log(res.data);
             setViewServiceProviderCalendarData(res.data);
         });
-    }   , []);
+    }, []);
 
     if (!viewServiceProviderCalendarData) return 'No Calandar data found!';
 
@@ -229,13 +228,13 @@ function SpCalendar(){
 
         while (currentDate <= endDate) {
             allWeeks.push(
-            generateDatesForCurrentWeek(currentDate, selectedDate, activeDate)
+                generateDatesForCurrentWeek(currentDate, selectedDate, activeDate)
             );
             currentDate = addDays(currentDate, 7);
         }
 
         return <div className="weekContainer">{allWeeks}</div>;
-    }; 
+    };
 
     const format12Hour = (time) => {
         const [hours, minutes] = time.split(":");
@@ -246,97 +245,97 @@ function SpCalendar(){
     };
 
 
-    return(
+    return (
         <div className="ms-lg-4">
-             {/* Page Title*/}
-             <span className="align-self-start" style={{fontSize:"28px",fontWeight:"600"}}>Availability Calendar</span>
-             <div className="spCalendar-container mt-4 d-flex flex-row">
-                    <div className="Sp-div-calendar w-xl-50 w-100">
-                        <div className="p-3 border rounded">
+            {/* Page Title*/}
+            <span className="align-self-start" style={{ fontSize: "28px", fontWeight: "600" }}>Availability Calendar</span>
+            <div className="spCalendar-container mt-4 d-flex flex-row">
+                <div className="Sp-div-calendar w-xl-50 w-100">
+                    <div className="p-3 border rounded">
 
-                            {getHeader()}
-                            {getWeekDaysNames()}
-                            {getDates()}
+                        {getHeader()}
+                        {getWeekDaysNames()}
+                        {getDates()}
 
-                        </div>
-                        <Button className="mt-3 d-flex ms-auto btn-ServiceProvider-1" onClick={() => handleShow(activeDate)}>Add Schedule</Button>
+                    </div>
+                    <Button className="mt-3 d-flex ms-auto btn-ServiceProvider-1" onClick={() => handleShow(activeDate)}>Add Schedule</Button>
+                </div>
+
+                <div className="div-schedules w-xl-50 w-100">
+                    <div className=" col-lg-10 col-12 ms-lg-5 mt-xl-0 mt-4">
+                        <span style={{ fontSize: "24px" }}>Schedule for {format(selectedDate, "yyyy-MM-dd")}</span>    {/* date is not rendering */}
                     </div>
 
-                    <div className="div-schedules w-xl-50 w-100">
-                            <div className=" col-lg-10 col-12 ms-lg-5 mt-xl-0 mt-4">
-                                        <span style={{fontSize:"24px"}}>Schedule for {format(selectedDate, "yyyy-MM-dd")}</span>    {/* date is not rendering */}      
-                            </div>
 
-
-                            {selectedSchedules.length === 0 ? (
-                                <div className="col-lg-10 ms-lg-5 px-3 mt-1">
-                                    <Row>
-                                    <div
+                    {selectedSchedules.length === 0 ? (
+                        <div className="col-lg-10 ms-lg-5 px-3 mt-1">
+                            <Row>
+                                <div
                                     className="mt-3 p-3 d-flex justify-content-center align-items-center"
                                     style={{ border: "1px solid black", borderRadius: "15px" }}
                                 >
-                                        <FaRegCalendarTimes /> &nbsp;&nbsp;
-                                        No schedules for this date
-                                    </div>
-                                    </Row>
+                                    <FaRegCalendarTimes /> &nbsp;&nbsp;
+                                    No schedules for this date
                                 </div>
-                            ) : (
-                            selectedSchedules.map((work) => (
-                                <Col key={work.id} className="col-lg-12 col-12 ms-lg-5">
-                                    <div className="col-lg-10 px-3 mt-1">
-                                        <Row>
-                                            <div className="mt-3 p-3" style={{border:"1px solid black",borderRadius:"15px"}}>
-                                                <div className=" d-flex flex-row">
-                                                    <div className="d-flex flex-column spCalendar-username-container ms-4">
-                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{format12Hour(work.eventstarttime)} - {format12Hour(work.eventendtime)}</span>
-                                                        <span className="spCalendar-comment-body-text" style={{fontWeight:"500"}}>{work.eventdescription}</span>
-                                                    </div>
-                                                    <div className="ms-auto d-flex flex-column justify-content-center align-items-center">
-                                                        <i className="bi bi-x-circle-fill" style={{fontSize:"26px",cursor:"pointer"}} onClick={() => handleDelete(work.eventid)}></i>
-                                                    </div>
+                            </Row>
+                        </div>
+                    ) : (
+                        selectedSchedules.map((work) => (
+                            <Col key={work.id} className="col-lg-12 col-12 ms-lg-5">
+                                <div className="col-lg-10 px-3 mt-1">
+                                    <Row>
+                                        <div className="mt-3 p-3" style={{ border: "1px solid black", borderRadius: "15px" }}>
+                                            <div className=" d-flex flex-row">
+                                                <div className="d-flex flex-column spCalendar-username-container ms-4">
+                                                    <span className="spCalendar-comment-body-text" style={{ fontWeight: "500" }}>{format12Hour(work.eventstarttime)} - {format12Hour(work.eventendtime)}</span>
+                                                    <span className="spCalendar-comment-body-text" style={{ fontWeight: "500" }}>{work.eventdescription}</span>
+                                                </div>
+                                                <div className="ms-auto d-flex flex-column justify-content-center align-items-center">
+                                                    <i className="bi bi-x-circle-fill" style={{ fontSize: "26px", cursor: "pointer" }} onClick={() => handleDelete(work.eventid)}></i>
                                                 </div>
                                             </div>
-                                        </Row>
-                                    </div>
-                                </Col>     
-                            )
-                            ))}
-                    </div>  
+                                        </div>
+                                    </Row>
+                                </div>
+                            </Col>
+                        )
+                        ))}
                 </div>
+            </div>
 
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff'}}>
-                        <Modal.Title>Schedule Visitation</Modal.Title>
-                    </Modal.Header>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+                    <Modal.Title>Schedule Visitation</Modal.Title>
+                </Modal.Header>
 
-                    <Modal.Body>
+                <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Date</Form.Label>
-                        <Form.Control className='mb-2' type="date" name="eventdate" value={format(selectedDate, "yyyy-MM-dd")}  onChange={(e)=>setSelectedDate(new Date(e.target.value))} autoFocus />
+                            <Form.Label>Date</Form.Label>
+                            <Form.Control className='mb-2' type="date" name="eventdate" value={format(selectedDate, "yyyy-MM-dd")} onChange={(e) => setSelectedDate(new Date(e.target.value))} autoFocus />
 
-                        <Form.Label>Start Time</Form.Label>
-                        <Form.Control className='mb-2' type="time" step={1} name="eventstarttime" value={scheduleFormData.eventstarttime} onChange={handleInputChange} autoFocus/>
-                        
-                        <Form.Label>End Time</Form.Label>
-                        <Form.Control className='mb-2' type="time" step={1} name="eventendtime" value={scheduleFormData.eventendtime} onChange={handleInputChange} autoFocus/>
+                            <Form.Label>Start Time</Form.Label>
+                            <Form.Control className='mb-2' type="time" step={1} name="eventstarttime" value={scheduleFormData.eventstarttime} onChange={handleInputChange} autoFocus />
 
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control className='mb-2' type="text" name="eventdescription" value={scheduleFormData.eventdescription} onChange={handleInputChange} autoFocus/>
+                            <Form.Label>End Time</Form.Label>
+                            <Form.Control className='mb-2' type="time" step={1} name="eventendtime" value={scheduleFormData.eventendtime} onChange={handleInputChange} autoFocus />
+
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control className='mb-2' type="text" name="eventdescription" value={scheduleFormData.eventdescription} onChange={handleInputChange} autoFocus />
                         </Form.Group>
 
                     </Form>
-                    </Modal.Body>
+                </Modal.Body>
 
-                    <Modal.Footer>
+                <Modal.Footer>
                     <Button className='btn-ServiceProvider-2' onClick={handleClose}>
                         Cancel
                     </Button>
                     <Button className='btn-ServiceProvider-1' onClick={handleSchedule}>
                         Schedule
                     </Button>
-                    </Modal.Footer>
-                </Modal>
+                </Modal.Footer>
+            </Modal>
 
         </div>
     );

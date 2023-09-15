@@ -47,32 +47,32 @@ const AdminHistory = () => {
             <Row className="d-flex justify-content-around">
               <Col >
                 <div className="input-group">
-                <DatePicker
-                  className="form-control"
-                  selected={startDate}
-                  onChange={handleStartDateChange}
-                  placeholderText="From Date"
-                  dateFormat="dd/MM/yyyy"
-                />
-                 <span className="input-group-text">
+                  <DatePicker
+                    className="form-control"
+                    selected={startDate}
+                    onChange={handleStartDateChange}
+                    placeholderText="From Date"
+                    dateFormat="dd/MM/yyyy"
+                  />
+                  <span className="input-group-text">
                     <i class="bi bi-calendar2-week"></i>
                   </span>
-                  </div>
+                </div>
               </Col>
               <Col >
                 <div className="input-group">
-                <DatePicker
-                  className="form-control"
-                  selected={endDate}
-                  onChange={handleEndDateChange}
-                  placeholderText="To Date"
-                  dateFormat="dd/MM/yyyy"
-                  minDate={startDate}
-                />
-                   <span className="input-group-text">
+                  <DatePicker
+                    className="form-control"
+                    selected={endDate}
+                    onChange={handleEndDateChange}
+                    placeholderText="To Date"
+                    dateFormat="dd/MM/yyyy"
+                    minDate={startDate}
+                  />
+                  <span className="input-group-text">
                     <i class="bi bi-calendar2-week"></i>
                   </span>
-                  </div>
+                </div>
               </Col>
 
               <Col>

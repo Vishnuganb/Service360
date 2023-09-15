@@ -11,17 +11,17 @@ const subscribedJobCategories = [
 function CreateBlogForm() {
     return (
         <div className="ms-lg-4 me-lg-4">
-            <span style={{fontSize:"28px",fontWeight:"bold"}}>Create a Blog</span>
-            
-            <Form className="mt-4">    
+            <span style={{ fontSize: "28px", fontWeight: "bold" }}>Create a Blog</span>
+
+            <Form className="mt-4">
                 <Form.Group className="mb-3" controlId="formBasicJobCategory">
                     <Form.Control as="select">
-                    <option value="">Select the service category</option>
-                    {subscribedJobCategories.map((category) => (
-                        <option key={category} value={category}>
-                        {category}
-                        </option>
-                    ))}
+                        <option value="">Select the service category</option>
+                        {subscribedJobCategories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
                     </Form.Control>
                 </Form.Group>
 

@@ -232,7 +232,7 @@ const PendingCont = ({
               <p>{proName}</p>
             </div>
           </Col>
-         
+
         </Row>
 
         <Row>

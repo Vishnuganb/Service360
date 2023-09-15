@@ -22,10 +22,10 @@ const OngoingProject = () => {
 
                                 <p className="card-text">
                                     <row><Col>
-                                    &nbsp;&nbsp;<img src={ServiceProvider1} alt="Profile" className="ServiceProvider1" /></Col>
-                                    <Col>Service Provider : Vinoth Kishan</Col>
-                                    <Col>Due Date : </Col></row></p>
-                                   
+                                        &nbsp;&nbsp;<img src={ServiceProvider1} alt="Profile" className="ServiceProvider1" /></Col>
+                                        <Col>Service Provider : Vinoth Kishan</Col>
+                                        <Col>Due Date : </Col></row></p>
+
                                 <button style={{
                                     width: '26%',
                                     height: '30px',
@@ -37,7 +37,7 @@ const OngoingProject = () => {
                                     fontWeight: '500',
                                     textTransform: 'none',
                                     background: 'black',
-                                    borderRadius:'20px',
+                                    borderRadius: '20px',
                                     '@media (max-width: 768px)': {
                                         width: '70%',
                                     }
@@ -53,13 +53,13 @@ const OngoingProject = () => {
                                     fontWeight: '500',
                                     textTransform: 'none',
                                     background: 'black',
-                                    borderRadius:'20px',
+                                    borderRadius: '20px',
 
                                     '@media (max-width: 768px)': {
                                         width: '70%',
                                     }
                                 }}> <i className="bi bi-wechat"></i>&nbsp;&nbsp;Chat</button><br></br>
-                               <button style={{
+                                <button style={{
                                     width: '26%',
                                     height: '30px',
                                     border: '1px solid #ced4da',
@@ -70,7 +70,7 @@ const OngoingProject = () => {
                                     fontWeight: '500',
                                     textTransform: 'none',
                                     background: 'black',
-                                    borderRadius:'20px',
+                                    borderRadius: '20px',
                                     '@media (max-width: 768px)': {
                                         width: '70%',
                                     }

@@ -42,11 +42,11 @@ public class CServiceProviderDetails {
     @Column(name = "contact")
     private long contact;
 
-//    @Column(name = "rating")
-//    private double rating; // New field for rating
-//
-//    @Column(name = "review")
-//    private String review; // New field for review
+    @Column(name = "rating")
+    private double rating; // New field for rating
+
+    @Column(name = "review")
+    private String review; // New field for review
 
 
     @Override
@@ -60,8 +60,8 @@ public class CServiceProviderDetails {
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
                 ", contact=" + contact +
-//                ", rating=" + rating +
-//                ", review='" + review + '\'' +
+                ", rating=" + rating +
+                ", review='" + review + '\'' +
                 '}';
     }
 }

@@ -4,10 +4,7 @@ import com.service360.group50.dto.JobWithStatusDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.email.StarterMail;
 import com.service360.group50.entity.*;
-import com.service360.group50.repo.JobsRepository;
-import com.service360.group50.repo.TrainingSessionRepository;
-import com.service360.group50.repo.UserRepository;
-import com.service360.group50.repo.VacanciesRepository;
+import com.service360.group50.repo.*;
 import com.service360.group50.request.*;
 import com.service360.group50.service.ImageService;
 import com.service360.group50.service.ServiceProviderService;
@@ -45,6 +42,8 @@ public class ServiceProvidersController {
     private StarterMail starterMail;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private TrainingSessionRegistrationRepository trainingSessionRegistrationRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -278,12 +277,13 @@ public class ServiceProvidersController {
         boolean isPaymentSuccessful= true;         //sample data
 
         // Generate a unique content for the QR code
-        String qrCodeContent = trainingSessionRegistrationRequest.getMobilenumber();
+        String mobileNumber = trainingSessionRegistrationRequest.getMobilenumber();
+        String verificationUrl = "http://localhost:8080/auth/verifyQR?mobileNumber=" + mobileNumber; // Replace with your actual verification URL
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
             trainingSessionRegistration.setPaymentstatus("paid");
-            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail(), qrCodeContent);
+            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail(), verificationUrl);
         } else {
             trainingSessionRegistration.setPaymentstatus("not paid");
         }
@@ -297,6 +297,19 @@ public class ServiceProvidersController {
         // Save the TrainingSessionRegistration entity
         return serviceProviderService.registerTrainingSession(trainingSessionRegistration);
     }
+
+    @GetMapping("auth/verifyQR")
+    public ResponseEntity<String> verifyMobileNumber(@RequestParam("mobileNumber") String mobileNumber) {
+        // Query the trainingsessionregistration table to check if the mobile number exists
+        boolean isMobileNumberValid = trainingSessionRegistrationRepository.existsByMobilenumber(mobileNumber);
+
+        if (isMobileNumberValid) {
+            return ResponseEntity.ok("Mobile number is valid.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid mobile number.");
+        }
+    }
+
 
     @PostMapping("auth/createTrainingSession")
     public TrainingSession createTrainingSession(@RequestParam("trainingtitle") String trainingtitle,
@@ -384,6 +397,9 @@ public class ServiceProvidersController {
     }
 
 
+
+
+    
     //BLOGS
     @PostMapping("auth/createBlog")
     public Blogs createBlog(@RequestParam("blogtitle") String blogtitle,

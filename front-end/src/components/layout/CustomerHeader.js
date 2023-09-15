@@ -9,21 +9,37 @@ import bell from '../../assets/images/header/bell.png';
 import chat from '../../assets/images/header/chat.png';
 import profileIcon from '../../assets/images/header/user.jpg';
 import { Link } from 'react-router-dom';
-import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
+import CustomerEditProfile from '../pages/Customer/CustomerEditProfile/CustomerEditProfile';
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
 import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
+import axios from 'axios';
 
+const serverLink = 'http://localhost:8080';
 
 function CustomerHeader() {
 
     const [showEditProfile, setShowEditProfile] = useState(false);
     const { logout } = useContext(AuthenticationContext);
     const [showAddReview, setShowAddReview] = useState(false);
+    const [userDetail, setUserDetail] = useState([]);
 
     const response = sessionStorage.getItem('authenticatedUser');
-    const userDetail = JSON.parse(response);
+    const userData = JSON.parse(response);
 
-    console.log(userDetail);
+        const fetchUserData = async () => {
+        try {
+            const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid); 
+            if (response.data) {
+                setUserDetail(response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">
@@ -51,8 +67,8 @@ function CustomerHeader() {
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
-                        <AdminEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)} />
-                        <img src={profileIcon} alt="Profile" className="profileIcon" />
+                        <CustomerEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)} />
+                        {userDetail.profilePic ? <img src={userDetail.profilePic} alt="Profile" className="profileIcon" style={{ width: "40px", height: "40px", borderRadius: "100%", }} /> : <img src={profileIcon} alt="Profile" className="profileIcon" style={{ width: "40px", height: "40px", borderRadius: "100%", }} />}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -22,7 +22,7 @@ import java.util.List;
 public class Jobs {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long jobid;
 

@@ -7,6 +7,7 @@ import Image from "react-bootstrap/Image";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthenticationContext } from "../../../../ContextFiles/Authentication/AuthenticationContextProvider";
+import { useNavigate } from "react-router-dom";
 
 import "../../../../style/advertiser/AdIndex.css";
 
@@ -75,6 +76,7 @@ const CreateAd = () => {
   const [DeliveryError, setdDeliveryError] = useState(false);
   const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
   const [policyErr, setPolicyErr] = useState(false);
+  const [description, setDescription] = useState("");
 
   const [adName, setAdName] = useState("");
   const handleAdNameChange = (event) => {
@@ -118,10 +120,14 @@ const CreateAd = () => {
     setWarentyMonthErr(false);
   };
 
+  const handleDescription = (event) => { 
+    setDescription(event.target.value);
+  };
+
   const handleCheckboxChange = (event) => {
     setIsPolicyAccepted(event.target.checked);
   };
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     // event.preventDefault();
     if (selectedAdImages.length === 0) {
@@ -169,7 +175,7 @@ const CreateAd = () => {
     formData.append("price", adPrice);
     formData.append("category", category);
     formData.append("warrantyMonths", warentyMonth);
-    formData.append("description", "This is a sample description");
+    formData.append("description", description );
     formData.append("area", adLocation);
     formData.append("delivery", adDelivery);
     formData.append("role", userDetail.role);
@@ -179,13 +185,16 @@ const CreateAd = () => {
     for (const imageFile of selectedAdImages) {
       formData.append("adsImages", imageFile);
     }
-
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
     // Send a POST request to your Spring Boot backend
     axios
       .post("http://localhost:8080/auth/createAd", formData)
       .then((response) => {
-        // Handle a successful response, e.g., show a success message
+        
         console.log("Ad created successfully!", response.data);
+         navigate(`/Advertiser/Ads`);
       })
       .catch((error) => {
         // Handle errors, e.g., show an error message

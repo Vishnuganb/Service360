@@ -4,6 +4,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
+import axios from "axios";
+
 import ViewAd from "./ViewAd";
 
 import "../../../../../style/advertiser/AdIndex.css";
@@ -102,13 +104,35 @@ const YetToVerifyAds = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {
-    const apiUrl = "http://localhost:8080/auth/getAds";
-
+    const apiUrl = `http://localhost:8080/auth/getAds`;
     fetch(apiUrl)
-      .then((response) => response.json())
+      .then((response) => {
+            if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+    }
+    return response.json();
+
+      })
       .then((data) => setAds(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  const userid = 1;
+  console.log(userid);
+
+  // useEffect(() => {
+  //   const apiUrl = `http://localhost:8080/auth/getAds/${userid}`;
+
+  //   axios
+  //     .get(apiUrl)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setAds(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, []);
 
   useEffect(() => {
     if (ads.length > 0) {
@@ -126,7 +150,6 @@ const YetToVerifyAds = () => {
          })
          .then((imageBlob) => {
            const imageUrl = URL.createObjectURL(imageBlob);
-           console.log(imageUrl);
            return imageUrl;
          })
          .catch((error) => {
@@ -139,7 +162,7 @@ const YetToVerifyAds = () => {
     }
   }, [ads]);
 
-  console.log(imageUrls);
+
   
 
 
@@ -148,28 +171,36 @@ const YetToVerifyAds = () => {
 
   return (
     <Container>
-   
-      <h2 className="AdPageHeading">Verified Ads</h2>
+      <h2 className="AdPageHeading">Pending Ads</h2>
       <Row>
         <div className="AdsRow">
-          {ads.map((ad, index) => (
-            <PendingCont
-              key={ad.adsId}
-              profileIcon={profileIcon}
-              proName="Karththi"
-              // adImage={getAdImages(ad.adsId)}
-              adImage={imageUrls[index]}
-              adName={ad.adsName}
-              price={ad.price}
-              location={ad.area}
-              openModal={() => openModal(ad)}
-            />
-          ))}
+          {ads.map((ad, index) => {
+            if (ad.verificationStatus === "Pending" && ad.status === "Active") {
+              return (
+                <PendingCont
+                  key={ad.adsId}
+                  profileIcon={profileIcon}
+                  proName="Karththi"
+                  // adImage={getAdImages(ad.adsId)}
+                  adImage={imageUrls[index]}
+                  adName={ad.adsName}
+                  price={ad.price}
+                  location={ad.area}
+                  openModal={() => openModal(ad)}
+                />
+              );
+            } else {
+              return null; // Render nothing for non-pending ads
+            }
+          })}
         </div>
 
         {selectedAd && (
           <ViewAd
-            id={selectedAd.adsId}
+            key={selectedAd.adsId}
+            ads={selectedAd}
+            proName={selectedAd.proName}
+            profileIcon={profileIcon}
             modalVisible={modalVisible}
             closeModal={closeModal}
           />

@@ -141,7 +141,7 @@ const router = createBrowserRouter(
         <Route path="Subscribtion" element={<Subscribtion />} />
         <Route path="Chat" element ={<AdvertiserChat/>}/>
         <Route path="Ads" element={<Ads />} />
-        <Route path="EditAd/:adId" element={<EditAd />} />
+        <Route path="EditAd/:id" element={<EditAd />} />
         <Route path="Subscribed/:subId" element={<Subscriped />} />
       </Route>
 

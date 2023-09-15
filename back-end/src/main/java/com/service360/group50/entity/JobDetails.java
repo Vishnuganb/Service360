@@ -20,7 +20,7 @@ import java.time.LocalDate;
 
 public class JobDetails {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long jobdetailsid;
 

@@ -19,7 +19,7 @@ import java.util.Date;
 )
 public class TodoListDetails {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long todolistdetailsid;
 

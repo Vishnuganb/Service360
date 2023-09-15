@@ -15,6 +15,7 @@ import com.service360.group50.repo.AdvertiserRepository;
 import com.service360.group50.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,7 @@ public class LoginService {
                 .lastname ( request.getLastname ( ) )
                 .phonenumber ( request.getPhonenumber ( ) )
                 .email ( request.getEmail ( ) )
+                .address ( request.getAddress ( ) )
                 .nic ( request.getNic ( ) )
                 .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
                 .role ( Role.ADVERTISER )
@@ -116,16 +118,26 @@ public class LoginService {
 
     }
 
-    public AuthenticationResponse login ( AuthenticationRequest request ) {
-        authenticationManager.authenticate (
-                new UsernamePasswordAuthenticationToken (
-                        request.getEmail ( ),
-                        request.getPassword ( )
-                )
-        );
+    public AuthenticationResponse login(AuthenticationRequest request) {
+        System.out.println ( request.getEmail ( ) );
+        try {
+            authenticationManager.authenticate (
+                    new UsernamePasswordAuthenticationToken (
+                            request.getEmail ( ),
+                            request.getPassword ( )
+                    )
+            );
+            System.out.println ( "Authentication successful" );
 
-        var user = userRepository.findByEmail ( request.getEmail ( ) )
-                .orElseThrow ( () -> new RuntimeException ( "Users not found" ) );
+        } catch (BadCredentialsException e) {
+            System.out.println ( "Authentication failed: " + e.getMessage ( ) );
+            throw new RuntimeException ( "Authentication failed" );
+        }
+
+        System.out.println ("hello" );
+
+        var user = userRepository.findByEmailIgnoreCase ( request.getEmail ( ) )
+                .orElseThrow ( () -> new RuntimeException ( "User not found" ) );
 
         var jwtToken = jwtService.generateToken ( user );
         return AuthenticationResponse.builder ( )
@@ -134,8 +146,8 @@ public class LoginService {
     }
 
     public UsersDTO getUserDetails ( String email ) {
-        var a = userRepository.findByEmail ( email )
-                .orElseThrow ( () -> new RuntimeException ( "Users not found" ) );
+        var a = userRepository.findByEmailIgnoreCase (email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         UsersDTO usersDTO = new UsersDTO ();
 
@@ -150,6 +162,7 @@ public class LoginService {
         usersDTO.setPassword ( a.getPassword () );
         usersDTO.setRole ( String.valueOf ( a.getRole () ) );
         usersDTO.setStatus ( a.getStatus () );
+        usersDTO.setProfilePic (  a.getProfilePic () );
 
         return usersDTO;
 

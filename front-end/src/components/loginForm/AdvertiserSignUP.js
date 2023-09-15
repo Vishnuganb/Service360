@@ -21,8 +21,8 @@ const AdvertiserSignUP = () => {
         lastName: '',
         nicNumber: '',
         contactNumber: '',
-        shopName: '',
-        shopNameErrorMessage: '',
+        address: '',
+        addressErrorMessage: '',
         emailStatus: false,
         emailErrorMessage: '',
         firstNameErrorMessage: '',
@@ -40,8 +40,10 @@ const AdvertiserSignUP = () => {
 
     // Step 2 state variables and handlers
     const [step2Data, setStep2Data] = useState({
-        address: '',
-        addressErrorMessage: '',
+        shopAddress: '',
+        shopAddressErrorMessage: '',
+        shopName: '',
+        shopNameErrorMessage: '',
         password: '',
         confirmPassword: '',
         errorMessage: 'Password requires to have at least one lowercase, one uppercase, one number, one symbol, and be a minimum of 8 characters in length',
@@ -163,12 +165,13 @@ const AdvertiserSignUP = () => {
 
     const handleStep2Submit = () => {
 
-        const { password, confirmPassword, selectedFileCount, address } = step2Data;
+        const { password, confirmPassword, selectedFileCount, shopAddress, shopName } = step2Data;
 
         let isError = false;
         let passwordErrorMessage = '';
         let confirmPasswordErrorMessage = '';
-        let addressErrorMessage = '';
+        let shopAddressErrorMessage = '';
+        let shopNameErrorMessage = '';
 
         let fileErrorMessage = '';
 
@@ -193,17 +196,23 @@ const AdvertiserSignUP = () => {
             fileErrorMessage = 'Select at least one file';
         }
 
-        if (address.trim() === '') {
+        if (shopAddress.trim() === '') {
             isError = true;
-            addressErrorMessage = 'Address is required';
+            shopAddressErrorMessage = 'Shop Address is required';
+        }
+
+        if (shopName.trim() === '') {
+            isError = true;
+            shopNameErrorMessage = 'Shop Name is required';
         }
 
         setStep2Data((prevData) => ({
             ...prevData,
             passwordErrorMessage,
             confirmPasswordErrorMessage,
+            shopNameErrorMessage,
             fileErrorMessage,
-            addressErrorMessage,
+            shopAddressErrorMessage,
         }));
 
         if (!isError) {
@@ -214,16 +223,18 @@ const AdvertiserSignUP = () => {
                 lastname: step1Data.lastName,
                 nic: step1Data.nicNumber,
                 phonenumber: step1Data.contactNumber,
-                shopaddress: step2Data.address,
-                shopname: step1Data.shopName,
+                address: step1Data.address,
+                shopaddress: step2Data.shopAddress,
+                shopname: step2Data.shopName,
                 files: step2Data.selectedFiles,
             });
+
         }
 
     };
 
     const handleStep1NextClick = () => {
-        const { email, firstName, lastName, nicNumber, contactNumber, shopName } = step1Data;
+        const { email, firstName, lastName, nicNumber, contactNumber, address } = step1Data;
 
         let isError = false;
         let emailErrorMessage = '';
@@ -231,7 +242,7 @@ const AdvertiserSignUP = () => {
         let lastNameErrorMessage = '';
         let nicNumberErrorMessage = '';
         let contactNumberErrorMessage = '';
-        let shopNameErrorMessage = '';
+        let addressErrorMessage = '';
 
         if (!validator.isEmail(email)) {
             isError = true;
@@ -258,9 +269,9 @@ const AdvertiserSignUP = () => {
             contactNumberErrorMessage = 'Should contain only digits';
         }
 
-        if (shopName.trim() === '') {
+        if (address.trim() === '') {
             isError = true;
-            shopNameErrorMessage = 'Shop name is required';
+            addressErrorMessage = 'Residential Address required';
         }
 
         if (contactNumber.length !== 10) {
@@ -304,7 +315,7 @@ const AdvertiserSignUP = () => {
             lastNameErrorMessage,
             nicNumberErrorMessage,
             contactNumberErrorMessage,
-            shopNameErrorMessage,
+            addressErrorMessage,
         }));
     };
 

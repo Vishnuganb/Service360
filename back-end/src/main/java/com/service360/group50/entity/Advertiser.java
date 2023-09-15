@@ -18,7 +18,7 @@ import java.util.List;
 )
 public class Advertiser {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long advertiserid;
 

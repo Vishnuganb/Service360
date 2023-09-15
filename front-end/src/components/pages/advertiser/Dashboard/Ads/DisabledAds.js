@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -48,11 +48,11 @@ const VerifiedAdCont = ({
               <p>{proName}</p>
             </div>
           </Col>
-          <Col className="d-flex align-items-center justify-content-end">
+          {/* <Col className="d-flex align-items-center justify-content-end">
             <div className="namediv float-right">
               <p className="AdVrifiedP  "> Verified</p>
             </div>
-          </Col>
+          </Col> */}
         </Row>
 
         <Row>
@@ -105,61 +105,111 @@ const VerifiedAds = () => {
     setModalVisible(false);
   };
 
-  const adsData = [
-    {
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [Ad6_1, Ad6_2, Ad6_3],
-      adName: "Hammer",
-      price: 850,
-      location: "Colombo",
-    },
-    {
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [Ad7_1, Ad7_2, Ad7_3],
-      adName: "Disk",
-      price: 1200,
-      location: "Colombo",
-    },
+  // const adsData = [
+  //   {
+  //     proName: "Adam",
+  //     profileIcon: profileIcon,
+  //     adImages: [Ad6_1, Ad6_2, Ad6_3],
+  //     adName: "Hammer",
+  //     price: 850,
+  //     location: "Colombo",
+  //   },
+  //   {
+  //     proName: "Adam",
+  //     profileIcon: profileIcon,
+  //     adImages: [Ad7_1, Ad7_2, Ad7_3],
+  //     adName: "Disk",
+  //     price: 1200,
+  //     location: "Colombo",
+  //   },
 
-    {
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [Ad8_1, Ad8_2, Ad8_3],
-      adName: "Pliers",
-      price: 600,
-      location: "Colombo",
-    },
-  ];
+  //   {
+  //     proName: "Adam",
+  //     profileIcon: profileIcon,
+  //     adImages: [Ad8_1, Ad8_2, Ad8_3],
+  //     adName: "Pliers",
+  //     price: 600,
+  //     location: "Colombo",
+  //   },
+  // ];
+
+   const [ads, setAds] = useState([]);
+   const [imageUrls, setImageUrls] = useState([]);
+
+   useEffect(() => {
+     const apiUrl = `http://localhost:8080/auth/getAds`;
+     fetch(apiUrl)
+       .then((response) => {
+         if (!response.ok) {
+           throw new Error(
+             `HTTP error! Status: ${response.status} - ${response.statusText}`
+           );
+         }
+         return response.json();
+       })
+       .then((data) => setAds(data))
+       .catch((error) => console.error("Error fetching data:", error));
+   }, []);
+
+   useEffect(() => {
+     if (ads.length > 0) {
+       const imageUrlsPromises = ads.map((ad) => {
+         const adId = `http://localhost:8080/auth/getAdImages/${ad.adsId}`;
+         return fetch(adId)
+           .then((response) => {
+             if (!response.ok) {
+               throw new Error(
+                 `Error fetching image for ad ${ad.id}: ${response.status}`
+               );
+             }
+
+             return response.blob(); // Fetch image as a blob
+           })
+           .then((imageBlob) => {
+             const imageUrl = URL.createObjectURL(imageBlob);
+             return imageUrl;
+           })
+           .catch((error) => {
+             console.error(`Error fetching image for ad ${ad.id}:`, error);
+             return null;
+           });
+       });
+
+       Promise.all(imageUrlsPromises).then((urls) => setImageUrls(urls));
+     }
+   }, [ads]);
 
   return (
-    <Container >
+    <Container>
       <h2 className="AdPageHeading">Disabled Ads</h2>
       <Row>
         <div className="AdsRow">
-          {adsData.map((ad, index) => (
-            <VerifiedAdCont
-              key={index}
-              profileIcon={ad.profileIcon}
-              proName={ad.proName}
-              adImage={ad.adImages[0]}
-              adName={ad.adName}
-              price={ad.price}
-              location={ad.location}
-              openModal={() => openModal(ad)}
-            />
-          ))}
+          {ads.map((ad, index) => {
+            if (ad.status === "Disabled") {
+              return (
+                <VerifiedAdCont
+                  key={index}
+                  profileIcon={profileIcon}
+                  proName={"Karththi"}
+                  adImage={imageUrls[index]}
+                  adName={ad.adsName}
+                  price={ad.price}
+                  location={ad.area}
+                  openModal={() => openModal(ad)}
+                />
+              );
+            } else {
+              return null; // Render nothing for non-verified ads
+            }
+          })}
         </div>
 
         {selectedAd && (
           <DisabledAdPopUp
-            adName={selectedAd.adName}
+            key={selectedAd.adsId}
+            ads={selectedAd}
             proName={selectedAd.proName}
-            price={selectedAd.price}
-            profileIcon={selectedAd.profileIcon}
-            adImages={selectedAd.adImages}
-            location={selectedAd.location}
+            profileIcon={profileIcon}
             modalVisible={modalVisible}
             closeModal={closeModal}
           />

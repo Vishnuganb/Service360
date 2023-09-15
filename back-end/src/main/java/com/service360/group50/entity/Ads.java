@@ -58,7 +58,7 @@ public class Ads {
 
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    @JoinColumn(name = "userid")
     private Users user;
 
 }

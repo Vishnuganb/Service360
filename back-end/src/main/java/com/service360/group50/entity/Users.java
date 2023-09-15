@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StreamUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +33,7 @@ import java.util.List;
 public class Users implements UserDetails {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long userid;
 
@@ -61,6 +64,9 @@ public class Users implements UserDetails {
     @Column(columnDefinition = "TEXT")
     private String status;
 
+    @Column(columnDefinition = "TEXT")
+    private String profilePic;
+
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
 
@@ -86,8 +92,8 @@ public class Users implements UserDetails {
     )
     private List<TodoList> todolist;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Ads> ads;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Ads> ads;
 
 
     @PrePersist

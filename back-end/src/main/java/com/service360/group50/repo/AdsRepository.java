@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface AdsRepository extends JpaRepository<Ads, Long> {
-    List<Ads> findByUser_userid(Long id);
+
 
 }
 

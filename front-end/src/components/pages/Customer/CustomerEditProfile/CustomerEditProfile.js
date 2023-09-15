@@ -13,7 +13,7 @@ import { Alert } from 'react-bootstrap';
 
 const serverLink = 'http://localhost:8080';
 
-const AdminEditProfile = (props) => {
+const CustomerEditProfile = (props) => {
 
     const [data, setdata] = useState({
         email: '',
@@ -428,4 +428,4 @@ const AdminEditProfile = (props) => {
     );
 };
 
-export default AdminEditProfile;
+export default CustomerEditProfile;

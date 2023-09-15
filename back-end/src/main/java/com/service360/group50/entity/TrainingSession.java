@@ -20,7 +20,7 @@ import java.sql.Time;
 
 public class TrainingSession {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
     private Long trainingid;
 

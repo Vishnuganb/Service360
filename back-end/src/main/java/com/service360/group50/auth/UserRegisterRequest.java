@@ -23,4 +23,6 @@ public class UserRegisterRequest {
     private String shopname;
     private String shopaddress;
     private List<MultipartFile> files;
+    private String[] services;
+    private String[] categories;
 }

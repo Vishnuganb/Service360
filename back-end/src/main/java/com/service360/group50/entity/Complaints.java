@@ -41,7 +41,7 @@ public class Complaints {
     private String status;
 
     //user name
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    private Users users;
+//    @ManyToOne
+//    @JoinColumn(name = "userid")
+//    private Users users;
 }

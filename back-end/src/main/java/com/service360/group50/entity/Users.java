@@ -70,33 +70,27 @@ public class Users implements UserDetails {
     @Column( name = "isActive", nullable = false)
     private boolean isactive = true;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Blogs> blogs;
+//    @OneToMany(mappedBy = "users")
+//    private List<Complaints> complaints;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Complaints> complaints;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_todolist", // Name of the join table
+//            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
+//            inverseJoinColumns = @JoinColumn(name = "todolistid") // FK column in user_vacancy table
+//    )
+//    private List<TodoList> todolist;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_vacancy", // Name of the join table
-            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
-            inverseJoinColumns = @JoinColumn(name = "vacancyid") // FK column in user_vacancy table
-    )
-    private List<Vacancies> vacancies;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_todolist", // Name of the join table
-            joinColumns = @JoinColumn(name = "userid"), // FK column in user_vacancy table
-            inverseJoinColumns = @JoinColumn(name = "todolistid") // FK column in user_vacancy table
-    )
-    private List<TodoList> todolist;
+    private Boolean locked;
+    private Boolean enabled;
 
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();
         isactive = true;
         status = "pending";
+        locked = false;
+        enabled = false;
     }
 
     @Enumerated(EnumType.STRING)
@@ -123,7 +117,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked () {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -133,7 +127,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isEnabled () {
-        return true;
+        return enabled;
     }
 
 }

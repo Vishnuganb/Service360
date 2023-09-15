@@ -11,16 +11,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(
         name = "jobs"
 )
 
 public class Jobs {
-
     @Id
     @GeneratedValue
     @Column(updatable = false)
@@ -39,9 +38,6 @@ public class Jobs {
     private String servicename;
 
     @Column( columnDefinition = "TEXT")
-    private String jobstatus;
-
-    @Column( columnDefinition = "TEXT")
     private String jobdescription;
 
     @Column( columnDefinition = "TEXT")
@@ -56,8 +52,9 @@ public class Jobs {
     @Column( columnDefinition = "TEXT")
     private String isquotation;
 
+    
+    @ManyToOne
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users customer;
 
-    //profile
-    //customername
-    //lastseen
 }

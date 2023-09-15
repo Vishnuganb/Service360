@@ -12,19 +12,36 @@ import { Link } from 'react-router-dom';
 import EditProfile from '../pages/User/SeviceProvider/EditProfile';
 import ChatApp from '../pages/Chat/ChatApp';
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
-import { useLocation } from "react-router-dom";
-import Cookies from 'js-cookie';
+import ServiceProviderEditProfile from '../pages/ServiceProvider/EditProfile/ServiceProviderEditProfile';
+import axios from 'axios';
 import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
+
+const serverLink = 'http://localhost:8080';
 
 function ServiceProviderHeader() {
 
-    const location = useLocation()
-    const { logout, userDetailsAfterAuthentication, authenticated, contentVisible } = useContext(AuthenticationContext)
-    const [modalShow, setModalShow] = React.useState(false);
+    const [showEditProfile, setShowEditProfile] = useState(false);
+    const { logout } = useContext(AuthenticationContext);
+    const [userDetail, setUserDetail] = useState([]);
     const [showAddReview, setShowAddReview] = useState(false);
 
     const response = sessionStorage.getItem('authenticatedUser');
-    const userDetail = JSON.parse(response);
+    const userData = JSON.parse(response);
+
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid);
+            if (response.data) {
+                setUserDetail(response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
 
     return (
         <Navbar expand="lg" bg="light" className="navbar">
@@ -38,24 +55,22 @@ function ServiceProviderHeader() {
                         <Nav.Link href="/ServiceProvider/ViewJobs" className='fw-bold navLink'>Jobs</Nav.Link>
                         {/* <Nav.Link href="/ServiceProvider/ViewVacancies" className='fw-bold navLink'>Vacancies</Nav.Link> */}
                         <Nav.Link href="#Riviews" className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none" onClick={() => setShowAddReview(true)}> <i className="fas fa-star-half-alt"></i></Nav.Link>
-                        <AddReviewandRating
-                            show={showAddReview}
-                            onHide={() => setShowAddReview(false)}
-                        />
+                        <AddReviewandRating show={showAddReview} onHide={() => setShowAddReview(false)} />
+                        
                         <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
-                        <Nav.Link href="#chat" as={Link} to="/ServiceProvider/Chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
+                        <Nav.Link as={Link} to="/ServiceProvider/Chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>
                         <Nav.Link href="#chat" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Chat</Nav.Link>
 
-                        <NavDropdown title={'userDetail.firstname'} className='fw-bold' id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#" onClick={() => setModalShow(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
+                        <NavDropdown title={userDetail.firstname} className='fw-bold' id="basic-nav-dropdown">
+                            <NavDropdown.Item onClick={() => setShowEditProfile(true)} className="fw-bold no-hover">View Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>
                         </NavDropdown>
 
-                        <EditProfile show={modalShow} onHide={() => setModalShow(false)} />
-                        <img src={profileIcon} alt="Profile" className="profileIcon" />
+                        <ServiceProviderEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)} />
+                        {userDetail.profilePic ? <img src={userDetail.profilePic} alt="Profile" className="profileIcon" style={{ width: "40px", height: "40px", borderRadius: "100%", }} /> : <img src={profileIcon} alt="Profile" className="profileIcon" style={{ width: "40px", height: "40px", borderRadius: "100%", }} />}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

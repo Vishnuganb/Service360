@@ -7,7 +7,9 @@ import SpSignUp from './components/loginForm/ServiceProviderSignupContextProvide
 import CustSignUp from './components/loginForm/CustomerSignupContextProviderInterface.js';
 import AdvertiserSignUp from './components/loginForm/AdvertiserSignupContextProviderInterface.js';
 import ViewServices from './components/pages/User/ViewServices.js';
+import ViewServicesJobs from './components/pages/User/ViewServicesJob.js';
 import ServicePage from './components/pages/User/ServicePage.js';
+import ServicePageJob from './components/pages/User/ServicePageJob.js';
 
 import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
@@ -46,6 +48,8 @@ import SpPendingJob from './components/pages/ServiceProvider/PendingJob/Index.js
 import SpOngoingVacancy from './components/pages/ServiceProvider/OngoingVacancy/Index.js';
 import SpViewJobsHome from './components/pages/User/ViewAjob.js';
 import SpChat from './components/pages/User/Chat/ChatPage.js';
+import SpViewAserviceJob from './components/pages/User/ViewAjob.js';
+import CreateQuotation from './components/pages/ServiceProvider/CreateQuotation/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -103,6 +107,7 @@ import PostedJobs from './components/pages/Customer/PostedJobs.js';
 import RequestedJobs from './components/pages/Customer/RequestedJobs.js';
 import ViewPostedJobs from './components/pages/Customer/ViewPostedJobs.js';
 import ViewVacancyReply from './components/pages/Customer/ViewVacancyReply.js';
+import ActivateUser from './ContextFiles/ActivateUser.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -110,9 +115,12 @@ const router = createBrowserRouter(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="/services" element={<ViewServices />} />
-        <Route path="/services/:serviceName" element={<ServicePage />} />
-        <Route path="/jobs" element={<SpViewJobsHome />} />        
+        <Route path="/services/:serviceName" element={<ServicePage />} />    
         <Route path="/services/ViewAservice" element={<ViewAservice />} />
+
+        <Route path="/jobs" element={<ViewServicesJobs />} /> 
+        <Route path="/jobs/:serviceName" element={<ServicePageJob />} />       
+        <Route path="/jobs/ViewAjob" element={<SpViewAserviceJob />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
@@ -215,17 +223,11 @@ const router = createBrowserRouter(
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
+        <Route path="CreateQuotation" element={<CreateQuotation />} />
       </Route>
 
-
-      <Route
-        path="*"
-        element={
-          <Layout404>
-            {" "}
-            <PageNotFound />
-          </Layout404>
-        }
+      <Route path='/activateUser' element={<ActivateUser />} />
+      <Route path="*" element={<Layout404> {" "}<PageNotFound /></Layout404>}
       />
     </>
   )

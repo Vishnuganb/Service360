@@ -35,7 +35,6 @@ public class LoginService {
     private final UserRepository userRepository;
     private final AdvertiserRepository advertiserRepository;
     private final AdvertiserFileRepository advertiserFileRepository;
-    private final ServiceProviderRepository serviceProviderRepository;
     private final ServiceProviderFilesRepository serviceProviderFileRepository;
     private final ServiceProviderServicesRepository serviceProviderServicesRepository;
     private final ServiceCategoryRepository serviceCategoryRepository;
@@ -192,12 +191,6 @@ public class LoginService {
 
                 userRepository.save(serviceProviderUser);
 
-                var serviceProvider = ServiceProvider.builder ()
-                        .users ( serviceProviderUser )
-                        .build ();
-
-                serviceProviderRepository.save ( serviceProvider );
-
                 // Create a Set to keep track of services associated with each category
                 Map<String, Set<String>> categoryServiceMap = new HashMap<> ();
 
@@ -220,7 +213,7 @@ public class LoginService {
                                     service.setServiceCategory(serviceCategoryEntity);
 
                                     ServiceProviderServices serviceProviderService = ServiceProviderServices.builder()
-                                            .serviceProvider(serviceProvider)
+                                            .users(serviceProviderUser)
                                             .services(service)
                                             .serviceCategory(serviceCategoryEntity)
                                             .build();
@@ -242,7 +235,7 @@ public class LoginService {
 
                 for (MultipartFile file : files) {
                     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-                    ServiceProviderFiles serviceProviderFiles = new ServiceProviderFiles (fileName, file.getContentType(), file.getBytes(), serviceProvider);
+                    ServiceProviderFiles serviceProviderFiles = new ServiceProviderFiles (fileName, file.getContentType(), file.getBytes(), serviceProviderUser);
 
                     serviceProviderFileRepository.save(serviceProviderFiles);
                 }
@@ -290,6 +283,7 @@ public class LoginService {
         // Authentication was successful, generate and return a token
         var user = userRepository.findByEmailIgnoreCase(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
         var jwtToken = jwtService.generateToken(user);
 
         return ResponseEntity.ok(AuthenticationResponse.builder()

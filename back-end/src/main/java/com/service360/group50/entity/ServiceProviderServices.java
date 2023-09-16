@@ -22,8 +22,8 @@ public class ServiceProviderServices {
     private Long serviceProviderServicesId;
 
     @ManyToOne
-    @JoinColumn(name = "serviceproviderid")
-    private ServiceProvider serviceProvider;
+    @JoinColumn(name = "userid")
+    private Users users;
 
     @ManyToOne
     @JoinColumn(name = "serviceid")

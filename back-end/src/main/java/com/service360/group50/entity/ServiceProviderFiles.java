@@ -31,14 +31,14 @@ public class ServiceProviderFiles {
     private byte[] data;
 
     @ManyToOne
-    @JoinColumn(name = "serviceprovider_id")
-    private ServiceProvider serviceProvider;
+    @JoinColumn(name = "userid")
+    private Users users;
 
-    public ServiceProviderFiles(String fileName, String contentType, byte[] data, ServiceProvider serviceProvider) {
+    public ServiceProviderFiles(String fileName, String contentType, byte[] data, Users users) {
         this.fileName = fileName;
         this.contentType = contentType;
         this.data = data;
-        this.serviceProvider = serviceProvider;
+        this.users = users;
     }
 
     public Long getFileid() {

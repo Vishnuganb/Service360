@@ -1,6 +1,8 @@
 package com.service360.group50.service;
 
 import com.service360.group50.dto.JobWithStatusDTO;
+import com.service360.group50.dto.ServiceProjectionDTO;
+import com.service360.group50.dto.ServiceProviderServicesDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.entity.*;
 import com.service360.group50.repo.*;
@@ -40,6 +42,10 @@ public class ServiceProviderService {
     private TrainingSessionRegistrationRepository trainingSessionRegistrationRepository;
     @Autowired
     private ServiceProviderServicesRepository serviceProviderServicesRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+    @Autowired
+    private ServiceCategoryRepository serviceCategoryRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -282,10 +288,24 @@ public class ServiceProviderService {
     }
 
     //MY SERVICES
-    public List<ServiceProviderServices> viewMyServices() {
-        List<ServiceProviderServices> ServiceProviderServicesList = new ArrayList<>();
-        serviceProviderServicesRepository.findAll().forEach(ServiceProviderServicesList::add);          // NEED TO FIND FOR LOGGED IN SP
-        return ServiceProviderServicesList;
+    public List<ServiceProjectionDTO> viewAllServices() {
+        return serviceRepository.findAllServicesWithCategoryAndNames();
+    }
+
+    public List<ServiceProviderServicesDTO> viewMyServices(Long id) {
+        return serviceProviderServicesRepository.findAllByServiceProviderid(id);
+    }
+
+    public ServiceProviderServices EnableMyService(Long id){
+        ServiceProviderServices existingService = serviceProviderServicesRepository.findByServiceProviderServicesId(id);
+        existingService.setStatus("active");
+        return serviceProviderServicesRepository.save(existingService);
+    }
+
+    public ServiceProviderServices DisableMyService(Long id){
+        ServiceProviderServices existingService = serviceProviderServicesRepository.findByServiceProviderServicesId(id);
+        existingService.setStatus("deactivate");
+        return serviceProviderServicesRepository.save(existingService);
     }
 
 }

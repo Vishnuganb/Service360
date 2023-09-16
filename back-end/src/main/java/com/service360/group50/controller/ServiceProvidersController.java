@@ -1,6 +1,8 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.JobWithStatusDTO;
+import com.service360.group50.dto.ServiceProjectionDTO;
+import com.service360.group50.dto.ServiceProviderServicesDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.email.StarterMail;
 import com.service360.group50.entity.*;
@@ -44,6 +46,12 @@ public class ServiceProvidersController {
     private ImageService imageService;
     @Autowired
     private TrainingSessionRegistrationRepository trainingSessionRegistrationRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+    @Autowired
+    private ServiceProviderServicesRepository serviceProviderServicesRepository;
+    @Autowired
+    private ServiceProviderFilesRepository serviceProviderFilesRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -227,7 +235,7 @@ public class ServiceProvidersController {
     @GetMapping("auth/viewMyTrainingSessions")
     public List<TrainingSession> viewMyTrainingSessions() {
         List<TrainingSession> trainingSessions = serviceProviderService.viewMyTrainingSessions();
-        String baseUrl = "http://localhost:8080/images/trainingsessions/";
+        String baseUrl = "src/main/resources/static/images/ads";
 
         for (TrainingSession session : trainingSessions) {
             String imageFilenames = session.getTrainingimage(); // Assuming you have a method to get the image filenames
@@ -452,10 +460,98 @@ public class ServiceProvidersController {
 
 
     //MY SERVICES
-    @GetMapping("auth/viewMyServices")
-    public List<ServiceProviderServices> viewMyServices() {
-        return serviceProviderService.viewMyServices();
+    @GetMapping("auth/viewAllServices")
+    public List<ServiceProjectionDTO> viewAllServices() {
+        return serviceProviderService.viewAllServices();
     }
 
+    @GetMapping("auth/viewMyServices/{id}")
+    public List<ServiceProviderServicesDTO> viewMyServices(@PathVariable Long id) {
+        return serviceProviderService.viewMyServices(id);
+    }
+
+    @PutMapping("auth/enableMyService/{id}")
+    public ServiceProviderServices EnableMyService(@PathVariable Long id) {
+        return serviceProviderService.EnableMyService(id);
+    }
+
+    @PutMapping("auth/disableMyService/{id}")
+    public ServiceProviderServices DisableMyService(@PathVariable Long id) {
+        return serviceProviderService.DisableMyService(id);
+    }
+
+    @PostMapping("auth/addNewServicesSp")
+    public List<ServiceProviderServices> AddNewServicesSp(@RequestParam("files") MultipartFile[] qualificationFiles,
+                                                          @RequestParam("serviceproviderid") Long serviceproviderid,
+                                                          @RequestParam("services") Long[] serviceids) {
+        String uploadDirectory = "src/main/resources/static/images/serviceproviderfiles";
+
+        List<ServiceProviderServices> savedServiceProviderServicesList = new ArrayList<>();
+
+        //ADD USER
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
+
+        for (Long serviceid : serviceids) {
+            // Create a new ServiceProviderServices instance for each service
+            ServiceProviderServices serviceProviderServices = new ServiceProviderServices();
+
+            // SET the common USER and STATUS
+            serviceProviderServices.setUsers(serviceProvider);
+            serviceProviderServices.setStatus("active");
+
+            // SET the SERVICE for this iteration
+            Optional<Services> serviceOptional = serviceRepository.findById(serviceid);
+            Services service = serviceOptional.orElse(null);
+            serviceProviderServices.setServices(service);
+
+            // Find the corresponding service category ID for this service
+            List<Long> serviceCategoryIds = serviceRepository.findServiceCategoryIdsByServiceIds(new Long[]{serviceid});
+            if (!serviceCategoryIds.isEmpty()) {
+                Long serviceCategoryId = serviceCategoryIds.get(0);
+                // Create a ServiceCategory object based on the serviceCategoryId
+                ServiceCategory serviceCategory = new ServiceCategory();
+                serviceCategory.setServicecategoryid(serviceCategoryId);
+                serviceProviderServices.setServiceCategory(serviceCategory);
+            } else {
+                // Handle the case where service category ID is not found for a service
+                // You can choose to throw an exception or handle it differently
+            }
+
+            // Save the ServiceProviderServices entity and add it to the list
+            ServiceProviderServices savedServiceProviderServices = serviceProviderServicesRepository.save(serviceProviderServices);
+            savedServiceProviderServicesList.add(savedServiceProviderServices);
+        }
+
+
+
+        // Handle qualification files
+        List<String> qualificationFileNames = new ArrayList<>();
+
+        for (MultipartFile qualificationFile : qualificationFiles) {
+            if (qualificationFile != null && !qualificationFile.isEmpty()) {
+                try {
+                    String savedQualificationFileName = imageService.saveImageToStorageServiceProvider(uploadDirectory, qualificationFile);
+                    qualificationFileNames.add(savedQualificationFileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        //Concatenate qualification file names as a comma-separated string
+        String ServicesqualificationFileNames = String.join(",", qualificationFileNames);
+
+        //SERVICE PROVIDER FILES
+        ServiceProviderFiles serviceProviderFiles = new ServiceProviderFiles();
+        serviceProviderFiles.setFileName(ServicesqualificationFileNames);
+        serviceProviderFiles.setUsers(serviceProvider);
+
+        // Finally, save the serviceProviderFiles entity
+        ServiceProviderFiles savedServiceProviderFiles = serviceProviderFilesRepository.save(serviceProviderFiles);
+
+        return savedServiceProviderServicesList;
+
+    }
 
 }

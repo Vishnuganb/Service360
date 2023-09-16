@@ -74,7 +74,6 @@ function CreateBlogForm() {
             formData.append("images", file);
         });
      
-
         axios
             .post('http://localhost:8080/auth/createBlog', formData,{
                 headers: {

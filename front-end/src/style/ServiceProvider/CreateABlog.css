@@ -54,3 +54,10 @@
     border-color: #2596be !important;
     color: #9f390d !important;
   }
+
+
+/* SWEET ALERT */
+
+.custom-swal-icon {
+  color: #282b3d !important;
+}

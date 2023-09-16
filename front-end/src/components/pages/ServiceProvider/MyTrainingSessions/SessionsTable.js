@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Container } from 'react-bootstrap';
+import { Table, Container, Alert  } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
@@ -25,6 +25,10 @@ function MyTrainingSessions() {
 
   const [show, setShow] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');  
+
 
   const handleClose = () => setShow(false);
   const handleShow = (rowData) => {
@@ -89,6 +93,7 @@ function MyTrainingSessions() {
 
   // State to store the selected date
   const [selectedDate, setSelectedDate] = useState(null);
+  
 
   // Function to handle page change when the user clicks on pagination buttons
   const handlePageChange = (page) => {
@@ -135,7 +140,6 @@ function MyTrainingSessions() {
   }, []);
 
   if (!viewTrainingSessionsData) return 'No jobs found!';
-
   
   // Filter training sessions based on search term and selected date
   const filteredSessions = viewTrainingSessionsData.filter((session) => {
@@ -165,7 +169,17 @@ function MyTrainingSessions() {
   // Create a subset of training sessions to be displayed on the current page
   const displayedSessions = filteredSessions.slice(startIndex, endIndex);
 
+  const handleShowAlert = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
 
+    // Automatically hide the alert after 5 seconds
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 5000); // 5000 milliseconds (5 seconds)
+  };
+  
+      
   return (
     <div>
 
@@ -252,21 +266,22 @@ function MyTrainingSessions() {
               {/* Map through the displayed training sessions and render each row */}
               {displayedSessions.map((session) => (
                 <tr key={session.trainingid} className="custom-table-row">
-                  <td>{String(session.trainingid).padStart(3, '0')}</td>
-                  <td style={{ width: '25%' }}>{session.trainingtitle}</td>
-                  <td style={{ width: '13%' }}>{session.trainingdate}</td>
-                  <td>{convertTo12HourFormat(session.trainingstarttime)} - {convertTo12HourFormat(session.trainingendtime)}</td>
-                  <td>{session.traininglocation}</td>
-                  <td>{session.status}</td>
-                  <td className="d-flex justify-content-center">
-                    {session.status === 'Payment Pending' ? (
+                  <td className="text-center">{String(session.trainingid).padStart(3, '0')}</td>
+                  <td className="text-center" style={{ width: '25%' }}>{session.trainingtitle}</td>
+                  <td className="text-center" style={{ width: '13%' }}>{session.trainingdate}</td>
+                  <td className="text-center">{convertTo12HourFormat(session.trainingstarttime)} - {convertTo12HourFormat(session.trainingendtime)}</td>
+                  <td className="text-center">{session.traininglocation}</td>
+                  <td className="text-center">{session.status}</td>
+                  <td className="text-center">
+                    {session.status === 'Pending' ? (
+                      <i
+                        className={`bi-info-circle fs-4 mx-2 my-2`}
+                        onClick={() => handleShowAlert('Your training session is under review by the admin')}
+                      ></i>
+                    ) : session.status === 'Payment Pending' ? (
                       <i
                         className={`bi bi-cash fs-4 mx-2 my-2`}
                         onClick={() => handleShow(session)}
-                      ></i>
-                    ) : session.status === 'Ready to publish' ? (
-                      <i
-                        className={`bi bi-upload fs-4 mx-2 my-2`}
                       ></i>
                     ) : session.status === 'Published' ? (
                       <i
@@ -300,9 +315,8 @@ function MyTrainingSessions() {
         ))}
       </div>
 
-
       {/* Modal for Payment Confirmation */}
-      <Modal show={show && selectedRow !== null} onHide={handleClose} >
+      <Modal show={show && selectedRow !== null} onHide={handleClose} centered>
         <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Pay for Training Session</Modal.Title>
         </Modal.Header>
@@ -348,14 +362,14 @@ function MyTrainingSessions() {
               } 
               handleClose(); 
           }}>
-            Pay Now
+            Pay & Publish
           </Button>
         </Modal.Footer>
       </Modal>
 
 
       {/* Modal for ServiceProviders Registration */}
-      <Modal show={showRegistrationModal} onHide={handleCloseRegistrationModal} dialogClassName="custom-modal">
+      <Modal show={showRegistrationModal} onHide={handleCloseRegistrationModal} dialogClassName="custom-modal" centered>
         <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Registered Users</Modal.Title>
         </Modal.Header>
@@ -388,6 +402,21 @@ function MyTrainingSessions() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <Alert
+        show={showAlert}
+        variant="secondary"
+        onClose={() => setShowAlert(false)}
+        dismissible
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 9999, // Adjust the z-index as needed
+        }}
+      >
+        {alertMessage}
+      </Alert>     
 
     </div>
 

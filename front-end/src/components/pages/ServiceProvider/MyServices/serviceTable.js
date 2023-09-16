@@ -6,45 +6,88 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Container } from 'react-bootstrap';
+import { useEffect } from "react";
+import axios from "axios";
 
 function ServiceTable() {
   const [show, setShow] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [myservicesData, setMyservicesData] = useState([]);
+  
+  const [serviceToEnable, setServiceToEnable] = useState(null);
+  const [serviceToDisable, setServiceToDisable] = useState(null);
 
-  const handleClose = () => setShow(false);
-  const handleShow = (rowData) => {
-    setSelectedRow(rowData);
-    setShow(true); // Show the modal
+  const [showEnableModal, setShowEnableModal] = useState(false);
+  const [showDisableModal, setShowDisableModal] = useState(false);
+
+
+  // GETTING LOGGED IN SERVICEPROVIDER ID
+
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
+
+  useEffect(() => {
+    const serverLink = 'http://localhost:8080';
+
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid);
+            if (response.data) {
+                // setUserDetail(response.data);
+                console.log(userData.userid)
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    fetchUserData();
+  }, [userData.userid]);
+
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+        console.log(res.data);
+        setMyservicesData(res.data);
+    });
+
+  }, []);
+
+  const handleEnableService = () => {
+    if (serviceToEnable) {
+      axios
+        .put(`http://localhost:8080/auth/enableMyService/${serviceToEnable}`)
+        .then((response) => {
+          setServiceToEnable(null);
+          // setShowEnableModal(false);
+        })
+        .catch((error) => {
+          console.error('Error enabling service:', error);
+        });
+        setShowEnableModal(false);
+    }
   };
 
+  const handleDisableService = () => {
+    if (serviceToDisable) {
+      axios
+        .put(`http://localhost:8080/auth/disableMyService/${serviceToDisable}`)
+        .then((response) => {
+          setServiceToDisable(null);
+          // setShowDisableModal(false);
+        })
+        .catch((error) => {
+          console.error('Error disabling service:', error);
+        });
+        setShowDisableModal(false);
+    }
+  };
+  
 
-  //training session objects with properties
-  const myservicesData = [
-    {
-      id: 1,
-      serviceName: 'Masonry',
-      serviceCategory: 'Construction',
-      date: '2023-08-20',
-    },
-    {
-      id: 2,
-      serviceName: 'Iron Works',
-      serviceCategory: 'Construction',
-      date: '2023-07-15',
-    },
-    {
-      id: 3,
-      serviceName: 'Glass & Aluminum',
-      serviceCategory: 'Construction',
-      date: '2023-05-08',
-    },
-    {
-      id: 4,
-      serviceName: 'Tiles Fitting',
-      serviceCategory: 'Construction',
-      date: '2023-03-14',
-    },
-  ];
+  const handleEditService = (service) => {
+    // Implement your edit functionality here
+    // You can open a modal or navigate to an edit page, for example.
+  };
 
   return (
     <div>
@@ -56,7 +99,7 @@ function ServiceTable() {
               <tr>
                 <th>Service Name</th>
                 <th>Service Category</th>
-                <th>Date</th>
+                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -64,11 +107,39 @@ function ServiceTable() {
               {/* Map through the displayed training sessions and render each row */}
               {myservicesData.map((service) => (
                 <tr key={service.id}>
-                  <td>{service.serviceName}</td>
-                  <td>{service.serviceCategory}</td>
-                  <td>{service.date}</td>
-                  <td className="d-flex justify-content-center">
-                    <i className="fas fa-pen-square fs-2" onClick={handleShow}></i>
+                  <td className="text-center">{service.serviceName}</td>
+                  <td className="text-center">{service.serviceCategoryName}</td>
+                  <td className="text-center">{service.status}</td>
+                  <td className="text-center">
+                    {service.status === "active" ? (
+                      <>
+                          <i
+                            className="fas fa-times-circle fs-2 me-2"
+                            onClick={() => {
+                              setServiceToDisable(service.serviceProviderServicesId);
+                              setShowDisableModal(true);
+                            }}
+                          ></i>
+                          <i
+                            className="fas fa-pen-square fs-2"
+                            onClick={() => handleEditService(service.serviceProviderServicesId)}
+                          ></i>
+                      </>
+                      ) : (
+                      <>
+                          <i
+                            className="fas fa-check-circle fs-2 me-2"
+                            onClick={() => {
+                              setServiceToEnable(service.serviceProviderServicesId);
+                              setShowEnableModal(true);
+                            }}
+                          ></i>
+                          <i
+                            className="fas fa-pen-square fs-2"
+                            onClick={() => handleEditService(service.serviceProviderServicesId)}
+                          ></i>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -77,60 +148,39 @@ function ServiceTable() {
         </Container>
       </div>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
-          <Modal.Title>Edit Service</Modal.Title>
+      {/* Modal for enabling a service */}
+      <Modal show={showEnableModal} onHide={() => setShowEnableModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Enable Service</Modal.Title>
         </Modal.Header>
-
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Service</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus disabled />
-
-              <Form.Label>Working Area</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
-
-              <Form.Label>Description</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
-
-              <Form.Label>Qualifications</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
-
-              <Form.Label>Working Days</Form.Label>
-              <div className='mb-2'>
-                <Form.Check className='mb-1' type="checkbox" id="monday" label="Monday" />
-                <Form.Check className='mb-1' type="checkbox" id="tuesday" label="Tuesday" />
-                <Form.Check className='mb-1' type="checkbox" id="wednesday" label="Wednesday" />
-                <Form.Check className='mb-1' type="checkbox" id="thursday" label="Thursday" />
-                <Form.Check className='mb-1' type="checkbox" id="friday" label="Friday" />
-                <Form.Check className='mb-1' type="checkbox" id="saturday" label="Saturday" />
-                <Form.Check className='mb-1' type="checkbox" id="sunday" label="Sunday" />
-              </div>
-
-
-              <Form.Label>Working Hours</Form.Label>
-              <Form.Control className='mb-2' type="text" placeholder="" autoFocus />
-
-              <Form.Label>Qualification Certificate</Form.Label>
-              <Form.Control type="file" placeholder="" autoFocus />
-            </Form.Group>
-
-          </Form>
-        </Modal.Body>
-
+        <Modal.Body>Are you sure you want to enable this service?</Modal.Body>
         <Modal.Footer>
-          <Button className='btn-ServiceProvider-1 me-auto' onClick={handleClose}>
-            Remove Service
+          <Button className="btn-ServiceProvider-2" onClick={() => setShowEnableModal(false)}>
+            Cancel
           </Button>
-          <Button className='btn-ServiceProvider-2' onClick={handleClose}>
-            Close
-          </Button>
-          <Button className='btn-ServiceProvider-1' onClick={handleClose}>
-            Save Changes
+          <Button className="btn-ServiceProvider-1" onClick={handleEnableService}>
+            Enable
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Modal for disabling a service */}
+      <Modal show={showDisableModal} onHide={() => setShowDisableModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Disable Service</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to disable this service?</Modal.Body>
+        <Modal.Footer>
+          <Button className="btn-ServiceProvider-2" onClick={() => setShowDisableModal(false)}>
+            Cancel
+          </Button>
+          <Button className="btn-ServiceProvider-1" onClick={handleDisableService}>
+            Disable
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
     </div>
   );
 }

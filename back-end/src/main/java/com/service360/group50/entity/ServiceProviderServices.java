@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 public class ServiceProviderServices {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long serviceProviderServicesId;
 
@@ -32,6 +32,5 @@ public class ServiceProviderServices {
     @ManyToOne
     @JoinColumn(name = "servicecategoryid")
     private ServiceCategory serviceCategory;
-
 
 }

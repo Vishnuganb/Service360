@@ -2,8 +2,89 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+
+const serviceCategories = {
+    "Interior Works": ["Carpentry", "Painting"],
+    "Electrical & Plumbing": ["AC Repair", "Electrical Wiring", "Plumbing"],
+    "Construction": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
+    "Security": ["CCTV Systems Repair", "Fire Alarm Systems Repair", "Video Surveillance Systems Repair"],
+    "Cleaning": ["Sofa Cleaning", "Carpet Cleaning"],
+};
 
 function AddServiceForm() {
+    const [serviceFormData, setServiceFormData] = useState({
+        subcategories: [],
+        workingArea: "",
+        qualificationCertificate: null,
+        services: [],
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setServiceFormData({
+            ...serviceFormData,
+            [name]: value,
+        });
+    };
+
+    const handleCategoryChange = (e) => {
+        const { name, options } = e.target;
+        const selectedSubcategories = [];
+        const selectedServices = [];
+    
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                selectedSubcategories.push(options[i].value);
+                selectedServices.push(...serviceCategories[options[i].value]);
+            }
+        }
+    
+        setServiceFormData({
+            ...serviceFormData,
+            subcategories: selectedSubcategories,
+            services: selectedServices,
+        });
+    };
+    
+
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        setServiceFormData({
+            ...serviceFormData,
+            qualificationCertificate: file,
+        });
+    };
+
+    const handleAddService = (event) => {
+        event.preventDefault();
+
+        // Create a FormData object to send the data
+        const formData = new FormData();
+
+        // Append the service data to the FormData object
+        formData.append("subcategories", serviceFormData.subcategories.join(', '));
+        formData.append("workingArea", serviceFormData.workingArea);
+        formData.append("qualificationCertificate", serviceFormData.qualificationCertificate);
+        formData.append("services", serviceFormData.services.join(', '));
+
+        axios
+            .post('http://localhost:8080/auth/addService', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+                console.log('Service added successfully:', response.data);
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error adding service:', error);
+            });
+    };
+
     return (
         <div className="AddServiceForm-container ms-lg-4 me-lg-5">
             <Row className="AddServiceForm-Head">
@@ -19,109 +100,58 @@ function AddServiceForm() {
                 </Col>
             </Row>
             <Row className="AddServiceForm-Body">
-                <Form>
-                    <Form.Group className="mt-4 mb-3 custom-checkbox" controlId="formBasicCheckbox">    {/* deleted the d-flex flex-wrap*/}
-                        <Row>
-                            <Col className="col-md-2 col-12 mb-2">
-                                Interior Works
-                            </Col>
-                            <Col className="col-md-10 col-12">
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Carpentry" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Painting" />
-                            </Col>
-                        </Row>
-
-                        <hr className="AddServiceForm-hr" />
-
-                        <Row>
-                            <Col className="col-md-2 col-12 mb-2">
-                                Electrical & Plumbing
-                            </Col>
-                            <Col className="col-md-10 col-12">
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Ac Repair" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Electrical Wiring" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Plumbing" />
-                            </Col>
-                        </Row>
-
-                        <hr className="AddServiceForm-hr" />
-
-                        <Row>
-                            <Col className="col-md-2 col-12 mb-2">
-                                Construction
-                            </Col>
-                            <Col className="col-md-10 col-12">
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Masonry" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Tiles Fitting" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Glass & Aluminium" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Iron Works" />
-                            </Col>
-                        </Row>
-
-                        <hr className="AddServiceForm-hr" />
-
-                        <Row>
-                            <Col className="col-md-2 col-12 mb-2">
-                                Security
-                            </Col>
-                            <Col className="col-md-10 col-12">
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="CCTV Systems Repair" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Fire Alarm Systems Repair" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Video Surveillance Systems Repair" />
-                            </Col>
-                        </Row>
-
-                        <hr className="AddServiceForm-hr" />
-
-                        <Row>
-                            <Col className="col-md-2 col-12 mb-2">
-                                Cleaning
-                            </Col>
-                            <Col className="col-md-10 col-12">
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Sofa Cleaning" />
-                                <Form.Check className="me-3 custom-font" type="checkbox" label="Carpet Cleaning" />
-                            </Col>
-                        </Row>
+                <Form method="post">
+                    <Form.Group className="mt-4 mb-3 custom-checkbox" controlId="formBasicCheckbox">
+                        {Object.keys(serviceCategories).map((category, index) => (
+                            <React.Fragment key={index}>
+                                <Row>
+                                    <Col className="col-md-2 col-12 mb-2">
+                                        {category}
+                                    </Col>
+                                    <Col className="col-md-10 col-12">
+                                        {serviceCategories[category].map((subcategory, subIndex) => (
+                                            <Form.Check
+                                                key={subIndex}
+                                                className="me-3 custom-font"
+                                                type="checkbox"
+                                                label={subcategory}
+                                                name={`subcategories-${index}-${subIndex}`}
+                                                onChange={handleCategoryChange}
+                                            />
+                                        ))}
+                                    </Col>
+                                </Row>
+                                {index < Object.keys(serviceCategories).length - 1 && <hr className="AddServiceForm-hr" />}
+                            </React.Fragment>
+                        ))}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="custom-font">Working Area</Form.Label>
-                        <Form.Control className="custom-font" type="text" placeholder="Area you like to perform jobs" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label className="custom-font">Description</Form.Label>
-                        <Form.Control className="custom-font" type="text" placeholder="Describe your work" />
-                    </Form.Group>
-
-                    <Form.Group className="" controlId="formBasicPassword">
-                        <Form.Label className="custom-font">Qualifications</Form.Label>
-                        <Form.Control className="custom-font" type="text" placeholder="Ex : NVQ Level 1" />
-                    </Form.Group>
-
-                    <Form.Group className="mt-4 mb-3 d-flex flex-column custom-checkbox" controlId="formBasicCheckbox">
-                        <Form.Label className="custom-font">Working day(s)</Form.Label>
-                        <Form.Check className="me-3 mb-2" type="checkbox" label="Monday" />
-                        <Form.Check className="me-3 mb-2" type="checkbox" label="Tuesday" />
-                        <Form.Check className="me-3 mb-2" type="checkbox" label="Wednessday" />
-                        <Form.Check className="me-3 mb-2" type="checkbox" label="Thursday" />
-                        <Form.Check className="me-3 mb-2" type="checkbox" label="Friday" />
-                        <Form.Check className="me-3 mb-2" type="checkbox" label="Saturday" />
-                        <Form.Check className="me-3" type="checkbox" label="Sunday" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label className="custom-font">Working Hours</Form.Label>
-                        <Form.Control className="custom-font" type="text" placeholder="Ex : 8am - 5am" />
+                        <Form.Control 
+                            className="custom-font" 
+                            type="text" 
+                            placeholder="Area you like to perform jobs" 
+                            name="workingArea"
+                            value={serviceFormData.workingArea}
+                            onChange={handleInputChange}
+                            required
+                        />
                     </Form.Group>
 
                     <Form.Group className="mb-4" controlId="formBasicPassword">
                         <Form.Label className="custom-font">Add Qualification Certificate</Form.Label>
-                        <Form.Control className="custom-font" type="file" />
+                        <Form.Control 
+                            className="custom-font" 
+                            type="file" 
+                            name="qualificationCertificate"
+                            onChange={handleFileInputChange}
+                            required
+                        />
                     </Form.Group>
 
                     <div className="AddNewService-button-container d-flex flex-row">
-                        <Button className="btn-ServiceProvider-1" type="submit">Submit</Button>
+                        <Button className="btn-ServiceProvider-1" onClick={handleAddService}>Submit</Button>
                         <Button className="btn-ServiceProvider-2 AddServiceForm-cancel ms-auto">Cancel</Button>
                     </div>
                 </Form>

@@ -38,6 +38,8 @@ public class ServiceProviderService {
     private JobRepliesRepository jobRepliesRepository;
     @Autowired
     private TrainingSessionRegistrationRepository trainingSessionRegistrationRepository;
+    @Autowired
+    private ServiceProviderServicesRepository serviceProviderServicesRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -267,7 +269,7 @@ public class ServiceProviderService {
         return trainingSessionRepository.save(trainingSession);
     }
 
-    //Blogs
+    //BLOGS
 
     public Blogs createBlog(Blogs blog){
         return blogsRepository.save(blog);
@@ -277,6 +279,13 @@ public class ServiceProviderService {
         List<Blogs> BlogsList = new ArrayList<>();
         blogsRepository.findAll().forEach(BlogsList::add);
         return BlogsList;
+    }
+
+    //MY SERVICES
+    public List<ServiceProviderServices> viewMyServices() {
+        List<ServiceProviderServices> ServiceProviderServicesList = new ArrayList<>();
+        serviceProviderServicesRepository.findAll().forEach(ServiceProviderServicesList::add);          // NEED TO FIND FOR LOGGED IN SP
+        return ServiceProviderServicesList;
     }
 
 }

@@ -451,4 +451,11 @@ public class ServiceProvidersController {
     }
 
 
+    //MY SERVICES
+    @GetMapping("auth/viewMyServices")
+    public List<ServiceProviderServices> viewMyServices() {
+        return serviceProviderService.viewMyServices();
+    }
+
+
 }

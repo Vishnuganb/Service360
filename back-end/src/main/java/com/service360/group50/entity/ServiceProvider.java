@@ -32,5 +32,4 @@ public class ServiceProvider {
 
     @OneToMany(mappedBy = "serviceProvider")
     private List<ServiceProviderServices> serviceProviderServices;
-
 }

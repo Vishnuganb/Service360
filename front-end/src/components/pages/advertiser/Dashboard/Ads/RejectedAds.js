@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import axios from "axios";
 
 import ViewAd from "./ViewAd";
 
@@ -84,6 +85,8 @@ const RejectedAdCont = ({
 };
 
 const RejectedAds = () => {
+   const response = sessionStorage.getItem("authenticatedUser");
+   const userDetail = JSON.parse(response);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
 
@@ -97,64 +100,48 @@ const RejectedAds = () => {
   };
 
    const [ads, setAds] = useState([]);
-   const [imageUrls, setImageUrls] = useState([]);
+  const [adsDetails, setAdsDetails] = useState([]);
 
    useEffect(() => {
-     const apiUrl = `http://localhost:8080/auth/getAds`;
-     fetch(apiUrl)
+     const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
+
+     axios
+       .get(apiUrl)
        .then((response) => {
-         if (!response.ok) {
-           throw new Error(
-             `HTTP error! Status: ${response.status} - ${response.statusText}`
-           );
-         }
-         return response.json();
+         console.log(response.data);
+         setAdsDetails(response.data);
+         setAds(response.data.ads);
        })
-       .then((data) => setAds(data))
-       .catch((error) => console.error("Error fetching data:", error));
+       .catch((error) => {
+         console.error("Error fetching data:", error);
+       });
    }, []);
 
-    useEffect(() => {
-      if (ads.length > 0) {
-        const imageUrlsPromises = ads.map((ad) => {
-          const adId = `http://localhost:8080/auth/getAdImages/${ad.adsId}`;
-          return fetch(adId)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  `Error fetching image for ad ${ad.id}: ${response.status}`
-                );
-              }
 
-              return response.blob(); // Fetch image as a blob
-            })
-            .then((imageBlob) => {
-              const imageUrl = URL.createObjectURL(imageBlob);
-              return imageUrl;
-            })
-            .catch((error) => {
-              console.error(`Error fetching image for ad ${ad.id}:`, error);
-              return null;
-            });
-        });
 
-        Promise.all(imageUrlsPromises).then((urls) => setImageUrls(urls));
-      }
-    }, [ads]);
+    const combinedData = ads.map((ad) => {
+      const adsImages = adsDetails.adsImages.find(
+        (details) => details.id === ad.adsId
+      );
+      return { ...ad, adsImages: adsImages ? adsImages.images : [] };
+    });
+
 
   return (
     <Container>
       <h2 className="AdPageHeading">Rejected Ads</h2>
       <Row>
         <div className="AdsRow">
-          {ads.map((ad, index) => {
+          {combinedData.map((ad, index) => {
             if (ad.verificationStatus === "Rejected") {
               return (
                 <RejectedAdCont
-                  key={index}
-                  profileIcon={profileIcon}
-                  proName={"Karththi"}
-                  adImage={imageUrls[index]}
+                  endingCont
+                  key={ad.adsId}
+                  profileIcon={ad.user.profilePic}
+                  proName={ad.user.firstname}
+                  // adImage={getAdImages(ad.adsId)}
+                  adImage={`data:image/png;base64,${ad.adsImages[0]}`}
                   adName={ad.adsName}
                   price={ad.price}
                   location={ad.area}

@@ -1,6 +1,7 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.CategoryDTO;
+import com.service360.group50.dto.ServiceCategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
 import com.service360.group50.entity.Services;
 import com.service360.group50.entity.ServiceCategory;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -85,5 +87,10 @@ public class ServiceController {
         return new ResponseEntity<> (categories, HttpStatus.OK);
     }
 
+    @GetMapping("/services")
+    public ResponseEntity<Map<String, List<String>>> getServiceCategoriesWithServices() {
+        Map<String, List<String>> serviceAndCategories = adminService.getServiceCategoriesWithServices();
+        return ResponseEntity.ok(serviceAndCategories);
+    }
 
 }

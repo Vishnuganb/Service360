@@ -20,7 +20,7 @@ import java.sql.Time;
 
 public class TrainingSession {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long trainingid;
 
@@ -36,14 +36,14 @@ public class TrainingSession {
     @Column( columnDefinition = "DATE")
     private Date trainingdate;
 
-    @Column( columnDefinition = "Text")
-    private String trainingtime;
+    @Column( columnDefinition = "TIME")
+    private Time trainingstarttime;
+
+    @Column( columnDefinition = "TIME")
+    private Time trainingendtime;
 
     @Column( columnDefinition = "TEXT")
     private String traininglocation;
-
-    @Column( columnDefinition = "TEXT")
-    private String trainingduration;
 
     @Column( columnDefinition = "TEXT")
     private String trainingcost;
@@ -51,14 +51,18 @@ public class TrainingSession {
     @Column( columnDefinition = "TEXT")
     private String servicename;
 
-    @Column( columnDefinition = "TEXT")
-    private String going;
+    @Column( columnDefinition = "INT")
+    private String status;
 
     @Column( columnDefinition = "TEXT")
-    private String interested;
+    private Integer going;
 
+    @Column( columnDefinition = "INT")
+    private Integer interested;
+
+    //IS THIS REQUIRED TO BE A PRIMARY KEY ?
     //service provider name
     @ManyToOne
-    @JoinColumn(name = "userid")
-    private Users users;
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    private Users serviceprovider;
 }

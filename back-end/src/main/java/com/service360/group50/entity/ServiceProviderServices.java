@@ -19,18 +19,19 @@ public class ServiceProviderServices {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private Long serviceproviderid;
+    private Long serviceProviderServicesId;
 
-    @Id
-    @GeneratedValue()
-    @Column(updatable = false)
-    private Long serviceid;
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users users;
 
-    @Column( columnDefinition = "TEXT")
-    private String services;
+    @ManyToOne
+    @JoinColumn(name = "serviceid")
+    private Services services;
 
-    @Column( columnDefinition = "TEXT")
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "servicecategoryid")
+    private ServiceCategory serviceCategory;
 
-    //serviceproviderid
+
 }

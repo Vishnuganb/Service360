@@ -22,6 +22,7 @@ const CreateAd = () => {
   const userDetail = JSON.parse(response);
 
 
+
   // Ad Image useState
 
   const [selectedAdImages, setSelectedAdImages] = useState([]);

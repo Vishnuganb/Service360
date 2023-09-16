@@ -10,5 +10,6 @@ import java.util.List;
 public interface AdsRepository extends JpaRepository<Ads, Long> {
 
 
+    List<Ads> findByUser_userid(Long userId);
 }
 

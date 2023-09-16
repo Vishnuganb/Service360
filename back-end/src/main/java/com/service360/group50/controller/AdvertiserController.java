@@ -1,13 +1,13 @@
 package com.service360.group50.controller;
 
-import com.service360.group50.dto.UsersDTO;
+import com.service360.group50.dto.AdsDTO;
+import com.service360.group50.dto.AdvertiserDTO;
+import com.service360.group50.dto.ImagesDTO;
 import com.service360.group50.entity.Ads;
-import com.service360.group50.entity.Users;
-import com.service360.group50.message.ResponseMessage;
+import com.service360.group50.entity.Advertiser;
 import com.service360.group50.service.AdvertiserService;
 import com.service360.group50.service.ImageService;
 import com.service360.group50.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +23,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdvertiserController {
 
     @Autowired
@@ -35,7 +36,8 @@ public class AdvertiserController {
     private UserService userService;
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
+
     @PostMapping("auth/createAd")
     public Ads createAd(
             @RequestParam("adsImages") MultipartFile[] adsImages,
@@ -51,20 +53,6 @@ public class AdvertiserController {
     ) {
         String uploadDirectory = "src/main/resources/static/images/ads";
         if (role.equals("ADVERTISER")) {
-            UsersDTO usersDTO = userService.getUserById(userId);
-            if (usersDTO != null) {
-                Users user = new Users();
-                user.setUserid(usersDTO.getUserid());
-                user.setFirstname(usersDTO.getFirstname());
-                user.setLastname(usersDTO.getLastname());
-                user.setPhonenumber(usersDTO.getPhonenumber());
-                user.setAddress(usersDTO.getAddress());
-                user.setEmail(usersDTO.getEmail());
-                user.setNic(usersDTO.getNic());
-                user.setProfilePic(usersDTO.getProfilePic());
-                user.setPassword(usersDTO.getPassword());
-                // Set other user properties as needed
-
                 Ads ad = new Ads();
                 ad.setAdsName(adsName);
                 ad.setCategory(category);
@@ -75,7 +63,7 @@ public class AdvertiserController {
                 ad.setDelivery(delivery);
                 ad.setStatus("Active");
                 ad.setVerificationStatus("Pending");
-                ad.setUser(user);
+                ad.setUser(userService.getUser(userId));
 
                 String adsImagesString = "";
                 for (MultipartFile imageFile : adsImages) {
@@ -88,12 +76,11 @@ public class AdvertiserController {
                 ad.setAdsImages(adsImagesString);
                 System.out.println("Hello" + ad);
                 return advertiserService.CreateAd(ad);
-            }
         }
         return null;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PutMapping("auth/updateAd")
     public Ads updateAd(
             @RequestParam(value = "adsImages",required = false) MultipartFile[] adsImages,
@@ -161,25 +148,99 @@ public class AdvertiserController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("auth/getAds")
-    public List<Ads> getAds()  {
-        return advertiserService.getAds();
+    @GetMapping("auth/getAds/{userId}")
+    public AdsDTO getAdsByUserId(@PathVariable Long userId)  {
+
+        // advertiserDTO
+        AdvertiserDTO advertiserDTO = new AdvertiserDTO();
+        advertiserDTO.setAdvertiserid(advertiserService.getAdvertiserByUserId(userId).getAdvertiserid());
+        advertiserDTO.setShopname(advertiserService.getAdvertiserByUserId(userId).getShopname());
+        advertiserDTO.setShopaddress(advertiserService.getAdvertiserByUserId(userId).getShopaddress());
+        System.out.println(advertiserDTO);
+
+        List<Ads> ads = advertiserService.getAdsByUserId(userId);
+        System.out.println(ads);
+        AdsDTO adsDTO = new AdsDTO();
+        adsDTO.setAdvertiser(advertiserDTO);
+        adsDTO.setAds(ads);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        for (Ads ad : ads) {
+            List<byte[]> adsimages = new ArrayList<>();
+
+            try {
+                List<byte[]> adsImages = getImages(ad.getAdsId());
+                for (byte[] adsImage : adsImages) {
+                    adsimages.add(adsImage);
+                }
+
+
+                ImagesDTO image = new ImagesDTO();
+                image.setId(ad.getAdsId());
+                image.setImages(adsimages);
+                imagesDTO.add(image);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        adsDTO.setAdsImages(imagesDTO);
+
+
+        return adsDTO;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
+
+
+//    @GetMapping("auth/getAds")
+//    public List<Ads> getAds()  {
+//        return advertiserService.getAds();
+//    }
+
+
     @GetMapping("auth/getAd/{adsId}")
     public Ads getAd(@PathVariable Long adsId)  {
-//        Long AdvertiserID = advertiserService.getAdvertiserIdByUserId(userId);
         return advertiserService.getAd(adsId);
     }
 
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("auth/getAdImages/{adsId}")
-    public ResponseEntity<byte[]> getImage(@PathVariable Long adsId) throws IOException {
+//    @GetMapping("auth/getAdImages/{adsId}")
+//    public ResponseEntity<byte[]> getImage(@PathVariable Long adsId) throws IOException {
+//        String imageDirectory = "src/main/resources/static/images/ads";
+//
+//
+//        String[] imageNames = advertiserService.getAdsImages(adsId).split(",");
+////        imageNames = adImages.split(",");
+//        List<byte[]> imageBytesList = new ArrayList<>();
+//
+//        for (String imageName : imageNames) {
+//            byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
+//            imageBytesList.add(imageBytes);
+//
+//        }
+////        System.out.println(imageBytesList);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.IMAGE_PNG); // Adjust the content type as needed
+//
+//        // Assuming you want to return all images as a single byte array
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        for (byte[] imageBytes : imageBytesList) {
+//            outputStream.write(imageBytes);
+//        }
+//        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+//
+//    }
+
+
+//    @GetMapping("auth/getAdImagesby/{adsId}")
+    public List<byte[]> getImages(@PathVariable Long adsId) throws IOException {
         String imageDirectory = "src/main/resources/static/images/ads";
+
+
         String[] imageNames = advertiserService.getAdsImages(adsId).split(",");
 //        imageNames = adImages.split(",");
         List<byte[]> imageBytesList = new ArrayList<>();
@@ -190,35 +251,26 @@ public class AdvertiserController {
 
         }
         System.out.println(imageBytesList);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG); // Adjust the content type as needed
 
-        // Assuming you want to return all images as a single byte array
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        for (byte[] imageBytes : imageBytesList) {
-            outputStream.write(imageBytes);
-        }
+        return imageBytesList;
 
-        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
     }
 
-    // delete ad
-    @CrossOrigin(origins = "http://localhost:3000")
+
+
     @DeleteMapping("auth/deleteAd/{adsId}")
     public void deleteAd(@PathVariable Long adsId){
         advertiserService.deleteAds(adsId);
     }
 
-    // set status Disabled by adsId
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping("auth/setStatusDisabled/{adsId}")
+
+    @PutMapping("auth/disable/{adsId}")
     public void setStatusDisabled(@PathVariable Long adsId){
         advertiserService.setStatusDisabled(adsId);
     }
 
-    // set status Enabled by adsId
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping("auth/setStatusEnabled/{adsId}")
+
+    @PutMapping("auth/enable/{adsId}")
     public void setStatusEnabled(@PathVariable Long adsId){
         advertiserService.setStatusEnabled(adsId);
     }

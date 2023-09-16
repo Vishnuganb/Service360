@@ -87,7 +87,8 @@ const PendingCont = ({
 
 const YetToVerifyAds = () => {
 
-  
+   const response = sessionStorage.getItem("authenticatedUser");
+   const userDetail = JSON.parse(response);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
 
@@ -101,72 +102,31 @@ const YetToVerifyAds = () => {
   };
 
   const [ads, setAds] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
+  const [adsDetails, setAdsDetails] = useState([]);
+
 
   useEffect(() => {
-    const apiUrl = `http://localhost:8080/auth/getAds`;
-    fetch(apiUrl)
-      .then((response) => {
-            if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
-    }
-    return response.json();
+    const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
 
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data);
+        setAdsDetails(response.data);
+        setAds(response.data.ads);
       })
-      .then((data) => setAds(data))
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
 
-  const userid = 1;
-  console.log(userid);
 
-  // useEffect(() => {
-  //   const apiUrl = `http://localhost:8080/auth/getAds/${userid}`;
+const combinedData = ads.map((ad) => {
+  const adsImages = adsDetails.adsImages.find((details) => details.id === ad.adsId);
+  return { ...ad, adsImages: adsImages ? adsImages.images : [] };
+});
 
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setAds(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
-
-  useEffect(() => {
-    if (ads.length > 0) {
-     const imageUrlsPromises = ads.map((ad) => {
-         const adId = `http://localhost:8080/auth/getAdImages/${ad.adsId}`;
-       return fetch(adId)
-         .then((response) => {
-           if (!response.ok) {
-             throw new Error(
-               `Error fetching image for ad ${ad.id}: ${response.status}`
-             );
-           }
-
-           return response.blob(); // Fetch image as a blob
-         })
-         .then((imageBlob) => {
-           const imageUrl = URL.createObjectURL(imageBlob);
-           return imageUrl;
-         })
-         .catch((error) => {
-           console.error(`Error fetching image for ad ${ad.id}:`, error);
-           return null;
-         });
-     });
-     
-      Promise.all(imageUrlsPromises).then((urls) => setImageUrls(urls));
-    }
-  }, [ads]);
-
-
-  
-
-
-
+console.log(combinedData);
   
 
   return (
@@ -174,15 +134,17 @@ const YetToVerifyAds = () => {
       <h2 className="AdPageHeading">Pending Ads</h2>
       <Row>
         <div className="AdsRow">
-          {ads.map((ad, index) => {
+          {combinedData.map((ad, index) => {
             if (ad.verificationStatus === "Pending" && ad.status === "Active") {
+             
+              console.log(adImage);
               return (
                 <PendingCont
                   key={ad.adsId}
-                  profileIcon={profileIcon}
-                  proName="Karththi"
+                  profileIcon={ad.user.profilePic}
+                  proName={ad.user.firstname}
                   // adImage={getAdImages(ad.adsId)}
-                  adImage={imageUrls[index]}
+                  adImage={`data:image/png;base64,${ad.adsImages[0]}`}
                   adName={ad.adsName}
                   price={ad.price}
                   location={ad.area}
@@ -199,8 +161,8 @@ const YetToVerifyAds = () => {
           <ViewAd
             key={selectedAd.adsId}
             ads={selectedAd}
-            proName={selectedAd.proName}
-            profileIcon={profileIcon}
+            profileIcon={selectedAd.user.profilePic}
+            proName={selectedAd.user.firstname}
             modalVisible={modalVisible}
             closeModal={closeModal}
           />

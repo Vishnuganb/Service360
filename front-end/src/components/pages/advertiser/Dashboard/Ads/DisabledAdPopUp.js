@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import backgroundImage from "../../../../../assets/images/header/Background.png";
 
 import "../../../../../style/advertiser/AdIndex.css";
@@ -48,6 +49,23 @@ const ShopDetailsModal = ({ show, onHide, shopData }) => {
 };
 
 const EnableAdModal = (props) => {
+  const navigate = useNavigate();
+  const id = props.id;
+  console.log(id);
+  function handleEnable() {
+    axios
+      .put(`http://localhost:8080/auth/enable/${id}`)
+      .then((response) => {
+        console.log("Ad Disabled successfully!", response.data);
+        props.onHide();
+        navigate(`/Advertiser/Ads`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        // Handle errors, e.g., show an error message
+        console.error("Failed to Disabled ad", error);
+      });
+  }
   return (
     <Modal
       {...props}
@@ -68,19 +86,16 @@ const EnableAdModal = (props) => {
           <button className="AdCancel rounded" onClick={props.onHide}>
             Close
           </button>
-          <button className="AdEnableBut rounded">Enable</button>
+          <button className="AdEnableBut rounded" onClick={handleEnable}>
+            Enable
+          </button>
         </div>
       </Modal.Body>
     </Modal>
   );
 };
 
-const DisableAdPop = ({
-  ads,
-  profileIcon,
-  modalVisible,
-  closeModal,
-}) => {
+const DisableAdPop = ({ ads, profileIcon, modalVisible, closeModal }) => {
   //Enable Model
   const [EnableModalShow, setEnableModalShow] = React.useState(false);
 
@@ -116,40 +131,42 @@ const DisableAdPop = ({
     address: "No 132, Marain Drive, Bambalapittiya, Colombo",
   };
 
-   const [imageUrls, setImageUrls] = useState([]);
-   useEffect(() => {
-     if (ads.adsId) {
-       // Check if id is available
-       const adId = `http://localhost:8080/auth/getAdImages/${ads.adsId}`;
+  const [imageUrls, setImageUrls] = useState([]);
+  useEffect(() => {
+    if (ads.adsId) {
+      // Check if id is available
+      const adId = `http://localhost:8080/auth/getAdImages/${ads.adsId}`;
 
-       fetch(adId)
-         .then((response) => {
-           if (!response.ok) {
-             throw new Error(
-               `Error fetching image for ad ${ads.adsId}: ${response.status}`
-             );
-           }
-           return response.blob(); // Fetch image as a blob
-         })
-         .then((imageBlob) => {
-           const imageUrl = URL.createObjectURL(imageBlob);
-           setImageUrls(imageUrl); // Set the imageUrl in the state
-         })
-         .catch((error) => {
-           console.error(`Error fetching image for ad ${ads.adsId}:`, error);
-           setImageUrls(null); // Set imageUrl to null on error
-         });
-     }
-   }, [ads.adsId]);
+      fetch(adId)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              `Error fetching image for ad ${ads.adsId}: ${response.status}`
+            );
+          }
+          return response.blob(); // Fetch image as a blob
+        })
+        .then((imageBlob) => {
+          const imageUrl = URL.createObjectURL(imageBlob);
+          setImageUrls(imageUrl); // Set the imageUrl in the state
+        })
+        .catch((error) => {
+          console.error(`Error fetching image for ad ${ads.adsId}:`, error);
+          setImageUrls(null); // Set imageUrl to null on error
+        });
+    }
+  }, [ads.adsId]);
 
-   const [selectedImage, setSelectedImage] = useState(imageUrls);
+ const [selectedImage, setSelectedImage] = useState(
+   `data:image/png;base64,${ads.adsImages[0]}`
+ );
 
-    const navigate = useNavigate();
-    const id = ads.adsId;
-    const handleOpenAdEditModal = () => {
-      // Navigate to the editAd route with the id as a parameter
-      navigate(`/Advertiser/editAd/${id}`);
-    };
+  const navigate = useNavigate();
+  const id = ads.adsId;
+  const handleOpenAdEditModal = () => {
+    // Navigate to the editAd route with the id as a parameter
+    navigate(`/Advertiser/editAd/${id}`);
+  };
 
   return (
     <div className="p-5">
@@ -195,6 +212,7 @@ const DisableAdPop = ({
                 </button>
 
                 <EnableAdModal
+                  id={ads.adsId}
                   show={EnableModalShow}
                   onHide={() => setEnableModalShow(false)}
                 />
@@ -205,27 +223,33 @@ const DisableAdPop = ({
               <div>
                 <div className="AdViewImage">
                   <Image
-                    src={imageUrls}
+                    src={selectedImage}
                     alt="Main image"
                     fluid
-                    onClick={() => handleImageClick(imageUrls[0])}
+                    onClick={() =>
+                      handleImageClick(
+                        `data:image/png;base64,${ads.adsImages[0]}`
+                      )
+                    }
                   />
 
-                  {/* <div className="py-3 ">
+                  <div className="py-3 ">
                     <div className="d-flex justify-content-center AdsRowImg">
-                      {adImages.map((image, index) => (
+                      {ads.adsImages.map((image, index) => (
                         <div key={index} className="m-3 AdsColImg">
                           <Image
-                            src={image}
+                            src={`data:image/png;base64,${image}`}
                             alt={`Gallery image ${index + 1}`}
                             thumbnail
                             fluid
-                            onClick={() => handleImageClick(image)}
+                            onClick={() =>
+                              handleImageClick(`data:image/png;base64,${image}`)
+                            }
                           />
                         </div>
                       ))}
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
 

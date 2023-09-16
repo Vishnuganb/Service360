@@ -10,9 +10,19 @@ import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
 import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
 import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
 import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 function TrainingSession() {
     const [viewTrainingSessionData, setviewTrainingSessionData] = useState(null);
+
+    const [registrationData, setRegistrationData] = useState({
+        email: "",
+        mobilenumber:""
+      });
+
+    const [isChecked, setIsChecked] = useState(false);
+
 
     const Trainingimages = [
         electrical,
@@ -31,6 +41,83 @@ function TrainingSession() {
     }, []);
 
     if (!viewTrainingSessionData) return 'No training session found!';
+
+    const handleRegistration = (event) => {
+        event.preventDefault();
+
+        // Check if the checkbox is checked before proceeding with registration
+        if (!isChecked) {
+          alert("Please verify the event name, venue, and time before proceeding.");
+          return;
+        }
+
+        // Proceed with registration if the checkbox is checked
+        axios
+            .post(`http://localhost:8080/auth/registerTrainingSession/${trainingsessionId}`, registrationData)
+            .then((response) => {
+                console.log('Registration successfully:', response.data);
+                // Clear the input fields by resetting registrationData
+                setRegistrationData({
+                    email: "",
+                    mobilenumber: "",
+                });
+
+                alert("Registration successful!");
+    
+                // Update singleJobReplies with the newly added comment
+                // setSingleJobReplies([...singleJobReplies, response.data]);
+            })
+            .catch((error) => {
+                console.error('Error Registration:', error);
+        }); 
+    };
+    
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+    
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setRegistrationData({
+            ...registrationData,
+            [name]: value,
+        });
+    };
+
+    function convertTo12HourFormat(time24) {
+        const [hour, minute] = time24.split(":");
+        const hourInt = parseInt(hour);
+        const amPm = hourInt >= 12 ? "PM" : "AM";
+        const hour12 = hourInt > 12 ? hourInt - 12 : hourInt === 0 ? 12 : hourInt;
+      
+        return `${hour12}:${minute} ${amPm}`;
+    }
+
+    // Calculate the duration in hours and minutes
+    const startTimeParts = viewTrainingSessionData.trainingstarttime.split(':');
+    const endTimeParts = viewTrainingSessionData.trainingendtime.split(':');
+
+    const startHours = parseInt(startTimeParts[0], 10);
+    const startMinutes = parseInt(startTimeParts[1], 10);
+    const endHours = parseInt(endTimeParts[0], 10);
+    const endMinutes = parseInt(endTimeParts[1], 10);
+
+    const hoursDiff = endHours - startHours;
+    const minutesDiff = endMinutes - startMinutes;
+
+    // Construct the duration string
+    let durationString = '';
+    if (hoursDiff > 0) {
+    durationString += `${hoursDiff} hour${hoursDiff !== 1 ? 's' : ''}`;
+    if (minutesDiff > 0) {
+        durationString += ` and ${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
+    }
+    } else if (minutesDiff > 0) {
+        durationString += `${minutesDiff} minute${minutesDiff !== 1 ? 's' : ''}`;
+    } else {
+        durationString = '0 minutes';
+    }
 
     return (
         <div className="ms-lg-4 me-lg-4">
@@ -66,11 +153,11 @@ function TrainingSession() {
                     </div>
                     <div className="col-lg-4 col-md-6 col-12  d-lg-flex justify-content-center">
                         <i className="bi bi-clock-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingtime}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{convertTo12HourFormat(viewTrainingSessionData.trainingstarttime)}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-end">
                         <i className="bi bi-hourglass-top"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingduration}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{durationString}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
                         <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp;&nbsp;
@@ -78,7 +165,7 @@ function TrainingSession() {
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-center">
                         <i className="bi bi-person-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.serviceprovidername}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.serviceprovider.firstname}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-end">
                         <i className="bi bi-cash"></i>&nbsp;&nbsp;&nbsp;
@@ -101,6 +188,51 @@ function TrainingSession() {
                     </div>
                 </div>
             </div>
+            
+            <br/>
+
+            <div>
+                <span className="h5 ViewATraining-title">Registration</span>
+            </div>
+            <Form onSubmit={handleRegistration}>
+                <Form.Group className="mt-2" controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control 
+                        type="email" 
+                        placeholder="Enter email" 
+                        name="email" 
+                        value={registrationData.email}
+                        onChange={handleInputChange} 
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group className="mt-2" controlId="formBasicPassword">
+                    <Form.Label>Mobile Number</Form.Label>
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Enter mobile number" 
+                        name="mobilenumber" 
+                        value={registrationData.mobilenumber}
+                        onChange={handleInputChange} 
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group className="mt-2" controlId="formBasicPassword">
+                    <Form.Label>Amount Payable</Form.Label>
+                    <Form.Control type="text" value={`LKR ${viewTrainingSessionData.trainingcost}`} disabled />
+                </Form.Group>
+                <div class="form-check mt-3">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" checked={isChecked} onChange={handleCheckboxChange}/>
+                    <label class="form-check-label" for="exampleCheck1">I have verified the event name, venue and time before proceeding my payment.</label>
+                </div>
+                <div className="ViewATraining-button-container mt-4 d-flex flex-row">
+                    <Button className="btn-ServiceProvider-1" type="submit">Register</Button>
+                    <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto">Back</Button>
+                </div>
+            </Form>
+
         </div>
     );
 }

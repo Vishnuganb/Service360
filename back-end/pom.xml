@@ -125,13 +125,16 @@
 			<artifactId>google-http-client-gson</artifactId>
 			<version>1.43.3</version>
 		</dependency>
-
 		<dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client-jackson2</artifactId>
-			<version>1.31.1</version> <!-- Replace with the latest version -->
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.4.0</version> <!-- Use the latest version available -->
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.4.0</version> <!-- Use the latest version available -->
+		</dependency>
 
 	</dependencies>
 

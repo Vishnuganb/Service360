@@ -3,13 +3,13 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import axios from "axios";
 
 import ViewAd from "./ViewAd";
 
 import "../../../../../style/advertiser/AdIndex.css";
 
 import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
-
 
 const VerifiedAdCont = ({
   profileIcon,
@@ -29,7 +29,6 @@ const VerifiedAdCont = ({
               <img
                 src={profileIcon}
                 alt="Profile of Advertiser"
-                
                 className="AdProfilePic"
               />
             </div>
@@ -49,7 +48,12 @@ const VerifiedAdCont = ({
         </Row>
 
         <Row className="d-flex justify-content-center">
-          <Image src={adImage} fluid alt="Item" style={{ maxHeight: "10em", width: "20em" }} />
+          <Image
+            src={adImage}
+            fluid
+            alt="Item"
+            style={{ maxHeight: "10em", width: "20em" }}
+          />
         </Row>
 
         <Row>
@@ -82,6 +86,8 @@ const VerifiedAdCont = ({
 };
 
 const VerifiedAds = () => {
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
   const [ViewAdmodalVisible, ViewAdsetModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
 
@@ -94,67 +100,49 @@ const VerifiedAds = () => {
     ViewAdsetModalVisible(false);
   };
 
+  const [ads, setAds] = useState([]);
+  const [adsDetails, setAdsDetails] = useState([]);
 
-    const [ads, setAds] = useState([]);
-    const [imageUrls, setImageUrls] = useState([]);
+ useEffect(() => {
+   const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
 
-
-   useEffect(() => {
-     const apiUrl = `http://localhost:8080/auth/getAds`;
-     fetch(apiUrl)
-       .then((response) => {
-         if (!response.ok) {
-           throw new Error(
-             `HTTP error! Status: ${response.status} - ${response.statusText}`
-           );
-         }
-         return response.json();
-       })
-       .then((data) => setAds(data))
-       .catch((error) => console.error("Error fetching data:", error));
-   }, []);
-
-    useEffect(() => {
-    if (ads.length > 0) {
-     const imageUrlsPromises = ads.map((ad) => {
-         const adId = `http://localhost:8080/auth/getAdImages/${ad.adsId}`;
-       return fetch(adId)
-         .then((response) => {
-           if (!response.ok) {
-             throw new Error(
-               `Error fetching image for ad ${ad.id}: ${response.status}`
-             );
-           }
-
-           return response.blob(); // Fetch image as a blob
-         })
-         .then((imageBlob) => {
-           const imageUrl = URL.createObjectURL(imageBlob);
-           return imageUrl;
-         })
-         .catch((error) => {
-           console.error(`Error fetching image for ad ${ad.id}:`, error);
-           return null;
-         });
+   axios
+     .get(apiUrl)
+     .then((response) => {
+       console.log(response.data);
+       setAdsDetails(response.data);
+       setAds(response.data.ads);
+     })
+     .catch((error) => {
+       console.error("Error fetching data:", error);
      });
-     
-      Promise.all(imageUrlsPromises).then((urls) => setImageUrls(urls));
-    }
-  }, [ads]);
+ }, []);
+
+ const combinedData = ads.map((ad) => {
+   const adsImages = adsDetails.adsImages.find(
+     (details) => details.id === ad.adsId
+   );
+   return { ...ad, adsImages: adsImages ? adsImages.images : [] };
+ });
+
 
   return (
     <Container>
       <h2 className="AdPageHeading">Verified Ads</h2>
       <Row>
         <div className="AdsRow">
-          {ads.map((ad, index) => {
-            if (ad.verificationStatus === "Verified" && ad.status === "Active") {
+          {combinedData.map((ad, index) => {
+            if (
+              ad.verificationStatus === "Verified" &&
+              ad.status === "Active"
+            ) {
               return (
                 <VerifiedAdCont
-                  key={index}
-                  profileIcon={profileIcon}
-                  proName={"Karththi"}
-                  adImage={imageUrls[index]}
+                  key={ad.adsId}
+                  profileIcon={ad.user.profilePic}
+                  proName={ad.user.firstname}
+                  // adImage={getAdImages(ad.adsId)}
+                  adImage={`data:image/png;base64,${ad.adsImages[0]}`}
                   adName={ad.adsName}
                   price={ad.price}
                   location={ad.area}

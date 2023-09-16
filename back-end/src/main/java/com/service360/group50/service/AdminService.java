@@ -1,6 +1,7 @@
 package com.service360.group50.service;
 
 import com.service360.group50.dto.CategoryDTO;
+import com.service360.group50.dto.ServiceCategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
 import com.service360.group50.entity.ServiceCategory;
 import com.service360.group50.entity.Services;
@@ -15,7 +16,9 @@ import org.springframework.util.StreamUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -202,4 +205,19 @@ public class AdminService {
 
     }
 
+    public Map<String, List<String>> getServiceCategoriesWithServices () {
+
+        List<ServiceCategory> categories = serviceCategoryRepository.findAll();
+        Map<String, List<String>> serviceAndCategories = new HashMap<> ();
+
+        for (ServiceCategory category : categories) {
+            String categoryName = category.getServiceCategoryName();
+            List<String> categoryServices = category.getServices().stream()
+                    .map(Services::getServiceName)
+                    .collect(Collectors.toList());
+            serviceAndCategories.put(categoryName, categoryServices);
+        }
+
+        return serviceAndCategories;
+    }
 }

@@ -5,9 +5,7 @@ import com.service360.group50.entity.Users;
 import com.service360.group50.service.CustomerService;
 import com.service360.group50.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,19 +20,29 @@ public class AdminController {
     private final CustomerService customerService;
     private final UserService userService;
 
+    @GetMapping("/getAllCustomers")
     public List<Users> getAllCustomers() {
-        String targetRole = "CUSTOMER";
+        Role targetRole = Role.CUSTOMER; // Assuming Role is an enum with a CUSTOMER value
         return userService.getAllUsers(targetRole);
     }
 
-    public List<Users> getAllAdvertisers() {
-        String targetRole = "ADVERTISER";
-        return userService.getAllUsers(targetRole);
-    }
+//    public List<Users> getAllAdvertisers() {
+//        String targetRole = "ADVERTISER";
+//        return userService.getAllUsers(targetRole);
+//    }
+//
+//    public List<Users> getAllServiceProviders() {
+//        String targetRole = "SERVICEPROVIDER";
+//        return userService.getAllUsers(targetRole);
+//    }
 
-    public List<Users> getAllServiceProviders() {
-        String targetRole = "SERVICEPROVIDER";
-        return userService.getAllUsers(targetRole);
+    @PutMapping("/updateCustomer")
+    public Users updateCustomer(
+            @RequestParam(value = "userid") Long userid,
+            @RequestParam(value = "enabled") boolean enabled
+
+    ){
+        return userService.updateCustomer(userid, enabled);
     }
 
 

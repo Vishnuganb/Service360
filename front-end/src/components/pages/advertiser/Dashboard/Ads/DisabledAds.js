@@ -3,14 +3,13 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import axios from "axios";
 
 import DisabledAdPopUp from "./DisabledAdPopUp";
 
 import "../../../../../style/advertiser/AdIndex.css";
 
 import profileIcon from "./../../../../../assets/images/advertiser/Adam.jpg";
-
-
 
 import Ad6_1 from "../../../../../assets/images/admin/ads/hammer_1.jpeg";
 import Ad6_2 from "../../../../../assets/images/admin/ads/hammer_2.jpeg";
@@ -21,7 +20,6 @@ import Ad7_3 from "../../../../../assets/images/admin/ads/disk_3.jpeg";
 import Ad8_1 from "../../../../../assets/images/admin/ads/plier_1.jpeg";
 import Ad8_2 from "../../../../../assets/images/admin/ads/plier_2.jpeg";
 import Ad8_3 from "../../../../../assets/images/admin/ads/plier_3.jpeg";
-
 
 const VerifiedAdCont = ({
   profileIcon,
@@ -93,9 +91,11 @@ const VerifiedAdCont = ({
 };
 
 const VerifiedAds = () => {
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
-
+  const [adsDetails, setAdsDetails] = useState([]);
   const openModal = (ad) => {
     setSelectedAd(ad); // Set the selected ad
     setModalVisible(true);
@@ -105,93 +105,47 @@ const VerifiedAds = () => {
     setModalVisible(false);
   };
 
-  // const adsData = [
-  //   {
-  //     proName: "Adam",
-  //     profileIcon: profileIcon,
-  //     adImages: [Ad6_1, Ad6_2, Ad6_3],
-  //     adName: "Hammer",
-  //     price: 850,
-  //     location: "Colombo",
-  //   },
-  //   {
-  //     proName: "Adam",
-  //     profileIcon: profileIcon,
-  //     adImages: [Ad7_1, Ad7_2, Ad7_3],
-  //     adName: "Disk",
-  //     price: 1200,
-  //     location: "Colombo",
-  //   },
+  const [ads, setAds] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
 
-  //   {
-  //     proName: "Adam",
-  //     profileIcon: profileIcon,
-  //     adImages: [Ad8_1, Ad8_2, Ad8_3],
-  //     adName: "Pliers",
-  //     price: 600,
-  //     location: "Colombo",
-  //   },
-  // ];
+ 
+  useEffect(() => {
+    const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
 
-   const [ads, setAds] = useState([]);
-   const [imageUrls, setImageUrls] = useState([]);
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data);
+        setAdsDetails(response.data);
+        setAds(response.data.ads);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
-   useEffect(() => {
-     const apiUrl = `http://localhost:8080/auth/getAds`;
-     fetch(apiUrl)
-       .then((response) => {
-         if (!response.ok) {
-           throw new Error(
-             `HTTP error! Status: ${response.status} - ${response.statusText}`
-           );
-         }
-         return response.json();
-       })
-       .then((data) => setAds(data))
-       .catch((error) => console.error("Error fetching data:", error));
-   }, []);
 
-   useEffect(() => {
-     if (ads.length > 0) {
-       const imageUrlsPromises = ads.map((ad) => {
-         const adId = `http://localhost:8080/auth/getAdImages/${ad.adsId}`;
-         return fetch(adId)
-           .then((response) => {
-             if (!response.ok) {
-               throw new Error(
-                 `Error fetching image for ad ${ad.id}: ${response.status}`
-               );
-             }
-
-             return response.blob(); // Fetch image as a blob
-           })
-           .then((imageBlob) => {
-             const imageUrl = URL.createObjectURL(imageBlob);
-             return imageUrl;
-           })
-           .catch((error) => {
-             console.error(`Error fetching image for ad ${ad.id}:`, error);
-             return null;
-           });
-       });
-
-       Promise.all(imageUrlsPromises).then((urls) => setImageUrls(urls));
-     }
-   }, [ads]);
+  const combinedData = ads.map((ad) => {
+    const adsImages = adsDetails.adsImages.find(
+      (details) => details.id === ad.adsId
+    );
+    return { ...ad, adsImages: adsImages ? adsImages.images : [] };
+  });
 
   return (
     <Container>
       <h2 className="AdPageHeading">Disabled Ads</h2>
       <Row>
         <div className="AdsRow">
-          {ads.map((ad, index) => {
+          {combinedData.map((ad, index) => {
+            console.log(ad);
             if (ad.status === "Disabled") {
               return (
                 <VerifiedAdCont
                   key={index}
-                  profileIcon={profileIcon}
-                  proName={"Karththi"}
-                  adImage={imageUrls[index]}
+                  profileIcon={ad.user.profilePic}
+                  proName={ad.user.firstname}
+                  adImage={`data:image/png;base64,${ad.adsImages[0]}`}
                   adName={ad.adsName}
                   price={ad.price}
                   location={ad.area}

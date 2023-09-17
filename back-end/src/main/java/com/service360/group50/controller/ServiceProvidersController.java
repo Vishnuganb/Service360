@@ -50,20 +50,6 @@ public class ServiceProvidersController {
     @Autowired
     private ServiceProviderFilesRepository serviceProviderFilesRepository;
 
-    private Long loggedInServiceProviderId;
-    @PostMapping("auth/recieveLoggedInServiceProviderId")
-    public Long receiveLoggedInUserId(@RequestBody Long userId) {
-        // You can now use the userId in your backend logic
-        loggedInServiceProviderId = userId;
-        return userId;
-    }
-
-    @GetMapping("auth/viewLoggedInServiceProviderId")
-    public Long viewLoggedInUserId() {
-        System.out.println("loggedInServiceProviderId: " + loggedInServiceProviderId);
-        return loggedInServiceProviderId;
-    }
-
     //JOBS
     @GetMapping("auth/viewNewJobs")
     public List<Jobs> viewNewJobs() {
@@ -79,8 +65,8 @@ public class ServiceProvidersController {
 
     // NEED TO FIND FOR LOGGED IN SP
     @GetMapping("auth/viewMyJobs")
-    public List<JobWithStatusDTO> viewMyJobs() {
-        return serviceProviderService.viewMyJobs();
+    public List<JobWithStatusDTO> viewMyJobs(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        return serviceProviderService.viewMyJobs(serviceproviderid);
     }
 
 
@@ -126,23 +112,21 @@ public class ServiceProvidersController {
     }
 
 
-
-
     @PutMapping("auth/updateJobStatusInviteToPending/{id}")
-    public JobsServiceProviders updateJobInvitetoPending(@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoPending(id);
+    public JobsServiceProviders updateJobInvitetoPending(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoPending(id,serviceproviderid);
     }
 
 
     @PutMapping("auth/updateJobStatusInviteToOngoing/{id}")
-    public JobsServiceProviders updateJobInvitetoOngoing(@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoOngoing(id);
+    public JobsServiceProviders updateJobInvitetoOngoing(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoOngoing(id,serviceproviderid);
     }
 
 
     @PutMapping("auth/updateJobStatusInviteToRejected/{id}")
-    public JobsServiceProviders updateJobInvitetoRejected(@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoRejected(id);
+    public JobsServiceProviders updateJobInvitetoRejected(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoRejected(id,serviceproviderid);
     }
 
 
@@ -159,8 +143,8 @@ public class ServiceProvidersController {
     }
 
     @GetMapping("auth/viewMyVacancies")
-    public List<VacancyWithStatusDTO> viewMyVacancies() {
-        return serviceProviderService.viewMyVacancies();
+    public List<VacancyWithStatusDTO> viewMyVacancies(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        return serviceProviderService.viewMyVacancies(serviceproviderid);
     }
 
     @GetMapping("auth/viewNewVacancies/{id}")
@@ -203,14 +187,13 @@ public class ServiceProvidersController {
     }
 
     @PutMapping("auth/updateVacancyStatusInviteToOngoing/{id}")
-    public VacanciesServiceProviders updateVacancyInvitetoOngoing(@PathVariable Long id) {
-        return serviceProviderService.updateVacancyInvitetoOngoing(id);
+    public VacanciesServiceProviders updateVacancyInvitetoOngoing(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
+        return serviceProviderService.updateVacancyInvitetoOngoing(id,serviceproviderid);
     }
 
-
     @PutMapping("auth/updateVacancyStatusInviteToRejected/{id}")
-    public VacanciesServiceProviders updateVacancyInvitetoRejected(@PathVariable Long id) {
-        return serviceProviderService.updateVacancyInvitetoRejected(id);
+    public VacanciesServiceProviders updateVacancyInvitetoRejected(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
+        return serviceProviderService.updateVacancyInvitetoRejected(id,serviceproviderid);
     }
 
 

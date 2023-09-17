@@ -166,7 +166,7 @@ function SessionsBodyPage() {
                                         height: '200px',
                                         width: '100%',
                                         objectFit: 'contain',
-                                        backgroundColor:"#f0f0f0" 
+                                        backgroundColor:"#e9e9e9" 
                                     }}
                                 />
                             </div>

@@ -22,10 +22,28 @@
     transition: transform .3s;
 }
 
+.single-my-vacancy-card{
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    width: 30%;
+    height: 30%;
+    margin-bottom: 20px;
+    padding: 20px 20px 0 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: transform .3s;
+}
+
 @media only screen and (max-width: 1070px) {
     .single-my-job-card{
         width: 100% !important;
     }
+}
+
+.single-my-vacancy-card:hover{
+    transform: scale(1.005);
+    z-index: 2;
+    border: 0.2px solid #29435cf0;
 }
 
 

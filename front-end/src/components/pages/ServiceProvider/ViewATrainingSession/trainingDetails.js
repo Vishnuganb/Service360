@@ -111,6 +111,7 @@ function TrainingSession() {
         durationString = '0 minutes';
     }
     
+    // Get all images from the training sessions
     const trainingSessionImagesArray = viewTrainingSessionData.trainingsessionimages;
     
     // Initialize an empty array to store all images

@@ -259,3 +259,10 @@
     --bs-gutter-x: 0;
 }
 
+
+/* SPINNER */
+.fa-spin-trainingsession-sp {
+    animation: fa-spin 1s infinite linear;
+    position: fixed;
+    left: 50%;
+  }

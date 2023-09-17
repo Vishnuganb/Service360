@@ -50,6 +50,20 @@ public class ServiceProvidersController {
     @Autowired
     private ServiceProviderFilesRepository serviceProviderFilesRepository;
 
+    private Long loggedInServiceProviderId;
+    @PostMapping("auth/recieveLoggedInServiceProviderId")
+    public Long receiveLoggedInUserId(@RequestBody Long userId) {
+        // You can now use the userId in your backend logic
+        loggedInServiceProviderId = userId;
+        return userId;
+    }
+
+    @GetMapping("auth/viewLoggedInServiceProviderId")
+    public Long viewLoggedInUserId() {
+        System.out.println("loggedInServiceProviderId: " + loggedInServiceProviderId);
+        return loggedInServiceProviderId;
+    }
+
     //JOBS
     @GetMapping("auth/viewNewJobs")
     public List<Jobs> viewNewJobs() {
@@ -218,9 +232,38 @@ public class ServiceProvidersController {
 
 //    //TRAINING SESSIONS
     @GetMapping("auth/viewTrainingSessions")
-    public List<TrainingSession> viewTrainingSessions() {
-        return serviceProviderService.viewTrainingSessions();
+    public TrainingSessionsDTO viewTrainingSessions() {
+        List<TrainingSession> trainingSessions = serviceProviderService.viewTrainingSessions();
+
+        TrainingSessionsDTO trainingSessionsDTO = new TrainingSessionsDTO();
+        trainingSessionsDTO.setTrainingsessions(trainingSessions);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        for (TrainingSession trainingSession : trainingSessions) {
+            List<byte[]> trainingsessionimages = new ArrayList<>();
+
+            try {
+                List<byte[]> trainingsessionImages = getTrainingImages(trainingSession.getTrainingid());
+                for (byte[] trainingsessionImage : trainingsessionImages) {
+                    trainingsessionimages.add(trainingsessionImage);
+                }
+
+                ImagesDTO image = new ImagesDTO();
+                image.setId(trainingSession.getTrainingid());
+                image.setImages(trainingsessionimages);
+                imagesDTO.add(image);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        trainingSessionsDTO.setTrainingsessionimages(imagesDTO);
+
+        return trainingSessionsDTO;
     }
+
+
 
     // NEED TO FIND FOR LOGGED IN SP
 
@@ -228,35 +271,6 @@ public class ServiceProvidersController {
     public List<TrainingSession> viewMyTrainingSessions() {
         return serviceProviderService.viewMyTrainingSessions();
     }
-
-//    @GetMapping("auth/viewMyTrainingSessions")
-//    public List<TrainingSession> viewMyTrainingSessions() {
-//        List<TrainingSession> trainingSessions = serviceProviderService.viewMyTrainingSessions();
-//        String baseUrl = "src/main/resources/static/images/ads";
-//
-//        for (TrainingSession session : trainingSessions) {
-//            String imageFilenames = session.getTrainingimage(); // Assuming you have a method to get the image filenames
-//            if (imageFilenames != null && !imageFilenames.isEmpty()) {
-//                // Split the comma-separated filenames
-//                String[] filenames = imageFilenames.split(",");
-//
-//                // Generate full image URLs and set them in the TrainingSession object
-//                List<String> imageUrls = Arrays.stream(filenames)
-//                        .map(filename -> baseUrl + filename.trim())
-//                        .collect(Collectors.toList());
-//
-//                session.setTrainingImageUrls(imageUrls); // Assuming you have a setter for image URLs
-//            }
-//        }
-//
-//        return trainingSessions;
-//    }
-
-
-//    @GetMapping("auth/viewTrainingSessions/{id}")
-//    public TrainingSession viewATrainingSession(@PathVariable Long id) {
-//        return serviceProviderService.viewATrainingSession(id);
-//    }
 
     @GetMapping("auth/viewTrainingSessions/{id}")
     public TrainingSessionDTO viewATrainingSession(@PathVariable Long id) {

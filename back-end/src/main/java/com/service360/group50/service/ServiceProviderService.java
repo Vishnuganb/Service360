@@ -308,4 +308,11 @@ public class ServiceProviderService {
         return serviceProviderServicesRepository.save(existingService);
     }
 
+    //IMAGES
+
+    // get adsImages by trainingId
+    public String getTrainingImages(Long id) {
+        return trainingSessionRepository.findById(id).orElse(null).getTrainingimage();
+    }
+
 }

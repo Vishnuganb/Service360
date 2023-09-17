@@ -4,7 +4,7 @@ import sessionImage from '../../../../assets/images/ServiceProvider/masonry2.jpg
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { all } from "axios";
 import Carousel from 'react-bootstrap/Carousel';
 import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
 import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
@@ -22,7 +22,6 @@ function TrainingSession() {
       });
 
     const [isChecked, setIsChecked] = useState(false);
-
 
     const Trainingimages = [
         electrical,
@@ -95,8 +94,8 @@ function TrainingSession() {
     }
 
     // Calculate the duration in hours and minutes
-    const startTimeParts = viewTrainingSessionData.trainingstarttime.split(':');
-    const endTimeParts = viewTrainingSessionData.trainingendtime.split(':');
+    const startTimeParts = viewTrainingSessionData.trainingsessions.trainingstarttime.split(':');
+    const endTimeParts = viewTrainingSessionData.trainingsessions.trainingendtime.split(':');
 
     const startHours = parseInt(startTimeParts[0], 10);
     const startMinutes = parseInt(startTimeParts[1], 10);
@@ -118,19 +117,34 @@ function TrainingSession() {
     } else {
         durationString = '0 minutes';
     }
+    
+    const trainingSessionImagesArray = viewTrainingSessionData.trainingsessionimages;
+    
+    // Initialize an empty array to store all images
+    const allImages = [];
+
+    // Iterate through trainingSessionImagesArray
+    trainingSessionImagesArray.forEach((sessionImages) => {
+    // Check if the current object has an 'images' property
+    if (sessionImages.hasOwnProperty('images') && Array.isArray(sessionImages.images)) {
+        // Concatenate the 'images' array to the 'allImages' array
+        allImages.push(...sessionImages.images);
+    }
+    });
+
+    console.log(allImages);
 
     return (
         <div className="ms-lg-4 me-lg-4">
-            <div className="ViewATraining-image-container d-flex justify-content-center mt-4 mb-3">
-                <Carousel fade style={{ maxHeight: '400px', overflow: 'hidden' }}>
-                    {Trainingimages.map((image, index) => (
+            <div className="ViewATraining-image-container d-flex justify-content-center mt-4 mb-3 vertical-align-middle Sp-image-view-container">
+                <Carousel fade className="Sp-image-view-carousel" style={{ overflow: 'hidden', width: '100%'}}>
+                    {allImages.map((image, index) => (
                         <Carousel.Item key={index}>
                             <img
-                                className="d-block w-100"
-                                src={image}
+                                className="d-block w-100 Sp-image-view"
+                                src={`data:image/jpg;base64,${image}`}
                                 alt={`Training Session ${index}`}
                                 style={{
-                                    maxHeight: '100%',
                                     objectFit: 'contain',
                                 }}
                             />
@@ -140,8 +154,8 @@ function TrainingSession() {
             </div>
 
             <div className="d-flex flex-column mb-3 mt-3">
-                <span className="ViewATraining-title h3">{viewTrainingSessionData.trainingtitle}</span>
-                <span className="ViewATraining-sub-title h6">{viewTrainingSessionData.trainingdescription}.</span>
+                <span className="ViewATraining-title h3">{viewTrainingSessionData.trainingsessions.trainingtitle}</span>
+                <span className="ViewATraining-sub-title h6">{viewTrainingSessionData.trainingsessions.trainingdescription}.</span>
             </div>
 
             <div className="ViewATraining-details border rounded px-4 py-2">
@@ -149,11 +163,11 @@ function TrainingSession() {
                 <div className="ViewATraining-details-body-left mt-2 d-flex flex-row flex-wrap">
                     <div className="col-lg-4 col-md-6 col-12">
                         <i className="bi bi-calendar2-event-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingdate}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingsessions.trainingdate}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12  d-lg-flex justify-content-center">
                         <i className="bi bi-clock-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{convertTo12HourFormat(viewTrainingSessionData.trainingstarttime)}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{convertTo12HourFormat(viewTrainingSessionData.trainingsessions.trainingstarttime)}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-end">
                         <i className="bi bi-hourglass-top"></i>&nbsp;&nbsp;&nbsp;
@@ -161,15 +175,15 @@ function TrainingSession() {
                     </div>
                     <div className="col-lg-4 col-md-6 col-12">
                         <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.traininglocation}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingsessions.traininglocation}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-center">
                         <i className="bi bi-person-fill"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.serviceprovider.firstname}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingsessions.serviceprovider.firstname}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-end">
                         <i className="bi bi-cash"></i>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingcost}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingsessions.trainingcost}</span>
                     </div>
                 </div>
             </div>
@@ -180,11 +194,11 @@ function TrainingSession() {
                         <Link to="#">
                             <span style={{ color: "black" }}>interested</span>&nbsp;&nbsp;&nbsp;
                         </Link>
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.interested}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingsessions.interested}</span>
                     </div>
                     <div className="col-lg-4 col-md-6 col-12 d-lg-flex justify-content-center">
                         <span>on going</span>&nbsp;&nbsp;&nbsp;
-                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.going}</span>
+                        <span className="ViewATraining-details-sub-info-val mb-1">{viewTrainingSessionData.trainingsessions.going}</span>
                     </div>
                 </div>
             </div>
@@ -221,7 +235,7 @@ function TrainingSession() {
 
                 <Form.Group className="mt-2" controlId="formBasicPassword">
                     <Form.Label>Amount Payable</Form.Label>
-                    <Form.Control type="text" value={`LKR ${viewTrainingSessionData.trainingcost}`} disabled />
+                    <Form.Control type="text" value={`LKR ${viewTrainingSessionData.trainingsessions.trainingcost}`} disabled />
                 </Form.Group>
                 <div class="form-check mt-3">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1" checked={isChecked} onChange={handleCheckboxChange}/>

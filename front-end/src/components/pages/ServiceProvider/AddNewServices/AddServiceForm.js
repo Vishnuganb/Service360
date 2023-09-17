@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert';
+import { Link } from 'react-router-dom';
+
 
 function AddServiceForm() {
     const [serviceFormData, setServiceFormData] = useState({
@@ -276,7 +278,9 @@ function AddServiceForm() {
 
                     <div className="AddNewService-button-container d-flex flex-row">
                         <Button className="btn-ServiceProvider-1" onClick={handleAddService}>Submit</Button>
-                        <Button className="btn-ServiceProvider-2 AddServiceForm-cancel ms-auto">Cancel</Button>
+                        <Link to="../MyServices" className=" ms-auto">
+                            <Button className="btn-ServiceProvider-2 AddServiceForm-cancel">Back</Button>
+                        </Link>
                     </div>
                 </Form>
             </Row>

@@ -1,9 +1,6 @@
 package com.service360.group50.controller;
 
-import com.service360.group50.dto.JobWithStatusDTO;
-import com.service360.group50.dto.ServiceProjectionDTO;
-import com.service360.group50.dto.ServiceProviderServicesDTO;
-import com.service360.group50.dto.VacancyWithStatusDTO;
+import com.service360.group50.dto.*;
 import com.service360.group50.email.StarterMail;
 import com.service360.group50.entity.*;
 import com.service360.group50.repo.*;
@@ -227,37 +224,69 @@ public class ServiceProvidersController {
 
     // NEED TO FIND FOR LOGGED IN SP
 
-//    @GetMapping("auth/viewMyTrainingSessions")
-//    public List<TrainingSession> viewMyTrainingSessions() {
-//        return serviceProviderService.viewMyTrainingSessions();
-//    }
-
     @GetMapping("auth/viewMyTrainingSessions")
     public List<TrainingSession> viewMyTrainingSessions() {
-        List<TrainingSession> trainingSessions = serviceProviderService.viewMyTrainingSessions();
-        String baseUrl = "src/main/resources/static/images/ads";
-
-        for (TrainingSession session : trainingSessions) {
-            String imageFilenames = session.getTrainingimage(); // Assuming you have a method to get the image filenames
-            if (imageFilenames != null && !imageFilenames.isEmpty()) {
-                // Split the comma-separated filenames
-                String[] filenames = imageFilenames.split(",");
-
-                // Generate full image URLs and set them in the TrainingSession object
-                List<String> imageUrls = Arrays.stream(filenames)
-                        .map(filename -> baseUrl + filename.trim())
-                        .collect(Collectors.toList());
-
-                session.setTrainingImageUrls(imageUrls); // Assuming you have a setter for image URLs
-            }
-        }
-
-        return trainingSessions;
+        return serviceProviderService.viewMyTrainingSessions();
     }
 
+//    @GetMapping("auth/viewMyTrainingSessions")
+//    public List<TrainingSession> viewMyTrainingSessions() {
+//        List<TrainingSession> trainingSessions = serviceProviderService.viewMyTrainingSessions();
+//        String baseUrl = "src/main/resources/static/images/ads";
+//
+//        for (TrainingSession session : trainingSessions) {
+//            String imageFilenames = session.getTrainingimage(); // Assuming you have a method to get the image filenames
+//            if (imageFilenames != null && !imageFilenames.isEmpty()) {
+//                // Split the comma-separated filenames
+//                String[] filenames = imageFilenames.split(",");
+//
+//                // Generate full image URLs and set them in the TrainingSession object
+//                List<String> imageUrls = Arrays.stream(filenames)
+//                        .map(filename -> baseUrl + filename.trim())
+//                        .collect(Collectors.toList());
+//
+//                session.setTrainingImageUrls(imageUrls); // Assuming you have a setter for image URLs
+//            }
+//        }
+//
+//        return trainingSessions;
+//    }
+
+
+//    @GetMapping("auth/viewTrainingSessions/{id}")
+//    public TrainingSession viewATrainingSession(@PathVariable Long id) {
+//        return serviceProviderService.viewATrainingSession(id);
+//    }
 
     @GetMapping("auth/viewTrainingSessions/{id}")
-    public TrainingSession viewATrainingSession(@PathVariable Long id) {return serviceProviderService.viewATrainingSession(id);}
+    public TrainingSessionDTO viewATrainingSession(@PathVariable Long id) {
+        TrainingSession trainingSession = serviceProviderService.viewATrainingSession(id);
+
+        TrainingSessionDTO trainingSessionDTO = new TrainingSessionDTO();
+        trainingSessionDTO.setTrainingsessions(trainingSession);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        List<byte[]> trainingsessionimages = new ArrayList<>();
+
+        try {
+            List<byte[]> trainingsessionImages = getTrainingImages(id);
+            for (byte[] trainingsessionImage : trainingsessionImages) {
+                trainingsessionimages.add(trainingsessionImage);
+            }
+
+            ImagesDTO image = new ImagesDTO();
+            image.setId(id);
+            image.setImages(trainingsessionimages);
+            imagesDTO.add(image);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        trainingSessionDTO.setTrainingsessionimages(imagesDTO);
+
+        return trainingSessionDTO;
+    }
 
 
     @PostMapping("auth/registerTrainingSession/{id}")
@@ -552,6 +581,24 @@ public class ServiceProvidersController {
 
         return savedServiceProviderServicesList;
 
+    }
+
+    //IMAGES
+    @GetMapping("auth/getTrainingImages/{id}")
+    public List<byte[]> getTrainingImages(@PathVariable Long id) throws IOException {
+        String imageDirectory = "src/main/resources/static/images/trainingsessions";
+
+        String[] imageNames = serviceProviderService.getTrainingImages(id).split(",");
+//        imageNames = adImages.split(",");
+        List<byte[]> imageBytesList = new ArrayList<>();
+
+        for (String imageName : imageNames) {
+            byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
+            imageBytesList.add(imageBytes);
+        }
+        System.out.println(imageBytesList);
+
+        return imageBytesList;
     }
 
 }

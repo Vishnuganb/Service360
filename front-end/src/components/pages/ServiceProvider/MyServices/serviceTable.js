@@ -1,6 +1,8 @@
 import React from 'react'
 import { Table } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import '../../../../style/ServiceProvider/MyServices.css';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -20,6 +22,7 @@ function ServiceTable() {
   const [showEnableModal, setShowEnableModal] = useState(false);
   const [showDisableModal, setShowDisableModal] = useState(false);
 
+  const [myServicesCount, setMyServicesCount]= useState(0);
 
   // GETTING LOGGED IN SERVICEPROVIDER ID
 
@@ -49,6 +52,8 @@ function ServiceTable() {
     axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
         console.log(res.data);
         setMyservicesData(res.data);
+        const numberOfRows = res.data.length;
+        setMyServicesCount(numberOfRows);
     });
 
   }, []);
@@ -84,13 +89,52 @@ function ServiceTable() {
   };
   
 
-  const handleEditService = (service) => {
+  const handleEditService = (event) => {
     // Implement your edit functionality here
     // You can open a modal or navigate to an edit page, for example.
   };
 
   return (
     <div>
+      <div className='ms-lg-2 me-lg-2'>
+      <div className="my-serivice-head-container">
+        <Row>
+          <Col className="my-serivice-head-container-col-1">
+            <span
+              className="my-serivice-head-container-col-1-span ms-2"
+              style={{ fontWeight: "600" }}
+            >
+              My Services
+            </span>
+            <span
+              className="my-serivice-head-container-col-1-no"
+              style={{
+                backgroundColor: "none",
+                border: "2px solid black",
+                color: "black",
+                borderRadius: "10px",
+              }}
+            >
+              {myServicesCount}
+            </span>
+          </Col>
+          <Col className="my-serivice-head-container-col-2">
+            <Link to="/ServiceProvider/AddNewServices">
+              <Button
+                className="btn-ServiceProvider-2 my-serivice-head-container-col-2-btn me-3"
+                style={{
+                  borderRadius: "10px",
+                }}
+              >
+                <i className="fas fa-plus pe-2"></i>
+                Add Services
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+      </div>
+    </div>
+
       {/* Table*/}
       <div className="mt-4 d-flex flex-column w-100" style={{ width: '100%' }}>
         <Container className="table-responsive">

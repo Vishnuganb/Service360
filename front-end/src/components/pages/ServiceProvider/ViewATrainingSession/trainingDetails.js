@@ -1,17 +1,13 @@
 import React from "react";
-// import powerImage from '../../../../assets/images/ServiceProvider/power.jpg';
-import sessionImage from '../../../../assets/images/ServiceProvider/masonry2.jpg';
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios, { all } from "axios";
 import Carousel from 'react-bootstrap/Carousel';
-import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
-import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
-import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
-import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+
 
 function TrainingSession() {
     const [viewTrainingSessionData, setviewTrainingSessionData] = useState(null);
@@ -23,11 +19,8 @@ function TrainingSession() {
 
     const [isChecked, setIsChecked] = useState(false);
 
-    const Trainingimages = [
-        electrical,
-        plumping1,
-        carpentry1,
-    ]
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const { id } = useParams();
     const trainingsessionId = parseInt(id, 10);
@@ -61,7 +54,7 @@ function TrainingSession() {
                     mobilenumber: "",
                 });
 
-                alert("Registration successful!");
+                showAlertWithMessage("Registration successful!, Check your email for more details.");
     
                 // Update singleJobReplies with the newly added comment
                 // setSingleJobReplies([...singleJobReplies, response.data]);
@@ -133,6 +126,16 @@ function TrainingSession() {
     });
 
     console.log(allImages);
+
+    const showAlertWithMessage = (message) => {
+        setAlertMessage(message);
+        setShowAlert(true);
+
+        setTimeout(() => {
+            setShowAlert(false);
+          }, 7000);
+      };
+    
 
     return (
         <div className="ms-lg-4 me-lg-4">
@@ -247,6 +250,20 @@ function TrainingSession() {
                 </div>
             </Form>
 
+            <Alert
+                show={showAlert}
+                    variant="info"
+                    onClose={() => setShowAlert(false)}
+                    dismissible
+                    style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999, // Adjust the z-index as needed
+                    }}
+                >
+                {alertMessage}
+            </Alert>   
         </div>
     );
 }

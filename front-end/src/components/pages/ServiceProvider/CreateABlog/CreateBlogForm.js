@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from "react";
+import Alert from 'react-bootstrap/Alert';
 
 const subscribedJobCategories = [
     'Masonry',
@@ -19,29 +20,30 @@ function CreateBlogForm() {
         blogdescription: "",
     });
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState(''); 
+
+    const [alertMessageRed, setAlertMessageRed] = useState(''); 
+    const [showAlertRed, setShowAlertRed] = useState(false);
+
     const [selectedFiles, setSelectedFiles] = useState([]);
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+    console.log(userData.userid);
 
     const handleFileInputChange = (e) => {
         const selectedFilesArray = Array.from(e.target.files);
 
             
         if (selectedFilesArray.length + selectedFiles.length > 5) {
-            alert('You can select a maximum of 5 images.');
+            handleShowAlertRed('you can select a maximum of 5 images');
             return;
         }
 
         const selectedFileNames = selectedFilesArray.map((file) => file);
 
         setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...selectedFileNames]);
-
-        // Join the selected image file names into a comma-separated string
-        // const blogImages = selectedFileNames.join(', ');
-
-        // Update the trainingimage field in trainingSessionFormData
-        // setBlogFormData({
-        //     ...blogFormData,
-        //     blogimages: blogImages,
-        // });
     };
 
     const handleRemoveFile = (indexToRemove) => {
@@ -73,6 +75,8 @@ function CreateBlogForm() {
         selectedFiles.map((file) => {
             formData.append("images", file);
         });
+
+        formData.append("serviceproviderid", userData.userid);
      
         axios
             .post('http://localhost:8080/auth/createBlog', formData,{
@@ -82,13 +86,44 @@ function CreateBlogForm() {
             })
             .then((response) => {
                 console.log('Blog created successfully:', response.data);
-                window.location.reload();
+
+            // Reset the form data to its initial empty values
+            setBlogFormData({
+                servicename: "",
+                blogtitle: "",
+                blogdescription: "",
+            });
+
+            // Clear the selected files
+            setSelectedFiles([]);
+
+            handleShowAlert('your blog has been created successfully!');
+
             })
             .catch((error) => {
                 console.error('Error creating blog:', error);
             });
     };
 
+    const handleShowAlert = (message) => {
+        setAlertMessage(message);
+        setShowAlert(true);
+    
+        // Automatically hide the alert after 5 seconds
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3500); // 3500 milliseconds (5 seconds)
+    };
+
+    const handleShowAlertRed = (message) => {
+        setAlertMessageRed(message);
+        setShowAlertRed(true);
+    
+        // Automatically hide the alert after 5 seconds
+        setTimeout(() => {
+          setShowAlertRed(false);
+        }, 3500); // 3500 milliseconds (5 seconds)
+    };
 
     return (
         <div className="ms-lg-4 me-lg-4">
@@ -161,6 +196,36 @@ function CreateBlogForm() {
                     <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>
+
+            
+            <Alert
+                show={showAlertRed}
+                    variant="danger"
+                    onClose={() => setShowAlertRed(false)}
+                    dismissible
+                    style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999, // Adjust the z-index as needed
+                    }}
+                >
+                {alertMessageRed}
+            </Alert>   
+            <Alert
+                show={showAlert}
+                    variant="info"
+                    onClose={() => setShowAlert(false)}
+                    dismissible
+                    style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999, // Adjust the z-index as needed
+                    }}
+                >
+                {alertMessage}
+            </Alert>  
         </div>
     );
 }

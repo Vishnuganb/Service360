@@ -440,13 +440,13 @@ public class ServiceProvidersController {
     //BLOGS
     @PostMapping("auth/createBlog")
     public Blogs createBlog(@RequestParam("blogtitle") String blogtitle,
+                            @RequestParam("serviceproviderid") Long serviceproviderid,
                             @RequestParam("blogdescription") String blogdescription,
                             @RequestParam("servicename") String servicename,
                             @RequestParam("images") MultipartFile[] imageFiles){
 
-        // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        //FIND FOR LOGGED IN SP
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         String uploadDirectory = "src/main/resources/static/images/blogs";
@@ -580,8 +580,47 @@ public class ServiceProvidersController {
         ServiceProviderFiles savedServiceProviderFiles = serviceProviderFilesRepository.save(serviceProviderFiles);
 
         return savedServiceProviderServicesList;
+    }
+
+    @PostMapping("auth/addQualifcationCertificates")
+    public ServiceProviderFiles AddQualificationCertificates(@RequestParam("files") MultipartFile[] qualificationFiles,
+                                                          @RequestParam("serviceproviderid") Long serviceproviderid) {
+        String uploadDirectory = "src/main/resources/static/images/serviceproviderfiles";
+
+        //ADD USER
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
+
+        // Handle qualification files
+        List<String> qualificationFileNames = new ArrayList<>();
+
+        for (MultipartFile qualificationFile : qualificationFiles) {
+            if (qualificationFile != null && !qualificationFile.isEmpty()) {
+                try {
+                    String savedQualificationFileName = imageService.saveImageToStorageServiceProvider(uploadDirectory, qualificationFile);
+                    qualificationFileNames.add(savedQualificationFileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        //Concatenate qualification file names as a comma-separated string
+        String ServicesqualificationFileNames = String.join(",", qualificationFileNames);
+
+        //SERVICE PROVIDER FILES
+        ServiceProviderFiles serviceProviderFiles = new ServiceProviderFiles();
+        serviceProviderFiles.setFileName(ServicesqualificationFileNames);
+        serviceProviderFiles.setUsers(serviceProvider);
+
+        // Finally, save the serviceProviderFiles entity
+        ServiceProviderFiles savedServiceProviderFiles = serviceProviderFilesRepository.save(serviceProviderFiles);
+
+        return savedServiceProviderFiles;
 
     }
+
+
 
     //IMAGES
     @GetMapping("auth/getTrainingImages/{id}")

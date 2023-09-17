@@ -8,20 +8,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
-import electrical from '../../../../assets/images/ServiceProvider/electric.jpg';
-import masonry2 from '../../../../assets/images/ServiceProvider/masonry2.jpg';
-import plumping1 from '../../../../assets/images/ServiceProvider/plumping.jpg';
-import carpentry1 from '../../../../assets/images/ServiceProvider/carpentry.jpg';
 
 function MyTrainingSessions() {
 
   const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
-
-  const Trainingimages = [
-    electrical,
-    plumping1,
-    carpentry1,
-  ]
 
   const [show, setShow] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -170,15 +160,14 @@ function MyTrainingSessions() {
   const displayedSessions = filteredSessions.slice(startIndex, endIndex);
 
   const handleShowAlert = (message) => {
-    setAlertMessage(message);
-    setShowAlert(true);
+      setAlertMessage(message);
+      setShowAlert(true);
 
-    // Automatically hide the alert after 5 seconds
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 5000); // 5000 milliseconds (5 seconds)
+      // Automatically hide the alert after 5 seconds
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 5000); // 5000 milliseconds (5 seconds)
   };
-  
       
   return (
     <div>

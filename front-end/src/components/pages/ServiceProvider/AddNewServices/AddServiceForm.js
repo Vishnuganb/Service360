@@ -36,15 +36,6 @@ function AddServiceForm() {
 
     const [userDetail, setUserDetail] = useState([]);
 
-    const showAlertWithMessage = (message) => {
-        setAlertMessage(message);
-        setShowAlert(true);
-
-        setTimeout(() => {
-            setShowAlert(false);
-          }, 2000);
-      };
-    
     // const handleInputChange = (e) => {
     //     const { name, value } = e.target;
     //     setServiceFormData({
@@ -92,7 +83,7 @@ function AddServiceForm() {
         const selectedFilesArray = Array.from(e.target.files);
     
         if (selectedFilesArray.length + selectedFiles.length > 5) {
-            alert('You can select a maximum of 5 images.');
+            showAlertWithMessage('You can select a maximum of 5 files.')
             return;
         }
 
@@ -207,6 +198,16 @@ function AddServiceForm() {
             window.location.reload();
     };
 
+    
+    const showAlertWithMessage = (message) => {
+        setAlertMessage(message);
+        setShowAlert(true);
+
+        setTimeout(() => {
+            setShowAlert(false);
+          }, 2000);
+      };
+    
     return (
         <div className="AddServiceForm-container ms-lg-4 me-lg-5">
             <Row className="AddServiceForm-Head">

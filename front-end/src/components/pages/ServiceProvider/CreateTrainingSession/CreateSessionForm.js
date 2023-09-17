@@ -4,13 +4,13 @@ import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from "react";
+import Alert from 'react-bootstrap/Alert';
 
 const subscribedJobCategories = [
     'Masonry',
     'Plumbing',
     'Carpentry',
 ];
-
 
 function CreateSessionForm() {
 
@@ -30,11 +30,14 @@ function CreateSessionForm() {
     
     const [selectedFiles, setSelectedFiles] = useState([]);
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');  
+
     const handleFileInputChange = (e) => {
         const selectedFilesArray = Array.from(e.target.files);
     
         if (selectedFilesArray.length + selectedFiles.length > 3) {
-            alert('You can select a maximum of 3 images.');
+            showAlertWithMessage('You can select a maximum of 3 images.');
             return;
         }
 
@@ -110,6 +113,15 @@ function CreateSessionForm() {
         });
     };
     
+    const showAlertWithMessage = (message) => {
+        setAlertMessage(message);
+        setShowAlert(true);
+    
+        // Automatically hide the alert after 5 seconds
+        setTimeout(() => {
+          setShowAlert(false);
+        },3500); // 3500 milliseconds (5 seconds)
+    };
 
     return (
         <div className="ms-lg-4 me-lg-4">
@@ -259,6 +271,21 @@ function CreateSessionForm() {
                     <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>
+
+            <Alert
+                show={showAlert}
+                    variant="danger"
+                    onClose={() => setShowAlert(false)}
+                    dismissible
+                    style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999, // Adjust the z-index as needed
+                    }}
+                >
+                {alertMessage}
+            </Alert>   
         </div>
     );
 }

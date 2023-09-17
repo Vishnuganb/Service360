@@ -7,14 +7,17 @@ import '../../../../style/ServiceProvider/MyServices.css';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { Container } from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
 import { useEffect } from "react";
 import axios from "axios";
 
 function ServiceTable() {
   const [show, setShow] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+
   const [myservicesData, setMyservicesData] = useState([]);
+
+  const [selectedFiles, setSelectedFiles] = useState([]);
   
   const [serviceToEnable, setServiceToEnable] = useState(null);
   const [serviceToDisable, setServiceToDisable] = useState(null);
@@ -22,12 +25,44 @@ function ServiceTable() {
   const [showEnableModal, setShowEnableModal] = useState(false);
   const [showDisableModal, setShowDisableModal] = useState(false);
 
+  const [showEditModal, setShowEditModal] = useState(false);
+
   const [myServicesCount, setMyServicesCount]= useState(0);
+  
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');  
+
+  const handleClose = () => setShowEditModal(false);
+
+  const handleShow = (rowData) => {
+    setSelectedRow(rowData);
+    setShowEditModal(true); // Show the modal
+  };
 
   // GETTING LOGGED IN SERVICEPROVIDER ID
 
   const response = sessionStorage.getItem('authenticatedUser');
   const userData = JSON.parse(response);
+
+  const handleFileInputChange = (e) => {
+    const selectedFilesArray = Array.from(e.target.files);
+
+        
+    if (selectedFilesArray.length + selectedFiles.length > 5) {
+      handleShowAlert('You can select a maximum of 5 documents') 
+      return;
+    }
+
+    const selectedFileNames = selectedFilesArray.map((file) => file);
+
+    setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...selectedFileNames]);
+  };
+
+  const handleRemoveFile = (indexToRemove) => {
+      setSelectedFiles((prevSelectedFiles) =>
+          prevSelectedFiles.filter((_, index) => index !== indexToRemove)
+      );
+  };
 
   useEffect(() => {
     const serverLink = 'http://localhost:8080';
@@ -87,11 +122,47 @@ function ServiceTable() {
         setShowDisableModal(false);
     }
   };
-  
 
-  const handleEditService = (event) => {
-    // Implement your edit functionality here
-    // You can open a modal or navigate to an edit page, for example.
+  const handleAddQualificationFiles = (event) => {
+    event.preventDefault();
+
+    // Create a FormData object to send the data
+    const formData = new FormData();
+
+    // Append each selected file to the FormData object    
+    selectedFiles.map((file) => {
+        formData.append("files", file);
+    });
+
+    formData.append("serviceproviderid", userData.userid);
+ 
+    axios
+        .post('http://localhost:8080/auth/addQualifcationCertificates', formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+            console.log('Files Added successfully:', response.data);
+
+        // Clear the selected files
+        setSelectedFiles([]);
+        setShowEditModal(false);
+        handleShowAlert('your certificates and achievements added succesfully')     
+        })
+        .catch((error) => {
+            console.error('Error creating blog:', error);
+        });
+  };
+
+  const handleShowAlert = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
+
+    // Automatically hide the alert after 5 seconds
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 4000); // 5000 milliseconds (5 seconds)
   };
 
   return (
@@ -164,10 +235,6 @@ function ServiceTable() {
                               setShowDisableModal(true);
                             }}
                           ></i>
-                          <i
-                            className="fas fa-pen-square fs-2"
-                            onClick={() => handleEditService(service.serviceProviderServicesId)}
-                          ></i>
                       </>
                       ) : (
                       <>
@@ -178,12 +245,14 @@ function ServiceTable() {
                               setShowEnableModal(true);
                             }}
                           ></i>
-                          <i
-                            className="fas fa-pen-square fs-2"
-                            onClick={() => handleEditService(service.serviceProviderServicesId)}
-                          ></i>
                       </>
                     )}
+                      <i
+                          className="fas fa-pen-square fs-2"
+                          onClick={() => {
+                            handleShow(service);
+                          }}
+                      ></i>
                   </td>
                 </tr>
               ))}
@@ -194,7 +263,7 @@ function ServiceTable() {
 
       {/* Modal for enabling a service */}
       <Modal show={showEnableModal} onHide={() => setShowEnableModal(false)} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Enable Service</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to enable this service?</Modal.Body>
@@ -210,7 +279,7 @@ function ServiceTable() {
 
       {/* Modal for disabling a service */}
       <Modal show={showDisableModal} onHide={() => setShowDisableModal(false)} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Disable Service</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to disable this service?</Modal.Body>
@@ -224,6 +293,64 @@ function ServiceTable() {
         </Modal.Footer>
       </Modal>
 
+      <Modal show={showEditModal} onHide={() => {setShowEditModal(false);setSelectedFiles([]);}} centered>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+          <Modal.Title>Add Qualification Certificate(s)</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Service</Form.Label>
+              <Form.Control className='mb-2' type="text" value={selectedRow ? selectedRow.serviceName : ''} readOnly />
+            </Form.Group>
+              
+            <Form.Group className="mb-3" controlId="formBasicFiles">
+                <Form.Label>Upload Relevant Files</Form.Label><Form.Text className="text-muted"></Form.Text><br />
+                <Button className="btn-ServiceProvider-1" onClick={() => document.getElementById('fileInput').click()}>Select Files</Button>
+                <input
+                    type="file"
+                    multiple
+                    id="fileInput"
+                    style={{ display: 'none' }}
+                    onChange={handleFileInputChange}
+                />
+                <div className="selected-images">
+                    {selectedFiles.map((file, index) => (
+                        <div key={index} className="selected-image">
+                            <span>{file.name}</span>
+                            <Button variant="link" onClick={() => handleRemoveFile(index)}><i class="bi bi-x bi-lg" style={{ color: 'black' }}></i></Button>
+                        </div>
+                    ))}
+                </div>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button className='btn-ServiceProvider-2' onClick={() => {setShowEditModal(false);setSelectedFiles([]);}}>
+            Cancel
+          </Button>
+          <Button className='btn-ServiceProvider-1' onClick={handleAddQualificationFiles}>
+            Upload
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Alert
+        show={showAlert}
+        variant="info"
+        onClose={() => setShowAlert(false)}
+        dismissible
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 9999, // Adjust the z-index as needed
+        }}
+      >
+        {alertMessage}
+      </Alert>     
 
     </div>
   );

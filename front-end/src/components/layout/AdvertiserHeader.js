@@ -68,7 +68,6 @@ function AdvertiserHeader() {
             <NavDropdown title={userDetail.firstname} className="fw-bold" id="basic-nav-dropdown">
               <NavDropdown.Item href="#" className="fw-bold no-hover" onClick={() => setShowEditProfile(true)}>View Profile</NavDropdown.Item>
               <NavDropdown.Divider />
-              <AdvertiserEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)}/>
               <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>
             </NavDropdown>
             <AdvertiserEditProfile show={showEditProfile} onHide={() => setShowEditProfile(false)} />

@@ -102,6 +102,8 @@ import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
 import ToDoList from './components/pages/ServiceProvider/CreateToDo.js';
 import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
 import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
+
+import ActivateCustomer from './ContextFiles/ActivateCustomer.js';
 import ActivateUser from './ContextFiles/ActivateUser.js';
 
 const router = createBrowserRouter(
@@ -214,7 +216,8 @@ const router = createBrowserRouter(
         <Route path="CreateQuotation" element={<CreateQuotation />} />
       </Route>
 
-      <Route path='/activateUser' element={<ActivateUser />} />
+      <Route path='/activateCustomer' element={<ActivateCustomer />} />
+      <Route path= '/activateUser' element={<ActivateUser />} />
       <Route path="*" element={<Layout404> {" "}<PageNotFound /></Layout404>}
       />
     </>

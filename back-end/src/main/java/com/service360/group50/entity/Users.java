@@ -67,8 +67,11 @@ public class Users implements UserDetails {
     @Column(columnDefinition = "TEXT")
     private String profilePic;
 
-    @Column( name = "isActive", nullable = false)
-    private boolean isactive = true;
+    @Column( name = "isActive")
+    private boolean isactive;
+
+    @Column( columnDefinition = "TEXT")
+    private String reason;
 
 //    @OneToMany(mappedBy = "users")
 //    private List<Complaints> complaints;
@@ -88,7 +91,7 @@ public class Users implements UserDetails {
     protected void onCreate() {
         registrationdate = LocalDate.now();
         isactive = true;
-        status = "pending";
+        status = "Pending";
         locked = false;
         enabled = false;
     }

@@ -32,6 +32,4 @@ public class Advertiser {
     @JoinColumn(name = "userid", referencedColumnName = "userid")
     private Users users;
 
-    @OneToMany(mappedBy = "advertiser")
-    private List<AdvertiserFiles> advertiserFiles;
 }

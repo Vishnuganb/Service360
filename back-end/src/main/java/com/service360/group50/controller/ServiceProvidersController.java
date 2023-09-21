@@ -344,5 +344,13 @@ public class ServiceProvidersController {
         return serviceProviderService.viewServiceProviderBlogs();
     }
 
+    @PostMapping("auth/addServiceProviderReview")
+    public SystemReview addServiceProviderReview(@RequestBody SystemReview systemReview) {
+        return serviceProviderService.addServiceProviderReview(systemReview);
+    }
 
+    @GetMapping("auth/viewServiceProviderReview")
+    public List<SystemReview>viewSystemReview(){
+        return serviceProviderService.viewServiceProviderReview();
+    }
 }

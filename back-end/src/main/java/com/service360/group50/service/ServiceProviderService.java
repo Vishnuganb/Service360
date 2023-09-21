@@ -6,6 +6,7 @@ import com.service360.group50.entity.*;
 import com.service360.group50.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +39,8 @@ public class ServiceProviderService {
     private JobRepliesRepository jobRepliesRepository;
     @Autowired
     private TrainingSessionRegistrationRepository trainingSessionRegistrationRepository;
+    @Autowired
+    private SystemReviewRepository systemReviewRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -277,6 +280,15 @@ public class ServiceProviderService {
         List<Blogs> BlogsList = new ArrayList<>();
         blogsRepository.findAll().forEach(BlogsList::add);
         return BlogsList;
+    }
+    public SystemReview addServiceProviderReview( SystemReview systemReview) {
+        return systemReviewRepository.save(systemReview);
+    }
+
+    public List <SystemReview> viewServiceProviderReview(){
+      List<SystemReview> ReviewList =new ArrayList<>();
+      systemReviewRepository.findAll().forEach(ReviewList::add);
+      return ReviewList;
     }
 
 }

@@ -193,6 +193,10 @@ public class LoginService {
 
                 userRepository.save(serviceProviderUser);
 
+                serviceProviderUser.setLocked ( true );
+
+                userRepository.save(serviceProviderUser);
+
                 // Create a Set to keep track of services associated with each category
                 Map<String, Set<String>> categoryServiceMap = new HashMap<> ();
 

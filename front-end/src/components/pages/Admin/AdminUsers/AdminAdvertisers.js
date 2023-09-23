@@ -18,7 +18,7 @@ const StyledModalFooter = styled(Modal.Footer)`
         justify-content: flex-end;
 `;
 
-const serverLink = 'http://localhost:8080'
+const serverLink = 'http://localhost:8080';
 
 function AdminAdvertisers() {
 

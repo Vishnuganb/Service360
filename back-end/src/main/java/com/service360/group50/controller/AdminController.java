@@ -1,15 +1,20 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.AdvertiserDTO;
-import com.service360.group50.entity.Advertiser;
-import com.service360.group50.entity.Role;
-import com.service360.group50.entity.Users;
+import com.service360.group50.dto.ServiceCategoryDTO;
+import com.service360.group50.dto.ServiceProviderDetailsDTO;
+import com.service360.group50.dto.ServiceProviderFilesDTO;
+import com.service360.group50.entity.*;
+import com.service360.group50.repo.ServiceProviderFilesRepository;
+import com.service360.group50.repo.ServiceProviderServicesRepository;
 import com.service360.group50.service.CustomerService;
 import com.service360.group50.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.service360.group50.entity.Role.CUSTOMER;
@@ -22,12 +27,76 @@ public class AdminController {
 
     private final CustomerService customerService;
     private final UserService userService;
+    private final ServiceProviderServicesRepository serviceProviderServicesRepository;
+    private final ServiceProviderFilesRepository serviceProviderFilesRepository;
 
     @GetMapping("/getAllCustomers")
     public List<Users> getAllCustomers() {
-        Role targetRole = Role.CUSTOMER; // Assuming Role is an enum with a CUSTOMER value
+        Role targetRole = Role.CUSTOMER;
         return userService.getAllUsers(targetRole);
     }
+
+    @GetMapping("/getAllServiceProvidersWithDetails")
+    @Transactional
+    public List<ServiceProviderDetailsDTO> getAllServiceProvidersWithDetails() {
+        Role targetRole = Role.SERVICEPROVIDER;
+        List<Users> serviceProviders = userService.getAllUsers(targetRole);
+
+        List<ServiceProviderDetailsDTO> serviceProviderDetailsList = new ArrayList<>();
+
+        for (Users serviceProvider : serviceProviders) {
+            ServiceProviderDetailsDTO serviceProviderDetailsDTO = new ServiceProviderDetailsDTO();
+
+            serviceProviderDetailsDTO.setUserid(serviceProvider.getUserid());
+            serviceProviderDetailsDTO.setFirstname(serviceProvider.getFirstname());
+            serviceProviderDetailsDTO.setLastname(serviceProvider.getLastname());
+            serviceProviderDetailsDTO.setEmail(serviceProvider.getEmail());
+            serviceProviderDetailsDTO.setNic(serviceProvider.getNic());
+            serviceProviderDetailsDTO.setAddress(serviceProvider.getAddress());
+            serviceProviderDetailsDTO.setPhonenumber(serviceProvider.getPhonenumber());
+            serviceProviderDetailsDTO.setStatus(serviceProvider.getStatus());
+            serviceProviderDetailsDTO.setProfilePic(serviceProvider.getProfilePic());
+            serviceProviderDetailsDTO.setLocked(serviceProvider.getLocked());
+            serviceProviderDetailsDTO.setEnabled(serviceProvider.isEnabled());
+            serviceProviderDetailsDTO.setRegistrationdate(serviceProvider.getRegistrationdate());
+
+            List<ServiceProviderServices> serviceProviderServices = serviceProviderServicesRepository.findByUsers(serviceProvider);
+
+            List<ServiceCategoryDTO> serviceCategoryDTOs = new ArrayList<>();
+            for (ServiceProviderServices service : serviceProviderServices) {
+                ServiceCategory serviceCategory = service.getServiceCategory();
+                Services serviceEntity = service.getServices();
+                ServiceCategoryDTO serviceCategoryDTO = new ServiceCategoryDTO();
+                serviceCategoryDTO.setCategoryName(serviceCategory.getServiceCategoryName());
+
+                serviceCategoryDTO.setServices( Collections.singletonList(serviceEntity.getServiceName()));
+
+                serviceCategoryDTOs.add(serviceCategoryDTO);
+            }
+
+            serviceProviderDetailsDTO.setServiceCategories(serviceCategoryDTOs);
+
+            List<ServiceProviderFiles> serviceProviderFiles = serviceProviderFilesRepository.findByUsers(serviceProvider);
+
+            List<ServiceProviderFilesDTO> serviceProviderFilesDTOs = new ArrayList<>();
+            for (ServiceProviderFiles file : serviceProviderFiles) {
+                ServiceProviderFilesDTO fileDTO = new ServiceProviderFilesDTO();
+                // Populate the ServiceProviderFilesDTO here if needed
+                 fileDTO.setFileName(file.getFileName());
+                 fileDTO.setContentType (file.getContentType ());
+                 fileDTO.setData (file.getData ());
+                // fileDTO.setFileSize(file.getFileSize());
+                serviceProviderFilesDTOs.add(fileDTO);
+            }
+
+            serviceProviderDetailsDTO.setFiles(serviceProviderFilesDTOs);
+
+            serviceProviderDetailsList.add(serviceProviderDetailsDTO);
+        }
+
+        return serviceProviderDetailsList;
+    }
+
 
     @GetMapping("/getAllAdvertisers")
     public List<AdvertiserDTO> getAllAdvertisers() {
@@ -64,13 +133,6 @@ public class AdminController {
 
         return response;
     }
-
-
-
-//    public List<Users> getAllServiceProviders() {
-//        String targetRole = "SERVICEPROVIDER";
-//        return userService.getAllUsers(targetRole);
-//    }
 
     @PutMapping("/updateCustomer")
     public Users updateCustomer(

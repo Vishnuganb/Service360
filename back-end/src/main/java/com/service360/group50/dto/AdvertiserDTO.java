@@ -3,6 +3,7 @@ package com.service360.group50.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class AdvertiserDTO {
 
@@ -18,13 +19,16 @@ public class AdvertiserDTO {
     private boolean locked;
     private boolean isactive;
     private String profilePic;
-    private String shopname; // Add shopname field
-    private String shopaddress; // Add shopaddress field
+    private String shopname;
+    private String shopaddress;
+    private List<AdvertiserFilesDTO> files;
 
     public AdvertiserDTO() {
     }
 
-    public AdvertiserDTO(Long userid, String firstname, String lastname, String email, String nic, String phonenumber, String address, LocalDate registrationdate, String status, boolean locked, boolean isactive, String profilePic, String shopname, String shopaddress) {
+    public AdvertiserDTO(Long userid, String firstname, String lastname, String email, String nic, String phonenumber,
+                         String address, LocalDate registrationdate, String status, boolean locked, boolean isactive,
+                         String profilePic, String shopname, String shopaddress, List<AdvertiserFilesDTO> files) {
         this.userid = userid;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -39,6 +43,7 @@ public class AdvertiserDTO {
         this.profilePic = profilePic;
         this.shopname = shopname;
         this.shopaddress = shopaddress;
+        this.files = files;
     }
 
     public Long getUserid() {
@@ -151,6 +156,14 @@ public class AdvertiserDTO {
 
     public void setShopaddress(String shopaddress) {
         this.shopaddress = shopaddress;
+    }
+
+    public List<AdvertiserFilesDTO> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<AdvertiserFilesDTO> files) {
+        this.files = files;
     }
 
 }

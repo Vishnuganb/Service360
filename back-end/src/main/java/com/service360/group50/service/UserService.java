@@ -2,8 +2,10 @@ package com.service360.group50.service;
 
 import com.service360.group50.dto.UsersDTO;
 import com.service360.group50.entity.Advertiser;
+import com.service360.group50.entity.AdvertiserFiles;
 import com.service360.group50.entity.Role;
 import com.service360.group50.entity.Users;
+import com.service360.group50.repo.AdvertiserFileRepository;
 import com.service360.group50.repo.AdvertiserRepository;
 import com.service360.group50.repo.UserRepository;
 import jakarta.transaction.Transactional;
@@ -452,5 +454,6 @@ public class UserService {
                 "\n" +
                 "</div></div>";
     }
+
 
 }

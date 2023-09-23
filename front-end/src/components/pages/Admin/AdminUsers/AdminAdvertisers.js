@@ -473,16 +473,19 @@ function AdminAdvertisers() {
                                         <h6 className="text-center">Certificates And Documents</h6>
                                     </div>
                                     <ul className="list-unstyled">
-                                        {/* {data.selectedAdvertiser.uploadedFiles.map((file, index) => (
+                                        {data.selectedAdvertiser.files.map((file, index) => (
                                             <li key={index}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
                                                     <i className="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
-                                                    <a href={file.url} download className="text-decoration-none text-dark fw-bold">
+                                                    <a
+                                                        href={`data:${file.contentType};base64,${file.data}`}
+                                                        download={file.fileName}
+                                                        className="text-decoration-none text-dark fw-bold">
                                                         {file.fileName}
                                                     </a>
                                                 </div>
                                             </li>
-                                        ))} */}
+                                        ))}
                                     </ul>
                                 </div>
                             </div>

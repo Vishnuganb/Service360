@@ -1,10 +1,8 @@
 package com.service360.group50.controller;
 
-import com.service360.group50.dto.AdvertiserDTO;
-import com.service360.group50.dto.ServiceCategoryDTO;
-import com.service360.group50.dto.ServiceProviderDetailsDTO;
-import com.service360.group50.dto.ServiceProviderFilesDTO;
+import com.service360.group50.dto.*;
 import com.service360.group50.entity.*;
+import com.service360.group50.repo.AdvertiserFileRepository;
 import com.service360.group50.repo.ServiceProviderFilesRepository;
 import com.service360.group50.repo.ServiceProviderServicesRepository;
 import com.service360.group50.service.CustomerService;
@@ -29,6 +27,7 @@ public class AdminController {
     private final UserService userService;
     private final ServiceProviderServicesRepository serviceProviderServicesRepository;
     private final ServiceProviderFilesRepository serviceProviderFilesRepository;
+    private final AdvertiserFileRepository advertiserFileRepository;
 
     @GetMapping("/getAllCustomers")
     public List<Users> getAllCustomers() {
@@ -99,6 +98,7 @@ public class AdminController {
 
 
     @GetMapping("/getAllAdvertisers")
+    @Transactional
     public List<AdvertiserDTO> getAllAdvertisers() {
         Role targetRole = Role.ADVERTISER;
         List<Users> advertiserUsers = userService.getAllUsers(targetRole);
@@ -115,6 +115,7 @@ public class AdminController {
 
     private AdvertiserDTO convertToAdvertiserResponse(Users user) {
         Advertiser advertiser = userService.getAdvertiserByUser(user);
+
         AdvertiserDTO response = new AdvertiserDTO();
         response.setUserid(user.getUserid());
         response.setFirstname(user.getFirstname());
@@ -130,6 +131,19 @@ public class AdminController {
         response.setIsactive ( user.isIsactive () );
         response.setShopname(advertiser.getShopname());
         response.setShopaddress(advertiser.getShopaddress());
+
+        List<AdvertiserFiles> advertiserFiles = advertiserFileRepository.findByUsers ( user );
+        List<AdvertiserFilesDTO> advertiserFilesDTOs = new ArrayList<>();
+
+        for (AdvertiserFiles file : advertiserFiles) {
+            AdvertiserFilesDTO fileDTO = new AdvertiserFilesDTO();
+            fileDTO.setFileName(file.getFileName());
+            fileDTO.setContentType (file.getContentType ());
+            fileDTO.setData (file.getData ());
+            advertiserFilesDTOs.add(fileDTO);
+        }
+
+        response.setFiles(advertiserFilesDTOs);
 
         return response;
     }

@@ -36,17 +36,36 @@ function MyProjectsBody(){
         "Tiles Fitting",
     ];
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/auth/viewMyJobs').then((res) => {
+    // GETTING LOGGED IN SERVICEPROVIDER ID
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
+    const fetchData = () => {
+        axios.get('http://localhost:8080/auth/viewMyJobs', {
+            params: {
+                serviceproviderid: userData.userid
+            }
+        })
+        .then((res) => {
             console.log(res.data);
             setMyProjectsJobsData(res.data);
         });
 
-        axios.get('http://localhost:8080/auth/viewMyVacancies').then((res) => {
+        axios.get('http://localhost:8080/auth/viewMyVacancies',{
+            params: {
+                serviceproviderid: userData.userid
+            }
+        })
+        .then((res) => {
             console.log(res.data);
             setMyProjectsVacanciesData(res.data);
         });
-    },[]);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -55,59 +74,64 @@ function MyProjectsBody(){
     if (!MyProjectsJobsData || !MyProjectsVacanciesData) return 'No jobs found!';
 
     const handleAcceptJob = (jobId, isQuotation) => {
-        const newStatus = isQuotation ? 'pending' : 'ongoing';
-        const apiUrl = isQuotation
-          ? `http://localhost:8080/auth/updateJobStatusInviteToPending/${jobId}`
-          : `http://localhost:8080/auth/updateJobStatusInviteToOngoing/${jobId}`;
-    
+        let apiUrl="";
+
+        if(isQuotation=="true"){
+            apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToPending/${jobId}?serviceproviderid=${userData.userid}`;
+        }
+        else if(isQuotation=="false"){
+            apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToOngoing/${jobId}?serviceproviderid=${userData.userid}`;
+        }
+
         axios.put(apiUrl)
           .then((res) => {
-            // Update the state or trigger a reload of the component if necessary
+            console.log(res.data); // Log the API response
+            fetchData(); // Update the state after the rejection
           })
           .catch((error) => {
             // Handle errors
           });
-          setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));           //PAGE REFRESH
     };
 
     const handleRejectJob = (jobId) => {
-        const apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToRejected/${jobId}`;
+        const apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToRejected/${jobId}?serviceproviderid=${userData.userid}`;
 
         axios.put(apiUrl)
-            .then((res) => {
-            // Update the state or trigger a reload of the component if necessary
-            })
-            .catch((error) => {
-            // Handle errors
-            });
-            setMyProjectsJobsData(prevData => prevData.filter(job => job.jobid !== jobId));
-        
+        .then((res) => {
+            console.log(res.data); // Log the API response
+            fetchData(); // Update the state after the rejection
+        })
+        .catch((error) => {
+        // Handle errors
+        });
     };
 
     const handleAcceptVacancy = (vacancyId) => {
-        const apiUrl = `http://localhost:8080/auth/updateVacancyStatusInviteToOngoing/${vacancyId}`;
+        const apiUrl = `http://localhost:8080/auth/updateVacancyStatusInviteToOngoing/${vacancyId}?serviceproviderid=${userData.userid}`;
     
         axios.put(apiUrl)
-            .then((res) => {
-                // Update the state or trigger a reload of the component if necessary
-            })
-            .catch((error) => {
-                // Handle errors
-            });
-            setMyProjectsJobsData(prevData => prevData.filter(vacancy => vacancy.vacancyid !== vacancyId));           //PAGE REFRESH
+        .then((res) => {
+            console.log(res.data); // Log the API response
+            fetchData(); // Update the state after the rejection
+        })
+        .catch((error) => {
+            // Handle errors
+        });
     };
     
     const handleRejectVacancy = (vacancyId) => {
-        const apiUrl = `http://localhost:8080/auth/updateVacancyStatusInviteToRejected/${vacancyId}`;
+        const apiUrl = `http://localhost:8080/auth/updateVacancyStatusInviteToRejected/${vacancyId}?serviceproviderid=${userData.userid}`;
     
+        console.log(vacancyId);
+
         axios.put(apiUrl)
-            .then((res) => {
-                // Update the state or trigger a reload of the component if necessary
-            })
-            .catch((error) => {
-                // Handle errors
-            });
-            setMyProjectsJobsData(prevData => prevData.filter(vacancy => vacancy.vacancyid !== vacancyId));
+        .then((res) => {
+            console.log(res.data); // Log the API response
+            fetchData(); // Update the state after the rejection
+        })
+        .catch((error) => {
+            // Handle errors
+        });
 
     };
 
@@ -261,6 +285,9 @@ function MyProjectsBody(){
                                     <span className="my-job-location-info">
                                         <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {job.job.joblocation}
                                     </span>
+                                    <span className="my-job-location-info ms-4">
+                                        <i class="fa-solid fa-hourglass-start"></i>&nbsp;&nbsp; short-term
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -314,10 +341,13 @@ function MyProjectsBody(){
                                     </div>
                                     <div>
                                         <span className="my-job-location-info">
-                                            <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancylocation}
+                                            <i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancylocation}
                                         </span>
                                         <span className="my-job-location-info ms-4">
-                                            <i class="fa-regular fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancytype}
+                                            <i class="fa-solid fa-hourglass-start"></i>&nbsp;&nbsp; long-term
+                                        </span><br/>
+                                        <span className="my-job-location-info ">
+                                            <i class="fa-solid fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancytype}
                                         </span>
                                     </div>
                                 </div>
@@ -387,15 +417,15 @@ function MyProjectsBody(){
                     </div>
                     <hr style={{margin:"0.5rem"}} />
                     <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
-                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                            <span class="view-jobs-page-btn-label" onClick={() => handleAcceptJob(job.job.jobid, job.job.isquotation === 'quotation')}>
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}} onClick={() => handleAcceptJob(job.job.jobid,job.job.isquotation)}>
+                            <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-check-circle"></i>
                             </span>
                             Accept
                         </button>
 
-                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
-                            <span class="view-jobs-page-btn-label" onClick={() => handleRejectJob(job.job.jobid)}>
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}  onClick={() => handleRejectJob(job.job.jobid)}>
+                            <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-x-circle"></i>
                             </span>
                             Reject
@@ -440,15 +470,15 @@ function MyProjectsBody(){
                 </div>
                 <hr style={{margin:"0.5rem"}} />
                 <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
-                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
-                        <span class="view-jobs-page-btn-label" onClick={() => handleAcceptVacancy(vacancy.vacancy.vacancyid)}>
+                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}} onClick={() => handleAcceptVacancy(vacancy.vacancy.vacancyid)}>
+                        <span class="view-jobs-page-btn-label">
                             <i class="bi bi-check-circle"></i>
                         </span>
                         Accept
                     </button>
 
-                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
-                        <span class="view-jobs-page-btn-label" onClick={() => handleRejectVacancy(vacancy.vacancy.vacancyid)}>
+                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}} onClick={() => handleRejectVacancy(vacancy.vacancy.vacancyid)}>
+                        <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-x-circle"></i>
                         </span>
                         Reject

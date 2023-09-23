@@ -14,6 +14,9 @@ public interface VacanciesServiceProvidersRepository extends CrudRepository<Vaca
     @Query("SELECT vsp.vacancies.vacancyid, vsp.vacancystatus FROM VacanciesServiceProviders vsp where vsp.serviceproviders.userid = :serviceproviderid")
     List<Object[]> findMyVacanciesIdsWithStatus(@Param("serviceproviderid") Long serviceproviderid);
 
+    @Query("SELECT vsp.vacancies.vacancyid, vsp.vacancystatus FROM VacanciesServiceProviders vsp WHERE vsp.serviceproviders.userid = :serviceProviderId")
+    List<Object[]> findMyVacanciesWithStatus(Long serviceProviderId);
+
     @Query("SELECT vsp.vacancies.vacancyid FROM VacanciesServiceProviders vsp where vsp.vacancystatus = :vacancystatus")
     List<Long> findAllByvacancystatus(@Param("vacancystatus") String vacancystatus);
 

@@ -63,7 +63,6 @@ public class ServiceProvidersController {
     }
 
 
-    // NEED TO FIND FOR LOGGED IN SP
     @GetMapping("auth/viewMyJobs")
     public List<JobWithStatusDTO> viewMyJobs(@RequestParam("serviceproviderid") Long serviceproviderid) {
         return serviceProviderService.viewMyJobs(serviceproviderid);

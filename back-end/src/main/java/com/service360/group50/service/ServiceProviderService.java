@@ -9,10 +9,8 @@ import com.service360.group50.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,38 +55,26 @@ public class ServiceProviderService {
 
     // NEED TO FIND FOR LOGGED IN SP
     public List<JobWithStatusDTO> viewMyJobs(Long serviceProviderId) {
-        List<JobWithStatusDTO> jobList = new ArrayList<>();
+        // Step 1: Retrieve job details with statuses
+        List<Object[]> jobDetailsWithStatus = jobsServiceProvidersRepository.findMyJobsWithStatus(serviceProviderId);
 
-        // Step 1: Retrieve job IDs with statuses
-        List<Object[]> jobIdsWithStatus = jobsServiceProvidersRepository.findMyJobsIdsWithStatus(serviceProviderId);
-
-        // Extract job IDs from the result
-        List<Long> jobIds = jobIdsWithStatus.stream()
-                .map(result -> (Long) result[0])
+        List<JobWithStatusDTO> jobList = jobDetailsWithStatus.stream()
+                .map(jobData -> {
+                    Long jobId = (Long) jobData[0];
+                    String jobStatus = (String) jobData[1];
+                    Jobs job = jobsRepository.findById(jobId).orElse(null);
+                    if (job != null) {
+                        return new JobWithStatusDTO(job, jobStatus);
+                    } else {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-
-        // Extract job statuses from the result
-        List<String> jobStatuses = jobIdsWithStatus.stream()
-                .map(result -> (String) result[1])
-                .collect(Collectors.toList());
-
-        // Step 2: Retrieve job details for those job IDs
-        if (!jobIds.isEmpty()) {
-            List<Object[]> jobDetails = jobsRepository.findMyJobs(jobIds);
-
-            // Create JobWithStatusDTO objects and add to the jobList
-            for (int i = 0; i < jobDetails.size(); i++) {
-                Object[] jobData = jobDetails.get(i);
-                Jobs job = (Jobs) jobData[0];
-
-                // Create a new JobWithStatusDTO object and add it to the list
-                JobWithStatusDTO jobWithStatus = new JobWithStatusDTO(job, jobStatuses.get(i));
-                jobList.add(jobWithStatus);
-            }
-        }
 
         return jobList;
     }
+
 
 
     public List<Jobs> viewHistoryJobs() {
@@ -153,37 +139,23 @@ public class ServiceProviderService {
         return VacancyList;
     }
 
-
     public List<VacancyWithStatusDTO> viewMyVacancies(Long serviceProviderId) {
-        List<VacancyWithStatusDTO> vacancyList = new ArrayList<>();
+        // Step 1: Retrieve vacancy details with statuses
+        List<Object[]> vacancyDetailsWithStatus = vacanciesServiceProvidersRepository.findMyVacanciesWithStatus(serviceProviderId);
 
-        // Step 1: Retrieve job IDs with statuses
-        List<Object[]> vacancyIdsWithStatus = vacanciesServiceProvidersRepository.findMyVacanciesIdsWithStatus(serviceProviderId);
-
-        // Extract job IDs from the result
-        List<Long> vacancyIds = vacancyIdsWithStatus.stream()
-                .map(result -> (Long) result[0])
+        List<VacancyWithStatusDTO> vacancyList = vacancyDetailsWithStatus.stream()
+                .map(vacancyData -> {
+                    Long vacancyId = (Long) vacancyData[0];
+                    String vacancyStatus = (String) vacancyData[1];
+                    Vacancies vacancy = vacanciesRepository.findById(vacancyId).orElse(null);
+                    if (vacancy != null) {
+                        return new VacancyWithStatusDTO(vacancy, vacancyStatus);
+                    } else {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-
-        // Extract job statuses from the result
-        List<String> vacancyStatuses = vacancyIdsWithStatus.stream()
-                .map(result -> (String) result[1])
-                .collect(Collectors.toList());
-
-        // Step 2: Retrieve vacancy details for those vacancy IDs
-        if (!vacancyIds.isEmpty()) {
-            List<Object[]> vacancyDetails = vacanciesRepository.findMyVacancies(vacancyIds);
-
-            // Create JobWithStatusDTO objects and add to the jobList
-            for (int i = 0; i < vacancyDetails.size(); i++) {
-                Object[] vacancyData = vacancyDetails.get(i);
-                Vacancies vacancy = (Vacancies) vacancyData[0];
-
-                // Create a new JobWithStatusDTO object and add it to the list
-                VacancyWithStatusDTO vacancyWithStatus = new VacancyWithStatusDTO(vacancy, vacancyStatuses.get(i));
-                vacancyList.add(vacancyWithStatus);
-            }
-        }
 
         return vacancyList;
     }

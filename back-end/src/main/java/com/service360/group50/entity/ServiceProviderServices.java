@@ -16,10 +16,20 @@ import lombok.NoArgsConstructor;
 )
 
 public class ServiceProviderServices {
+    @SequenceGenerator(
+            name = "serviceproviderservices_sequence",
+            sequenceName = "serviceproviderservices_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "serviceproviderservices_sequence")
     @Column(updatable = false)
     private Long serviceProviderServicesId;
+
+    @Column
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "userid")
@@ -32,6 +42,5 @@ public class ServiceProviderServices {
     @ManyToOne
     @JoinColumn(name = "servicecategoryid")
     private ServiceCategory serviceCategory;
-
 
 }

@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrainingSessionRegistrationRepository extends CrudRepository<TrainingSessionRegistration,Long> {
+    boolean existsByMobilenumber(String mobileNumber);
 }

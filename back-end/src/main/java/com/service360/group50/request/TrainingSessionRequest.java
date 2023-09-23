@@ -1,6 +1,7 @@
 package com.service360.group50.request;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 public class TrainingSessionRequest {
     // Include fields matching the JSON payload, including serviceproviderId

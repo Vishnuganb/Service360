@@ -1,7 +1,6 @@
 import React from "react";
 import TrainingDetails from "./trainingDetails";
 import "../../../../style/ServiceProvider/ViewATrainingSession.css";
-import TrainingRegistration from "./trainingRegistration";
 
 function Index() {
     return (

@@ -14,9 +14,10 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "servicecategory")
+
 public class ServiceCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long servicecategoryid;
 

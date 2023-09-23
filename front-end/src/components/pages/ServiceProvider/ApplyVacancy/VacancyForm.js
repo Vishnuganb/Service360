@@ -13,7 +13,7 @@ function ApplyVacancy() {
         lastname: "",
         contactnumber: "",
         emailaddress: "",        
-        educationqualification: "1",  
+        educationqualification: "",  
         hasWorkExperience: '1',
         yearsofexperience: "0",      
         salaryexpectation: "",

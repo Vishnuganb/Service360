@@ -19,10 +19,10 @@ import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
 import AdvertiserChat from './components/pages/User/Chat/ChatPage.js';
 import Subscribtion from "./components/pages/advertiser/Dashboard/Subscription/subscription.js";
-import Ads from './components/pages/advertiser/Dashboard/Ads/Index.js';
-import EditAd from './components/pages/advertiser/Dashboard/EditAd.js';
+import Ads from "./components/pages/advertiser/Dashboard/Ads/Index.js";
+import EditAd from "./components/pages/advertiser/Dashboard/EditAd.js";
 import Subscriped from "./components/pages/advertiser/Dashboard/Subscription/subscribed.js";
-import SubscripetionIndex from './components/pages/advertiser/Dashboard/Subscription/Index.js';
+import SubscripetionIndex from "./components/pages/advertiser/Dashboard/Subscription/Index.js";
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';

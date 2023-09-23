@@ -51,7 +51,7 @@ const ShopDetailsModal = ({ show, onHide, shopData }) => {
 const ConfirmDelete = (props) => {
   const navigate = useNavigate();
   const id = props.id;
-  console.log(id);
+  // console.log(id);
   function handleDelete() {
     axios
       .delete(`http://localhost:8080/auth/deleteAd/${id}`)
@@ -98,7 +98,7 @@ const ConfirmDelete = (props) => {
 const ConfirmDisabled = (props) => {
   const navigate = useNavigate();
   const id = props.id;
-  console.log(id);
+  // console.log(id);
   function handleDisable() {
     axios
       .put(`http://localhost:8080/auth/disable/${id}`)
@@ -143,7 +143,7 @@ const ConfirmDisabled = (props) => {
   );
 };
 
-const ViewAd = ({ ads, profileIcon, proName, modalVisible, closeModal }) => {
+const ViewAd = ({ ads, modalVisible, closeModal }) => {
   // disable disable pop
   const [DisableModalShow, setDisableModalShow] = React.useState(false);
   // show delete details
@@ -165,31 +165,7 @@ const ViewAd = ({ ads, profileIcon, proName, modalVisible, closeModal }) => {
   };
 
   const [, setShowModal] = useState(false);
-  // const [imageUrls, setImageUrls] = useState([]);
-  // useEffect(() => {
-  //   if (ads.adsId) {
-  //     // Check if id is available
-  //     const adId = `http://localhost:8080/auth/getAdImages/${ads.adsId}`;
 
-  //     fetch(adId)
-  //       .then((response) => {
-  //         if (!response.ok) {
-  //           throw new Error(
-  //             `Error fetching image for ad ${ads.adsId}: ${response.status}`
-  //           );
-  //         }
-  //         return response.blob(); // Fetch image as a blob
-  //       })
-  //       .then((imageBlob) => {
-  //         const imageUrl = URL.createObjectURL(imageBlob);
-  //         setImageUrls(imageUrl); // Set the imageUrl in the state
-  //       })
-  //       .catch((error) => {
-  //         console.error(`Error fetching image for ad ${ads.adsId}:`, error);
-  //         setImageUrls(null); // Set imageUrl to null on error
-  //       });
-  //   }
-  // }, [ads.adsId]);
 
 
   const [selectedImage, setSelectedImage] = useState(
@@ -206,16 +182,18 @@ const ViewAd = ({ ads, profileIcon, proName, modalVisible, closeModal }) => {
     setShowModal(false);
   };
 
-  const shopData = {
-    shopName: ads.advertiser.shopname,
-    ownerName: ads.user.firstname,
-    mobileNo: ads.advertiser.mobileNo,
-    address: ads.advertiser.address,
-  };
+
+
+const shopData = {
+  shopName: ads.shopName, 
+  ownerName: ads.firstName, 
+  mobileNo: ads.shopPhone, 
+  address: ads.shopAddress, 
+};
 
   // Open Edit Ad Page
   const navigate = useNavigate();
-  const id = ads.adsId;
+  const id = ads.id;
   const handleOpenAdEditModal = () => {
     // Navigate to the editAd route with the id as a parameter
     navigate(`/Advertiser/editAd/${id}`);
@@ -242,13 +220,13 @@ const ViewAd = ({ ads, profileIcon, proName, modalVisible, closeModal }) => {
               <div md="auto" className="d-flex align-items-center ">
                 <div>
                   <img
-                    src={profileIcon}
+                    src={ads.profileImage}
                     alt="Profile of Advertiser"
                     className="AdProfilePic"
                   />
                 </div>
                 <div className="namediv">
-                  <p>{proName}</p>
+                  <p>{ads.firstName}</p>
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3">
@@ -267,12 +245,12 @@ const ViewAd = ({ ads, profileIcon, proName, modalVisible, closeModal }) => {
                   onClick={() => setDeleteModalShow(true)}
                 ></i>
                 <ConfirmDelete
-                  id={ads.adsId}
+                  id={ads.id}
                   show={DeleteModalShow}
                   onHide={() => setDeleteModalShow(false)}
                 />
                 <ConfirmDisabled
-                  id={ads.adsId}
+                  id={ads.id}
                   show={DisableModalShow}
                   onHide={() => setDisableModalShow(false)}
                 />

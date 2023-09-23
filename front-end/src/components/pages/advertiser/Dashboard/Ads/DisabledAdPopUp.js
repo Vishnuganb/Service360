@@ -95,7 +95,7 @@ const EnableAdModal = (props) => {
   );
 };
 
-const DisableAdPop = ({ ads, profileIcon, modalVisible, closeModal }) => {
+const DisableAdPop = ({ ads, modalVisible, closeModal }) => {
   //Enable Model
   const [EnableModalShow, setEnableModalShow] = React.useState(false);
 
@@ -121,50 +121,22 @@ const DisableAdPop = ({ ads, profileIcon, modalVisible, closeModal }) => {
     setShowModal(true);
   };
 
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
-  const shopData = {
-    shopName: "Emereld Electrical",
-    ownerName: "Adam Robert",
-    mobileNo: "0778964983",
-    address: "No 132, Marain Drive, Bambalapittiya, Colombo",
-  };
 
-  const [imageUrls, setImageUrls] = useState([]);
-  useEffect(() => {
-    if (ads.adsId) {
-      // Check if id is available
-      const adId = `http://localhost:8080/auth/getAdImages/${ads.adsId}`;
-
-      fetch(adId)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(
-              `Error fetching image for ad ${ads.adsId}: ${response.status}`
-            );
-          }
-          return response.blob(); // Fetch image as a blob
-        })
-        .then((imageBlob) => {
-          const imageUrl = URL.createObjectURL(imageBlob);
-          setImageUrls(imageUrl); // Set the imageUrl in the state
-        })
-        .catch((error) => {
-          console.error(`Error fetching image for ad ${ads.adsId}:`, error);
-          setImageUrls(null); // Set imageUrl to null on error
-        });
-    }
-  }, [ads.adsId]);
+   const shopData = {
+     shopName: ads.shopName,
+     ownerName: ads.firstName,
+     mobileNo: ads.shopPhone,
+     address: ads.shopAddress,
+   };
+  
 
  const [selectedImage, setSelectedImage] = useState(
    `data:image/png;base64,${ads.adsImages[0]}`
  );
 
   const navigate = useNavigate();
-  const id = ads.adsId;
+  const id = ads.id;
   const handleOpenAdEditModal = () => {
-    // Navigate to the editAd route with the id as a parameter
     navigate(`/Advertiser/editAd/${id}`);
   };
 
@@ -189,14 +161,14 @@ const DisableAdPop = ({ ads, profileIcon, modalVisible, closeModal }) => {
               <div md="auto" className="d-flex align-items-center ">
                 <div>
                   <img
-                    src={profileIcon}
+                    src={ads.profileImage}
                     alt="Profile of Advertiser"
                     roundedCircle
                     className="AdProfilePic"
                   />
                 </div>
                 <div className="namediv">
-                  <p>Adam</p>
+                  <p>{ads.firstName}</p>
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3">
@@ -212,7 +184,7 @@ const DisableAdPop = ({ ads, profileIcon, modalVisible, closeModal }) => {
                 </button>
 
                 <EnableAdModal
-                  id={ads.adsId}
+                  id={ads.id}
                   show={EnableModalShow}
                   onHide={() => setEnableModalShow(false)}
                 />

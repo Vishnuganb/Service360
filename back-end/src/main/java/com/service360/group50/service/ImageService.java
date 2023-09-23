@@ -54,4 +54,20 @@ public class ImageService {
         }
     }
 
+    // delete image
+    public String deleteImage(String imageDirectory, String imageName) throws IOException {
+        // Construct the full path to the image
+        Path imagePath = Path.of(imageDirectory, imageName);
+
+        // Check if the image file exists
+        if (Files.exists(imagePath)) {
+            Files.delete(imagePath);
+            return "Success";
+        } else {
+            return "Failed"; // You can also throw an exception here if needed
+        }
+    }
+
+
+
 }

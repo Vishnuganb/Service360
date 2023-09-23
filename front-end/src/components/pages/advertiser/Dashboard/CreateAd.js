@@ -129,22 +129,31 @@ const CreateAd = () => {
     setIsPolicyAccepted(event.target.checked);
   };
   const navigate = useNavigate();
+
   const handleSubmit = (event) => {
-    // event.preventDefault();
+    
+    event.preventDefault();
+
+    let hasError = false;
+
     if (selectedAdImages.length === 0) {
       setAdImageInputErr(true);
+      hasError=true;
     }
 
     if (adName.length === 0) {
       setAdNameInputErr(true);
+      hasError = true;
     }
 
     if (category === "Select Category") {
       setCatError(true);
+      hasError = true;
     }
 
     if (adPrice < 1) {
       setPriceError(true);
+      hasError = true;
     }
 
     if (warrantyProvided === "select") {
@@ -152,21 +161,25 @@ const CreateAd = () => {
     } else if (warrantyProvided === "yes") {
       if (warentyMonth < 1) {
         setWarentyMonthErr(true);
+        hasError = true;
       }
     }
 
     if (adLocation === "Area") {
       setAreaError(true);
+      hasError = true;
     }
 
     if (adDelivery === "Delivery") {
       setdDeliveryError(true);
+      hasError = true;
     }
 
     if (isPolicyAccepted) {
       setPolicyErr(false);
     } else {
       setPolicyErr(true);
+      hasError = true;
     }
 
     event.preventDefault();
@@ -190,17 +203,20 @@ const CreateAd = () => {
       console.log(`${key}:`, value);
     }
     // Send a POST request to your Spring Boot backend
-    axios
-      .post("http://localhost:8080/auth/createAd", formData)
-      .then((response) => {
-        
-        console.log("Ad created successfully!", response.data);
-         navigate(`/Advertiser/Ads`);
-      })
-      .catch((error) => {
-        // Handle errors, e.g., show an error message
-        console.error("Failed to create ad", error);
-      });
+    if (!hasError) {
+      axios
+        .post("http://localhost:8080/auth/createAd", formData)
+        .then((response) => {
+          console.log("Ad created successfully!", response.data);
+          navigate(`/Advertiser/Ads`);
+        })
+        .catch((error) => {
+          // Handle errors, e.g., show an error message
+          console.error("Failed to create ad", error);
+        });
+    }else{
+      return;
+    }
   };
 
   // ..........................................................................................................................................

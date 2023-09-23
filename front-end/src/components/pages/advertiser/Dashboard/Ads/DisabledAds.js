@@ -90,7 +90,7 @@ const VerifiedAdCont = ({
   );
 };
 
-const VerifiedAds = () => {
+const DisableAds = () => {
   const response = sessionStorage.getItem("authenticatedUser");
   const userDetail = JSON.parse(response);
   const [modalVisible, setModalVisible] = useState(false);
@@ -106,9 +106,7 @@ const VerifiedAds = () => {
   };
 
   const [ads, setAds] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
 
- 
   useEffect(() => {
     const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
 
@@ -116,8 +114,7 @@ const VerifiedAds = () => {
       .get(apiUrl)
       .then((response) => {
         console.log(response.data);
-        setAdsDetails(response.data);
-        setAds(response.data.ads);
+        setAds(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -125,26 +122,18 @@ const VerifiedAds = () => {
   }, []);
 
 
-  const combinedData = ads.map((ad) => {
-    const adsImages = adsDetails.adsImages.find(
-      (details) => details.id === ad.adsId
-    );
-    return { ...ad, adsImages: adsImages ? adsImages.images : [] };
-  });
-
   return (
     <Container>
       <h2 className="AdPageHeading">Disabled Ads</h2>
       <Row>
         <div className="AdsRow">
-          {combinedData.map((ad, index) => {
-            console.log(ad);
+          {ads.map((ad, index) => {
             if (ad.status === "Disabled") {
               return (
                 <VerifiedAdCont
-                  key={index}
-                  profileIcon={ad.user.profilePic}
-                  proName={ad.user.firstname}
+                  key={ad.adsId}
+                  profileIcon={ad.profileImage}
+                  proName={ad.firstName}
                   adImage={`data:image/png;base64,${ad.adsImages[0]}`}
                   adName={ad.adsName}
                   price={ad.price}
@@ -162,8 +151,6 @@ const VerifiedAds = () => {
           <DisabledAdPopUp
             key={selectedAd.adsId}
             ads={selectedAd}
-            proName={selectedAd.proName}
-            profileIcon={profileIcon}
             modalVisible={modalVisible}
             closeModal={closeModal}
           />
@@ -173,4 +160,4 @@ const VerifiedAds = () => {
   );
 };
 
-export default VerifiedAds;
+export default DisableAds;

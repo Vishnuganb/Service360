@@ -101,7 +101,7 @@ const VerifiedAds = () => {
   };
 
   const [ads, setAds] = useState([]);
-  const [adsDetails, setAdsDetails] = useState([]);
+
 
  useEffect(() => {
    const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
@@ -110,20 +110,14 @@ const VerifiedAds = () => {
      .get(apiUrl)
      .then((response) => {
        console.log(response.data);
-       setAdsDetails(response.data);
-       setAds(response.data.ads);
+       setAds(response.data);
      })
      .catch((error) => {
        console.error("Error fetching data:", error);
      });
  }, []);
 
- const combinedData = ads.map((ad) => {
-   const adsImages = adsDetails.adsImages.find(
-     (details) => details.id === ad.adsId
-   );
-   return { ...ad, adsImages: adsImages ? adsImages.images : [] };
- });
+
 
 
   return (
@@ -131,7 +125,7 @@ const VerifiedAds = () => {
       <h2 className="AdPageHeading">Verified Ads</h2>
       <Row>
         <div className="AdsRow">
-          {combinedData.map((ad, index) => {
+          {ads.map((ad, index) => {
             if (
               ad.verificationStatus === "Verified" &&
               ad.status === "Active"
@@ -139,9 +133,8 @@ const VerifiedAds = () => {
               return (
                 <VerifiedAdCont
                   key={ad.adsId}
-                  profileIcon={ad.user.profilePic}
-                  proName={ad.user.firstname}
-                  // adImage={getAdImages(ad.adsId)}
+                  profileIcon={ad.profileImage}
+                  proName={ad.firstName}
                   adImage={`data:image/png;base64,${ad.adsImages[0]}`}
                   adName={ad.adsName}
                   price={ad.price}
@@ -159,8 +152,6 @@ const VerifiedAds = () => {
           <ViewAd
             key={selectedAd.adsId}
             ads={selectedAd}
-            proName={selectedAd.proName}
-            profileIcon={profileIcon}
             modalVisible={ViewAdmodalVisible}
             closeModal={ViewAdcloseModal}
           />

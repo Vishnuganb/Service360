@@ -2,9 +2,9 @@ package com.service360.group50.service;
 
 import com.service360.group50.entity.Ads;
 import com.service360.group50.entity.Advertiser;
-import com.service360.group50.repo.AdsRepository;
-import com.service360.group50.repo.AdvertiserRepository;
-import com.service360.group50.repo.UserRepository;
+import com.service360.group50.entity.Subscription;
+import com.service360.group50.entity.SubscriptionPlan;
+import com.service360.group50.repo.*;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,8 @@ public class AdvertiserService {
 
     @Autowired
     private AdvertiserRepository advertiserRepository;
+
+
     
     public Ads CreateAd(Ads ad) {
        return adsRepository.save(ad);
@@ -80,4 +82,6 @@ public class AdvertiserService {
     public Advertiser getAdvertiserByUserId(Long userId) {
         return advertiserRepository.findByUsers_userid(userId);
     }
+
+
 }

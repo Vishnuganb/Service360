@@ -100,31 +100,22 @@ const RejectedAds = () => {
   };
 
    const [ads, setAds] = useState([]);
-  const [adsDetails, setAdsDetails] = useState([]);
 
-   useEffect(() => {
-     const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
+  useEffect(() => {
+    const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
 
-     axios
-       .get(apiUrl)
-       .then((response) => {
-         console.log(response.data);
-         setAdsDetails(response.data);
-         setAds(response.data.ads);
-       })
-       .catch((error) => {
-         console.error("Error fetching data:", error);
-       });
-   }, []);
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data);
+        setAds(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
 
-
-    const combinedData = ads.map((ad) => {
-      const adsImages = adsDetails.adsImages.find(
-        (details) => details.id === ad.adsId
-      );
-      return { ...ad, adsImages: adsImages ? adsImages.images : [] };
-    });
 
 
   return (
@@ -132,14 +123,13 @@ const RejectedAds = () => {
       <h2 className="AdPageHeading">Rejected Ads</h2>
       <Row>
         <div className="AdsRow">
-          {combinedData.map((ad, index) => {
+          {ads.map((ad, index) => {
             if (ad.verificationStatus === "Rejected") {
               return (
                 <RejectedAdCont
-                  endingCont
                   key={ad.adsId}
-                  profileIcon={ad.user.profilePic}
-                  proName={ad.user.firstname}
+                  profileIcon={ad.profileImage}
+                  proName={ad.firstName}
                   // adImage={getAdImages(ad.adsId)}
                   adImage={`data:image/png;base64,${ad.adsImages[0]}`}
                   adName={ad.adsName}
@@ -158,8 +148,6 @@ const RejectedAds = () => {
           <ViewAd
             key={selectedAd.adsId}
             ads={selectedAd}
-            proName={selectedAd.proName}
-            profileIcon={profileIcon}
             modalVisible={modalVisible}
             closeModal={closeModal}
           />

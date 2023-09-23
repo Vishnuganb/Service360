@@ -6,34 +6,28 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "advertiser"
+        name = "subscriptionPlan"
 )
-public class Advertiser {
+public class SubscriptionPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private Long advertiserid;
+    private Long id;
 
     @Column( columnDefinition = "TEXT")
-    private String shopname;
+    private String name;
 
-    @Column(columnDefinition = "TEXT")
-    private String shopaddress;
+    @Column( columnDefinition = "TEXT")
+    private String description;
 
-    @OneToOne
-    @JoinColumn(name = "userid")
-    private Users users;
-
-    @OneToMany(mappedBy = "advertiser")
-    private List<AdvertiserFiles> advertiserFiles;
+    @Column( columnDefinition = "TEXT")
+    private String price;
 
 
 }

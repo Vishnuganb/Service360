@@ -1,22 +1,16 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.AdsDTO;
-import com.service360.group50.dto.AdvertiserDTO;
-import com.service360.group50.dto.ImagesDTO;
-import com.service360.group50.entity.Ads;
-import com.service360.group50.entity.Advertiser;
+import com.service360.group50.dto.SubscriptionDTO;
+import com.service360.group50.entity.*;
 import com.service360.group50.service.AdvertiserService;
 import com.service360.group50.service.ImageService;
+import com.service360.group50.service.SubscriptionService;
 import com.service360.group50.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +28,9 @@ public class AdvertiserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SubscriptionService subscriptionService;
 
 
 
@@ -149,48 +146,70 @@ public class AdvertiserController {
 
 
     @GetMapping("auth/getAds/{userId}")
-    public AdsDTO getAdsByUserId(@PathVariable Long userId)  {
-
-        // advertiserDTO
-        AdvertiserDTO advertiserDTO = new AdvertiserDTO();
-        advertiserDTO.setAdvertiserid(advertiserService.getAdvertiserByUserId(userId).getAdvertiserid());
-        advertiserDTO.setShopname(advertiserService.getAdvertiserByUserId(userId).getShopname());
-        advertiserDTO.setShopaddress(advertiserService.getAdvertiserByUserId(userId).getShopaddress());
-        System.out.println(advertiserDTO);
+    public List<AdsDTO> getAdsByUserId(@PathVariable Long userId)  {
 
         List<Ads> ads = advertiserService.getAdsByUserId(userId);
-        System.out.println(ads);
-        AdsDTO adsDTO = new AdsDTO();
-        adsDTO.setAdvertiser(advertiserDTO);
-        adsDTO.setAds(ads);
+        List<AdsDTO> adsDTOList = new ArrayList<>(); // Create a list to hold AdsDTO objects
 
-        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        Advertiser advertiser = advertiserService.getAdvertiserByUserId(userId);
+
+        Subscription subscription = subscriptionService.getActiveSubscribtionByUserId(userId);
+        String subStatus = null;
+
+        if (subscription != null) {
+            if (subscription.getStatus().equals("Expaired")) {
+                subStatus = "Expired";
+            }else {
+                subStatus = subscription.getId().toString();
+            }
+        }
+
         for (Ads ad : ads) {
+            Users user = userService.getUser(ad.getUser().getUserid());
+            AdsDTO adDTO = new AdsDTO();
+            adDTO.setId(ad.getAdsId());
+            adDTO.setAdsName(ad.getAdsName());
+            adDTO.setCategory(ad.getCategory());
+            adDTO.setPrice(ad.getPrice());
+            adDTO.setWarrantyMonths(ad.getWarrantyMonths());
+            adDTO.setDescription(ad.getDescription());
+            adDTO.setArea(ad.getArea());
+            adDTO.setDelivery(ad.getDelivery());
+            adDTO.setStatus(ad.getStatus());
+            adDTO.setVerificationStatus(ad.getVerificationStatus());
+            adDTO.setUserId(userId);
+            adDTO.setFirstName(user.getFirstname());
+            adDTO.setLastName(user.getLastname());
+            adDTO.setPlan(subStatus);
+            if (user.getProfilePic() != null) {
+                adDTO.setProfileImage(user.getProfilePic().getBytes());
+            }
+            adDTO.setShopName(advertiser.getShopname());
+            adDTO.setShopAddress(advertiser.getShopaddress());
+            adDTO.setShopPhone(user.getPhonenumber());
+
             List<byte[]> adsimages = new ArrayList<>();
 
             try {
                 List<byte[]> adsImages = getImages(ad.getAdsId());
+
                 for (byte[] adsImage : adsImages) {
                     adsimages.add(adsImage);
                 }
 
-
-                ImagesDTO image = new ImagesDTO();
-                image.setId(ad.getAdsId());
-                image.setImages(adsimages);
-                imagesDTO.add(image);
+                adDTO.setAdsImages(adsimages);
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            adsDTOList.add(adDTO); // Add the AdsDTO object to the list
         }
 
-        adsDTO.setAdsImages(imagesDTO);
-
-
-        return adsDTO;
+        return adsDTOList; // Return the list of AdsDTO objects
     }
+
 
 
 
@@ -250,7 +269,6 @@ public class AdvertiserController {
             imageBytesList.add(imageBytes);
 
         }
-        System.out.println(imageBytesList);
 
         return imageBytesList;
 
@@ -260,6 +278,16 @@ public class AdvertiserController {
 
     @DeleteMapping("auth/deleteAd/{adsId}")
     public void deleteAd(@PathVariable Long adsId){
+        Ads ad = advertiserService.getAd(adsId);
+        String[] imageNames = ad.getAdsImages().split(",");
+        String imageDirectory = "src/main/resources/static/images/ads";
+        for (String imageName : imageNames) {
+            try {
+                imageService.deleteImage(imageDirectory, imageName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         advertiserService.deleteAds(adsId);
     }
 
@@ -274,6 +302,81 @@ public class AdvertiserController {
     public void setStatusEnabled(@PathVariable Long adsId){
         advertiserService.setStatusEnabled(adsId);
     }
+
+    // get subscription
+@GetMapping("auth/subscriptionDetails/{userid}")
+public SubscriptionDTO getSubscriptionDetails(@PathVariable Long userid) {
+    Subscription subscription= subscriptionService.getActiveSubscribtionByUserId(userid);
+    SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
+    if(subscription != null){
+        subscriptionDTO.setId(subscription.getId());
+        subscriptionDTO.setStartDate(subscription.getStartDate().toString());
+        subscriptionDTO.setEndDate(subscription.getEndDate().toString());
+        subscriptionDTO.setStatus(subscription.getStatus());
+        subscriptionDTO.setPlanName(subscription.getSubscriptionPlan().getName());
+        subscriptionDTO.setPlanDescription(subscription.getSubscriptionPlan().getDescription());
+        subscriptionDTO.setPlanPrice(subscription.getSubscriptionPlan().getPrice());
+        subscriptionDTO.setUserId(userid);
+    }
+    return subscriptionDTO;
+}
+
+
+    // add subscription
+    @PutMapping("auth/subscription/{userid}/{id}")
+    public Subscription setSubscription(@PathVariable Long userid,@PathVariable Long id) {
+
+        Users user = userService.getUser(userid);
+        String role = user.getRole().name();
+        if(role.equals("ADVERTISER")){
+            String status = "Active";
+            Subscription subscription = new Subscription();
+            subscription.setStatus(status);
+            subscription.setSubscriptionPlan(subscriptionService.getSubscriptionPlan(id));
+            subscription.setUsers(userService.getUser(userid));
+            // set current date and time
+            subscription.setCreatedAt(new java.util.Date());
+           return subscriptionService.addOrUpdateSubscription(userid,subscription);
+        }
+
+        return null;
+
+    }
+
+    // Add subscriptionPlan
+    @PostMapping("auth/subscriptionPlan")
+    public SubscriptionPlan addSubscriptionPlan( @RequestParam String name,
+                                                 @RequestParam String description,
+                                                 @RequestParam String price) {
+        SubscriptionPlan subscriptionPlan = new SubscriptionPlan();
+        subscriptionPlan.setName(name);
+        subscriptionPlan.setDescription(description);
+        subscriptionPlan.setPrice(price);
+
+        return subscriptionService.addSubscriptionPlan(subscriptionPlan);
+
+    }
+
+
+    // get subscription History
+    @GetMapping("auth/subscriptionHistory/{userid}")
+    public List<SubscriptionDTO> getSubscriptionHistory(@PathVariable Long userid) {
+        List<SubscriptionHistory> subscriptionHistoryList = subscriptionService.getSubscriptionHistoryByUserId(userid);
+        List<SubscriptionDTO> subscriptionDTOList = new ArrayList<>();
+        for (SubscriptionHistory subscriptionHistory : subscriptionHistoryList) {
+            SubscriptionDTO subscriptionDTO = new SubscriptionDTO();
+            subscriptionDTO.setId(subscriptionHistory.getId());
+            subscriptionDTO.setStartDate(subscriptionHistory.getStartDate().toString());
+            subscriptionDTO.setEndDate(subscriptionHistory.getEndDate().toString());
+            subscriptionDTO.setCreatedAt(subscriptionHistory.getCreatedAt().toString());
+            subscriptionDTO.setPlanName(subscriptionHistory.getSubscriptionPlan().getName());
+            subscriptionDTO.setPlanPrice(subscriptionHistory.getSubscriptionPlan().getPrice());
+            subscriptionDTO.setUserId(userid);
+            subscriptionDTOList.add(subscriptionDTO);
+        }
+        return subscriptionDTOList;
+    }
+
 
 
 }

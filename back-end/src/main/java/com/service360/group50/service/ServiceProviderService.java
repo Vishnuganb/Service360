@@ -1,6 +1,8 @@
 package com.service360.group50.service;
 
 import com.service360.group50.dto.JobWithStatusDTO;
+import com.service360.group50.dto.ServiceProjectionDTO;
+import com.service360.group50.dto.ServiceProviderServicesDTO;
 import com.service360.group50.dto.VacancyWithStatusDTO;
 import com.service360.group50.entity.*;
 import com.service360.group50.repo.*;
@@ -38,6 +40,12 @@ public class ServiceProviderService {
     private JobRepliesRepository jobRepliesRepository;
     @Autowired
     private TrainingSessionRegistrationRepository trainingSessionRegistrationRepository;
+    @Autowired
+    private ServiceProviderServicesRepository serviceProviderServicesRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
+    @Autowired
+    private ServiceCategoryRepository serviceCategoryRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -48,11 +56,11 @@ public class ServiceProviderService {
 
 
     // NEED TO FIND FOR LOGGED IN SP
-    public List<JobWithStatusDTO> viewMyJobs() {
+    public List<JobWithStatusDTO> viewMyJobs(Long serviceProviderId) {
         List<JobWithStatusDTO> jobList = new ArrayList<>();
 
         // Step 1: Retrieve job IDs with statuses
-        List<Object[]> jobIdsWithStatus = jobsServiceProvidersRepository.findMyJobsIdsWithStatus();
+        List<Object[]> jobIdsWithStatus = jobsServiceProvidersRepository.findMyJobsIdsWithStatus(serviceProviderId);
 
         // Extract job IDs from the result
         List<Long> jobIds = jobIdsWithStatus.stream()
@@ -117,22 +125,22 @@ public class ServiceProviderService {
     }
 
 
-    public JobsServiceProviders updateJobInvitetoPending(Long id) {             // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
-        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
+    public JobsServiceProviders updateJobInvitetoPending(Long id,Long serviceProviderId) {
+        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByJobidAndServiceproviderid(id, serviceProviderId);
         existingJob.setJobstatus("pending");
         return jobsServiceProvidersRepository.save(existingJob);
     }
 
 
-    public JobsServiceProviders updateJobInvitetoOngoing(Long id) {             // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
-        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
+    public JobsServiceProviders updateJobInvitetoOngoing(Long id,Long serviceProviderId) {
+        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByJobidAndServiceproviderid(id, serviceProviderId);
         existingJob.setJobstatus("ongoing");
         return jobsServiceProvidersRepository.save(existingJob);
     }
 
 
-    public JobsServiceProviders updateJobInvitetoRejected(Long id) {            // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
-        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByjobid(id);
+    public JobsServiceProviders updateJobInvitetoRejected(Long id,Long serviceProviderId) {
+        JobsServiceProviders existingJob = jobsServiceProvidersRepository.findByJobidAndServiceproviderid(id, serviceProviderId);
         existingJob.setJobstatus("rejected");
         return jobsServiceProvidersRepository.save(existingJob);
     }
@@ -146,11 +154,11 @@ public class ServiceProviderService {
     }
 
 
-    public List<VacancyWithStatusDTO> viewMyVacancies() {
+    public List<VacancyWithStatusDTO> viewMyVacancies(Long serviceProviderId) {
         List<VacancyWithStatusDTO> vacancyList = new ArrayList<>();
 
         // Step 1: Retrieve job IDs with statuses
-        List<Object[]> vacancyIdsWithStatus = vacanciesServiceProvidersRepository.findMyVacanciesIdsWithStatus();
+        List<Object[]> vacancyIdsWithStatus = vacanciesServiceProvidersRepository.findMyVacanciesIdsWithStatus(serviceProviderId);
 
         // Extract job IDs from the result
         List<Long> vacancyIds = vacancyIdsWithStatus.stream()
@@ -207,15 +215,15 @@ public class ServiceProviderService {
         return vacancyApplicationsRepository.save(vacancyApplication);
     }
 
-    public VacanciesServiceProviders updateVacancyInvitetoOngoing(Long id) {             // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
-        VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByvacancyid(id);
+    public VacanciesServiceProviders updateVacancyInvitetoOngoing(Long id,Long serviceProviderId) {
+        VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByVacancyidAndServiceproviderid(id,serviceProviderId);
         existingVacancy.setVacancystatus("ongoing");
         return vacanciesServiceProvidersRepository.save(existingVacancy);
     }
 
 
-    public VacanciesServiceProviders updateVacancyInvitetoRejected(Long id) {            // NEED TO FIND FOR LOGGED IN SP AND PASS AS PARAMETER
-        VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByvacancyid(id);
+    public VacanciesServiceProviders updateVacancyInvitetoRejected(Long id,Long serviceProviderId) {
+        VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByVacancyidAndServiceproviderid(id,serviceProviderId);
         existingVacancy.setVacancystatus("rejected");
         return vacanciesServiceProvidersRepository.save(existingVacancy);
     }
@@ -267,7 +275,7 @@ public class ServiceProviderService {
         return trainingSessionRepository.save(trainingSession);
     }
 
-    //Blogs
+    //BLOGS
 
     public Blogs createBlog(Blogs blog){
         return blogsRepository.save(blog);
@@ -277,6 +285,34 @@ public class ServiceProviderService {
         List<Blogs> BlogsList = new ArrayList<>();
         blogsRepository.findAll().forEach(BlogsList::add);
         return BlogsList;
+    }
+
+    //MY SERVICES
+    public List<ServiceProjectionDTO> viewAllServices() {
+        return serviceRepository.findAllServicesWithCategoryAndNames();
+    }
+
+    public List<ServiceProviderServicesDTO> viewMyServices(Long id) {
+        return serviceProviderServicesRepository.findAllByServiceProviderid(id);
+    }
+
+    public ServiceProviderServices EnableMyService(Long id){
+        ServiceProviderServices existingService = serviceProviderServicesRepository.findByServiceProviderServicesId(id);
+        existingService.setStatus("active");
+        return serviceProviderServicesRepository.save(existingService);
+    }
+
+    public ServiceProviderServices DisableMyService(Long id){
+        ServiceProviderServices existingService = serviceProviderServicesRepository.findByServiceProviderServicesId(id);
+        existingService.setStatus("deactivate");
+        return serviceProviderServicesRepository.save(existingService);
+    }
+
+    //IMAGES
+
+    // get adsImages by trainingId
+    public String getTrainingImages(Long id) {
+        return trainingSessionRepository.findById(id).orElse(null).getTrainingimage();
     }
 
 }

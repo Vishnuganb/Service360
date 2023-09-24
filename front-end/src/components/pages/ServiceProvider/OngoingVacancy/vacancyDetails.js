@@ -17,7 +17,7 @@ function VacancyDetails() {
   const vacancyId = parseInt(id, 10);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/auth/viewVacancies/${vacancyId}`).then((res) => {
+    axios.get(`http://localhost:8080/auth/viewNewVacancies/${vacancyId}`).then((res) => {
       console.log(res.data);
       setviewVacancyData(res.data);
     });
@@ -56,7 +56,7 @@ function VacancyDetails() {
       <Col className="vacancyDetails-details-container col-12 col-lg-10 d-flex flex-column">
         <div className="vacancyDetails-status-container mb-2">
           <span className="vacancyDetails-status me-2" id="vacancy-status" style={{ fontSize: "16px", fontWeight: "400", padding: "4px 6px", border: "2px solid rgb(37, 199, 37)", borderRadius: "8px" }}>
-            {viewVacancyData.vacancystatus}
+            ongoing
           </span>
           <span className="vacancyDetails-status" id="vacancy-status" style={{ fontSize: "16px", fontWeight: "400", padding: "4px 6px", border: "2px solid rgb(37, 199, 37)", borderRadius: "8px" }}>
             {viewVacancyData.vacancytype}

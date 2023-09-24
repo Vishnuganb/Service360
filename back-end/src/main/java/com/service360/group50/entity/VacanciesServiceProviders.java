@@ -32,4 +32,9 @@ public class VacanciesServiceProviders {
     @ManyToOne
     @JoinColumn(name = "vacancyid")
     private Vacancies vacancies;
+
+    // Setter method for vacancystatus
+    public void setVacancystatus(String vacancystatus) {
+        this.vacancystatus = vacancystatus;
+    }
 }

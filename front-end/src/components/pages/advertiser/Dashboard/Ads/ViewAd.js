@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import backgroundImage from "../../../../../assets/images/header/Background.png";
 
@@ -48,6 +49,23 @@ const ShopDetailsModal = ({ show, onHide, shopData }) => {
 };
 
 const ConfirmDelete = (props) => {
+  const navigate = useNavigate();
+  const id = props.id;
+  // console.log(id);
+  function handleDelete() {
+    axios
+      .delete(`http://localhost:8080/auth/deleteAd/${id}`)
+      .then((response) => {
+        console.log("Ad Deleted successfully!", response.data);
+        props.onHide();
+        navigate(`/Advertiser/Ads`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        // Handle errors, e.g., show an error message
+        console.error("Failed to Delete ad", error);
+      });
+  }
   return (
     <Modal
       {...props}
@@ -68,7 +86,9 @@ const ConfirmDelete = (props) => {
           <button className="AdCancel rounded" onClick={props.onHide}>
             Close
           </button>
-          <button className="AdDeleted rounded">Delete</button>
+          <button className="AdDeleted rounded" onClick={handleDelete}>
+            Delete
+          </button>
         </div>
       </Modal.Body>
     </Modal>
@@ -76,6 +96,24 @@ const ConfirmDelete = (props) => {
 };
 
 const ConfirmDisabled = (props) => {
+  const navigate = useNavigate();
+  const id = props.id;
+  // console.log(id);
+  function handleDisable() {
+    axios
+      .put(`http://localhost:8080/auth/disable/${id}`)
+      .then((response) => {
+        console.log("Ad Disabled successfully!", response.data);
+        props.onHide();
+        navigate(`/Advertiser/Ads`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        // Handle errors, e.g., show an error message
+        console.error("Failed to Disabled ad", error);
+      });
+  }
+
   return (
     <Modal
       {...props}
@@ -96,27 +134,16 @@ const ConfirmDisabled = (props) => {
           <button className="AdCancel rounded" onClick={props.onHide}>
             Close
           </button>
-          <button className="AdDeleted rounded">Disable</button>
+          <button className="AdDeleted rounded" onClick={handleDisable}>
+            Disable
+          </button>
         </div>
       </Modal.Body>
     </Modal>
   );
 };
 
-const ViewAd = ({
-  id,
-  profileIcon,
-  proName,
-  adName,
-  adImages,
-  price,
-  location,
-  Reason,
-  modalVisible,
-  closeModal,
-
-}) => {
-
+const ViewAd = ({ ads, modalVisible, closeModal }) => {
   // disable disable pop
   const [DisableModalShow, setDisableModalShow] = React.useState(false);
   // show delete details
@@ -138,27 +165,35 @@ const ViewAd = ({
   };
 
   const [, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(adImages[0]);
+
+
+
+  const [selectedImage, setSelectedImage] = useState(
+    `data:image/png;base64,${ads.adsImages[0]}`
+  );
+
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
     setShowModal(true);
   };
 
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
-  const shopData = {
-    shopName: "Emereld Electrical",
-    ownerName: "Adam Robert",
-    mobileNo: "0778964983",
-    address: "No 132, Marain Drive, Bambalapittiya, Colombo",
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
 
+
+const shopData = {
+  shopName: ads.shopName, 
+  ownerName: ads.firstName, 
+  mobileNo: ads.shopPhone, 
+  address: ads.shopAddress, 
+};
+
   // Open Edit Ad Page
   const navigate = useNavigate();
-
+  const id = ads.id;
   const handleOpenAdEditModal = () => {
     // Navigate to the editAd route with the id as a parameter
     navigate(`/Advertiser/editAd/${id}`);
@@ -185,25 +220,16 @@ const ViewAd = ({
               <div md="auto" className="d-flex align-items-center ">
                 <div>
                   <img
-                    src={profileIcon}
+                    src={ads.profileImage}
                     alt="Profile of Advertiser"
-                    roundedCircle
                     className="AdProfilePic"
                   />
                 </div>
                 <div className="namediv">
-                  <p>Adam</p>
+                  <p>{ads.firstName}</p>
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3">
-                <i
-                  className="fa-solid fa-pen-to-square fa-2xl AdEditBut"
-                  onClick={handleOpenAdEditModal}
-                ></i>
-                {/* {EditAdModal && (
-                  <EditAd show={EditAdModal} onHide={handleCloseAdEditModal} />
-                )} */}
-
                 <button
                   className="AdDisableBut rounded"
                   onClick={() => setDisableModalShow(true)}
@@ -211,14 +237,20 @@ const ViewAd = ({
                   Disable
                 </button>
                 <i
-                  className="fa-solid fa-trash fa-xl AdDeleteBut"
+                  className="fa-solid fa-pen-to-square fa-2xl AdEditBut"
+                  onClick={handleOpenAdEditModal}
+                ></i>
+                <i
+                  className="fa-solid fa-trash fa-2xl AdDeleteBut"
                   onClick={() => setDeleteModalShow(true)}
                 ></i>
                 <ConfirmDelete
+                  id={ads.id}
                   show={DeleteModalShow}
                   onHide={() => setDeleteModalShow(false)}
                 />
                 <ConfirmDisabled
+                  id={ads.id}
                   show={DisableModalShow}
                   onHide={() => setDisableModalShow(false)}
                 />
@@ -232,19 +264,23 @@ const ViewAd = ({
                     src={selectedImage}
                     alt="Main image"
                     fluid
-                    onClick={() => handleImageClick(adImages[0])}
+                    onClick={() =>
+                      handleImageClick(`data:image/png;base64,${ads.adsImages[0]}`)
+                    }
                   />
 
                   <div className="py-3 ">
                     <div className="d-flex justify-content-center AdsRowImg">
-                      {adImages.map((image, index) => (
+                      {ads.adsImages.map((image, index) => (
                         <div key={index} className="m-3 AdsColImg">
                           <Image
-                            src={image}
+                            src={`data:image/png;base64,${image}`}
                             alt={`Gallery image ${index + 1}`}
                             thumbnail
                             fluid
-                            onClick={() => handleImageClick(image)}
+                            onClick={() =>
+                              handleImageClick(`data:image/png;base64,${image}`)
+                            }
                           />
                         </div>
                       ))}
@@ -255,7 +291,7 @@ const ViewAd = ({
 
               <div>
                 <div className="d-flex justify-content-center">
-                  <h1 className="AdSlideHeading">{adName}</h1>
+                  <h1 className="AdSlideHeading">{ads.adName}</h1>
                 </div>
                 <div>
                   <p>
@@ -263,10 +299,10 @@ const ViewAd = ({
                     Set Electric Specification 24V Cordless Power Drills
                   </p>
                   <hr />
-                  <p> category: Electrical</p>
-                  <p> Warranty: 12 Months</p>
-                  <p> Delivery: Free Delivery</p>
-                  <h1 className="AdPrice text-center">{price} LKR</h1>
+                  <p> category: {ads.category}</p>
+                  <p> Warranty: {ads.warrantyMonths} Months</p>
+                  <p> Delivery: {ads.delivery}</p>
+                  <h1 className="AdPrice text-center">{ads.price} LKR</h1>
                 </div>
 
                 <div className="d-flex justify-content-center mb-3">
@@ -288,7 +324,10 @@ const ViewAd = ({
             shopData={shopData}
           />
         </Container>
-        <div> {Reason && <h3 className="AdrejectP p-4">{Reason}</h3>}</div>
+        <div>
+          {" "}
+          {ads.reason && <h3 className="AdrejectP p-4">{ads.reason}</h3>}
+        </div>
       </Modal>
     </div>
   );

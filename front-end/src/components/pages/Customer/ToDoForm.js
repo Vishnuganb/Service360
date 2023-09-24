@@ -7,7 +7,7 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
-import { QrReader } from 'react-qr-reader'; // Import the QR code reader
+// import { QrReader } from 'react-qr-reader'; // Import the QR code reader
 
 function ToDoForm() {
   const [tasks, setTasks] = useState([]);

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import backgroundImage from "../../../../../assets/images/header/Background.png";
 
 import "../../../../../style/advertiser/AdIndex.css";
@@ -48,6 +49,23 @@ const ShopDetailsModal = ({ show, onHide, shopData }) => {
 };
 
 const EnableAdModal = (props) => {
+  const navigate = useNavigate();
+  const id = props.id;
+  console.log(id);
+  function handleEnable() {
+    axios
+      .put(`http://localhost:8080/auth/enable/${id}`)
+      .then((response) => {
+        console.log("Ad Disabled successfully!", response.data);
+        props.onHide();
+        navigate(`/Advertiser/Ads`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        // Handle errors, e.g., show an error message
+        console.error("Failed to Disabled ad", error);
+      });
+  }
   return (
     <Modal
       {...props}
@@ -68,28 +86,18 @@ const EnableAdModal = (props) => {
           <button className="AdCancel rounded" onClick={props.onHide}>
             Close
           </button>
-          <button className="AdEnableBut rounded">Enable</button>
+          <button className="AdEnableBut rounded" onClick={handleEnable}>
+            Enable
+          </button>
         </div>
       </Modal.Body>
     </Modal>
   );
 };
 
-const DisableAdPop = ({
-  profileIcon,
-  proName,
-  adName,
-  adImages,
-  price,
-  location,
-  reason,
-  modalVisible,
-  closeModal,
-}) => {
-
+const DisableAdPop = ({ ads, modalVisible, closeModal }) => {
   //Enable Model
   const [EnableModalShow, setEnableModalShow] = React.useState(false);
-
 
   // Shop Details
 
@@ -107,21 +115,29 @@ const DisableAdPop = ({
   };
 
   const [, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(adImages[0]);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
     setShowModal(true);
   };
 
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
-  const shopData = {
-    shopName: "Emereld Electrical",
-    ownerName: "Adam Robert",
-    mobileNo: "0778964983",
-    address: "No 132, Marain Drive, Bambalapittiya, Colombo",
+
+   const shopData = {
+     shopName: ads.shopName,
+     ownerName: ads.firstName,
+     mobileNo: ads.shopPhone,
+     address: ads.shopAddress,
+   };
+  
+
+ const [selectedImage, setSelectedImage] = useState(
+   `data:image/png;base64,${ads.adsImages[0]}`
+ );
+
+  const navigate = useNavigate();
+  const id = ads.id;
+  const handleOpenAdEditModal = () => {
+    navigate(`/Advertiser/editAd/${id}`);
   };
 
   return (
@@ -145,18 +161,21 @@ const DisableAdPop = ({
               <div md="auto" className="d-flex align-items-center ">
                 <div>
                   <img
-                    src={profileIcon}
+                    src={ads.profileImage}
                     alt="Profile of Advertiser"
                     roundedCircle
                     className="AdProfilePic"
                   />
                 </div>
                 <div className="namediv">
-                  <p>Adam</p>
+                  <p>{ads.firstName}</p>
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3">
-                <i className="fa-solid fa-pen-to-square fa-2xl AdEditBut"></i>
+                <i
+                  className="fa-solid fa-pen-to-square fa-2xl AdEditBut"
+                  onClick={handleOpenAdEditModal}
+                ></i>
                 <button
                   className="AdEnableBut rounded"
                   onClick={() => setEnableModalShow(true)}
@@ -165,6 +184,7 @@ const DisableAdPop = ({
                 </button>
 
                 <EnableAdModal
+                  id={ads.id}
                   show={EnableModalShow}
                   onHide={() => setEnableModalShow(false)}
                 />
@@ -178,19 +198,25 @@ const DisableAdPop = ({
                     src={selectedImage}
                     alt="Main image"
                     fluid
-                    onClick={() => handleImageClick(adImages[0])}
+                    onClick={() =>
+                      handleImageClick(
+                        `data:image/png;base64,${ads.adsImages[0]}`
+                      )
+                    }
                   />
 
                   <div className="py-3 ">
                     <div className="d-flex justify-content-center AdsRowImg">
-                      {adImages.map((image, index) => (
+                      {ads.adsImages.map((image, index) => (
                         <div key={index} className="m-3 AdsColImg">
                           <Image
-                            src={image}
+                            src={`data:image/png;base64,${image}`}
                             alt={`Gallery image ${index + 1}`}
                             thumbnail
                             fluid
-                            onClick={() => handleImageClick(image)}
+                            onClick={() =>
+                              handleImageClick(`data:image/png;base64,${image}`)
+                            }
                           />
                         </div>
                       ))}
@@ -201,7 +227,7 @@ const DisableAdPop = ({
 
               <div>
                 <div className="d-flex justify-content-center">
-                  <h1 className="AdSlideHeading">{adName}</h1>
+                  <h1 className="AdSlideHeading">{ads.adName}</h1>
                 </div>
                 <div>
                   <p>
@@ -209,11 +235,12 @@ const DisableAdPop = ({
                     Set Electric Specification 24V Cordless Power Drills
                   </p>
                   <hr />
-                  <p> category: Electrical</p>
-                  <p> Warranty: 12 Months</p>
-                  <p> Delivery: Free Delivery</p>
-                  <h1 className="AdPrice text-center">{price} LKR</h1>
+                  <p> category: {ads.category}</p>
+                  <p> Warranty: {ads.warrantyMonths}</p>
+                  <p> Delivery: {ads.delivery}</p>
+                  <h1 className="AdPrice text-center">{ads.price} LKR</h1>
                 </div>
+
                 <div className="d-flex justify-content-center mb-3">
                   <Button
                     className="AdSlideButton"

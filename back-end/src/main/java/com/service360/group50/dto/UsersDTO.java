@@ -107,7 +107,7 @@ public class UsersDTO {
         this.password = password;
     }
 
-    public String getRole () {
+    public String getRole() {
         return role;
     }
 

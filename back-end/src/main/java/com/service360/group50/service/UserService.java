@@ -127,6 +127,12 @@ public class UserService {
         userRepository.save ( userdata );
         return userdata;
     }
+
+
+    public Users getUser(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
     public Users updateAdvertiserEnable ( Long userid, boolean locked ) {
         Optional<Users> usersOptional = userRepository.findById ( userid );
         if ( usersOptional.isEmpty () ) {

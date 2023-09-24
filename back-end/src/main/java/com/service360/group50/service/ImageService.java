@@ -7,14 +7,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class ImageService {
+
     public String saveImageToStorage(String uploadDirectory, MultipartFile imageFile) throws IOException {
         String uniqueFileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
 
@@ -31,6 +37,8 @@ public class ImageService {
         return uniqueFileName;
     }
 
+
+
     public byte[] getImage(String imageDirectory, String imageName) throws IOException {
         // Construct the full path to the image
         Path imagePath = Path.of(imageDirectory, imageName);
@@ -43,7 +51,21 @@ public class ImageService {
         } else {
             // If the image does not exist, return null or throw an exception
             return null; // You can also throw an exception here if needed
-      }
+        }
+    }
+
+    // delete image
+    public String deleteImage(String imageDirectory, String imageName) throws IOException {
+        // Construct the full path to the image
+        Path imagePath = Path.of(imageDirectory, imageName);
+
+        // Check if the image file exists
+        if (Files.exists(imagePath)) {
+            Files.delete(imagePath);
+            return "Success";
+        } else {
+            return "Failed"; // You can also throw an exception here if needed
+        }
     }
 
 

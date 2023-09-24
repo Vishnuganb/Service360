@@ -87,6 +87,7 @@ public class Users implements UserDetails {
     private Boolean locked;
     private Boolean enabled;
 
+
     @PrePersist
     protected void onCreate() {
         registrationdate = LocalDate.now();
@@ -132,5 +133,6 @@ public class Users implements UserDetails {
     public boolean isEnabled () {
         return enabled;
     }
+
 
 }

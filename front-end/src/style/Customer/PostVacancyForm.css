@@ -189,8 +189,12 @@ h2{
     font-weight: 500;
     text-transform: none;
     background:black
+    
 }
-
+.btn-vacancy-form-k:hover {
+    background-color: black; 
+    color: white;
+  }
 
 #cancel-link button{
     width: 20%;

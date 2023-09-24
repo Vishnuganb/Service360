@@ -103,9 +103,14 @@ import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
 import ToDoList from './components/pages/ServiceProvider/CreateToDo.js';
 import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
 import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
-
+import PostJobForm from './components/pages/Customer/PostJobForm.js';
+import PostedJobs from './components/pages/Customer/PostedJobs.js';
+import RequestedJobs from './components/pages/Customer/RequestedJobs.js';
+import ViewPostedJobs from './components/pages/Customer/ViewPostedJobs.js';
+import ViewVacancyReply from './components/pages/Customer/ViewVacancyReply.js';
 import ActivateCustomer from './ContextFiles/ActivateCustomer.js';
 import ActivateUser from './ContextFiles/ActivateUser.js';
+import ViewPostedJobs1 from './components/pages/Customer/ViewPostedJobs1.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -187,6 +192,14 @@ const router = createBrowserRouter(
         <Route path="RequestedQuotation" element={<RequestedQuotation />} />
         <Route path="PostedVacancies" element={<PostedVacancies />} />
         <Route path="JobRequest" element={<JobRequest />} />
+        <Route path="PostJobForm" element={<PostJobForm />} />
+        <Route path="PostedJobs" element={<PostedJobs />} />
+        <Route path="RequestedJobs" element={<RequestedJobs />} />
+        <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} />
+        <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
+        <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
+
+
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

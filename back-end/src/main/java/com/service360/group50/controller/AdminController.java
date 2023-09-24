@@ -5,6 +5,7 @@ import com.service360.group50.entity.*;
 import com.service360.group50.repo.AdvertiserFileRepository;
 import com.service360.group50.repo.ServiceProviderFilesRepository;
 import com.service360.group50.repo.ServiceProviderServicesRepository;
+import com.service360.group50.service.AdminService;
 import com.service360.group50.service.CustomerService;
 import com.service360.group50.service.UserService;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,7 @@ public class AdminController {
     private final ServiceProviderServicesRepository serviceProviderServicesRepository;
     private final ServiceProviderFilesRepository serviceProviderFilesRepository;
     private final AdvertiserFileRepository advertiserFileRepository;
+    private final AdminService adminService;
 
     @GetMapping("/getAllCustomers")
     public List<Users> getAllCustomers() {
@@ -190,5 +192,23 @@ public class AdminController {
         return userService.updateUserLockedAndRejectStatus(userid, locked, status, reason);
     }
 
+    @PutMapping("/updateTrainingSessionAcceptStatus")
+    public TrainingSession updateTrainingSessionAcceptStatus(
+            @RequestParam(value = "trainingid") Long trainingid,
+            @RequestParam(value = "status") String status
+
+    ){
+        return adminService.updateTrainingSessionAcceptStatus(trainingid, status);
+    }
+
+    @PutMapping("/updateTrainingSessionRejectStatus")
+    public TrainingSession updateTrainingSessionRejectStatus(
+            @RequestParam(value = "trainingid") Long trainingid,
+            @RequestParam(value = "status") String status,
+            @RequestParam(value = "reason") String reason
+
+    ){
+        return adminService.updateTrainingSessionRejectStatus(trainingid, status, reason);
+    }
 
 }

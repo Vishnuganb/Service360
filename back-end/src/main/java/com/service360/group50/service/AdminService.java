@@ -5,8 +5,11 @@ import com.service360.group50.dto.ServiceCategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
 import com.service360.group50.entity.ServiceCategory;
 import com.service360.group50.entity.Services;
+import com.service360.group50.entity.TrainingSession;
+import com.service360.group50.entity.Users;
 import com.service360.group50.repo.ServiceCategoryRepository;
 import com.service360.group50.repo.ServiceRepository;
+import com.service360.group50.repo.TrainingSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -29,6 +32,7 @@ public class AdminService {
 
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final ServiceRepository serviceRepository;
+    private final TrainingSessionRepository trainingSessionRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -219,5 +223,41 @@ public class AdminService {
         }
 
         return serviceAndCategories;
+    }
+
+
+    public TrainingSession updateTrainingSessionAcceptStatus ( Long trainingid, String status ) {
+        Optional<TrainingSession> existingTrainingSessionOptional = trainingSessionRepository.findById ( trainingid );
+
+        if (existingTrainingSessionOptional.isEmpty()) {
+            System.out.println("Training session not found");
+            return null;
+        }
+
+        TrainingSession existingTrainingSession = existingTrainingSessionOptional.get();
+
+        existingTrainingSession.setStatus(status);
+
+        existingTrainingSession = trainingSessionRepository.save(existingTrainingSession);
+
+        return existingTrainingSession;
+    }
+
+    public TrainingSession updateTrainingSessionRejectStatus ( Long trainingid, String status, String reason ) {
+        Optional<TrainingSession> existingTrainingSessionOptional = trainingSessionRepository.findById ( trainingid );
+
+        if (existingTrainingSessionOptional.isEmpty()) {
+            System.out.println("Training session not found");
+            return null;
+        }
+
+        TrainingSession existingTrainingSession = existingTrainingSessionOptional.get();
+
+        existingTrainingSession.setStatus(status);
+        existingTrainingSession.setReason(reason);
+
+        existingTrainingSession = trainingSessionRepository.save(existingTrainingSession);
+
+        return existingTrainingSession;
     }
 }

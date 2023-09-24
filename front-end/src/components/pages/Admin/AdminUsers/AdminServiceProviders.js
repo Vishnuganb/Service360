@@ -176,6 +176,10 @@ function AdminServiceProvider() {
 
         }
 
+        if (data.selectedCategory !== 'default') {
+            filteredServiceProviders = filteredServiceProviders.filter((service) => service.category === data.selectedCategory);
+        }
+
         if (data.searchTerm) {
             filteredServiceProviders = filteredServiceProviders.filter((service) =>
                 service.firstname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
@@ -388,7 +392,7 @@ function AdminServiceProvider() {
                     {data.displayedServices && data.displayedServices.map((provider) => (
                         <Card className="m-3" key={provider.userid}>
                             {data.activeTab !== 'Pending' && (
-                                <Card.Img src={provider.image} alt="Service Provider" className="rounded-circle" width="50" height="50" />
+                                <Card.Img src={data.provider.profilePic} alt="Service Provider" className="rounded-circle" width="50" height="50" />
                             )}
                             <Card.Body className="d-flex flex-column align-items-center">
                                 <p className="card-text fw-bold d-none d-md-block">{provider.firstname}{' '}{provider.lastname}</p>

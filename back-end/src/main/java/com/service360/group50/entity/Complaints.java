@@ -37,8 +37,8 @@ public class Complaints {
     @Column( columnDefinition = "DATE")
     private LocalDate posteddate;
 
-    @Column(columnDefinition = "TEXT")
-    private String status;
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean disabled;
 
     //user name
 //    @ManyToOne

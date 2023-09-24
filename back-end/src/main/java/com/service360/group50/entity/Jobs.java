@@ -52,6 +52,8 @@ public class Jobs {
     @Column( columnDefinition = "TEXT")
     private String isquotation;
 
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean disabled;
     
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")

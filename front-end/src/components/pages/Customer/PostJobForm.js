@@ -51,22 +51,42 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
         jobstatus: "",
         jobdescription: "",
         joblocation: "",
+        vacancytype:"",
+        qualifications:"",
+        responsibilities:""
       });
 
 
       const handleAddJob = async (e) => {
         e.preventDefault();
-    
+      
         try {
-          const response = await axiosInstance.post("/auth/createjobs", {
-            jobtitle: jobData.jobtitle,
-            posteddate: jobData.posteddate,
-            duedate: jobData.posteddate,
-            joblocation:jobData.joblocation,
-            servicename:jobData.servicename
+          let response;
+          if (selectedDuration === 'Long_term') {
+            response = await axiosInstance.post("/auth/createvacancies", {
+            vacancytitle: jobData.jobtitle,
+              posteddate: jobData.posteddate,
+              duedate: jobData.posteddate,
+              vacancylocation: jobData.joblocation,
+              servicename: jobData.servicename,
+              vacancytype: jobData.vacancytype,
+              qualifications: jobData.qualifications,
+              responsibilities: jobData.responsibilities,
 
-          });
-    
+              // Add other properties specific to vacancies here
+            });
+          } else {
+            response = await axiosInstance.post("/auth/createjobs", {
+              jobtitle: jobData.jobtitle,
+              posteddate: jobData.posteddate,
+              duedate: jobData.duedate,
+              joblocation: jobData.joblocation,
+              servicename: jobData.servicename,
+              jobdescription: jobData.jobdescription,
+              // Add other properties specific to jobs here
+            });
+          }
+      
           if (response.status === 200) {
             console.log(jobData);
             window.location.reload();
@@ -77,6 +97,7 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
           console.log(error);
         }
       };
+      
     return (
         <div className='card2' >
             <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
@@ -260,7 +281,10 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                                         <label htmlFor="title">Skill & Qualification Expect <span style={{ color: "red" }}>*</span></label>
                                     </Col>
                                     <Col className="col-6">
-                                        <input type="text" name="qualification" className="form-control" id="qualification" placeholder="Type here" />
+                                    <input type="text" name="qualifications" value={jobData.qualifications}
+                        onChange={(e) => {
+                          inputJobdata(e.target.name, e.target.value);
+                        }} className="form-control" id="qualifications" />
                                     </Col>
                                 </Row>
                             </div>
@@ -271,7 +295,10 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                                         <label htmlFor="title">Responsibilities Expect <span style={{ color: "red" }}>*</span></label>
                                     </Col>
                                     <Col className="col-6">
-                                        <input type="text" name="responsibilities" className="form-control" id="responsibilities" placeholder="Type here" />
+                                    <input type="text" name="responsibilities" value={jobData.responsibilities}
+                        onChange={(e) => {
+                          inputJobdata(e.target.name, e.target.value);
+                        }} className="form-control" id="responsibilities" />
                                     </Col>
                                 </Row>
                             </div>

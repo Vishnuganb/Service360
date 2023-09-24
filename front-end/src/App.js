@@ -108,6 +108,7 @@ import RequestedJobs from './components/pages/Customer/RequestedJobs.js';
 import ViewPostedJobs from './components/pages/Customer/ViewPostedJobs.js';
 import ViewVacancyReply from './components/pages/Customer/ViewVacancyReply.js';
 import ActivateUser from './ContextFiles/ActivateUser.js';
+import ViewPostedJobs1 from './components/pages/Customer/ViewPostedJobs1.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -186,7 +187,8 @@ const router = createBrowserRouter(
         <Route path="PostJobForm" element={<PostJobForm />} />
         <Route path="PostedJobs" element={<PostedJobs />} />
         <Route path="RequestedJobs" element={<RequestedJobs />} />
-        <Route path="ViewPostedJobs" element={<ViewPostedJobs />} />
+        <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} />
+        <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
         <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
 
 

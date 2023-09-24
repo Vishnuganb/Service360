@@ -9,7 +9,7 @@ import img3 from '../../../assets/images/Customer/sofaclean3.jpeg';
 import '../../../style/Customer/ViewServiceProvider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faComment, faStar } from '@fortawesome/free-solid-svg-icons';
-// import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link,useParams } from 'react-router-dom';

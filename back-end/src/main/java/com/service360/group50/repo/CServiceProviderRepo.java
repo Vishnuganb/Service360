@@ -11,5 +11,4 @@ public interface CServiceProviderRepo extends JpaRepository<CServiceProviderDeta
 
     @Override
     List<CServiceProviderDetails> findAll();
-
 }

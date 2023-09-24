@@ -1,6 +1,8 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.entity.CServiceProviderDetails;
+import com.service360.group50.entity.TodoListDetails;
+import com.service360.group50.service.TodoListDetailsService;
 import com.service360.group50.service.CServiceProviderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,12 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequiredArgsConstructor
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class CustomerController {
-    @Autowired
-    private CServiceProviderService cServiceProviderService;
+
+    private final CServiceProviderService cServiceProviderService;
+    private final TodoListDetailsService todoListDetailsService;
 
     @GetMapping("/details")
     @ResponseBody
@@ -23,5 +26,9 @@ public class CustomerController {
         return cServiceProviderService.getAllDetails();
     }
 
-
+    @GetMapping("/tododetails")
+    @ResponseBody
+    public List<TodoListDetails> getAllTodoListDetails() {
+        return todoListDetailsService.getAllDetails();
+    }
 }

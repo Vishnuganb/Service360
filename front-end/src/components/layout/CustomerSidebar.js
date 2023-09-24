@@ -71,7 +71,6 @@ function CustomerSideBar() {
                   </span>
                 </Link>
               </li>
-
               {/* <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-1"
@@ -167,7 +166,6 @@ function CustomerSideBar() {
                   </li>
                 </ul>
               </li> */}
-
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-2"

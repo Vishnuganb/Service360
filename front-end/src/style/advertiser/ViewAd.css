@@ -13,12 +13,12 @@
 }
 .AdDisableBut {
   all: unset;
-  background-color: rgb(78, 4, 4);
+  background-color: rgb(182, 14, 14);
   color: white;
   padding: 0.4em;
 }
 .AdDeleteBut {
-  color: rgb(78, 4, 4);
+  color: rgb(182, 14, 14);
   padding: 0.4em;
 }
 
@@ -43,15 +43,19 @@
   background-color: unset;
 }
 
+.AdEditBut{
+  color:  rgb(13, 100, 69);
+}
+
 .AdEditBut:hover {
-  color: #2d2932;
-  scale: 1.05;
+  color: #000000;
+  /* scale: 1.05; */
 }
 
 .AdDeleteBut:hover {
   color: #000000;
   font-weight: bold;
-  scale: 1.1;
+  /* scale: 1.1; */
   /* border: 1px solid  rgb(78, 4, 4); */
   background-color: unset;
 }

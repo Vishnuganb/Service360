@@ -24,6 +24,10 @@ public class SubscriptionService {
     @Autowired
     private SubscriptionHistoryRepository subscriptionHistoryRepository;
 
+    public Subscription getSubscription(Long id) {
+        return subscriptionRepository.findByUsers_userid(id);
+    }
+
 
     // get Active subscribtion by userId
     public Subscription getActiveSubscribtionByUserId(Long userId) {

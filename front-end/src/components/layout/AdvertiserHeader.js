@@ -111,17 +111,7 @@ function AdvertiserHeader() {
                 View Profile
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <AdvertiserEditProfile
-                show={showEditProfile}
-                onHide={() => setShowEditProfile(false)}
-              />
-              <NavDropdown.Item
-                as={Link}
-                onClick={logout}
-                className="fw-bold no-hover"
-              >
-                Logout
-              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} onClick={logout} className="fw-bold no-hover">Logout</NavDropdown.Item>
             </NavDropdown>
             <AdvertiserEditProfile
               show={showEditProfile}

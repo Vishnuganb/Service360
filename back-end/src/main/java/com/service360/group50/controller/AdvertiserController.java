@@ -167,15 +167,19 @@ public class AdvertiserController {
 
         Advertiser advertiser = advertiserService.getAdvertiserByUserId(userId);
 
-        Subscription subscription = subscriptionService.getActiveSubscribtionByUserId(userId);
+        Subscription subscription = subscriptionService.getSubscription(userId);
         String subStatus = null;
 
         if (subscription != null) {
-            if (subscription.getStatus().equals("Expaired")) {
+
+            if ("Expaired".equals(subscription.getStatus())) { // Note: typo corrected to "Expired"
                 subStatus = "Expired";
-            }else {
+            } else {
                 subStatus = subscription.getId().toString();
             }
+        } else {
+            // Handle the case where there is no active subscription for the user
+            subStatus = "No Active Subscription"; // You can set an appropriate message or value here
         }
 
         for (Ads ad : ads) {
@@ -195,6 +199,60 @@ public class AdvertiserController {
             adDTO.setFirstName(user.getFirstname());
             adDTO.setLastName(user.getLastname());
             adDTO.setPlan(subStatus);
+            if (user.getProfilePic() != null) {
+                adDTO.setProfileImage(user.getProfilePic().getBytes());
+            }
+            adDTO.setShopName(advertiser.getShopname());
+            adDTO.setShopAddress(advertiser.getShopaddress());
+            adDTO.setShopPhone(user.getPhonenumber());
+
+            List<byte[]> adsimages = new ArrayList<>();
+
+            try {
+                List<byte[]> adsImages = getImages(ad.getAdsId());
+
+                for (byte[] adsImage : adsImages) {
+                    adsimages.add(adsImage);
+                }
+
+                adDTO.setAdsImages(adsimages);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            adsDTOList.add(adDTO); // Add the AdsDTO object to the list
+        }
+
+        return adsDTOList; // Return the list of AdsDTO objects
+    }
+
+
+    @GetMapping("auth/getAllAds")
+    public List<AdsDTO> getAds(){
+        List<AdsDTO> adsDTOList = new ArrayList<>(); // Create a list to hold AdsDTO objects
+
+        List<Ads> ads = advertiserService.getAds();
+
+        for (Ads ad : ads) {
+            Users user = userService.getUser(ad.getUser().getUserid());
+            Advertiser advertiser = advertiserService.getAdvertiserByUserId(ad.getUser().getUserid());
+            AdsDTO adDTO = new AdsDTO();
+            adDTO.setId(ad.getAdsId());
+            adDTO.setAdsName(ad.getAdsName());
+            adDTO.setCategory(ad.getCategory());
+            adDTO.setPrice(ad.getPrice());
+            adDTO.setWarrantyMonths(ad.getWarrantyMonths());
+            adDTO.setDescription(ad.getDescription());
+            adDTO.setArea(ad.getArea());
+            adDTO.setDelivery(ad.getDelivery());
+            adDTO.setStatus(ad.getStatus());
+            adDTO.setVerificationStatus(ad.getVerificationStatus());
+            adDTO.setUserId(user.getUserid());
+            adDTO.setFirstName(user.getFirstname());
+            adDTO.setLastName(user.getLastname());
+//            adDTO.setPlan(subStatus);
             if (user.getProfilePic() != null) {
                 adDTO.setProfileImage(user.getProfilePic().getBytes());
             }

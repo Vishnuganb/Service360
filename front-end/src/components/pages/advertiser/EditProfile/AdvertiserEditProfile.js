@@ -50,6 +50,7 @@ const AdvertiserEditProfile = (props) => {
       const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid);
       if (response.data) {
         setUserDetail(response.data);
+        console.log(response.data);
         setdata({
           ...data,
           email: response.data.email,

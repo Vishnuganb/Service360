@@ -1,87 +1,15 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, } from "react-router-dom";
 
 import HistoryModal from "./subscriptionHistory";
 
-import backgroundImage from "../../../../assets/images/header/Background.png";
+import backgroundImage from "../../../../../assets/images/header/Background.png";
 
-const Subscriped = () => {
+const Subscriped = ({id,planName, price, startDate, endDate, description,status, userid}) => {
   // History Modal
-  const subscriptionHistory = [
-    {
-      planName: "Bronze",
-      amount: "0 LKR",
-      paymentDate: "2023-01-15",
-      startDate: "2023-01-15",
-      expirationDate: "2023-02-15",
-    },
-    {
-      planName: "Gold",
-      amount: "299 LKR",
-      paymentDate: "2023-02-15",
-      startDate: "2023-02-15",
-      expirationDate: "2023-03-15",
-    },
-    {
-      planName: "Platinum",
-      amount: "499 LKR",
-      paymentDate: "2023-03-15",
-      startDate: "2023-08-15",
-      expirationDate: "2023-04-15",
-    },
 
-    {
-      planName: "Bronze",
-      amount: "0 LKR",
-      paymentDate: "2023-04-16",
-      startDate: "2023-04-16",
-      expirationDate: "2023-05-16",
-    },
-    {
-      planName: "Gold",
-      amount: "299 LKR",
-      paymentDate: "2023-05-16",
-      startDate: "2023-05-16",
-      expirationDate: "2023-06-16",
-    },
-    {
-      planName: "Platinum",
-      amount: "499 LKR",
-      paymentDate: "2023-06-16",
-      startDate: "2023-06-16",
-      expirationDate: "2023-07-16",
-    },
-    {
-      planName: "Bronze",
-      amount: "0 LKR",
-      paymentDate: "2023-07-17",
-      startDate: "2023-07-17",
-      expirationDate: "2023-08-17",
-    },
-    {
-      planName: "Gold",
-      amount: "299 LKR",
-      paymentDate: "2023-08-17",
-      startDate: "2023-08-17",
-      expirationDate: "2023-09-17",
-    },
-    {
-      planName: "Platinum",
-      amount: "499 LKR",
-      paymentDate: "2023-09-17",
-      startDate: "2023-09-17",
-      expirationDate: "2023-10-17",
-    },
-    {
-      planName: "Bronze",
-      amount: "0 LKR",
-      paymentDate: "2023-10-18",
-      startDate: "2023-10-18",
-      expirationDate: "2023-11-18",
-    },
-  ];
   const [historyModal, setHistoryModal] = React.useState(false);
 
   const openHistoryModal = () => {
@@ -91,7 +19,6 @@ const Subscriped = () => {
   const closeHistoryModal = () => {
     setHistoryModal(false);
   };
-
 
   const plans = [
     {
@@ -130,14 +57,7 @@ const Subscriped = () => {
     },
   ];
   const { subId } = useParams();
-  console.log("ID : " + subId);
   const subData = plans.find((plan) => plan.id === parseInt(subId));
-
-  if (!subData) {
-    return <div>Subscription plan not found</div>;
-  }
-
-
 
   return (
     <Container
@@ -157,7 +77,6 @@ const Subscriped = () => {
       <HistoryModal
         show={historyModal}
         onHide={closeHistoryModal}
-        subscriptionHistory={subscriptionHistory}
       />
 
       <div className="d-flex gap-3 justify-content-center">
@@ -170,14 +89,14 @@ const Subscriped = () => {
             <h4 className="text-center">Your Plan</h4>
           </div>
           <div className="d-flex align-items-center">
-            {subData.id === 0 && (
-              <i className="fa-solid fa-chess-knight fa-2xl">{subData.title}</i>
+            {planName === "Bronze" && (
+              <i className="fa-solid fa-chess-knight fa-2xl">{planName}</i>
             )}
-            {subData.id === 1 && (
-              <i className="fa-solid fa-chess-king fa-2xl">{subData.title}</i>
+            {planName === "Gold" && (
+              <i className="fa-solid fa-chess-king fa-2xl">{planName}</i>
             )}
-            {subData.id === 2 && (
-              <i className="fa-solid fa-chess-queen fa-2xl">{subData.title}</i>
+            {planName === "Platinum" && (
+              <i className="fa-solid fa-chess-queen fa-2xl">{planName}</i>
             )}
           </div>
         </div>
@@ -190,7 +109,7 @@ const Subscriped = () => {
           </div>
           <div className="d-flex  gap-3">
             <div style={{ height: "fit-content" }}>
-              <h3 className="GreenDate">Thu Aug 10 2023</h3>
+              <h3 className="GreenDate">{startDate}</h3>
             </div>
           </div>
         </div>
@@ -202,7 +121,7 @@ const Subscriped = () => {
             <h4 className="text-center">End Date</h4>
           </div>
           <div className="d-flex align-items-center gap-3">
-            <h3 className="redDate"> Sun Sep 10 2023</h3>
+            <h3 className="redDate"> {endDate}</h3>
           </div>
         </div>
         <div
@@ -219,8 +138,7 @@ const Subscriped = () => {
           </div>
         </div>
       </div>
-
-      {subData.id === 0 && (
+      {planName === "Bronze" && (
         <div className="px-5 mt-3">
           <h4 className="text-center">
             Your current plan is set to automatically renew at 0LKR. For a more

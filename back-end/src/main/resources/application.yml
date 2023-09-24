@@ -11,10 +11,12 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   jpa:
+    #    hibernate:
+    #      ddl-auto: create-drop
 #    hibernate:
 #      ddl-auto
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     open-in-view: false
     properties:
@@ -40,6 +42,9 @@ spring:
 #          connectiontimeout: 5000
 #          timeout: 3000
 #          writetimeout: 5000
+
+
+
 
 
 

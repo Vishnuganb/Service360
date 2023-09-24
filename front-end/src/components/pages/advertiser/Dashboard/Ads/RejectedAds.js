@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import axios from "axios";
 
 import ViewAd from "./ViewAd";
 
@@ -31,7 +32,7 @@ const RejectedAdCont = ({
               <img
                 src={profileIcon}
                 alt="Profile of Advertiser"
-                roundedCircle
+            
                 className="AdProfilePic"
               />
             </div>
@@ -84,6 +85,8 @@ const RejectedAdCont = ({
 };
 
 const RejectedAds = () => {
+   const response = sessionStorage.getItem("authenticatedUser");
+   const userDetail = JSON.parse(response);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
 
@@ -96,46 +99,55 @@ const RejectedAds = () => {
     setModalVisible(false);
   };
 
-  const adsData = [
-    {
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [soapImage],
-      adName: "Lifebuoy Soap",
-      price: 160,
-      location: "Colombo",
-      Reason: "This Ad Not Relevant For Our System",
-    },
-  ];
+   const [ads, setAds] = useState([]);
+
+  useEffect(() => {
+    const apiUrl = `http://localhost:8080/auth/getAds/${userDetail.userid}`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data);
+        setAds(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+
+
 
   return (
-    <Container >
+    <Container>
       <h2 className="AdPageHeading">Rejected Ads</h2>
       <Row>
         <div className="AdsRow">
-          {adsData.map((ad, index) => (
-            <RejectedAdCont
-              key={index}
-              profileIcon={ad.profileIcon}
-              proName={ad.proName}
-              adImage={ad.adImages[0]}
-              adName={ad.adName}
-              price={ad.price}
-              location={ad.location}
-              openModal={() => openModal(ad)}
-            />
-          ))}
+          {ads.map((ad, index) => {
+            if (ad.verificationStatus === "Rejected") {
+              return (
+                <RejectedAdCont
+                  key={ad.adsId}
+                  profileIcon={ad.profileImage}
+                  proName={ad.firstName}
+                  // adImage={getAdImages(ad.adsId)}
+                  adImage={`data:image/png;base64,${ad.adsImages[0]}`}
+                  adName={ad.adsName}
+                  price={ad.price}
+                  location={ad.area}
+                  openModal={() => openModal(ad)}
+                />
+              );
+            } else {
+              return null; // Render nothing for non-pending ads
+            }
+          })}
         </div>
 
         {selectedAd && (
           <ViewAd
-            adName={selectedAd.adName}
-            proName={selectedAd.proName}
-            price={selectedAd.price}
-            profileIcon={selectedAd.profileIcon}
-            adImages={selectedAd.adImages}
-            location={selectedAd.location}
-            Reason={selectedAd.Reason}
+            key={selectedAd.adsId}
+            ads={selectedAd}
             modalVisible={modalVisible}
             closeModal={closeModal}
           />

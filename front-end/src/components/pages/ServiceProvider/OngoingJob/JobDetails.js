@@ -64,6 +64,11 @@ function AcceptedJobDetails() {
         </Col>
 
         <Col className="AcceptedJobDetails-details-container mt-lg-0 mt-2 col-12 col-lg-10 d-flex flex-column">
+        <div className="vacancyDetails-status-container mb-2">
+          <span className="vacancyDetails-status me-2" id="vacancy-status" style={{ fontSize: "16px", fontWeight: "400", padding: "4px 6px", border: "2px solid rgb(37, 199, 37)", borderRadius: "8px" }}>
+            ongoing
+          </span>
+        </div>
           <div className="AcceptedJobDetails-title-container mb-2">
             <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobtitle}</span>
           </div>

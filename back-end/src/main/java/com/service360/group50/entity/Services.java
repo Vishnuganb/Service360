@@ -14,10 +14,11 @@ import lombok.NoArgsConstructor;
 @Table(
         name = "services"
 )
+
 public class Services {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long serviceid;
 

@@ -3,10 +3,7 @@ package com.service360.group50.controller;
 import com.service360.group50.dto.AdsDTO;
 import com.service360.group50.dto.SubscriptionDTO;
 import com.service360.group50.entity.*;
-import com.service360.group50.service.AdvertiserService;
-import com.service360.group50.service.ImageService;
-import com.service360.group50.service.SubscriptionService;
-import com.service360.group50.service.UserService;
+import com.service360.group50.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +29,8 @@ public class AdvertiserController {
     @Autowired
     private SubscriptionService subscriptionService;
 
+    @Autowired
+    private NotificationService notificationService;
 
 
 
@@ -71,8 +70,23 @@ public class AdvertiserController {
                     }
                 }
                 ad.setAdsImages(adsImagesString);
-                System.out.println("Hello" + ad);
-                return advertiserService.CreateAd(ad);
+
+                Ads createdAd = advertiserService.CreateAd(ad);
+
+                if(createdAd.getAdsId() != null ){
+                    Notification notification = new Notification();
+                    notification.setTitle(adsName+" Ad was Added");
+                    notification.setMessage("You have created a new ad");
+                    notification.setStatus("UNREAD");
+                    notification.setFEButton1("View");
+                    notification.setFEButton1("Advertiser/Ads");
+                    notification.setBEButton1("Disable");
+                    notification.setBEButton1Link("Advertiser/Ads/Disable/"+createdAd.getAdsId());
+                    notification.setUsers(userService.getUser(userId));
+                    notificationService.addNotification(notification);
+                }
+
+                return createdAd;
         }
         return null;
     }

@@ -29,13 +29,13 @@ public class Ads {
     @Column( columnDefinition = "TEXT", nullable = true)
     private String verificationStatus;
 
-    @Column( columnDefinition = "TEXT", nullable = true)
+    @Column( columnDefinition = "TEXT", nullable = false)
     private String adsImages;
 
-    @Column( columnDefinition = "TEXT", nullable = true)
+    @Column( columnDefinition = "TEXT", nullable = false)
     private String category;
 
-    @Column( columnDefinition = "TEXT", nullable = true)
+    @Column( columnDefinition = "TEXT", nullable = false)
     private String price;
 
     @Column( columnDefinition = "TEXT", nullable = true)
@@ -44,10 +44,10 @@ public class Ads {
     @Column( columnDefinition = "TEXT", nullable = true)
     private String description;
 
-    @Column( columnDefinition = "TEXT", nullable = true)
+    @Column( columnDefinition = "TEXT", nullable = false)
     private String area;
 
-    @Column( columnDefinition = "TEXT", nullable = true)
+    @Column( columnDefinition = "TEXT", nullable = false)
     private String delivery;
 
     @Column( columnDefinition = "TEXT", nullable = true)

@@ -1,14 +1,19 @@
 package com.service360.group50.service;
 
+
 import com.service360.group50.dto.UsersDTO;
+import com.service360.group50.entity.Advertiser;
 import com.service360.group50.entity.Role;
+import com.service360.group50.entity.SystemReview;
 import com.service360.group50.entity.Users;
+import com.service360.group50.repo.SystemReviewRepository;
 import com.service360.group50.repo.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +24,13 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SystemReviewRepository systemReviewRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    public List<Users> getAllUsers( Role role) {
+
+    public List<Users> getAllUsers(Role role) {
         List<Users> users = userRepository.findByRoleAndEnabled(role, true);
         return users;
     }
@@ -116,4 +124,19 @@ public class UserService {
         userRepository.save ( userdata );
         return userdata;
     }
-}
+    public SystemReview addSystemReview(Long userId, String reviewText, int rating) {
+            Users user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                throw new IllegalArgumentException("User not found");
+            }
+            SystemReview systemReview = new SystemReview();
+            systemReview.setUsers(user);
+            systemReview.setReview(reviewText);
+            systemReview.setRating(rating);
+
+            return systemReviewRepository.save(systemReview);
+        }
+    }
+
+
+

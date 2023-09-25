@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Container,
   Col,
@@ -14,23 +13,75 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker from "react-datepicker";
-const AddReviewandRating = (props) => {
-  const [rating, setRating] = useState(0);
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
+
+
+
+const serverLink = "http://localhost:8080"; 
+
+function AddReviewandRating(props) {
+
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const [userDetail, setUserDetail] = useState([]); 
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
+
+  
+ 
+  const handleReviewChange = (e) => {
+    setReview(e.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Process the form submission here
+  const handleRatingChange = (newValue) => {
+    setRating(newValue); 
   };
 
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const [startDate, setStartDate] = useState(null);
+    
+    if (userDetail) {
+      
+      const reviewData = {
+        review: review,
+        rating: parseInt(rating), 
+        userId: userDetail.userid, 
+        
+      };
+      console.log(reviewData, "data");
+      
+      fetch("http://localhost:8080/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reviewData),
+      })
+        .then((data) => {
+    
+          console.log("Review added successfully:", data);
+          setShowSuccessMessage(true); 
+        })
+        .catch((error) => {
+          
+          console.error("Error adding review:", error);
+        })
+        .finally(() => {
+          
+          setTimeout(() => {
+            setShowSuccessMessage(false);
+          }, 3000); 
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000); 
+        });
+    }
+  };
 
   return (
     <Modal
@@ -67,20 +118,6 @@ const AddReviewandRating = (props) => {
                   activeColor="#ffd700"
                 />
               </Col>
-              {/* <Col>
-                  <div className="input-group ">
-                    <DatePicker
-                      selected={startDate}
-                      onChange={handleStartDateChange}
-                      placeholderText="Select Date"
-                      dateFormat="dd/MM/yyyy"
-                      className="form-control"
-                    />
-                    <span className="input-group-text">
-                      <i class="bi bi-calendar2-week"></i>
-                    </span>
-                  </div>
-                </Col> */}
             </Row>
 
             <div className="mt-3">
@@ -92,6 +129,7 @@ const AddReviewandRating = (props) => {
                   as="textarea"
                   placeholder="Enter your comment"
                   rows={3}
+                  onChange={handleReviewChange}
                 />
               </Form.Group>
             </div>
@@ -103,8 +141,13 @@ const AddReviewandRating = (props) => {
           </Card.Body>
         </Card>
       </Form>
+      {showSuccessMessage && (
+        <div className="alert alert-success mt-3">
+          Successfully added the review and rating!
+        </div>
+      )}
     </Modal>
   );
-};
+}
 
 export default AddReviewandRating;

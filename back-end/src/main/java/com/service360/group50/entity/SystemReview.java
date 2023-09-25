@@ -33,7 +33,12 @@ public class SystemReview {
 
     //user name
     //profile
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "userid")
     private Users users;
+
+    @PrePersist
+    protected void onCreate(){
+        posteddate = LocalDate.now();
+    }
 }

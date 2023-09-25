@@ -7,10 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-import person1 from '../../../../assets/images/home/Customer_1.png';
-import person2 from '../../../../assets/images/home/Customer_2.png';
-import person3 from '../../../../assets/images/home/Customer_3.png';
+import axios from 'axios';
 import styled from 'styled-components';
 import { set } from 'lodash';
 
@@ -19,335 +16,9 @@ const StyledModalFooter = styled(Modal.Footer)`
         justify-content: flex-start;
     `;
 
+const serverLink = 'http://localhost:8080';
+
 function AdminComplaints() {
-
-    const userData = [
-        {
-            id: 1,
-            firstName: 'John',
-            lastName: 'Doe',
-            nic: '123456789V',
-            contactNumber: '0123456789',
-            email: 'john.doe@example.com',
-            address: '123 Main Street, City',
-            complaintDate: '2023-08-01',
-            image: person1,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Issue with account registration process',
-            description: 'I registered on July 1st, but my account status is still pending. Can you please check and update my status?'
-
-        },
-        {
-            id: 2,
-            firstName: 'Jane',
-            lastName: 'Smith',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'jane.smith@example.com',
-            address: '456 Oak Avenue, Town',
-            complaintDate: '2023-08-02',
-            image: person2,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Missing uploaded files.',
-            description: 'I uploaded the required files on July 2nd, but they are not showing up in my account. Please resolve this issue.'
-        },
-        {
-            id: 3,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '456123789V',
-            contactNumber: '0456123789',
-            email: 'mike.johnson@example.com',
-            address: '789 Maple Lane, Village',
-            complaintDate: '2023-08-03',
-            image: person3,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Incorrect contact number.',
-            description: 'I entered my contact number as 0456123789, but it is showing up as 0456123788. Please correct this.'
-        },
-        {
-            id: 4,
-            firstName: 'De',
-            lastName: 'Silva',
-            nic: '789123456V',
-            contactNumber: '0789123456',
-            email: 'de.silva@example.com',
-            address: '101 Pine Street, City',
-            complaintDate: '2023-08-04',
-            image: person2,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Unresolved issue with account status.',
-            description: `My account status is showing as "Resolved," but I haven't received any resolution for my previous complaint.Please look into it.`
-        },
-        {
-            id: 5,
-            firstName: 'Kumar',
-            lastName: 'Sangakkara',
-            nic: '654987321V',
-            contactNumber: '0654987321',
-            email: 'kumar.sangakkara@example.com',
-            address: '222 Oak Road, Town',
-            complaintDate: '2023-08-05',
-            image: person3,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Email verification problem.',
-            description: `I registered with my email (kumar.sangakkara@example.com) on July 5th, but I haven't received any verification email. Can you resend it?`
-        },
-        {
-            id: 6,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '789654123V',
-            contactNumber: '0789654123',
-            email: 'mike.johnson@example.com',
-            address: '333 Maple Street, Village',
-            complaintDate: '2023-08-06',
-            image: person1,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: ' Multiple accounts created.',
-            description: `It seems that there are two accounts with the same name (Mike Johnson). Please merge them into a single account.`
-        },
-        {
-            id: 7,
-            firstName: 'Saman',
-            lastName: 'Perera',
-            nic: '321456789V',
-            contactNumber: '0321456789',
-            email: 'saman.perera@example.com',
-            address: '444 Pine Avenue, City',
-            complaintDate: '2023-08-07',
-            image: person3,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Delay in resolving the issue.',
-            description: `I raised a complaint on August 7th, but it's still pending. It's been too long, and I need a prompt resolution.`
-        },
-        {
-            id: 8,
-            firstName: 'Susantha',
-            lastName: 'Villergers',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'susantha.villergers@example.com',
-            address: '555 Oak Lane, Town',
-            complaintDate: '2023-08-08',
-            image: person1,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Incorrect address.',
-            description: `I entered my address as 555 Oak Lane, Town, but it is showing up as 555 Oak Lane, City. Please correct this.`
-        },
-        {
-            id: 9,
-            firstName: 'William',
-            lastName: 'Wiliamson',
-            nic: '654321789V',
-            contactNumber: '0654321789',
-            email: 'william.wiliamson@example.com',
-            address: '666 Maple Road, Village',
-            complaintDate: '2023-08-09',
-            image: person2,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Missing uploaded files.',
-            description: `I uploaded the required files on August 9th, but they are not showing up in my account. Please resolve this issue.`
-        },
-        {
-            id: 10,
-            firstName: 'Johnes',
-            lastName: 'Doe',
-            nic: '123456789V',
-            contactNumber: '0123456789',
-            email: 'john.doe@example.com',
-            address: '777 Main Street, City',
-            complaintDate: '2023-08-10',
-            image: person1,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: ' Account login issue.',
-            description: `I can't log in to my account even after using the correct credentials. Please help me regain access.`
-        },
-        {
-            id: 11,
-            firstName: 'Jane',
-            lastName: 'Smith',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'jane.smith@example.com',
-            address: '888 Oak Avenue, Town',
-            complaintDate: '2023-08-11',
-            image: person2,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Incorrect profile picture.',
-            description: `The profile picture associated with my account is not mine (person2). Please update it with the correct one.`
-        },
-        {
-            id: 12,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '456123789V',
-            contactNumber: '0456123789',
-            email: 'mike.johnson@example.com',
-            address: '999 Maple Lane, Village',
-            complaintDate: '2023-08-12',
-            image: person3,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: 'Unresponsive customer support.',
-            description: `I contacted customer support regarding an issue, but I haven't received any response yet. Please improve your response time.`
-        },
-        {
-            id: 13,
-            firstName: 'De',
-            lastName: 'Silva',
-            nic: '789123456V',
-            contactNumber: '0789123456',
-            email: 'de.silva@example.com',
-            address: '1010 Pine Street, City',
-            complaintDate: '2023-08-13',
-            image: person2,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: `Unauthorized access to account.`,
-            description: `I suspect that someone else has accessed my account without my permission. Please investigate and take necessary action.`
-        },
-        {
-            id: 14,
-            firstName: 'Kumar',
-            lastName: 'Sangakkara',
-            nic: '654987321V',
-            contactNumber: '0654987321',
-            email: 'kumar.sangakkara@example.com',
-            address: '111 Oak Road, Town',
-            complaintDate: '2023-08-14',
-            image: person3,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: `Billing discrepancy.`,
-            description: `There is a discrepancy in my billing statement for the services provided. Kindly review and correct the charges.`
-        },
-        {
-            id: 15,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '789654123V',
-            contactNumber: '0789654123',
-            email: 'mike.johnson@example.com',
-            address: '1212 Maple Street, Village',
-            complaintDate: '2023-08-15',
-            image: person1,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: `Lost data after resolution.`,
-            description: `My previous complaint was resolved, but some of my data seems to be missing. Please restore it.`
-        },
-        {
-            id: 16,
-            firstName: 'Saman',
-            lastName: 'Perera',
-            nic: '321456789V',
-            contactNumber: '0321456789',
-            email: 'saman.perera@example.com',
-            address: '1313 Pine Avenue, City',
-            complaintDate: '2023-08-16',
-            image: person3,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: `Unable to upload files.`,
-            description: `I'm unable to upload the required files for my account. The system keeps showing an error. Please fix this issue.`
-        },
-        {
-            id: 17,
-            firstName: 'Susantha',
-            lastName: 'Villergers',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'susantha.villergers@example.com',
-            address: '1414 Oak Lane, Town',
-            complaintDate: '2023-08-17',
-            image: person1,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: `Account deactivation without notice.`,
-            description: `My account was deactivated without any prior notice or reason. I need an explanation and a solution.`
-        },
-        {
-            id: 18,
-            firstName: 'William',
-            lastName: 'Wiliamson',
-            nic: '654321789V',
-            contactNumber: '0654321789',
-            email: 'william.wiliamson@example.com',
-            address: '1515 Maple Road, Village',
-            complaintDate: '2023-08-18',
-            image: person2,
-            status: 'Resolved',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-            complaint: `Incorrect NIC number.`,
-            description: `The NIC number associated with my account (654321789V) is incorrect. Please update it to 654987321V.`
-        },
-    ];
 
     const [data, setData] = useState({
         currentPage: 1,
@@ -365,41 +36,41 @@ function AdminComplaints() {
         toDate: null,
         reply: '',
         replyErrorMessage: '',
+        complaintsData: [],
+        pendingComplaints: [],
+        resolvedComplaints: [],
     });
 
-    const totalPages = Math.ceil(userData.length / data.rowsPerPage);
-    const startIndex = (data.currentPage - 1) * data.rowsPerPage;
-    const endIndex = startIndex + data.rowsPerPage;
-    const displayedComplaints = userData.slice(startIndex, endIndex);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(serverLink + '/auth/getAllComplaints');
+                const detail = response.data;
+
+                setData({
+                    ...data,
+                    complaintsData: detail,
+                    pendingComplaints: detail.filter((complaint) => complaint.status === 'Pending'),
+                    resolvedComplaints: detail.filter((complaint) => complaint.status === 'Resolved'),
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const handlePageChange = (page) => {
-        setData((prevState) => ({
-            ...prevState,
+        const startIndex = (page - 1) * data.cardsPerPage;
+        const endIndex = startIndex + data.cardsPerPage;
+        const filteredData = data.filteredSessions[data.activeTab];
+        const displayedComplaints = filteredData.slice(startIndex, endIndex);
+
+        setData({
+            ...data,
             currentPage: page,
-            displayedComplaints: getDisplayedComplaints(prevState.filteredComplaints[prevState.activeTab], page, prevState.rowsPerPage),
-        }));
-    };
-
-    const getDisplayedComplaints = (filteredComplaints, currentPage, rowsPerPage) => {
-        const startIndex = (currentPage - 1) * data.rowsPerPage;
-        const endIndex = startIndex + data.rowsPerPage;
-        return filteredComplaints.slice(startIndex, endIndex);
-    };
-
-    const filterComplaints = (status) => {
-
-        const filteredComplaints = userData.filter((complaint) =>
-            complaint.status === status && (
-                complaint.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                complaint.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                complaint.nic.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                complaint.complaintDate.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                complaint.complaint.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                complaint.description.toLowerCase().includes(data.searchTerm.toLowerCase())
-            )
-        );
-
-        return filteredComplaints;
+            displayedComplaints,
+        });
     };
 
     const handleSearchChange = (e) => {
@@ -410,32 +81,61 @@ function AdminComplaints() {
         }));
     };
 
-    useEffect(() => {
+    const handleTabChange = (tab) => {
 
-        const filteredComplaintsByStatus = {
-            Pending: filterComplaints('Pending'),
-            Resolved: filterComplaints('Resolved'),
+        setData((prevState) => ({
+            ...prevState,
+            activeTab: tab,
+            currentPage: 1,
+            displayedComplaints: getDisplayedComplaints(tab),
+        }));
+    };
+
+    const getDisplayedComplaints = (tab) => {
+        let filteredComplaints;
+
+        switch (tab) {
+            case 'Pending':
+                filteredComplaints = data.pendingComplaints || [];
+                break;
+            case 'Resolved':
+                filteredComplaints = data.resolvedComplaints || [];
+                break;
+            default:
+                filteredComplaints = data.complaintsData;
         }
 
-        const fromDateObj = data.fromDate ? new Date(data.fromDate) : null;
-        const toDateObj = data.toDate ? new Date(data.toDate) : null;
+        if (data.fromDate !== null && data.toDate !== null) {
+            filteredComplaints = filteredComplaints.filter((complaint) => {
+                const complaintDate = new Date(complaint.complaintDate);
+                return complaintDate >= data.fromDate && complaintDate <= data.toDate;
+            });
+        }
 
-        const filteredComplaints = filteredComplaintsByStatus[data.activeTab].filter((user) => {
-            const complaintDateObj = new Date(user.complaintDate);
-            return (
-                (!fromDateObj || complaintDateObj >= fromDateObj) &&
-                (!toDateObj || complaintDateObj <= toDateObj)
-            );
-        });
-        ;
+        if(data.searchTerm !== '') {
+            filteredComplaints = filteredComplaints.filter((user) => {
+                return (
+                    user.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.nic.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.email.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.complaint.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.description.toLowerCase().includes(data.searchTerm.toLowerCase())
+                );
+            });
+        }
 
-        const totalPages = Math.ceil(filteredComplaints.length / data.rowsPerPage);
+        return filteredComplaints.slice(0, data.rowsPerPage);
+    };
+
+    useEffect(() => {
+
+        const totalPages = Math.ceil(getDisplayedComplaints(data.activeTab).length / data.rowsPerPage);
 
         setData((prevState) => ({
             ...prevState,
             totalPages,
-            filteredComplaints: filteredComplaintsByStatus,
-            displayedComplaints: filteredComplaints.slice(0, data.rowsPerPage),
+            displayedComplaints: getDisplayedComplaints(data.activeTab),
             currentPage: 1,
         }));
     }, [data.searchTerm, data.activeTab, data.selectedComplaints, data.fromDate, data.toDate]);
@@ -475,16 +175,6 @@ function AdminComplaints() {
     const handleShowDetails = (user) => {
         setData({ ...data, showDetailsModal: true, selectedUser: user });
     };
-
-    const handleTabChange = (tab) => {
-
-        setData((prevState) => ({
-            ...prevState,
-            activeTab: tab,
-            currentPage: 1,
-        }));
-    };
-
 
     return (
 
@@ -565,7 +255,7 @@ function AdminComplaints() {
                             <tbody>
                                 {data.displayedComplaints && data.displayedComplaints.map((user) => (
                                     <tr key={user.id}>
-                                        <td>COM000{user.id}</td>
+                                        <td>{user.id}</td>
                                         <td>{user.firstName}</td>
                                         <td>{user.lastName}</td>
                                         <td>{user.nic}</td>

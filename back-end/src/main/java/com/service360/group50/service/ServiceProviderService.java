@@ -247,6 +247,21 @@ public class ServiceProviderService {
         return trainingSessionRepository.save(trainingSession);
     }
 
+    public Void IncreaseTrainingSessionIntrestedCount(Long trainingsessionid) {
+        TrainingSession existingTrainingSession = trainingSessionRepository.findById(trainingsessionid).orElse(null);
+        if (existingTrainingSession != null) {
+            existingTrainingSession.setInterestedcount(existingTrainingSession.getInterestedcount() + 1);
+            trainingSessionRepository.save(existingTrainingSession);
+        }
+        return null;
+    }
+
+    public List<TrainingSessionRegistration> GetTrainingSessionRegisteredUsers(Long trainingsessionid) {
+        List<TrainingSessionRegistration> TrainingSessionRegistrationList = new ArrayList<>();
+        trainingSessionRegistrationRepository.findAllByTrainingsessionid(trainingsessionid).forEach(TrainingSessionRegistrationList::add);
+        return TrainingSessionRegistrationList;
+    }
+
     //BLOGS
 
     public Blogs createBlog(Blogs blog){
@@ -291,5 +306,6 @@ public class ServiceProviderService {
     public String getBlogImages(Long id) {
         return blogsRepository.findBlogImagesByBlogId(id);
     }
+
 
 }

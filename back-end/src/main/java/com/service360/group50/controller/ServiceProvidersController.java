@@ -286,10 +286,9 @@ public class ServiceProvidersController {
 
 
     @PostMapping("auth/registerTrainingSession/{id}")
-    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest, @PathVariable Long id) throws Exception {
+    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest, @RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) throws Exception {
         // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         // Load the TrainingSession entity by ID
@@ -301,6 +300,9 @@ public class ServiceProvidersController {
         trainingSessionRegistration.setMobilenumber(trainingSessionRegistrationRequest.getMobilenumber());
         trainingSessionRegistration.setEmail(trainingSessionRegistrationRequest.getEmail());
 
+        // Set the dateapplied for the vacancy application
+        LocalDate today = LocalDate.now();
+        trainingSessionRegistration.setRegistrationdate(today);
 
         /*
         // Payment gateway Api call here
@@ -429,10 +431,16 @@ public class ServiceProvidersController {
         }
     }
 
+    @PutMapping("auth/TrainingSessionIntrested")
+    public Void IncreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid){
+        return serviceProviderService.IncreaseTrainingSessionIntrestedCount(trainingsessionid);
+    }
 
+    @GetMapping("auth/GetTrainingSessionRegisteredUsers")
+    public List<TrainingSessionRegistration> GetTrainingSessionRegisteredUsers(@RequestParam("trainingsessionid") Long trainingsessionid){
+        return serviceProviderService.GetTrainingSessionRegisteredUsers(trainingsessionid);
+    }
 
-
-    
     //BLOGS
     @PostMapping("auth/createBlog")
     public Blogs createBlog(@RequestParam("blogtitle") String blogtitle,

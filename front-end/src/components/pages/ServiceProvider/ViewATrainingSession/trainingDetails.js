@@ -34,6 +34,11 @@ function TrainingSession() {
 
     if (!viewTrainingSessionData) return 'No training session found!';
 
+    // GETTING LOGGED IN SERVICEPROVIDER ID
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
     const handleRegistration = (event) => {
         event.preventDefault();
 
@@ -45,7 +50,11 @@ function TrainingSession() {
 
         // Proceed with registration if the checkbox is checked
         axios
-            .post(`http://localhost:8080/auth/registerTrainingSession/${trainingsessionId}`, registrationData)
+            .post(`http://localhost:8080/auth/registerTrainingSession/${trainingsessionId}`, registrationData,{
+                params:{
+                    serviceproviderid:userData.userid
+                }
+            })
             .then((response) => {
                 console.log('Registration successfully:', response.data);
                 // Clear the input fields by resetting registrationData

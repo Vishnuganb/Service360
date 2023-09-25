@@ -45,6 +45,7 @@ public class UsersController {
     public UsersDTO getUserById( @PathVariable Long userId){
         return userService.getUserById(userId);
     }
+
     @PostMapping("/addSystemReview")
     public SystemReview addSystemReview(
                 @RequestParam("userid") Long userId,
@@ -52,4 +53,10 @@ public class UsersController {
                 @RequestParam("rating") int rating) {
         return userService.addSystemReview(userId, review, rating);
     }
+
+    @GetMapping("/getAllSystemReview")
+    public Iterable<SystemReview> getAllSystemReview() {
+        return userService.getAllSystemReview();
+    }
+
 }

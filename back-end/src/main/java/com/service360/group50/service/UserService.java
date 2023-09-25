@@ -143,8 +143,11 @@ public class UserService {
             systemReview.setRating(rating);
 
             return systemReviewRepository.save(systemReview);
-        }
-    
+    }
+
+    public Iterable<SystemReview> getAllSystemReview () {
+        return systemReviewRepository.findAll();
+    }
 
     public Users getUser(Long userId) {
         return userRepository.findById(userId).orElse(null);
@@ -477,6 +480,7 @@ public class UserService {
                 "\n" +
                 "</div></div>";
     }
+
 }
 
 

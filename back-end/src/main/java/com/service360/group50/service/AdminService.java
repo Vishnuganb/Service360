@@ -4,10 +4,7 @@ import com.service360.group50.dto.CategoryDTO;
 import com.service360.group50.dto.ServiceCategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
 import com.service360.group50.entity.*;
-import com.service360.group50.repo.AdsRepository;
-import com.service360.group50.repo.ServiceCategoryRepository;
-import com.service360.group50.repo.ServiceRepository;
-import com.service360.group50.repo.TrainingSessionRepository;
+import com.service360.group50.repo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -32,6 +29,7 @@ public class AdminService {
     private final ServiceRepository serviceRepository;
     private final TrainingSessionRepository trainingSessionRepository;
     private final AdsRepository adsRepository;
+    private final SystemReviewRepository systemReviewRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -293,5 +291,24 @@ public class AdminService {
         existingAds = adsRepository.save(existingAds);
 
         return existingAds;
+    }
+
+    public SystemReview updateSelectSystemReview ( Long ratingid, String status ) {
+
+        Optional<SystemReview> existingSystemReviewOptional = systemReviewRepository.findById ( ratingid );
+
+        if (existingSystemReviewOptional.isEmpty()) {
+            System.out.println("System Review not found");
+            return null;
+        }
+
+        SystemReview existingSystemReview = existingSystemReviewOptional.get();
+
+        existingSystemReview.setStatus(status);
+
+        existingSystemReview = systemReviewRepository.save(existingSystemReview);
+
+        return existingSystemReview;
+
     }
 }

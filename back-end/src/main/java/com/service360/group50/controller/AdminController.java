@@ -231,4 +231,13 @@ public class AdminController {
         return adminService.updateAdvertisementRejectStatus(adsId, status, reason);
     }
 
+    @PutMapping("/updateSelectSystemReview")
+    public SystemReview updateSelectSystemReview(
+            @RequestParam(value = "ratingid") Long ratingid,
+            @RequestParam(value = "status") String status
+
+    ){
+        return adminService.updateSelectSystemReview(ratingid, status);
+    }
+
 }

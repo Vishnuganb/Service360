@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 @Builder
@@ -24,8 +26,8 @@ public class TrainingSession {
     @Column(updatable = false)
     private Long trainingid;
 
-    @Column( columnDefinition = "TEXT")
-    private String trainingimage;
+    @Column(columnDefinition = "TEXT")
+    private String trainingimage;           // Comma-separated image filenames
 
     @Column( columnDefinition = "TEXT")
     private String trainingtitle;
@@ -51,18 +53,39 @@ public class TrainingSession {
     @Column( columnDefinition = "TEXT")
     private String servicename;
 
-    @Column( columnDefinition = "INT")
+    @Column( columnDefinition = "TEXT")
     private String status;
 
-    @Column( columnDefinition = "TEXT")
+    @Column( columnDefinition = "INT")
     private Integer going;
 
     @Column( columnDefinition = "INT")
     private Integer interested;
 
-    //IS THIS REQUIRED TO BE A PRIMARY KEY ?
+    @Column( columnDefinition = "TEXT")
+    private String reason;
+
     //service provider name
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")
     private Users serviceprovider;
+
+    @Transient
+    private List<String> trainingImageUrls; // List of full image URLs (not stored in the database)
+
+    public List<String> getTrainingImageList() {
+        return Arrays.asList(trainingimage.split(","));
+    }
+
+    public void setTrainingImageList(List<String> imageList) {
+        this.trainingimage = String.join(",", imageList);
+    }
+
+    public List<String> getTrainingImageUrls() {
+        return trainingImageUrls;
+    }
+
+    public void setTrainingImageUrls(List<String> trainingImageUrls) {
+        this.trainingImageUrls = trainingImageUrls;
+    }
 }

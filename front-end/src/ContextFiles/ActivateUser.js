@@ -12,9 +12,9 @@ function ActivateUser() {
                 <img src={logo} alt="Service 360 Logo" className="logo" /><br />
                 <img src={image} alt="Service 360 Logo" className="logo" />
                 <h1>Email Verified successfully</h1>
-                <p>Click the following link to login your account</p>
-                <Link to="/login">Login</Link>
-                
+                <p>Please wait until your details are verified. We will email you if your details are successfully verified.</p>
+                <p>Visit our page through this <Link to={'/'}>link</Link></p>
+                <p className='text-secondary'>If any futher details contact with us via <Link to="#">chat</Link></p>     
             </Container>
         </Layout404>
     )

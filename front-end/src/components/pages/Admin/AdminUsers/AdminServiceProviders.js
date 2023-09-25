@@ -6,16 +6,8 @@ import PopupBgImage from '../../../../assets/images/header/popupBg.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import axios from 'axios';
 
-import person1 from '../../../../assets/images/home/Customer_1.png';
-import person2 from '../../../../assets/images/home/Customer_2.png';
-import person3 from '../../../../assets/images/home/Customer_3.png';
-import person4 from '../../../../assets/images/home/Customer_4.jpg';
-import person5 from '../../../../assets/images/home/Customer_5.jpg';
-import person6 from '../../../../assets/images/home/Customer_6.jpg';
-import person7 from '../../../../assets/images/home/Customer_7.jpg';
-import person8 from '../../../../assets/images/home/Customer_8.jpg';
-import person9 from '../../../../assets/images/home/Customer_9.jpg';
 import { set } from 'lodash';
 
 const searchInputStyle = {
@@ -26,342 +18,9 @@ const StyledModalFooter = styled(Modal.Footer)`
         justify-content: flex-end;
     `;
 
+const serverLink = 'http://localhost:8080';
+
 function AdminServiceProvider() {
-
-    const serviceProvidersData = [
-        {
-            id: 1,
-            firstName: 'John',
-            lastName: 'Doe',
-            nic: '123456789V',
-            contactNumber: '0123456789',
-            email: 'john.doe@example.com',
-            address: '123 Main Street, City',
-            registeredDate: '2023-08-01',
-            service: 'Carpentry',
-            category: 'Interior Works',
-            image: person1,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 2,
-            firstName: 'Jane',
-            lastName: 'Smith',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'jane.smith@example.com',
-            address: '456 Oak Avenue, Town',
-            registeredDate: '2023-08-02',
-            service: 'AC Repair',
-            category: 'Electrical & Plumbing',
-            image: person2,
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 3,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '456123789V',
-            contactNumber: '0456123789',
-            email: 'mike.johnson@example.com',
-            address: '789 Maple Lane, Village',
-            registeredDate: '2023-08-03',
-            service: 'Masonry',
-            category: 'Construction',
-            image: person3,
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 4,
-            firstName: 'De',
-            lastName: 'Silva',
-            nic: '789123456V',
-            contactNumber: '0789123456',
-            email: 'de.silva@example.com',
-            address: '101 Pine Street, City',
-            registeredDate: '2023-08-04',
-            service: 'CCTV Repair',
-            category: 'Security',
-            image: person2,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 5,
-            firstName: 'Kumar',
-            lastName: 'Sangakkara',
-            nic: '654987321V',
-            contactNumber: '0654987321',
-            email: 'kumar.sangakkara@example.com',
-            address: '222 Oak Road, Town',
-            registeredDate: '2023-08-05',
-            service: 'Sofa cleaning',
-            category: 'cleaning',
-            image: person3,
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 6,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '789654123V',
-            contactNumber: '0789654123',
-            email: 'mike.johnson@example.com',
-            address: '333 Maple Street, Village',
-            registeredDate: '2023-08-06',
-            service: 'Painting',
-            category: 'Interior Works',
-            image: person1,
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 7,
-            firstName: 'Saman',
-            lastName: 'Perera',
-            nic: '321456789V',
-            contactNumber: '0321456789',
-            email: 'saman.perera@example.com',
-            address: '444 Pine Avenue, City',
-            registeredDate: '2023-08-07',
-            service: 'Electrical Wiring',
-            category: 'Electrical & Plumbing',
-            image: person4,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 8,
-            firstName: 'Susantha',
-            lastName: 'Villergers',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'susantha.villergers@example.com',
-            address: '555 Oak Lane, Town',
-            registeredDate: '2023-08-08',
-            service: 'Tiles Fitting',
-            category: 'Construction',
-            image: person5,
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 9,
-            firstName: 'William',
-            lastName: 'Wiliamson',
-            nic: '654321789V',
-            contactNumber: '0654321789',
-            email: 'william.wiliamson@example.com',
-            address: '666 Maple Road, Village',
-            registeredDate: '2023-08-09',
-            service: 'Fire Alarm',
-            category: 'Security',
-            image: person6,
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 10,
-            firstName: 'Johnes',
-            lastName: 'Doe',
-            nic: '123456789V',
-            contactNumber: '0123456789',
-            email: 'john.doe@example.com',
-            address: '777 Main Street, City',
-            registeredDate: '2023-08-10',
-            service: 'Carpentry',
-            category: 'Interior Works',
-            image: person1,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 11,
-            firstName: 'Jane',
-            lastName: 'Smith',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'jane.smith@example.com',
-            address: '888 Oak Avenue, Town',
-            registeredDate: '2023-08-11',
-            service: 'AC Repair',
-            category: 'Electrical & Plumbing',
-            image: person2,
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 12,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '456123789V',
-            contactNumber: '0456123789',
-            email: 'mike.johnson@example.com',
-            address: '999 Maple Lane, Village',
-            registeredDate: '2023-08-12',
-            service: 'Masonry',
-            category: 'Construction',
-            image: person3,
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 13,
-            firstName: 'De',
-            lastName: 'Silva',
-            nic: '789123456V',
-            contactNumber: '0789123456',
-            email: 'de.silva@example.com',
-            address: '1010 Pine Street, City',
-            registeredDate: '2023-08-13',
-            service: 'CCTV Repair',
-            category: 'Security',
-            image: person7,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 14,
-            firstName: 'Kumar',
-            lastName: 'Sangakkara',
-            nic: '654987321V',
-            contactNumber: '0654987321',
-            email: 'kumar.sangakkara@example.com',
-            address: '111 Oak Road, Town',
-            registeredDate: '2023-08-14',
-            service: 'Sofa cleaning',
-            category: 'cleaning',
-            image: person8,
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 15,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '789654123V',
-            contactNumber: '0789654123',
-            email: 'mike.johnson@example.com',
-            address: '1212 Maple Street, Village',
-            registeredDate: '2023-08-15',
-            service: 'Painting',
-            category: 'Interior Works',
-            image: person9,
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 16,
-            firstName: 'Saman',
-            lastName: 'Perera',
-            nic: '321456789V',
-            contactNumber: '0321456789',
-            email: 'saman.perera@example.com',
-            address: '1313 Pine Avenue, City',
-            registeredDate: '2023-08-16',
-            service: 'Electrical Wiring',
-            category: 'Electrical & Plumbing',
-            image: person3,
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 17,
-            firstName: 'Susantha',
-            lastName: 'Villergers',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'susantha.villergers@example.com',
-            address: '1414 Oak Lane, Town',
-            registeredDate: '2023-08-17',
-            service: 'Tiles Fitting',
-            category: 'Construction',
-            image: person1,
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 18,
-            firstName: 'William',
-            lastName: 'Wiliamson',
-            nic: '654321789V',
-            contactNumber: '0654321789',
-            email: 'william.wiliamson@example.com',
-            address: '1515 Maple Road, Village',
-            registeredDate: '2023-08-18',
-            service: 'Fire Alarm',
-            category: 'Security',
-            image: person2,
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-    ];
-
-    const serviceCategories = {
-        "Interior Works": ["Carpentry", "Painting"],
-        "Electrical & Plumbing": ["AC Repair", "Electrical Wiring", "Plumbing"],
-        "Construction": ["Masonry", "Tiles Fitting", "Iron Works", "Glass & Aluminum"],
-        "Security": ["CCTV Repair", "Fire Alarm", "Video Surveillance"],
-        "cleaning": ["Sofa cleaning", "Carpet cleaning"],
-    };
 
     const [data, setData] = useState({
         category: 'default',
@@ -380,22 +39,49 @@ function AdminServiceProvider() {
         cardsPerPage: 3,
         showAcceptConfirmation: false,
         showRejectConfirmation: false,
-        enable: true,
+        locked: false,
         rejectReason: '',
         rejectReasonErrorMessage: '',
+        serviceProvidersData: [],
+        pendingServiceProviders: [],
+        acceptedServiceProviders: [],
+        rejectedServiceProviders: [],
+        serviceCategories: [],
     });
 
-    // const cardsPerPage = data.windowWidth <= 768 ? 3 : 6;
-    const totalPages = Math.ceil(serviceProvidersData.length / data.cardsPerPage);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(serverLink + '/auth/getAllServiceProvidersWithDetails');
+                const detail = response.data;
+                const categoriesResponse = await axios.get(serverLink + '/auth/allCategories');
+                const serviceCategoriesData = categoriesResponse.data;
+                console.log(detail);
+                setData({
+                    ...data,
+                    serviceCategories: serviceCategoriesData,
+                    serviceProvidersData: detail,
+                    pendingServiceProviders: detail.filter((service) => service.status === 'Pending'),
+                    acceptedServiceProviders: detail.filter((service) => service.status === 'Accepted'),
+                    rejectedServiceProviders: detail.filter((service) => service.status === 'Rejected'),
+                    displayedServices: detail.filter((service) => service.status === 'Pending').slice(0, data.cardsPerPage),
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const totalPages = Math.ceil(data.serviceProvidersData.length / data.cardsPerPage);
     const startIndex = (data.currentPage - 1) * data.cardsPerPage;
     const endIndex = startIndex + data.cardsPerPage;
-    const displayedServices = serviceProvidersData.slice(startIndex, endIndex);
 
     const filterServiceProvidersByCategory = (category) => {
         if (category === 'default') {
-            return serviceProvidersData;
+            return data.serviceProvidersData;
         } else {
-            return serviceProvidersData.filter((provider) => provider.category === category);
+            return data.serviceProvidersData.filter((provider) => provider.category === category);
         }
     };
 
@@ -425,15 +111,14 @@ function AdminServiceProvider() {
 
     const filterServiceProviders = (status) => {
         const filteredServices = data.selectedCategory !== 'default'
-            ? serviceProvidersData.filter((service) => service.category === data.selectedCategory)
-            : serviceProvidersData;
+            ? data.serviceProvidersData.filter((service) => service.category === data.selectedCategory)
+            : data.serviceProvidersData;
 
         const filteredProviders = filteredServices.filter((service) =>
             service.status === status && (
-                service.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                service.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                service.category.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                service.service.toLowerCase().includes(data.searchTerm.toLowerCase())
+                service.firstname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                service.lastname.toLowerCase().includes(data.searchTerm.toLowerCase())
+
             )
         );
 
@@ -461,42 +146,88 @@ function AdminServiceProvider() {
     };
 
     const handleTabChange = (tab) => {
-
         setData((prevState) => ({
             ...prevState,
             activeTab: tab,
+            currentPage: 1,
+            displayedServices: getDisplayedServiceProviders(tab),
         }));
     };
 
+    const getDisplayedServiceProviders = (activeTab) => {
+
+        let filteredServiceProviders;
+
+        switch (activeTab) {
+            case 'Pending':
+                filteredServiceProviders = data.pendingServiceProviders || [];
+                break;
+
+            case 'Accepted':
+                filteredServiceProviders = data.acceptedServiceProviders || [];
+                break;
+
+            case 'Rejected':
+                filteredServiceProviders = data.rejectedServiceProviders || [];
+                break;
+
+            default:
+                filteredServiceProviders = [];
+
+        }
+
+        if (data.selectedCategory !== 'default') {
+            filteredServiceProviders = filteredServiceProviders.filter((service) => service.category === data.selectedCategory);
+        }
+
+        if (data.searchTerm) {
+            filteredServiceProviders = filteredServiceProviders.filter((service) =>
+                service.firstname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                service.lastname.toLowerCase().includes(data.searchTerm.toLowerCase())
+            );
+        }
+
+        return filteredServiceProviders.slice(0, data.cardsPerPage);
+
+    };
 
     useEffect(() => {
-        const filteredServicesByStatus = {
-            Pending: filterServiceProviders('Pending'),
-            Accepted: filterServiceProviders('Accepted'),
-            Rejected: filterServiceProviders('Rejected'),
-        };
 
-        const filteredProviders = filteredServicesByStatus[data.activeTab];
-        const totalPages = Math.ceil(filteredProviders.length / data.cardsPerPage);
+        const totalPages = Math.ceil(getDisplayedServiceProviders(data.activeTab).length / data.cardsPerPage);
 
         setData((prevState) => ({
             ...prevState,
             totalPages,
-            filteredServiceProviders: filteredServicesByStatus,
-            displayedServices: filteredProviders.slice(0, data.cardsPerPage),
             currentPage: 1,
+            displayedServices: getDisplayedServiceProviders(data.activeTab),
         }));
     }, [data.selectedCategory, data.searchTerm, data.activeTab]);
 
-    const handleConfirmAccept = () => {
-        setData({ ...data, showAcceptConfirmation: false });
-    };
+    const handleAcceptProvider = (e) => {
+        e.preventDefault();
 
-    const handleConfirmReject = () => {
-        setData({ ...data, showRejectConfirmation: false });
-    };
+        const formData = new FormData();
 
-    const handleAcceptProvider = () => {
+        formData.append('userid', data.selectedProvider.userid);
+        formData.append('locked', false);
+        formData.append('status', 'Accepted');
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        axios.put(serverLink + '/auth/updateAdvertiserAcceptStatus', formData).then(
+
+            (response) => {
+                console.log(response.data);
+                window.location.reload();
+            }
+
+        ).catch(
+
+            () => { alert("Can't Update. Check Again") }
+
+        )
         setData({ ...data, showAcceptConfirmation: false });
     };
 
@@ -512,6 +243,32 @@ function AdminServiceProvider() {
         setData({ ...data, rejectReasonErrorMessage });
 
         if (!isError) {
+            const formData = new FormData();
+
+            formData.append('userid', data.selectedProvider.userid);
+            formData.append('locked', true);
+            formData.append('status', 'Rejected');
+            formData.append('reason', rejectReason);
+
+            for (const [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
+            axios.put(serverLink + '/auth/updateAdvertiserRejectStatus', formData).then(
+
+                (response) => {
+
+                    console.log(response.data);
+                    window.location.reload();
+
+                }
+
+            ).catch(
+
+                () => { alert("Can't Update. Check Again") }
+
+            )
+
             setData({ ...data, showRejectConfirmation: false, rejectReason });
         }
     };
@@ -519,6 +276,66 @@ function AdminServiceProvider() {
     const handleShowDetails = (provider) => {
         setData({ ...data, showDetailsModal: true, selectedProvider: provider });
     };
+
+    const handleServiceFormSubmit = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+
+        formData.append('userid', data.selectedProvider.userid);
+        formData.append('locked', data.locked);
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        if (data.locked === true) {
+            axios.put(serverLink + '/auth/updateAdvertiserDisableStatus', formData).then(
+
+                (response) => {
+
+                    console.log(response.data);
+                    window.location.reload();
+
+                }
+
+            ).catch(
+
+                () => { alert("Can't Update. Check Again") }
+
+            )
+        } else {
+            axios.put(serverLink + '/auth/updateAdvertiserEnableStatus', formData).then(
+
+                (response) => {
+
+                    console.log(response.data);
+                    window.location.reload();
+
+                }
+
+            ).catch(
+
+                () => { alert("Can't Update. Check Again") }
+
+            )
+
+        }
+
+        setData({
+            ...data,
+            showDetailsModal: false,
+        });
+    };
+
+    useEffect(() => {
+        if (data.selectedProvider) {
+            setData({
+                ...data,
+                locked: data.selectedProvider.locked,
+            });
+        }
+    }, [data.selectedProvider]);
 
 
     return (
@@ -544,9 +361,9 @@ function AdminServiceProvider() {
                                 required
                             >
                                 <option value="default">Select a Service Category</option>
-                                {Object.keys(serviceCategories).map((service) => (
-                                    <option key={service} value={service}>
-                                        {service}
+                                {data.serviceCategories.map((category) => (
+                                    <option key={category.id} value={category.serviceCategoryName}>
+                                        {category.serviceCategoryName}
                                     </option>
                                 ))}
                             </select>
@@ -573,32 +390,44 @@ function AdminServiceProvider() {
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
                     {data.displayedServices && data.displayedServices.map((provider) => (
-                        <Card className="m-3" key={provider.id}>
-                            <Card.Img src={provider.image} alt="Service Provider" className="rounded-circle" width="50" height="50" />
+                        <Card className="m-3" key={provider.userid}>
+                            {data.activeTab !== 'Pending' && (
+                                <Card.Img src={data.provider.profilePic} alt="Service Provider" className="rounded-circle" width="50" height="50" />
+                            )}
                             <Card.Body className="d-flex flex-column align-items-center">
-                                <p className="card-text fw-bold d-none d-md-block">{provider.firstName}{' '}{provider.lastName}</p>
-                                <p className="card-text d-none d-md-block align-self-start">Service: {provider.service}</p>
-                                <p className="card-text d-none d-md-block align-self-start">Category: {provider.category}</p>
+                                <p className="card-text fw-bold d-none d-md-block">{provider.firstname}{' '}{provider.lastname}</p>
+                                {provider.serviceCategories && provider.serviceCategories.map((category) => (
+                                    <div key={category.categoryName}>
+                                        {category.services && category.services.map((service) => (
+                                            <p key={service} className="card-text d-none d-md-block align-self-start">Service: {service}</p>
+                                        ))}
+                                    </div>
+                                ))}
+                                
                                 <div className="d-flex flex-column justify-content-center text-center">
                                     <button onClick={() => handleShowDetails(provider)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
-                                    <button
-                                        className="btn"
-                                        style={{ backgroundColor: "#0D6445" }}
-                                        onClick={() => {
-                                            setData({ ...data, showAcceptConfirmation: true, selectedProvider: provider });
-                                        }}
-                                    >
-                                        Accept
-                                    </button>
-                                    <button
-                                        className="btn"
-                                        style={{ backgroundColor: "#B60E0E" }}
-                                        onClick={() => {
-                                            setData({ ...data, showRejectConfirmation: true, selectedProvider: provider });
-                                        }}
-                                    >
-                                        Reject
-                                    </button>
+                                    {data.activeTab === 'Pending' && (
+                                        <button
+                                            className="btn"
+                                            style={{ backgroundColor: "#0D6445" }}
+                                            onClick={() => {
+                                                setData({ ...data, showAcceptConfirmation: true, selectedProvider: provider });
+                                            }}
+                                        >
+                                            Accept
+                                        </button>
+                                    )}
+                                    {data.activeTab === 'Pending' && (
+                                        <button
+                                            className="btn"
+                                            style={{ backgroundColor: "#B60E0E" }}
+                                            onClick={() => {
+                                                setData({ ...data, showRejectConfirmation: true, selectedProvider: provider });
+                                            }}
+                                        >
+                                            Reject
+                                        </button>
+                                    )}
                                 </div>
                             </Card.Body>
                         </Card>
@@ -626,8 +455,31 @@ function AdminServiceProvider() {
                 </Modal.Header>
                 {data.selectedProvider && (
                     <Modal.Body className="centered-body" style={{ backgroundImage: `url(${BgImage})` }}>
-                        <div className="d-flex justify-content-center">
-                            <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                        <div className="mt-2 bordered-paragraph rounded">
+                            <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name: </span>{data.selectedProvider.firstname}{" "}{data.selectedProvider.lastname}
+                        </div>
+                        <div className="mt-2 bordered-paragraph rounded">
+                            <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Categories:</span>
+                            {data.selectedProvider.serviceCategories.map((category, index) => (
+                                <span key={index}>
+                                    {category.categoryName}
+                                    {index < data.selectedProvider.serviceCategories.length - 1 && ', '}
+                                </span>
+                            ))}
+                        </div>
+                        <div className="mt-2 bordered-paragraph rounded">
+                            <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Services: </span>
+                            {data.selectedProvider.serviceCategories.map((category, index) => (
+                                <span key={index}>
+                                    {category.services.map((service, serviceIndex) => (
+                                        <span key={serviceIndex}>
+                                            {service}
+                                            {serviceIndex < category.services.length - 1 && ', '}
+                                        </span>
+                                    ))}
+                                    {index < data.selectedProvider.serviceCategories.length - 1 && ', '}
+                                </span>
+                            ))}
                         </div>
                         <p className='fw-bold pt-4'>Are you sure you want to accept this service provider?</p>
                     </Modal.Body>
@@ -648,8 +500,31 @@ function AdminServiceProvider() {
                 </Modal.Header>
                 {data.selectedProvider && (
                     <Modal.Body className="centered-body" style={{ backgroundImage: `url(${BgImage})` }}>
-                        <div className="d-flex justify-content-center">
-                            <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                        <div className="mt-2 bordered-paragraph rounded">
+                            <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name: </span>{data.selectedProvider.firstname}{" "}{data.selectedProvider.lastname}
+                        </div>
+                        <div className="mt-2 bordered-paragraph rounded">
+                            <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Categories:</span>
+                            {data.selectedProvider.serviceCategories.map((category, index) => (
+                                <span key={index}>
+                                    {category.categoryName}
+                                    {index < data.selectedProvider.serviceCategories.length - 1 && ', '}
+                                </span>
+                            ))}
+                        </div>
+                        <div className="mt-2 bordered-paragraph rounded">
+                            <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Services: </span>
+                            {data.selectedProvider.serviceCategories.map((category, index) => (
+                                <span key={index}>
+                                    {category.services.map((service, serviceIndex) => (
+                                        <span key={serviceIndex}>
+                                            {service}
+                                            {serviceIndex < category.services.length - 1 && ', '}
+                                        </span>
+                                    ))}
+                                    {index < data.selectedProvider.serviceCategories.length - 1 && ', '}
+                                </span>
+                            ))}
                         </div>
                         <p className='fw-bold pt-4'>Are you sure you want to Reject this service provider?</p>
                         <p>If you select "Yes," please enter the reason for rejection.<span style={{ color: 'red' }}>*</span></p>
@@ -675,14 +550,16 @@ function AdminServiceProvider() {
                     <Modal.Body className="text-start" style={{ backgroundImage: `url(${PopupBgImage})` }}>
                         <div className="row">
                             <div className="col-md-8">
+                                {data.activeTab !== 'Pending' && (
                                 <div className="d-flex justify-content-start">
-                                    <img src={data.selectedProvider.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                                        <img src={data.selectedProvider.profilePic} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                                </div>
+                                )}
+                                <div className="mt-2 bordered-paragraph rounded">
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedProvider.firstname}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedProvider.firstName}
-                                </div>
-                                <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Last Name: </span> {data.selectedProvider.lastName}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Last Name: </span> {data.selectedProvider.lastname}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>NIC: </span> {data.selectedProvider.nic}
@@ -694,13 +571,30 @@ function AdminServiceProvider() {
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Address: </span> {data.selectedProvider.address}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Registered Date: </span> {data.selectedProvider.registeredDate}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Registered Date: </span> {data.selectedProvider.registrationdate}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service: </span> {data.selectedProvider.service}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Categories:</span>
+                                    {data.selectedProvider.serviceCategories.map((category, index) => (
+                                        <span key={index}>
+                                            {category.categoryName}
+                                            {index < data.selectedProvider.serviceCategories.length - 1 && ', '}
+                                        </span>
+                                    ))}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Category:</span> {data.selectedProvider.category}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Services: </span>
+                                    {data.selectedProvider.serviceCategories.map((category, index) => (
+                                        <span key={index}>
+                                            {category.services.map((service, serviceIndex) => (
+                                                <span key={serviceIndex}>
+                                                    {service}
+                                                    {serviceIndex < category.services.length - 1 && ', '}
+                                                </span>
+                                            ))}
+                                            {index < data.selectedProvider.serviceCategories.length - 1 && ', '}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
                             <div className="col-md-4">
@@ -709,17 +603,22 @@ function AdminServiceProvider() {
                                         <h6 className="text-center">Certificates And Documents</h6>
                                     </div>
                                     <ul className="list-unstyled">
-                                        {data.selectedProvider.uploadedFiles.map((file, index) => (
-                                            <li key={index}>
+                                        {data.selectedProvider.files.map((file, index) => (
+                                            <li key={file.fileName}>
                                                 <div className="d-flex align-items-center mb-2 p-2 rounded hover-effect" style={{ backgroundColor: "#ccc" }}>
                                                     <i className="bi bi-file-earmark-arrow-down-fill me-2 fs-4"></i>
-                                                    <a href={file.url} download className="text-decoration-none text-dark fw-bold">
+                                                    <a
+                                                        href={`data:${file.contentType};base64,${file.data}`}
+                                                        download={file.fileName}
+                                                        className="text-decoration-none text-dark fw-bold"
+                                                    >
                                                         {file.fileName}
                                                     </a>
                                                 </div>
                                             </li>
                                         ))}
                                     </ul>
+
                                 </div>
                             </div>
                         </div>
@@ -734,8 +633,8 @@ function AdminServiceProvider() {
                                 name="enableDisableRadio"
                                 id="enableRadio"
                                 label="Enable"
-                                checked={data.enable}
-                                onChange={() => setData({ ...data, enable: true })}
+                                checked={!data.locked}
+                                onChange={() => setData({ ...data, locked: false })}
                                 className='ms-0 me-1 custom-radio'
                             />
                             <Form.Check
@@ -743,8 +642,8 @@ function AdminServiceProvider() {
                                 name="enableDisableRadio"
                                 id="disableRadio"
                                 label="Disable"
-                                checked={!data.enable}
-                                onChange={() => setData({ ...data, enable: false })}
+                                checked={data.locked}
+                                onChange={() => setData({ ...data, locked: true })}
                                 className='ms-0 me-5 custom-radio'
                             />
 
@@ -754,9 +653,11 @@ function AdminServiceProvider() {
                         <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showDetailsModal: false })}>
                             Cancel
                         </Button>
-                        <Button type="submit" className="btn-effect">
-                            More Info
-                        </Button>
+                        {data.activeTab === 'Accepted' && (
+                            <Button type="submit" className="btn-effect" onClick={handleServiceFormSubmit}>
+                            Save
+                            </Button>
+                        )}
                     </div>
                 </StyledModalFooter>
 

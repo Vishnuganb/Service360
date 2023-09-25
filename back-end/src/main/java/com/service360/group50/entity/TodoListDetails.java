@@ -35,4 +35,5 @@ public class TodoListDetails {
 
     @Column
     private LocalDateTime reminder;
+
 }

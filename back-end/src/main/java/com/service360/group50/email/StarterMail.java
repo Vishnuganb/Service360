@@ -34,7 +34,7 @@ public class StarterMail {
         helper.setSubject("Training Session QR Code");
 
         // Set the content of the email
-        helper.setText("Hi, here's your unique QR code for the training session.");
+        helper.setText("Hi, here's your unique QR code for the training session. Please present this QR code to the training session to confirm your entrance.");
 
         // Attach the QR code as an attachment
         helper.addAttachment("qrcode.png", new ByteArrayResource(qrCodeBytes));

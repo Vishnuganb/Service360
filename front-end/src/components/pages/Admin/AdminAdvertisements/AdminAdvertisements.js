@@ -6,34 +6,8 @@ import PopupBgImage from '../../../../assets/images/header/popupBg.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import axios from 'axios';
 
-import Ad1_1 from '../../../../assets/images/admin/ads/Driller_1.jpg';
-import Ad1_2 from '../../../../assets/images/admin/ads/Driller_2.jpg';
-import Ad1_3 from '../../../../assets/images/admin/ads/Driller_3.jpg';
-import Ad2_1 from '../../../../assets/images/admin/ads/Screw_1.jpeg';
-import Ad2_2 from '../../../../assets/images/admin/ads/Screw_2.jpeg';
-import Ad2_3 from '../../../../assets/images/admin/ads/Screw_3.jpeg';
-import Ad3_1 from '../../../../assets/images/admin/ads/Grinder_1.jpeg';
-import Ad3_2 from '../../../../assets/images/admin/ads/Grinder_2.jpeg';
-import Ad3_3 from '../../../../assets/images/admin/ads/Grinder_3.jpeg';
-import Ad4_1 from '../../../../assets/images/admin/ads/drills_2.jpeg';
-import Ad4_2 from '../../../../assets/images/admin/ads/drills_1.jpeg';
-import Ad4_3 from '../../../../assets/images/admin/ads/drills_3.jpeg';
-import Ad5_1 from '../../../../assets/images/admin/ads/handsaw_1.jpeg';
-import Ad5_2 from '../../../../assets/images/admin/ads/handsaw_2.jpeg';
-import Ad5_3 from '../../../../assets/images/admin/ads/handsaw_3.jpeg';
-import Ad6_1 from '../../../../assets/images/admin/ads/hammer_1.jpeg';
-import Ad6_2 from '../../../../assets/images/admin/ads/hammer_2.jpeg';
-import Ad6_3 from '../../../../assets/images/admin/ads/hammer_3.jpeg';
-import Ad7_1 from '../../../../assets/images/admin/ads/disk_2.jpeg';
-import Ad7_2 from '../../../../assets/images/admin/ads/disk_1.jpeg';
-import Ad7_3 from '../../../../assets/images/admin/ads/disk_3.jpeg';
-import Ad8_1 from '../../../../assets/images/admin/ads/plier_1.jpeg';
-import Ad8_2 from '../../../../assets/images/admin/ads/plier_2.jpeg';
-import Ad8_3 from '../../../../assets/images/admin/ads/plier_3.jpeg';
-import Ad9_1 from '../../../../assets/images/admin/ads/wrench_1.jpeg';
-import Ad9_2 from '../../../../assets/images/admin/ads/wrench_2.jpeg';
-import Ad9_3 from '../../../../assets/images/admin/ads/wrench_3.jpeg';
 import { set } from 'lodash';
 
 const searchInputStyle = {
@@ -45,387 +19,6 @@ const StyledModalFooter = styled(Modal.Footer)`
     `;
 
 function AdminAdvertisements() {
-
-    const advertisementsData = [
-        {
-            id: 1,
-            adName: 'Driller',
-            firstName: 'John',
-            lastName: 'Doe',
-            nic: '123456789V',
-            contactNumber: '0123456789',
-            email: 'john.doe@example.com',
-            address: '123 Main Street, City',
-            registeredDate: '2023-08-01',
-            service: 'Carpentry',
-            category: 'Tools',
-            shopName: 'The Handyman Hub',
-            shopAddress: '123 Main Street, City',
-            images: [Ad1_1, Ad1_2, Ad1_3],
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 2,
-            adName: 'ScrewDriver',
-            firstName: 'Jane',
-            lastName: 'Smith',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'jane.smith@example.com',
-            address: '456 Oak Avenue, Town',
-            registeredDate: '2023-08-02',
-            service: 'AC Repair',
-            category: 'Tools',
-            shopName: 'Electric Fixers',
-            shopAddress: '456 Oak Avenue, Town',
-            images: [Ad2_1, Ad2_2, Ad2_3],
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 3,
-            adName: 'Grinder',
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '456123789V',
-            contactNumber: '0456123789',
-            email: 'mike.johnson@example.com',
-            address: '789 Maple Lane, Village',
-            registeredDate: '2023-08-03',
-            service: 'Masonry',
-            category: 'Tools',
-            shopName: 'Creative Carpentry',
-            shopAddress: '789 Maple Lane, Village',
-            images: [Ad3_1, Ad3_2, Ad3_3],
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 4,
-            adName: 'ScrewDriver',
-            firstName: 'De',
-            lastName: 'Silva',
-            nic: '789123456V',
-            contactNumber: '0789123456',
-            email: 'de.silva@example.com',
-            address: '101 Pine Street, City',
-            registeredDate: '2023-08-04',
-            service: 'CCTV Repair',
-            category: 'Tools',
-            shopName: 'Master Plumbers',
-            shopAddress: '101 Pine Street, City',
-            images: [Ad2_1, Ad2_2, Ad2_3],
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 5,
-            adName: 'Grinder',
-            firstName: 'Kumar',
-            lastName: 'Sangakkara',
-            nic: '654987321V',
-            contactNumber: '0654987321',
-            email: 'kumar.sangakkara@example.com',
-            address: '222 Oak Road, Town',
-            registeredDate: '2023-08-05',
-            service: 'Sofa cleaning',
-            category: 'Tools',
-            shopName: 'All Seasons Cleaners',
-            shopAddress: '222 Oak Road, Town',
-            images: [Ad3_1, Ad3_2, Ad3_3],
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 6,
-            adName: 'Driller',
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '789654123V',
-            contactNumber: '0789654123',
-            email: 'mike.johnson@example.com',
-            address: '333 Maple Street, Village',
-            registeredDate: '2023-08-06',
-            service: 'Painting',
-            category: 'Tools',
-            shopName: 'Artisan Masons',
-            shopAddress: '333 Maple Street, Village',
-            images: [Ad1_1, Ad1_2, Ad1_3],
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 7,
-            adName: 'Drills',
-            firstName: 'Saman',
-            lastName: 'Perera',
-            nic: '321456789V',
-            contactNumber: '0321456789',
-            email: 'saman.perera@example.com',
-            address: '444 Pine Avenue, City',
-            registeredDate: '2023-08-07',
-            service: 'Electrical Wiring',
-            category: 'Spare Parts',
-            shopName: 'SecureTech Solutions',
-            shopAddress: '444 Pine Avenue, City',
-            images: [Ad4_1, Ad4_2, Ad4_3],
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 8,
-            adName: 'Handsaw',
-            firstName: 'Susantha',
-            lastName: 'Villergers',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'susantha.villergers@example.com',
-            address: '555 Oak Lane, Town',
-            registeredDate: '2023-08-08',
-            service: 'Tools',
-            category: 'Tools',
-            shopName: 'Elite Interior Design',
-            shopAddress: '555 Oak Lane, Town',
-            images: [Ad5_1, Ad5_2, Ad5_3],
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 9,
-            adName: 'Hammer',
-            firstName: 'William',
-            lastName: 'Wiliamson',
-            nic: '654321789V',
-            contactNumber: '0654321789',
-            email: 'william.wiliamson@example.com',
-            address: '666 Maple Road, Village',
-            registeredDate: '2023-08-09',
-            service: 'Fire Alarm',
-            category: 'Tools',
-            shopName: 'GreenThumb Landscaping',
-            shopAddress: '666 Maple Road, Village',
-            images: [Ad6_1, Ad6_2, Ad6_3],
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 10,
-            adName: 'Driller',
-            firstName: 'Johnes',
-            lastName: 'Doe',
-            nic: '123456789V',
-            contactNumber: '0123456789',
-            email: 'john.doe@example.com',
-            address: '777 Main Street, City',
-            registeredDate: '2023-08-10',
-            service: 'Carpentry',
-            category: 'Tools',
-            shopName: 'TopNotch Roofing',
-            shopAddress: '777 Main Street, City',
-            images: [Ad1_1, Ad1_2, Ad1_3],
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 11,
-            adName: 'ScrewDriver',
-            firstName: 'Jane',
-            lastName: 'Smith',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'jane.smith@example.com',
-            address: '888 Oak Avenue, Town',
-            registeredDate: '2023-08-11',
-            service: 'AC Repair',
-            category: 'Tools',
-            shopName: 'TechZone Electronics',
-            shopAddress: '888 Oak Avenue, Town',
-            images: [Ad2_1, Ad2_2, Ad2_3],
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 12,
-            adName: 'Grinder',
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '456123789V',
-            contactNumber: '0456123789',
-            email: 'mike.johnson@example.com',
-            address: '999 Maple Lane, Village',
-            registeredDate: '2023-08-12',
-            service: 'Masonry',
-            category: 'Tools',
-            shopName: 'AquaFlow Plumbing',
-            shopAddress: '999 Maple Lane, Village',
-            images: [Ad3_1, Ad3_2, Ad3_3],
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 13,
-            adName: 'Grinder Disks',
-            firstName: 'De',
-            lastName: 'Silva',
-            nic: '789123456V',
-            contactNumber: '0789123456',
-            email: 'de.silva@example.com',
-            address: '1010 Pine Street, City',
-            registeredDate: '2023-08-13',
-            service: 'CCTV Repair',
-            category: 'Spare Parts',
-            shopName: 'SparkleClean Services',
-            shopAddress: '1010 Pine Street, City',
-            images: [Ad7_1, Ad7_2, Ad7_3],
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 14,
-            adName: 'Pliers',
-            firstName: 'Kumar',
-            lastName: 'Sangakkara',
-            nic: '654987321V',
-            contactNumber: '0654987321',
-            email: 'kumar.sangakkara@example.com',
-            address: '111 Oak Road, Town',
-            registeredDate: '2023-08-14',
-            service: 'Sofa cleaning',
-            category: 'Tools',
-            shopName: 'Precision Builders',
-            shopAddress: '111 Oak Road, Town',
-            images: [Ad8_1, Ad8_2, Ad8_3],
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 15,
-            adName: 'Wrench',
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            nic: '789654123V',
-            contactNumber: '0789654123',
-            email: 'mike.johnson@example.com',
-            address: '1212 Maple Street, Village',
-            registeredDate: '2023-08-15',
-            service: 'Painting',
-            category: 'Tools',
-            shopName: 'SkyHigh Air Conditioning',
-            shopAddress: '1212 Maple Street, Village',
-            images: [Ad9_1, Ad9_2, Ad9_3],
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 16,
-            adName: 'Grinder',
-            firstName: 'Saman',
-            lastName: 'Perera',
-            nic: '321456789V',
-            contactNumber: '0321456789',
-            email: 'saman.perera@example.com',
-            address: '1313 Pine Avenue, City',
-            registeredDate: '2023-08-16',
-            service: 'Electrical Wiring',
-            category: 'Tools',
-            shopName: 'Golden Hammer Construction',
-            shopAddress: '1313 Pine Avenue, City',
-            images: [Ad3_1, Ad3_2, Ad3_3],
-            status: 'Pending',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 17,
-            adName: 'Driller',
-            firstName: 'Susantha',
-            lastName: 'Villergers',
-            nic: '987654321V',
-            contactNumber: '0987654321',
-            email: 'susantha.villergers@example.com',
-            address: '1414 Oak Lane, Town',
-            registeredDate: '2023-08-17',
-            service: 'Tiles Fitting',
-            category: 'Tools',
-            shopName: 'SilverLock Security',
-            shopAddress: '1414 Oak Lane, Town',
-            images: [Ad1_1, Ad1_2, Ad1_3],
-            status: 'Accepted',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-        {
-            id: 18,
-            adName: 'ScrewDriver',
-            firstName: 'William',
-            lastName: 'Wiliamson',
-            nic: '654321789V',
-            contactNumber: '0654321789',
-            email: 'william.wiliamson@example.com',
-            address: '1515 Maple Road, Village',
-            registeredDate: '2023-08-18',
-            service: 'Fire Alarm',
-            category: 'Tools',
-            shopName: 'Elegant Designs',
-            shopAddress: '1515 Maple Road, Village',
-            images: [Ad2_1, Ad2_2, Ad2_3],
-            status: 'Rejected',
-            uploadedFiles: [
-                { fileName: 'File 1', url: 'https://example.com/file1.pdf' },
-                { fileName: 'File 2', url: 'https://example.com/file2.pdf' },
-            ],
-        },
-    ];
 
     const advertisementsCategories = {
         "Tools": ["Carpentry", "Painting"],
@@ -454,19 +47,20 @@ function AdminAdvertisements() {
         enable: true,
         rejectReason: '',
         rejectReasonErrorMessage: '',
+        advertisementsData: []
     });
 
     // const cardsPerPage = data.windowWidth <= 768 ? 3 : 6;
-    const totalPages = Math.ceil(advertisementsData.length / data.cardsPerPage);
+    const totalPages = Math.ceil(data.advertisementsData.length / data.cardsPerPage);
     const startIndex = (data.currentPage - 1) * data.cardsPerPage;
     const endIndex = startIndex + data.cardsPerPage;
-    const displayedServices = advertisementsData.slice(startIndex, endIndex);
+    const displayedServices = data.advertisementsData.slice(startIndex, endIndex);
 
     const filterServiceProvidersByCategory = (category) => {
         if (category === 'default') {
-            return advertisementsData;
+            return data.advertisementsData;
         } else {
-            return advertisementsData.filter((provider) => provider.category === category);
+            return data.advertisementsData.filter((provider) => provider.category === category);
         }
     };
 
@@ -496,8 +90,8 @@ function AdminAdvertisements() {
 
     const filterAdvertisements = (status) => {
         const filteredServices = data.selectedCategory !== 'default'
-            ? advertisementsData.filter((advertisement) => advertisement.category === data.selectedCategory)
-            : advertisementsData;
+            ? data.advertisementsData.filter((advertisement) => advertisement.category === data.selectedCategory)
+            : data.advertisementsData;
 
         const filteredProviders = filteredServices.filter((advertisement) =>
             advertisement.status === status && (
@@ -662,24 +256,28 @@ function AdminAdvertisements() {
                                 <p className="card-text d-none d-md-block align-self-start">Category: {ads.category}</p>
                                 <div className="d-flex flex-column justify-content-center text-center">
                                     <button onClick={() => handleShowDetails(ads)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
-                                    <button
-                                        className="btn"
-                                        style={{ backgroundColor: "#0D6445" }}
-                                        onClick={() => {
-                                            setData({ ...data, showAcceptConfirmation: true, selectedAdvertisement: ads });
-                                        }}
-                                    >
-                                        Accept
-                                    </button>
-                                    <button
-                                        className="btn"
-                                        style={{ backgroundColor: "#B60E0E" }}
-                                        onClick={() => {
-                                            setData({ ...data, showRejectConfirmation: true, selectedAdvertisement: ads });
-                                        }}
-                                    >
-                                        Reject
-                                    </button>
+                                    {data.activeTab === 'Pending' && (
+                                        <button
+                                            className="btn"
+                                            style={{ backgroundColor: "#0D6445" }}
+                                            onClick={() => {
+                                                setData({ ...data, showAcceptConfirmation: true, selectedAdvertisement: ads });
+                                            }}
+                                        >
+                                            Accept
+                                        </button>
+                                    )}
+                                    {data.activeTab === 'Pending' && (
+                                        <button
+                                            className="btn"
+                                            style={{ backgroundColor: "#B60E0E" }}
+                                            onClick={() => {
+                                                setData({ ...data, showRejectConfirmation: true, selectedAdvertisement: ads });
+                                            }}
+                                        >
+                                            Reject
+                                        </button>
+                                    )}
                                 </div>
                             </Card.Body>
                         </Card>
@@ -821,36 +419,9 @@ function AdminAdvertisements() {
                     </Modal.Body>
                 )}
                 <StyledModalFooter>
-                    {data.activeTab === 'Accepted' && (
-                        <>
-
-                            <Form.Check
-                                type="radio"
-                                name="enableDisableRadio"
-                                id="enableRadio"
-                                label="Enable"
-                                checked={data.enable}
-                                onChange={() => setData({ ...data, enable: true })}
-                                className='ms-0 me-1 custom-radio'
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="enableDisableRadio"
-                                id="disableRadio"
-                                label="Disable"
-                                checked={!data.enable}
-                                onChange={() => setData({ ...data, enable: false })}
-                                className='ms-0 me-5 custom-radio'
-                            />
-
-                        </>
-                    )}
                     <div className="col-sm-6 d-flex justify-content-end align-items-end m-0">
                         <Button className="btn-effect3 me-2" onClick={() => setData({ ...data, showDetailsModal: false })}>
                             Cancel
-                        </Button>
-                        <Button type="submit" className="btn-effect">
-                            More Info
                         </Button>
                     </div>
                 </StyledModalFooter>

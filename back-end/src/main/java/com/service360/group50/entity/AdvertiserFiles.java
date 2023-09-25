@@ -21,17 +21,17 @@ public class AdvertiserFiles {
     private byte[] data;
 
     @ManyToOne
-    @JoinColumn(name = "advertiser_id")
-    private Advertiser advertiser;
+    @JoinColumn(name = "userid")
+    private Users users;
 
     public AdvertiserFiles() {
     }
 
-    public AdvertiserFiles(String fileName, String contentType, byte[] data, Advertiser advertiser) {
+    public AdvertiserFiles(String fileName, String contentType, byte[] data, Users users) {
         this.fileName = fileName;
         this.contentType = contentType;
         this.data = data;
-        this.advertiser = advertiser;
+        this.users = users;
     }
 
     public Long getFileid() {

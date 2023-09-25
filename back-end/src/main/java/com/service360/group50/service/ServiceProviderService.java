@@ -77,9 +77,9 @@ public class ServiceProviderService {
 
 
 
-    public List<Jobs> viewHistoryJobs() {
+    public List<Jobs> viewHistoryJobs(Long serviceProviderId) {
         // Step 1: Retrieve job IDs
-        List<Long> completedJobIds = jobsServiceProvidersRepository.findAllByjobstatus("completed");
+        List<Long> completedJobIds = jobsServiceProvidersRepository.findAllMyJobsByjobstatus("completed", serviceProviderId);
 
         // Step 2: Retrieve job details for those job IDs
         if (!completedJobIds.isEmpty()) {
@@ -161,9 +161,9 @@ public class ServiceProviderService {
     }
 
 
-    public List<Vacancies> viewHistoryVacancies() {
+    public List<Vacancies> viewHistoryVacancies(Long serviceProviderId) {
         // Step 1: Retrieve job IDs
-        List<Long> completedVacancyIds = vacanciesServiceProvidersRepository.findAllByvacancystatus("completed");
+        List<Long> completedVacancyIds = vacanciesServiceProvidersRepository.findAllMyVacanciesByvacancystatus("completed", serviceProviderId);
 
         // Step 2: Retrieve job details for those job IDs
         if (!completedVacancyIds.isEmpty()) {
@@ -253,10 +253,10 @@ public class ServiceProviderService {
         return blogsRepository.save(blog);
     }
 
-    public List<Blogs> viewServiceProviderBlogs() {         //LOOP IT ACCORDING TO THE SERVICE PROVIDER ID
-        List<Blogs> BlogsList = new ArrayList<>();
-        blogsRepository.findAll().forEach(BlogsList::add);
-        return BlogsList;
+    public List<Blogs> viewServiceProviderBlogs(Long serviceProviderId) {
+        List<Blogs> BlogList = new ArrayList<>();
+        blogsRepository.findAllByServiceProviderId(serviceProviderId).forEach(BlogList::add);
+        return BlogList;
     }
 
     //MY SERVICES
@@ -285,6 +285,11 @@ public class ServiceProviderService {
     // get adsImages by trainingId
     public String getTrainingImages(Long id) {
         return trainingSessionRepository.findById(id).orElse(null).getTrainingimage();
+    }
+
+    // get blogImages by blogId
+    public String getBlogImages(Long id) {
+        return blogsRepository.findBlogImagesByBlogId(id);
     }
 
 }

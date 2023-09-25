@@ -58,8 +58,8 @@ public class ServiceProvidersController {
 
 
     @GetMapping("auth/viewHistoryJobs")
-    public List<Jobs> viewHistoryJobs(){
-        return serviceProviderService.viewHistoryJobs();
+    public List<Jobs> viewHistoryJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewHistoryJobs(serviceproviderid);
     }
 
 
@@ -137,8 +137,8 @@ public class ServiceProvidersController {
 
 
     @GetMapping("auth/viewHistoryVacancies")
-    public List<Vacancies> viewHistoryVacancies(){
-        return serviceProviderService.viewHistoryVacancies();
+    public List<Vacancies> viewHistoryVacancies(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewHistoryVacancies(serviceproviderid);
     }
 
     @GetMapping("auth/viewMyVacancies")
@@ -479,8 +479,35 @@ public class ServiceProvidersController {
     }
 
     @GetMapping("auth/viewServiceProviderBlogs")
-    public List<Blogs> viewServiceProviderBlogs() {
-        return serviceProviderService.viewServiceProviderBlogs();
+    public BlogsDTO viewServiceProviderBlogs(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        List<Blogs> blogs = serviceProviderService.viewServiceProviderBlogs(serviceproviderid);
+
+        BlogsDTO blogsDTO = new BlogsDTO();
+        blogsDTO.setBlogs(blogs);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        for (Blogs blog : blogs) {
+            List<byte[]> blogimages = new ArrayList<>();
+
+            try {
+                List<byte[]> blogImages = getBlogimages(blog.getBlogid());
+                for (byte[] blogImage : blogImages) {
+                    blogimages.add(blogImage);
+                }
+
+                ImagesDTO image = new ImagesDTO();
+                image.setId(blog.getBlogid());
+                image.setImages(blogimages);
+                imagesDTO.add(image);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        blogsDTO.setBlogimages(imagesDTO);
+
+        return blogsDTO;
     }
 
 
@@ -636,4 +663,20 @@ public class ServiceProvidersController {
         return imageBytesList;
     }
 
+    @GetMapping("auth/getBlogimages/{id}")
+    public List<byte[]> getBlogimages(@PathVariable Long id) throws IOException {
+        String imageDirectory = "src/main/resources/static/images/blogs";
+
+        String[] imageNames = serviceProviderService.getBlogImages(id).split(",");
+//        imageNames = adImages.split(",");
+        List<byte[]> imageBytesList = new ArrayList<>();
+
+        for (String imageName : imageNames) {
+            byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
+            imageBytesList.add(imageBytes);
+        }
+        System.out.println(imageBytesList);
+
+        return imageBytesList;
+    }
 }

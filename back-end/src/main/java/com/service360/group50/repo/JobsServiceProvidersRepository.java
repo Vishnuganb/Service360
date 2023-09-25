@@ -26,4 +26,6 @@ public interface JobsServiceProvidersRepository extends CrudRepository<JobsServi
     @Query("SELECT jsp FROM JobsServiceProviders jsp where jsp.jobs.jobid = :jobid and jsp.serviceproviders.userid = :serviceproviderid")
     JobsServiceProviders findByJobidAndServiceproviderid(@Param("jobid") Long jobid, @Param("serviceproviderid") Long serviceProviderId);
 
+    @Query("SELECT jsp.jobs.jobid FROM JobsServiceProviders jsp where jsp.jobstatus = :jobstatus and jsp.serviceproviders.userid = :serviceproviderid")
+    List<Long> findAllMyJobsByjobstatus(@Param("jobstatus") String jobstatus, @Param("serviceproviderid") Long serviceproviderid);
 }

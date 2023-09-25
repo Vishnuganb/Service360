@@ -50,6 +50,7 @@ import SpViewJobsHome from './components/pages/User/ViewAjob.js';
 import SpChat from './components/pages/User/Chat/ChatPage.js';
 import SpViewAserviceJob from './components/pages/User/ViewAjob.js';
 import CreateQuotation from './components/pages/ServiceProvider/CreateQuotation/Index.js';
+import SpCompletedJobs from './components/pages/ServiceProvider/CompletedJob/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -212,6 +213,7 @@ const router = createBrowserRouter(
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
         <Route path="CreateQuotation" element={<CreateQuotation />} />
+        <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
       </Route>
 
       <Route path='/activateUser' element={<ActivateUser />} />

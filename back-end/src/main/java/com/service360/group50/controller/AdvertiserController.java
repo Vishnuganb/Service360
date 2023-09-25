@@ -252,6 +252,8 @@ public class AdvertiserController {
             adDTO.setUserId(user.getUserid());
             adDTO.setFirstName(user.getFirstname());
             adDTO.setLastName(user.getLastname());
+            adDTO.setDate ( ad.getDate () );
+            adDTO.setReason ( ad.getReason () );
 //            adDTO.setPlan(subStatus);
             if (user.getProfilePic() != null) {
                 adDTO.setProfileImage(user.getProfilePic().getBytes());

@@ -439,6 +439,11 @@ function AdminAdvertisers() {
                                         <img src={data.selectedAdvertiser.profilePic} alt="Service Provider" className="rounded-circle" width="100" height="100" />
                                     </div>
                                 )}
+                                {data.activeTab === 'Rejected' && (
+                                    <div className="mt-2 bordered-paragraph rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Reason for rejection: </span> {data.selectedAdvertiser.reason}
+                                    </div>
+                                )}
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedAdvertiser.firstname}
                                 </div>

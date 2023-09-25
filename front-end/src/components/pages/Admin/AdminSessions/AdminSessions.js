@@ -58,11 +58,6 @@ function AdminSessions() {
                 const detail = response.data;
                 const trainingsessions = detail.trainingsessions;
                 const trainingSessionImagesArray = detail.trainingsessionimages;
-                const categoriesResponse = await axios.get(serverLink + '/auth/allCategories');
-                const serviceCategoriesData = categoriesResponse.data;
-                // console.log(detail);
-                // console.log(trainingsessions);
-                // console.log(trainingSessionImagesArray);
                 setData({
                     ...data,
                     sessionImages: trainingSessionImagesArray,
@@ -313,7 +308,6 @@ function AdminSessions() {
                             </span>
                         </div>
                     </div>
-
                 </div>
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
@@ -463,8 +457,13 @@ function AdminSessions() {
 
                         <div className="row">
                             <div className="col-12">
+                                {data.activeTab === 'Rejected' && (
+                                    <div className="mt-2 bordered-paragraph rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Reason for rejection: </span> {data.selectedSession.reason}
+                                    </div>
+                                )}
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name:</span> {data.selectedSession.serviceprovider.firstname} {data.selectedSession.serviceprovider.lastname}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name: </span> {data.selectedSession.serviceprovider.firstname} {data.selectedSession.serviceprovider.lastname}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service Name: </span>{data.selectedSession.servicename}

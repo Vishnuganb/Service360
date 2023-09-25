@@ -3,10 +3,8 @@ package com.service360.group50.service;
 import com.service360.group50.dto.CategoryDTO;
 import com.service360.group50.dto.ServiceCategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
-import com.service360.group50.entity.ServiceCategory;
-import com.service360.group50.entity.Services;
-import com.service360.group50.entity.TrainingSession;
-import com.service360.group50.entity.Users;
+import com.service360.group50.entity.*;
+import com.service360.group50.repo.AdsRepository;
 import com.service360.group50.repo.ServiceCategoryRepository;
 import com.service360.group50.repo.ServiceRepository;
 import com.service360.group50.repo.TrainingSessionRepository;
@@ -33,6 +31,7 @@ public class AdminService {
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final ServiceRepository serviceRepository;
     private final TrainingSessionRepository trainingSessionRepository;
+    private final AdsRepository adsRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -259,5 +258,40 @@ public class AdminService {
         existingTrainingSession = trainingSessionRepository.save(existingTrainingSession);
 
         return existingTrainingSession;
+    }
+
+    public Ads updateAdvertisementAcceptStatus ( Long adsId, String status ) {
+        Optional<Ads> existingAdsOptional = adsRepository.findById ( adsId );
+
+        if (existingAdsOptional.isEmpty()) {
+            System.out.println("Ads not found");
+            return null;
+        }
+
+        Ads existingAds = existingAdsOptional.get();
+
+        existingAds.setVerificationStatus (status);
+
+        existingAds = adsRepository.save(existingAds);
+
+        return existingAds;
+    }
+
+    public Ads updateAdvertisementRejectStatus ( Long adsId, String status, String reason ) {
+        Optional<Ads> existingAdsOptional = adsRepository.findById ( adsId );
+
+        if (existingAdsOptional.isEmpty()) {
+            System.out.println("Ads not found");
+            return null;
+        }
+
+        Ads existingAds = existingAdsOptional.get();
+
+        existingAds.setVerificationStatus(status);
+        existingAds.setReason(reason);
+
+        existingAds = adsRepository.save(existingAds);
+
+        return existingAds;
     }
 }

@@ -56,6 +56,7 @@ public class AdminController {
             serviceProviderDetailsDTO.setAddress(serviceProvider.getAddress());
             serviceProviderDetailsDTO.setPhonenumber(serviceProvider.getPhonenumber());
             serviceProviderDetailsDTO.setStatus(serviceProvider.getStatus());
+            serviceProviderDetailsDTO.setReason(serviceProvider.getReason());
             serviceProviderDetailsDTO.setProfilePic(serviceProvider.getProfilePic());
             serviceProviderDetailsDTO.setLocked(serviceProvider.getLocked());
             serviceProviderDetailsDTO.setEnabled(serviceProvider.isEnabled());
@@ -130,6 +131,7 @@ public class AdminController {
         response.setStatus(user.getStatus());
         response.setProfilePic(user.getProfilePic());
         response.setLocked ( user.getLocked () );
+        response.setReason ( user.getReason () );
         response.setIsactive ( user.isIsactive () );
         response.setShopname(advertiser.getShopname());
         response.setShopaddress(advertiser.getShopaddress());
@@ -209,6 +211,24 @@ public class AdminController {
 
     ){
         return adminService.updateTrainingSessionRejectStatus(trainingid, status, reason);
+    }
+
+    @PutMapping("/updateAdvertisementAcceptStatus")
+    public Ads updateAdvertisementAcceptStatus(
+            @RequestParam(value = "adsId") Long adsId,
+            @RequestParam(value = "status") String status
+    ){
+        return adminService.updateAdvertisementAcceptStatus(adsId, status);
+    }
+
+    @PutMapping("/updateAdvertisementRejectStatus")
+    public Ads updateAdvertisementRejectStatus(
+            @RequestParam(value = "adsId") Long adsId,
+            @RequestParam(value = "status") String status,
+            @RequestParam(value = "reason") String reason
+
+    ){
+        return adminService.updateAdvertisementRejectStatus(adsId, status, reason);
     }
 
 }

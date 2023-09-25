@@ -403,7 +403,7 @@ function AdminServiceProvider() {
                                         ))}
                                     </div>
                                 ))}
-                                
+
                                 <div className="d-flex flex-column justify-content-center text-center">
                                     <button onClick={() => handleShowDetails(provider)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
                                     {data.activeTab === 'Pending' && (
@@ -551,9 +551,14 @@ function AdminServiceProvider() {
                         <div className="row">
                             <div className="col-md-8">
                                 {data.activeTab !== 'Pending' && (
-                                <div className="d-flex justify-content-start">
+                                    <div className="d-flex justify-content-start">
                                         <img src={data.selectedProvider.profilePic} alt="Service Provider" className="rounded-circle" width="100" height="100" />
-                                </div>
+                                    </div>
+                                )}
+                                {data.activeTab === 'Rejected' && (
+                                    <div className="mt-2 bordered-paragraph rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Reason for rejection: </span> {data.selectedProvider.reason}
+                                    </div>
                                 )}
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedProvider.firstname}
@@ -655,7 +660,7 @@ function AdminServiceProvider() {
                         </Button>
                         {data.activeTab === 'Accepted' && (
                             <Button type="submit" className="btn-effect" onClick={handleServiceFormSubmit}>
-                            Save
+                                Save
                             </Button>
                         )}
                     </div>

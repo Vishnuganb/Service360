@@ -40,8 +40,12 @@ public class Complaints {
     @Column(columnDefinition = "BOOLEAN")
     private boolean disabled;
 
-    //user name
-//    @ManyToOne
-//    @JoinColumn(name = "userid")
-//    private Users users;
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users users;
+
+    @PrePersist
+    protected void onCreate(){
+        posteddate=LocalDate.now();
+    }
 }

@@ -1,5 +1,6 @@
 package com.service360.group50.service;
 
+import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.Vacancies;
 import com.service360.group50.repo.CVacanciesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,13 @@ public class CVacanciesService {
         return this.cVacanciesRepository.findAll();
     }
 
-    public String deleteVacanciesById(Long jobid) {
-        cVacanciesRepository.deleteById(jobid);
+    public String deleteVacanciesById(Long vacancyid) {
+        cVacanciesRepository.deleteById(vacancyid);
         return "Job deleted successfully";
     }
+    public Vacancies updateVacancy(Vacancies vacancy) {
+        return this.cVacanciesRepository.save(vacancy);
+    }
+
 
 }

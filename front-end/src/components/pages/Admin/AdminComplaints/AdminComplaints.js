@@ -44,14 +44,15 @@ function AdminComplaints() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(serverLink + '/auth/getAllComplaints');
+                const response = await axios.get(serverLink + '/auth/viewcomplaints');
                 const detail = response.data;
-
+                console.log(detail);
                 setData({
                     ...data,
                     complaintsData: detail,
-                    pendingComplaints: detail.filter((complaint) => complaint.status === 'Pending'),
-                    resolvedComplaints: detail.filter((complaint) => complaint.status === 'Resolved'),
+                    pendingComplaints: detail.filter((complaint) => complaint.complaintstatus === 'Pending'),
+                    resolvedComplaints: detail.filter((complaint) => complaint.complaintstatus === 'Replied'),
+                    displayedComplaints: detail.filter((complaint) => complaint.complaintstatus === 'Pending').slice(0, data.rowsPerPage),
                 });
             } catch (error) {
                 console.log(error);
@@ -107,20 +108,19 @@ function AdminComplaints() {
 
         if (data.fromDate !== null && data.toDate !== null) {
             filteredComplaints = filteredComplaints.filter((complaint) => {
-                const complaintDate = new Date(complaint.complaintDate);
+                const complaintDate = new Date(complaint.posteddate);
                 return complaintDate >= data.fromDate && complaintDate <= data.toDate;
             });
         }
 
-        if(data.searchTerm !== '') {
+        if (data.searchTerm !== '') {
             filteredComplaints = filteredComplaints.filter((user) => {
                 return (
-                    user.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    user.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    user.nic.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    user.email.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    user.complaint.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                    user.description.toLowerCase().includes(data.searchTerm.toLowerCase())
+                    user.users.firstname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.users.lastname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.users.email.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.complainttitle.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    user.posteddate.toLowerCase().includes(data.searchTerm.toLowerCase())
                 );
             });
         }
@@ -162,11 +162,27 @@ function AdminComplaints() {
 
         if (!isError) {
 
-            setData((prevState) => ({
-                ...prevState,
-                reply: '',
-            }));
+            const formData = new FormData();
+            formData.append('complaintid', data.selectedUser.complaintid);
+            formData.append('reply', data.reply);
+            formData.append('complaintstatus', 'Replied');
 
+            for (const [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
+            axios.put(serverLink + '/auth/updateComplaintStatus', formData).then(
+                (response) => {
+                    console.log(response.data);
+                    window.location.reload();
+                }
+            ).catch(
+
+                () => { alert("Can't Update. Check Again") }
+
+            );
+
+            setData((prevState) => ({...prevState, reply: '',}));
             setData({ ...data, showDetailsModal: false });
         }
 
@@ -243,24 +259,22 @@ function AdminComplaints() {
                         <Table striped bordered hover size="sm" className="custom-table" style={{ backgroundImage: `url(${BgImage})` }}>
                             <thead className='text-center'>
                                 <tr>
-                                    <th>Complaint ID</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
-                                    <th>NIC</th>
+                                    <th>Complaint Title</th>
+                                    <th>Posted Date</th>
                                     <th>Email</th>
-                                    <th>Complaint</th>
                                     <th>More</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data.displayedComplaints && data.displayedComplaints.map((user) => (
-                                    <tr key={user.id}>
-                                        <td>{user.id}</td>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
-                                        <td>{user.nic}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.complaint}</td>
+                                    <tr key={user.complaintid}>
+                                        <td>{user.users.firstname}</td>
+                                        <td>{user.users.lastname}</td>
+                                        <td>{user.complainttitle}</td>
+                                        <td>{user.posteddate}</td>
+                                        <td>{user.users.email}</td>
                                         <td className='d-flex justify-content-center'>
                                             <i className="bi bi-info-circle-fill fs-3" onClick={() => handleShowDetails(user)}></i>
                                         </td>
@@ -293,28 +307,33 @@ function AdminComplaints() {
                         <Modal.Body className="text-start" style={{ backgroundImage: `url(${PopupBgImage})` }}>
                             <div className="row">
                                 <div className="col-12">
+                                    {data.activeTab === 'Resolved' && (
+                                        <div className="mt-2 rounded">
+                                            <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Reply for the Complaint: </span>{data.selectedUser.reply}
+                                        </div>
+                                    )}
                                     <div className="mt-2 rounded">
-                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint ID: </span> COM000{data.selectedUser.id}
-                                    </div>
-                                    <div className="mt-2 rounded">
-                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint Date: </span> {data.selectedUser.complaintDate}
-                                    </div>
-                                    <div className="mt-2 rounded">
-                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint: </span>
-                                        <div>{data.selectedUser.complaint}</div>
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint Date: </span> {data.selectedUser.posteddate}
                                     </div>
                                     <div className="mt-2 rounded">
-                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Description: </span>
-                                        <div>{data.selectedUser.description}</div>
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Complaint Title: </span>{data.selectedUser.complainttitle}
                                     </div>
-                                    <div className="mt-2">
-                                        <textarea value={data.reply} onChange={handleReplyChange} className="form-control" placeholder="Reply to the complaint..."
-                                            rows={6}
-                                            style={{ resize: 'vertical', height: '100px' }}
-                                            autoFocus
-                                        />
-                                        {data.replyErrorMessage && <p className="text-danger p-0 m-0">{data.replyErrorMessage}</p>}
+                                    <div className="mt-2 rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Description: </span>{data.selectedUser.complaintdescription}
                                     </div>
+                                    <div className="mt-2 rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name: </span>{data.selectedUser.users.firstname}{" "}{data.selectedUser.users.lastname}
+                                    </div>
+                                    {data.activeTab === 'Pending' && (
+                                        <div className="mt-2">
+                                            <textarea value={data.reply} onChange={handleReplyChange} className="form-control" placeholder="Reply to the complaint..."
+                                                rows={6}
+                                                style={{ resize: 'vertical', height: '100px' }}
+                                                autoFocus
+                                            />
+                                            {data.replyErrorMessage && <p className="text-danger p-0 m-0">{data.replyErrorMessage}</p>}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </Modal.Body>

@@ -11,7 +11,7 @@ const AdvertiserLayout = () => {
     <>
       <AuthenticationContextProvider>
         <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", }}>
-          <AdvertiserHeader />
+          {/* <AdvertiserHeader /> */}
           <div style={{ display: 'flex', flex: 1 }}>
             <AdvertiserSidebar />
             <div className="classoutlet" style={{ flex: 1, overflow: 'auto' }}>

@@ -28,6 +28,8 @@ public class Notification {
     @Column( columnDefinition = "TEXT" , nullable = false)
     private String message;
 
+    @Column( columnDefinition = "TEXT" , nullable = false)
+    private String senderName;
 
     // Always set to UNREAD
     @Column( columnDefinition = "TEXT")

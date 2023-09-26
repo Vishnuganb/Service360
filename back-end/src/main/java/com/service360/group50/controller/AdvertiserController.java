@@ -77,6 +77,7 @@ public class AdvertiserController {
                     Notification notification = new Notification();
                     notification.setTitle(adsName+" Ad was Added");
                     notification.setMessage("You have created a new ad");
+                    notification.setSenderName("Admin");
                     notification.setStatus("UNREAD");
                     notification.setFEButton1("View");
                     notification.setFEButton1("Advertiser/Ads");

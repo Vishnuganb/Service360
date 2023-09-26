@@ -57,7 +57,7 @@ function ComplaintPopup() {
                 <Modal.Body>
                     <form className="vacancy-form" onSubmit={handleSubmit}>
                         <div className="vacancy-form-group">
-                            <label htmlFor="complaintCategory">Complaint Category<span style={{ color: "red" }}>&nbsp;*</span> </label>
+                            <label htmlFor="complaintCategory">Complaint Title<span style={{ color: "red" }}>&nbsp;*</span> </label>
                             <input
                                 type="text"
                                 name="complainttitle"
@@ -130,7 +130,7 @@ const View = ({ complaintId }) => {
                 fontWeight: '500',
                 textTransform: 'none',
                 background: 'black',
-                '@media (max-width: 768px)': {
+                '@media (maxWidth: 768px)': {
                     width: '100%',
                 }
             }} onClick={handleShow} >
@@ -188,7 +188,7 @@ const Delete = ({ complaintId, onDelete }) => {
                     fontWeight: '500',
                     textTransform: 'none',
                     background: 'black',
-                    '@media (max-width: 768px)': {
+                    '@media (maxWidth: 768px)': {
                         width: '100%',
                     }
                 }}
@@ -201,7 +201,7 @@ const Delete = ({ complaintId, onDelete }) => {
                 <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
                     <Modal.Title>Delete</Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="text-center"> {/* Use text-center class to center-align content */}
+                <Modal.Body className="text-center">
                     <p>Are you sure to delete?</p>
                     <Button
                         variant="btn btn-viewvacancy-form-a"
@@ -217,11 +217,11 @@ const Delete = ({ complaintId, onDelete }) => {
                             textTransform: 'none',
                             marginRight: '200px',
                             background: 'black',
-                            '@media (max-width: 768px)': {
+                            '@media (maxWidth: 768px)': {
                                 width: '60%',
                             }
                         }}
-                        onClick={handleDelete} 
+                        onClick={handleDelete}
                     >
                         Yes
                     </Button>
@@ -238,11 +238,11 @@ const Delete = ({ complaintId, onDelete }) => {
                             fontWeight: '500',
                             textTransform: 'none',
                             background: 'rgb(126, 123, 123)',
-                            '@media (max-width: 768px)': {
+                            '@media (maxWidth: 768px)': {
                                 width: '60%',
                             }
                         }}
-                        onClick={handleClose} 
+                        onClick={handleClose}
                     >
                         No
                     </Button>
@@ -263,14 +263,12 @@ const More = ({ complaintId }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => {
         setShow(true);
-        // Fetch the complaint description when the modal is shown
         fetchComplaintDescription(complaintId);
     };
 
     const fetchComplaintDescription = (complaintId) => {
         axios.get(`http://localhost:8080/auth/viewcomplaints/${complaintId}`)
             .then((response) => {
-                // Set the complaint description in state
                 setComplaintDescription(response.data.complaintdescription);
             })
             .catch((error) => {
@@ -281,12 +279,12 @@ const More = ({ complaintId }) => {
     return (
         <>
             <Button variant="btn btn-viewvacancy-form-t" onClick={handleShow}>
-                <i className="bi bi-three-dots-vertical fs-6"></i>
+                <i className="bi bi-chat-square-text-fill fs-4"></i>
             </Button>
 
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
-                    <Modal.Title>Complaint</Modal.Title>
+                    <Modal.Title>Complaint Description</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <center><p>{complaintDescription}</p></center>
@@ -299,22 +297,20 @@ const More = ({ complaintId }) => {
 export default function CustomerComplaintPage() {
     const apiBaseUrl = "http://localhost:8080";
 
-    const axiosInstance = axios.create({
-        baseURL: apiBaseUrl,
-        timeout: 10000,
-    });
     const [Complaints, setComplaints] = useState([]);
 
     useEffect(() => {
-        axiosInstance
-            .get(`/auth/viewcomplaintsbyuserid/${userData.userid}`)
-            .then((response) => {
-                setComplaints(response.data);
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.log("Error fetching data:");
-            });
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(apiBaseUrl + `/auth/viewcomplaintsbyuserid/${userData.userid}`)
+                const detail = response.data;
+                setComplaints(detail);
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+        };
+        fetchData();
     }, []);
 
     const Cuscomplaints = Complaints.map((complaint) => {
@@ -327,7 +323,7 @@ export default function CustomerComplaintPage() {
             };
         }
         return null;
-    }).filter(Boolean); 
+    }).filter(Boolean);
 
     return (
         <>
@@ -346,28 +342,28 @@ export default function CustomerComplaintPage() {
 
                 </div>
 
-
-
                 <div className="my-customer-table-container">
                     <Table className="my-customer-table" striped bordered hover>
                         <thead>
                             <tr>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Date</b></th>
-                                <th className="my-customer-table-th-1" style={{ width: '18.67%' }}><b>Complaint</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Status</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '18.67%' }}><b>Complaint Title</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '18.67%' }}><b>Complaint Description</b></th>
                                 <th className="my-customer-table-th-2" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Cuscomplaints.map((complaint, index) => (
-                                <tr key={index}>
+                            {Cuscomplaints && Cuscomplaints.map((complaint) => (
+                                <tr key={complaint.complaintid}>
                                     <td>{complaint.date}</td>
-                                    <td>{complaint.complaint}<More complaintId={complaint.complaintid} /></td>
                                     <td>{complaint.complaintstatus}</td>
+                                    <td>{complaint.complaint}</td>
+                                    <td><More complaintId={complaint.complaintid} /></td>
                                     <td>
 
                                         {complaint.complaintstatus === 'Replied' && (
-                                            <View complaintId={complaint.complaintid}/>
+                                            <View complaintId={complaint.complaintid} />
                                         )}&nbsp;&nbsp;
                                         <Delete complaintId={complaint.complaintid} />
 

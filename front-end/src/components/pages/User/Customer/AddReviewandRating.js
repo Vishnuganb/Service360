@@ -17,8 +17,6 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 
-
-
 const serverLink = "http://localhost:8080"; 
 
 function AddReviewandRating(props) {
@@ -112,7 +110,7 @@ function AddReviewandRating(props) {
                 </div>
                 <Rating
                   count={5}
-                  value={rating}
+                  value={parseInt(rating)} // Convert rating to a number
                   onChange={handleRatingChange}
                   size={40}
                   activeColor="#ffd700"

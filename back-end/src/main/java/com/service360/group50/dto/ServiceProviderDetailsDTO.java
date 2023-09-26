@@ -20,6 +20,7 @@ public class ServiceProviderDetailsDTO{
     private String address;
     private String phonenumber;
     private String status;
+    private String reason;
     private String profilePic;
     private boolean locked;
     private boolean enabled;

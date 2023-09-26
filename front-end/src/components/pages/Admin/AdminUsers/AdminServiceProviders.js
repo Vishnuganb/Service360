@@ -176,6 +176,10 @@ function AdminServiceProvider() {
 
         }
 
+        if (data.selectedCategory !== 'default') {
+            filteredServiceProviders = filteredServiceProviders.filter((service) => service.category === data.selectedCategory);
+        }
+
         if (data.searchTerm) {
             filteredServiceProviders = filteredServiceProviders.filter((service) =>
                 service.firstname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
@@ -388,7 +392,7 @@ function AdminServiceProvider() {
                     {data.displayedServices && data.displayedServices.map((provider) => (
                         <Card className="m-3" key={provider.userid}>
                             {data.activeTab !== 'Pending' && (
-                                <Card.Img src={provider.image} alt="Service Provider" className="rounded-circle" width="50" height="50" />
+                                <Card.Img src={data.provider.profilePic} alt="Service Provider" className="rounded-circle" width="50" height="50" />
                             )}
                             <Card.Body className="d-flex flex-column align-items-center">
                                 <p className="card-text fw-bold d-none d-md-block">{provider.firstname}{' '}{provider.lastname}</p>
@@ -399,7 +403,7 @@ function AdminServiceProvider() {
                                         ))}
                                     </div>
                                 ))}
-                                
+
                                 <div className="d-flex flex-column justify-content-center text-center">
                                     <button onClick={() => handleShowDetails(provider)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
                                     {data.activeTab === 'Pending' && (
@@ -547,9 +551,14 @@ function AdminServiceProvider() {
                         <div className="row">
                             <div className="col-md-8">
                                 {data.activeTab !== 'Pending' && (
-                                <div className="d-flex justify-content-start">
+                                    <div className="d-flex justify-content-start">
                                         <img src={data.selectedProvider.profilePic} alt="Service Provider" className="rounded-circle" width="100" height="100" />
-                                </div>
+                                    </div>
+                                )}
+                                {data.activeTab === 'Rejected' && (
+                                    <div className="mt-2 bordered-paragraph rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Reason for rejection: </span> {data.selectedProvider.reason}
+                                    </div>
                                 )}
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>First Name: </span> {data.selectedProvider.firstname}
@@ -651,7 +660,7 @@ function AdminServiceProvider() {
                         </Button>
                         {data.activeTab === 'Accepted' && (
                             <Button type="submit" className="btn-effect" onClick={handleServiceFormSubmit}>
-                            Save
+                                Save
                             </Button>
                         )}
                     </div>

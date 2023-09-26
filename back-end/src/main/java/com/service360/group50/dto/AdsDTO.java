@@ -3,6 +3,7 @@ package com.service360.group50.dto;
 import com.service360.group50.entity.Ads;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class AdsDTO {
 
     private byte[] profileImage;
 
+    private LocalDate date;
+
       public AdsDTO() {
             this.id = id;
             this.adsName = adsName;
@@ -56,6 +59,7 @@ public class AdsDTO {
             this.profileImage = profileImage;
             this.adsImages = new ArrayList<>();
             this.plan = plan;
+            this.date = date;
         }
 
     public Long getId() {
@@ -224,5 +228,13 @@ public class AdsDTO {
 
     public void setPlan(String plan) {
         this.plan = plan;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

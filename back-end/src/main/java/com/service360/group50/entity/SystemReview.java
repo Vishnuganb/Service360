@@ -31,9 +31,16 @@ public class SystemReview {
     @Column( columnDefinition = "DATE")
     private LocalDate posteddate;
 
-    //user name
-    //profile
-    @OneToOne
+    @Column( columnDefinition = "TEXT")
+    private String status;
+
+    @ManyToOne
     @JoinColumn(name = "userid")
     private Users users;
+
+    @PrePersist
+    protected void onCreate(){
+        posteddate = LocalDate.now();
+        status = "Pending";
+    }
 }

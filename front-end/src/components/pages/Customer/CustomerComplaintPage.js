@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
@@ -7,12 +7,44 @@ import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
+import axios from "axios";
 
 function ComplaintPopup() {
     const [show, setShow] = useState(false);
+    const [complaintData, setComplaintData] = useState({
+        complaintCategory: "",
+        description: "",
+        posteddate: new Date().toISOString().slice(0, 10), // Set the current date
+        complaintstatus: "Pending" // Set the status to "Pending"
+
+    });
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post("http://localhost:8080/auth/createcomplaints", complaintData)
+            .then((response) => {
+                // Handle success, maybe show a success message
+                console.log("Complaint added successfully:", response.data);
+
+                // Close the modal
+                handleClose();
+                window.location.reload();
+
+            })
+            .catch((error) => {
+                // Handle error, maybe show an error message
+                console.error("Error adding complaint:", error);
+            });
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setComplaintData({ ...complaintData, [name]: value });
+    };
 
     return (
         <>
@@ -25,27 +57,39 @@ function ComplaintPopup() {
                     <Modal.Title>Make Complaints</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form className="vacancy-form">
-
+                    <form className="vacancy-form" onSubmit={handleSubmit}>
                         <div className="vacancy-form-group">
-                            <label for="complaint">Complaint Category<span style={{ color: "red" }}>&nbsp;*</span> </label>
-                            <input type="text" name="complaint" className="form-control" id="title" placeholder="Enter your Complaint" />
-                            <label for="complaint">Description <span style={{ color: "red" }}>&nbsp;*</span> </label>
-                            <textarea
-                                name="description"
+                            <label htmlFor="complaintCategory">Complaint Category<span style={{ color: "red" }}>&nbsp;*</span> </label>
+                            <input
+                                type="text"
+                                name="complainttitle"
                                 className="form-control"
-                                id="description"
+                                id="complainttitle"
+                                placeholder="Enter your Complaint"
+                                value={complaintData.complainttitle}
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="description">Description <span style={{ color: "red" }}>&nbsp;*</span> </label>
+                            <textarea
+                                name="complaintdescription"
+                                className="form-control"
+                                id="complaintdescription"
                                 placeholder="Enter your Description"
-                            />                             </div>
+                                value={complaintData.complaintdescription}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-end">
+                            <Button variant='secondary' style={{ background: "#292d32", marginRight: '200px' }} type="submit">
+                                Submit
+                            </Button>
+                            <Button variant="secondary" style={{ background: "#687699" }} onClick={handleClose}>
+                                Cancel
+                            </Button>
+                        </div>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant='secondary' style={{ background: "#292d32" }}>
-                        Submit
-                    </Button>
-                    <Button variant="secondary" style={{ background: "#687699" }} onClick={handleClose}>
-                        Cancel
-                    </Button>
 
                 </Modal.Footer>
             </Modal>
@@ -53,11 +97,27 @@ function ComplaintPopup() {
     );
 }
 
-const View = () => {
+const View = ({ complaintId }) => {
     const [show, setShow] = useState(false);
+    const [complaintReply, setComplaintReply] = useState("");
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        // Fetch the complaint description when the modal is shown
+        fetchComplaintReply(complaintId);
+    };
+
+    const fetchComplaintReply = (complaintId) => {
+        axios.get(`http://localhost:8080/auth/viewcomplaints/${complaintId}`)
+            .then((response) => {
+                // Set the complaint description in state
+                setComplaintReply(response.data.reply);
+            })
+            .catch((error) => {
+                console.error("Error fetching complaint description:", error);
+            });
+    };
 
     return (
         <>
@@ -84,7 +144,7 @@ const View = () => {
                     <Modal.Title>Reply</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <center><p>We will take action</p></center>
+                    <center><p>{complaintReply}</p></center>
                 </Modal.Body>
 
             </Modal>
@@ -92,29 +152,56 @@ const View = () => {
     );
 };
 
-const Delete = () => {
+
+const Delete = ({ complaintId, onDelete }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleDelete = () => {
+        // Make an API request to update the complaint's disabled property to true
+        axios
+            .delete(`http://localhost:8080/auth/deletecomplaints/${complaintId}`)
+            .then((response) => {
+                // Handle success, maybe show a success message
+                console.log("Complaint disabled successfully:", response.data);
+
+                // Close the modal
+                handleClose();
+                window.location.reload();
+
+
+                // Trigger the onDelete callback to update the UI
+                onDelete(complaintId);
+            })
+            .catch((error) => {
+                // Handle error, maybe show an error message
+                console.error("Error disabling complaint:", error);
+            });
+    };
+
     return (
         <>
-            <Button variant="btn btn-viewvacancy-form-t" style={{
-                width: '15%',
-                height: '30px',
-                border: '1px solid #ced4da',
-                fontSize: '14px',
-                padding: '0 8px',
-                backgroundColor: '#007bff',
-                color: '#fff',
-                fontWeight: '500',
-                textTransform: 'none',
-                background: 'black',
-                '@media (max-width: 768px)': {
-                    width: '100%',
-                }
-            }} onClick={handleShow} >
+            <Button
+                variant="btn btn-viewvacancy-form-t"
+                style={{
+                    width: '15%',
+                    height: '30px',
+                    border: '1px solid #ced4da',
+                    fontSize: '14px',
+                    padding: '0 8px',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    fontWeight: '500',
+                    textTransform: 'none',
+                    background: 'black',
+                    '@media (max-width: 768px)': {
+                        width: '100%',
+                    }
+                }}
+                onClick={handleShow}
+            >
                 <i className="my-customer-table-icon bi bi-trash h7"></i>
             </Button>
 
@@ -122,59 +209,86 @@ const Delete = () => {
                 <Modal.Header closeButton style={{ backgroundColor: '#303841', color: '#fff' }} >
                     <Modal.Title>Delete</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <center><p>Are you sure to delete?</p></center>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="btn btn-viewvacancy-form-a" style={{
-                        width: '15%',
-                        height: '38px',
-                        border: '1px solid #ced4da',
-                        fontSize: '14px',
-                        padding: '0 8px',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        fontWeight: '500',
-                        textTransform: 'none',
-                        background: 'black',
-                        '@media (max-width: 768px)': {
-                            width: '60%',
-                        }
-                    }} onClick={handleClose}>
+                <Modal.Body className="text-center"> {/* Use text-center class to center-align content */}
+                    <p>Are you sure to delete?</p>
+                    <Button
+                        variant="btn btn-viewvacancy-form-a"
+                        style={{
+                            width: '15%',
+                            height: '38px',
+                            border: '1px solid #ced4da',
+                            fontSize: '14px',
+                            padding: '0 8px',
+                            backgroundColor: '#007bff',
+                            color: '#fff',
+                            fontWeight: '500',
+                            textTransform: 'none',
+                            marginRight: '200px',
+                            background: 'black',
+                            '@media (max-width: 768px)': {
+                                width: '60%',
+                            }
+                        }}
+                        onClick={handleDelete} // Call handleDelete when "Yes" is clicked
+                    >
                         Yes
                     </Button>
-                    <Button variant="btn btn-viewvacancy-form-r" style={{
-                        width: '15%',
-                        height: '38px',
-                        border: '1px solid #ced4da',
-                        fontSize: '14px',
-                        padding: '0 8px',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        fontWeight: '500',
-                        textTransform: 'none',
-                        background: 'rgb(126, 123, 123)',
-                        '@media (max-width: 768px)': {
-                            width: '60%',
-                        }
-                    }} onClick={handleClose}>
+                    <Button
+                        variant="btn btn-viewvacancy-form-r"
+                        style={{
+                            width: '15%',
+                            height: '38px',
+                            border: '1px solid #ced4da',
+                            fontSize: '14px',
+                            padding: '0 8px',
+                            backgroundColor: '#007bff',
+                            color: '#fff',
+                            fontWeight: '500',
+                            textTransform: 'none',
+                            background: 'rgb(126, 123, 123)',
+                            '@media (max-width: 768px)': {
+                                width: '60%',
+                            }
+                        }}
+                        onClick={handleClose} // Close the modal without deleting
+                    >
                         No
                     </Button>
+
+                </Modal.Body>
+                <Modal.Footer>
+
                 </Modal.Footer>
             </Modal>
         </>
     );
 };
 
-const More = () => {
+const More = ({ complaintId }) => {
     const [show, setShow] = useState(false);
+    const [complaintDescription, setComplaintDescription] = useState("");
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        // Fetch the complaint description when the modal is shown
+        fetchComplaintDescription(complaintId);
+    };
+
+    const fetchComplaintDescription = (complaintId) => {
+        axios.get(`http://localhost:8080/auth/viewcomplaints/${complaintId}`)
+            .then((response) => {
+                // Set the complaint description in state
+                setComplaintDescription(response.data.complaintdescription);
+            })
+            .catch((error) => {
+                console.error("Error fetching complaint description:", error);
+            });
+    };
 
     return (
         <>
-            <Button variant="btn btn-viewvacancy-form-t" onClick={handleShow} >
+            <Button variant="btn btn-viewvacancy-form-t" onClick={handleShow}>
                 <i className="bi bi-three-dots-vertical fs-6"></i>
             </Button>
 
@@ -183,71 +297,93 @@ const More = () => {
                     <Modal.Title>Complaint</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <center><p>Dissatisfaction with the plumbing service provided by <b>Alex</b> on <b>27.07.2023</b> at my resident at<b>wellawatte.</b></p></center>
+                    <center><p>{complaintDescription}</p></center>
                 </Modal.Body>
-
             </Modal>
         </>
     );
 };
 export default function CustomerComplaintPage() {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // Adjust this value based on how many items you want per page
-    const [selectedStatus, setSelectedStatus] = useState('All');
+    const apiBaseUrl = "http://localhost:8080";
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [fromDate, setFromDate] = useState(null);
-    const [toDate, setToDate] = useState(null);
-
-    const complaints = [
-        { date: '27/07/2023', complaint: 'About service providers', status: 'Pending' },
-        { date: '26/07/2023', complaint: 'Billing Issues', status: 'Pending' },
-        { date: '25/07/2023', complaint: 'System quality', status: 'Replied' },
-        { date: '25/07/2023', complaint: 'System quality', status: 'Pending' },
-        { date: '24/07/2023', complaint: 'Billing Issues', status: 'Replied' },
-        { date: '24/07/2023', complaint: 'Services provided by service providers', status: 'Pending' },
-
-    ];
-
-    const filteredComplaints = complaints.filter((complaint) => {
-        const isDateMatch =
-            (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
-            (!toDate || new Date(complaint.date) <= new Date(toDate));
-
-
-        return (
-            isDateMatch &&
-            (complaint.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                complaint.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                complaint.complaint.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-        );
+    const axiosInstance = axios.create({
+        baseURL: apiBaseUrl,
+        timeout: 10000,
     });
+    const [Complaints, setComplaints] = useState([]);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentComplaints = filteredComplaints.slice(indexOfFirstItem, indexOfLastItem);
+    useEffect(() => {
+        // Fetch data from your backend API
+        axiosInstance
+            .get("/auth/viewcomplaints")
+            .then((response) => {
+                setComplaints(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log("Error fetching data:", error);
+            });
+    }, []);
 
-    const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const itemsPerPage = 5; // Adjust this value based on how many items you want per page
+    // const [selectedStatus, setSelectedStatus] = useState('All');
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    // const [searchTerm, setSearchTerm] = useState('');
+    // const [fromDate, setFromDate] = useState(null);
+    // const [toDate, setToDate] = useState(null);
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-        setCurrentPage(1);
-    };
+    const Cuscomplaints = Complaints.map((complaint) => {
+        if (!complaint.disabled) {
+            return {
+                date: complaint.posteddate,
+                complaint: complaint.complainttitle,
+                complaintstatus: complaint.complaintstatus,
+                complaintid: complaint.complaintid
+            };
+        }
+        return null; // Filter out complaints with disabled=true
+    }).filter(Boolean); // Remove null entries from the array
 
-    const handleFromDateChange = (e) => {
-        setFromDate(e.target.value);
-        setCurrentPage(1);
-    };
+    // const filteredComplaints = complaints.filter((complaint) => {
+    //     const isDateMatch =
+    //         (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
+    //         (!toDate || new Date(complaint.date) <= new Date(toDate));
 
-    const handleToDateChange = (e) => {
-        setToDate(e.target.value);
-        setCurrentPage(1);
-    };
+
+    //     return (
+    //         isDateMatch &&
+    //         (complaint.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //             complaint.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //             complaint.complaint.toLowerCase().includes(searchTerm.toLowerCase())
+    //         )
+    //     );
+    // });
+
+    // const indexOfLastItem = currentPage * itemsPerPage;
+    // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    // const currentComplaints = filteredComplaints.slice(indexOfFirstItem, indexOfLastItem);
+
+    // const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
+
+    // const handlePageChange = (pageNumber) => {
+    //     setCurrentPage(pageNumber);
+    // };
+
+    // const handleSearchChange = (e) => {
+    //     setSearchTerm(e.target.value);
+    //     setCurrentPage(1);
+    // };
+
+    // const handleFromDateChange = (e) => {
+    //     setFromDate(e.target.value);
+    //     setCurrentPage(1);
+    // };
+
+    // const handleToDateChange = (e) => {
+    //     setToDate(e.target.value);
+    //     setCurrentPage(1);
+    // };
 
     return (
         <>
@@ -266,7 +402,7 @@ export default function CustomerComplaintPage() {
 
 
 
-                    <Form className="nav-search">
+                    {/* <Form className="nav-search">
                         <div className="d-flex flex-wrap justify-content-center">
                             <div className='col-md-3 col-sm-6 m-2'>
                                 <div className="input-group m-0">
@@ -318,7 +454,7 @@ export default function CustomerComplaintPage() {
                                 </div>
                             </div>
                         </div>
-                    </Form>
+                    </Form> */}
 
                 </div>
 
@@ -335,17 +471,17 @@ export default function CustomerComplaintPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentComplaints.map((complaints, index) => (
+                            {Cuscomplaints.map((complaint, index) => (
                                 <tr key={index}>
-                                    <td>{complaints.date}</td>
-                                    <td>{complaints.complaint}<More /></td>
-                                    <td>{complaints.status}</td>
+                                    <td>{complaint.date}</td>
+                                    <td>{complaint.complaint}<More complaintId={complaint.complaintid} /></td>
+                                    <td>{complaint.complaintstatus}</td>
                                     <td>
 
-                                        {complaints.status === 'Replied' && (
-                                            <View />
+                                        {complaint.complaintstatus === 'Replied' && (
+                                            <View complaintId={complaint.complaintid}/>
                                         )}&nbsp;&nbsp;
-                                        <Delete />
+                                        <Delete complaintId={complaint.complaintid} />
 
                                     </td>
                                 </tr>
@@ -357,7 +493,7 @@ export default function CustomerComplaintPage() {
                 <br></br>
 
 
-                <div className="pagination justify-content-center">
+                {/* <div className="pagination justify-content-center">
                     {Array.from({ length: totalPages }, (_, index) => (
                         <button
                             key={index + 1}
@@ -368,7 +504,7 @@ export default function CustomerComplaintPage() {
                             {index + 1}
                         </button>
                     ))}
-                </div>
+                </div> */}
 
 
             </div>

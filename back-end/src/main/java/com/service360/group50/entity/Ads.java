@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -56,9 +58,18 @@ public class Ads {
     @Column( columnDefinition = "TEXT", nullable = true)
     private String Reason;
 
+    @Column( nullable = false)
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "userid")
     private Users user;
+
+    @PrePersist
+    protected void onCreate()  {
+        status = "Pending";
+        verificationStatus = "Pending";
+        date = LocalDate.now();
+    }
 
 }

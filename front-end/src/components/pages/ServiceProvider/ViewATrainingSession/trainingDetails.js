@@ -52,7 +52,7 @@ function TrainingSession() {
         axios
             .post(`http://localhost:8080/auth/registerTrainingSession/${trainingsessionId}`, registrationData,{
                 params:{
-                    serviceproviderid:userData.userid
+                    serviceproviderid:userData.userid,
                 }
             })
             .then((response) => {

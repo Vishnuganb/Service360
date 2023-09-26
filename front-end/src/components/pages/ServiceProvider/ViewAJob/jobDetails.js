@@ -42,9 +42,22 @@ function JobDetails() {
 
   if (!viewJobData) return 'No training sessions found!';
 
+  // GETTING LOGGED IN SERVICEPROVIDER ID
+
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
+
   const handleAddReply = () => {
+    const formData = new FormData();
+    formData.append('replymessage', addReplyData.replymessage);
+    formData.append('serviceproviderid', userData.userid);
+
     axios
-        .post(`http://localhost:8080/auth/AddJobReply/${jobId}`, addReplyData)
+        .post(`http://localhost:8080/auth/AddJobReply/${jobId}`, formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
         .then((response) => {
             console.log('Reply Added successfully:', response.data);
             setAddReplyData({ replymessage: "" });      // Clear the input field by resetting addReplyData

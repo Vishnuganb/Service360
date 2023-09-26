@@ -82,10 +82,11 @@ public class ServiceProvidersController {
 
 
     @PostMapping("auth/AddJobReply/{jobid}")
-    public JobReplies addJobReply(@RequestBody JobRepliesRequest jobRepliesRequest, @PathVariable Long jobid){
+    public JobReplies addJobReply( @RequestParam("replymessage") String replymessage,
+                                   @RequestParam("serviceproviderid") Long serviceproviderid,
+                                   @PathVariable Long jobid){
         // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         // Load the Jobs entity by ID
@@ -94,7 +95,7 @@ public class ServiceProvidersController {
 
         // Create a JobReplies entity
         JobReplies jobReply = new JobReplies();
-        jobReply.setReplymessage(jobRepliesRequest.getReplymessage());
+        jobReply.setReplymessage(replymessage);
 
         // Set the dateapplied for the vacancy application
         LocalDate today = LocalDate.now();
@@ -150,10 +151,17 @@ public class ServiceProvidersController {
     public Vacancies viewAVacancy(@PathVariable Long id) {return serviceProviderService.viewAVacancy(id);}
 
     @PostMapping("auth/applyVacancy/{id}")
-    public VacancyApplications applyvacancy(@RequestBody VacancyApplicationsRequest vacancyApplicationsRequest, @PathVariable Long id) {
+    public VacancyApplications applyvacancy( @RequestParam("firstname") String firstname,
+                                             @RequestParam("lastname") String lastname,
+                                             @RequestParam("contactnumber") String contactnumber,
+                                             @RequestParam("emailaddress") String emailaddress,
+                                             @RequestParam("educationqualification") String educationqualification,
+                                             @RequestParam("yearsofexperience") String yearsofexperience,
+                                             @RequestParam("salaryexpectation") String salaryexpectation,
+                                             @RequestParam("serviceproviderid") Long serviceproviderid,
+                                             @RequestParam("file") MultipartFile cvfile, @PathVariable Long id) {
         // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         // Load the Vacancies entity by ID
@@ -162,14 +170,27 @@ public class ServiceProvidersController {
 
         // Create a VacancyApplications entity
         VacancyApplications vacancyApplication = new VacancyApplications();
-        vacancyApplication.setFirstname(vacancyApplicationsRequest.getFirstname());
-        vacancyApplication.setLastname(vacancyApplicationsRequest.getLastname());
-        vacancyApplication.setContactnumber(vacancyApplicationsRequest.getContactnumber());
-        vacancyApplication.setEmailaddress(vacancyApplicationsRequest.getEmailaddress());
-        vacancyApplication.setEducationqualification(vacancyApplicationsRequest.getEducationqualification());
-        vacancyApplication.setYearsofexperience(vacancyApplicationsRequest.getYearsofexperience());
-        vacancyApplication.setSalaryexpectation(vacancyApplicationsRequest.getSalaryexpectation());
-        vacancyApplication.setCvfile(vacancyApplicationsRequest.getCvfile());
+        vacancyApplication.setFirstname(firstname);
+        vacancyApplication.setLastname(lastname);
+        vacancyApplication.setContactnumber(contactnumber);
+        vacancyApplication.setEmailaddress(emailaddress);
+        vacancyApplication.setEducationqualification(educationqualification);
+        vacancyApplication.setYearsofexperience(yearsofexperience);
+        vacancyApplication.setSalaryexpectation(salaryexpectation);
+
+        String uploadDirectory = "src/main/resources/static/images/vacancy";
+
+        String savedcvfile="";
+
+        if (cvfile != null && !cvfile.isEmpty()) {
+            try {
+                savedcvfile = imageService.saveImageToStorageServiceProvider(uploadDirectory, cvfile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        vacancyApplication.setCvfile(savedcvfile);
 
         // Set the service provider for the vacancy application
         vacancyApplication.setServiceproviders(serviceProvider);
@@ -318,7 +339,7 @@ public class ServiceProvidersController {
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
             trainingSessionRegistration.setPaymentstatus("paid");
-            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail(), verificationUrl);
+            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail(), verificationUrl, trainingSession);
         } else {
             trainingSessionRegistration.setPaymentstatus("not paid");
         }
@@ -338,11 +359,43 @@ public class ServiceProvidersController {
         // Query the trainingsessionregistration table to check if the mobile number exists
         boolean isMobileNumberValid = trainingSessionRegistrationRepository.existsByMobilenumber(mobileNumber);
 
+        String validImageSrc = "src/main/resources/static/images/qrvalidation/valid.png";
+        String invalidImageSrc = "src/main/resources/static/images/qrvalidation/invalid.png";
+
+        String fontCss = "font-family: 'Rubik', sans-serif;"; // Define the font-family inline CSS
+
         if (isMobileNumberValid) {
-            return ResponseEntity.ok("Mobile number is valid.");
+            String htmlResponse = "<html>" +
+                    "<head>" +
+                    "<style>" +
+                    "body { " + fontCss + " }" + // Apply the font to the entire body
+                    "</style>" +
+                    "</head>" +
+                    "<body style='display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;'>" +
+                    "<div style='text-align: center;'>" +
+                    "<img src='" + validImageSrc + "' alt='Valid Image'>" +
+                    "<h3 style='" + fontCss + "'>Verification Successful : Verified Mobile Number</h3>" +
+                    "</div>" +
+                    "</body>" +
+                    "</html>";
+            return ResponseEntity.ok(htmlResponse);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid mobile number.");
+            String htmlResponse = "<html>" +
+                    "<head>" +
+                    "<style>" +
+                    "body { " + fontCss + " }" + // Apply the font to the entire body
+                    "</style>" +
+                    "</head>" +
+                    "<body style='display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;'>" +
+                    "<div style='text-align: center;'>" +
+                    "<img src='" + invalidImageSrc + "' alt='Invalid Image'>" +
+                    "<h3 style='" + fontCss + "'>User Verification Failed : Not verified Mobile Number</h3>" +
+                    "</div>" +
+                    "</body>" +
+                    "</html>";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(htmlResponse);
         }
+
     }
 
 
@@ -358,11 +411,11 @@ public class ServiceProvidersController {
                                                  @RequestParam("status") String status,
                                                  @RequestParam("going") Integer going,
                                                  @RequestParam("interested") Integer interested,
+                                                 @RequestParam("serviceproviderid") Long serviceproviderid,
                                                  @RequestParam("images") MultipartFile[] imageFiles)
     {
         // Load the Users (service provider) entity by ID
-        Long userId = 4L; // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         String uploadDirectory = "src/main/resources/static/images/trainingsessions";

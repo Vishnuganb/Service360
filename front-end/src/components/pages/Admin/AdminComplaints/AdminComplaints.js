@@ -322,9 +322,6 @@ function AdminComplaints() {
                     <StyledModalFooter>
                         <div className="container">
                             <div className="row justify-content-between">
-                                <Button className="btn-effect3 d-flex justify-content-center align-items-center">
-                                    More Info
-                                </Button>
                                 <div className="col-sm-6 d-flex justify-content-center align-items-center m-0">
                                     <Button className="btn-effect2 me-2" onClick={() => setData({ ...data, showDetailsModal: false })}>
                                         Cancel

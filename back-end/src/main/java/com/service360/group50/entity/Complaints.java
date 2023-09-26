@@ -47,5 +47,6 @@ public class Complaints {
     @PrePersist
     protected void onCreate(){
         posteddate=LocalDate.now();
+        complaintstatus="Pending";
     }
 }

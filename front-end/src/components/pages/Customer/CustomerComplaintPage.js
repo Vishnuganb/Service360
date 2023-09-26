@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
@@ -7,21 +6,19 @@ import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
-import { AuthenticationContext } from './../../../ContextFiles/Authentication/AuthenticationContextProvider';
 import axios from "axios";
 
 const response = sessionStorage.getItem('authenticatedUser');
 const userData = JSON.parse(response);
-console.log(userData);
 
 function ComplaintPopup() {
     const [show, setShow] = useState(false);
     const [complaintData, setComplaintData] = useState({
         complaintCategory: "",
         description: "",
-        complaintstatus: "Pending" // Set the status to "Pending"
-
-
+        users: {
+            userid: userData.userid
+        }
     });
 
     const handleClose = () => setShow(false);
@@ -32,16 +29,12 @@ function ComplaintPopup() {
 
         axios.post("http://localhost:8080/auth/createcomplaints", complaintData)
             .then((response) => {
-                // Handle success, maybe show a success message
                 console.log("Complaint added successfully:", response.data);
-
-                // Close the modal
                 handleClose();
                 window.location.reload();
 
             })
             .catch((error) => {
-                // Handle error, maybe show an error message
                 console.error("Error adding complaint:", error);
             });
     };
@@ -169,19 +162,13 @@ const Delete = ({ complaintId, onDelete }) => {
         axios
             .delete(`http://localhost:8080/auth/deletecomplaints/${complaintId}`)
             .then((response) => {
-                // Handle success, maybe show a success message
                 console.log("Complaint disabled successfully:", response.data);
-
-                // Close the modal
                 handleClose();
                 window.location.reload();
 
-
-                // Trigger the onDelete callback to update the UI
                 onDelete(complaintId);
             })
             .catch((error) => {
-                // Handle error, maybe show an error message
                 console.error("Error disabling complaint:", error);
             });
     };
@@ -234,7 +221,7 @@ const Delete = ({ complaintId, onDelete }) => {
                                 width: '60%',
                             }
                         }}
-                        onClick={handleDelete} // Call handleDelete when "Yes" is clicked
+                        onClick={handleDelete} 
                     >
                         Yes
                     </Button>
@@ -255,7 +242,7 @@ const Delete = ({ complaintId, onDelete }) => {
                                 width: '60%',
                             }
                         }}
-                        onClick={handleClose} // Close the modal without deleting
+                        onClick={handleClose} 
                     >
                         No
                     </Button>
@@ -308,6 +295,7 @@ const More = ({ complaintId }) => {
         </>
     );
 };
+
 export default function CustomerComplaintPage() {
     const apiBaseUrl = "http://localhost:8080";
 
@@ -318,25 +306,16 @@ export default function CustomerComplaintPage() {
     const [Complaints, setComplaints] = useState([]);
 
     useEffect(() => {
-        // Fetch data from your backend API
         axiosInstance
-            .get("/auth/viewcomplaints")
+            .get(`/auth/viewcomplaintsbyuserid/${userData.userid}`)
             .then((response) => {
                 setComplaints(response.data);
                 console.log(response.data);
             })
             .catch((error) => {
-                console.log("Error fetching data:", error);
+                console.log("Error fetching data:");
             });
     }, []);
-
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const itemsPerPage = 5; // Adjust this value based on how many items you want per page
-    // const [selectedStatus, setSelectedStatus] = useState('All');
-
-    // const [searchTerm, setSearchTerm] = useState('');
-    // const [fromDate, setFromDate] = useState(null);
-    // const [toDate, setToDate] = useState(null);
 
     const Cuscomplaints = Complaints.map((complaint) => {
         if (!complaint.disabled) {
@@ -347,48 +326,8 @@ export default function CustomerComplaintPage() {
                 complaintid: complaint.complaintid
             };
         }
-        return null; // Filter out complaints with disabled=true
-    }).filter(Boolean); // Remove null entries from the array
-
-    // const filteredComplaints = complaints.filter((complaint) => {
-    //     const isDateMatch =
-    //         (!fromDate || new Date(complaint.date) >= new Date(fromDate)) &&
-    //         (!toDate || new Date(complaint.date) <= new Date(toDate));
-
-
-    //     return (
-    //         isDateMatch &&
-    //         (complaint.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    //             complaint.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    //             complaint.complaint.toLowerCase().includes(searchTerm.toLowerCase())
-    //         )
-    //     );
-    // });
-
-    // const indexOfLastItem = currentPage * itemsPerPage;
-    // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    // const currentComplaints = filteredComplaints.slice(indexOfFirstItem, indexOfLastItem);
-
-    // const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
-
-    // const handlePageChange = (pageNumber) => {
-    //     setCurrentPage(pageNumber);
-    // };
-
-    // const handleSearchChange = (e) => {
-    //     setSearchTerm(e.target.value);
-    //     setCurrentPage(1);
-    // };
-
-    // const handleFromDateChange = (e) => {
-    //     setFromDate(e.target.value);
-    //     setCurrentPage(1);
-    // };
-
-    // const handleToDateChange = (e) => {
-    //     setToDate(e.target.value);
-    //     setCurrentPage(1);
-    // };
+        return null;
+    }).filter(Boolean); 
 
     return (
         <>
@@ -404,62 +343,6 @@ export default function CustomerComplaintPage() {
                             <ComplaintPopup />
                         </div>
                     </div>
-
-
-
-                    {/* <Form className="nav-search">
-                        <div className="d-flex flex-wrap justify-content-center">
-                            <div className='col-md-3 col-sm-6 m-2'>
-                                <div className="input-group m-0">
-                                    <Form.Control
-                                        type="search"
-                                        placeholder="Search"
-                                        className=""
-                                        aria-label="Search"
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                    <span className="input-group-text">
-                                        <i className="bi bi-search"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className='col-md-2 col-sm-6 m-2'>
-                                <Form.Control
-                                    as="select"
-                                    value={selectedStatus}
-                                    onChange={(e) => setSelectedStatus(e.target.value)}
-                                    style={{ height: '45px' }}
-                                >
-                                    <option value="All">All Status</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Replied">Replied</option>
-                                </Form.Control>
-                            </div>
-                            <div className='col-md-2 col-sm-6 m-2 date-picker-container'>
-                                <div className="input-group">
-                                    <Form.Control
-                                        type="date"
-                                        placeholder="From Date"
-                                        value={fromDate}
-                                        onChange={handleFromDateChange}
-                                        style={{ height: '45px' }}
-                                    />
-                                </div>
-                            </div>
-                            <div className='col-md-2 col-sm-6 m-2 date-picker-container'>
-                                <div className="input-group">
-                                    <Form.Control
-                                        type="date"
-                                        placeholder="To Date"
-                                        value={toDate}
-                                        onChange={handleToDateChange}
-                                        style={{ height: '45px' }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </Form> */}
 
                 </div>
 
@@ -496,21 +379,6 @@ export default function CustomerComplaintPage() {
                 </div>
 
                 <br></br>
-
-
-                {/* <div className="pagination justify-content-center">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
-                            style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div> */}
-
 
             </div>
         </>

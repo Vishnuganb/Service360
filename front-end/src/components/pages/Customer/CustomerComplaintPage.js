@@ -7,15 +7,20 @@ import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/Viewvacancy.css';
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
+import { AuthenticationContext } from './../../../ContextFiles/Authentication/AuthenticationContextProvider';
 import axios from "axios";
+
+const response = sessionStorage.getItem('authenticatedUser');
+const userData = JSON.parse(response);
+console.log(userData);
 
 function ComplaintPopup() {
     const [show, setShow] = useState(false);
     const [complaintData, setComplaintData] = useState({
         complaintCategory: "",
         description: "",
-        posteddate: new Date().toISOString().slice(0, 10), // Set the current date
         complaintstatus: "Pending" // Set the status to "Pending"
+
 
     });
 

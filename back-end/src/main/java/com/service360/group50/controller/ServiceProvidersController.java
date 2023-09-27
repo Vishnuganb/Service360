@@ -68,12 +68,35 @@ public class ServiceProvidersController {
         return serviceProviderService.viewMyJobs(serviceproviderid);
     }
 
-
     @GetMapping("auth/viewNewJobs/{id}")
-    public Jobs viewAJob(@PathVariable Long id) {
-        return serviceProviderService.viewAJob(id);
-    }
+    public JobsDTO viewAJob(@PathVariable Long id) {
+        Jobs job = serviceProviderService.viewAJob(id);
 
+        JobsDTO jobsDTO = new JobsDTO();
+        jobsDTO.setJobs(job);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        List<byte[]> jobimages = new ArrayList<>();
+
+        try {
+            List<byte[]> jobImages = getJobImages(id);
+            for (byte[] jobImage : jobImages) {
+                jobimages.add(jobImage);
+            }
+
+            ImagesDTO image = new ImagesDTO();
+            image.setId(id);
+            image.setImages(jobimages);
+            imagesDTO.add(image);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jobsDTO.setJobimages(imagesDTO);
+
+        return jobsDTO;
+    }
 
     @GetMapping("auth/viewJobReplies/{jobid}")
     public List<JobReplies> viewJobReplies(@PathVariable Long jobid) {
@@ -740,4 +763,23 @@ public class ServiceProvidersController {
 
         return imageBytesList;
     }
+
+    @GetMapping("auth/getJobImages/{id}")
+    public List<byte[]> getJobImages(@PathVariable Long id) throws IOException {
+        String imageDirectory = "src/main/resources/static/images/jobImages";
+
+        String[] imageNames = serviceProviderService.getJobImages(id).split(",");
+
+        List<byte[]> imageBytesList = new ArrayList<>();
+
+        for (String imageName : imageNames) {
+            byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
+            imageBytesList.add(imageBytes);
+        }
+
+        System.out.println(imageBytesList);
+
+        return imageBytesList;
+    }
+
 }

@@ -307,5 +307,10 @@ public class ServiceProviderService {
         return blogsRepository.findBlogImagesByBlogId(id);
     }
 
+    // get jobImages by jobId
+    public String getJobImages(Long id) {
+        return jobsRepository.findJobImagesByJobId(id);
+    }
+
 
 }

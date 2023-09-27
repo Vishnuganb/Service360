@@ -3,11 +3,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
 import customerimage from "../../../../assets/images/ServiceProvider/customer1.jpg";
-import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
-import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
-import tiles1 from "../../../../assets/images/ServiceProvider/tiles1.jpg";
-import tiles2 from "../../../../assets/images/ServiceProvider/tiles2.jpg";
-import tiles3 from "../../../../assets/images/ServiceProvider/tiles3.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
@@ -22,8 +17,6 @@ function JobDetails() {
   const [addReplyData, setAddReplyData] = useState({
     replymessage: "",
   });
-
-  const jobimages =[tiles1, tiles2, tiles3]
 
   const { id } = useParams();
   const jobId = parseInt(id, 10);
@@ -78,6 +71,22 @@ function JobDetails() {
     });
 };
 
+
+  // Get all images from the job
+  const jobImagesArray = viewJobData.jobimages;
+      
+  // Initialize an empty array to store all images
+  const allImages = [];
+
+  // Iterate through trainingSessionImagesArray
+  jobImagesArray.forEach((sessionImages) => {
+    // Check if the current object has an 'images' property
+    if (sessionImages.hasOwnProperty('images') && Array.isArray(sessionImages.images)) {
+        // Concatenate the 'images' array to the 'allImages' array
+        allImages.push(...sessionImages.images);
+    }
+  });
+
   return (
     <>
     <Row className="JobDetails-Col-container">
@@ -94,18 +103,8 @@ function JobDetails() {
           className="jobDetails-username mb-1"
           style={{ fontSize:"18px",fontFamily: "'Rubik', sans-serif" }}
         >
-          {viewJobData.customer.firstname}
+          {viewJobData.jobs.customer.firstname}
         </div>
-        <div>
-          {/* <Link to="/ServiceProvider/AcceptedJob"> */}
-            {/* <Button
-              className="jobDetails-apply-btn btn-ServiceProvider-1 mt-2 mb-4"
-              style={{ fontFamily: "'Rubik', sans-serif" }}
-            >
-              Apply
-            </Button> */}
-          {/* </Link> */}
-          </div>
 
       </Col>
       <Col className="jobDetails-details-container col-12 col-lg-10 d-flex flex-column">
@@ -115,53 +114,52 @@ function JobDetails() {
           </span>
         </div>
         <div className="jobDetails-title-container mb-2">
-          <span className="jobDetails-title" style={{fontWeight:"650"}}>{viewJobData.jobtitle}</span>
+          <span className="jobDetails-title" style={{fontWeight:"650"}}>{viewJobData.jobs.jobtitle}</span>
         </div>
         <div className="jobDetails-category-container mb-2 d-flex flex-column">
           <span className="jobDetails-category" style={{fontWeight:"650"}}>Category</span>
-          <span className="jobDetails-category-value">{viewJobData.servicename}</span>
+          <span className="jobDetails-category-value">{viewJobData.jobs.servicename}</span>
         </div>
         <div className="jobDetails-location-container mb-2 d-flex flex-column">
           <span className="jobDetails-location" style={{fontWeight:"650"}}>Location</span>
-          <span className="jobDetails-location-value">{viewJobData.joblocation}</span>
+          <span className="jobDetails-location-value">{viewJobData.jobs.joblocation}</span>
         </div>
         <div className="jobDetails-dueDate-container mb-2 d-flex flex-row">
           <div>
             <span className="jobDetails-dueDate" style={{fontWeight:"650"}}>Due Date</span>
             <br />
-            <span className="jobDetails-dueDate-value">{viewJobData.duedate}</span>
+            <span className="jobDetails-dueDate-value">{viewJobData.jobs.duedate}</span>
           </div>
           <div className="mx-4">
             <span className="jobDetails-posted" style={{fontWeight:"650"}}>Posted</span>
             <br />
-            <span className="jobDetails-posted-value">{viewJobData.posteddate}</span>
+            <span className="jobDetails-posted-value">{viewJobData.jobs.posteddate}</span>
           </div>
         </div>
         <div className="jobDetails-description-container d-flex flex-column mb-2">
           <span className="jobDetails-description" style={{fontWeight:"650"}}>Description</span>
           <span className="jobDetails-description-value">
-          {viewJobData.jobdescription}
+          {viewJobData.jobs.jobdescription}
           </span>
         </div>
         <div className="jobDetails-images-container">
           <span className="jobDetails-images" style={{fontWeight:"650"}}>Images</span>
           
-          
           <div className="jobDetails-images-container-box row mt-2">
-          {jobimages.map((image) => (
-            <div className="col-6 col-md-4 col-lg-3">
-              <img
-                src={image}
-                alt={'job detail image'}
-                className="jobDetails-images-value-img"
-              />
-            </div>
-          ))}
+            {allImages.map((image) => (
+              <div className="col-6 col-md-4 col-lg-3">
+                <img
+                  src={`data:image/jpg;base64,${image}`}
+                  alt={'job detail image'}
+                  className="jobDetails-images-value-img"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </Col>
     </Row>
-    <div className="d-flex flex-column col-12  justify-content-center align-items-center">
+    <div className="d-flex flex-column col-12  justify-content-center align-items-center comment-section-start-div">
             <Col className="commentSection-col-container col-12 col-lg-10 col-md-10 col-sm-11 mt-3">
                 <Row className="my-3 me-lg-1 ms-lg-1">
                   <Form className="mt-4" onSubmit={(e) => {

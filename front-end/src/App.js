@@ -199,7 +199,7 @@ const router = createBrowserRouter(
         <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
         <Route path="OngoingJob/:id" element={<SpOngoingJob/>} />
         <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
-        <Route path="StartJob" element={<SpStartJob/>} />
+        <Route path="StartJob/:id" element={<SpStartJob/>} />
         <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
         <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
         <Route path="ViewHistory" element={<SpViewHistory/>} />
@@ -212,7 +212,7 @@ const router = createBrowserRouter(
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
-        <Route path="CreateQuotation" element={<CreateQuotation />} />
+        <Route path="CreateQuotation/:id" element={<CreateQuotation />} />
         <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
       </Route>
 

@@ -52,6 +52,9 @@ public class Jobs {
     @Column( columnDefinition = "TEXT")
     private String isquotation;
 
+    @Column( columnDefinition = "TEXT")
+    private String quotationpdf;
+
     //customerid
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")

@@ -787,4 +787,26 @@ public class ServiceProvidersController {
         return imageBytesList;
     }
 
+    @PutMapping("auth/addQuotationPdf/{id}")
+    public Jobs addQuotationPdf(@RequestParam("file") MultipartFile quotationfile, @PathVariable Long id) {
+        // Load the Jobs entity by ID
+        Optional<Jobs> jobOptional = jobsRepository.findById(id);
+        Jobs job = jobOptional.orElse(null);
+
+        String uploadDirectory = "src/main/resources/static/images/quotation";
+
+        String savedquotationfile="";
+
+        if (quotationfile != null && !quotationfile.isEmpty()) {
+            try {
+                savedquotationfile = imageService.saveImageToStorageServiceProvider(uploadDirectory, quotationfile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        job.setQuotationpdf(savedquotationfile);
+
+        return serviceProviderService.addQuotationPdf(job);
+    }
 }

@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 
 function PendingJobDetails() {
     const [viewJobData, setViewJobData] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const { id } = useParams();
     const jobId = parseInt(id, 10);
@@ -27,6 +28,20 @@ function PendingJobDetails() {
     }, []);
 
     if (!viewJobData) return 'No jobs found!';
+
+    const handleAddQuotation = () => {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        
+        axios.put(`http://localhost:8080/auth/addQuotationPdf/${jobId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((res) => {
+            console.log(res.data);
+            document.getElementById('fileInput').value = '';
+        });
+    };
 
     // Get all images from the job
     const jobImagesArray = viewJobData.jobimages;
@@ -42,6 +57,14 @@ function PendingJobDetails() {
             allImages.push(...sessionImages.images);
         }
     });
+
+    const handleFileInputChange = (e) => {
+        const selectedFile = e.target.files[0];
+    
+        if (selectedFile) {
+            setSelectedFile(selectedFile);
+        }
+    };
 
     return (
         <div>
@@ -121,17 +144,21 @@ function PendingJobDetails() {
             <div className="mt-2 d-flex flex-column">
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Control type="file" placeholder="Password" />
+                        <Form.Control type="file" placeholder="Password" id="fileInput" onChange={handleFileInputChange}/>
                     </Form.Group>
-                    <Form.Text className="text-muted d-block mb-3">
-                        Visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
-                    </Form.Text>
-                    <Link to="../CreateQuotation">
-                        <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
-                            Create Quotation
-                        </Button>
-                    </Link>
+                    <div className="CreateBlog-button-container d-flex flex-row d-flex">
+                        <Button className="ms-auto btn-ServiceProvider-1" onClick={handleAddQuotation}>Submit</Button>
+                    </div>
                 </Form>
+
+                <div className="text-muted d-block mb-3">
+                    You can create quotation using our website or visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
+                </div>
+                <Link to={`../CreateQuotation/${jobId}`}>
+                    <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
+                        Create Quotation
+                    </Button>
+                </Link>
             </div>
         </div>
     );

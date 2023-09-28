@@ -313,4 +313,8 @@ public class ServiceProviderService {
     }
 
 
+    // save quotation pdf
+    public Jobs addQuotationPdf(Jobs job) {
+        return jobsRepository.save(job);
+    }
 }

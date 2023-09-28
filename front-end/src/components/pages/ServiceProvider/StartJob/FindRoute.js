@@ -1,21 +1,60 @@
 import React from "react";
-import { Form } from 'react-bootstrap'
+import { Form } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 import Routing from "./Routing";
 
-const routeDetails = [
-    {
-        cutomerLocation: "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
-        serviceProviderLocation: "no 11 5/4 Nelson Place, Colombo 06"
-    }
-];
-
 function FindRoute() {
+    const [viewJobData, setViewJobData] = useState(null);
+    const [userDetail, setUserDetail] = useState([]);
+
+    const { id } = useParams();
+    const jobId = parseInt(id, 10);
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
+    // FETCHING LOGGED IN USER DATA
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/auth/getUserById/' + userData.userid);      
+            if (response.data) {
+                setUserDetail(response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+    
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewNewJobs/${jobId}`).then((res) => {
+            console.log(res.data);
+            setViewJobData(res.data);
+        });
+    }, []);
+
+    if (!viewJobData) return 'No jobs sessions found!';
 
     const position = [16.902, 79.859];
+
+    const cus_location = viewJobData.jobs.customer.address;
+    const sp_location = userDetail.address;
+
+    // const routeDetails = [
+    //     {
+    //         cutomerLocation: "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
+    //         serviceProviderLocation: "no 11 5/4 Nelson Place, Colombo 06"
+    //     }
+    // ];
 
     return (
         <div className="ms-lg-4 me-lg-4">
@@ -25,12 +64,12 @@ function FindRoute() {
                 <Form className="mt-4">
                     <Form.Group className="mb-3" controlId="formBasicTitle">
                         <Form.Label>My Location</Form.Label>
-                        <Form.Control type="text" value={routeDetails[0].serviceProviderLocation} />
+                        <Form.Control type="text" value={sp_location} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicTitle">
                         <Form.Label>Customer's Location</Form.Label>
-                        <Form.Control type="text" value={routeDetails[0].cutomerLocation} />
+                        <Form.Control type="text" value={cus_location} />
                     </Form.Group>
                 </Form>
 

@@ -130,7 +130,7 @@ function AcceptedJobDetails() {
       </div>
       <hr />
       <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-        <Link className="ms-auto" to="../StartJob">
+        <Link className="ms-auto" to={`../StartJob/${jobId}`}>
           <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
         </Link>
       </div>

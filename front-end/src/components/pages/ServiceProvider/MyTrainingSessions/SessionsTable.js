@@ -89,6 +89,11 @@ function MyTrainingSessions() {
     setCurrentPage(1); // Reset current page to 1 when date changes
   };
 
+  // GETTING LOGGED IN SERVICEPROVIDER ID
+
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
+
   const handlePublish = (id) => {
       console.log(id);
       axios
@@ -124,7 +129,11 @@ function MyTrainingSessions() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/viewMyTrainingSessions').then((res) => {
+    axios.get('http://localhost:8080/auth/viewMyTrainingSessions',{
+      params: {
+        serviceproviderid: userData.userid
+      },
+    }).then((res) => {
         console.log(res.data);
         setviewTrainingSessionsData(res.data);
     });

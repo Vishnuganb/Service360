@@ -203,9 +203,9 @@ public class ServiceProviderService {
 
 
     //SP CALENDAR
-    public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
+    public List<ServiceProviderCalendar> viewServiceProviderCalendar(Long serviceProviderId) {
         List<ServiceProviderCalendar> ServiceProviderCalendarList = new ArrayList<>();
-        serviceProviderCalendarRepository.findAll().forEach(ServiceProviderCalendarList::add);      // NEED TO FIND FOR LOGGED IN SP
+        serviceProviderCalendarRepository.findAllByServiceProviderId(serviceProviderId).forEach(ServiceProviderCalendarList::add);      // NEED TO FIND FOR LOGGED IN SP
         return ServiceProviderCalendarList;
     }
 
@@ -233,9 +233,9 @@ public class ServiceProviderService {
         return trainingSessionRegistrationRepository.save(trainingSessionRegistration);
     }
 
-    public List<TrainingSession> viewMyTrainingSessions() {
+    public List<TrainingSession> viewMyTrainingSessions(Long serviceProviderId) {
         List<TrainingSession> TrainingSessionList = new ArrayList<>();
-        trainingSessionRepository.findAllTrainingSessionsWithSpDetails().forEach(TrainingSessionList::add);          // NEED TO FIND FOR LOGGED IN SP
+        trainingSessionRepository.findMyTrainingSessionsWithSpDetails(serviceProviderId).forEach(TrainingSessionList::add);          // NEED TO FIND FOR LOGGED IN SP
         return TrainingSessionList;
     }
 

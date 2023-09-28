@@ -242,12 +242,17 @@ public class ServiceProvidersController {
 
     //SP CALENDAR
     @GetMapping("auth/viewServiceProviderCalendar")
-    public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
-        return serviceProviderService.viewServiceProviderCalendar();
+    public List<ServiceProviderCalendar> viewServiceProviderCalendar(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        return serviceProviderService.viewServiceProviderCalendar(serviceproviderid);
     }
 
     @PostMapping("auth/createServiceProviderCalendar")
-    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
+    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar, @RequestParam("serviceproviderid") Long serviceproviderid) {
+        // Load the Users (service provider) entity by ID
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
+
+        serviceProviderCalendar.setServiceprovider(serviceProvider);
         return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
     }
 
@@ -294,8 +299,8 @@ public class ServiceProvidersController {
     // NEED TO FIND FOR LOGGED IN SP
 
     @GetMapping("auth/viewMyTrainingSessions")
-    public List<TrainingSession> viewMyTrainingSessions() {
-        return serviceProviderService.viewMyTrainingSessions();
+    public List<TrainingSession> viewMyTrainingSessions(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        return serviceProviderService.viewMyTrainingSessions(serviceproviderid);
     }
 
     @GetMapping("auth/viewTrainingSessions/{id}")

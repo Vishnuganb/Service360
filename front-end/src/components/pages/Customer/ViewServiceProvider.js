@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,15 +12,47 @@ import { faPhone, faComment, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link,useParams } from 'react-router-dom';
 import axios from 'axios';
+import { error } from 'jquery';
+// import { Link } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import axios from 'axios';
 
 function ViewServiceProvider() {
   const [viewSpBlogs, setViewSpBlogs] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0); 
 
   const rating = 4;
+  const { id } = useParams();
+  // const ViewServiceProvider = ({ match }) => {
+  //   const rating = 4; 
+
+  //   const serviceproviderid = match.params.id;
+
+  //   useEffect(() => {
+  //     axios.get('http://localhost:8080/auth/details/${serviceproviderid}')
+  //       .then((response) => {
+  //           setServiceProvider(response.data);
+
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //     });
+  //   }, [serviceproviderid]);
+
+  const [serviceProvider, setServiceProvider] = useState({});
+
+  const getServiceProvider=async()=>{
+    const data=await axios.get("http://localhost:8080/auth/details")
+    const filteredData = data.data.filter(item => item.serviceproviderid == id);
+    setServiceProvider(filteredData[0])
+
+  }
+
+  useEffect(() => {
+    getServiceProvider();
+  });
 
   useEffect(() => {
     axios.get('http://localhost:8080/auth/viewServiceProviderBlogs',{
@@ -64,25 +96,25 @@ function ViewServiceProvider() {
     <div className="SPBox ">
       <img className='SPImg' src={ServiceProvideimg} alt="profile-image" />
       <div className='SPProfile'>
-        <span className='SPname'> Alex </span>
+        <span className='SPname'>{serviceProvider.serviceprovidername}</span>
         <span className='SPActive'> Last Active 5 days ago </span>
         <div class="SPDetail">
-          <p className='p1'> Member Since 2022 </p>
-          <p className='p1'>Service : Sofa Cleaning &nbsp; | &nbsp; Location : Colombo 1, Colombo</p>
-          <p className='p1'>Description </p>
-          <p className='Des border p-3' >Iphone unlocking Software and hardware, Display replacing, Battery replacing, All kind Mobile can be repaired</p>
+          <p className='p1'> Member Since {serviceProvider.membershipdate} </p>
+          <p className='p1'>Service : {serviceProvider.service}  &nbsp; | &nbsp; Location : {serviceProvider.location}</p>
+          <p className='p1'> </p>
+          <p className='Des border p-3' >{serviceProvider.description}</p>
         </div>
 
         <div className='SPContact'>
           <div className='contacticon'>
             <a href="#getcall" className='SPNo'>
               <FontAwesomeIcon icon={faPhone} />
-              &nbsp; &nbsp; 0775869807
+              &nbsp; &nbsp; {serviceProvider.contact}
             </a>
           </div>
-
         </div>
-        <hr className='line'></hr>
+
+        {/* <hr className='line'></hr>
 
         <div className='SPContact'>
           <div className='contacticon'>
@@ -92,7 +124,7 @@ function ViewServiceProvider() {
             </a>
           </div>
           <br></br>
-        </div>
+        </div> */}
         <hr className='line'></hr>
 
         <div className='SPReqButtons'>
@@ -100,9 +132,9 @@ function ViewServiceProvider() {
             <button className='SPRequestjob'> Request for job </button></Link>
 
 
-          <Link to={`/customer/Quotation`}>
+          {/* <Link to={`/customer/Quotation`}>
             <button className='SPRequestquotation'> Request for quotation</button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className='SPRatings'>
@@ -228,6 +260,6 @@ function ViewServiceProvider() {
     </div>
 
   );
-}
+};
 
 export default ViewServiceProvider;

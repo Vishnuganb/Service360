@@ -18,10 +18,11 @@ import ViewAd from './components/pages/advertiser/ViewAd.js';
 import ViewThread from './components/pages/Forum/ViewThread/ViewThread.js';
 import About from './components/pages/User/About/Index.js';
 import AdvertiserChat from './components/pages/User/Chat/ChatPage.js';
-import Subscribtion from './components/pages/advertiser/Dashboard/subscription.js';
-import Ads from './components/pages/advertiser/Dashboard/Ads/Index.js';
-import EditAd from './components/pages/advertiser/Dashboard/EditAd.js';
-import Subscriped from './components/pages/advertiser/Dashboard/subscribed.js';
+import Subscribtion from "./components/pages/advertiser/Dashboard/Subscription/subscription.js";
+import Ads from "./components/pages/advertiser/Dashboard/Ads/Index.js";
+import EditAd from "./components/pages/advertiser/Dashboard/EditAd.js";
+import Subscriped from "./components/pages/advertiser/Dashboard/Subscription/subscribed.js";
+import SubscripetionIndex from "./components/pages/advertiser/Dashboard/Subscription/Index.js";
 
 import SpDashboard from './components/pages/ServiceProvider/SpDashboard/Index.js';
 import SpViewJobs from './components/pages/ServiceProvider/ViewJobs/Index.js';
@@ -103,7 +104,14 @@ import ContactpageNR from './components/pages/User/Customer/ContactpageNR.js'
 import ToDoList from './components/pages/ServiceProvider/CreateToDo.js';
 import RequestedQuotation from './components/pages/Customer/RequestedQuotation.js';
 import PostedVacancies from './components/pages/Customer/PostedVacancies.js';
+import PostJobForm from './components/pages/Customer/PostJobForm.js';
+import PostedJobs from './components/pages/Customer/PostedJobs.js';
+import RequestedJobs from './components/pages/Customer/RequestedJobs.js';
+import ViewPostedJobs from './components/pages/Customer/ViewPostedJobs.js';
+import ViewVacancyReply from './components/pages/Customer/ViewVacancyReply.js';
+import ActivateCustomer from './ContextFiles/ActivateCustomer.js';
 import ActivateUser from './ContextFiles/ActivateUser.js';
+import ViewPostedJobs1 from './components/pages/Customer/ViewPostedJobs1.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -111,18 +119,18 @@ const router = createBrowserRouter(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="/services" element={<ViewServices />} />
-        <Route path="/services/:serviceName" element={<ServicePage />} />    
+        <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/ViewAservice" element={<ViewAservice />} />
 
-        <Route path="/jobs" element={<ViewServicesJobs />} /> 
-        <Route path="/jobs/:serviceName" element={<ServicePageJob />} />       
+        <Route path="/jobs" element={<ViewServicesJobs />} />
+        <Route path="/jobs/:serviceName" element={<ServicePageJob />} />
         <Route path="/jobs/ViewAjob" element={<SpViewAserviceJob />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup/customer" element={<CustSignUp />} />
         <Route path="/signup/serviceProvider" element={<SpSignUp />} />
         <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
         <Route path="/About" element={<About />} />
-        <Route path='/Contactus' element={<ContactpageNR />} />
+        <Route path="/Contactus" element={<ContactpageNR />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
@@ -136,11 +144,10 @@ const router = createBrowserRouter(
         <Route path="report" element={<AdminReport />} />
         <Route path="advertisements" element={<AdminAdvertisements />} />
         <Route path="invoice" element={<AdminInvoices />} />
-        <Route path="history" element={<AdminViewHistory /> } />
-        <Route path="review" element={<ViewReviewandRating/>}  />  
-        <Route path="chat" element={<AdminChat/>}  /> 
+        <Route path="history" element={<AdminViewHistory />} />
+        <Route path="review" element={<ViewReviewandRating />} />
+        <Route path="chat" element={<AdminChat />} />
         <Route path="sessions" element={<AdminSessions />} />
-      
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
@@ -148,9 +155,10 @@ const router = createBrowserRouter(
         <Route path="View" element={<ViewAd />} />
         <Route index element={<AdDashbord />} />
         <Route path="Subscribtion" element={<Subscribtion />} />
-        <Route path="Chat" element ={<AdvertiserChat/>}/>
+        <Route path="Subscription" element={<SubscripetionIndex />} />
+        <Route path="Chat" element={<AdvertiserChat />} />
         <Route path="Ads" element={<Ads />} />
-        <Route path="EditAd/:adId" element={<EditAd />} />
+        <Route path="EditAd/:id" element={<EditAd />} />
         <Route path="Subscribed/:subId" element={<Subscriped />} />
       </Route>
 
@@ -162,23 +170,37 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="ViewServiceProvider" element={<ViewServiceProvider />} />
+        <Route path="ViewServiceProvider/:id" element={<ViewServiceProvider />} />
         <Route path="ToDoForm" element={<ToDoForm />} />
         <Route path="RatenReview" element={<RatenReview />} />
-        <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
+        <Route
+          path="Searchserviceprovider"
+          element={<Searchserviceprovider />}
+        />
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
         <Route path="History" element={<CustomerViewHistory />} />
-        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage />} />
+        <Route
+          path="CustomerComplaintPage"
+          element={<CustomerComplaintPage />}
+        />
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
-        <Route path="AdsPage" element={<AdsPage />} /> 
+        <Route path="AdsPage" element={<AdsPage />} />
         <Route path="Chat" element={<CustomerChat />} />
         <Route path="ToDoList" element={<ToDoList />} />
         <Route path="RequestedQuotation" element={<RequestedQuotation />} />
         <Route path="PostedVacancies" element={<PostedVacancies />} />
         <Route path="JobRequest" element={<JobRequest />} />
+        <Route path="PostJobForm" element={<PostJobForm />} />
+        <Route path="PostedJobs" element={<PostedJobs />} />
+        <Route path="RequestedJobs" element={<RequestedJobs />} />
+        <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} />
+        <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
+        <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
+
+
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -208,7 +230,7 @@ const router = createBrowserRouter(
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="ToDoList/:id" element={<ToDoList />} />
-        <Route path="Chat" element={<SpChat/>} />
+        <Route path="Chat" element={<SpChat />} />
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
@@ -216,7 +238,8 @@ const router = createBrowserRouter(
         <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
       </Route>
 
-      <Route path='/activateUser' element={<ActivateUser />} />
+      <Route path='/activateCustomer' element={<ActivateCustomer />} />
+      <Route path= '/activateUser' element={<ActivateUser />} />
       <Route path="*" element={<Layout404> {" "}<PageNotFound /></Layout404>}
       />
     </>

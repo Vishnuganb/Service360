@@ -51,6 +51,9 @@ public class Vacancies {
     @Column( columnDefinition = "TEXT")
     private String responsibilities;
 
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean disabled;
+
     //customerid
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")

@@ -23,8 +23,10 @@ const Ads = () => {
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="p-5 ">
-
-          <h1 className="text-center">Unlock Your Potential Create a New Ad Today And Reach a Wider Audience</h1>
+          <h1 className="text-center">
+            Unlock Your Potential Create a New Ad Today And Reach a Wider
+            Audience
+          </h1>
           <div className="adCenterCont">
             <Link to="/advertiser/CreateAd">
               <button className="PostAd">Post New Ad</button>
@@ -39,11 +41,11 @@ const Ads = () => {
             onSelect={(k) => setKey(k)}
             className="mb-3"
           >
-            <Tab eventKey="home" title="Verified">
-              <VerifiedAds />
-            </Tab>
-            <Tab eventKey="profile" title="Pending">
+            <Tab eventKey="home" title="Pending">
               <PendingAds />
+            </Tab>
+            <Tab eventKey="profile" title="Verified">
+              <VerifiedAds />
             </Tab>
             <Tab eventKey="contact" title="Rejected">
               <RejectedAds />

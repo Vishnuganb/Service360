@@ -37,8 +37,16 @@ public class Complaints {
     @Column( columnDefinition = "DATE")
     private LocalDate posteddate;
 
-    //user name
-//    @ManyToOne
-//    @JoinColumn(name = "userid")
-//    private Users users;
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean disabled;
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users users;
+
+    @PrePersist
+    protected void onCreate(){
+        posteddate=LocalDate.now();
+        complaintstatus="Pending";
+    }
 }

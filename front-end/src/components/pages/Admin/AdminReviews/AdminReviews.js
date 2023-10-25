@@ -6,129 +6,13 @@ import BgImage from '../../../../assets/images/header/Background.png';
 import Bg2Image from '../../../../assets/images/header/footer.png';
 import '../../../../style/Admin/AdminReviews.css';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import Rating from "react-rating-stars-component";
+import axios from 'axios';
 
-const reviewData = [
-
-    {
-        id: 1,
-        image: require('../../../../assets/images/home/Customer_4.jpg'),
-        firstName: 'John',
-        lastName: 'Doe',
-        address: '123 Main Street, City',
-        review: `I've been using this platform for a few months now, and it has made my life so much easier. 
-        I can easily find service providers based on my requirements and hire them within minutes.
-        The variety of services available is impressive, and the platform is user-friendly. Highly recommended!`,
-        status: 'All',
-        date: '2023-08-01',
-    },
-    {
-        id: 2,
-        image: require('../../../../assets/images/home/Customer_5.jpg'),
-        firstName: 'Jane',
-        lastName: 'Smith',
-        address: '456 Oak Avenue, Town',
-        review: `As a busy professional, I don't have the time to search for service providers individually. 
-        This platform has simplified the process for me. I can compare prices, read reviews,
-        and make an informed decision about hiring service providers.
-        It has saved me time and provided me with reliable professionals. Thank you!`,
-        status: 'All',
-        date: '2023-08-02',
-    },
-    {
-        id: 3,
-        image: require('../../../../assets/images/home/Customer_6.jpg'),
-        firstName: 'Mike',
-        lastName: 'Johnson',
-        address: '789 Maple Lane, Village',
-        review: `I recently used this platform to find a service provider, and I must say,
-        I'm impressed.The website is intuitive, and the booking process was seamless.
-        I found a skilled professional who delivered excellent service.
-        It's great to have a platform that connects customers with trusted service providers.
-        I will definitely be using it again.`,
-        status: 'All',
-        date: '2023-08-03',
-    },
-    {
-        id: 4,
-        image: require('../../../../assets/images/home/Customer_1.png'),
-        firstName: 'De',
-        lastName: 'Silva',
-        address: '101 Pine Street, City',
-        review: `I've been using this platform for a few months now, and it has made my life so much easier. 
-        I can easily find service providers based on my requirements and hire them within minutes.
-        The variety of services available is impressive, and the platform is user-friendly. Highly recommended!`,
-        status: 'All',
-        date: '2023-08-04',
-    },
-    {
-        id: 5,
-        image: require('../../../../assets/images/home/Customer_2.png'),
-        firstName: 'Kumar',
-        lastName: 'Sangakkara',
-        address: '222 Oak Road, Town',
-        review: `As a busy professional, I don't have the time to search for service providers individually. 
-        This platform has simplified the process for me. I can compare prices, read reviews,
-        and make an informed decision about hiring service providers.
-        It has saved me time and provided me with reliable professionals. Thank you!`,
-        status: 'All',
-        date: '2023-08-05',
-    },
-    {
-        id: 6,
-        image: require('../../../../assets/images/home/Customer_3.png'),
-        firstName: 'Mike',
-        lastName: 'Johnson',
-        address: '333 Maple Street, Village',
-        review: `I recently used this platform to find a service provider, and I must say,
-        I'm impressed.The website is intuitive, and the booking process was seamless.
-        I found a skilled professional who delivered excellent service.
-        It's great to have a platform that connects customers with trusted service providers.
-        I will definitely be using it again.`,
-        status: 'All',
-        date: '2023-08-06',
-    },
-    {
-        id: 7,
-        image: require('../../../../assets/images/home/Customer_7.jpg'),
-        firstName: 'Saman',
-        lastName: 'Perera',
-        address: '444 Pine Avenue, City',
-        review: `I've been using this platform for a few months now, and it has made my life so much easier. 
-        I can easily find service providers based on my requirements and hire them within minutes.
-        The variety of services available is impressive, and the platform is user-friendly. Highly recommended!`,
-        status: 'All',
-        date: '2023-08-07',
-    },
-    {
-        id: 8,
-        image: require('../../../../assets/images/home/Customer_8.jpg'),
-        firstName: 'Susantha',
-        lastName: 'Villergers',
-        address: '555 Oak Lane, Town',
-        review: `As a busy professional, I don't have the time to search for service providers individually. 
-        This platform has simplified the process for me. I can compare prices, read reviews,
-        and make an informed decision about hiring service providers.
-        It has saved me time and provided me with reliable professionals. Thank you!`,
-        status: 'All',
-        date: '2023-08-08',
-    },
-    {
-        id: 9,
-        image: require('../../../../assets/images/home/Customer_9.jpg'),
-        firstName: 'William',
-        lastName: 'Wiliamson',
-        address: '666 Maple Road, Village',
-        review: `I recently used this platform to find a service provider, and I must say,
-        I'm impressed.The website is intuitive, and the booking process was seamless.
-        I found a skilled professional who delivered excellent service.
-        It's great to have a platform that connects customers with trusted service providers.
-        I will definitely be using it again.`,
-        status: 'All',
-        date: '2023-08-09',
-    },
-]
+const serverLink = 'http://localhost:8080';
 
 export default function AdminReviews() {
+
     const [data, setData] = useState({
         currentPage: 1,
         showModal: false,
@@ -143,56 +27,43 @@ export default function AdminReviews() {
         reviewsPerPage: 3,
         showAcceptConfirmation: false,
         enable: true,
+        reviewData: [],
+        pendingReviews: [],
+        selectedReviews: [],
     });
 
-    const totalPages = Math.ceil(reviewData.length / data.reviewsPerPage);
-    const startIndex = (data.currentPage - 1) * data.reviewsPerPage;
-    const endIndex = startIndex + data.reviewsPerPage;
-    const displayedReviews = reviewData.slice(startIndex, endIndex);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(serverLink + '/auth/getAllSystemReview');
+                const detail = response.data;
+                console.log(detail);
+                setData({
+                    ...data,
+                    reviewData: detail,
+                    pendingReviews: detail.filter((review) => review.status === 'Pending'),
+                    selectedReviews: detail.filter((review) => review.status === 'Selected'),
+                });
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const handlePageChange = (page) => {
+        const startIndex = (page - 1) * data.cardsPerPage;
+        const endIndex = startIndex + data.cardsPerPage;
+        const filteredData = data.filteredSessions[data.activeTab];
+        const displayedReviews = filteredData.slice(startIndex, endIndex);
+
         setData((prevState) => ({
             ...prevState,
             currentPage: page,
-            displayedReviews: getDisplayedReviews(prevState.filteredReviews[prevState.activeTab], page, prevState.reviewsPerPage),
+            displayedReviews,
         }));
     };
-
-
-    const filterReviews = (status) => {
-
-        const filteredReviews = reviewData.filter((review) =>
-            review.status === status && (
-                review.firstName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                review.lastName.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                review.address.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
-                review.date.toLowerCase().includes(data.searchTerm.toLowerCase())
-            )
-        );
-
-        return filteredReviews;
-    };
-
-    useEffect(() => {
-
-        const filteredReviewsByStatus = {
-            All: filterReviews('All'),
-            Selected: filterReviews('Selected'),
-        }
-
-        const filteredReviews = filteredReviewsByStatus[data.activeTab];
-        const totalPages = Math.ceil(filteredReviews.length / data.reviewsPerPage);
-
-        console.log(filteredReviewsByStatus);
-
-        setData((prevState) => ({
-            ...prevState,
-            totalPages,
-            filteredReviews: filteredReviewsByStatus,
-            displayedReviews: filteredReviews.slice(0, data.reviewsPerPage),
-            currentPage: 1,
-        }));
-    }, [data.searchTerm, data.activeTab, data.selectedReviews]);
 
     const handleSearchChange = (e) => {
         const { value } = e.target;
@@ -202,73 +73,94 @@ export default function AdminReviews() {
         }));
     };
 
-    const handleAssign = (reviewId) => {
-        const reviewToAssign = reviewData.find((review) => review.id === reviewId);
-
-        if (reviewToAssign && data.selectedReviews.length < 3) {
-
-            reviewToAssign.status = 'Selected';
-
-            setData((prevState) => ({
-                ...prevState,
-                selectedReviews: [...prevState.selectedReviews, reviewToAssign],
-            }));
-
-            const updatedReviewData = reviewData.filter((review) => review.id !== reviewId);
-            //const displayedAllReviews = getDisplayedReviews(updatedReviewData, data.currentPage, data.reviewsPerPage);
-
-            setData((prevState) => ({
-                ...prevState,
-                // displayedReviews: displayedAllReviews,
-                filteredReviews: {
-                    ...prevState.filteredReviews,
-                    All: updatedReviewData,
-                    Selected: [...prevState.selectedReviews],
-                },
-            }));
-        }
-    };
-
-    const getDisplayedReviews = (filteredReviews, currentPage, reviewsPerPage) => {
-        const startIndex = (currentPage - 1) * reviewsPerPage;
-        const endIndex = startIndex + reviewsPerPage;
-        return filteredReviews.slice(startIndex, endIndex);
-    };
-
-    const handleReassign = (reviewId) => {
-        const reviewToReassign = data.selectedReviews.find((review) => review.id === reviewId);
-
-        if (reviewToReassign) {
-
-            reviewToReassign.status = 'All';
-
-            const updatedSelectedReviews = data.selectedReviews.filter((review) => review.id !== reviewId);
-
-            setData((prevState) => {
-                const updatedFilteredReviews = {
-                    ...prevState.filteredReviews,
-                    Selected: updatedSelectedReviews,
-                };
-
-                return {
-                    ...prevState,
-                    selectedReviews: updatedSelectedReviews,
-                    filteredReviews: updatedFilteredReviews,
-                    displayedReviews: getDisplayedReviews(updatedFilteredReviews[prevState.activeTab], prevState.currentPage, prevState.reviewsPerPage),
-                };
-            });
-        }
-    };
-
     const handleTabChange = (tab) => {
         setData((prevState) => ({
             ...prevState,
             activeTab: tab,
             currentPage: 1,
-            displayedReviews: getDisplayedReviews(prevState.filteredReviews[tab], 1, prevState.reviewsPerPage),
+            displayedReviews: getDisplayedReviews(tab),
         }));
     };
 
+    const getDisplayedReviews = (tab) => {
+
+        let filteredReviews;
+
+        switch (tab) {
+            case 'All':
+                filteredReviews = data.pendingReviews || [];
+                break;
+            case 'Selected':
+                filteredReviews = data.selectedReviews || [];
+                break;
+            default:
+                filteredReviews = data.reviewData || [];
+                break;
+        }
+
+        if (data.searchTerm) {
+            filteredReviews = filteredReviews.filter((review) => {
+                review.review.toLowerCase().includes(data.searchTerm.toLowerCase()) || 
+                    review.rating.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    review.users.firstname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    review.users.lastname.toLowerCase().includes(data.searchTerm.toLowerCase()) ||
+                    review.posteddate.toLowerCase().includes(data.searchTerm.toLowerCase())
+            });
+        }
+
+        return filteredReviews.slice(0, data.reviewsPerPage);
+    };
+
+    useEffect(() => {
+
+        const totalPages = Math.ceil(getDisplayedReviews(data.activeTab).length / data.reviewsPerPage);
+
+        setData((prevState) => ({
+            ...prevState,
+            totalPages,
+            displayedReviews: getDisplayedReviews(data.activeTab),
+            currentPage: 1,
+        }));
+    }, [data.searchTerm, data.activeTab, data.selectedReviews]);
+
+    const handleAssign = (ratingid) => {
+        const formData = new FormData();
+        formData.append('ratingid', ratingid);
+        formData.append('status', 'Selected');
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        axios.put(serverLink + '/auth/updateSelectSystemReview', formData).then(
+            (response) => {
+                console.log(response);
+                window.location.reload();
+            }
+        ).catch((error) => {
+            console.log(error);
+        });
+
+    };
+
+    const handleReassign = (ratingid) => {
+        const formData = new FormData();
+        formData.append('ratingid', ratingid);
+        formData.append('status', 'Pending');
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        axios.put(serverLink + '/auth/updateSelectSystemReview', formData).then(
+            (response) => {
+                console.log(response);
+                window.location.reload();
+            }
+        ).catch((error) => {
+            console.log(error);
+        });
+    };
 
     return (
         <div>
@@ -277,8 +169,6 @@ export default function AdminReviews() {
                 <Tab eventKey="Selected" title="Selected" />
             </Tabs>
             <section className="block review-block" style={{ backgroundImage: `url(${BgImage})` }}>
-
-                {/* <h2 className='ms-5 fw-bold align-self-start'>System Reviews</h2> */}
 
                 {data.activeTab === "All" ? (
                     <>
@@ -308,40 +198,29 @@ export default function AdminReviews() {
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
                     {data.displayedReviews && data.displayedReviews.map((review) => (
-                        <Card key={review.id} className="col-xs-12">
+                        <Card key={review.ratingid} className="col-xs-12">
                             <Card.Body className="py-3" style={{ backgroundImage: `url(${Bg2Image})` }}>
                                 <div className="d-flex">
                                     <div className="flex-shrink-0">
                                         <img
-                                            src={review.image}
+                                            src={review.users.profilePic}
                                             className="rounded-circle mb-4 mb-lg-0 shadow-2 d-none d-lg-block"
-                                            alt="Customers"
+                                            alt="Profile Picture"
                                             width="100"
                                             height="100"
                                         />
+                                        <Rating count={5} value={review.rating} size={25} activeColor="#ffd700" />
                                     </div>
                                     <div className="flex-grow-1 ms-4 ps-3">
-                                        <blockquote className="blockquote mb-4">
-                                            <FontAwesomeIcon
-                                                icon={faQuoteLeft}
-                                                className="fa-lg text-warning me-2"
-                                            />
-                                            <p>
-                                                <span className="font-italic">
-                                                    {review.review}
-                                                </span>
-                                            </p>
-                                            <footer className="blockquote-footer mb-3">
-                                                {review.firstName}{review.lastName} {" "}
-
-                                            </footer>
+                                        <blockquote className="blockquote mb-4"> <FontAwesomeIcon icon={faQuoteLeft} className="fa-lg text-warning me-2"/>
+                                            <p> <span className="font-italic">{review.review}</span></p>
+                                            <footer className="blockquote-footer mb-3">{review.users.firstname}{" "}{review.users.lastname}</footer>
                                         </blockquote>
 
                                         {data.activeTab === "All" && (
                                             <button
                                                 className="btn-effect3"
-                                                onClick={() => handleAssign(review.id)}
-                                                disabled={data.selectedReviews.length >= 3}
+                                                onClick={() => handleAssign(review.ratingid)}
                                             >
                                                 Assign
                                             </button>
@@ -349,7 +228,7 @@ export default function AdminReviews() {
                                         {data.activeTab === "Selected" && (
                                             <button
                                                 className="btn-effect3"
-                                                onClick={() => handleReassign(review.id)}
+                                                onClick={() => handleReassign(review.ratingid)}
                                             >
                                                 Reassign
                                             </button>

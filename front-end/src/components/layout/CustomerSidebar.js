@@ -71,7 +71,7 @@ function CustomerSideBar() {
                   </span>
                 </Link>
               </li>
-              <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
+              {/* <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-1"
                   className={`nav-link nav-link-sidebar text-white d-none ${isOpen ? "d-lg-block" : "d-none"
@@ -165,10 +165,7 @@ function CustomerSideBar() {
                     </Link>
                   </li>
                 </ul>
-              </li>
-
-
-
+              </li> */}
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
                   to="#submenu-2"
@@ -190,7 +187,10 @@ function CustomerSideBar() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item as={Link} to="/Customer/PostedJobs" className="no-hover">Posted Jobs</NavDropdown.Item>
                   <NavDropdown.Divider />
+                  <NavDropdown.Item as={Link} to="/Customer/ViewVacancy" className="no-hover">Responses</NavDropdown.Item>
+                  <NavDropdown.Divider />
                   <NavDropdown.Item as={Link} to="/Customer/RequestedJobs" className="no-hover">Requested Jobs</NavDropdown.Item>
+
                 </NavDropdown>
 
                 {/* Add Jobs submenu */}
@@ -202,6 +202,7 @@ function CustomerSideBar() {
                   <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
                     <Link to="/Customer/PostJobForm" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Post Jobs </Link>
                     <Link to="/Customer/PostedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Posted Jobs </Link>
+                    <Link to="/Customer/ViewVacancy" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Responses </Link>
                     <Link to="/Customer/RequestedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Requested Jobs </Link>
                   </li>
                 </ul>

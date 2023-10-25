@@ -29,9 +29,7 @@ public class Advertiser {
     private String shopaddress;
 
     @OneToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    @JoinColumn(name = "userid")
     private Users users;
 
-    @OneToMany(mappedBy = "advertiser")
-    private List<AdvertiserFiles> advertiserFiles;
 }

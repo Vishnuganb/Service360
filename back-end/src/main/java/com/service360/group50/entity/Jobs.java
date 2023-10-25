@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Jobs {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long jobid;
 
@@ -56,6 +56,9 @@ public class Jobs {
     private String quotationpdf;
 
     //customerid
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean disabled;
+    
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")
     private Users customer;

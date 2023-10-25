@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import "../../../../style/advertiser/AdIndex.css";
+import "../../../../../style/advertiser/AdIndex.css";
 
-import backgroundImage from "../../../../assets/images/header/Background.png";
+import backgroundImage from "../../../../../assets/images/header/Background.png";
 
 const Subscribtion = () => {
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
   const [subscriptionStartDate] = useState(
     new Date()
   ); // Set the actual start date here
@@ -34,7 +37,7 @@ const Subscribtion = () => {
 
   const plans = [
     {
-      id: 0,
+      id: 1,
       title: "Bronze",
       points: [
         "Limited Ads Posting",
@@ -45,7 +48,7 @@ const Subscribtion = () => {
       duration: 0,
     },
     {
-      id: 1,
+      id: 2,
       title: "Gold",
       points: [
         "Unlimited Ad Posting",
@@ -56,7 +59,7 @@ const Subscribtion = () => {
       duration: 1,
     },
     {
-      id: 2,
+      id: 3,
       title: "Platinum",
       points: [
         "Unlimited Ad Posting",
@@ -72,8 +75,18 @@ const Subscribtion = () => {
   const navigate = useNavigate();
 
   const handleOpenSubscripedModal = (id) => {
-    // Navigate to the editAd route with the id as a parameter
-    navigate(`/Advertiser/Subscribed/${id}`);
+
+    axios
+      .put(`http://localhost:8080/auth/subscription/${userDetail.userid}/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+        navigate(`/Advertiser/Subscription`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   };
 
   return (

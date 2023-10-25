@@ -1,0 +1,25 @@
+
+.notification-container {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .notification-header{
+    height: fit-content;
+
+  }
+
+  .noti-time{
+    text-align: right;
+  }
+  
+
+  .notification-title {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+
+  .notification-message {
+    font-size: 1rem;
+  }

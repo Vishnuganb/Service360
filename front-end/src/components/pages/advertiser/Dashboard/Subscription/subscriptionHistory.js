@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
+import axios from "axios";
 
+const SubscriptionHistoryModal = ({ userid, show, onHide }) => {
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
+  const [subscriptionHistory, setSubscriptionHistory] = useState([]);
 
-const subscriptionHistoryModal = ({ show, onHide, subscriptionHistory }) => {
+  useEffect(() => {
+    // Fetch data when the component mounts
+    axios
+      .get(`http://localhost:8080/auth/subscriptionHistory/${userDetail.userid}`)
+      .then((res) => {
+        console.log(res.data);
+        setSubscriptionHistory(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userid]);
+
+  console.log(subscriptionHistory);
+
   return (
     <Modal
       show={show}
@@ -32,10 +51,10 @@ const subscriptionHistoryModal = ({ show, onHide, subscriptionHistory }) => {
             {subscriptionHistory.map((record, index) => (
               <tr key={index}>
                 <td>{record.planName}</td>
-                <td>{record.amount}</td>
-                <td>{record.paymentDate}</td>
+                <td>{record.planPrice}</td>
+                <td>{record.createdAt}</td>
                 <td>{record.startDate}</td>
-                <td>{record.expirationDate}</td>
+                <td>{record.endDate}</td>
               </tr>
             ))}
           </tbody>
@@ -45,4 +64,4 @@ const subscriptionHistoryModal = ({ show, onHide, subscriptionHistory }) => {
   );
 };
 
-export default subscriptionHistoryModal;
+export default SubscriptionHistoryModal;

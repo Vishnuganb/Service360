@@ -94,6 +94,40 @@ public class ServiceProviderService {
         return Collections.emptyList(); // Return an empty list if no jobs found
     }
 
+    public List<Jobs> viewOngoingJobs(Long serviceProviderId){
+        // Step 1: Retrieve job IDs
+        List<Long> ongoingJobIds = jobsServiceProvidersRepository.findAllMyJobsByjobstatus("ongoing", serviceProviderId);
+
+        // Step 2: Retrieve job details for those job IDs
+        if (!ongoingJobIds.isEmpty()) {
+            List<Object[]> jobDetails = jobsRepository.findMyJobs(ongoingJobIds);
+
+            // Extract Jobs objects and return them
+            return jobDetails.stream()
+                    .map(jobData -> (Jobs) jobData[0])
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList(); // Return an empty list if no jobs found
+    }
+
+    public List<Jobs> viewPendingJobs(Long serviceProviderId){
+        // Step 1: Retrieve job IDs
+        List<Long> pendingJobIds = jobsServiceProvidersRepository.findAllMyJobsByjobstatus("pending", serviceProviderId);
+
+        // Step 2: Retrieve job details for those job IDs
+        if (!pendingJobIds.isEmpty()) {
+            List<Object[]> jobDetails = jobsRepository.findMyJobs(pendingJobIds);
+
+            // Extract Jobs objects and return them
+            return jobDetails.stream()
+                    .map(jobData -> (Jobs) jobData[0])
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList(); // Return an empty list if no jobs found
+    }
+
 
     public Jobs viewAJob(Long id){
         return jobsRepository.findAJobWithCustomerDetails(id);
@@ -178,6 +212,24 @@ public class ServiceProviderService {
         return Collections.emptyList(); // Return an empty list if no jobs found
     }
 
+    public List<Vacancies> viewOngoingVacancies(Long serviceProviderId) {
+        // Step 1: Retrieve job IDs
+        List<Long> ongoingVacancyIds = vacanciesServiceProvidersRepository.findAllMyVacanciesByvacancystatus("ongoing", serviceProviderId);
+
+        // Step 2: Retrieve job details for those job IDs
+        if (!ongoingVacancyIds.isEmpty()) {
+            List<Object[]> vacancyDetails = vacanciesRepository.findMyVacancies(ongoingVacancyIds);
+
+            // Extract Jobs objects and return them
+            return vacancyDetails.stream()
+                    .map(vacancyData -> (Vacancies) vacancyData[0])
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList(); // Return an empty list if no jobs found
+    }
+
+
 
     public Vacancies viewAVacancy(Long id){
         return vacanciesRepository.findAVacancyWithCustomerDetails(id);
@@ -230,6 +282,8 @@ public class ServiceProviderService {
     }
 
     public TrainingSessionRegistration registerTrainingSession(TrainingSessionRegistration trainingSessionRegistration){
+        //increase the ongoing count by 1
+
         return trainingSessionRegistrationRepository.save(trainingSessionRegistration);
     }
 

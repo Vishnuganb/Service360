@@ -62,6 +62,16 @@ public class ServiceProvidersController {
         return serviceProviderService.viewHistoryJobs(serviceproviderid);
     }
 
+    @GetMapping("auth/viewOngoingJobs")
+    public List<Jobs> viewOngoingJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewOngoingJobs(serviceproviderid);
+    }
+
+    @GetMapping("auth/viewPendingJobs")
+    public List<Jobs> viewPendingJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewPendingJobs(serviceproviderid);
+    }
+
 
     @GetMapping("auth/viewMyJobs")
     public List<JobWithStatusDTO> viewMyJobs(@RequestParam("serviceproviderid") Long serviceproviderid) {
@@ -163,6 +173,11 @@ public class ServiceProvidersController {
     @GetMapping("auth/viewHistoryVacancies")
     public List<Vacancies> viewHistoryVacancies(@RequestParam("serviceproviderid") Long serviceproviderid){
         return serviceProviderService.viewHistoryVacancies(serviceproviderid);
+    }
+
+    @GetMapping("auth/viewOngoingVacancies")
+    public List<Vacancies> viewOngoingVacancies(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewOngoingVacancies(serviceproviderid);
     }
 
     @GetMapping("auth/viewMyVacancies")
@@ -343,6 +358,9 @@ public class ServiceProvidersController {
         // Load the TrainingSession entity by ID
         Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
         TrainingSession trainingSession = trainingSessionOptional.orElse(null);
+        //increase ongoing count by 1
+        trainingSession.setGoingcount(trainingSession.getGoing()+1);
+        trainingSessionRepository.save(trainingSession);
 
         // Create a TrainingSessionRegistration entity
         TrainingSessionRegistration trainingSessionRegistration = new TrainingSessionRegistration();

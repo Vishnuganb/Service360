@@ -47,7 +47,7 @@ const ServiceProviderEditProfile = (props) => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get(serverLink + '/auth/  /' + userData.userid);
+            const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid);
             if (response.data) {
                 setUserDetail(response.data);
                 setdata({

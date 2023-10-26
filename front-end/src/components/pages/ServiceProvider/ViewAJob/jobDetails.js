@@ -93,7 +93,7 @@ function JobDetails() {
       <Col className="jobDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
         <div className="jobDetails-avatar-container mb-2">
             <img
-            src={customerimage}
+            src={'data:image/jpeg;base64;' + viewJobData.jobs.customer.profilePic}
             alt="avatar"
             className="jobDetails-avatar rounded-circle"
             style={{ width: "50px", height: "50px" }}
@@ -200,8 +200,7 @@ function JobDetails() {
                             <div className="commentSection-comment-header d-flex flex-row">
                                 <div className="commentSection-avatar-container">
                                     <img
-                                    src={comment.serviceproviders.profile}
-                                    alt=""
+                                    src={'data:image/jpeg;base64;' + comment.serviceproviders.profilePic}
                                     className="commentSection-avatar rounded-circle"
                                     style={{ width: "40px", height: "40px" }}
                                     />

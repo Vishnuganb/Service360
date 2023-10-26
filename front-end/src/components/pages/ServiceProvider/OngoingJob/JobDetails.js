@@ -49,7 +49,7 @@ function AcceptedJobDetails() {
         <Col className="AcceptedJobDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
           <div className="AcceptedJobDetails-avatar-container mb-2">
             <img
-              src={customerimage}
+              src={'data:image/jpeg;base64;' + viewJobData.jobs.customer.profilePic}
               alt="avatar"
               className="AcceptedJobDetails-avatar rounded-circle"
               style={{ width: "50px", height: "50px" }}
@@ -59,14 +59,18 @@ function AcceptedJobDetails() {
             className="AcceptedJobDetails-username mb-1"
             style={{ fontSize: "18px", fontFamily: "'Rubik', sans-serif" }}
           >
-            {viewJobData.customername}
+            {viewJobData.jobs.customer.firstname}
           </div>
           <div className="d-flex flex-row">
             <div className="me-3">
-              <i class="bi bi-telephone-fill"></i>
+              <a href={`tel:${viewJobData.jobs.customer.phonenumber}`}>
+                <i className="bi bi-telephone-fill" style={{color:"black"}}></i>
+              </a>
             </div>
             <div>
-              <i class="bi bi-chat-fill"></i>
+              <Link to="/ServiceProvider/Chat">
+                <i className="bi bi-chat-fill" style={{color:"black"}}></i>
+              </Link>
             </div>
           </div>
         </Col>

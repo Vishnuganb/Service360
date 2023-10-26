@@ -182,9 +182,10 @@ function JobsBodyPage() {
                         <div className="job-card-header">
                             <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                                 <div className='d-flex justify-content-center align-items-center'>
+                                    {console.log(job.customer.profilePic)}
                                     {/* <img src={job.profile} alt="avatar" className="job-card-avatar" /> */}
                                     <img
-                                            src=""
+                                            src={'data:image/jpeg;base64;' + job.customer.profilePic}
                                             alt="avatar"
                                             className="rounded-circle view-jobs-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -258,7 +259,7 @@ function JobsBodyPage() {
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                        src=""
+                                        src={'data:image/jpeg;base64;' + vacancy.customer.profilePic}
                                         alt="avatar"
                                         className="rounded-circle"
                                         style={{ width: "42px", height: "42px" }}

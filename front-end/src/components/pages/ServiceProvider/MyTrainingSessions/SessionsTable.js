@@ -8,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import { set } from 'date-fns';
 
 function MyTrainingSessions() {
 
@@ -17,8 +18,12 @@ function MyTrainingSessions() {
   const [selectedRow, setSelectedRow] = useState(null);
 
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');  
+  const [alertMessage, setAlertMessage] = useState(''); 
+  
+  const [registeredUsers, setRegisteredUsers] = useState([]);
 
+  // State to control the user registration modal
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = (rowData) => {
@@ -26,11 +31,12 @@ function MyTrainingSessions() {
     setShow(true); // Show the modal
   };
 
-  // State to control the user registration modal
-  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
-
   // Function to open the user registration modal
-  const handleShowRegistrationModal = () => {
+  const handleShowRegistrationModal = (rowData) => {  
+    // Call the getRegisteredUsers function to fetch data
+    getRegisteredUsers(rowData.trainingid);
+
+    console.log(registeredUsers);
     setShowRegistrationModal(true);
   };
 
@@ -39,38 +45,18 @@ function MyTrainingSessions() {
     setShowRegistrationModal(false);
   };
 
-  const registeredUsers = [
-    {
-      email: 'pranavan@gmail.com',
-      phoneNumber: '0771319093',
-      registrationDate: '2023-08-16 10:00 AM',
-      status: 'Confirmed',
-    },
-    {
-      email: 'visnugan@gmail.com',
-      phoneNumber: '070983783',
-      registrationDate: '2023-08-16 11:00 AM',
-      status: 'Confirmed',
-    },
-    {
-      email: 'karthikeyan@gmail.com',
-      phoneNumber: '0773499921',
-      registrationDate: '2023-08-16 12:00 PM',
-      status: 'Pending',
-    },
-    {
-      email: 'mithilan@gmail.com',
-      phoneNumber: '0751209321',
-      registrationDate: '2023-08-16 01:00 PM',
-      status: 'Confirmed',
-    },
-    {
-      email: 'naresh@gmail.com',
-      phoneNumber: '0701912299',
-      registrationDate: '2023-08-16 02:00 PM',
-      status: 'Confirmed',
-    },
-  ];
+  const [showRejectionModal, setShowRejectionModal] = useState(false);
+
+  // Function to open the user registration modal
+  const handleShowRejectionModal = (rowData) => {
+    setSelectedRow(rowData);
+    setShowRejectionModal(true);
+  };
+
+  // Function to close the user registration modal
+  const handleCloseRejectionModal = () => {
+    setShowRejectionModal(false);
+  };
 
   // Number of cards (training sessions) to display per page
   const cardsPerPage = 10;
@@ -103,6 +89,11 @@ function MyTrainingSessions() {
     setCurrentPage(1); // Reset current page to 1 when date changes
   };
 
+  // GETTING LOGGED IN SERVICEPROVIDER ID
+
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
+
   const handlePublish = (id) => {
       console.log(id);
       axios
@@ -122,8 +113,27 @@ function MyTrainingSessions() {
       });
   };
 
+  const getRegisteredUsers = (trainingsessionid) => {
+    axios
+      .get(`http://localhost:8080/auth/GetTrainingSessionRegisteredUsers`,{
+        params: {
+          trainingsessionid: trainingsessionid,
+        },
+      }).then((res) => {
+        console.log(res.data);
+        setRegisteredUsers(res.data);
+      })
+      .catch((error) => {
+        // Handle errors
+      });
+  };
+
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/viewMyTrainingSessions').then((res) => {
+    axios.get('http://localhost:8080/auth/viewMyTrainingSessions',{
+      params: {
+        serviceproviderid: userData.userid
+      },
+    }).then((res) => {
         console.log(res.data);
         setviewTrainingSessionsData(res.data);
     });
@@ -275,7 +285,12 @@ function MyTrainingSessions() {
                     ) : session.status === 'Published' ? (
                       <i
                         className={`bi bi-eye fs-4 mx-2 my-2`}
-                        onClick={handleShowRegistrationModal}
+                        onClick={() => handleShowRegistrationModal(session)}
+                      ></i>
+                    ) : session.status === 'Rejected' ? (
+                      <i
+                        className={`bi bi-info-circle fs-4 mx-2 my-2`}
+                        onClick={() => handleShowRejectionModal(session)}
                       ></i>
                     ) : null
                     }
@@ -311,13 +326,13 @@ function MyTrainingSessions() {
         </Modal.Header>
 
         <Modal.Body>
-        <p>
-            To publish your training session post on Service360, you need to make a payment of 1000.00 LKR.
-            Please confirm your payment below
-        </p>
+          <p>
+            To publish your training session post on Service360, you need to make a payment of 1000.00 LKR. Please
+            confirm your payment below
+          </p>
           <Form>
-              {selectedRow && (
-                <>
+            {selectedRow && (
+              <>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Group className="mb-3" controlId="sessionTitle">
                     <Form.Label>Session Title</Form.Label>
@@ -336,21 +351,24 @@ function MyTrainingSessions() {
                     />
                   </Form.Group>
                 </Form.Group>
-                </>
-              )}
+              </>
+            )}
           </Form>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button className='btn-ServiceProvider-2' onClick={handleClose}>
+          <Button className="btn-ServiceProvider-2" onClick={handleClose}>
             Close
           </Button>
-          <Button className='btn-ServiceProvider-1' onClick={() =>{
-              if(selectedRow) {
+          <Button
+            className="btn-ServiceProvider-1"
+            onClick={() => {
+              if (selectedRow) {
                 handlePublish(selectedRow.trainingid);
-              } 
-              handleClose(); 
-          }}>
+              }
+              handleClose();
+            }}
+          >
             Pay & Publish
           </Button>
         </Modal.Footer>
@@ -363,30 +381,51 @@ function MyTrainingSessions() {
           <Modal.Title>Registered Users</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* Display the registered users table */}
           <Table striped bordered hover size="sm">
             <thead>
-              <tr>
+              <tr className="text-center">
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th >Registration Date</th>
+                <th>Registration Date</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {registeredUsers.map((user, index) => (
                 <tr key={index}>
-                  <td>{user.email}</td>
-                  <td>{user.phoneNumber}</td>
-                  <td >{user.registrationDate}</td>
-                  <td>{user.status}</td>
+                  <td className="text-center">{user.email}</td>
+                  <td className="text-center">{user.mobilenumber}</td>
+                  <td className="text-center">{user.registrationdate}</td>
+                  <td className="text-center">{user.paymentstatus}</td>
                 </tr>
               ))}
             </tbody>
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <Button className='btn-ServiceProvider-2' onClick={handleCloseRegistrationModal}>
+          <Button className="btn-ServiceProvider-2" onClick={handleCloseRegistrationModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Rejection */}
+      <Modal show={showRejectionModal} onHide={handleCloseRejectionModal} dialogClassName="custom-modal" centered>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+          <Modal.Title>Training Session Rejection Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            This training session has been rejected by the admin due to the following reason
+          </p>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Control type="text" value={selectedRow ? selectedRow.reason : ''} readOnly />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn-ServiceProvider-2" onClick={handleCloseRejectionModal}>
             Close
           </Button>
         </Modal.Footer>

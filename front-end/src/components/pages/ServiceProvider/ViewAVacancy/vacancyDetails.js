@@ -31,7 +31,7 @@ function VacancyDetails() {
         <Col className="vacancyDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
           <div className="vacancyDetails-avatar-container mb-2">
               <img
-              src={Companyimage}
+              src={'data:image/jpeg;base64;' + viewVacancyData.customer.profilePic}
               alt="avatar"
               className="vacancyDetails-avatar rounded-circle"
               style={{ width: "50px", height: "50px" }}

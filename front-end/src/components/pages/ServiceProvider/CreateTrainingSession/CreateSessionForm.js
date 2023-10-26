@@ -77,6 +77,11 @@ function CreateSessionForm() {
         return `${hours}:${minutes}:00`;
       }   
 
+    // GETTING LOGGED IN SERVICEPROVIDER ID
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
     const handleCreateTrainingSession = (event) => {
         event.preventDefault();
 
@@ -87,6 +92,8 @@ function CreateSessionForm() {
         for (const key in trainingSessionFormData) {
             formData.append(key, trainingSessionFormData[key]);
         }
+
+        formData.append('serviceproviderid', userData.userid)
     
         // Append each selected file to the FormData object    
         selectedFiles.map((file) => {

@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -37,4 +40,7 @@ public class TrainingSessionRegistration {
 
     @Column( columnDefinition = "TEXT")
     private String paymentstatus;
+
+    @Column( columnDefinition = "DATE")
+    private LocalDate registrationdate;
 }

@@ -60,6 +60,27 @@ function SessionsBodyPage() {
         return <FontAwesomeIcon icon={faSpinner} className='fa-spin-trainingsession-sp'/>;
     }
 
+    const handleIntrested = (trainingsessionid) => {
+        axios
+            .put(`http://localhost:8080/auth/TrainingSessionIntrested?trainingsessionid=${trainingsessionid}`)
+            .then((response) => {
+                console.log('Intrested Count Updated successfully:', response.data);
+                
+                //update the entries without page refresh
+                setviewTrainingSessionsData((prevData) => ({
+                    ...prevData,
+                    trainingsessions: prevData.trainingsessions.map((session) =>
+                        session.trainingid === trainingsessionid
+                        ? { ...session, interested: session.interested + 1 }
+                        : session
+                    ),
+                }));
+        })
+            .catch((error) => {
+                console.error('Error udpdating interested count intrested:', error);
+            });
+    };
+
     function convertTo12HourFormat(time24) {
         const [hour, minute] = time24.split(":");
         const hourInt = parseInt(hour);
@@ -192,20 +213,20 @@ function SessionsBodyPage() {
                                 </div>
                                 <hr />
                                 <div className="my-training-card-footer d-flex flex-row">
-                                    <Link to={`/ServiceProvider/ViewATrainingSession/${TrainingSession.trainingid}`}
+                                    <span onClick={() => handleIntrested(TrainingSession.trainingid)}
                                         className="btn btn-default my-training-card-footer-btn"
                                         id="my-training-card-footer-btn-view"
                                     >
-                                        <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
-                                    </Link>
-                                    <span
+                                        <i className="bi bi-star h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span style={{ position: "relative", bottom: "1.5px" }}>intrested</span>
+                                    </span>
+                                    <Link to={`/ServiceProvider/ViewATrainingSession/${TrainingSession.trainingid}`}
                                         className="btn btn-default my-training-card-footer-btn"
                                         id="my-training-card-footer-btn-view"
                                     >
                                         <i className="bi bi-credit-card h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span style={{ position: "relative", bottom: "1.5px" }}>Register</span>
-                                    </span>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

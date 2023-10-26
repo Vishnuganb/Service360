@@ -61,28 +61,16 @@ function AcceptedJobDetails() {
           >
             {viewJobData.jobs.customer.firstname}
           </div>
-          <div className="d-flex flex-row">
-            <div className="me-3">
-              <a href={`tel:${viewJobData.jobs.customer.phonenumber}`}>
-                <i className="bi bi-telephone-fill" style={{color:"black"}}></i>
-              </a>
-            </div>
-            <div>
-              <Link to="/ServiceProvider/Chat">
-                <i className="bi bi-chat-fill" style={{color:"black"}}></i>
-              </Link>
-            </div>
-          </div>
         </Col>
 
         <Col className="AcceptedJobDetails-details-container mt-lg-0 mt-2 col-12 col-lg-10 d-flex flex-column">
         <div className="vacancyDetails-status-container mb-2">
           <span className="vacancyDetails-status me-2" id="vacancy-status" style={{ fontSize: "16px", fontWeight: "400", padding: "4px 6px", border: "2px solid rgb(37, 199, 37)", borderRadius: "8px" }}>
-            ongoing
+            completed
           </span>
         </div>
           <div className="AcceptedJobDetails-title-container mb-2">
-            <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobs.jobtitle}</span>
+            <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobtitle}</span>
           </div>
           <div className="AcceptedJobDetails-category-container mb-2 d-flex flex-column">
             <span className="AcceptedJobDetails-category" style={{ fontWeight: "650" }}>Category</span>
@@ -113,16 +101,18 @@ function AcceptedJobDetails() {
           <div className="AcceptedJobDetails-images-container">
             <span className="AcceptedJobDetails-images" style={{ fontWeight: "650" }}>Images</span>
 
+            {/* LOOP WILL COME HERE */}
+
             <div className="AcceptedJobDetails-images-container-box row mt-2">
-            {allImages.map((image) => (
-                <div className="col-6 col-md-4 col-lg-3">
-                  <img
-                    src={`data:image/jpg;base64,${image}`}
-                    alt={'job detail image'}
-                    className="jobDetails-images-value-img"
-                  />
-                </div>
-              ))}
+                {allImages.map((image) => (
+                  <div className="col-6 col-md-4 col-lg-3">
+                    <img
+                      src={`data:image/jpg;base64,${image}`}
+                      alt={'job detail image'}
+                      className="jobDetails-images-value-img"
+                    />
+                  </div>
+                ))}
             </div>
           </div>
         </Col>
@@ -130,12 +120,6 @@ function AcceptedJobDetails() {
       <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
         <Link className="d-flex ms-auto" to={`../ToDoList/${jobId}`}>
           <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
-        </Link>
-      </div>
-      <hr />
-      <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-        <Link className="ms-auto" to={`../StartJob/${jobId}`}>
-          <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
         </Link>
       </div>
 

@@ -8,6 +8,8 @@ import axios from 'axios';
 function ApplyVacancy() {
     const [viewVacancyData, setviewVacancyData] = useState(null);
 
+    const [selectedFile, setSelectedFile] = useState(null);
+
     const [vacancyFormData, setVacancyFormData] = useState({
         firstname: "",
         lastname: "",
@@ -20,11 +22,26 @@ function ApplyVacancy() {
         cvfile: "",
     });
 
+    const handleFileInputChange = (e) => {
+        const selectedFile = e.target.files[0];
+      
+        if (selectedFile) {
+          setSelectedFile(selectedFile);
+        }
+    };
+
     const { id } = useParams();
     const vacancyId = parseInt(id, 10);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/auth/viewNewVacancies/${vacancyId}`).then((res) => {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        axios.get(`http://localhost:8080/auth/viewNewVacancies/${vacancyId}`,formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((res) => {
             console.log(res.data);
             setviewVacancyData(res.data);
         });
@@ -32,9 +49,30 @@ function ApplyVacancy() {
 
     if (!viewVacancyData) return 'No Vacancy found!';
 
+    // GETTING LOGGED IN SERVICEPROVIDER ID
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
     const handleApplyVacancy = () => {
+        const formData = new FormData();
+        formData.append('firstname', vacancyFormData.firstname);
+        formData.append('lastname', vacancyFormData.lastname);
+        formData.append('contactnumber', vacancyFormData.contactnumber);
+        formData.append('emailaddress', vacancyFormData.emailaddress);
+        formData.append('educationqualification', vacancyFormData.educationqualification);
+        formData.append('hasWorkExperience', vacancyFormData.hasWorkExperience);
+        formData.append('yearsofexperience', vacancyFormData.yearsofexperience);
+        formData.append('salaryexpectation', vacancyFormData.salaryexpectation);
+        formData.append('serviceproviderid', userData.userid);
+        formData.append('file', selectedFile);
+
         axios
-            .post(`http://localhost:8080/auth/applyVacancy/${vacancyId}`, vacancyFormData)
+            .post(`http://localhost:8080/auth/applyVacancy/${vacancyId}`, formData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             .then((response) => {
                 console.log('Vacancy application submitted successfully:', response.data);
             })
@@ -170,11 +208,10 @@ function ApplyVacancy() {
                     <Form.Label>Upload your CV</Form.Label>
                     <Form.Control 
                         type="file" 
-                        accept="application/pdf" 
-                        name="cvfile"
-                        onChange={handleInputChange}
+                        name="cvfile" 
+                        onChange={handleFileInputChange}
+                        required
                     />
-                    <Form.Text className="text-muted">Please upload images that showcase your work experience and accomplishments.</Form.Text>
                 </Form.Group>
 
                 <div className="vacancy-form-button-container d-flex flex-row">

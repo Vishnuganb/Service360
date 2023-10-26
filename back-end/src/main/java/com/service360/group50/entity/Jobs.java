@@ -52,6 +52,10 @@ public class Jobs {
     @Column( columnDefinition = "TEXT")
     private String isquotation;
 
+    @Column( columnDefinition = "TEXT")
+    private String quotationpdf;
+
+    //customerid
     @Column(columnDefinition = "BOOLEAN")
     private boolean disabled;
     

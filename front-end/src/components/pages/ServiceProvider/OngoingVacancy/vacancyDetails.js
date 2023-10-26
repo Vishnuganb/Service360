@@ -31,7 +31,7 @@ function VacancyDetails() {
       <Col className="vacancyDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
         <div className="vacancyDetails-avatar-container mb-2">
           <img
-            src={companyimage}
+            src={'data:image/jpeg;base64;' + viewVacancyData.customer.profilePic}
             alt="avatar"
             className="vacancyDetails-avatar rounded-circle"
             style={{ width: "50px", height: "50px" }}
@@ -41,14 +41,18 @@ function VacancyDetails() {
           className="vacancyDetails-username mb-1"
           style={{ fontSize: "18px", fontFamily: "'Rubik', sans-serif" }}
         >
-          {viewVacancyData.customername}
+          {viewVacancyData.customer.firstname}
         </div>
         <div className="d-flex flex-row">
           <div className="me-3">
-            <i class="bi bi-telephone-fill"></i>
+            <a href={`tel:${viewVacancyData.customer.phonenumber}`}>
+              <i className="bi bi-telephone-fill" style={{color:"black"}}></i>
+            </a>
           </div>
           <div>
-            <i class="bi bi-chat-fill"></i>
+            <Link to="/ServiceProvider/Chat">
+              <i className="bi bi-chat-fill" style={{color:"black"}}></i>
+            </Link>
           </div>
         </div>
       </Col>

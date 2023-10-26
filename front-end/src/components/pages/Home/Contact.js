@@ -42,15 +42,15 @@ export default function AppContact() {
                     <ul>
                         <li>
                             <i className="fas fa-envelope"></i>
-                            Service360@example.com
+                            <a href="mailto:Service360@example.com" style={{color:'black'}}>service.360.50@gmail.com</a>
                         </li>
                         <li>
                             <i className="fas fa-phone"></i>
-                            + 01 234 567 88
+                            <a href="tel:+0123456788" style={{ color: 'black' }}>+01 234 567 88</a>
                         </li>
                         <li>
                             <i className="fas fa-map-marker-alt"></i>
-                            Nelson Place, Colombo, Sri Lanka
+                            <p style={{ color: 'black' }}>Nelson Place, Colombo, Sri Lanka</p>
                         </li>
                     </ul>
                 </div>

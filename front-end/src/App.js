@@ -10,6 +10,7 @@ import ViewServices from './components/pages/User/ViewServices.js';
 import ViewServicesJobs from './components/pages/User/ViewServicesJob.js';
 import ServicePage from './components/pages/User/ServicePage.js';
 import ServicePageJob from './components/pages/User/ServicePageJob.js';
+import ResetPasswordContextProviderInterface from './components/loginForm/ResetPasswordContextProviderInterface.js';
 
 import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
@@ -130,6 +131,7 @@ const router = createBrowserRouter(
         <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
         <Route path="/About" element={<About />} />
         <Route path="/Contactus" element={<ContactpageNR />} />
+        <Route exact path="/ResetPassword" element={<ResetPasswordContextProviderInterface />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>

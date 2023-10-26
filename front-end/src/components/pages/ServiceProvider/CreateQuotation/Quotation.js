@@ -3,17 +3,11 @@ import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useParams } from 'react-router-dom';
 import service360logo from '../../../../assets/images/header/logo.png';
+import axios from 'axios';
 
 function ActivityReport() {
-
-    const customerdetails = [
-        {
-            name: 'Pranavan',
-            address: 'No 11, Nelson Place Colombo'
-        }
-    ];
-
     const [activityReports, setActivityReports] = useState([]);
     const [quotationData, setQuotationData] = useState({
         customerName: '',
@@ -24,14 +18,28 @@ function ActivityReport() {
         unitPrice: '',
     });
 
+    const [viewJobData, setViewJobData] = useState(null);
+
     const [quoteId, setQuoteId] = useState(null); // Initialize quoteId as null
     const [subtotalAmount, setSubtotalAmount] = useState(0);
+
+    const { id } = useParams();
+    const jobId = parseInt(id, 10);
 
     useEffect(() => {
         // Generate the quote ID only once when the component mounts
         const generatedQuoteId = Math.floor(Math.random() * 100000);
         setQuoteId(generatedQuoteId);
     }, []); // Empty dependency array ensures it runs only once on mount
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewNewJobs/${jobId}`).then((res) => {
+            console.log(res.data);
+            setViewJobData(res.data);
+        });
+    }, []);
+
+    if (!viewJobData) return 'No jobs sessions found!';
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -49,6 +57,14 @@ function ActivityReport() {
             unitPrice: '',
         });
     };
+
+    
+    const customerdetails = [
+        {
+            name: 'Pranavan',
+            address: 'No 11, Nelson Place Colombo'
+        }
+    ];
 
     // Handle "Complete and Send" button click event
     const handleCompleteAndSend = () => {
@@ -117,8 +133,8 @@ function ActivityReport() {
                 <div className="row mt-4 mb-3">
                     <div className="col-md-6 d-flex flex-row">
                         <div className='d-flex flex-column ms-1 d-flex flex-column'>       {/* customer details */}
-                            <span>{customerdetails[0].name}</span>
-                            <span>{customerdetails[0].address}</span>
+                            <span>{viewJobData.jobs.customer.firstname}</span>
+                            <span>{viewJobData.jobs.customer.address}</span>
                         </div>
                     </div>
                     <div className="col-md-6 text-md-end d-flex flex-column">

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "../../../../style/ServiceProvider/Dashboard.css";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { useEffect } from "react";
+import axios from "axios";
 
 const getLastDayOfMonth = (date) => {
   const nextMonth = new Date(date);
@@ -32,14 +34,47 @@ const generateMonthlyData = () => {
 
 
 function AnalysisSp() {
+  const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
+  const [earningsData, setEarningsData] = useState([]);
 
-  const earningsData = [
-    { session: "Advanced Electrical Wiring", earnings: 14000, date: "2023-07-01" },
-    { session: "Common Electrical Issues", earnings: 18000, date: "2023-06-12" },
-    { session: "Energy-Efficient Systems", earnings: 10000, date: "2023-04-02" },
-    { session: "Smart Home Automation", earnings: 17000, date: "2023-08-03" },
-    { session: "Safety Practices in Electricity", earnings: 20000, date: "2023-05-12" },
-  ];
+    // GETTING LOGGED IN SERVICEPROVIDER ID
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/auth/viewMyTrainingSessions',{
+      params: {
+        serviceproviderid: userData.userid
+      },
+    }).then((res) => {
+        console.log(res.data);
+        setviewTrainingSessionsData(res.data);
+
+        // Generate earningsData from res.data
+        const newData = res.data.map(item => {
+          return {
+              session: item.trainingtitle,
+              earnings: parseInt(item.trainingcost)*item.going, 
+              date: item.trainingdate 
+          };
+        });
+
+        setEarningsData(newData);
+    });
+  }, []);
+
+  console.log(viewTrainingSessionsData)
+
+
+
+  // const earningsData = [
+  //   { session: "Advanced Electrical Wiring", earnings: 14000, date: "2023-07-01" },
+  //   { session: "Common Electrical Issues", earnings: 18000, date: "2023-06-12" },
+  //   { session: "Energy-Efficient Systems", earnings: 10000, date: "2023-04-02" },
+  //   { session: "Smart Home Automation", earnings: 17000, date: "2023-08-03" },
+  //   { session: "Safety Practices in Electricity", earnings: 20000, date: "2023-05-12" },
+  // ];
 
   const [view, setView] = useState('daily');
 

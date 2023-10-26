@@ -15,6 +15,9 @@ public interface TrainingSessionRepository extends CrudRepository<TrainingSessio
     @Query("SELECT t FROM TrainingSession t INNER JOIN t.serviceprovider u")
     List<TrainingSession> findAllTrainingSessionsWithSpDetails();
 
+    @Query("SELECT t FROM TrainingSession t INNER JOIN t.serviceprovider u where t.serviceprovider.userid = :serviceproviderid")
+    List<TrainingSession> findMyTrainingSessionsWithSpDetails(@Param("serviceproviderid") Long serviceproviderid);
+
     @Query("SELECT t FROM TrainingSession t INNER JOIN t.serviceprovider u where t.trainingid = :id")
     TrainingSession findATrainingSessionWithSpDetails(@Param("id") Long id);
 }

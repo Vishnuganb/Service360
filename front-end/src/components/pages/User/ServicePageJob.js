@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Card } from 'react-bootstrap';
-import { serviceCategories } from './ViewServices';
+// import { serviceCategories } from './ViewServices';
 import '../../../style/User/ViewServices.css';
 import BgImage from '../../../assets/images/header/Background.png';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,8 @@ function ServicePage() {
     const { serviceName } = useParams();
     const navigate = useNavigate();
 
-    const selectedServiceData = serviceCategories[serviceName];
+    // const selectedServiceData = serviceCategories[serviceName];
+    const selectedServiceData = []
 
     const handleBackClick = () => {
         navigate(-1);

@@ -31,7 +31,7 @@ const searchInputStyle = {
     height: '38px',
 };
 
-const serverLink = 'http://localhost:8080'
+const serverLink = 'http://localhost:8080';
 
 function AdminServices() {
 

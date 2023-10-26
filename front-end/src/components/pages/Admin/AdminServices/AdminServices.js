@@ -1,18 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Card, Col, Button, Modal, Form } from 'react-bootstrap';
-import image1 from '../../../../assets/images/home/AC-Repair.jpeg'
-import image2 from '../../../../assets/images/home/ElectricalWiring.jpeg';
-import image3 from '../../../../assets/images/home/plumbing.jpeg';
-import image4 from '../../../../assets/images/home/Tiles_Fitting.jpeg';
-import image5 from '../../../../assets/images/home/carpentry.jpeg';
-import image6 from '../../../../assets/images/home/painting.jpeg';
-import image7 from '../../../../assets/images/home/masonry.jpeg';
-import image8 from '../../../../assets/images/home/Glass-Aluminum.jpeg';
-import image9 from '../../../../assets/images/home/Iron-Work.jpeg';
-import image10 from '../../../../assets/images/home/Cctv.jpeg';
-import image11 from '../../../../assets/images/home/Fire-Alarm.jpeg';
-import image12 from '../../../../assets/images/home/video-Sur.jpeg';
-
 import BgImage from '../../../../assets/images/header/Background.png';
 import '../../../../style/Admin/AdminServices.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,7 +31,7 @@ const searchInputStyle = {
     height: '38px',
 };
 
-const serverLink = 'http://localhost:8080'
+const serverLink = 'http://localhost:8080';
 
 function AdminServices() {
 

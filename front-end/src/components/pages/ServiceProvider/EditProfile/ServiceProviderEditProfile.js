@@ -326,8 +326,6 @@ const ServiceProviderEditProfile = (props) => {
                                 </div>
                             </div>
 
-
-
                             <>
                                 <div className="mt-3">
 

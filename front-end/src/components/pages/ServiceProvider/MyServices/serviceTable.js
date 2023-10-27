@@ -99,11 +99,18 @@ function ServiceTable() {
         .put(`http://localhost:8080/auth/enableMyService/${serviceToEnable}`)
         .then((response) => {
           setServiceToEnable(null);
-          // setShowEnableModal(false);
         })
         .catch((error) => {
           console.error('Error enabling service:', error);
         });
+
+        setMyservicesData((prevData) =>
+          prevData.map((service) =>
+            service.serviceProviderServicesId === serviceToEnable
+              ? { ...service, status: 'active' }
+              : service
+          )
+        );
         setShowEnableModal(false);
     }
   };
@@ -119,6 +126,14 @@ function ServiceTable() {
         .catch((error) => {
           console.error('Error disabling service:', error);
         });
+
+        setMyservicesData((prevData) =>
+          prevData.map((service) =>
+            service.serviceProviderServicesId === serviceToDisable
+              ? { ...service, status: 'inactive' }
+              : service
+          )
+        );
         setShowDisableModal(false);
     }
   };
@@ -224,12 +239,22 @@ function ServiceTable() {
                 <tr key={service.id}>
                   <td className="text-center">{service.serviceName}</td>
                   <td className="text-center">{service.serviceCategoryName}</td>
-                  <td className="text-center">{service.status}</td>
+                  <td className="text-center">
+                    {service.status === 'active' ? (
+                      <span style={{ color: '#4CAF50' }}>
+                        active
+                      </span>
+                    ) : (
+                      <span style={{ color: '#FF5733' }}>
+                        inactive
+                      </span>
+                    )}
+                  </td>
                   <td className="text-center">
                     {service.status === "active" ? (
                       <>
                           <i
-                            className="fas fa-times-circle fs-2 me-2"
+                            className="fas fa-times-circle fs-3 me-2"
                             onClick={() => {
                               setServiceToDisable(service.serviceProviderServicesId);
                               setShowDisableModal(true);
@@ -239,7 +264,7 @@ function ServiceTable() {
                       ) : (
                       <>
                           <i
-                            className="fas fa-check-circle fs-2 me-2"
+                            className="fas fa-check-circle fs-3 me-2"
                             onClick={() => {
                               setServiceToEnable(service.serviceProviderServicesId);
                               setShowEnableModal(true);
@@ -248,7 +273,7 @@ function ServiceTable() {
                       </>
                     )}
                       <i
-                          className="fas fa-pen-square fs-2"
+                          className="fas fa-pen-square fs-3"
                           onClick={() => {
                             handleShow(service);
                           }}

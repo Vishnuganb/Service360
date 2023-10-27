@@ -270,10 +270,10 @@ public class ServiceProviderService {
     }
 
 
-    //TRAINING SESSION
+    //TRAINING SESSION (ONLY FETCH PUBLISHED TRAINING SESSIONS)
     public List<TrainingSession> viewTrainingSessions() {
         List<TrainingSession> TrainingSessionList = new ArrayList<>();
-        trainingSessionRepository.findAllTrainingSessionsWithSpDetails().forEach(TrainingSessionList::add);
+        trainingSessionRepository.findPublishedTrainingSessionsWithSpDetails().forEach(TrainingSessionList::add);
         return TrainingSessionList;
     }
 
@@ -345,7 +345,7 @@ public class ServiceProviderService {
 
     public ServiceProviderServices DisableMyService(Long id){
         ServiceProviderServices existingService = serviceProviderServicesRepository.findByServiceProviderServicesId(id);
-        existingService.setStatus("deactivate");
+        existingService.setStatus("inactive");
         return serviceProviderServicesRepository.save(existingService);
     }
 

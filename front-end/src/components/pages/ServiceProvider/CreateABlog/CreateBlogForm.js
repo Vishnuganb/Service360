@@ -6,12 +6,6 @@ import axios from 'axios';
 import { useEffect } from "react";
 import Alert from 'react-bootstrap/Alert';
 
-const subscribedJobCategories = [
-    'Masonry',
-    'Plumbing',
-    'Carpentry',
-];
-
 function CreateBlogForm() {
 
     const [blogFormData, setBlogFormData] = useState({
@@ -19,6 +13,8 @@ function CreateBlogForm() {
         blogtitle: "",
         blogdescription: "",
     });
+
+    const [myservicesData, setMyservicesData] = useState([]);
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState(''); 
@@ -31,6 +27,13 @@ function CreateBlogForm() {
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
     console.log(userData.userid);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
+        });
+    }, []);
 
     const handleFileInputChange = (e) => {
         const selectedFilesArray = Array.from(e.target.files);
@@ -139,9 +142,9 @@ function CreateBlogForm() {
                         required
                     >
                         <option value="">Select the service category</option>
-                        {subscribedJobCategories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
+                        {myservicesData.map((category) => (
+                            <option key={category.serviceId} value={category.serviceName}>
+                                {category.serviceName}
                             </option>
                         ))}
                     </Form.Control>

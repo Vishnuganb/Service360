@@ -276,7 +276,7 @@ public class ServiceProvidersController {
         serviceProviderService.deleteServiceProviderCalendarEvent(id);
     }
 
-//    //TRAINING SESSIONS
+//  TRAINING SESSIONS (ONLY FETCH PUBLISHED TRAINING SESSIONS)
     @GetMapping("auth/viewTrainingSessions")
     public TrainingSessionsDTO viewTrainingSessions() {
         List<TrainingSession> trainingSessions = serviceProviderService.viewTrainingSessions();
@@ -523,7 +523,7 @@ public class ServiceProvidersController {
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
-            trainingSession.setStatus("Ready to publish");
+            trainingSession.setStatus("Published");
             return serviceProviderService.publishTrainingSession(trainingSession);
         } else {
             return null;

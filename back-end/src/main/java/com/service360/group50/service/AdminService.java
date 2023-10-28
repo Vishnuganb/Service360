@@ -30,6 +30,7 @@ public class AdminService {
     private final TrainingSessionRepository trainingSessionRepository;
     private final AdsRepository adsRepository;
     private final SystemReviewRepository systemReviewRepository;
+    private final CComplaintsRepository cComplaintsRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -309,6 +310,26 @@ public class AdminService {
         existingSystemReview = systemReviewRepository.save(existingSystemReview);
 
         return existingSystemReview;
+
+    }
+
+    public Complaints updateComplaintStatus ( Long complaintid, String reply, String status ) {
+
+        Optional<Complaints> existingComplaint =  cComplaintsRepository.findById(complaintid);
+
+        if (existingComplaint.isEmpty()) {
+            System.out.println("Complaint not found");
+            return null;
+        }
+
+        Complaints complaint = existingComplaint.get();
+
+        complaint.setReply(reply);
+        complaint.setComplaintstatus(status);
+
+        complaint = cComplaintsRepository.save(complaint);
+
+        return complaint;
 
     }
 }

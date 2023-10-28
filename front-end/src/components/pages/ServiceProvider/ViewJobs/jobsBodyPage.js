@@ -3,8 +3,18 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { useEffect, useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {
+    FacebookShareButton,
+    TwitterShareButton,
+    LinkedinShareButton,
+    InstapaperShareButton,
+    TelegramShareButton,
+    ViberShareButton,
+    EmailShareButton,
+  } from 'react-share';
 
 function JobsBodyPage() {
     const [viewJobsData, setViewJobsData] = useState(null);
@@ -13,6 +23,8 @@ function JobsBodyPage() {
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [activeTab, setActiveTab] = useState(''); 
+    const [showShareModal, setShowShareModal] = useState(false);
+    const [selectedJob, setSelectedJob] = useState(null);
 
     const MyServices= [
         "Electrical Wiring",
@@ -32,6 +44,15 @@ function JobsBodyPage() {
             setViewVacanciesData(res.data);
         });
     }, []);
+
+    const openShareModal = (job) => {
+        setSelectedJob(job);
+        setShowShareModal(true);
+    };
+    
+    const closeShareModal = () => {
+        setShowShareModal(false);
+    };
 
     useEffect(() => {
         setCurrentPage(1);
@@ -161,9 +182,10 @@ function JobsBodyPage() {
                         <div className="job-card-header">
                             <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                                 <div className='d-flex justify-content-center align-items-center'>
+                                    {console.log(job.customer.profilePic)}
                                     {/* <img src={job.profile} alt="avatar" className="job-card-avatar" /> */}
                                     <img
-                                            src=""
+                                            src={'data:image/jpeg;base64;' + job.customer.profilePic}
                                             alt="avatar"
                                             className="rounded-circle view-jobs-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -207,32 +229,23 @@ function JobsBodyPage() {
                         <hr style={{margin:"0.5rem"}} />
                         <div className="view-jobs-card-footer d-flex flex-row justify-content-between mx-sm-2 mb-sm-2 mt-md-0 mt-4">
                             
-                            <Link to={`../ViewAJob/${job.jobid}` }>
+                            <Link to={`../ViewAJob/${job.jobid}` } className='ms-lg-5'>
                                 <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
                                     <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
                                     </span>
                                     View
                                 </button>
-                            </Link>                            
-                                
-                            <Link to="">
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(13, 100, 69)"}}>
-                                    <span class="view-jobs-page-btn-label">
-                                    <i class="bi bi-chat-square-dots"></i>
-                                    </span>
-                                    Comment
-                                </button>
-                            </Link>    
+                            </Link> 
 
-                            <Link to="">
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
+                            <div className='me-lg-5'>
+                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}} onClick={() => openShareModal(job)}>
                                     <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-share"></i>
                                     </span>
                                     Share
                                 </button>
-                            </Link>  
+                            </div>  
 
                         </div>
                     </div>
@@ -246,7 +259,7 @@ function JobsBodyPage() {
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                        src=""
+                                        src={'data:image/jpeg;base64;' + vacancy.customer.profilePic}
                                         alt="avatar"
                                         className="rounded-circle"
                                         style={{ width: "42px", height: "42px" }}
@@ -325,6 +338,52 @@ function JobsBodyPage() {
                 ))}
             </div>
             )}
+
+            {/* Share Modal */}
+            <Modal show={showShareModal} onHide={closeShareModal} dialogClassName="custom-modal" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-dark">Share Job</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {selectedJob && (
+                        <div className="text-center">
+                            <h4>Share this job:</h4>
+                            <div className="d-flex justify-content-center mt-3">
+                                <FacebookShareButton url={window.location.href} quote={selectedJob.jobtitle}>
+                                    <Button variant="primary" className="me-1">
+                                        <i className="bi bi-facebook"></i> Facebook
+                                    </Button>
+                                </FacebookShareButton>
+                                <TelegramShareButton url={window.location.href} title={selectedJob.jobtitle}>
+                                    <Button variant="primary" className="me-1">
+                                        <i className="bi bi-telegram"></i> Telegram
+                                    </Button>
+                                </TelegramShareButton>
+                                <TwitterShareButton url={window.location.href} title={selectedJob.jobtitle}>
+                                    <Button variant="info" className="me-1">
+                                        <i className="bi bi-twitter"></i> Tweet
+                                    </Button>
+                                </TwitterShareButton>
+                                <LinkedinShareButton url={window.location.href} title={selectedJob.jobtitle}>
+                                    <Button variant="success" className="me-1">
+                                        <i className="bi bi-linkedin"></i> LinkedIn
+                                    </Button>
+                                </LinkedinShareButton>
+                                <EmailShareButton url={window.location.href} title={selectedJob.jobtitle} >
+                                    <Button variant="primary">
+                                        <i className="bi bi-envelope"></i> Email
+                                    </Button>
+                                </EmailShareButton>
+                            </div>
+                        </div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={closeShareModal}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </div>
     );

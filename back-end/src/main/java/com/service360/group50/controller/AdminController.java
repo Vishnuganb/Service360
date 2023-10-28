@@ -240,4 +240,14 @@ public class AdminController {
         return adminService.updateSelectSystemReview(ratingid, status);
     }
 
+    @PutMapping("/updateComplaintStatus")
+    public Complaints updateComplaintStatus(
+            @RequestParam(value = "complaintid") Long complaintid,
+            @RequestParam(value = "reply") String reply,
+            @RequestParam(value = "complaintstatus") String status
+
+    ){
+        return adminService.updateComplaintStatus(complaintid, reply, status);
+    }
+
 }

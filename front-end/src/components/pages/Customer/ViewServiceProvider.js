@@ -21,7 +21,7 @@ import { error } from 'jquery';
 
 function ViewServiceProvider() {
   const [viewSpBlogs, setViewSpBlogs] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0); 
 
   const rating = 4;
   const { id } = useParams();
@@ -55,7 +55,11 @@ function ViewServiceProvider() {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/viewServiceProviderBlogs').then((res) => {
+    axios.get('http://localhost:8080/auth/viewServiceProviderBlogs',{
+      params:{
+        serviceproviderid:3
+      }
+    }).then((res) => {
         console.log(res.data);
         setViewSpBlogs(res.data);
     });
@@ -64,12 +68,29 @@ function ViewServiceProvider() {
   if (!viewSpBlogs) return 'No jobs found!';
 
   const handlePrev = () => {
-    setActiveIndex(activeIndex > 0 ? activeIndex - 1 : viewSpBlogs.length - 1);
+    setActiveIndex(activeIndex > 0 ? activeIndex - 1 : viewSpBlogs.blogs.length - 1);
   };
 
   const handleNext = () => {
-    setActiveIndex(activeIndex < viewSpBlogs.length - 1 ? activeIndex + 1 : 0);
+    setActiveIndex(activeIndex < viewSpBlogs.blogs.length - 1 ? activeIndex + 1 : 0);
   };
+
+  // Get all images from the training sessions
+  const blogImagesArray = viewSpBlogs.blogimages;
+
+  // Initialize an empty array to store all images
+  const allImages = [];
+
+  // Iterate through trainingSessionImagesArray
+  blogImagesArray.forEach((sessionImages) => {
+  // Check if the current object has an 'images' property
+  if (sessionImages.hasOwnProperty('images') && Array.isArray(sessionImages.images)) {
+      // Concatenate the 'images' array to the 'allImages' array
+      allImages.push(...sessionImages.images);
+  }
+  });
+
+
 
   return (
     <div className="SPBox ">
@@ -182,44 +203,48 @@ function ViewServiceProvider() {
         <div className='SPblogs'>
           <p className='blogstitle fs-5'> Blogs </p>
 
-          {viewSpBlogs.map((Blog, index) => (
-            <div
-              key={index}
-              className={`blogs-container border border-secondary p-4 ${index !== activeIndex ? 'd-none' : ''}`}
-              style={{ borderRadius: "5px" }}
-            >
-              <div className='SPImageCarousel'>
-              <Carousel interval={null}>
-                <Carousel.Item>
-                <img
-                  className="d-block w-100 img-fluid"
-                  src={img1}
-                  alt="Blog Image"
-                  style={{ maxHeight: '300px', objectFit: 'cover' }}
-                />
-                </Carousel.Item>
-                <Carousel.Item>
-                <img
-                  className="d-block w-100 img-fluid"
-                  src={img1}
-                  alt="Blog Image"
-                  style={{ maxHeight: '300px', objectFit: 'cover' }}
-                />
-                </Carousel.Item>
-              </Carousel>
-              </div><br />
+    
+          {viewSpBlogs.blogs.map((Blog, index) => {
+              // Find the matching training session images
+              const matchingSessionImages = blogImagesArray.find(sessionImages => sessionImages.id === Blog.blogid);
 
-              <div className="d-flex flex-row">
-                <div>
-                  <p className='blogtitle' style={{ fontWeight: "600" }}> {Blog.blogtitle} </p>
+              // Extract the images array if found, or provide an empty array as a default value
+              const imagesArray = matchingSessionImages ? matchingSessionImages.images : [];
+
+              return(
+                <div
+                  key={index}
+                  className={`blogs-container border border-secondary p-4 ${index !== activeIndex ? 'd-none' : ''}`}
+                  style={{ borderRadius: "5px" }}
+                >
+                    <div className='SPImageCarousel'>
+
+                    <Carousel interval={null}>
+                        {imagesArray.map((image, imgIndex) => (
+                          <Carousel.Item key={imgIndex}>
+                            <img
+                              className='d-block w-100 img-fluid'
+                              src={`data:image/jpg;base64,${image}`}
+                              alt={`Blog Image ${imgIndex + 1}`}
+                              style={{ maxHeight: '300px', objectFit: 'cover' }}
+                            />
+                          </Carousel.Item>
+                        ))}
+                    </Carousel>
+                    </div><br/>
+
+                    <div className="d-flex flex-row">
+                      <div>
+                        <p className='blogtitle' style={{ fontWeight: "600" }}> {Blog.blogtitle} </p>
+                      </div>
+                      <div className='ms-auto'>
+                        <span className='blog-service'>{Blog.servicename}</span>
+                      </div>
+                    </div>
+                    <p className='blogdescription'> {Blog.blogdescription} </p>
                 </div>
-                <div className='ms-auto'>
-                  <span className='blog-service'>{Blog.servicename}</span>
-                </div>
-              </div>
-              <p className='blogdescription'> {Blog.blogdescription} </p>
-            </div>
-          ))}
+            );
+         })}
 
           <div className="d-flex blog-bt-container justify-content-center">
             <div className="blog-bt-left me-3">
@@ -229,9 +254,8 @@ function ViewServiceProvider() {
               <Button className='btn-ServiceProvider-2' onClick={handleNext}>&gt;</Button>
             </div>
           </div>
+          
         </div>
-
-
       </div>
     </div>
 

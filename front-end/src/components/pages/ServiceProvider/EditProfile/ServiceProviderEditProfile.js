@@ -47,7 +47,7 @@ const ServiceProviderEditProfile = (props) => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get(serverLink + '/auth/  /' + userData.userid);
+            const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid);
             if (response.data) {
                 setUserDetail(response.data);
                 setdata({
@@ -325,8 +325,6 @@ const ServiceProviderEditProfile = (props) => {
                                     {data.nicNumberErrorMessage && <p className="text-danger p-0 m-0">{data.nicNumberErrorMessage}</p>}
                                 </div>
                             </div>
-
-
 
                             <>
                                 <div className="mt-3">

@@ -10,6 +10,7 @@ import ViewServices from './components/pages/User/ViewServices.js';
 import ViewServicesJobs from './components/pages/User/ViewServicesJob.js';
 import ServicePage from './components/pages/User/ServicePage.js';
 import ServicePageJob from './components/pages/User/ServicePageJob.js';
+import ResetPasswordContextProviderInterface from './components/loginForm/ResetPasswordContextProviderInterface.js';
 
 import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
@@ -51,6 +52,7 @@ import SpViewJobsHome from './components/pages/User/ViewAjob.js';
 import SpChat from './components/pages/User/Chat/ChatPage.js';
 import SpViewAserviceJob from './components/pages/User/ViewAjob.js';
 import CreateQuotation from './components/pages/ServiceProvider/CreateQuotation/Index.js';
+import SpCompletedJobs from './components/pages/ServiceProvider/CompletedJob/Index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -130,6 +132,7 @@ const router = createBrowserRouter(
         <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
         <Route path="/About" element={<About />} />
         <Route path="/Contactus" element={<ContactpageNR />} />
+        <Route exact path="/ResetPassword" element={<ResetPasswordContextProviderInterface />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
@@ -212,32 +215,20 @@ const router = createBrowserRouter(
         <Route path="ViewAVacancy/:id" element={<SpViewAVacancy />} />
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
-        <Route
-          path="CreateTrainingSession"
-          element={<SpCreateTrainingSession />}
-        />
-        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs />} />
-        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies />} />
-        <Route
-          path="ViewTrainingSessions"
-          element={<SpViewTrainingSessions />}
-        />
-        <Route
-          path="ViewATrainingSession/:id"
-          element={<SpViewATrainingSession />}
-        />
-        <Route path="MyProjectStates" element={<SpMyProjectStates />} />
-        <Route path="OngoingJob/:id" element={<SpOngoingJob />} />
-        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy />} />
-        <Route path="StartJob" element={<SpStartJob />} />
-        <Route
-          path="AvailabilityCalendar"
-          element={<SpAvailabilityCalendar />}
-        />
-        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions />} />
-        <Route path="ViewHistory" element={<SpViewHistory />} />
-        <Route path="PendingJob/:id" element={<SpPendingJob />} />
-        <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy />} />
+        <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
+        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
+        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
+        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
+        <Route path="ViewATrainingSession/:id" element={<SpViewATrainingSession/>} />
+        <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
+        <Route path="OngoingJob/:id" element={<SpOngoingJob/>} />
+        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
+        <Route path="StartJob/:id" element={<SpStartJob/>} />
+        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
+        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
+        <Route path="ViewHistory" element={<SpViewHistory/>} />
+        <Route path="PendingJob/:id" element={<SpPendingJob/>} />
+        <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="ToDoList/:id" element={<ToDoList />} />
@@ -245,7 +236,8 @@ const router = createBrowserRouter(
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
-        <Route path="CreateQuotation" element={<CreateQuotation />} />
+        <Route path="CreateQuotation/:id" element={<CreateQuotation />} />
+        <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
       </Route>
 
       <Route path='/activateCustomer' element={<ActivateCustomer />} />

@@ -1,5 +1,6 @@
 import react, { createContext, useState, useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
+import { Route } from 'react-router-dom';
 import axios from "axios";
 
 
@@ -11,7 +12,7 @@ const AuthenticationContextProvider = (props) => {
 
     const serverLink = 'http://localhost:8080'
 
-    let authenticated = false
+    let authenticated = false;
 
     const customerSignUp = (data) => {
 
@@ -104,7 +105,6 @@ const AuthenticationContextProvider = (props) => {
                 console.log(response.data);
                 alert("Please verify your email!!!")
                 window.location.href = "http://localhost:3000/login"
-
             }
 
         ).catch(
@@ -146,7 +146,7 @@ const AuthenticationContextProvider = (props) => {
             (response) => {
                 authenticated = true;
                 storeSessionJWT(response.data, token);
-
+                // console.log(authenticated);
                 if (response.data.role === 'CUSTOMER') navigate("/Customer");
                 else if (response.data.role === 'ADMIN') navigate("/admin");
                 else if (response.data.role === 'SERVICEPROVIDER') navigate("/ServiceProvider");
@@ -180,12 +180,13 @@ const AuthenticationContextProvider = (props) => {
                 return config;
 
             }
-
+            
         )
 
     }
 
     const storeSessionJWT = (userdetails, token) => {
+        
         sessionStorage.setItem('authenticatedUser', JSON.stringify(userdetails));
         setupAxiosInterceptors(createJWTToken(token));
     }
@@ -205,13 +206,10 @@ const AuthenticationContextProvider = (props) => {
     return (
 
         <AuthenticationContext.Provider value={{ authenticated, login, logout, customerSignUp, advertiserSignUp, serviceProviderSignUp }}>
-
             {props.children}
-
         </AuthenticationContext.Provider>
 
-    )
-
-}
+    );
+};
 
 export default AuthenticationContextProvider

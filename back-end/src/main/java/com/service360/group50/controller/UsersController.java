@@ -1,6 +1,7 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.UsersDTO;
+import com.service360.group50.entity.Contact;
 import com.service360.group50.entity.SystemReview;
 import com.service360.group50.entity.Users;
 import com.service360.group50.message.ResponseMessage;
@@ -57,6 +58,16 @@ public class UsersController {
     @GetMapping("/getAllSystemReview")
     public Iterable<SystemReview> getAllSystemReview() {
         return userService.getAllSystemReview();
+    }
+
+    @PostMapping("/addContactMessage")
+    public Contact addContactMessage(
+            @RequestParam("email") String email,
+            @RequestParam("fullName") String fullName,
+            @RequestParam("contactNumber") String contactNumber,
+            @RequestParam("message") String message
+    ){
+        return userService.addContactMessage(email,fullName,contactNumber,message);
     }
 
 }

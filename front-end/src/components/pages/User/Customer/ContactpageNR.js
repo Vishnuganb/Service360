@@ -1,154 +1,290 @@
-import React, { useState } from 'react';
-import '../../../../style/User/ContactUsNR.css';
+import React, { useState, useEffect } from 'react';
+import validator from "validator";
+import axios from 'axios';
+import image from '../../../../assets/images/header/Background.png';
+import loginPhoto from '../../../../assets/images/home/contact.jpg'
+import styled from 'styled-components';
+
+const serverLink = 'http://localhost:8080'
+
+const customFontStyle = {
+    fontFamily: "Roboto",
+    color: '#9F390D'
+};
+
+const StyledButton = styled.button`
+        background-color: #292D32;
+        width: 70%;
+        @media (max-width: 768px) {
+            width: 100%; 
+            margin-top: 1rem; 
+        }
+        &:hover {
+            background: #fff;
+            border-color: #2596be;
+            color: #9f390d;
+        }
+    `;
 
 function ContactpageNR() {
-    const [formData, setFormData] = useState({
-        fname: '',
-        lname: '',
+    const [data, setdata] = useState({
         email: '',
+        fullName: '',
         contactNumber: '',
-        message: ''
+        message: '',
+        emailStatus: false,
+        messageErrorMessage: '',
+        emailErrorMessage: '',
+        fullNameErrorMessage: '',
+        contactNumberErrorMessage: '',
+        addressErrorMessage: '',
+        fullNameErrorMessage: '',
+        contactNumberErrorMessage: '',
+        isMessageSent:false,
     });
 
-    const [inputErrors, setInputErrors] = useState({
-        email: '',
-        contactNumber: '',
-        message: ''
-    });
-
-    const handleChange = event => {
-        const { name, value } = event.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
-
-        if (value.trim() !== '') {
-            event.target.classList.add('filled');
+    const validateEmail = (emailInputValue) => {
+        if (validator.isEmail(emailInputValue)) {
+            setdata({ ...data, email: emailInputValue, emailStatus: true, emailErrorMessage: '' });
         } else {
-            event.target.classList.remove('filled');
+            setdata({ ...data, email: emailInputValue, emailStatus: false, emailErrorMessage: 'Invalid email' });
         }
     };
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        const updatedInputErrors = { ...inputErrors };
+    const createMessage = (e) => {
 
-        // Validate email format
-        if (!validateEmail(formData.email)) {
-            updatedInputErrors.email = 'Please enter a valid email address.';
-        } else {
-            updatedInputErrors.email = '';
+        e.preventDefault();
+
+        let isError = false;
+        let emailErrorMessage = '';
+        let fullNameErrorMessage = '';
+        let messageErrorMessage = '';
+        let contactNumberErrorMessage = '';
+
+        if (data.email.trim() === '') {
+            isError = true;
+            emailErrorMessage = 'Email is required';
         }
 
-        // Validate contact number format
-        if (!validateContactNumber(formData.contactNumber)) {
-            updatedInputErrors.contactNumber = 'Please enter a valid contact number.';
-        } else {
-            updatedInputErrors.contactNumber = '';
+        if (!/^[A-Za-z\s]*$/.test(data.fullName)) {
+            isError = true;
+            fullNameErrorMessage = 'Should contain only letters and spaces';
         }
 
-        // Validate textbox minimum length
-        if (formData.message.length < 3) {
-            updatedInputErrors.message = 'Please enter at least 3 characters.';
-        } else {
-            updatedInputErrors.message = '';
+        if (!validator.isNumeric(data.contactNumber)) {
+            isError = true;
+            contactNumberErrorMessage = 'Should contain only digits';
         }
 
-        setInputErrors(updatedInputErrors);
+        if (data.contactNumber.length < 9) {
+            isError = true;
+            contactNumberErrorMessage = 'Invalid contact number';
+        }
+
+        if (data.fullName.trim() === '') {
+            isError = true;
+            fullNameErrorMessage = 'Full name is required';
+        }
+
+        if (data.message.trim() === '') {
+            isError = true;
+            messageErrorMessage = 'Message is required';
+        }
+
+        if (data.contactNumber.trim() === '') {
+            isError = true;
+            contactNumberErrorMessage = 'Phone Number is required';
+        }
+
+        setdata({
+            ...data,
+            emailErrorMessage,
+            fullNameErrorMessage,
+            contactNumberErrorMessage,
+            messageErrorMessage,
+        });
+
+        if (!isError) {
+            const formData = new FormData();
+            formData.append('email', data.email);
+            formData.append('fullName', data.fullName);
+            formData.append('contactNumber', data.contactNumber);
+            formData.append('message', data.message);
+
+            for (const [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
+            axios.post(serverLink + '/auth/addContactMessage', formData).then(
+                (response) => {
+                    console.log(response.data);
+                    setdata({
+                        email: '',
+                        fullName: '',
+                        contactNumber: '',
+                        message: '',
+                        emailErrorMessage: '',
+                        fullNameErrorMessage: '',
+                        contactNumberErrorMessage: '',
+                        messageErrorMessage: '',
+                        isMessageSent:true,
+                    });
+                }
+            ).catch(
+                () => { alert("Check the Credentials For Contact Message!!!") }
+            )
+        }
     };
 
-    const validateEmail = email => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(email);
-    };
+    useEffect(() => {
+        if (data.isMessageSent) {
+            const timer = setTimeout(() => {
+                setdata({ ...data, isMessageSent: false });
+            }, 10000); // 10,000 milliseconds (10 seconds)
 
-    const validateContactNumber = contactNumber => {
-        const contactNumberPattern = /^[0-9]{10}$/;
-        return contactNumberPattern.test(contactNumber);
-    };
+            return () => clearTimeout(timer); // Clean up the timer when the component unmounts
+        }
+    }, [data.isMessageSent]);
 
     return (
-        <div className='contactusNR'>
-            <div className='contactuscontainer'>
-                <div className='imgNR'></div>
-                <div className="contact-us">
-                    <div className='contactdetailsNR'>
-                        <h3>Get in Touch with Us!</h3>
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <div className='NRName'>
-                                    <input
-                                        className={`CNRinput ${inputErrors.fname ? 'error' : ''}`}
-                                        type="text"
-                                        name="fname"
-                                        value={formData.fname}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder='First name'
-                                    />
-                                    <input
-                                        className={`CNRinput ${inputErrors.lname ? 'error' : ''}`}
-                                        type="text"
-                                        name="lname"
-                                        value={formData.lname}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder='Last Name'
-                                    />
+        <div className="h-100" style={{ backgroundImage: `url(${image})` }}>
+
+            <section className="h-100">
+
+                <div className="container h-100">
+
+                    <div className="row d-flex justify-content-center align-items-center h-100">
+
+                        <div className="col-xl-10 offset-sm-2 offset-lg-4 offset-xl-0 my-lg-1 py-lg-1 my-xl-0 py-xl-0">
+
+                            <div className="rounded-3 text-black my-lg my-xl-0 py-xl-0">
+
+                                <div className="row g-0">
+
+                                    <div className="col-xl-6">
+
+                                        <div className="p-md-1 mx-md-2 my-5 bg-white rounded-lg justify-content-center align-items-center shadow-lg"
+                                            style={{ backgroundColor: '#ffffff', maxWidth: '600px', borderRadius: '1rem' }}>
+
+                                            <div className="mb-0 p-0">
+
+                                                <div className="d-flex justify-content-between">
+
+                                                    <p className='pt-4 px-4 flex-wrap fs-5'>
+                                                        welcome to <span className="fs-2 fw-bold pb-2" style={customFontStyle}>Service360</span>
+                                                    </p>
+
+                                                </div>
+
+                                                <div className="d-flex pb-1 justify-content-center">
+                                                    <h3 className='text-center' style={{ color: 'gray' }}>-Get in Touch with Us!-</h3>
+                                                </div>
+
+                                                {data.isMessageSent && (
+                                                    <div className="text-center">
+                                                        <p className="text-success">Message sent successfully!</p>
+                                                    </div>
+                                                )}
+
+                                            </div>
+
+                                            <form action="" className="my-2 mx-4">
+
+                                                <div className="mb-3">
+                                                    <div className='align-items-center'>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder="Full Name"
+                                                            value={data.fullName}
+                                                            onChange={(e) => setdata({ ...data, fullName: e.target.value })}
+                                                            required
+                                                        />
+                                                        {data.fullNameErrorMessage && <p className="text-danger p-0 m-0">{data.fullNameErrorMessage}</p>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="mb-3">
+                                                    <div className="align-items-center">
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder="Enter your email address"
+                                                            value={data.email}
+                                                            onChange={(e) => validateEmail(e.target.value)}
+                                                            required
+                                                        />
+                                                        {data.emailErrorMessage && <p className="text-danger p-0 m-0">{data.emailErrorMessage}</p>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="mb-3">
+                                                    <div className='align-items-center'>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder="Enter your Contact Number"
+                                                            value={data.contactNumber}
+                                                            onChange={(e) => setdata({ ...data, contactNumber: e.target.value })}
+                                                            required
+                                                            maxLength={10}
+                                                        />
+                                                        {data.contactNumberErrorMessage && <p className="text-danger p-0 m-0">{data.contactNumberErrorMessage}</p>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="mb-3">
+                                                    <div className="align-items-center">
+                                                        <textarea
+                                                            type="textarea"
+                                                            className="form-control"
+                                                            placeholder="Enter your meassage"
+                                                            value={data.message}
+                                                            onChange={(e) => setdata({ ...data, message: e.target.value })}
+                                                            required
+                                                        />
+                                                        {data.messageErrorMessage && <p className="text-danger p-0 m-0">{data.messageErrorMessage}</p>}
+                                                    </div>
+                                                </div>
+
+                                                <div className="text-center">
+
+                                                    <div className="d-flex align-items-center justify-content-center pb-4">
+
+                                                        <StyledButton className="btn btn-dark btn-block" type="button" onClick={createMessage}>
+
+                                                            Submit
+
+                                                        </StyledButton>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </form>
+
+                                            <div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col-xl-6 my-5 justify-content-center align-items-center rounded" style={{ background: `url(${loginPhoto})`, backgroundSize: 'cover'}} />
+
                                 </div>
+
                             </div>
-                            <div className="form-group">
-                                <input
-                                    className={`CNRinput ${inputErrors.email ? 'error' : ''}`}
-                                    type="text"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder='Enter your Email'
-                                />
-                                <span className={`error-message ${inputErrors.email ? 'visible' : ''}`}>
-                                    {inputErrors.email && <i className="error-icon fas fa-exclamation-circle"></i>} &nbsp;
-                                    {inputErrors.email}
-                                </span>
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    className={`CNRinput ${inputErrors.contactNumber ? 'error' : ''}`}
-                                    type="text"
-                                    name="contactNumber"
-                                    value={formData.contactNumber}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder='Contact Number'
-                                />
-                                <span className={`error-message ${inputErrors.contactNumber ? 'visible' : ''}`}>
-                                    {inputErrors.contactNumber && <i className="error-icon fas fa-exclamation-circle"></i>} &nbsp;
-                                    {inputErrors.contactNumber}
-                                </span>
-                            </div>
-                            <div className="form-group">
-                                <textarea
-                                    className={`CNRinput ${inputErrors.message ? 'error' : ''}`}
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder='Your Message'
-                                />
-                                <span className={`error-message ${inputErrors.message ? 'visible' : ''}`}>
-                                    {inputErrors.message && <i className="error-icon fas fa-exclamation-circle"></i>} &nbsp;
-                                    {inputErrors.message}
-                                </span>
-                            </div>
-                            <div className='buttonNR'>
-                                <button className="btnNR" type="submit">Submit</button>
-                            </div>
-                        </form>
+
+                        </div>
+
                     </div>
+
                 </div>
-            </div>
+
+            </section>
+
         </div>
     );
 }

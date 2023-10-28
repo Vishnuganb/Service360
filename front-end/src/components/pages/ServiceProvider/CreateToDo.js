@@ -112,7 +112,7 @@ function ToDoList() {
                 placeholder="Enter hours..."
                 value={hourInputs[task.todolistdetailsid] || ''}
                 onChange={(e) => setHourInputs({ ...hourInputs, [task.todolistdetailsid]: e.target.value })}
-                style={{ marginBottom: "5px", width: "150px", marginRight: "1000px" }}
+                style={{ marginBottom: "5px", width: "150px", marginRight: "1000px", height:"35px" }}
             />
         </div>
     </li>

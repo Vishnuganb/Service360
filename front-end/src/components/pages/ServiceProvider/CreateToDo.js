@@ -96,11 +96,10 @@ function ToDoList() {
 
                 <ul>
                 {tasks.map((task, index) => (
-    <li key={index} className="custom-todo-list card" style={{ padding: '10px' }}>
+    <li key={index} className="castodolist card" style={{ padding: '10px' }}>
         <div>
             <input
                 type="checkbox"
-                checked={task.completed}
                 onChange={() => handleToggleComplete(task.todolistdetailsid, !task.completed)}
             />
             <span className={task.completed ? 'completed' : ''}>
@@ -113,7 +112,7 @@ function ToDoList() {
                 placeholder="Enter hours..."
                 value={hourInputs[task.todolistdetailsid] || ''}
                 onChange={(e) => setHourInputs({ ...hourInputs, [task.todolistdetailsid]: e.target.value })}
-                style={{ marginBottom: "5px", width: "150px" }}
+                style={{ marginBottom: "5px", width: "150px", marginRight: "1000px", height:"35px"}}
             />
         </div>
     </li>

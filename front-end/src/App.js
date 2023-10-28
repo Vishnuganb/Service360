@@ -114,6 +114,8 @@ import ActivateCustomer from './ContextFiles/ActivateCustomer.js';
 import ActivateUser from './ContextFiles/ActivateUser.js';
 import ViewPostedJobs1 from './components/pages/Customer/ViewPostedJobs1.js';
 
+import Payment from './components/pages/Payment/Payment.js';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -162,6 +164,9 @@ const router = createBrowserRouter(
         <Route path="Ads" element={<Ads />} />
         <Route path="EditAd/:id" element={<EditAd />} />
         <Route path="Subscribed/:subId" element={<Subscriped />} />
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="Payment" element={<Payment />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -172,7 +177,10 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="ViewServiceProvider/:id" element={<ViewServiceProvider />} />
+        <Route
+          path="ViewServiceProvider/:id"
+          element={<ViewServiceProvider />}
+        />
         <Route path="ToDoForm" element={<ToDoForm />} />
         <Route path="RatenReview" element={<RatenReview />} />
         <Route
@@ -201,8 +209,6 @@ const router = createBrowserRouter(
         <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} />
         <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
         <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
-
-
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -229,20 +235,25 @@ const router = createBrowserRouter(
         <Route path="ViewHistory" element={<SpViewHistory/>} />
         <Route path="PendingJob/:id" element={<SpPendingJob/>} />
         <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
+        {/* <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} /> */}
         <Route path="ToDoList/:id" element={<ToDoList />} />
         <Route path="Chat" element={<SpChat />} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
         <Route path="CreateQuotation/:id" element={<CreateQuotation />} />
         <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
       </Route>
 
-      <Route path='/activateCustomer' element={<ActivateCustomer />} />
-      <Route path= '/activateUser' element={<ActivateUser />} />
-      <Route path="*" element={<Layout404> {" "}<PageNotFound /></Layout404>}
+      <Route path="/activateCustomer" element={<ActivateCustomer />} />
+      <Route path="/activateUser" element={<ActivateUser />} />
+      <Route
+        path="*"
+        element={
+          <Layout404>
+            {" "}
+            <PageNotFound />
+          </Layout404>
+        }
       />
     </>
   )

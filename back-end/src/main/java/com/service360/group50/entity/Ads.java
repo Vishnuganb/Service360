@@ -67,7 +67,7 @@ public class Ads {
 
     @PrePersist
     protected void onCreate()  {
-        status = "Pending";
+        status = "Active";
         verificationStatus = "Pending";
         date = LocalDate.now();
     }

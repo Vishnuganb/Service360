@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Payment from "../../../Payment/Payment";
 
 import "../../../../../style/advertiser/AdIndex.css";
 
@@ -11,9 +12,12 @@ import backgroundImage from "../../../../../assets/images/header/Background.png"
 const Subscribtion = () => {
   const response = sessionStorage.getItem("authenticatedUser");
   const userDetail = JSON.parse(response);
-  const [subscriptionStartDate] = useState(
-    new Date()
-  ); // Set the actual start date here
+
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [orderID, setOrderID] = useState(null);
+
+  const [subscriptionStartDate] = useState(new Date()); 
   const [selectedPlanIndex, setSelectedPlanIndex] = useState(null);
   const [chosenPlan, setChosenPlan] = useState(null);
   const [billDetailsPointerEvents, setBillDetailsPointerEvents] =
@@ -44,7 +48,7 @@ const Subscribtion = () => {
         "10 Ads Allowed",
         "Basic Ad Verification",
       ],
-      price: "0 LKR",
+      price: 0,
       duration: 0,
     },
     {
@@ -55,7 +59,7 @@ const Subscribtion = () => {
         "Verified Badge by Admin",
         "Premium Ad Verification",
       ],
-      price: "299 LKR",
+      price: 299,
       duration: 1,
     },
     {
@@ -67,7 +71,7 @@ const Subscribtion = () => {
         "Random Ads in Slide",
         "Enhanced Ad Visibility",
       ],
-      price: "499 LKR",
+      price: 499,
       duration: 1,
     },
   ];
@@ -75,18 +79,15 @@ const Subscribtion = () => {
   const navigate = useNavigate();
 
   const handleOpenSubscripedModal = (id) => {
-
     axios
       .put(`http://localhost:8080/auth/subscription/${userDetail.userid}/${id}`)
       .then((res) => {
         console.log(res.data);
-        window.location.reload();
         navigate(`/Advertiser/Subscription`);
       })
       .catch((err) => {
         console.log(err);
       });
-
   };
 
   return (
@@ -110,10 +111,11 @@ const Subscribtion = () => {
         {plans.map((plan, index) => (
           <Card
             key={index}
-            className={`AdSubDiv ${selectedPlanIndex === index ? "selectedAdSub" : ""
-              }`}
+            className={`AdSubDiv ${
+              selectedPlanIndex === index ? "selectedAdSub" : ""
+            }`}
             onClick={() => handleSelectPlan(index)}
-          // style={{ backgroundImage: `url(${backgroundImage})` }}
+            // style={{ backgroundImage: `url(${backgroundImage})` }}
           >
             <Card.Body>
               <Card.Title className="text-center d-flex align-items-center gap-2">
@@ -142,7 +144,7 @@ const Subscribtion = () => {
             <div className="px-4">
               <p className="AdSubPriceP">
                 {plan.price}
-                <sub> /month</sub>
+                <sub> LKR/month</sub>
               </p>
             </div>
             <Card.Footer className="AdSubCarFoot">
@@ -167,7 +169,7 @@ const Subscribtion = () => {
               Plan: <b>{chosenPlan.title}</b>
             </p>
             <p className="AdBillDetailsP">
-              Price: <b>{chosenPlan.price}</b>
+              Price: <b>{chosenPlan.price} LKR</b>
             </p>
             {console.log("chosenPlan.id:" + chosenPlan.id)}
             {chosenPlan.title === "Bronze" ? (
@@ -204,12 +206,22 @@ const Subscribtion = () => {
                   </p>
                 )}
                 <div className={` d-flex justify-content-center`}>
-                  <button
-                    className="ChooseSubBut py-2 px-4"
-                    onClick={() => handleOpenSubscripedModal(chosenPlan.id)}
-                  >
-                    Pay
-                  </button>
+                  <Payment
+                    firstname={userDetail.firstname}
+                    lastname={userDetail.lastname}
+                    email={userDetail.email}
+                    paymentTitle={chosenPlan.title}
+                    amount={chosenPlan.price}
+                    sendUserId={userDetail.userid}
+                    reciveUserID={null}
+                    setPaymentSuccess={setPaymentSuccess}
+                    setOrderID={setOrderID}
+                  />
+
+                  {paymentSuccess && orderID && (
+                    handleOpenSubscripedModal(chosenPlan.id)
+                  )}
+                  
                 </div>
               </div>
             )}

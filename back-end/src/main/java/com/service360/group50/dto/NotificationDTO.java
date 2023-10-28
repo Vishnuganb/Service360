@@ -6,6 +6,9 @@ public class NotificationDTO {
     private String title;
     private String message;
     private String status;
+
+    private String senderName;
+
     private String FEButton1;
     private String FEButton1Link;
 
@@ -31,6 +34,7 @@ public class NotificationDTO {
         this.BEButton2Link=BEButton2Link;
         this.userid=userid;
         this.createdAt=createdAt;
+        this.senderName=senderName;
     }
 
     public Long getId() {
@@ -63,6 +67,14 @@ public class NotificationDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getFEButton1() {

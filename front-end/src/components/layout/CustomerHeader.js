@@ -13,6 +13,7 @@ import CustomerEditProfile from '../pages/Customer/CustomerEditProfile/CustomerE
 import { AuthenticationContext } from './../../ContextFiles/Authentication/AuthenticationContextProvider';
 import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 import axios from 'axios';
+import Notification from '../pages/Notification/Notification';
 
 const serverLink = 'http://localhost:8080';
 
@@ -22,6 +23,7 @@ function CustomerHeader() {
     const { logout } = useContext(AuthenticationContext);
     const [showAddReview, setShowAddReview] = useState(false);
     const [userDetail, setUserDetail] = useState([]);
+    const [showNotification, setShowNotification] = useState(false);
 
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
@@ -55,7 +57,14 @@ function CustomerHeader() {
                             show={showAddReview}
                             onHide={() => setShowAddReview(false)}
                         />
-                        <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
+                        <Nav.Link className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none">
+                             <i className="bi bi-bell-fill" onClick={() => setShowNotification(true)}></i>
+                        </Nav.Link>
+
+                        <Notification
+                        show={showNotification}
+                        onHide={() => setShowNotification(false)}
+                        />
                         <Nav.Link href="#chat" as={Link} to="/Customer/Chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link href="#History" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">History</Nav.Link>

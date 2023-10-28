@@ -164,6 +164,9 @@ const router = createBrowserRouter(
         <Route path="Ads" element={<Ads />} />
         <Route path="EditAd/:id" element={<EditAd />} />
         <Route path="Subscribed/:subId" element={<Subscriped />} />
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="Payment" element={<Payment />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -174,7 +177,10 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="ViewServiceProvider/:id" element={<ViewServiceProvider />} />
+        <Route
+          path="ViewServiceProvider/:id"
+          element={<ViewServiceProvider />}
+        />
         <Route path="ToDoForm" element={<ToDoForm />} />
         <Route path="RatenReview" element={<RatenReview />} />
         <Route path="Searchserviceprovider" element={<Searchserviceprovider />}/>
@@ -210,25 +216,23 @@ const router = createBrowserRouter(
         <Route path="AddNewServices" element={<SpAddNewServices />} />
         <Route path="CreateBlog" element={<SpCreateBlog />} />
         <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
-        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs />} />
-        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies />} />
-        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions />} />
-        <Route path="ViewATrainingSession/:id" element={<SpViewATrainingSession />} />
-        <Route path="MyProjectStates" element={<SpMyProjectStates />} />
-        <Route path="OngoingJob/:id" element={<SpOngoingJob />} />
-        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy />} />
-        <Route path="StartJob/:id" element={<SpStartJob />} />
-        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar />} />
-        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions />} />
-        <Route path="ViewHistory" element={<SpViewHistory />} />
-        <Route path="PendingJob/:id" element={<SpPendingJob />} />
-        <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy />} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
+        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
+        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
+        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
+        <Route path="ViewATrainingSession/:id" element={<SpViewATrainingSession/>} />
+        <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
+        <Route path="OngoingJob/:id" element={<SpOngoingJob/>} />
+        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
+        <Route path="StartJob/:id" element={<SpStartJob/>} />
+        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
+        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
+        <Route path="ViewHistory" element={<SpViewHistory/>} />
+        <Route path="PendingJob/:id" element={<SpPendingJob/>} />
+        <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
+        {/* <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} /> */}
         <Route path="ToDoList/:id" element={<ToDoList />} />
         <Route path="Chat" element={<SpChat />} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
         <Route path="CreateQuotation/:id" element={<CreateQuotation />} />
         <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />

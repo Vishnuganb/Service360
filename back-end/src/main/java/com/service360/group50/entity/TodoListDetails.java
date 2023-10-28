@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -30,10 +31,11 @@ public class TodoListDetails {
     @Column( columnDefinition = "TEXT")
     private String task;
 
-    @Column( columnDefinition = "DATE")
-    private Date dueDate;
+    @Column(name = "workedhours")
+    private double workedHours;
 
-    @Column
-    private LocalDateTime reminder;
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean completed;
+
 
 }

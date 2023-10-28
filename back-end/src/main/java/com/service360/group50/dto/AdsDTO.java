@@ -33,7 +33,7 @@ public class AdsDTO {
 
     private List<byte[]> adsImages;
 
-    private byte[] profileImage;
+    private String profileImage;
 
     private LocalDate date;
 
@@ -70,11 +70,11 @@ public class AdsDTO {
         this.id = id;
     }
 
-    public byte[] getProfileImage() {
+    public String getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(byte[] profileImage) {
+    public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
 

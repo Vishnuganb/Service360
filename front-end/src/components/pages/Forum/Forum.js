@@ -94,8 +94,8 @@ function Forum() {
       <div className="ForumDiv p-3">
         <h3>368 Questions</h3>
         {posts.map((post, index) => (
-          <Link to="/ServiceProvider/ViewThread">
-            <ForumPost key={index} {...post} />
+          <Link to={`/ServiceProvider/ViewThread/`} key={index}>
+            <ForumPost {...post} />
           </Link>
         ))}
       </div>

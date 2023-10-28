@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -89,6 +89,13 @@ const Subscribtion = () => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    if (paymentSuccess && orderID) {
+      handleOpenSubscripedModal(chosenPlan.id);
+    }
+  }, [paymentSuccess, orderID]);
+
 
   return (
     <Container
@@ -218,9 +225,9 @@ const Subscribtion = () => {
                     setOrderID={setOrderID}
                   />
 
-                  {paymentSuccess && orderID && (
+                  {/* {paymentSuccess && orderID && (
                     handleOpenSubscripedModal(chosenPlan.id)
-                  )}
+                  )} */}
                   
                 </div>
               </div>

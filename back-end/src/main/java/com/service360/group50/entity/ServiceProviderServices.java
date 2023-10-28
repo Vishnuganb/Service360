@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,6 +29,11 @@ public class ServiceProviderServices {
             generator = "serviceproviderservices_sequence")
     @Column(updatable = false)
     private Long serviceProviderServicesId;
+
+    @PrePersist
+    protected void onCreate() {
+        status = "active";
+    }
 
     @Column
     private String status;

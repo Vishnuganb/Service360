@@ -1,21 +1,31 @@
 package com.service360.group50.service;
 
-import com.service360.group50.entity.CServiceProviderDetails;
+import com.service360.group50.entity.*;
 import com.service360.group50.repo.CServiceProviderRepo;
-import com.service360.group50.entity.TodoListDetails;
 import com.service360.group50.repo.TodoListDetailsRepo;
+import com.service360.group50.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoListDetailsService {
     private final TodoListDetailsRepo todoListDetailsRepo;
 
     @Autowired
+
     public TodoListDetailsService(TodoListDetailsRepo todoListDetailsRepo) {
         this.todoListDetailsRepo = todoListDetailsRepo;
+    }
+
+    public TodoListDetails createTodoListDetails (TodoListDetails newTodoListDetails) {
+        return this.todoListDetailsRepo.save(newTodoListDetails);
+    }
+
+    public List<TodoListDetails> viewTodoListDetails() {
+        return this.todoListDetailsRepo.findAll();
     }
 
     public List<TodoListDetails> getAllDetails() {
@@ -28,5 +38,9 @@ public class TodoListDetailsService {
         }
     }
 
+    public TodoListDetails getTodoListDetailsById(Long todoListDetailsid) {
+        Optional<TodoListDetails> todoListDetails = todoListDetailsRepo.findById(todoListDetailsid);
+        return todoListDetailsRepo.findById(todoListDetailsid).orElse(null);
+    }
 }
 

@@ -3,11 +3,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import UserImg from "../../../../assets/images/header/user.jpg";
 import customerimage from "../../../../assets/images/ServiceProvider/customer2.jpg";
-import printer1 from "../../../../assets/images/ServiceProvider/printer1.jpg";
-import printer2 from "../../../../assets/images/ServiceProvider/printer2.jpg";
-import tiles1 from "../../../../assets/images/ServiceProvider/tiles1.jpg";
-import tiles2 from "../../../../assets/images/ServiceProvider/tiles2.jpg";
-import tiles3 from "../../../../assets/images/ServiceProvider/tiles3.jpg";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -21,8 +16,6 @@ import { useParams } from 'react-router-dom';
 function AcceptedJobDetails() {
   const [viewJobData, setViewJobData] = useState(null);
 
-  const jobimages = [tiles1, tiles2, tiles3]
-
   const { id } = useParams();
   const jobId = parseInt(id, 10);
 
@@ -35,13 +28,28 @@ function AcceptedJobDetails() {
 
   if (!viewJobData) return 'No jobs found!';
 
+  // Get all images from the job
+  const jobImagesArray = viewJobData.jobimages;
+    
+  // Initialize an empty array to store all images
+  const allImages = [];
+
+  // Iterate through trainingSessionImagesArray
+  jobImagesArray.forEach((sessionImages) => {
+    // Check if the current object has an 'images' property
+    if (sessionImages.hasOwnProperty('images') && Array.isArray(sessionImages.images)) {
+        // Concatenate the 'images' array to the 'allImages' array
+        allImages.push(...sessionImages.images);
+    }
+  });
+
   return (
     <div>
       <Row className="AcceptedJobDetails-Col-container mb-4">
         <Col className="AcceptedJobDetails-img-container col-12 col-lg-2 d-flex flex-column align-items-center">
           <div className="AcceptedJobDetails-avatar-container mb-2">
             <img
-              src={customerimage}
+              src={'data:image/jpeg;base64;' + viewJobData.jobs.customer.profilePic}
               alt="avatar"
               className="AcceptedJobDetails-avatar rounded-circle"
               style={{ width: "50px", height: "50px" }}
@@ -51,14 +59,18 @@ function AcceptedJobDetails() {
             className="AcceptedJobDetails-username mb-1"
             style={{ fontSize: "18px", fontFamily: "'Rubik', sans-serif" }}
           >
-            {viewJobData.customername}
+            {viewJobData.jobs.customer.firstname}
           </div>
           <div className="d-flex flex-row">
             <div className="me-3">
-              <i class="bi bi-telephone-fill"></i>
+              <a href={`tel:${viewJobData.jobs.customer.phonenumber}`}>
+                <i className="bi bi-telephone-fill" style={{color:"black"}}></i>
+              </a>
             </div>
             <div>
-              <i class="bi bi-chat-fill"></i>
+              <Link to="/ServiceProvider/Chat">
+                <i className="bi bi-chat-fill" style={{color:"black"}}></i>
+              </Link>
             </div>
           </div>
         </Col>
@@ -70,44 +82,42 @@ function AcceptedJobDetails() {
           </span>
         </div>
           <div className="AcceptedJobDetails-title-container mb-2">
-            <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobtitle}</span>
+            <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobs.jobtitle}</span>
           </div>
           <div className="AcceptedJobDetails-category-container mb-2 d-flex flex-column">
             <span className="AcceptedJobDetails-category" style={{ fontWeight: "650" }}>Category</span>
-            <span className="AcceptedJobDetails-category-value">{viewJobData.servicename}</span>
+            <span className="AcceptedJobDetails-category-value">{viewJobData.jobs.servicename}</span>
           </div>
           <div className="AcceptedJobDetails-location-container mb-2 d-flex flex-column">
             <span className="AcceptedJobDetails-location" style={{ fontWeight: "650" }}>Location</span>
-            <span className="AcceptedJobDetails-location-value">{viewJobData.joblocation}</span>
+            <span className="AcceptedJobDetails-location-value">{viewJobData.jobs.joblocation}</span>
           </div>
           <div className="AcceptedJobDetails-dueDate-container mb-2 d-flex flex-row">
             <div>
               <span className="AcceptedJobDetails-dueDate" style={{ fontWeight: "650" }}>Due Date</span>
               <br />
-              <span className="AcceptedJobDetails-dueDate-value">{viewJobData.duedate}</span>
+              <span className="AcceptedJobDetails-dueDate-value">{viewJobData.jobs.duedate}</span>
             </div>
             <div className="mx-4">
               <span className="AcceptedJobDetails-posted" style={{ fontWeight: "650" }}>Posted</span>
               <br />
-              <span className="AcceptedJobDetails-posted-value">{viewJobData.posteddate}</span>
+              <span className="AcceptedJobDetails-posted-value">{viewJobData.jobs.posteddate}</span>
             </div>
           </div>
           <div className="AcceptedJobDetails-description-container d-flex flex-column mb-2">
             <span className="AcceptedJobDetails-description" style={{ fontWeight: "650" }}>Description</span>
             <span className="AcceptedJobDetails-description-value">
-              {viewJobData.jobdescription}
+              {viewJobData.jobs.jobdescription}
             </span>
           </div>
           <div className="AcceptedJobDetails-images-container">
             <span className="AcceptedJobDetails-images" style={{ fontWeight: "650" }}>Images</span>
 
-            {/* LOOP WILL COME HERE */}
-
             <div className="AcceptedJobDetails-images-container-box row mt-2">
-              {jobimages.map((image) => (
+            {allImages.map((image) => (
                 <div className="col-6 col-md-4 col-lg-3">
                   <img
-                    src={image}
+                    src={`data:image/jpg;base64,${image}`}
                     alt={'job detail image'}
                     className="jobDetails-images-value-img"
                   />
@@ -124,7 +134,7 @@ function AcceptedJobDetails() {
       </div>
       <hr />
       <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-        <Link className="ms-auto" to="../StartJob">
+        <Link className="ms-auto" to={`../StartJob/${jobId}`}>
           <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
         </Link>
       </div>

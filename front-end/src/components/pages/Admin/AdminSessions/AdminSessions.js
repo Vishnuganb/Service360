@@ -262,7 +262,7 @@ function AdminSessions() {
 
                 <div className="d-flex align-items-center justify-content-center w-100">
 
-                    <div className='col-xs-3 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 me-0 date-picker-container'>
+                    <div className='col-xs-3 col-md-5 col-lg-5 col-xl-4 col-xxl-4 m-3 me-0 date-picker-container'>
                         <div className="input-group m-0">
                             <DatePicker
                                 selected={data.fromDate}
@@ -277,7 +277,7 @@ function AdminSessions() {
                             </span>
                         </div>
                     </div>
-                    <div className='me-xs-2 col-xs-2 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 date-picker-container'>
+                    <div className='me-xs-2 col-xs-2 col-md-5 col-lg-5 col-xl-4 col-xxl-4 m-3 date-picker-container'>
                         <div className="input-group">
                             <DatePicker
                                 selected={data.toDate}
@@ -293,15 +293,14 @@ function AdminSessions() {
                         </div>
                     </div>
 
-                    <div className='col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-2 m-3 me-xs-5'>
+                    <div className='col-xs-2 col-sm-3 col-md-2 col-lg-2 col-xl-2 m-3 me-xs-5'>
                         <div className="input-group">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Search Training sessions"
+                                placeholder="Search"
                                 value={data.searchTerm}
                                 onChange={handleSearchChange}
-                                style={searchInputStyle}
                             />
                             <span className="input-group-text">
                                 <FontAwesomeIcon icon={faSearch} />

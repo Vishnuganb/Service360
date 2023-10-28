@@ -17,22 +17,22 @@ import axios from 'axios';
 import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
 import Notification from '../pages/Notification/Notification';
 
-const serverLink = 'http://localhost:8080';
-
 function ServiceProviderHeader() {
 
     const [showEditProfile, setShowEditProfile] = useState(false);
     const { logout } = useContext(AuthenticationContext);
     const [userDetail, setUserDetail] = useState([]);
+    const [spServices, setSpServices] = useState([]);
     const [showAddReview, setShowAddReview] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
 
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
 
+    // FETCHING LOGGED IN USER DATA
     const fetchUserData = async () => {
         try {
-            const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid);
+            const response = await axios.get('http://localhost:8080/auth/getUserById/' + userData.userid);      
             if (response.data) {
                 setUserDetail(response.data);
             }
@@ -41,8 +41,21 @@ function ServiceProviderHeader() {
         }
     };
 
+    // FETCHING LOGGED IN USER SERVICES
+    const fetchSpServices = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`);
+            if (response.data) {
+                setSpServices(response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
     useEffect(() => {
         fetchUserData();
+        fetchSpServices();
     }, []);
 
     return (

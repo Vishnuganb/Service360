@@ -96,7 +96,7 @@ function ToDoList() {
 
                 <ul>
                 {tasks.map((task, index) => (
-    <li key={index} className="castodolist card" style={{ padding: '10px' }}>
+    <li key={index} className="castodolist card" style={{ padding: '10px',width: "700px" }}>
         <div>
             <input
                 type="checkbox"

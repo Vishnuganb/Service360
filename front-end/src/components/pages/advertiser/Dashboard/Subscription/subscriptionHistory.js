@@ -12,7 +12,7 @@ const SubscriptionHistoryModal = ({ userid, show, onHide }) => {
     axios
       .get(`http://localhost:8080/auth/subscriptionHistory/${userDetail.userid}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setSubscriptionHistory(res.data);
       })
       .catch((err) => {
@@ -20,7 +20,6 @@ const SubscriptionHistoryModal = ({ userid, show, onHide }) => {
       });
   }, [userid]);
 
-  console.log(subscriptionHistory);
 
   return (
     <Modal

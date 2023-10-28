@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
 import axios from 'axios';
 import AdminEditProfile from '../pages/Admin/AdminEditProfile/AdminEditProfile';
+import Notification from '../pages/Notification/Notification';
 
 const serverLink = 'http://localhost:8080';
 
@@ -17,6 +18,8 @@ function AdminHeader() {
     const [showEditProfile, setShowEditProfile] = useState(false);
     const { logout } = useContext(AuthenticationContext);
     const [userDetail, setUserDetail] = useState([]);
+    const [showNotification, setShowNotification] = useState(false);
+
 
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
@@ -46,7 +49,14 @@ function AdminHeader() {
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav className="me-auto">
 
-                        <Nav.Link href="#notifications" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
+                <Nav.Link className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none">
+                    <i className="bi bi-bell-fill" onClick={() => setShowNotification(true)}></i>
+                </Nav.Link>
+
+                <Notification
+                show={showNotification}
+                onHide={() => setShowNotification(false)}
+                />
                         <Nav.Link as={Link} to="/admin/chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link href="#notifications" className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>

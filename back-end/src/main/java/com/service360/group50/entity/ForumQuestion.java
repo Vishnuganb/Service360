@@ -44,6 +44,10 @@ public class ForumQuestion {
     @OneToMany(mappedBy = "forumQuestion")
     private List<ForumAnswer> forumAnswers;
 
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users user;
+
     @PrePersist
     public void setPostedAt() {
         this.postedAt = LocalDateTime.now();

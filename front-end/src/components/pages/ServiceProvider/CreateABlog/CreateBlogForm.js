@@ -196,7 +196,6 @@ function CreateBlogForm() {
 
                 <div className="CreateBlog-button-container d-flex flex-row">
                     <Button className="btn-ServiceProvider-1" onClick={handleCreateBlog}>Publish</Button>
-                    <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>
 

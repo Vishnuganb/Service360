@@ -5,7 +5,7 @@ import UserImg from "../../../../assets/images/header/user.jpg";
 import customerimage from "../../../../assets/images/ServiceProvider/customer1.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
@@ -17,6 +17,11 @@ function JobDetails() {
   const [addReplyData, setAddReplyData] = useState({
     replymessage: "",
   });
+
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   const { id } = useParams();
   const jobId = parseInt(id, 10);
@@ -114,6 +119,10 @@ function JobDetails() {
           </span>
         </div>
         <div className="jobDetails-title-container mb-2">
+          <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-40px', maxWidth: '110px', fontWeight:600, float:'right' }}>
+              <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+              <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+          </span>
           <span className="jobDetails-title" style={{fontWeight:"650"}}>{viewJobData.jobs.jobtitle}</span>
         </div>
         <div className="jobDetails-category-container mb-2 d-flex flex-column">

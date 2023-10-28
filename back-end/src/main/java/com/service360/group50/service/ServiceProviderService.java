@@ -44,6 +44,8 @@ public class ServiceProviderService {
     private ServiceRepository serviceRepository;
     @Autowired
     private ServiceCategoryRepository serviceCategoryRepository;
+    @Autowired
+    private TodoListRepository TodoListRepository;
 
     //JOBS
     public List<Jobs> viewNewJobs() {
@@ -252,7 +254,11 @@ public class ServiceProviderService {
         return vacanciesServiceProvidersRepository.save(existingVacancy);
     }
 
-
+    public VacanciesServiceProviders updateVacancyOngoingtoCompleted(Long id, Long serviceproviderid) {
+        VacanciesServiceProviders existingVacancy = vacanciesServiceProvidersRepository.findByVacancyidAndServiceproviderid(id,serviceproviderid);
+        existingVacancy.setVacancystatus("completed");
+        return vacanciesServiceProvidersRepository.save(existingVacancy);
+    }
 
     //SP CALENDAR
     public List<ServiceProviderCalendar> viewServiceProviderCalendar(Long serviceProviderId) {
@@ -371,4 +377,16 @@ public class ServiceProviderService {
     public Jobs addQuotationPdf(Jobs job) {
         return jobsRepository.save(job);
     }
+
+    public TodoList generateTodoList(TodoList todoList) {
+        TodoListRepository.save(todoList);
+        return todoList;
+    }
+
+    public boolean isExistTodoList(Jobs job) {
+        //existsbyjobid
+        return TodoListRepository.existsByJobid(job.getJobid());
+    }
+
+
 }

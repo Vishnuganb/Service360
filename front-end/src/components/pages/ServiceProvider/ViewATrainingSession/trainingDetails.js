@@ -7,7 +7,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-
+import { useNavigate } from 'react-router-dom';
 
 function TrainingSession() {
     const [viewTrainingSessionData, setviewTrainingSessionData] = useState(null);
@@ -21,6 +21,11 @@ function TrainingSession() {
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+
+    const navigate = useNavigate();
+        const handleBackClick = () => {
+        navigate(-1);
+    };
 
     const { id } = useParams();
     const trainingsessionId = parseInt(id, 10);
@@ -256,7 +261,7 @@ function TrainingSession() {
                 </div>
                 <div className="ViewATraining-button-container mt-4 d-flex flex-row">
                     <Button className="btn-ServiceProvider-1" type="submit">Register</Button>
-                    <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto">Back</Button>
+                    <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto"  onClick={handleBackClick}>Back</Button>
                 </div>
             </Form>
 

@@ -64,14 +64,10 @@ function ViewAjob() {
       <div className="bodyPageContainer-SP">
 
         <Row id="bodyPageRow1">
-          <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '120px' }}>
-            <div className="back-icon">
+          <span className="back-button" onClick={handleBackClick} style={{ marginLeft: '120px',maxWidth: '110px' }}>
               <i className="bi bi-arrow-left-circle-fill fs-3"></i>
-            </div>
-            <div className="back-text">
-              <p className="m-0 p-0">Back</p>
-            </div>
-          </div>
+              <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+          </span>
           <div className="ServiceCardContainer col-lg-12 col-md-12 col-sm-12" style={{ overflow: 'auto', height: '50%' }}>
             <div className="search-container">
 

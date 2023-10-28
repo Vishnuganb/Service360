@@ -387,27 +387,27 @@ function JobsBodyPage() {
                             <h4>Share this job:</h4>
                             <div className="d-flex justify-content-center mt-3">
                                 <FacebookShareButton url={window.location.href} quote={selectedJob.jobtitle}>
-                                    <Button variant="primary" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-facebook"></i> Facebook
                                     </Button>
                                 </FacebookShareButton>
                                 <TelegramShareButton url={window.location.href} title={selectedJob.jobtitle}>
-                                    <Button variant="primary" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-telegram"></i> Telegram
                                     </Button>
                                 </TelegramShareButton>
                                 <TwitterShareButton url={window.location.href} title={selectedJob.jobtitle}>
-                                    <Button variant="info" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-twitter"></i> Tweet
                                     </Button>
                                 </TwitterShareButton>
                                 <LinkedinShareButton url={window.location.href} title={selectedJob.jobtitle}>
-                                    <Button variant="success" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-linkedin"></i> LinkedIn
                                     </Button>
                                 </LinkedinShareButton>
                                 <EmailShareButton url={window.location.href} title={selectedJob.jobtitle} >
-                                    <Button variant="primary">
+                                    <Button variant="" className="border">
                                         <i className="bi bi-envelope"></i> Email
                                     </Button>
                                 </EmailShareButton>

@@ -88,7 +88,7 @@ function ToDoForm() {
               <span className="task-text">{task.task}</span>
             </div>
             
-            <Button className="scanbtn" onClick={startScan}>Scan QR Code</Button>
+            {/* <Button className="scanbtn" onClick={startScan}>Scan QR Code</Button> */}
           </Card.Body>
         </Card>
       ))}

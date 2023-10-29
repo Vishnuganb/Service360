@@ -20,6 +20,8 @@ public class UserRegisterRequest {
     private String phonenumber;
     private String address;
     private String nic;
+    private String district;
+    private String city;
     private String shopname;
     private String shopaddress;
     private List<MultipartFile> files;

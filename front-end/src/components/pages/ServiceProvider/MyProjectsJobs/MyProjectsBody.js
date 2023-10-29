@@ -5,15 +5,22 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function MyProjectsBody(){
     const [MyProjectsJobsData, setMyProjectsJobsData] = useState(null);
     const [MyProjectsVacanciesData, setMyProjectsVacanciesData] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
+    const [filterLocationTerm, setFilterLocationTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [activeTab, setActiveTab] = useState(''); 
+    const [myservicesData, setMyservicesData] = useState([]);
+
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+      navigate(-1);
+    };
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -29,17 +36,17 @@ function MyProjectsBody(){
         setFilterCategoryTerm('');  // Reset category filter when active tab changes
     }, [activeTab]);
     
-    const MyServices= [
-        "Electrical Wiring",
-        "Masonry",
-        "Sofa Cleaning",
-        "Tiles Fitting",
-    ];
-
     // GETTING LOGGED IN SERVICEPROVIDER ID
 
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
+        });
+    }, []);
 
     const fetchData = () => {
         axios.get('http://localhost:8080/auth/viewMyJobs', {
@@ -135,11 +142,13 @@ function MyProjectsBody(){
 
     };
 
-
     const allCards = [...MyProjectsJobsData, ...MyProjectsVacanciesData];
 
     const filteredCards = allCards.filter((card) => {
         const serviceMatch = !filterCategoryTerm || card.job?.servicename === filterCategoryTerm || card.vacancy?.servicename === filterCategoryTerm; // Check servicename in job or vacancy
+
+        const locationMatch = !filterLocationTerm || card.job?.joblocation.toLowerCase() === filterLocationTerm.toLowerCase() || card.vacancy?.vacancylocation.toLowerCase() === filterLocationTerm.toLowerCase();
+
         const searchTermMatch = (
             (card.job?.servicename && card.job.servicename.toLowerCase().includes(searchTerm.toLowerCase())) ||
             (card.job?.joblocation && card.job.joblocation.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -151,7 +160,7 @@ function MyProjectsBody(){
             (card.customer?.firstname && card.customer.firstname.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     
-        return serviceMatch && searchTermMatch;
+        return serviceMatch && searchTermMatch && locationMatch;
     });
     
     const filteredAndSortedCards = filteredCards.filter((card) => {
@@ -163,7 +172,6 @@ function MyProjectsBody(){
         return false; // Exclude cards without valid status
     });
     
-
     const cardsPerPage = 3;
     
     // Calculate the total number of pages based on the filtered and sorted cards
@@ -197,12 +205,22 @@ function MyProjectsBody(){
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
 
+    // Function to handle filter by location changes
+    const handleFilterLocationChange = (location) => {
+        setFilterLocationTerm(location);
+        setCurrentPage(1); // Reset current page to 1 when location changes
+    };
+
     console.log(displayedCards);
 
     return(
         <div>
             
             {/* Page Title*/}
+            <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', maxWidth: '120px', fontWeight:600, float:'right' }}>
+              <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+              <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+            </span>
             <span className="ms-4 align-self-start" style={{fontSize:"28px",fontWeight:"600"}}>My Jobs</span>
 
             {/* Nav Bar */}
@@ -275,15 +293,38 @@ function MyProjectsBody(){
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handlefilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (          
-                                <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
+                            {myservicesData.map((service) => (          
+                                <NavDropdown.Item key={service.serviceId} eventKey={service.serviceName}>{service.serviceName}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
-                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4'>
-                            <NavDropdown.Item href="#action3">All Island</NavDropdown.Item>
-                            <NavDropdown.Item >or</NavDropdown.Item>
-                            &nbsp; &nbsp;
-                            <input type="range" name="distance" min="1km" max="50km" />               {/*ADD LOCATION PART IS REMAINING*/}
+                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
+                            <NavDropdown.Item eventKey="wellawatte">Wellawatte</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="colombo">Colombo</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Ampara">Ampara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Anuradhapura">Anuradhapura</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Badulla">Badulla</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Batticaloa">Batticaloa</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Colombo">Colombo</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Galle">Galle</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Gampaha">Gampaha</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Hambantota">Hambantota</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Jaffna">Jaffna</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kalutara">Kalutara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kandy">Kandy</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kegalle">Kegalle</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kilinochchi">Kilinochchi</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kurunegala">Kurunegala</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Mannar">Mannar</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Matale">Matale</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Matara">Matara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Monaragala">Monaragala</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Mullaitivu">Mullaitivu</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Nuwara Eliya">Nuwara Eliya</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Polonnaruwa">Polonnaruwa</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Puttalam">Puttalam</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Ratnapura">Ratnapura</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Trincomalee">Trincomalee</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Vavuniya">Vavuniya</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar>

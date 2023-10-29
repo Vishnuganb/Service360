@@ -64,7 +64,7 @@ const TextEditor = () => {
   return (
     <div>
       <Form.Label>
-        Description/Specification{" "}
+        Description/Specifications
         <sup>
           <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
         </sup>

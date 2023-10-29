@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, useLocation } from 'react-router-dom';
 import Home from './components/pages/Home/Index.js';
 
 import Login from './components/loginForm/LoginContextProviderInterface.js';
@@ -114,6 +114,8 @@ import ActivateCustomer from './ContextFiles/ActivateCustomer.js';
 import ActivateUser from './ContextFiles/ActivateUser.js';
 import ViewPostedJobs1 from './components/pages/Customer/ViewPostedJobs1.js';
 
+import PrivateRoute from './PrivateRoute.js';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -144,12 +146,12 @@ const router = createBrowserRouter(
         <Route path="reviews" element={<AdminReviews />} />
         <Route path="complaints" element={<AdminComplaints />} />
         <Route path="report" element={<AdminReport />} />
-        <Route path="advertisements" element={<AdminAdvertisements />} />
-        <Route path="invoice" element={<AdminInvoices />} />
-        <Route path="history" element={<AdminViewHistory />} />
-        <Route path="review" element={<ViewReviewandRating />} />
-        <Route path="chat" element={<AdminChat />} />
-        <Route path="sessions" element={<AdminSessions />} />
+        <Route path="advertisements" element={<AdminAdvertisements />}/>
+        <Route path="invoice" element={<AdminInvoices />}/>
+        <Route path="history" element={<AdminViewHistory />}/>
+        <Route path="review" element={<ViewReviewandRating />}/>
+        <Route path="chat" element={<AdminChat />}/>
+        <Route path="sessions" element={<AdminSessions />}/>
       </Route>
 
       <Route path="/Advertiser" element={<AdvertiserLayout />}>
@@ -162,6 +164,8 @@ const router = createBrowserRouter(
         <Route path="Ads" element={<Ads />} />
         <Route path="EditAd/:id" element={<EditAd />} />
         <Route path="Subscribed/:subId" element={<Subscriped />} />
+        <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -172,20 +176,17 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route path="ViewServiceProvider/:id" element={<ViewServiceProvider />} />
+        <Route
+          path="ViewServiceProvider/:id"
+          element={<ViewServiceProvider />}
+        />
         <Route path="ToDoForm" element={<ToDoForm />} />
         <Route path="RatenReview" element={<RatenReview />} />
-        <Route
-          path="Searchserviceprovider"
-          element={<Searchserviceprovider />}
-        />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />}/>
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
         <Route path="History" element={<CustomerViewHistory />} />
-        <Route
-          path="CustomerComplaintPage"
-          element={<CustomerComplaintPage />}
-        />
+        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage />}/>
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
@@ -201,8 +202,6 @@ const router = createBrowserRouter(
         <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} />
         <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
         <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
-
-
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>
@@ -229,19 +228,17 @@ const router = createBrowserRouter(
         <Route path="ViewHistory" element={<SpViewHistory/>} />
         <Route path="PendingJob/:id" element={<SpPendingJob/>} />
         <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
+        {/* <Route path="Forum" element={<Forum />} />
+        <Route path="ViewThread" element={<ViewThread />} /> */}
         <Route path="ToDoList/:id" element={<ToDoList />} />
         <Route path="Chat" element={<SpChat />} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
         <Route path="AdsPage" element={<AdsPage />} />
         <Route path="CreateQuotation/:id" element={<CreateQuotation />} />
         <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
       </Route>
 
       <Route path='/activateCustomer' element={<ActivateCustomer />} />
-      <Route path= '/activateUser' element={<ActivateUser />} />
+      <Route path='/activateUser' element={<ActivateUser />} />
       <Route path="*" element={<Layout404> {" "}<PageNotFound /></Layout404>}
       />
     </>

@@ -7,17 +7,26 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
-
 function AcceptedJobDetails() {
   const [viewJobData, setViewJobData] = useState(null);
+  const [isTodoListExist, setIsTodoListExist] = useState(false);
+  const [fetchTodoListId, setFetchTodoListId] = useState(null);
 
   const { id } = useParams();
   const jobId = parseInt(id, 10);
+  
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/auth/viewNewJobs/${jobId}`).then((res) => {
@@ -25,6 +34,47 @@ function AcceptedJobDetails() {
       setViewJobData(res.data);
     });
   }, []);
+
+  //get tolist id from job id
+  useEffect(() => {
+    axios.get(`http://localhost:8080/auth/getTodoListIdByJobId/${jobId}`).then((res) => {
+      console.log(res.data);
+      setFetchTodoListId(res.data);
+    });
+  }, []);
+
+  //isexist todo list
+  useEffect(() => {
+    axios.get(`http://localhost:8080/auth/isExistTodoList/${jobId}`).then((res) => {
+      console.log(res.data);
+      setIsTodoListExist(res.data);
+    });
+  }, []);
+
+  //generate todo list for the job
+  const handleGenerateTodoList = async () => {
+    const formData = new FormData();
+    formData.append('serviceproviderid', userData.userid);
+    formData.append('customerid',viewJobData.jobs.customer.userid);
+
+    axios.post(`http://localhost:8080/auth/generateTodoList/${jobId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
+    axios.get(`http://localhost:8080/auth/isExistTodoList/${jobId}`).then((res) => {
+      console.log(res.data);
+      axios.get(`http://localhost:8080/auth/getTodoListIdByJobId/${jobId}`).then((res) => {
+        console.log(res.data);
+        setFetchTodoListId(res.data);
+      });
+    });
+
+    // Update the generateTodoListClicked state
+    setIsTodoListExist(true);
+  };
+
 
   if (!viewJobData) return 'No jobs found!';
 
@@ -82,6 +132,10 @@ function AcceptedJobDetails() {
           </span>
         </div>
           <div className="AcceptedJobDetails-title-container mb-2">
+            <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-40px', maxWidth: '110px', fontWeight:600, float:'right' }}>
+                <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+            </span>
             <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobs.jobtitle}</span>
           </div>
           <div className="AcceptedJobDetails-category-container mb-2 d-flex flex-column">
@@ -127,16 +181,36 @@ function AcceptedJobDetails() {
           </div>
         </Col>
       </Row>
-      <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-        <Link className="d-flex ms-auto" to={`../ToDoList/${jobId}`}>
-          <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">View Todo List</Button>
-        </Link>
-      </div>
       <hr />
       <div className="AcceptedJobDetails-button-container mt-2 d-flex flex-row">
-        <Link className="ms-auto" to={`../StartJob/${jobId}`}>
-          <Button className="btn-ServiceProvider-3 AcceptedJobDetails-start ms-auto">Start Job</Button>
-        </Link>
+        {isTodoListExist ? (
+          <Link className="d-flex" to={`../ToDoList/${fetchTodoListId}`}>
+            <Button
+              className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto"
+            >
+              View Todo List
+            </Button>
+          </Link>
+        ) : (
+          <div className="d-flex">
+            <Button
+              disabled={!isTodoListExist}
+              className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto"
+            >
+              View Todo List
+            </Button>
+          </div>
+        )}
+        {!isTodoListExist && (
+          <Button onClick={handleGenerateTodoList} className="btn-ServiceProvider-2 AcceptedJobDetails-start ms-auto">
+            Generate Todo List
+          </Button>
+        )}
+        {isTodoListExist && (
+          <Link className="d-flex ms-sm-auto" to={`../StartJob/${jobId}`}>
+            <Button className="btn-ServiceProvider-3 AcceptedJobDetails-end ms-auto">Start Job</Button>
+          </Link>
+        )}
       </div>
 
     </div>

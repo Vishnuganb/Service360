@@ -49,6 +49,10 @@ public class ForumAnswer {
     @JoinColumn(name = "QuestionId")
     private ForumQuestion forumQuestion;
 
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users user;
+
     @PrePersist
     public void setPostedAt() {
         this.AnsPostedAt = LocalDateTime.now();

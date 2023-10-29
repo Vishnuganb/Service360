@@ -11,13 +11,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 function SessionsBodyPage() {
     const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
-
-    const MyServices = [
-        "Electrical Wiring",
-        "Masonry",
-        "Cleaning",
-        "Tiles Fitting",
-    ];
+    const [myservicesData, setMyservicesData] = useState([]);
 
     // Number of cards (training sessions) to display per page
     const cardsPerPage = 3;
@@ -30,6 +24,12 @@ function SessionsBodyPage() {
 
     // State to store the filter by category
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
+
+    // State to store the filter by location
+    const [filterLocationTerm, setFilterLocationTerm] = useState('');
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
 
     // Function to handle page change when the user clicks on pagination buttons
     const handlePageChange = (page) => {
@@ -49,10 +49,24 @@ function SessionsBodyPage() {
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
 
+    // Function to handle filter by location changes
+    const handleFilterLocationChange = (location) => {
+        setFilterLocationTerm(location);
+        setCurrentPage(1); // Reset current page to 1 when location changes
+    };
+
+    // (ONLY FETCH PUBLISHED TRAINING SESSIONS)
     useEffect(() => {
         axios.get('http://localhost:8080/auth/viewTrainingSessions').then((res) => {
             console.log(res.data);
             setviewTrainingSessionsData(res.data);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
         });
     }, []);
 
@@ -90,10 +104,11 @@ function SessionsBodyPage() {
         return `${hour12}:${minute} ${amPm}`;
     }
 
-    // Filter training sessions based on search term and selected date
     const filteredCards = viewTrainingSessionsData.trainingsessions.filter((card) => {
+        console.log(filterCategoryTerm, filterLocationTerm)
         return (
-            (!filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
+            (!filterCategoryTerm || card.servicename.toLowerCase() === filterCategoryTerm.toLowerCase()) &&
+            (!filterLocationTerm || card.traininglocation.toLowerCase() === filterLocationTerm.toLowerCase()) &&
             (card.servicename.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 card.trainingtitle.toLowerCase().includes(searchTerm.toLowerCase()))
         );
@@ -152,15 +167,38 @@ function SessionsBodyPage() {
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handlefilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (
-                                <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
+                            {myservicesData.map((service) => (
+                                <NavDropdown.Item key={service.serviceId} eventKey={service.serviceName}>{service.serviceName}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
-                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4'>
-                            <NavDropdown.Item href="#action3">All Island</NavDropdown.Item>
-                            <NavDropdown.Item >or</NavDropdown.Item>
-                            &nbsp; &nbsp;
-                            <input type="range" name="distance" min="1km" max="50km" />               {/*ADD LOCATION PART IS REMAINING*/}
+                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
+                            <NavDropdown.Item eventKey="wellawatte">Wellawatte</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="colombo">Colombo</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Ampara">Ampara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Anuradhapura">Anuradhapura</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Badulla">Badulla</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Batticaloa">Batticaloa</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Colombo">Colombo</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Galle">Galle</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Gampaha">Gampaha</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Hambantota">Hambantota</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Jaffna">Jaffna</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kalutara">Kalutara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kandy">Kandy</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kegalle">Kegalle</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kilinochchi">Kilinochchi</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kurunegala">Kurunegala</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Mannar">Mannar</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Matale">Matale</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Matara">Matara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Monaragala">Monaragala</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Mullaitivu">Mullaitivu</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Nuwara Eliya">Nuwara Eliya</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Polonnaruwa">Polonnaruwa</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Puttalam">Puttalam</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Ratnapura">Ratnapura</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Trincomalee">Trincomalee</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Vavuniya">Vavuniya</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </div>

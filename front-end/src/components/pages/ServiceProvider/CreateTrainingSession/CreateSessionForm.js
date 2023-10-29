@@ -6,13 +6,14 @@ import axios from 'axios';
 import { useEffect } from "react";
 import Alert from 'react-bootstrap/Alert';
 
-const subscribedJobCategories = [
-    'Masonry',
-    'Plumbing',
-    'Carpentry',
-];
+// const subscribedJobCategories = [
+//     'Masonry',
+//     'Plumbing',
+//     'Carpentry',
+// ];
 
 function CreateSessionForm() {
+    const [myservicesData, setMyservicesData] = useState([]);
 
     const [trainingSessionFormData, setTrainingSessionFormData] = useState({
         trainingtitle: "",
@@ -119,6 +120,13 @@ function CreateSessionForm() {
             console.error('Error creating training session:', error);
         });
     };
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
+        });
+    }, []);
     
     const showAlertWithMessage = (message) => {
         setAlertMessage(message);
@@ -143,9 +151,9 @@ function CreateSessionForm() {
                         onChange={handleInputChange}
                     >
                         <option value="">Select the service category</option>
-                        {subscribedJobCategories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
+                        {myservicesData.map((category) => (
+                            <option key={category.serviceId} value={category.serviceName}>
+                                {category.serviceName}
                             </option>
                         ))}
                     </Form.Control>

@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import { useParams } from 'react-router-dom';
 import service360logo from '../../../../assets/images/header/logo.png';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ActivityReport() {
     const [activityReports, setActivityReports] = useState([]);
@@ -25,6 +26,11 @@ function ActivityReport() {
 
     const { id } = useParams();
     const jobId = parseInt(id, 10);
+
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+      navigate(-1);
+    };
 
     useEffect(() => {
         // Generate the quote ID only once when the component mounts
@@ -117,6 +123,10 @@ function ActivityReport() {
                 <span className="ms-lg-2" style={{ fontSize: "28px", fontWeight: "bold" }}>Create Quotation</span>
                 {/* Complete and Send Button */}
             </div>
+            <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-60px', maxWidth: '110px', fontWeight:600, float:'right' }}>
+                <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+            </span>
 
             <div className='quotation-pdf border mb-3 px-4 py-4'>
                 {/*logo*/}
@@ -204,7 +214,7 @@ function ActivityReport() {
                 </div>
                 <div className='d-flex flex-row mt-2'>
                     <Button type="submit" className="btn-ServiceProvider-1">Add Item</Button>
-                    <Button onClick={handleCompleteAndSend} className="btn-ServiceProvider-2 d-flex ms-auto">Complete</Button>
+                    <Button onClick={handleCompleteAndSend} className="btn-ServiceProvider-2 d-flex ms-auto" disabled={activityReports.length === 0}>Complete</Button>
                 </div>
             </form>
         </div>

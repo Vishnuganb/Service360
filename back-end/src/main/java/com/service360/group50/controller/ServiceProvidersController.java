@@ -49,6 +49,8 @@ public class ServiceProvidersController {
     private ServiceProviderServicesRepository serviceProviderServicesRepository;
     @Autowired
     private ServiceProviderFilesRepository serviceProviderFilesRepository;
+    @Autowired
+    private TodoListRepository todoListRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -254,6 +256,11 @@ public class ServiceProvidersController {
         return serviceProviderService.updateVacancyInvitetoRejected(id,serviceproviderid);
     }
 
+    @PutMapping("auth/updateVacancyStatusOngoingToCompleted/{id}")
+    public VacanciesServiceProviders updateVacancyOngoingtoCompleted(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
+        return serviceProviderService.updateVacancyOngoingtoCompleted(id,serviceproviderid);
+    }
+
 
     //SP CALENDAR
     @GetMapping("auth/viewServiceProviderCalendar")
@@ -276,7 +283,7 @@ public class ServiceProvidersController {
         serviceProviderService.deleteServiceProviderCalendarEvent(id);
     }
 
-//    //TRAINING SESSIONS
+//  TRAINING SESSIONS (ONLY FETCH PUBLISHED TRAINING SESSIONS)
     @GetMapping("auth/viewTrainingSessions")
     public TrainingSessionsDTO viewTrainingSessions() {
         List<TrainingSession> trainingSessions = serviceProviderService.viewTrainingSessions();
@@ -523,7 +530,7 @@ public class ServiceProvidersController {
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
-            trainingSession.setStatus("Ready to publish");
+            trainingSession.setStatus("Published");
             return serviceProviderService.publishTrainingSession(trainingSession);
         } else {
             return null;
@@ -826,5 +833,45 @@ public class ServiceProvidersController {
         job.setQuotationpdf(savedquotationfile);
 
         return serviceProviderService.addQuotationPdf(job);
+    }
+
+    @PostMapping("auth/generateTodoList/{jobId}")
+    public TodoList generateTodoList(@PathVariable Long jobId,
+                                     @RequestParam("serviceproviderid") Long serviceproviderid,
+                                     @RequestParam("customerid") Long customerid) {
+        // Load the Users (service provider) entity by ID
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
+
+        // Load the Users (customer) entity by ID
+        Optional<Users> customerOptional = userRepository.findById(customerid);
+        Users customer = customerOptional.orElse(null);
+
+        // Load the Jobs entity by ID
+        Optional<Jobs> jobOptional = jobsRepository.findById(jobId);
+        Jobs job = jobOptional.orElse(null);
+
+        // Create a TodoList entity
+        TodoList todoList = new TodoList();
+        todoList.setJob(job);
+        todoList.setCustomer(customer);
+        todoList.setServiceprovider(serviceProvider);
+
+        // Save the TodoList entity
+        return serviceProviderService.generateTodoList(todoList);
+    }
+
+    @GetMapping("auth/isExistTodoList/{jobId}")
+    public boolean isExistTodoList(@PathVariable Long jobId) {
+        // Load the Jobs entity by ID
+        Optional<Jobs> jobOptional = jobsRepository.findById(jobId);
+        Jobs job = jobOptional.orElse(null);
+
+        return serviceProviderService.isExistTodoList(job);
+    }
+
+    @GetMapping("auth/getTodoListIdByJobId/{jobId}")
+    public Long getTodoListIdByJobId(@PathVariable Long jobId) {
+        return todoListRepository.getTodoListIdByJobId(jobId);
     }
 }

@@ -13,25 +13,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(
-        name = "reviewandrating"
-)
+@Table(name = "reviewandrating")
 public class SystemReview {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long ratingid;
 
-    @Column( columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String review;
 
-    @Column( columnDefinition = "INTEGER")
+    @Column(columnDefinition = "INTEGER")
     private int rating;
 
-    @Column( columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE")
     private LocalDate posteddate;
 
-    @Column( columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String status;
 
     @ManyToOne
@@ -39,7 +37,7 @@ public class SystemReview {
     private Users users;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         posteddate = LocalDate.now();
         status = "Pending";
     }

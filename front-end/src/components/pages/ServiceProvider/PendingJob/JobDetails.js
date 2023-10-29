@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
@@ -16,6 +16,11 @@ import { useParams } from 'react-router-dom';
 function PendingJobDetails() {
     const [viewJobData, setViewJobData] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
+
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+      navigate(-1);
+    };
 
     const { id } = useParams();
     const jobId = parseInt(id, 10);
@@ -87,7 +92,16 @@ function PendingJobDetails() {
                 </Col>
 
                 <Col className="AcceptedJobDetails-details-container mt-lg-0 mt-2 col-12 col-lg-10 d-flex flex-column">
+                    <div className="vacancyDetails-status-container mb-2">
+                        <span className="vacancyDetails-status me-2" id="vacancy-status" style={{ fontSize: "16px", fontWeight: "400", padding: "4px 6px", border: "2px solid rgb(37, 199, 37)", borderRadius: "8px" }}>
+                            pending
+                        </span>
+                    </div>
                     <div className="AcceptedJobDetails-title-container mb-2">
+                        <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-40px', maxWidth: '110px', fontWeight:600, float:'right' }}>
+                            <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                            <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+                        </span>
                         <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobs.jobtitle}</span>
                     </div>
                     <div className="AcceptedJobDetails-category-container mb-2 d-flex flex-column">
@@ -131,18 +145,9 @@ function PendingJobDetails() {
                         </div>
                     </div>
                 </Col>
-            </Row>
+            </Row><hr/>
             <span>Quotation</span>
             <div className="mt-2 d-flex flex-column">
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Control type="file" placeholder="Password" id="fileInput" onChange={handleFileInputChange}/>
-                    </Form.Group>
-                    <div className="CreateBlog-button-container d-flex flex-row d-flex">
-                        <Button className="ms-auto btn-ServiceProvider-1" onClick={handleAddQuotation}>Submit</Button>
-                    </div>
-                </Form>
-
                 <div className="text-muted d-block mb-3">
                     You can create quotation using our website or visit the <a href="https://vyaparapp.in/tools/free-online-quotation-maker#generate-online">quotation website</a> to create a quotation.
                 </div>
@@ -150,7 +155,19 @@ function PendingJobDetails() {
                     <Button className="btn-ServiceProvider-2 AcceptedJobDetails-start" variant="primary" type="submit">
                         Create Quotation
                     </Button>
-                </Link>
+                </Link><hr/>
+
+                <Form>
+                    <div className="d-block mb-3">
+                        Upload Quotation
+                    </div>
+                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                        <Form.Control type="file" placeholder="Choose Quotation" id="fileInput" onChange={handleFileInputChange}/>
+                    </Form.Group>
+                    <div className="CreateBlog-button-container d-flex flex-row d-flex">
+                        <Button className="ms-auto btn-ServiceProvider-1" onClick={handleAddQuotation}>Submit</Button>
+                    </div>
+                </Form>
             </div>
         </div>
     );

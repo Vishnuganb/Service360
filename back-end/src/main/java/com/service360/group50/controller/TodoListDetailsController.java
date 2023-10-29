@@ -32,12 +32,12 @@ public class TodoListDetailsController {
         return todoListDetailsService.viewTodoListDetails();
     }
     @PutMapping("/viewTodoListDetails/{todoListdetailsid}")
-    public TodoListDetails toggleTaskCompletion(@PathVariable("todoListdetailsid") Long todoListId,
+    public TodoListDetails toggleTaskCompletion(@PathVariable("todoListdetailsid") Long todoListdetailsId,
                                                 @RequestParam("completed") Boolean completed,
-                                                @RequestParam("hours") Double hours) {
+                                                @RequestParam("hours") Double hours, @RequestParam("todolistId") Long todoListId ) {
 
         // Retrieve the task by ID
-        TodoListDetails task = todoListDetailsService.getTodoListDetailsById(todoListId);
+        TodoListDetails task = todoListDetailsService.getTodoListDetailsById(todoListdetailsId);
 
         // Retrieve the todolist by id
         Optional<TodoList> todolistOptional = todoListRepository.getTodoListByTodolistid(todoListId);
@@ -46,10 +46,22 @@ public class TodoListDetailsController {
         // Toggle the completion status
         task.setCompleted(!completed);
         task.setWorkedHours(hours);
-        task.setTodolist(todolist);
+        task.setCustomercompleted(completed);
+                task.setTodolist(todolist);
 
         // Save the updated task
         return todoListDetailsService.createTodoListDetails(task);
     }
+
+    @PutMapping("/ConfirmTodoListDetails/{todoListdetailsid}")
+    public TodoListDetails toggleTaskCompletion(@PathVariable Long todoListdetailsid, @RequestParam("ccompleted") Boolean ccompleted) {
+        // Retrieve the task by ID
+        TodoListDetails task = todoListDetailsService.getTodoListDetailsById(todoListdetailsid);
+        // Toggle the completion status
+        task.setCustomercompleted(ccompleted);
+        // Save the updated task
+        return todoListDetailsService.createTodoListDetails(task);
+    }
+
 
 }

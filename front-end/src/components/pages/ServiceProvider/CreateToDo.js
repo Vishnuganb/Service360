@@ -39,6 +39,7 @@ function ToDoList() {
             const response = await axios.post('http://localhost:8080/auth/createTodoListDetails', {
                 task: taskInput,
                 completed: false,
+
             });
 
             if (response.status === 200) {
@@ -57,8 +58,10 @@ function ToDoList() {
         const formData = new FormData();
         formData.append('completed', !completed);
         formData.append('hours', hourInputs[todolistdetailsid]); 
+        formData.append('todolistId', todolistid); 
 
-            const response = await axios.put(`http://localhost:8080/auth/viewTodoListDetails/${todolistid}`, formData, {
+
+            const response = await axios.put(`http://localhost:8080/auth/viewTodoListDetails/${todolistdetailsid}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -101,10 +104,20 @@ function ToDoList() {
                 <ul>
                 {tasks.map((task, index) => (
     <li key={index} className="castodolist card" style={{ padding: '10px',width: "700px" }}>
-        <div>
+       <div>
             <input
-                type="checkbox"
-                onChange={() => handleToggleComplete(task.todolistdetailsid, !task.completed)}
+                    type="checkbox"
+                    onChange={() => {
+                        if (!task.completed) {
+                            handleToggleComplete(task.todolistdetailsid, !task.completed);
+                            // Reload the page
+                             window.location.reload();
+                        }
+                        
+                    }}
+                    checked={task.completed}
+                         
+                    
             />
             <span className={task.completed ? 'completed' : ''}>
                 &nbsp;&nbsp;
@@ -112,12 +125,12 @@ function ToDoList() {
             </span>
             &nbsp;&nbsp;
             <input
-                type="text"
-                placeholder="Enter hours..."
-                value={hourInputs[task.todolistdetailsid] || ''}
-                onChange={(e) => setHourInputs({ ...hourInputs, [task.todolistdetailsid]: e.target.value })}
-                style={{ marginBottom: "5px", width: "150px", marginRight: "1000px", height:"35px" }}
-            />
+    type="text"
+    placeholder="Enter hours..."
+    value={task.completed ? task.workedHours.toString() : (hourInputs[task.todolistdetailsid] || '')}
+    onChange={(e) => setHourInputs({ ...hourInputs, [task.todolistdetailsid]: e.target.value })}
+    style={{ marginBottom: "5px", width: "150px", marginRight: "1000px", height: "35px" }}
+/>
         </div>
     </li>
 ))}

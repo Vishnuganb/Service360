@@ -49,7 +49,7 @@ function ViewServiceProvider() {
 
   const getServiceProvider=async()=>{
     const data=await axios.get("http://localhost:8080/auth/details")
-    const filteredData = data.data.filter(item => item.serviceproviderid == id);
+    const filteredData = data.data.filter(item => item.userid == id);
     setServiceProvider(filteredData[0])
 
   }
@@ -100,20 +100,20 @@ function ViewServiceProvider() {
     <div className="SPBox ">
       {/* <img className='SPImg' src={ServiceProvideimg} alt="profile-image" />
       <div className='SPProfile'>
-        <span className='SPname'>{serviceProvider.serviceprovidername}</span>
-        <span className='SPActive'> Last Active 5 days ago </span>
+        <span className='SPname'>{serviceProvider.firstname} {" "} {serviceProvider.lastname}</span>
+        {/* <span className='SPActive'> Last Active 5 days ago </span> */}
         <div class="SPDetail">
-          <p className='p1'> Member Since {serviceProvider.membershipdate} </p>
-          <p className='p1'>Service : {serviceProvider.service}  &nbsp; | &nbsp; Location : {serviceProvider.location}</p>
+          <p className='p1'> Member Since {serviceProvider.registrationdate} </p>
+          <p className='p1'>Service : {serviceProvider.service}  &nbsp; | &nbsp; Location : {serviceProvider.district} {" "} {serviceProvider.city}</p>
           <p className='p1'> </p>
-          <p className='Des border p-3' >{serviceProvider.description}</p>
+          {/* <p className='Des border p-3' >{serviceProvider.description}</p> */}
         </div>
 
         <div className='SPContact'>
           <div className='contacticon'>
             <a href="#getcall" className='SPNo'>
               <FontAwesomeIcon icon={faPhone} />
-              &nbsp; &nbsp; {serviceProvider.contact}
+              &nbsp; &nbsp; {serviceProvider.phonenumber}
             </a>
           </div>
         </div> */}
@@ -142,7 +142,7 @@ function ViewServiceProvider() {
         {/* </div>
 
         <div className='SPRatings'>
-          <p className='ratereview'> Ratings and Reviews (24 Jobs)</p>
+          <p className='ratereview'> Ratings and Reviews </p>
           <div className='rating'>
             <span className={`star ${rating >= 1 ? 'filled' : ''}`}>&#9733;</span>
             <span className={`star ${rating >= 2 ? 'filled' : ''}`}>&#9733;</span>

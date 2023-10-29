@@ -121,7 +121,6 @@ function ToDoForm() {
               <p className="task-date">{task.dueDate}</p>
               <span className="task-text">{task.task}</span>
             </div>
-
           </Card.Body>
         </Card>
       ))}

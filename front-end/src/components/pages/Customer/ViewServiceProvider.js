@@ -25,6 +25,10 @@ function ViewServiceProvider() {
 
   const rating = 4;
   const { id } = useParams();
+
+  const { serviceproviderid } = useParams();
+  const serviceProviderId = parseInt(id, 10);
+
   // const ViewServiceProvider = ({ match }) => {
   //   const rating = 4; 
 
@@ -57,7 +61,7 @@ function ViewServiceProvider() {
   useEffect(() => {
     axios.get('http://localhost:8080/auth/viewServiceProviderBlogs',{
       params:{
-        serviceproviderid:3
+        serviceproviderid:serviceProviderId
       }
     }).then((res) => {
         console.log(res.data);
@@ -94,7 +98,7 @@ function ViewServiceProvider() {
 
   return (
     <div className="SPBox ">
-      <img className='SPImg' src={ServiceProvideimg} alt="profile-image" />
+      {/* <img className='SPImg' src={ServiceProvideimg} alt="profile-image" />
       <div className='SPProfile'>
         <span className='SPname'>{serviceProvider.serviceprovidername}</span>
         <span className='SPActive'> Last Active 5 days ago </span>
@@ -112,7 +116,7 @@ function ViewServiceProvider() {
               &nbsp; &nbsp; {serviceProvider.contact}
             </a>
           </div>
-        </div>
+        </div> */}
 
         {/* <hr className='line'></hr>
 
@@ -125,17 +129,17 @@ function ViewServiceProvider() {
           </div>
           <br></br>
         </div> */}
-        <hr className='line'></hr>
+        {/* <hr className='line'></hr>
 
         <div className='SPReqButtons'>
           <Link to={`/customer/JobRequest`}>
-            <button className='SPRequestjob'> Request for job </button></Link>
+            <button className='SPRequestjob'> Request for job </button></Link> */}
 
 
           {/* <Link to={`/customer/Quotation`}>
             <button className='SPRequestquotation'> Request for quotation</button>
           </Link> */}
-        </div>
+        {/* </div>
 
         <div className='SPRatings'>
           <p className='ratereview'> Ratings and Reviews (24 Jobs)</p>
@@ -195,7 +199,7 @@ function ViewServiceProvider() {
               </Card.Text>
             </Card.Body>
           </Card>
-        </div>
+        </div> */}
 
         
         {/* BLOGS SECTION */}
@@ -256,7 +260,7 @@ function ViewServiceProvider() {
           </div>
           
         </div>
-      </div>
+      {/* </div> */}
     </div>
 
   );

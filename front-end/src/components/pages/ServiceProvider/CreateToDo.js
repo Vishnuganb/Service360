@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function ToDoList() {
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
     const [hourInputs, setHourInputs] = useState({}); // State to manage hours for each task
+
+    const { id } = useParams();
+    const todolistid = parseInt(id, 10);
 
     useEffect(() => {
         fetchTasks(); // Load tasks when the component mounts
@@ -52,9 +56,9 @@ function ToDoList() {
     const handleToggleComplete = async (todolistdetailsid, completed) => {
         const formData = new FormData();
         formData.append('completed', !completed);
-        formData.append('hours', hourInputs[todolistdetailsid]); // Use task.id to access the correct hours value
+        formData.append('hours', hourInputs[todolistdetailsid]); 
 
-            const response = await axios.put(`http://localhost:8080/auth/viewTodoListDetails/${todolistdetailsid}`, formData, {
+            const response = await axios.put(`http://localhost:8080/auth/viewTodoListDetails/${todolistid}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

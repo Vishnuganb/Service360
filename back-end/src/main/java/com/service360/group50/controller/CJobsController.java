@@ -31,7 +31,7 @@ public class CJobsController {
         return cJobsService.getJobsById(id); // Use the service method to retrieve the job
     }
 
-//    @DeleteMapping("/deletejobs/{id}") // Fixed the URL mapping
+    //    @DeleteMapping("/deletejobs/{id}") // Fixed the URL mapping
 //    public String deleteJobs(@PathVariable Long id) {
 //        return cJobsService.deleteJobsById(id); // Use the service method
 //    }

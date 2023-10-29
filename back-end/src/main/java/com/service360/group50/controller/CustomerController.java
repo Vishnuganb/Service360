@@ -97,7 +97,7 @@ public class CustomerController {
 
             serviceProviderDetailsDTO.setFiles(serviceProviderFilesDTOs);
 
-            if ("accepted".equals(serviceProviderDetailsDTO.getStatus())) {
+            if ("Accepted".equals(serviceProviderDetailsDTO.getStatus())) {
                 serviceProviderDetailsList.add(serviceProviderDetailsDTO);
             }
         }

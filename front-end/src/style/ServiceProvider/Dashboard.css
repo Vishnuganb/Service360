@@ -7,24 +7,29 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
-.dashboard-button-1{
-    background: #30A5BF !important;
+.dashboard-button-sp-1{
+    box-shadow: 2px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
 }
 
-.dashboard-button-2{
-    background: #68abd5 !important;
+.dashboard-button-sp-2{
+    box-shadow: 2px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
 }
 
-.dashboard-button-3{
-    background: #30A5BF !important;
+.dashboard-button-sp-3{
+    box-shadow: 2px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
 }
 
-.dashboard-button-4{
-    background: #68abd5 !important;
+.dashboard-button-sp-4{
+    box-shadow: 2px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
 }
 
 .card-sp-dashboard-title{
-    font-size: 1.6rem;
+    font-size: 38px;
+    font-weight: 600;
     font-family: 'Rubik', sans-serif;
     margin-bottom: 10px;
 }
@@ -36,7 +41,8 @@
 }
 
 .card-sp-dashboard-body-container{
-    font-size: 1.1rem;
+    font-size: 46px;
+    font-weight: 600;
     font-family: 'Rubik', sans-serif;
 }
 
@@ -49,27 +55,33 @@
 
 
 .card-body-container i{
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin-right: 10px;
+}
+
+@media only screen and (min-width: 992px) {
+    .card-body-container i{
+        margin-top: -5px;
+    } 
 }
 
 @media only screen and (max-width: 992px){
     .dashboard-top-cards-container{
         flex-direction: column !important;
     }
-    .dashboard-button-1{
+    .dashboard-button-sp-1{
         width: 100% !important;
     }
     
-    .dashboard-button-2{
+    .dashboard-button-sp-2{
         width: 100% !important;
     }
     
-    .dashboard-button-3{
+    .dashboard-button-sp-3{
         width: 100% !important;
     }
     
-    .dashboard-button-4{
+    .dashboard-button-sp-4{
         width: 100% !important;
     }
 

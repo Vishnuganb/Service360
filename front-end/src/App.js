@@ -166,7 +166,6 @@ const router = createBrowserRouter(
         <Route path="Subscribed/:subId" element={<Subscriped />} />
         <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} />
-        <Route path="Payment" element={<Payment />} />
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>

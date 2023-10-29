@@ -187,6 +187,8 @@ public class LoginService {
                         .email ( request.getEmail ( ) )
                         .address ( request.getAddress ( ) )
                         .nic ( request.getNic ( ) )
+                        .district ( request.getDistrict ( ) )
+                        .city ( request.getCity ( ) )
                         .password ( passwordEncoder.encode ( request.getPassword ( ) ) )
                         .role ( Role.SERVICEPROVIDER )
                         .build ( );

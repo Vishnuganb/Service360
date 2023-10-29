@@ -44,6 +44,8 @@ const AuthenticationContextProvider = (props) => {
         formData.append('nic', data.nic);
         formData.append('address', data.address);
         formData.append('phonenumber', data.phonenumber);
+        formData.append('district', data.district);
+        formData.append('city', data.city);
         formData.append('categories', data.categories);
         formData.append('services', data.services);
 

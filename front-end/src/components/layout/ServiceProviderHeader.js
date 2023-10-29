@@ -15,6 +15,7 @@ import { AuthenticationContext } from './../../ContextFiles/Authentication/Authe
 import ServiceProviderEditProfile from '../pages/ServiceProvider/EditProfile/ServiceProviderEditProfile';
 import axios from 'axios';
 import AddReviewandRating from '../pages/User/Customer/AddReviewandRating';
+import Notification from '../pages/Notification/Notification';
 
 function ServiceProviderHeader() {
 
@@ -23,6 +24,7 @@ function ServiceProviderHeader() {
     const [userDetail, setUserDetail] = useState([]);
     const [spServices, setSpServices] = useState([]);
     const [showAddReview, setShowAddReview] = useState(false);
+    const [showNotification, setShowNotification] = useState(false);
 
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
@@ -70,8 +72,9 @@ function ServiceProviderHeader() {
                         <Nav.Link className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none" onClick={() => setShowAddReview(true)}> <i className="fas fa-star-half-alt"></i></Nav.Link>
                         <AddReviewandRating show={showAddReview} onHide={() => setShowAddReview(false)} />
                         
-                        <Nav.Link className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-bell-fill"></i></Nav.Link>
-                        
+                        <Nav.Link className="fw-bold navLink d-lg-inline d-sm-none d-md-none d-none"><i className="bi bi-bell-fill" onClick={() => setShowNotification(true)}></i></Nav.Link>
+
+                        <Notification  show={showNotification} onHide={() => setShowNotification(false)} />
                         <Nav.Link as={Link} to="/ServiceProvider/Chat" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-chat-fill"></i></Nav.Link>
 
                         <Nav.Link className="fw-bold navLink d-sm-inline d-md-inline d-lg-none ">Notifications</Nav.Link>

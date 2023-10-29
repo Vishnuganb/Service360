@@ -77,11 +77,11 @@ public class AdvertiserController {
                     Notification notification = new Notification();
                     notification.setTitle(adsName+" Ad was Added");
                     notification.setMessage("You have created a new ad");
-                    notification.setStatus("UNREAD");
+                    notification.setSenderName("Admin");
                     notification.setFEButton1("View");
-                    notification.setFEButton1("Advertiser/Ads");
+                    notification.setFEButton1Link("Advertiser/Ads");
                     notification.setBEButton1("Disable");
-                    notification.setBEButton1Link("Advertiser/Ads/Disable/"+createdAd.getAdsId());
+                    notification.setBEButton1Link("disable/"+createdAd.getAdsId());
                     notification.setUsers(userService.getUser(userId));
                     notificationService.addNotification(notification);
                 }
@@ -200,7 +200,7 @@ public class AdvertiserController {
             adDTO.setLastName(user.getLastname());
             adDTO.setPlan(subStatus);
             if (user.getProfilePic() != null) {
-                adDTO.setProfileImage(user.getProfilePic().getBytes());
+                adDTO.setProfileImage(user.getProfilePic());
             }
             adDTO.setShopName(advertiser.getShopname());
             adDTO.setShopAddress(advertiser.getShopaddress());
@@ -256,7 +256,7 @@ public class AdvertiserController {
             adDTO.setReason ( ad.getReason () );
 //            adDTO.setPlan(subStatus);
             if (user.getProfilePic() != null) {
-                adDTO.setProfileImage(user.getProfilePic().getBytes());
+                adDTO.setProfileImage(user.getProfilePic());
             }
             adDTO.setShopName(advertiser.getShopname());
             adDTO.setShopAddress(advertiser.getShopaddress());
@@ -451,6 +451,30 @@ public SubscriptionDTO getSubscriptionDetails(@PathVariable Long userid) {
         return subscriptionDTOList;
     }
 
+    // add subscription history
+    @PutMapping("auth/subscriptionHistory/{userid}")
+    public SubscriptionHistory setSubscriptionHistory(@PathVariable Long userid) {
+
+        Users user = userService.getUser(userid);
+        String role = user.getRole().name();
+        if(role.equals("ADVERTISER")){
+            // get current plan
+            Subscription subscription = subscriptionService.getActiveSubscribtionByUserId(userid);
+            String status = "Active";
+            SubscriptionHistory subscriptionHistory = new SubscriptionHistory();
+            subscriptionHistory.setUsers(userService.getUser(userid));
+            subscriptionHistory.setSubscriptionPlan(subscription.getSubscriptionPlan());
+            subscriptionHistory.setStartDate(subscription.getStartDate());
+
+            subscriptionHistory.setEndDate(subscription.getEndDate());
+            // set current date and time
+            subscriptionHistory.setCreatedAt(new java.util.Date());
+            return subscriptionService.addSubscriptionHistory(subscriptionHistory);
+        }
+
+        return null;
+
+    }
 
 
 }

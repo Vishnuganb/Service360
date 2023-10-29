@@ -14,7 +14,8 @@ const ResetPasswordContextProvider = (props) => {
 
             {
 
-                otp: otp, newPassword: newPassword
+                otp: otp,
+                newPassword: newPassword
 
             }
 

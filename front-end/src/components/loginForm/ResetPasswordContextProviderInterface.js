@@ -1,6 +1,6 @@
 import React from 'react'
 import ResetPasswordContextProvider from "../../ContextFiles/ResetPasswordContext";
-import ResetPassword from "../../ContextFiles/ResetPasswordContext";
+import ResetPassword from "./ResetPassword";
 
 const ResetPasswordContextProviderInterface = () => {
 

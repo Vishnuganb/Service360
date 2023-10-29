@@ -17,6 +17,7 @@ public class NotificationService {
     // add notification
     public Notification addNotification( Notification notification) {
         notification.setCreatedAt(new java.util.Date());
+        notification.setStatus("UNREAD");
         return notificationRepository.save(notification);
     }
 

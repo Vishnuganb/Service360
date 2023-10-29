@@ -22,6 +22,8 @@ public class ServiceProviderDetailsDTO{
     private String status;
     private String reason;
     private String profilePic;
+    private String district;
+    private String city;
     private boolean locked;
     private boolean enabled;
     private LocalDate registrationdate;

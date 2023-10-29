@@ -3,10 +3,8 @@ package com.service360.group50.service;
 import com.service360.group50.dto.CategoryDTO;
 import com.service360.group50.dto.ServiceCategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
-import com.service360.group50.entity.ServiceCategory;
-import com.service360.group50.entity.Services;
-import com.service360.group50.repo.ServiceCategoryRepository;
-import com.service360.group50.repo.ServiceRepository;
+import com.service360.group50.entity.*;
+import com.service360.group50.repo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -29,6 +27,10 @@ public class AdminService {
 
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final ServiceRepository serviceRepository;
+    private final TrainingSessionRepository trainingSessionRepository;
+    private final AdsRepository adsRepository;
+    private final SystemReviewRepository systemReviewRepository;
+    private final CComplaintsRepository cComplaintsRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -219,5 +221,115 @@ public class AdminService {
         }
 
         return serviceAndCategories;
+    }
+
+
+    public TrainingSession updateTrainingSessionAcceptStatus ( Long trainingid, String status ) {
+        Optional<TrainingSession> existingTrainingSessionOptional = trainingSessionRepository.findById ( trainingid );
+
+        if (existingTrainingSessionOptional.isEmpty()) {
+            System.out.println("Training session not found");
+            return null;
+        }
+
+        TrainingSession existingTrainingSession = existingTrainingSessionOptional.get();
+
+        existingTrainingSession.setStatus(status);
+
+        existingTrainingSession = trainingSessionRepository.save(existingTrainingSession);
+
+        return existingTrainingSession;
+    }
+
+    public TrainingSession updateTrainingSessionRejectStatus ( Long trainingid, String status, String reason ) {
+        Optional<TrainingSession> existingTrainingSessionOptional = trainingSessionRepository.findById ( trainingid );
+
+        if (existingTrainingSessionOptional.isEmpty()) {
+            System.out.println("Training session not found");
+            return null;
+        }
+
+        TrainingSession existingTrainingSession = existingTrainingSessionOptional.get();
+
+        existingTrainingSession.setStatus(status);
+        existingTrainingSession.setReason(reason);
+
+        existingTrainingSession = trainingSessionRepository.save(existingTrainingSession);
+
+        return existingTrainingSession;
+    }
+
+    public Ads updateAdvertisementAcceptStatus ( Long adsId, String status ) {
+        Optional<Ads> existingAdsOptional = adsRepository.findById ( adsId );
+
+        if (existingAdsOptional.isEmpty()) {
+            System.out.println("Ads not found");
+            return null;
+        }
+
+        Ads existingAds = existingAdsOptional.get();
+
+        existingAds.setVerificationStatus (status);
+
+        existingAds = adsRepository.save(existingAds);
+
+        return existingAds;
+    }
+
+    public Ads updateAdvertisementRejectStatus ( Long adsId, String status, String reason ) {
+        Optional<Ads> existingAdsOptional = adsRepository.findById ( adsId );
+
+        if (existingAdsOptional.isEmpty()) {
+            System.out.println("Ads not found");
+            return null;
+        }
+
+        Ads existingAds = existingAdsOptional.get();
+
+        existingAds.setVerificationStatus(status);
+        existingAds.setReason(reason);
+
+        existingAds = adsRepository.save(existingAds);
+
+        return existingAds;
+    }
+
+    public SystemReview updateSelectSystemReview ( Long ratingid, String status ) {
+
+        Optional<SystemReview> existingSystemReviewOptional = systemReviewRepository.findById ( ratingid );
+
+        if (existingSystemReviewOptional.isEmpty()) {
+            System.out.println("System Review not found");
+            return null;
+        }
+
+        SystemReview existingSystemReview = existingSystemReviewOptional.get();
+
+        existingSystemReview.setStatus(status);
+
+        existingSystemReview = systemReviewRepository.save(existingSystemReview);
+
+        return existingSystemReview;
+
+    }
+
+    public Complaints updateComplaintStatus ( Long complaintid, String reply, String status ) {
+
+        Optional<Complaints> existingComplaint =  cComplaintsRepository.findById(complaintid);
+
+        if (existingComplaint.isEmpty()) {
+            System.out.println("Complaint not found");
+            return null;
+        }
+
+        Complaints complaint = existingComplaint.get();
+
+        complaint.setReply(reply);
+        complaint.setComplaintstatus(status);
+
+        complaint = cComplaintsRepository.save(complaint);
+
+        return complaint;
+
     }
 }

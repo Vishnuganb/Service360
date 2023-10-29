@@ -1,32 +1,99 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import TextEditor from "../ViewThread/TextEditor";
+
+import axios from "axios";
 
 import backgroundImage from "../../../../assets/images/header/Background.png";
 
 function ForumPopUp(props) {
-  // State to track selected files
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const selectedFileCount = selectedFiles.length;
+   const response = sessionStorage.getItem("authenticatedUser");
+   const userDetail = JSON.parse(response);
 
-  // Handler for file input change
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    setSelectedFiles(files);
+  const [selectedAdImages, setSelectedAdImages] = useState([]);
+
+
+  const handleAdimages = (event) => {
+    const selectedImages = Array.from(event.target.files);
+    setAdImageInputErr(false);
+    if (selectedAdImages.length + selectedImages.length <= 3) {
+      setSelectedAdImages((prevSelectedAdImages) => [
+        ...prevSelectedAdImages,
+        ...selectedImages,
+      ]);
+
+    } else {
+      alert("You can only select up to 3 files.");
+    }
   };
 
-  // Handler for removing a file from the selected files list
-  const handleRemoveFile = (index) => {
-    const updatedFiles = [...selectedFiles];
-    updatedFiles.splice(index, 1);
-    setSelectedFiles(updatedFiles);
+  const handleRemoveAdImages = (index) => {
+    const updatedAdImages = selectedAdImages.filter((_, i) => i !== index);
+    setSelectedAdImages(updatedAdImages);
+ 
   };
 
-  // Handler for form submission (Not implemented in this code)
-  const handleSubmit = (e) => {
+  const [AdImageInputErr, setAdImageInputErr] = useState(false);
+  const [category, setCategory] = useState("Select Category");
+  const [catError, setCatError] = useState(false);
+  const [title, setTitle] = useState("");
+  const [titleError, setTitleError] = useState(false);
+  const [description, setDescription] = useState("");
+  const [descriptionError, setDescriptionError] = useState(false);
+
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+    setTitleError(false);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+
+    if(description.length > 0){
+    setDescriptionError(false);
+    }
+  };
+
+  
+   const handleCategoryChange = (event) => {
+     setCategory(event.target.value);
+     if (category != "Select Category") {
+       setCatError(false);
+     }
+   };
+
+
+  const handleSubmitFQ = (e) => {
     e.preventDefault();
-    // Implement your submit logic here
+    if (selectedAdImages.length === 0) {
+      setAdImageInputErr(true);
+    } else {
+      setAdImageInputErr(false);
+    }
+
+    if(!titleError && !catError && !descriptionError){
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("category", category);
+      // formData.append("role", userDetail.role);
+      formData.append("role", "SERVICEPROVIDER");
+      formData.append("userId", userDetail.userid);
+      selectedAdImages.forEach((image) => {
+        formData.append("images", image);
+      });
+      axios
+        .post("http://localhost:8080/auth/forum/createQuestion", formData)
+        .then((res) => {
+          console.log("Forum Question Create Sucessfully" + res);
+        })
+        .catch((err) => console.log(err));
+    }
   };
+
+
   return (
     <Modal
       {...props}
@@ -47,50 +114,74 @@ function ForumPopUp(props) {
         <Form>
           <fieldset>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="disabledTextInput">Title</Form.Label>
+              <Form.Label htmlFor="disabledTextInput">Title</Form.Label>{" "}
+              <sup>
+                <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
+              </sup>
               <Form.Control
                 id="disabledTextInput"
                 required
                 placeholder="Title"
               />
+              {titleError && (
+                <p className="px-3 text-danger">
+                  Please Enter The Question Title.
+                </p>
+              )}
             </Form.Group>
 
             <div className="mb-3">
-              <p className="mb-0">Upload Releated Pictures ( Not required )</p>
-              <input type="file" className="form-control" multiple required />
-              {Array.isArray(selectedFiles) && selectedFiles.length > 0 && (
-                <>
-                  <p>
-                    {selectedFileCount} file
-                    {selectedFileCount !== 1 ? "s" : ""} selected
-                  </p>
-                  <ul className="list-group mt-2">
-                    {selectedFiles.map((file, index) => (
-                      <li
-                        key={index}
-                        className="list-group-item d-flex justify-content-between align-items-center"
-                      >
-                        <span>{file.name}</span>
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveFile(index)}
-                          className="btn-close"
-                          aria-label="Close"
-                        ></button>
-                      </li>
+              <p className="mb-0">Upload Item Images (Maximum 3 Images) </p>
+
+              <input
+                type="file"
+                onChange={handleAdimages}
+                multiple
+                accept=".jpg, .jpeg, .png"
+                className="BrowseImageInput form-control"
+              />
+
+              {AdImageInputErr && (
+                <p className="px-3 text-danger">
+                  Please select one or more files.
+                </p>
+              )}
+
+              {selectedAdImages.length > 0 && (
+                <div className="p-3 d-flex gap-3">
+                  <p>Selected Files:</p>
+                  <ul>
+                    {selectedAdImages.map((file, index) => (
+                      <div className="d-flex align-items-center justify-content-between gap-3">
+                        <li key={index}>{file.name}</li>
+                        <i
+                          className="fa-solid fa-trash fa-lg AddeleteImg"
+                          onClick={() => handleRemoveAdImages(index)}
+                        ></i>
+                      </div>
                     ))}
                   </ul>
-                </>
+                </div>
               )}
             </div>
 
             <Form.Group className="mb-3">
-              <Form.Label>Category</Form.Label>
-              <Form.Select required>
-                <option>Electician</option>
-                <option>Plumber</option>
-                <option>Mechanic</option>
+              <Form.Label>Category</Form.Label>{" "}
+              <sup>
+                <i className="fa-solid fa-asterisk fa-sm AdAstric"></i>
+              </sup>
+              <Form.Select required onChange={handleCategoryChange}>
+                <option defaultValue disabled selected>
+                  Select Category
+                </option>
+                <option> </option>
+                <option>Spare Parts</option>
+                <option>Equipment</option>
+                <option>Others</option>
               </Form.Select>
+              {catError && (
+                <p className="px-3 text-danger">Please Select the Category.</p>
+              )}
             </Form.Group>
 
             {/* Description */}
@@ -98,14 +189,18 @@ function ForumPopUp(props) {
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Description/Specification</Form.Label>
-              <Form.Control as="textarea" required rows={3} />
+              <TextEditor />
+              {descriptionError && (
+                <p className="px-3 text-danger">Please discribe your Question</p>
+              )}
             </Form.Group>
 
             {/* Area */}
 
             <div className="d-flex justify-content-center">
-              <button className="PostAd">Post</button>
+              <button className="PostAd" onClick={handleSubmitFQ}>
+                Post
+              </button>
             </div>
           </fieldset>
         </Form>

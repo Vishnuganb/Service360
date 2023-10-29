@@ -1,6 +1,8 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.UsersDTO;
+import com.service360.group50.entity.Contact;
+import com.service360.group50.entity.SystemReview;
 import com.service360.group50.entity.Users;
 import com.service360.group50.message.ResponseMessage;
 import com.service360.group50.service.UserService;
@@ -9,6 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,6 +45,29 @@ public class UsersController {
     @GetMapping("/getUserById/{userId}")
     public UsersDTO getUserById( @PathVariable Long userId){
         return userService.getUserById(userId);
+    }
+
+    @PostMapping("/addSystemReview")
+    public SystemReview addSystemReview(
+                @RequestParam("userid") Long userId,
+                @RequestParam("review") String review,
+                @RequestParam("rating") int rating) {
+        return userService.addSystemReview(userId, review, rating);
+    }
+
+    @GetMapping("/getAllSystemReview")
+    public Iterable<SystemReview> getAllSystemReview() {
+        return userService.getAllSystemReview();
+    }
+
+    @PostMapping("/addContactMessage")
+    public Contact addContactMessage(
+            @RequestParam("email") String email,
+            @RequestParam("fullName") String fullName,
+            @RequestParam("contactNumber") String contactNumber,
+            @RequestParam("message") String message
+    ){
+        return userService.addContactMessage(email,fullName,contactNumber,message);
     }
 
 }

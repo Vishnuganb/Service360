@@ -1,13 +1,9 @@
 package com.service360.group50.service;
 
+
 import com.service360.group50.dto.UsersDTO;
-import com.service360.group50.entity.Advertiser;
-import com.service360.group50.entity.AdvertiserFiles;
-import com.service360.group50.entity.Role;
-import com.service360.group50.entity.Users;
-import com.service360.group50.repo.AdvertiserFileRepository;
-import com.service360.group50.repo.AdvertiserRepository;
-import com.service360.group50.repo.UserRepository;
+import com.service360.group50.entity.*;
+import com.service360.group50.repo.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +20,16 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SystemReviewRepository systemReviewRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final AdvertiserRepository advertiserRepository;
+    private final ContactRepository contactRepository;
     private final EmailSender emailSender;
 
-    public List<Users> getAllUsers( Role role) {
+
+    public List<Users> getAllUsers(Role role) {
         List<Users> users = userRepository.findByRoleAndEnabled(role, true);
         return users;
     }
@@ -60,7 +60,6 @@ public class UserService {
             return null; // Handle the case where the user is not found
         }
     }
-
 
     public Users updateUser(long userid, String firstname, String lastname, String password, String phonenumber,
                                String address, String nic, String profilePic) {
@@ -127,7 +126,22 @@ public class UserService {
         userRepository.save ( userdata );
         return userdata;
     }
+    public SystemReview addSystemReview(Long userId, String reviewText, int rating) {
+            Users user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                throw new IllegalArgumentException("User not found");
+            }
+            SystemReview systemReview = new SystemReview();
+            systemReview.setUsers(user);
+            systemReview.setReview(reviewText);
+            systemReview.setRating(rating);
 
+            return systemReviewRepository.save(systemReview);
+    }
+
+    public Iterable<SystemReview> getAllSystemReview () {
+        return systemReviewRepository.findAll();
+    }
 
     public Users getUser(Long userId) {
         return userRepository.findById(userId).orElse(null);
@@ -185,6 +199,18 @@ public class UserService {
 
         emailSender.send ( userdata.getEmail (), buildReject( userdata.getFirstname (), reason ) );
         return userdata;
+    }
+
+    public Contact addContactMessage ( String email, String fullName, String contactNumber, String message ) {
+
+        Contact contact = new Contact ();
+        contact.setEmail ( email );
+        contact.setFullname ( fullName );
+        contact.setPhonenumber ( contactNumber );
+        contact.setMessage ( message );
+        contactRepository.save ( contact );
+        return contact;
+
     }
 
     private String buildAccept(String name, String link) {
@@ -460,6 +486,6 @@ public class UserService {
                 "\n" +
                 "</div></div>";
     }
-
-
 }
+
+

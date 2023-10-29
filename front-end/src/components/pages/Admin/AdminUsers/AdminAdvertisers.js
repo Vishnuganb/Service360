@@ -436,7 +436,12 @@ function AdminAdvertisers() {
                             <div className="col-md-8">
                                 {data.activeTab !== 'Pending' && (
                                     <div className="d-flex justify-content-start">
-                                        <img src={data.selectedAdvertiser.image} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                                        <img src={data.selectedAdvertiser.profilePic} alt="Service Provider" className="rounded-circle" width="100" height="100" />
+                                    </div>
+                                )}
+                                {data.activeTab === 'Rejected' && (
+                                    <div className="mt-2 bordered-paragraph rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Reason for rejection: </span> {data.selectedAdvertiser.reason}
                                     </div>
                                 )}
                                 <div className="mt-2 bordered-paragraph rounded">

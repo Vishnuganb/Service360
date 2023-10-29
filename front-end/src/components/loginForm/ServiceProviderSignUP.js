@@ -20,6 +20,8 @@ const ServiceProviderSignUP = () => {
         nicNumber: '',
         contactNumber: '',
         address: '',
+        district: '',
+        city: '',
         emailStatus: false,
         emailErrorMessage: '',
         firstNameErrorMessage: '',
@@ -27,6 +29,8 @@ const ServiceProviderSignUP = () => {
         nicNumberErrorMessage: '',
         contactNumberErrorMessage: '',
         addressErrorMessage: '',
+        districtErrorMessage: '',
+        cityErrorMessage: '',
     });
 
     const handleStep1Change = (field, value) => {
@@ -267,6 +271,8 @@ const ServiceProviderSignUP = () => {
                 files: step2Data.selectedFiles,
                 services: step2Data.selectedCategories,
                 categories: step2Data.selectedServices,
+                district: step1Data.district,
+                city: step1Data.city,
             });
             console.log(step1Data)
             console.log(step2Data)
@@ -275,7 +281,7 @@ const ServiceProviderSignUP = () => {
     };
 
     const handleStep1NextClick = () => {
-        const { email, firstName, lastName, nicNumber, contactNumber, address } = step1Data;
+        const { email, firstName, lastName, nicNumber, contactNumber, address, district, city } = step1Data;
 
         let isError = false;
         let emailErrorMessage = '';
@@ -284,6 +290,8 @@ const ServiceProviderSignUP = () => {
         let nicNumberErrorMessage = '';
         let contactNumberErrorMessage = '';
         let addressErrorMessage = '';
+        let districtErrorMessage = '';
+        let cityErrorMessage = '';
 
         if (!validator.isEmail(email)) {
             isError = true;
@@ -345,7 +353,17 @@ const ServiceProviderSignUP = () => {
             addressErrorMessage = 'Address is required';
         }
 
-        // isError = false;
+        if (district.trim() === '') {
+            isError = true;
+            districtErrorMessage = 'District is required';
+        }
+
+        if (city.trim() === '') {
+            isError = true;
+            cityErrorMessage = 'City is required';
+        }
+
+        //  isError = false;
 
         if (!isError) {
             setStep(2);
@@ -359,6 +377,8 @@ const ServiceProviderSignUP = () => {
             nicNumberErrorMessage,
             contactNumberErrorMessage,
             addressErrorMessage,
+            districtErrorMessage,
+            cityErrorMessage,
         }));
     };
 

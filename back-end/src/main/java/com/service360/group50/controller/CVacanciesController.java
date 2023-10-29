@@ -33,9 +33,17 @@ public class CVacanciesController {
         return cVacanciesService.getVacancyById(id); // Use the service method to retrieve the job
     }
 
-    @DeleteMapping("/deletevacancies/{id}") // Fixed the URL mapping
-    public String deleteVacancies(@PathVariable Long id) {
-        return cVacanciesService.deleteVacanciesById(id); // Use the service method
+    @DeleteMapping("/deletevacancies/{id}")
+    public String disableVacancies(@PathVariable Long id) {
+        Vacancies vacancy = cVacanciesService.getVacancyById(id);
+        if (vacancy != null) {
+            vacancy.setDisabled(true); // Mark the job as disabled
+            cVacanciesService.updateVacancy(vacancy); // Update the job in the database
+            return "Job disabled successfully";
+        } else {
+            return "Job not found";
+        }
     }
+
 
 }

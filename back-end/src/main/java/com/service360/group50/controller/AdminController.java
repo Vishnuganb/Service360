@@ -5,6 +5,7 @@ import com.service360.group50.entity.*;
 import com.service360.group50.repo.AdvertiserFileRepository;
 import com.service360.group50.repo.ServiceProviderFilesRepository;
 import com.service360.group50.repo.ServiceProviderServicesRepository;
+import com.service360.group50.service.AdminService;
 import com.service360.group50.service.CustomerService;
 import com.service360.group50.service.UserService;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,7 @@ public class AdminController {
     private final ServiceProviderServicesRepository serviceProviderServicesRepository;
     private final ServiceProviderFilesRepository serviceProviderFilesRepository;
     private final AdvertiserFileRepository advertiserFileRepository;
+    private final AdminService adminService;
 
     @GetMapping("/getAllCustomers")
     public List<Users> getAllCustomers() {
@@ -54,6 +56,7 @@ public class AdminController {
             serviceProviderDetailsDTO.setAddress(serviceProvider.getAddress());
             serviceProviderDetailsDTO.setPhonenumber(serviceProvider.getPhonenumber());
             serviceProviderDetailsDTO.setStatus(serviceProvider.getStatus());
+            serviceProviderDetailsDTO.setReason(serviceProvider.getReason());
             serviceProviderDetailsDTO.setProfilePic(serviceProvider.getProfilePic());
             serviceProviderDetailsDTO.setLocked(serviceProvider.getLocked());
             serviceProviderDetailsDTO.setEnabled(serviceProvider.isEnabled());
@@ -128,6 +131,7 @@ public class AdminController {
         response.setStatus(user.getStatus());
         response.setProfilePic(user.getProfilePic());
         response.setLocked ( user.getLocked () );
+        response.setReason ( user.getReason () );
         response.setIsactive ( user.isIsactive () );
         response.setShopname(advertiser.getShopname());
         response.setShopaddress(advertiser.getShopaddress());
@@ -190,5 +194,60 @@ public class AdminController {
         return userService.updateUserLockedAndRejectStatus(userid, locked, status, reason);
     }
 
+    @PutMapping("/updateTrainingSessionAcceptStatus")
+    public TrainingSession updateTrainingSessionAcceptStatus(
+            @RequestParam(value = "trainingid") Long trainingid,
+            @RequestParam(value = "status") String status
+
+    ){
+        return adminService.updateTrainingSessionAcceptStatus(trainingid, status);
+    }
+
+    @PutMapping("/updateTrainingSessionRejectStatus")
+    public TrainingSession updateTrainingSessionRejectStatus(
+            @RequestParam(value = "trainingid") Long trainingid,
+            @RequestParam(value = "status") String status,
+            @RequestParam(value = "reason") String reason
+
+    ){
+        return adminService.updateTrainingSessionRejectStatus(trainingid, status, reason);
+    }
+
+    @PutMapping("/updateAdvertisementAcceptStatus")
+    public Ads updateAdvertisementAcceptStatus(
+            @RequestParam(value = "adsId") Long adsId,
+            @RequestParam(value = "status") String status
+    ){
+        return adminService.updateAdvertisementAcceptStatus(adsId, status);
+    }
+
+    @PutMapping("/updateAdvertisementRejectStatus")
+    public Ads updateAdvertisementRejectStatus(
+            @RequestParam(value = "adsId") Long adsId,
+            @RequestParam(value = "status") String status,
+            @RequestParam(value = "reason") String reason
+
+    ){
+        return adminService.updateAdvertisementRejectStatus(adsId, status, reason);
+    }
+
+    @PutMapping("/updateSelectSystemReview")
+    public SystemReview updateSelectSystemReview(
+            @RequestParam(value = "ratingid") Long ratingid,
+            @RequestParam(value = "status") String status
+
+    ){
+        return adminService.updateSelectSystemReview(ratingid, status);
+    }
+
+    @PutMapping("/updateComplaintStatus")
+    public Complaints updateComplaintStatus(
+            @RequestParam(value = "complaintid") Long complaintid,
+            @RequestParam(value = "reply") String reply,
+            @RequestParam(value = "complaintstatus") String status
+
+    ){
+        return adminService.updateComplaintStatus(complaintid, reply, status);
+    }
 
 }

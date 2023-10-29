@@ -88,4 +88,20 @@ public class TrainingSession {
     public void setTrainingImageUrls(List<String> trainingImageUrls) {
         this.trainingImageUrls = trainingImageUrls;
     }
+
+    public Integer getInterestedcount() {
+        return interested;
+    }
+
+    public Integer getGoingcount() {
+        return going;
+    }
+
+    public void setInterestedcount(Integer interested) {
+        this.interested = interested;
+    }
+
+    public void setGoingcount(Integer going) {
+        this.going = going;
+    }
 }

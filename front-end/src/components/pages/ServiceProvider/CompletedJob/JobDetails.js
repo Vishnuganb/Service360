@@ -7,14 +7,18 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
-
 function AcceptedJobDetails() {
   const [viewJobData, setViewJobData] = useState(null);
+
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   const { id } = useParams();
   const jobId = parseInt(id, 10);
@@ -70,6 +74,10 @@ function AcceptedJobDetails() {
           </span>
         </div>
           <div className="AcceptedJobDetails-title-container mb-2">
+            <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-40px', maxWidth: '110px', fontWeight:600, float:'right' }}>
+                <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+            </span>
             <span className="AcceptedJobDetails-title" style={{ fontWeight: "650" }}>{viewJobData.jobtitle}</span>
           </div>
           <div className="AcceptedJobDetails-category-container mb-2 d-flex flex-column">

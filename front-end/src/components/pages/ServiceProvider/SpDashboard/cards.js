@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import '../../../../style/ServiceProvider/Dashboard.css'
-import profile_img_2 from '../../../../assets/images/ServiceProvider/my_profile_2.jpg'
+import schedule_event from '../../../../assets/images/ServiceProvider/schedule event.jpg'
 import services_img from '../../../../assets/images/ServiceProvider/my_services.jpg'
 import blog_img from '../../../../assets/images/ServiceProvider/my_blog.jpg'
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ function BasicExample() {
             </Card>
 
             <Card className="dashboard-pages col-md-3 col-12">
-                <img className="card-img-top" src={profile_img_2} alt="my profile" />
+                <img className="card-img-top" src={schedule_event} alt="my profile" />
                 <Card.Body>
                     <Card.Text className='card-text-container d-flex align-items-center flex-row'>
                         <span>Schedule an event</span>

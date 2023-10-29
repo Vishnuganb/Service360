@@ -7,7 +7,10 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import Payment from "../Payment/Payment";
 // import { QrReader } from 'react-qr-reader'; // Import the QR code reader
+
+
 
 function ToDoForm() {
   const [tasks, setTasks] = useState([]);
@@ -15,6 +18,10 @@ function ToDoForm() {
   const [showPaymentMessage, setShowPaymentMessage] = useState(false);
   const [paymentDone, setPaymentDone] = useState(false);
   const [qrScanActive, setQrScanActive] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [orderID, setOrderID] = useState(null);
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
 
   useEffect(() => {
     fetchData();
@@ -43,6 +50,12 @@ function ToDoForm() {
   //     );
   //   });
   // };
+  useEffect(() => {
+    if (paymentSuccess && orderID) {
+      setShowPaymentModal(false);
+      // handleOpenSubscripedModal(chosenPlan.id);
+    }
+  }, [paymentSuccess, orderID]);
 
   const completedTasks = tasks.filter(task => task.completed && !task.customercompleted);
   const ConfirmcompletedTasks = tasks.filter(task => task.completed && task.customercompleted);
@@ -182,9 +195,19 @@ function ToDoForm() {
             Your tasks are completed now. Select Payment option to Continue
           </Modal.Body>
           <Modal.Footer>
-            <Button className='custodobut1' onClick={handleClosePaymentModal}>
-              Online Payment
-            </Button>
+            {/* <Button className='custodobut1' onClick={handleClosePaymentModal}> */}
+            <Payment
+                    firstname={userDetail.firstname}
+                    lastname={userDetail.lastname}
+                    email={userDetail.email}
+                    paymentTitle={"tile fitting"}
+                    amount={10000}
+                    sendUserId={userDetail.userid}
+                    reciveUserID={null}
+                    setPaymentSuccess={setPaymentSuccess}
+                    setOrderID={setOrderID}
+                  />          
+                    {/* </Button> */}
             <Button className='custodobut2' variant="primary" onClick={handleSkip}>
               HandOver Directly
             </Button>

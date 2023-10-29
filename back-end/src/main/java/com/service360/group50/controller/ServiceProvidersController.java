@@ -357,7 +357,9 @@ public class ServiceProvidersController {
 
 
     @PostMapping("auth/registerTrainingSession/{id}")
-    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest, @RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) throws Exception {
+    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest,
+                                                               @RequestParam("serviceproviderid") Long serviceproviderid,
+                                                               @PathVariable Long id) throws Exception {
         // Load the Users (service provider) entity by ID
         Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
@@ -378,16 +380,11 @@ public class ServiceProvidersController {
         LocalDate today = LocalDate.now();
         trainingSessionRegistration.setRegistrationdate(today);
 
-        /*
-        // Payment gateway Api call here
-        boolean isPaymentSuccessful = processPayment(); // This function should return true if payment is successful
-         */
-
-        boolean isPaymentSuccessful= true;         //sample data
+        boolean isPaymentSuccessful= true;
 
         // Generate a unique content for the QR code
         String mobileNumber = trainingSessionRegistrationRequest.getMobilenumber();
-        String verificationUrl = "http://localhost:8080/auth/verifyQR?mobileNumber=" + mobileNumber; // Replace with your actual verification URL
+        String verificationUrl = "http://localhost:3000/ServiceProvider/TrainingSessionVerification/" + mobileNumber; //
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
@@ -408,47 +405,11 @@ public class ServiceProvidersController {
     }
 
     @GetMapping("auth/verifyQR")
-    public ResponseEntity<String> verifyMobileNumber(@RequestParam("mobileNumber") String mobileNumber) {
+    public Boolean verifyMobileNumber(@RequestParam("mobileNumber") String mobileNumber) {
         // Query the trainingsessionregistration table to check if the mobile number exists
         boolean isMobileNumberValid = trainingSessionRegistrationRepository.existsByMobilenumber(mobileNumber);
 
-        String validImageSrc = "src/main/resources/static/images/qrvalidation/valid.png";
-        String invalidImageSrc = "src/main/resources/static/images/qrvalidation/invalid.png";
-
-        String fontCss = "font-family: 'Rubik', sans-serif;"; // Define the font-family inline CSS
-
-        if (isMobileNumberValid) {
-            String htmlResponse = "<html>" +
-                    "<head>" +
-                    "<style>" +
-                    "body { " + fontCss + " }" + // Apply the font to the entire body
-                    "</style>" +
-                    "</head>" +
-                    "<body style='display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;'>" +
-                    "<div style='text-align: center;'>" +
-                    "<img src='" + validImageSrc + "' alt='Valid Image'>" +
-                    "<h3 style='" + fontCss + "'>Verification Successful : Verified Mobile Number</h3>" +
-                    "</div>" +
-                    "</body>" +
-                    "</html>";
-            return ResponseEntity.ok(htmlResponse);
-        } else {
-            String htmlResponse = "<html>" +
-                    "<head>" +
-                    "<style>" +
-                    "body { " + fontCss + " }" + // Apply the font to the entire body
-                    "</style>" +
-                    "</head>" +
-                    "<body style='display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;'>" +
-                    "<div style='text-align: center;'>" +
-                    "<img src='" + invalidImageSrc + "' alt='Invalid Image'>" +
-                    "<h3 style='" + fontCss + "'>User Verification Failed : Not verified Mobile Number</h3>" +
-                    "</div>" +
-                    "</body>" +
-                    "</html>";
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(htmlResponse);
-        }
-
+        return isMobileNumberValid;
     }
 
 
@@ -521,12 +482,7 @@ public class ServiceProvidersController {
         Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
         TrainingSession trainingSession = trainingSessionOptional.orElse(null);
 
-        /*
-            // Payment gateway Api call here
-            boolean isPaymentSuccessful = processPayment(); // This function should return true if payment is successful
-        */
-
-        boolean isPaymentSuccessful= true;         //sample data
+        boolean isPaymentSuccessful= true;
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {

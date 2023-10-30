@@ -277,6 +277,9 @@ function TrainingSession() {
                         reciveUserID={null}
                         setPaymentSuccess={setPaymentSuccess}
                         setOrderID={setOrderID}
+                        onClick={(e) => {
+                            e.preventDefault(); // Prevents the default behavior of the button
+                        }}
                     />
                     <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto"  onClick={handleBackClick}>Back</Button>
                 </div>

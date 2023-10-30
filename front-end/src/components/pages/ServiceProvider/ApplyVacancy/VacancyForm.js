@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ApplyVacancy() {
     const [viewVacancyData, setviewVacancyData] = useState(null);
@@ -28,6 +29,11 @@ function ApplyVacancy() {
         if (selectedFile) {
           setSelectedFile(selectedFile);
         }
+    };
+
+    const navigate = useNavigate();
+        const handleBackClick = () => {
+        navigate(-1);
     };
 
     const { id } = useParams();
@@ -92,7 +98,7 @@ function ApplyVacancy() {
         <div className="ms-lg-4 me-lg-4">
             <div className='d-flex flex-column'>
               <span style={{fontSize:"30px",fontWeight:"600"}}>{viewVacancyData.vacancytitle}</span>
-              <span style={{fontSize:"26px",fontWeight:"600"}}>{viewVacancyData.customer.firstname}</span>
+              <span style={{fontSize:"26px",fontWeight:"600"}}>{viewVacancyData.customer.firstname} {viewVacancyData.customer.lastname}</span>
             </div>
             <Form className="mt-4" onSubmit={handleApplyVacancy}>
                 <Form.Group className="mb-3" controlId="formBasicTitle">
@@ -215,7 +221,7 @@ function ApplyVacancy() {
 
                 <div className="vacancy-form-button-container d-flex flex-row">
                     <Button className="btn-ServiceProvider-1" type="submit">Apply</Button>
-                    <Button className="btn-ServiceProvider-2 vacancy-form-cancel ms-auto">Cancel</Button>
+                    <Button className="btn-ServiceProvider-2 vacancy-form-cancel ms-auto" onClick={handleBackClick}>Back</Button>
                 </div>
             </Form>
         </div>

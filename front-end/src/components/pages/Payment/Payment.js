@@ -75,7 +75,8 @@ const Payment = ({
 
   console.log(payment);
 
-  function pay() {
+  function pay(e) {
+    e.preventDefault(); 
     window.payhere.startPayment(payment);
   }
 

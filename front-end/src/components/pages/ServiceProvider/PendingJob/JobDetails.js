@@ -1,8 +1,6 @@
 import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import UserImg from "../../../../assets/images/header/user.jpg";
-import customer1 from "../../../../assets/images/ServiceProvider/customer1.jpg";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -11,11 +9,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
-
+import Alert from 'react-bootstrap/Alert';
 
 function PendingJobDetails() {
     const [viewJobData, setViewJobData] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const navigate = useNavigate();
     const handleBackClick = () => {
@@ -45,6 +46,7 @@ function PendingJobDetails() {
         }).then((res) => {
             console.log(res.data);
             document.getElementById('fileInput').value = '';
+            showAlertWithMessage('The quotation has been successfully sent to the customer!');
         });
     };
 
@@ -70,6 +72,15 @@ function PendingJobDetails() {
             setSelectedFile(selectedFile);
         }
     };
+
+    const showAlertWithMessage = (message) => {
+        setAlertMessage(message);
+        setShowAlert(true);
+
+        setTimeout(() => {
+            setShowAlert(false);
+          }, 4000);
+      };
 
     return (
         <div>
@@ -169,6 +180,21 @@ function PendingJobDetails() {
                     </div>
                 </Form>
             </div>
+
+            <Alert
+                show={showAlert}
+                    variant="info"
+                    onClose={() => setShowAlert(false)}
+                    dismissible
+                    style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999, // Adjust the z-index as needed
+                    }}
+                >
+                {alertMessage}
+            </Alert>
         </div>
     );
 }

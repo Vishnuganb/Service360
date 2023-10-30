@@ -498,6 +498,11 @@ public class ServiceProvidersController {
         return serviceProviderService.IncreaseTrainingSessionIntrestedCount(trainingsessionid);
     }
 
+    @PutMapping("auth/TrainingSessionNotIntrested")
+    public Void DecreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid){
+        return serviceProviderService.DecreaseTrainingSessionIntrestedCount(trainingsessionid);
+    }
+
     @GetMapping("auth/GetTrainingSessionRegisteredUsers")
     public List<TrainingSessionRegistration> GetTrainingSessionRegisteredUsers(@RequestParam("trainingsessionid") Long trainingsessionid){
         return serviceProviderService.GetTrainingSessionRegisteredUsers(trainingsessionid);

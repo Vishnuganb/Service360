@@ -13,7 +13,8 @@ const AuthenticationContextProvider = (props) => {
 
     const serverLink = 'http://localhost:8080'
 
-    let authenticated = false;
+    const [authenticated, setAuthenticated] = useState(false);
+
 
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
@@ -158,8 +159,11 @@ const AuthenticationContextProvider = (props) => {
         axios.get(serverLink + '/auth/login/' + email).then(
 
             (response) => {
-                authenticated = true;
+                // authenticated = true;
+                setAuthenticated(true);
                 storeSessionJWT(response.data, token);
+                localStorage.setItem('authenticated', 'true');
+                localStorage.setItem('role', response.data.role);
                 // console.log(authenticated);
                 if (response.data.role === 'CUSTOMER') navigate("/Customer");
                 else if (response.data.role === 'ADMIN') navigate("/admin");
@@ -212,7 +216,10 @@ const AuthenticationContextProvider = (props) => {
     const logout = () => {
         navigate("/login");
         sessionStorage.removeItem('authenticatedUser');
-        authenticated = false;
+        localStorage.removeItem('authenticated');
+        localStorage.removeItem('role');
+        // authenticated = false;
+        setAuthenticated(false);
         console.log("Logged out successfully!!!")
 
     }

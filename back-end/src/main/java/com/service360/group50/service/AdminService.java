@@ -14,6 +14,7 @@ import org.springframework.util.StreamUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class AdminService {
     private final AdsRepository adsRepository;
     private final SystemReviewRepository systemReviewRepository;
     private final CComplaintsRepository cComplaintsRepository;
+    private final UserRepository userRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -331,5 +333,33 @@ public class AdminService {
 
         return complaint;
 
+    }
+
+    public Long getTotalCustomers () {
+        return userRepository.countByRole(Role.CUSTOMER);
+    }
+
+    public Long getTotalServiceProviders () {
+        return userRepository.countByRole(Role.SERVICEPROVIDER);
+    }
+
+    public Long getTotalAdvertisers () {
+        return userRepository.countByRole(Role.ADVERTISER);
+    }
+
+    public List<Long> getCustomerCountForLast7Days () {
+        return userRepository.findAllByRegistrationdateBetween( LocalDate.now().minusDays(7), LocalDate.now())
+                .stream()
+                .filter(user -> user.getRole().equals(Role.CUSTOMER))
+                .map(Users::getUserid)
+                .collect(Collectors.toList());
+    }
+
+    public List<Long> getCustomerCountForLast30Days () {
+        return userRepository.findAllByRegistrationdateBetween( LocalDate.now().minusDays(30), LocalDate.now())
+                .stream()
+                .filter(user -> user.getRole().equals(Role.CUSTOMER))
+                .map(Users::getUserid)
+                .collect(Collectors.toList());
     }
 }

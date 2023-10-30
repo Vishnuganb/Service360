@@ -94,11 +94,29 @@ import { Row } from 'react-bootstrap';
         left: 60px;
     }
 }
+
+.col-12 h4{
+    font-size: 30px;
+}
+
+.d-flex{
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    
+}
 .dashboard-button-1{
+    margin-top: -20px;
     background: linear-gradient(45deg,#b5c4d4,#568eca);
+    height: 120px;
+    
+    /* width: 255px; */
 }
 .dashboard-button-2{
+    margin-top: -20px;
     background: linear-gradient(45deg,#b5c4d4,#568eca);
+    height: 120px;
+    /* width: 255px; */
 }
 
 /* 540px - 992px */
@@ -138,7 +156,7 @@ import { Row } from 'react-bootstrap';
     border-radius: 8px;
     margin-bottom: 10px; 
     /* margin-right: 30px; */
-    gap: 10px;
+    gap: 2px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 

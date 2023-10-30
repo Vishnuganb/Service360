@@ -142,7 +142,6 @@ function PastPopup({ title, serviceProvider, dueDate, imageSrc }) {
     );
 }
 
-
 const Delete = () => {
     const [show, setShow] = useState(false);
 
@@ -222,40 +221,42 @@ const CustomerDashboard = () => {
         <div className="row ps-lg-5 pe-lg-5 pt-lg-5" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <div className="col-12">
-                <div style={{ padding: '10px' }}><h4>Welcome back !</h4></div>
+                <div style={{ padding: '10px'}}><h4>Welcome back !</h4></div>
                 <div className='d-flex flex-column flex-lg-row flex-md-row '>
                     <div className="d-flex flex-row col-7">
                         <Card className="card-cus-dashboard dashboard-button-1" style={{ width: "255px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
                                 <Card.Body >
-                                    <Card.Title>8</Card.Title>
-                                    <Card.Text className="card-body-container">
+                                    <Card.Title style={{ fontSize: '18px', paddingTop: '10px' }}>8</Card.Title>
+                                    <Card.Text className="card-body-container" style={{ fontSize: '18px' }}>
                                         Pending vacancy
-                                        <i className="bi bi-rocket-takeoff"></i>
+                                        <i className="bi bi-rocket-takeoff" ></i>
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
                         </Card>
-                        &nbsp; &nbsp; &nbsp;
+                        {/* &nbsp; &nbsp; &nbsp; */}
                         <Card className="card-cus-dashboard dashboard-button-2" style={{ width: "255px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
                                 <Card.Body>
-                                    <Card.Title>3</Card.Title>
-                                    <Card.Text className="card-body-container">
+                                    <Card.Title style = {{fontSize: '18px', paddingTop: '10px'}}>3</Card.Title>
+                                    <Card.Text className="card-body-container" style={{ fontSize: '18px' }}>
                                         New Quotation
-                                        <i className="bi bi-file-post-fill"></i>
+                                            <i className="bi bi-file-post-fill" ></i>
+                                    
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
                         </Card>
                     </div>
 
-                    <div className="d-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-4 responsiveCalendar_cus" >
+                    {/* <div className="d-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-4 responsiveCalendar_cus" >
                         <ResponsiveCalendar />
-                    </div>
+                    </div> */}
 
                 </div>
-
+                
+                <br></br>
                 <div className='Onpro'> <h3>Ongoing Projects</h3></div>
                 <Row>
                     <Card className="dashboard-pages">

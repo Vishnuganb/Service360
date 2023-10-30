@@ -9,6 +9,8 @@ import Pagination from 'react-bootstrap/Pagination';
 import ViewSPCard from './SocialShare/ViewSPCard';
 import Row from 'react-bootstrap/esm/Row';
 import axios from 'axios';
+import places from '../../loginForm/cities-by-district.json';
+import { NavDropdown } from 'react-bootstrap';
 
 const SearchServiceProvider = () => {
   const [isLocationPopupOpen, setLocationPopupOpen] = useState(false);
@@ -20,8 +22,8 @@ const SearchServiceProvider = () => {
   const [sortAscending, setSortAscending] = useState(true);
   const [sortByReview, setSortByReview] = useState(false);
   const [sortOrder, setSortOrder] = useState('asc');
-  const [serviceProviderCards,setServiceProviderCards]=useState([]);
- 
+  const [serviceProviderCards, setServiceProviderCards] = useState([]);
+
   const toggleLocationPopup = () => {
     setLocationPopupOpen(!isLocationPopupOpen);
   };
@@ -62,15 +64,22 @@ const SearchServiceProvider = () => {
   };
 
 
-const getServiceProviderCards=async()=>{
-  const data=await axios.get("http://localhost:8080/auth/details");
-  console.log(data.data)
-  setServiceProviderCards(data.data)
-}
+  const getServiceProviderCards = async () => {
+    const data = await axios.get("http://localhost:8080/auth/details");
+    console.log(data.data)
+    setServiceProviderCards(data.data)
+  }
 
-  useEffect(()=>{
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location); // Set the selected location
+    handleSelectLocation(location); // Use handleSelectLocation instead
+    toggleLocationPopup(); // Close the location popup
+  };
+
+
+  useEffect(() => {
     getServiceProviderCards();
-  },[])
+  }, [])
 
   const filteredSPCards = serviceProviderCards.filter(card => {
     const locationMatch = !selectedLocation || card.location === selectedLocation;

@@ -12,8 +12,9 @@ import { faPhone, faComment, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
-import { Link,useParams } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import { error } from 'jquery';
 // import { Link } from 'react-router-dom';
 // import { useEffect } from 'react';
@@ -22,6 +23,12 @@ import { error } from 'jquery';
 function ViewServiceProvider() {
   const [viewSpBlogs, setViewSpBlogs] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0); 
+
+  const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate(-1);
+    };
 
   const rating = 4;
   const { id } = useParams();
@@ -90,17 +97,26 @@ function ViewServiceProvider() {
   }
   });
 
-
-
   return (
+    <div>
+    <div className="back-button" onClick={handleBackClick}>
+                <div className="back-icon">
+                    <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                </div>
+                <div className="back-text">
+                    <p className="m-0 p-0">Back</p>
+                </div>
+            </div>
+            
+
     <div className="SPBox ">
-      <img className='SPImg' src={ServiceProvideimg} alt="profile-image" />
+      <img className='SPImg' src={serviceProvider.profilePic} alt="profile-image" />
       <div className='SPProfile'>
         <span className='SPname'>{serviceProvider.firstname} {" "} {serviceProvider.lastname}</span>
         {/* <span className='SPActive'> Last Active 5 days ago </span> */}
         <div class="SPDetail">
           <p className='p1'> Member Since {serviceProvider.registrationdate} </p>
-          <p className='p1'>Service : {serviceProvider.service}  &nbsp; | &nbsp; Location : {serviceProvider.district} {" "} {serviceProvider.city}</p>
+          <p className='p1'>Service : {serviceProvider.service}  &nbsp; | &nbsp; Location : {serviceProvider.district}</p>
           <p className='p1'> </p>
           {/* <p className='Des border p-3' >{serviceProvider.description}</p> */}
         </div>
@@ -257,6 +273,7 @@ function ViewServiceProvider() {
           
         </div>
       </div>
+    </div>
     </div>
 
   );

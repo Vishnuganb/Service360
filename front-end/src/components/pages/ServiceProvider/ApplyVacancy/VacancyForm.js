@@ -50,7 +50,6 @@ function ApplyVacancy() {
     if (!viewVacancyData) return 'No Vacancy found!';
 
     // GETTING LOGGED IN SERVICEPROVIDER ID
-
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
 

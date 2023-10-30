@@ -77,14 +77,14 @@ function HistoryTable() {
   // Filter training sessions based on the selected date range
   const filteredProjects = allCards.filter((project) => {
     if (startDate && endDate) {
-      const ProjectDate = new Date(project.date);
+      const ProjectDate = new Date(project.posteddate);
       return ProjectDate >= startDate && ProjectDate <= endDate;
     } else if (startDate) {
-      const ProjectDate = new Date(project.date);
+      const ProjectDate = new Date(project.posteddate);
       return ProjectDate >= startDate;
     }
     else if (endDate) {
-      const ProjectDate = new Date(project.date);
+      const ProjectDate = new Date(project.posteddate);
       return ProjectDate <= endDate;
     }
     return true; // If start date or end date is not selected, return all sessions
@@ -95,7 +95,7 @@ function HistoryTable() {
   const endIndex = startIndex + cardsPerPage;
 
   // Create a subset of training sessions to be displayed on the current page
-  const displayedProjects = allCards.slice(startIndex, endIndex);
+  const displayedProjects = filteredProjects.slice(startIndex, endIndex);
 
   const format12Hour = (time) => {
     const [hours, minutes] = time.split(":");

@@ -75,7 +75,7 @@ function Overview() {
 
     return (
         <div className="dashboard-top-cards-container d-flex flex-row mt-3 ms-lg-4 me-lg-4">
-            <Card className="card-sp-dashboard dashboard-button-1 col-3">
+            <Card className="card-sp-dashboard dashboard-button-sp-1 col-3">
                 <Card.Body className="d-flex flex-column">
                     <Card.Title className="card-sp-dashboard-title">{completedjobs_count}</Card.Title>
                     <Card.Text className="card-body-container d-flex flex-row">
@@ -84,7 +84,7 @@ function Overview() {
                     </Card.Text>
                 </Card.Body>
             </Card>
-            <Card className="card-sp-dashboard dashboard-button-2 col-3">
+            <Card className="card-sp-dashboard dashboard-button-sp-2 col-3">
                 <Card.Body className="d-flex flex-column">
                     <Card.Title className="card-sp-dashboard-title">{ongoingjobs_count}</Card.Title>
                     <Card.Text className="card-body-container d-flex flex-row">
@@ -93,7 +93,7 @@ function Overview() {
                     </Card.Text>
                 </Card.Body>
             </Card>
-            <Card className="card-sp-dashboard dashboard-button-3 col-3">
+            <Card className="card-sp-dashboard dashboard-button-sp-3 col-3">
                 <Card.Body className="d-flex flex-column">
                     <Card.Title className="card-sp-dashboard-title">{pendingjobs_count}</Card.Title>
                     <Card.Text className="card-body-container d-flex flex-row">
@@ -102,7 +102,7 @@ function Overview() {
                     </Card.Text>
                 </Card.Body>
             </Card>
-            <Card className="card-sp-dashboard dashboard-button-4 col-3">
+            <Card className="card-sp-dashboard dashboard-button-sp-4 col-3">
                 <Card.Body className="d-flex flex-column">
                     <Card.Title className="card-sp-dashboard-title">3.5 (28)</Card.Title>
                     <Card.Text className="card-body-container d-flex flex-row">

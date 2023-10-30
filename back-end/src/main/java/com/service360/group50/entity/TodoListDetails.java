@@ -37,5 +37,7 @@ public class TodoListDetails {
     @Column(columnDefinition = "BOOLEAN")
     private boolean completed;
 
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean customercompleted;
 
 }

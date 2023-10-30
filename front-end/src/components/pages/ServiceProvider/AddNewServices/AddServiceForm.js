@@ -6,8 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert';
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 function AddServiceForm() {
     const [serviceFormData, setServiceFormData] = useState({
@@ -43,7 +42,6 @@ function AddServiceForm() {
     //         [name]: value,
     //     });
     // };
-    
 
     const handleCategoryChange = (e) => {
         const { name, checked, value } = e.target;
@@ -91,8 +89,7 @@ function AddServiceForm() {
     
         setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, ...selectedFileNames]);
     
-    };
-    
+    };  
 
     const handleRemoveFile = (indexToRemove) => {
         setSelectedFiles((prevSelectedFiles) =>
@@ -132,7 +129,6 @@ function AddServiceForm() {
             setCountOfAlreadyAddedServices(AlreadyAddedServices.length);
         });
     }, []);
-
 
     useEffect(() => {
         axios.get(`http://localhost:8080/auth/viewAllServices`).then((res) => {
@@ -197,7 +193,6 @@ function AddServiceForm() {
             });
             window.location.reload();
     };
-
     
     const showAlertWithMessage = (message) => {
         setAlertMessage(message);

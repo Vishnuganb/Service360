@@ -9,6 +9,9 @@ import { BsCloudUpload } from 'react-icons/bs';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
+const response = sessionStorage.getItem('authenticatedUser');
+const userData = JSON.parse(response);
+
 function PostJobForm() {
     const navigate = useNavigate();
     const handleBackClick = () => {
@@ -53,7 +56,10 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
         joblocation: "",
         vacancytype:"",
         qualifications:"",
-        responsibilities:""
+        responsibilities:"",
+        // customer: {
+        //     userid: userData.userid
+        // }
       });
 
 
@@ -83,6 +89,7 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
               joblocation: jobData.joblocation,
               servicename: jobData.servicename,
               jobdescription: jobData.jobdescription,
+
               // Add other properties specific to jobs here
             });
           }

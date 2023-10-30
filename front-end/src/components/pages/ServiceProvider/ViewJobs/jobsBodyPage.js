@@ -21,17 +21,15 @@ function JobsBodyPage() {
     const [viewVacanciesData, setViewVacanciesData] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
+    const [filterLocationTerm, setFilterLocationTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [activeTab, setActiveTab] = useState(''); 
     const [showShareModal, setShowShareModal] = useState(false);
     const [selectedJob, setSelectedJob] = useState(null);
+    const [myservicesData, setMyservicesData] = useState([]);
 
-    const MyServices= [
-        "Electrical Wiring",
-        "Masonry",
-        "Cleaning",
-        "Tiles Fitting",
-    ];
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
 
     useEffect(() => {
         axios.get('http://localhost:8080/auth/viewNewJobs').then((res) => {
@@ -42,6 +40,13 @@ function JobsBodyPage() {
         axios.get('http://localhost:8080/auth/viewNewVacancies').then((res) => {
             console.log(res.data);
             setViewVacanciesData(res.data);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
         });
     }, []);
 
@@ -64,6 +69,9 @@ function JobsBodyPage() {
 
     const filteredCards = allCards.filter((card) => {
         const serviceMatch = !filterCategoryTerm || card.servicename === filterCategoryTerm;
+
+        const locationMatch = !filterLocationTerm || card.joblocation?.toLowerCase() === filterLocationTerm.toLowerCase() || card.vacancylocation?.toLowerCase() === filterLocationTerm.toLowerCase();
+
         const searchTermMatch = (
             card.servicename?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             card.joblocation?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -75,7 +83,7 @@ function JobsBodyPage() {
             card.customername?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         
-        return serviceMatch && searchTermMatch;
+        return serviceMatch && searchTermMatch && locationMatch;
     });
 
     // Calculate the number of cards to display per page based on active tab
@@ -112,6 +120,12 @@ function JobsBodyPage() {
     const handleFilterCategoryChange = (category) => {
         setFilterCategoryTerm(category);
         setCurrentPage(1); // Reset current page to 1 when filter category changes
+    };
+
+    // Function to handle filter by location changes
+    const handleFilterLocationChange = (location) => {
+        setFilterLocationTerm(location);
+        setCurrentPage(1); // Reset current page to 1 when location changes
     };
 
     return (
@@ -158,15 +172,38 @@ function JobsBodyPage() {
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handleFilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (          
-                                <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
+                            {myservicesData.map((service) => (          
+                                <NavDropdown.Item key={service.serviceId} eventKey={service.serviceName}>{service.serviceName}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
-                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4'>
-                            <NavDropdown.Item href="#action3">All Island</NavDropdown.Item>
-                            <NavDropdown.Item >or</NavDropdown.Item>
-                            &nbsp; &nbsp;
-                            <input type="range" name="distance" min="1km" max="50km" />               {/*ADD LOCATION PART IS REMAINING*/}
+                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
+                            <NavDropdown.Item eventKey="wellawatte">Wellawatte</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="colombo">Colombo</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Ampara">Ampara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Anuradhapura">Anuradhapura</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Badulla">Badulla</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Batticaloa">Batticaloa</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Colombo">Colombo</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Galle">Galle</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Gampaha">Gampaha</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Hambantota">Hambantota</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Jaffna">Jaffna</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kalutara">Kalutara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kandy">Kandy</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kegalle">Kegalle</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kilinochchi">Kilinochchi</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Kurunegala">Kurunegala</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Mannar">Mannar</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Matale">Matale</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Matara">Matara</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Monaragala">Monaragala</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Mullaitivu">Mullaitivu</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Nuwara Eliya">Nuwara Eliya</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Polonnaruwa">Polonnaruwa</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Puttalam">Puttalam</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Ratnapura">Ratnapura</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Trincomalee">Trincomalee</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="Vavuniya">Vavuniya</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </div>
@@ -350,27 +387,27 @@ function JobsBodyPage() {
                             <h4>Share this job:</h4>
                             <div className="d-flex justify-content-center mt-3">
                                 <FacebookShareButton url={window.location.href} quote={selectedJob.jobtitle}>
-                                    <Button variant="primary" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-facebook"></i> Facebook
                                     </Button>
                                 </FacebookShareButton>
                                 <TelegramShareButton url={window.location.href} title={selectedJob.jobtitle}>
-                                    <Button variant="primary" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-telegram"></i> Telegram
                                     </Button>
                                 </TelegramShareButton>
                                 <TwitterShareButton url={window.location.href} title={selectedJob.jobtitle}>
-                                    <Button variant="info" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-twitter"></i> Tweet
                                     </Button>
                                 </TwitterShareButton>
                                 <LinkedinShareButton url={window.location.href} title={selectedJob.jobtitle}>
-                                    <Button variant="success" className="me-1">
+                                    <Button variant="" className="me-1 border">
                                         <i className="bi bi-linkedin"></i> LinkedIn
                                     </Button>
                                 </LinkedinShareButton>
                                 <EmailShareButton url={window.location.href} title={selectedJob.jobtitle} >
-                                    <Button variant="primary">
+                                    <Button variant="" className="border">
                                         <i className="bi bi-envelope"></i> Email
                                     </Button>
                                 </EmailShareButton>

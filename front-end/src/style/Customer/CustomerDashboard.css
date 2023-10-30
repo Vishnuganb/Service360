@@ -106,15 +106,19 @@ import { Row } from 'react-bootstrap';
     
 }
 .dashboard-button-1{
+    justify-content: center;
     margin-top: -20px;
-    background: linear-gradient(45deg,#b5c4d4,#568eca);
+    box-shadow: 1px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
     height: 120px;
+
     
     /* width: 255px; */
 }
 .dashboard-button-2{
     margin-top: -20px;
-    background: linear-gradient(45deg,#b5c4d4,#568eca);
+    box-shadow: 1px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
     height: 120px;
     /* width: 255px; */
 }

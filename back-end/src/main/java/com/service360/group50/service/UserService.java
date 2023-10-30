@@ -481,6 +481,12 @@ public class UserService {
                 "</div></div>";
     }
 
+
+    // get users by email
+    public Users getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 }
 
 

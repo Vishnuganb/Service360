@@ -28,4 +28,5 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
     List<Users> findByRoleAndEnabled( Role role, boolean enabled);
 
+    Users findByEmail(String email);
 }

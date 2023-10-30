@@ -6,6 +6,7 @@ import axios from "axios";
 
 export const AuthenticationContext = createContext(undefined)
 
+
 const AuthenticationContextProvider = (props) => {
 
     const navigate = useNavigate()
@@ -14,27 +15,31 @@ const AuthenticationContextProvider = (props) => {
 
     let authenticated = false;
 
+    const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
+    const [loading3, setLoading3] = useState(false);
+
     const customerSignUp = (data) => {
+        setLoading(true);
 
-        axios.post(serverLink + '/auth/signup/customer', data).then(
-
-            (response) => {
-
+        axios
+            .post(serverLink + "/auth/signup/customer", data)
+            .then((response) => {
                 console.log(response.data);
-                alert("Please verify your email!!!")
-                window.location.href = "http://localhost:3000/login"
-
-            }
-
-        ).catch(
-
-            () => { alert("Chcek the credentials for the customers!!!") }
-
-        )
-
+                alert("Please verify your email!!!");
+                window.location.href = "http://localhost:3000/login";
+            })
+            .catch(() => {
+                alert("Check the credentials for the customers!!!");
+            })
+            .finally(() => {
+                setLoading(false); // Set loading to false whether the request succeeds or fails.
+            });
     }
 
     const serviceProviderSignUp = (data) => {
+
+        setLoading3(true);
 
         const formData = new FormData();
         formData.append('email', data.email);
@@ -74,6 +79,9 @@ const AuthenticationContextProvider = (props) => {
             () => { alert("Check the Credentials For ServiceProvider!!!") }
 
         )
+        .finally(() => {
+            setLoading3(false); 
+        });
 
     }
 
@@ -100,6 +108,8 @@ const AuthenticationContextProvider = (props) => {
             console.log(`${key}:`, value);
         }
 
+        setLoading2(true);
+
         axios.post(serverLink + '/auth/signup/advertiser', formData).then(
 
             (response) => {
@@ -113,7 +123,9 @@ const AuthenticationContextProvider = (props) => {
 
             () => { alert("Check the Credentials For Advertiser!!!") }
 
-        )
+        ).finally(() => {
+            setLoading2(false);
+        });
 
     }
 
@@ -182,13 +194,13 @@ const AuthenticationContextProvider = (props) => {
                 return config;
 
             }
-            
+
         )
 
     }
 
     const storeSessionJWT = (userdetails, token) => {
-        
+
         sessionStorage.setItem('authenticatedUser', JSON.stringify(userdetails));
         setupAxiosInterceptors(createJWTToken(token));
     }
@@ -207,7 +219,7 @@ const AuthenticationContextProvider = (props) => {
 
     return (
 
-        <AuthenticationContext.Provider value={{ authenticated, login, logout, customerSignUp, advertiserSignUp, serviceProviderSignUp }}>
+        <AuthenticationContext.Provider value={{ authenticated, login, logout, customerSignUp, advertiserSignUp, serviceProviderSignUp, loading, loading2, loading3 }}>
             {props.children}
         </AuthenticationContext.Provider>
 

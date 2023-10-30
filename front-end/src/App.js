@@ -11,6 +11,7 @@ import ViewServicesJobs from './components/pages/User/ViewServicesJob.js';
 import ServicePage from './components/pages/User/ServicePage.js';
 import ServicePageJob from './components/pages/User/ServicePageJob.js';
 import ResetPasswordContextProviderInterface from './components/loginForm/ResetPasswordContextProviderInterface.js';
+import Review from './components/pages/User/Admin/ViewReviewandRating.js';
 
 import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
@@ -124,6 +125,7 @@ const router = createBrowserRouter(
         <Route path="/services" element={<ViewServices />} />
         <Route path="/services/:serviceName" element={<ServicePage />} />
         <Route path="/services/ViewAservice" element={<ViewAservice />} />
+        <Route path="/review" element={<Review />} />
 
         <Route path="/jobs" element={<ViewServicesJobs />} />
         <Route path="/jobs/:serviceName" element={<ServicePageJob />} />

@@ -6,7 +6,7 @@ import { useMap } from "react-leaflet";
 import Geocode from "react-geocode";
 import { useState } from "react";
 
-// Geocode.setApiKey("AIzaSyBbGzH8N4wZYI3haxyktwT0G-QqA13fJyg");
+Geocode.setApiKey("AIzaSyBbGzH8N4wZYI3haxyktwT0G-QqA13fJyg");
 Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
@@ -15,17 +15,18 @@ L.Marker.prototype.options.icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
 });
 
-const routeDetails = [
-  {
-    cutomerLocation:
-      "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
-    serviceProviderLocation: "no 11 5/4 Nelson Place, Colombo 06",
-  },
-];
-
-export default function Routing() {
+export default function Routing(props) {
   const map = useMap();
   const [waypoints, setWaypoints] = useState([]);
+
+  const { spLocation, cusLocation } = props;
+
+  const routeDetails = [
+    {
+      cutomerLocation:cusLocation,
+      serviceProviderLocation:spLocation,
+    },
+  ];
 
   useEffect(() => {
     if (!map) return;

@@ -208,33 +208,15 @@ function SessionsBodyPage() {
                             ))}
                         </NavDropdown>
                         <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
-                            <NavDropdown.Item eventKey="wellawatte">Wellawatte</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="colombo">Colombo</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Ampara">Ampara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Anuradhapura">Anuradhapura</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Badulla">Badulla</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Batticaloa">Batticaloa</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Colombo">Colombo</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Galle">Galle</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Gampaha">Gampaha</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Hambantota">Hambantota</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Jaffna">Jaffna</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kalutara">Kalutara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kandy">Kandy</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kegalle">Kegalle</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kilinochchi">Kilinochchi</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kurunegala">Kurunegala</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Mannar">Mannar</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Matale">Matale</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Matara">Matara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Monaragala">Monaragala</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Mullaitivu">Mullaitivu</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Nuwara Eliya">Nuwara Eliya</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Polonnaruwa">Polonnaruwa</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Puttalam">Puttalam</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Ratnapura">Ratnapura</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Trincomalee">Trincomalee</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Vavuniya">Vavuniya</NavDropdown.Item>
+                            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {Object.keys(LocationByCitiesJson).map((location, index) => (
+                                    LocationByCitiesJson[location].cities.map((city, subIndex) => (
+                                        <NavDropdown.Item key={`${index}-${subIndex}`} eventKey={city}>
+                                            {city}
+                                        </NavDropdown.Item>
+                                    ))
+                                ))}
+                            </div>
                         </NavDropdown>
                     </Nav>
                 </div>

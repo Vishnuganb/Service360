@@ -224,25 +224,25 @@ const CustomerDashboard = () => {
                 <div style={{ padding: '10px'}}><h4>Welcome back !</h4></div>
                 <div className='d-flex flex-column flex-lg-row flex-md-row '>
                     <div className="d-flex flex-row col-7">
-                        <Card className="card-cus-dashboard dashboard-button-1" style={{ width: "255px" }}>
+                        <Card className="card-cus-dashboard dashboard-button-1" style={{ width: "240px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
-                                <Card.Body >
-                                    <Card.Title style={{ fontSize: '18px', paddingTop: '10px' }}>8</Card.Title>
-                                    <Card.Text className="card-body-container" style={{ fontSize: '18px' }}>
+                                <Card.Body classname = "pendingvacancy">
+                                    <Card.Title style={{ fontSize: '30px', paddingTop: '5px', fontWeight: "bold", margin: '0', marginLeft: '85px'}}>8</Card.Title>
+                                    <Card.Text className="card-body-container" style={{ fontSize: '20px', marginTop: '-10px', marginLeft: '10px' }}>
                                         Pending vacancy
-                                        <i className="bi bi-rocket-takeoff" ></i>
+                                        <i className="bi bi-rocket-takeoff" style={{fontSize:'30px', marginLeft:'-50px', padding: '5px'}} ></i>
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
                         </Card>
                         {/* &nbsp; &nbsp; &nbsp; */}
-                        <Card className="card-cus-dashboard dashboard-button-2" style={{ width: "255px" }}>
+                        <Card className="card-cus-dashboard dashboard-button-2" style={{ width: "240px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
                                 <Card.Body>
-                                    <Card.Title style = {{fontSize: '18px', paddingTop: '10px'}}>3</Card.Title>
-                                    <Card.Text className="card-body-container" style={{ fontSize: '18px' }}>
+                                    <Card.Title style = {{fontSize: '30px', paddingTop: '5px', fontWeight: "bold", margin: '0', marginLeft: '85px'}}>3</Card.Title>
+                                    <Card.Text className="card-body-container" style={{fontSize: '20px', marginTop: '-10px', marginLeft: '10px' }}>
                                         New Quotation
-                                            <i className="bi bi-file-post-fill" ></i>
+                                            <i className="bi bi-file-post-fill" style={{fontSize:'30px', marginLeft:'-50px', padding: '5px'}} ></i>
                                     
                                     </Card.Text>
                                 </Card.Body>

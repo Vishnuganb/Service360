@@ -12,6 +12,7 @@ import axios from 'axios';
 import places from '../../loginForm/cities-by-district.json';
 import { NavDropdown } from 'react-bootstrap';
 
+
 const SearchServiceProvider = () => {
   const [isLocationPopupOpen, setLocationPopupOpen] = useState(false);
   const [isFilterPopupOpen, setFilterPopupOpen] = useState(false);
@@ -23,6 +24,10 @@ const SearchServiceProvider = () => {
   const [sortByReview, setSortByReview] = useState(false);
   const [sortOrder, setSortOrder] = useState('asc');
   const [serviceProviderCards, setServiceProviderCards] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Added currentPage state
+  const [itemsPerPage] = useState(10); // Set the number of items per page
+  const [searchTerm, setSearchTerm] = useState(''); // Added search term state
+
 
   const toggleLocationPopup = () => {
     setLocationPopupOpen(!isLocationPopupOpen);
@@ -96,6 +101,21 @@ const SearchServiceProvider = () => {
     return 0;
   });
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentSPCards = sortedSPCards.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(sortedSPCards.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
+
   return (
     <div className="content">
       <div className="selectionpanel">
@@ -158,10 +178,18 @@ const SearchServiceProvider = () => {
 
       <Row id='bodyPageRow2'>
         <div className="paginationContainer-customer">
-          <Pagination className='pagination-element-customer'>
-            <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Item>{2}</Pagination.Item>
-          </Pagination>
+          <div className="pagination justify-content-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
+                style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </Row>
     </div>

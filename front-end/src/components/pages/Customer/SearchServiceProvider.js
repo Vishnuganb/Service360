@@ -25,8 +25,9 @@ const SearchServiceProvider = () => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [serviceProviderCards, setServiceProviderCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Added currentPage state
-  const [itemsPerPage] = useState(10); // Set the number of items per page
+  const [itemsPerPage] = useState(1); // Set the number of items per page
   const [searchTerm, setSearchTerm] = useState(''); // Added search term state
+
 
 
   const toggleLocationPopup = () => {
@@ -74,6 +75,7 @@ const SearchServiceProvider = () => {
     console.log(data.data)
     setServiceProviderCards(data.data)
   }
+
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location); // Set the selected location

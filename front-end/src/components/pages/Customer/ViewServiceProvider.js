@@ -145,7 +145,8 @@ function ViewServiceProvider() {
 
         <div className='SPReqButtons'>
           <Link to={`/customer/JobRequest`}>
-            <button className='SPRequestjob'> Request for job </button></Link>
+            <button className='SPRequestjob'> Request for job </button>
+          </Link>
 
 
           {/* <Link to={`/customer/Quotation`}>
@@ -275,6 +276,7 @@ function ViewServiceProvider() {
       </div>
     </div>
     </div>
+    
 
   );
 };

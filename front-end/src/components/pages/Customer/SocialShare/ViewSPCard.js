@@ -54,7 +54,10 @@ function ViewSPCard({ spCard }) {
             <img src={spCard.profilePic} alt="avatar" className="SP-card-avatar" />
           </Col>
           <Col>
-            <span className="SP-card-title">{spCard.firstname} {" "} {spCard.lastname}</span>
+          <div className="SP-card-title d-flex gap-2">
+          <span className="firstname">{spCard.firstname} </span> {" "}
+          <span className="lastname"> {spCard.lastname}</span>
+          </div>
           </Col>
 
           {/* <Col className='star'>
@@ -77,7 +80,7 @@ function ViewSPCard({ spCard }) {
                             ))}
                           | Member since  {spCard.registrationdate}</span>
           <br />
-          <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {spCard.district} {" "} {spCard.city}
+          <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {spCard.district} 
           </span>
           <br />
           <span className="SP-contact-info">

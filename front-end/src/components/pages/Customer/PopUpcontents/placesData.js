@@ -18,4 +18,4 @@
 // ];
 // export default places;
 
-import LocationByCitiesJson from '../../../loginForm/cities-by-district.json';
+// import LocationByCitiesJson from '../../../loginForm/cities-by-district.json';

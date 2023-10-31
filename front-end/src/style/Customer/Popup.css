@@ -11,7 +11,7 @@
 
 .cusmodalcontent {
   background-image: url("../../assets/images/header/Background.png");
-  height: 400px;
+  height: auto;
 }
 
 .cuslocsearch {
@@ -34,6 +34,7 @@
 .PlaceList li {
   font-size: 16px;
   margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 
 .PlaceList li:hover{

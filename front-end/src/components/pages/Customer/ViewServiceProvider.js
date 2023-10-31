@@ -116,7 +116,18 @@ function ViewServiceProvider() {
         {/* <span className='SPActive'> Last Active 5 days ago </span> */}
         <div class="SPDetail">
           <p className='p1'> Member Since {serviceProvider.registrationdate} </p>
-          <p className='p1'>Service : {serviceProvider.service}  &nbsp; | &nbsp; Location : {serviceProvider.district}</p>
+          <p className='p1'> Service : {serviceProvider.serviceCategories.map((category, categoryIndex) => (
+              <span key={categoryIndex}>
+                {category.services.map((service, serviceIndex) => (
+                  <span key={serviceIndex}>
+                    {service}
+                    {serviceIndex < category.services.length - 1 && ', '}
+                  </span>
+                ))}
+                {categoryIndex < serviceProvider.serviceCategories.length - 1 && ', '}
+              </span>
+            ))}  &nbsp; 
+          | &nbsp; Location : {serviceProvider.district}</p>
           <p className='p1'> </p>
           {/* <p className='Des border p-3' >{serviceProvider.description}</p> */}
         </div>

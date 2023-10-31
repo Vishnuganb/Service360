@@ -8,10 +8,16 @@ import { Link } from "react-router-dom";
 import trainingsessionimage from '../../../../assets/images/ServiceProvider/TrainingSession/default.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import LocationByCitiesJson from '../../../loginForm/cities-by-district.json';
 
 function SessionsBodyPage() {
     const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
     const [myservicesData, setMyservicesData] = useState([]);
+
+    const [interestedSessions, setInterestedSessions] = useState(() => {
+        const interestedSessionsFromStorage = localStorage.getItem('interestedSessions');
+        return interestedSessionsFromStorage ? JSON.parse(interestedSessionsFromStorage) : [];
+    });
 
     // Number of cards (training sessions) to display per page
     const cardsPerPage = 3;
@@ -30,6 +36,11 @@ function SessionsBodyPage() {
 
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
+
+    // Function to save interested sessions in localStorage when it changes
+    useEffect(() => {
+        localStorage.setItem('interestedSessions', JSON.stringify(interestedSessions));
+    }, [interestedSessions]);
 
     // Function to handle page change when the user clicks on pagination buttons
     const handlePageChange = (page) => {
@@ -75,25 +86,50 @@ function SessionsBodyPage() {
     }
 
     const handleIntrested = (trainingsessionid) => {
-        axios
-            .put(`http://localhost:8080/auth/TrainingSessionIntrested?trainingsessionid=${trainingsessionid}`)
-            .then((response) => {
-                console.log('Intrested Count Updated successfully:', response.data);
-                
-                //update the entries without page refresh
-                setviewTrainingSessionsData((prevData) => ({
-                    ...prevData,
-                    trainingsessions: prevData.trainingsessions.map((session) =>
-                        session.trainingid === trainingsessionid
-                        ? { ...session, interested: session.interested + 1 }
-                        : session
-                    ),
-                }));
-        })
-            .catch((error) => {
-                console.error('Error udpdating interested count intrested:', error);
-            });
+        // Check if the user has already clicked "Interested" for this session
+        if (interestedSessions.includes(trainingsessionid)) {
+            axios
+                .put(`http://localhost:8080/auth/TrainingSessionNotIntrested?trainingsessionid=${trainingsessionid}`)
+                .then((response) => {
+                    console.log('Interested Count Updated successfully:', response.data);
+                    // Update the entries without page refresh
+                    setviewTrainingSessionsData((prevData) => ({
+                        ...prevData,
+                        trainingsessions: prevData.trainingsessions.map((session) =>
+                            session.trainingid === trainingsessionid
+                                ? { ...session, interested: session.interested - 1 }
+                                : session
+                        ),
+                    }));
+                    // Remove the session ID from the interestedSessions state
+                    setInterestedSessions(interestedSessions.filter((id) => id !== trainingsessionid));
+                })
+                .catch((error) => {
+                    console.error('Error updating interested count:', error);
+                });
+        } else {
+            axios
+                .put(`http://localhost:8080/auth/TrainingSessionIntrested?trainingsessionid=${trainingsessionid}`)
+                .then((response) => {
+                    console.log('Interested Count Updated successfully:', response.data);
+                    // Update the entries without page refresh
+                    setviewTrainingSessionsData((prevData) => ({
+                        ...prevData,
+                        trainingsessions: prevData.trainingsessions.map((session) =>
+                            session.trainingid === trainingsessionid
+                                ? { ...session, interested: session.interested + 1 }
+                                : session
+                        ),
+                    }));
+                    // Add the session ID to the interestedSessions state
+                    setInterestedSessions([...interestedSessions, trainingsessionid]);
+                })
+                .catch((error) => {
+                    console.error('Error updating interested count:', error);
+                });
+        }
     };
+    
 
     function convertTo12HourFormat(time24) {
         const [hour, minute] = time24.split(":");
@@ -172,33 +208,15 @@ function SessionsBodyPage() {
                             ))}
                         </NavDropdown>
                         <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
-                            <NavDropdown.Item eventKey="wellawatte">Wellawatte</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="colombo">Colombo</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Ampara">Ampara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Anuradhapura">Anuradhapura</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Badulla">Badulla</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Batticaloa">Batticaloa</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Colombo">Colombo</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Galle">Galle</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Gampaha">Gampaha</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Hambantota">Hambantota</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Jaffna">Jaffna</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kalutara">Kalutara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kandy">Kandy</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kegalle">Kegalle</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kilinochchi">Kilinochchi</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kurunegala">Kurunegala</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Mannar">Mannar</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Matale">Matale</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Matara">Matara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Monaragala">Monaragala</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Mullaitivu">Mullaitivu</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Nuwara Eliya">Nuwara Eliya</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Polonnaruwa">Polonnaruwa</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Puttalam">Puttalam</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Ratnapura">Ratnapura</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Trincomalee">Trincomalee</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Vavuniya">Vavuniya</NavDropdown.Item>
+                            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {Object.keys(LocationByCitiesJson).map((location, index) => (
+                                    LocationByCitiesJson[location].cities.map((city, subIndex) => (
+                                        <NavDropdown.Item key={`${index}-${subIndex}`} eventKey={city}>
+                                            {city}
+                                        </NavDropdown.Item>
+                                    ))
+                                ))}
+                            </div>
                         </NavDropdown>
                     </Nav>
                 </div>
@@ -255,7 +273,13 @@ function SessionsBodyPage() {
                                         className="btn btn-default my-training-card-footer-btn"
                                         id="my-training-card-footer-btn-view"
                                     >
-                                        <i className="bi bi-star h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i className={`bi ${
+                                                interestedSessions.includes(TrainingSession.trainingid)
+                                                    ? 'bi-star-fill'
+                                                    : 'bi-star'
+                                            } h5`}
+                                        ></i>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
                                         <span style={{ position: "relative", bottom: "1.5px" }}>intrested</span>
                                     </span>
                                     <Link to={`/ServiceProvider/ViewATrainingSession/${TrainingSession.trainingid}`}

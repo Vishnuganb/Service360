@@ -9,6 +9,7 @@ import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { set } from 'date-fns';
+import Payment from "../../Payment/Payment";
 
 function MyTrainingSessions() {
 
@@ -30,6 +31,9 @@ function MyTrainingSessions() {
 
   // State to control the user registration modal
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [orderID, setOrderID] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = (rowData) => {
@@ -75,6 +79,35 @@ function MyTrainingSessions() {
 
   // State to store the selected date
   const [selectedDate, setSelectedDate] = useState(null);
+
+  const [selectedRowId, setSelectedRowId] = useState(null);
+
+  const [selectedRowTitle, setSelectedRowTitle] = useState(null);
+
+  useEffect(() => {
+    if (paymentSuccess && orderID) {
+        if (paymentSuccess) {
+              axios.put(`http://localhost:8080/auth/publishTrainingSession/${selectedRowId}`).then((res) => {
+                console.log(res.data);
+
+                if(!res){
+                  handleShowAlertRed("Payment unsuccessful.");    
+                }
+                else{
+                  handleShowAlertBlue("Payment successful. Your training session has been published.");
+                  setviewTrainingSessionsData((prevData) =>
+                    prevData.map((session) =>
+                      session.trainingid === selectedRowId ? { ...session, status: "Published" } : session
+                    )
+                  );
+                  handleClose();
+                }
+            })
+        } else {
+          handleShowAlertRed("Payment Failed, Please try again!");
+        }
+    }
+}, [paymentSuccess, orderID]);
   
 
   // Function to handle page change when the user clicks on pagination buttons
@@ -100,27 +133,11 @@ function MyTrainingSessions() {
   const response = sessionStorage.getItem('authenticatedUser');
   const userData = JSON.parse(response);
 
-  const handlePublish = (id) => {
-      console.log(id);
-      axios
-      .put(`http://localhost:8080/auth/publishTrainingSession/${id}`).then((res) => {
-          console.log(res.data);
-
-          if(!res){
-            handleShowAlertRed("Payment unsuccessful.");
-          }
-          else{
-            handleShowAlertBlue("Payment successful. Your training session has been published.");
-            setviewTrainingSessionsData((prevData) =>
-              prevData.map((session) =>
-                session.trainingid === id ? { ...session, status: "Published" } : session
-              )
-            );
-          }
-      })
-      .catch((error) => {
-        // Handle errors
-      });
+  const handleSetSelectedData = (session) => {
+    if (session && session.trainingid && session.trainingtitle) {
+      setSelectedRowId(session.trainingid);
+      setSelectedRowTitle(session.trainingtitle);
+    }
   };
 
   const getRegisteredUsers = (trainingsessionid) => {
@@ -208,7 +225,7 @@ function MyTrainingSessions() {
         setShowAlertRed(false);
       }, 5000); // 5000 milliseconds (5 seconds)
   };
-      
+
   return (
     <div>
 
@@ -309,8 +326,11 @@ function MyTrainingSessions() {
                       ></i>
                     ) : session.status === 'Payment Pending' ? (
                       <i
-                        className={`bi bi-cash-fil fs-5 mx-2 my-2`}
-                        onClick={() => handleShow(session)}
+                        className={`bi bi-cash fs-5 mx-2 my-2`}
+                        onClick={() => {
+                          handleShow(session);
+                          handleSetSelectedData(session);
+                      }}
                       ></i>
                     ) : session.status === 'Published' ? (
                       <i
@@ -355,6 +375,7 @@ function MyTrainingSessions() {
 
       {/* Modal for Payment Confirmation */}
       <Modal show={show && selectedRow !== null} onHide={handleClose} centered>
+        
         <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Pay for Training Session</Modal.Title>
         </Modal.Header>
@@ -370,7 +391,7 @@ function MyTrainingSessions() {
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Group className="mb-3" controlId="sessionTitle">
                     <Form.Label>Session Title</Form.Label>
-                    <Form.Control type="text" value={selectedRow ? selectedRow.trainingtitle : ''} readOnly />
+                    <Form.Control type="text" value={selectedRow ? selectedRow.trainingtitle : ''} onreadOnly />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="amount">
@@ -394,17 +415,28 @@ function MyTrainingSessions() {
           <Button className="btn-ServiceProvider-2" onClick={handleClose}>
             Close
           </Button>
-          <Button
+          <Payment
+            firstname={userData.firstname}
+            lastname={userData.lastname}
+            email={userData.email}
+            paymentTitle={selectedRow ? selectedRow.trainingtitle : ''}
+            amount={1000}
+            sendUserId={userData.userid}
+            reciveUserID={null}
+            setPaymentSuccess={setPaymentSuccess}
+            setOrderID={setOrderID}
+          />
+          {/* <Button
             className="btn-ServiceProvider-1"
             onClick={() => {
               if (selectedRow) {
-                handlePublish(selectedRow.trainingid);
+                handlePublish(selectedRow.trainingid,selectedRow.trainingtitle);
               }
               handleClose();
             }}
           >
             Pay & Publish
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
 

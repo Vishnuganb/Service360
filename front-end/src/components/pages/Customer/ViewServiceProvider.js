@@ -32,6 +32,10 @@ function ViewServiceProvider() {
 
   const rating = 4;
   const { id } = useParams();
+
+  const { serviceproviderid } = useParams();
+  const serviceProviderId = parseInt(id, 10);
+
   // const ViewServiceProvider = ({ match }) => {
   //   const rating = 4; 
 
@@ -64,7 +68,7 @@ function ViewServiceProvider() {
   useEffect(() => {
     axios.get('http://localhost:8080/auth/viewServiceProviderBlogs',{
       params:{
-        serviceproviderid:3
+        serviceproviderid:serviceProviderId
       }
     }).then((res) => {
         console.log(res.data);
@@ -139,19 +143,8 @@ function ViewServiceProvider() {
               &nbsp; &nbsp; {serviceProvider.phonenumber}
             </a>
           </div>
-        </div>
+        </div> 
 
-        {/* <hr className='line'></hr>
-
-        <div className='SPContact'>
-          <div className='contacticon'>
-            <a href='#Chat' className='SPNo'>
-              <FontAwesomeIcon icon={faComment} />
-              &nbsp; &nbsp; Chat
-            </a>
-          </div>
-          <br></br>
-        </div> */}
         <hr className='line'></hr>
 
         <div className='SPReqButtons'>
@@ -162,10 +155,10 @@ function ViewServiceProvider() {
 
           {/* <Link to={`/customer/Quotation`}>
             <button className='SPRequestquotation'> Request for quotation</button>
-          </Link> */}
+          </Link>  */}
         </div>
 
-        <div className='SPRatings'>
+         <div className='SPRatings'>
           <p className='ratereview'> Ratings and Reviews </p>
           <div className='rating'>
             <span className={`star ${rating >= 1 ? 'filled' : ''}`}>&#9733;</span>
@@ -284,9 +277,10 @@ function ViewServiceProvider() {
           </div>
           
         </div>
-      </div>
+      {/* </div> */}
     </div>
     </div>
+  </div>
     
 
   );

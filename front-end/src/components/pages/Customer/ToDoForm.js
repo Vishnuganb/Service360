@@ -7,7 +7,10 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import Payment from "../Payment/Payment";
 // import { QrReader } from 'react-qr-reader'; // Import the QR code reader
+
+
 
 function ToDoForm() {
   const [tasks, setTasks] = useState([]);
@@ -15,6 +18,10 @@ function ToDoForm() {
   const [showPaymentMessage, setShowPaymentMessage] = useState(false);
   const [paymentDone, setPaymentDone] = useState(false);
   const [qrScanActive, setQrScanActive] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [orderID, setOrderID] = useState(null);
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
 
   useEffect(() => {
     fetchData();
@@ -36,15 +43,22 @@ function ToDoForm() {
     }
   }, [tasks]);
 
-  const toggleCompletion = taskId => {
-    setTasks(prevTasks => {
-      return prevTasks.map(task =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      );
-    });
-  };
+  // const toggleCompletion = taskId => {
+  //   setTasks(prevTasks => {
+  //     return prevTasks.map(task =>
+  //       task.id === taskId ? { ...task, completed: !task.completed } : task
+  //     );
+  //   });
+  // };
+  useEffect(() => {
+    if (paymentSuccess && orderID) {
+      setShowPaymentModal(false);
+      // handleOpenSubscripedModal(chosenPlan.id);
+    }
+  }, [paymentSuccess, orderID]);
 
-  const completedTasks = tasks.filter(task => task.completed);
+  const completedTasks = tasks.filter(task => task.completed && !task.customercompleted);
+  const ConfirmcompletedTasks = tasks.filter(task => task.completed && task.customercompleted);
   const nonCompletedTasks = tasks.filter(task => !task.completed);
 
   const handleClosePaymentModal = () => {
@@ -57,16 +71,36 @@ function ToDoForm() {
     handleClosePaymentModal(); // Close the modal
   };
 
-  const handleScan = data => {
-    if (data) {
-      // Handle the scanned QR code data here (e.g., send it to the server)
-      console.log(data);
-      setQrScanActive(false); // Turn off the QR scanner after a successful scan
-    }
-  };
+  // const handleScan = data => {
+  //   if (data) {
+  //     // Handle the scanned QR code data here (e.g., send it to the server)
+  //     console.log(data);
+  //     setQrScanActive(false); // Turn off the QR scanner after a successful scan
+  //   }
+  // };
 
-  const startScan = () => {
-    setQrScanActive(true);
+  // const startScan = () => {
+  //   setQrScanActive(true);
+  // };
+  const handleConfirm = async (taskId) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/auth/ConfirmTodoListDetails/${taskId}`, null, {
+        params: {
+          ccompleted: true, // Set the completed parameter to true
+        }
+      });
+
+      if (response.data) {
+        // Task confirmation was successful
+        // You can update the task in your state if needed
+        fetchData(); // Refresh the task list
+      } else {
+        // Handle the error
+        console.error('Error confirming task:', response.data);
+      }
+    } catch (error) {
+      console.error('Error confirming task:', error);
+    }
   };
 
   return (
@@ -84,18 +118,17 @@ function ToDoForm() {
                 className={`check-icon ${task.completed ? 'completed' : ''}`}
                 onClick={() => toggleCompletion(task.todolistdetailsid)}
               /> */}
-               <p className="task-date">{task.dueDate}</p>
+              <p className="task-date">{task.dueDate}</p>
               <span className="task-text">{task.task}</span>
+              <span className="task-text">Amount = Rs.{task.amount}</span>
             </div>
-            
-            {/* <Button className="scanbtn" onClick={startScan}>Scan QR Code</Button> */}
           </Card.Body>
         </Card>
       ))}
 
       {completedTasks.length > 0 && (
         <div className='completedTasks'>
-          <h5>Completed Tasks</h5>
+          <h5>Confirm the Tasks Completed</h5>
           {completedTasks.map(task => (
             <Card
               key={task.todolistdetailsid}
@@ -107,30 +140,54 @@ function ToDoForm() {
                   className={`check-icon completed`}
                 />
                 {task.task}
+
+                <div class="time"> worked hours:  {task.workedHours}</div>
+
+                <Button
+                  className="scanbtn"
+                  onClick={() => handleConfirm(task.todolistdetailsid)}
+                >Confirm</Button>
+
               </Card.Body>
             </Card>
           ))}
         </div>
       )}
 
-      {/* QR Code Scanner Modal */}
-      <Modal show={qrScanActive} onHide={() => setQrScanActive(false)} centered>
-        <Modal.Header className='cusmodaltitle'>
-          <Modal.Title>Scan QR Code</Modal.Title>
-        </Modal.Header>
-        {/* <Modal.Body>
-          <QrReader
-            onScan={handleScan}
-            onError={(err) => console.error(err)}
-          />
-        </Modal.Body> */}
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setQrScanActive(false)}>Cancel</Button>
-        </Modal.Footer>
-      </Modal>
+      {ConfirmcompletedTasks.length > 0 && (
+        <div className='completedTasks'>
+          <h5>Completed Tasks</h5>
+          {ConfirmcompletedTasks.map(task => (
+            <Card
+              key={task.todolistdetailsid}
+              className={`castodolist completed`}
+            >
+              <Card.Body>
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className={`check-icon completed`}
+                />
+                {task.task}
+
+                <div class="time"> worked hours:  {task.workedHours}</div>
+                <div class="time"> Amount:  Rs.{task.amount}</div>
+
+                {/* <Button
+                  className="scanbtn"
+                  onClick={() => handleConfirm(task.todolistdetailsid)}
+                >Confirm</Button> */}
+
+              </Card.Body>
+            </Card>
+          ))}
+
+
+        </div>
+      )}
 
       {/* Payment Modal */}
-      {/* <Modal show={showPaymentModal} onHide={handleClosePaymentModal} centered>
+      {completedTasks.length === 0 && nonCompletedTasks.length === 0 && ConfirmcompletedTasks.length > 0 && (
+      <Modal show={showPaymentModal} onHide={handleClosePaymentModal} centered>
         <Modal.Header className='cusmodaltitle'>
           <Modal.Title>Service Completed</Modal.Title>
         </Modal.Header>
@@ -139,17 +196,35 @@ function ToDoForm() {
             Your tasks are completed now. Select Payment option to Continue
           </Modal.Body>
           <Modal.Footer>
-            <Button className='custodobut1' onClick={handleClosePaymentModal}>
-              Online Payment
-            </Button>
+            {/* <Button className='custodobut1' onClick={handleClosePaymentModal}> */}
+            <Payment
+                    firstname={userDetail.firstname}
+                    lastname={userDetail.lastname}
+                    email={userDetail.email}
+                    paymentTitle={"tile fitting"}
+                    amount={10000}
+                    sendUserId={userDetail.userid}
+                    reciveUserID={null}
+                    setPaymentSuccess={setPaymentSuccess}
+                    setOrderID={setOrderID}
+                  />          
+                    {/* </Button> */}
             <Button className='custodobut2' variant="primary" onClick={handleSkip}>
               HandOver Directly
             </Button>
           </Modal.Footer>
         </div>
-      </Modal> */}
+      </Modal>
+    )}
+
+
+
     </div>
-  );
+  )
 }
+
+
+
+
 
 export default ToDoForm;

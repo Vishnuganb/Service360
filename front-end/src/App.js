@@ -120,29 +120,33 @@ import AuthenticationContextProvider from './ContextFiles/Authentication/Authent
 import PrivateRouteLayout from './components/layout/PrivateRouteLayout.js';
 import { Navigate } from 'react-router-dom';
 
-const isAuth = localStorage.getItem('authenticated'); 
-const user = JSON.parse(sessionStorage.getItem('user'));
+let isAuth = localStorage.getItem('authenticated');
+let user = localStorage.getItem('role'); 
+
+if (user) {
+  user = user.toLowerCase();
+}
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<Home />} />
-        <Route path="/services" element={<ViewServices />} />
-        <Route path="/services/:serviceName" element={<ServicePage />} />
-        <Route path="/services/ViewAservice" element={<ViewAservice />} />
-        <Route path="/review" element={<Review />} />
+        <Route index element={isAuth ? (<Navigate to={`/${user}`} />) : (<Home />)} />
+        <Route path="/services" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ViewServices />)} />
+        <Route path="/services/:serviceName" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ServicePage />)} />
+        <Route path="/services/ViewAservice" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ViewAservice />)} />
+        <Route path="/review" element={isAuth ? (<Navigate to={`/${user}`} />) : (<Review />)} />
 
-        <Route path="/jobs" element={<ViewServicesJobs />} />
-        <Route path="/jobs/:serviceName" element={<ServicePageJob />} />
+        <Route path="/jobs" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ViewServicesJobs />)} />
+        <Route path="/jobs/:serviceName" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ServicePageJob />)} />
         <Route path="/jobs/ViewAjob" element={<SpViewAserviceJob />} />
-        <Route path="/login" element={ isAuth && user ? ( <Navigate to={`/${user}`} />) : (<Login /> )}/>
-        <Route path="/signup/customer" element={<CustSignUp />} />
-        <Route path="/signup/serviceProvider" element={<SpSignUp />} />
-        <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
-        <Route path="/About" element={<About />} />
+        <Route path="/login" element={ isAuth ? ( <Navigate to={`/${user}`} />) : (<Login /> )}/>
+        <Route path="/signup/customer" element={isAuth ? (<Navigate to={`/${user}`} />) : (<CustSignUp />)} />
+        <Route path="/signup/serviceProvider" element={isAuth ? (<Navigate to={`/${user}`} />) : (<SpSignUp />)} />
+        <Route path="/signup/advertiser" element={isAuth ? (<Navigate to={`/${user}`} />) : (<AdvertiserSignUp />)} />
+        <Route path="/About" element={isAuth ? (<Navigate to={`/${user}`} />) : (<About />)} />
         <Route path="/Contactus" element={<ContactpageNR />} />
-        <Route exact path="/ResetPassword" element={<ResetPasswordContextProviderInterface />} />
+        <Route exact path="/ResetPassword" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ResetPasswordContextProviderInterface />)} />
       </Route>
 
       <Route path="/admin" element={<PrivateRouteLayout />}>
@@ -180,8 +184,8 @@ const router = createBrowserRouter(
         </Route>
       </Route>
 
-      <Route path="/Customer" element={<PrivateRouteLayout />}>
-        <Route path="/Customer" element={<CustomerLayout />}>
+      <Route path="/customer" element={<PrivateRouteLayout />}>
+        <Route path="/customer" element={<CustomerLayout />}>
           <Route index element={<CustomerDashboard />} />
           <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
           <Route path="OngoingProject" element={<OngoingProject />} />

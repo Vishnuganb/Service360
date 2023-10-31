@@ -165,7 +165,7 @@ const AuthenticationContextProvider = (props) => {
                 localStorage.setItem('authenticated', 'true');
                 localStorage.setItem('role', response.data.role);
                 // console.log(authenticated);
-                if (response.data.role === 'CUSTOMER') navigate("/Customer");
+                if (response.data.role === 'CUSTOMER') navigate("/customer");
                 else if (response.data.role === 'ADMIN') navigate("/admin");
                 else if (response.data.role === 'SERVICEPROVIDER') navigate("/ServiceProvider");
                 else if (response.data.role === 'ADVERTISER') navigate("/Advertiser");

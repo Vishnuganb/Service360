@@ -65,7 +65,7 @@ export default function AppFooter() {
                 </Link>
               </p>
               <p>
-                <Link as={Link} to="/admin/review" className="text-reset">
+                <Link as={Link} to="/review" className="text-reset">
                   View Review & Ratings
                 </Link>
               </p>

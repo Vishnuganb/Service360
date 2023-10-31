@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Card, Table, Modal, Form, Button } from "react-bootstrap";
 import BgImage from '../../../../assets/images/header/Background.png';
 import BgImage2 from '../../../../assets/images/header/footer.png';
@@ -10,13 +10,18 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-date-range/dist/theme/default.css';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import person1 from '../../../../assets/images/home/Customer_1.png';
 import person2 from '../../../../assets/images/home/Customer_2.png';
 import person3 from '../../../../assets/images/home/Customer_3.png';
 import person4 from '../../../../assets/images/home/Customer_4.jpg';
+import { set } from 'lodash';
+
+const serverLink = 'http://localhost:8080';
 
 const generateRevenueData = () => {
+
   const data = [];
   const days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
   for (let i = 0; i < 7; i++) {
@@ -72,6 +77,41 @@ const StyledModalFooter = styled(Modal.Footer)`
     `;
 
 const AdminDashboard = () => {
+
+  const [customerCount, setCustomerCount] = useState(0);
+  const [serviceProviderCount, setServiceProviderCount] = useState(0);
+  const [advertiserCount, setAdvertiserCount] = useState(0);
+  const [customerCountForLast7Days,setCustomerCountForLast7Days] = useState([])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response1 = await axios.get(serverLink + '/auth/api/getTotalCustomers');
+        const customerCount = response1.data;
+        setCustomerCount(customerCount);
+
+        const response2 = await axios.get(serverLink + '/auth/api/getTotalServiceProviders');
+        const serviceProviderCount = response2.data;
+        setServiceProviderCount(serviceProviderCount);
+
+        const response3 = await axios.get(serverLink + '/auth/api/getTotalAdvertisers');
+        const advertiserCount = response3.data;
+        setAdvertiserCount(advertiserCount);
+
+        const response4 = await axios.get(serverLink + '/auth/api/getCustomerCountForLast7Days');
+        const customerCountForLast7 = response4.data;
+        setCustomerCountForLast7Days(customerCountForLast7)
+
+        console.log(customerCountForLast7)
+
+      }
+      catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const TopServiceProvidersData = [
     {
@@ -289,7 +329,7 @@ const AdminDashboard = () => {
                 <i className="bi bi-three-dots-vertical"></i>
               </div>
               <Card.Body className='d-flex justify-content-between'>
-                <h1 className="card-title mt-2">1000</h1>
+                <h1 className="card-title mt-2">{customerCount}</h1>
                 <p className="card-text d-flex justify-content-end align-items-end">
                   <span className="text-success flex-end">↑ 10%</span>
                 </p>
@@ -304,7 +344,7 @@ const AdminDashboard = () => {
                 <i className="bi bi-three-dots-vertical"></i>
               </div>
               <Card.Body className='d-flex justify-content-between'>
-                <h1 className="card-title mt-2">750</h1>
+                <h1 className="card-title mt-2">{serviceProviderCount}</h1>
                 <p className="card-text d-flex justify-content-end align-items-end">
                   <span className="text-danger">↓ 5%</span>
                 </p>
@@ -319,7 +359,7 @@ const AdminDashboard = () => {
                 <i className="bi bi-three-dots-vertical"></i>
               </div>
               <Card.Body className='d-flex justify-content-between'>
-                <h1 className="card-title mt-2">1200</h1>
+                <h1 className="card-title mt-2">{advertiserCount}</h1>
                 <p className="card-text d-flex justify-content-end align-items-end">
                   <span className="text-success">↑ 15%</span>
                 </p>

@@ -46,7 +46,7 @@ function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
                     </center>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Link to={`/Customer/ViewServiceProvider`}>
+                    <Link to={`/customer/ViewServiceProvider`}>
                         <Button variant='secondary' style={{ background: "#292d32" }}>
                             View Profile
                         </Button></Link>
@@ -88,7 +88,7 @@ function HiredPopup({ title, serviceProvider, durationPeriod, imageSrc, }) {
                 </Modal.Body>
                 <Modal.Footer>
 
-                    <Link to={`/Customer/ViewServiceProvider`}>
+                    <Link to={`/customer/ViewServiceProvider`}>
                         <Button variant='secondary' style={{ background: "#292d32" }}>
                             View Profile
                         </Button></Link>
@@ -132,7 +132,7 @@ function PastPopup({ title, serviceProvider, dueDate, imageSrc }) {
                 </Modal.Body>
                 <Modal.Footer>
 
-                    <Link to={`/Customer/ViewServiceProvider`}>
+                    <Link to={`/customer/ViewServiceProvider`}>
                         <Button variant='secondary' style={{ background: "#292d32" }}>
                             View Profile
                         </Button></Link>

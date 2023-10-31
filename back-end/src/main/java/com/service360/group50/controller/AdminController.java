@@ -250,4 +250,33 @@ public class AdminController {
         return adminService.updateComplaintStatus(complaintid, reply, status);
     }
 
+    // Admin DashBoard
+
+    @GetMapping("/getTotalCustomers")
+    public Long getTotalCustomers() {
+        return adminService.getTotalCustomers();
+    }
+
+    @GetMapping("/getTotalServiceProviders")
+    public Long getTotalServiceProviders() {
+        return adminService.getTotalServiceProviders();
+    }
+
+    @GetMapping("/getTotalAdvertisers")
+    public Long getTotalAdvertisers() {
+        return adminService.getTotalAdvertisers();
+    }
+
+    // i need the customers count for the last 7 days and also the last 30 days every day count
+
+    @GetMapping("/getCustomerCountForLast7Days")
+    public List<Long> getCustomerCountForLast7Days() {
+        return adminService.getCustomerCountForLast7Days();
+    }
+
+    @GetMapping("/getCustomerCountForLast30Days")
+    public List<Long> getCustomerCountForLast30Days() {
+        return adminService.getCustomerCountForLast30Days();
+    }
+
 }

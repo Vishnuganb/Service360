@@ -13,7 +13,7 @@ const OngoingProject = () => {
                 <div className="col-md-8">
                     <div className="card_2" >
                         <p> <a href="#" className='fw-bold navLink d-lg-inline d-sm-none d-md-none d-none'><i className="bi bi-arrow-left-circle-fill"></i></a>
-                            &nbsp;&nbsp;Back</p>
+                            &nbsp;&nbsp;Back</p> 
                         <h3>Ongoing Projects</h3>
 
                         <div className="card d-flex card-3">

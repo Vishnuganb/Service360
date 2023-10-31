@@ -70,11 +70,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
-.paginationContainer-SP {
+/* .paginationContainer-SP {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-}
+} */
 
 @media only screen and (max-width:566px){       
     .paginationContainer-SP {
@@ -146,6 +146,12 @@
     margin-top: 1px;
     margin-bottom: 2px;
 }
+
+/* .SP-card-title .firstname,
+.SP-card-title .lastname{
+    justify-content: inline;
+} */
+
 
 .SP-card-date{
     font-size: 14px;

@@ -2,15 +2,8 @@ package com.service360.group50.service;
 
 
 import com.service360.group50.dto.UsersDTO;
-import com.service360.group50.entity.Advertiser;
-import com.service360.group50.entity.AdvertiserFiles;
-import com.service360.group50.entity.Role;
-import com.service360.group50.entity.SystemReview;
-import com.service360.group50.entity.Users;
-import com.service360.group50.repo.SystemReviewRepository;
-import com.service360.group50.repo.AdvertiserFileRepository;
-import com.service360.group50.repo.AdvertiserRepository;
-import com.service360.group50.repo.UserRepository;
+import com.service360.group50.entity.*;
+import com.service360.group50.repo.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +25,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final AdvertiserRepository advertiserRepository;
+    private final ContactRepository contactRepository;
     private final EmailSender emailSender;
 
 
@@ -205,6 +199,18 @@ public class UserService {
 
         emailSender.send ( userdata.getEmail (), buildReject( userdata.getFirstname (), reason ) );
         return userdata;
+    }
+
+    public Contact addContactMessage ( String email, String fullName, String contactNumber, String message ) {
+
+        Contact contact = new Contact ();
+        contact.setEmail ( email );
+        contact.setFullname ( fullName );
+        contact.setPhonenumber ( contactNumber );
+        contact.setMessage ( message );
+        contactRepository.save ( contact );
+        return contact;
+
     }
 
     private String buildAccept(String name, String link) {
@@ -480,6 +486,7 @@ public class UserService {
                 "\n" +
                 "</div></div>";
     }
+<<<<<<< HEAD
 
 
     // get users by email
@@ -487,6 +494,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+=======
+>>>>>>> main
 }
 
 

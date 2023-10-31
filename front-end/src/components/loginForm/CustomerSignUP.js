@@ -7,6 +7,7 @@ import '../../style/Login.css'
 import { Alert } from 'react-bootstrap';
 import image from '../../assets/images/header/Background.png'
 import { AuthenticationContext } from "../../ContextFiles/Authentication/AuthenticationContextProvider";
+import { Spinner } from 'react-bootstrap';
 
 const customFontStyle = {
     fontFamily: "Roboto",
@@ -33,6 +34,8 @@ const CustomerSignUP = () => {
     const { login } = useContext(AuthenticationContext);
 
     const { customerSignUp } = useContext(AuthenticationContext);
+
+    const { loading } = useContext(AuthenticationContext);
 
     const [data, setdata] = useState({
         email: '',
@@ -237,6 +240,12 @@ const CustomerSignUP = () => {
                                                 </div>
 
                                             </div>
+
+                                            {loading && (
+                                                <div className="text-center">
+                                                    <Spinner animation="border" variant="primary" />
+                                                </div>
+                                            )}
 
                                             <form action="" className="my-2 mx-4">
 

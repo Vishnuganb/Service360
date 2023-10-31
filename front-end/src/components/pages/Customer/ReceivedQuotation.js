@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
@@ -230,59 +230,27 @@ export default function ReceivedQuotation() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Adjust this value based on how many items you want per page
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [fromDate, setFromDate] = useState(null);
-    const [toDate, setToDate] = useState(null);
+   
 
-    const quotations = [
-        { date: '27/07/2023', serviceTitle: 'Ac Repair', status: 'Pending', serviceProvider: 'Vijay Deva', amount: 'Rs.8000', },
-        { date: '26/07/2023', serviceTitle: 'Ac Repair', status: 'Pending', serviceProvider: 'Ashwin Kumar', amount: 'Rs.7000' },
-        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', status: 'Accepted', serviceProvider: 'Alex Kumar', amount: 'Rs.3000' },
-        { date: '25/07/2023', serviceTitle: 'Sofa cleaning', status: 'Pending', serviceProvider: 'Arun Kumar', amount: 'Rs.4000' },
-        { date: '24/07/2023', serviceTitle: 'Sofa cleaning', status: 'Pending', serviceProvider: 'Varun Kumar', amount: 'Rs.4000' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Pending', serviceProvider: 'Tharun Kumar', amount: 'Rs.5000' },
-        { date: '24/07/2023', serviceTitle: 'Plumbing', status: 'Accepted', serviceProvider: 'Vijay Deva', amount: 'Rs.4000' },
-        { date: '23/07/2023', serviceTitle: 'Plumbing', status: 'Pending', serviceProvider: 'Karthik Kumar', amount: 'Rs.4000' },
-    ];
+    const [quotations, setQuotations] = useState([]);
 
-    const filteredQuotations = quotations.filter((quotation) => {
-        const isDateMatch = (!fromDate || new Date(quotation.date) >= new Date(fromDate)) &&
-            (!toDate || new Date(quotation.date) <= new Date(toDate));
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-        return (
-            isDateMatch &&
-            (quotation.date.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.serviceProvider.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.amount.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                quotation.status.toLowerCase().includes(searchTerm.toLowerCase()))
-        );
-    });
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentQuotations = filteredQuotations.slice(indexOfFirstItem, indexOfLastItem);
-
-    const totalPages = Math.ceil(filteredQuotations.length / itemsPerPage);
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    const fetchData = () => {
+        fetch('http://localhost:8080/auth/quotationpdf') // Replace with the actual API endpoint
+            .then((response) => response.json())
+            .then((data) => {
+                setQuotations(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching quotations:', error);
+            });
     };
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-        setCurrentPage(1);
-    };
+   
 
-    const handleFromDateChange = (e) => {
-        setFromDate(e.target.value);
-        setCurrentPage(1);
-    };
-
-    const handleToDateChange = (e) => {
-        setToDate(e.target.value);
-        setCurrentPage(1);
-    };
 
     return (
         <>
@@ -294,51 +262,6 @@ export default function ReceivedQuotation() {
                         </div>
                     </div>
 
-                    <Form className="nav-search">
-                        <div className="d-flex flex-wrap justify-content-center">
-                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3'>
-                                <div className="input-group m-0">
-                                    <Form.Control
-                                        type="search"
-                                        placeholder="Search"
-                                        className=""
-                                        aria-label="Search"
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                    <span className="input-group-text">
-                                        <i className="bi bi-search"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3 date-picker-container'>
-                                <div className="input-group">
-                                    <Form.Control
-                                        type="date"
-                                        placeholder="From Date"
-                                        value={fromDate}
-                                        onChange={handleFromDateChange}
-                                        style={{ height: '45px' }}
-
-                                    />
-
-                                </div>
-                            </div>
-                            <div className='col-sm-6 col-md-4 col-lg-3 col-xl-3 m-3 date-picker-container'>
-                                <div className="input-group">
-                                    <Form.Control
-                                        type="date"
-                                        placeholder="To Date"
-                                        value={toDate}
-                                        onChange={handleToDateChange}
-                                        style={{ height: '45px' }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </Form>
-                </div>
-
 
 
                 <div className="my-customer-table-container" >
@@ -347,20 +270,18 @@ export default function ReceivedQuotation() {
                             <tr>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Date</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Title</b></th>
-                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Service Provider</b></th>
                                 {/* <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Amount</b></th> */}
-                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Status</b></th>
+                                <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>DueDate</b></th>
                                 <th className="my-customer-table-th-1" style={{ width: '16.67%' }}><b>Action</b></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentQuotations.map((quotation, index) => (
+                            {quotations.map((quotation, index) => (
                                 <tr key={index}>
-                                    <td style={{ width: '16.67%' }}>{quotation.date}</td>
-                                    <td style={{ width: '16.67%' }}>{quotation.serviceTitle}</td>
-                                    <td style={{ width: '16.67%' }}>{quotation.serviceProvider}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.posteddate}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.servicename}</td>
                                     {/* <td style={{ width: '16.67%' }}>{quotation.amount}</td> */}
-                                    <td style={{ width: '16.67%' }}>{quotation.status}</td>
+                                    <td style={{ width: '16.67%' }}>{quotation.duedate}</td>
                                     <td style={{ width: '16.67%' }}>
                                         <View />
                                         &nbsp; &nbsp;
@@ -376,20 +297,8 @@ export default function ReceivedQuotation() {
                     </Table>
                 </div>
             </div>
-            <br></br>
-
-            <div className="pagination justify-content-center">
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index + 1}
-                        className={`pagination-element ${currentPage === index + 1 ? 'active' : ''}`}
-                        style={{ backgroundColor: '#292D32', color: '#fff', width: '35px', height: '35px', fontSize: '16px' }}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
+</div>
+           
         </>
     );
 }

@@ -1,10 +1,14 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.entity.Jobs;
+import com.service360.group50.entity.Users;
 import com.service360.group50.entity.Vacancies;
+import com.service360.group50.request.CvacanciesRequest;
 import com.service360.group50.service.CJobsService;
 import com.service360.group50.service.CVacanciesService;
+import com.service360.group50.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +22,25 @@ public class CVacanciesController {
 
     private final CVacanciesService cVacanciesService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/createvacancies")
-    public Vacancies createvacancies(@RequestBody Vacancies newVacancies) {
-        return cVacanciesService.createvacancies(newVacancies);
+    public Vacancies createvacancies(@RequestBody CvacanciesRequest VacancyRequest) {
+        Vacancies newvacancies = new Vacancies();
+        newvacancies.setVacancytitle(VacancyRequest.getVacancytitle());
+        newvacancies.setPosteddate(VacancyRequest.getPosteddate());
+        newvacancies.setDuedate(VacancyRequest.getDuedate());
+        newvacancies.setVacancylocation(VacancyRequest.getVacancylocation());
+        newvacancies.setServicename(VacancyRequest.getServicename());
+        newvacancies.setVacancydescription(VacancyRequest.getVacancydescription());
+        newvacancies.setQualifications(VacancyRequest.getQualifications());
+        newvacancies.setResponsibilities(VacancyRequest.getResponsibilities());
+        newvacancies.setVacancytype(VacancyRequest.getVacancytype());
+        Users user = userService.getUser(VacancyRequest.getCustomer());
+        newvacancies.setCustomer(user);
+
+        return cVacanciesService.createvacancies(newvacancies);
     }
 
     @GetMapping("/viewvacancies")

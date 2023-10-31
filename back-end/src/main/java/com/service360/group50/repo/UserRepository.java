@@ -28,5 +28,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
     List<Users> findByRoleAndEnabled( Role role, boolean enabled);
 
+<<<<<<< HEAD
     Users findByEmail(String email);
+=======
+    Long countByRole ( Role role );
+>>>>>>> main
 }

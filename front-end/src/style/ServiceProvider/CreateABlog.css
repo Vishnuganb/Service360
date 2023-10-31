@@ -55,6 +55,19 @@
     color: #9f390d !important;
   }
 
+  /* BACK BUTTON COMMON CSS FOR ALL FILES */
+
+  .back-button-service-provider{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width:1200px) {
+    .back-button-service-provider{
+        display: none !important;
+    }
+  }
 
 /* SWEET ALERT */
 

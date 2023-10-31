@@ -19,6 +19,12 @@ function MyTrainingSessions() {
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(''); 
+
+  const [showAlertBlue, setShowAlertBlue] = useState(false);
+  const [alertMessageBlue, setAlertMessageBlue] = useState(''); 
+
+  const [showAlertRed, setShowAlertRed] = useState(false);
+  const [alertMessageRed, setAlertMessageRed] = useState(''); 
   
   const [registeredUsers, setRegisteredUsers] = useState([]);
 
@@ -101,11 +107,15 @@ function MyTrainingSessions() {
           console.log(res.data);
 
           if(!res){
-            alert("Payment Failed");
+            handleShowAlertRed("Payment unsuccessful.");
           }
           else{
-            alert("Payment Successful");
-            window.location.reload();
+            handleShowAlertBlue("Payment successful. Your training session has been published.");
+            setviewTrainingSessionsData((prevData) =>
+              prevData.map((session) =>
+                session.trainingid === id ? { ...session, status: "Published" } : session
+              )
+            );
           }
       })
       .catch((error) => {
@@ -176,6 +186,26 @@ function MyTrainingSessions() {
       // Automatically hide the alert after 5 seconds
       setTimeout(() => {
         setShowAlert(false);
+      }, 5000); // 5000 milliseconds (5 seconds)
+  };
+
+  const handleShowAlertBlue = (message) => {
+      setAlertMessageBlue(message);
+      setShowAlertBlue(true);
+
+      // Automatically hide the alert after 5 seconds
+      setTimeout(() => {
+        setShowAlertBlue(false);
+      }, 5000); // 5000 milliseconds (5 seconds)
+  };
+
+  const handleShowAlertRed = (message) => {
+      setAlertMessageRed(message);
+      setShowAlertRed(true);
+
+      // Automatically hide the alert after 5 seconds
+      setTimeout(() => {
+        setShowAlertRed(false);
       }, 5000); // 5000 milliseconds (5 seconds)
   };
       
@@ -274,26 +304,30 @@ function MyTrainingSessions() {
                   <td className="text-center">
                     {session.status === 'Pending' ? (
                       <i
-                        className={`bi-info-circle fs-4 mx-2 my-2`}
+                        className={`bi-info-circle-fill fs-5 mx-2 my-2`}
                         onClick={() => handleShowAlert('Your training session is under review by the admin')}
                       ></i>
                     ) : session.status === 'Payment Pending' ? (
                       <i
-                        className={`bi bi-cash fs-4 mx-2 my-2`}
+                        className={`bi bi-cash-fil fs-5 mx-2 my-2`}
                         onClick={() => handleShow(session)}
                       ></i>
                     ) : session.status === 'Published' ? (
                       <i
-                        className={`bi bi-eye fs-4 mx-2 my-2`}
+                        className={`bi bi-eye-fill fs-5 mx-2 my-2`}
                         onClick={() => handleShowRegistrationModal(session)}
                       ></i>
                     ) : session.status === 'Rejected' ? (
                       <i
-                        className={`bi bi-info-circle fs-4 mx-2 my-2`}
+                        className={`bi bi-info-circle-fill fs-5 mx-2 my-2`}
                         onClick={() => handleShowRejectionModal(session)}
                       ></i>
-                    ) : null
-                    }
+                    ) : session.status === 'Completed' ? (
+                      <i
+                      className={`bi bi-eye-fill fs-5 mx-2 my-2`}
+                      onClick={() => handleShowRegistrationModal(session)}
+                      ></i>
+                    ) : null}
                   </td>
                 </tr>
               ))}
@@ -444,7 +478,37 @@ function MyTrainingSessions() {
         }}
       >
         {alertMessage}
-      </Alert>     
+      </Alert>   
+      
+      <Alert
+        show={showAlertRed}
+            variant="danger"
+            onClose={() => setShowAlertRed(false)}
+            dismissible
+            style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9999, // Adjust the z-index as needed
+            }}
+        >
+        {alertMessageRed}
+      </Alert>   
+
+      <Alert
+        show={showAlertBlue}
+            variant="info"
+            onClose={() => setShowAlertBlue(false)}
+            dismissible
+            style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9999, // Adjust the z-index as needed
+            }}
+        >
+        {alertMessageBlue}
+      </Alert>       
 
     </div>
 

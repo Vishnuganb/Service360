@@ -32,9 +32,20 @@ public class TodoListDetailsController {
         // Toggle the completion status
         task.setCompleted(!completed);
         task.setWorkedHours(hours);
-
+//        task.setCustomercompleted(completed);
         // Save the updated task
         return todoListDetailsService.createTodoListDetails(task);
     }
+
+    @PutMapping("/ConfirmTodoListDetails/{todoListdetailsid}")
+    public TodoListDetails toggleTaskCompletion(@PathVariable Long todoListdetailsid, @RequestParam("ccompleted") Boolean ccompleted) {
+        // Retrieve the task by ID
+        TodoListDetails task = todoListDetailsService.getTodoListDetailsById(todoListdetailsid);
+        // Toggle the completion status
+        task.setCustomercompleted(ccompleted);
+        // Save the updated task
+        return todoListDetailsService.createTodoListDetails(task);
+    }
+
 
 }

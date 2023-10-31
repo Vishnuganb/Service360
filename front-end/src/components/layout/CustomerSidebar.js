@@ -41,7 +41,7 @@ function CustomerSideBar() {
               </li>
               <li className="nav-item text-white fs-4 mt-4 py-2 py-xs-1">
                 <Link
-                  to="/Customer"
+                  to="/customer"
                   className="nav-link nav-link-sidebar text-white"
                 >
                   <i className="bi bi-grid"></i>
@@ -55,7 +55,7 @@ function CustomerSideBar() {
               </li>
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
                 <Link
-                  to="/Customer/Searchserviceprovider"
+                  to="/customer/Searchserviceprovider"
                   className="nav-link nav-link-sidebar text-white"
                 >
                   <i
@@ -108,7 +108,7 @@ function CustomerSideBar() {
                 >
                   <NavDropdown.Item
                     as={Link}
-                    to="/Customer/PostVacancyFormIndex"
+                    to="/customer/PostVacancyFormIndex"
                     className="no-hover"
                   >
                     Post Vacancies{" "}
@@ -116,7 +116,7 @@ function CustomerSideBar() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     as={Link}
-                    to="/Customer/PostedVacancies"
+                    to="/customer/PostedVacancies"
                     className="no-hover"
                   >
                     {" "}
@@ -125,7 +125,7 @@ function CustomerSideBar() {
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     as={Link}
-                    to="/Customer/ViewVacancy"
+                    to="/customer/ViewVacancy"
                     className="no-hover"
                   >
                     {" "}
@@ -143,21 +143,21 @@ function CustomerSideBar() {
                       }`}
                   >
                     <Link
-                      to="/Customer/PostVacancyFormIndex"
+                      to="/customer/PostVacancyFormIndex"
                       className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
                     >
                       {" "}
                       Post Vacancies{" "}
                     </Link>
                     <Link
-                      to="/Customer/PostedVacancies"
+                      to="/customer/PostedVacancies"
                       className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
                     >
                       {" "}
                       Posted Vacancies{" "}
                     </Link>
                     <Link
-                      to="/Customer/ViewVacancy"
+                      to="/customer/ViewVacancy"
                       className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"
                     >
                       {" "}
@@ -183,13 +183,13 @@ function CustomerSideBar() {
                   id="jobs-nav-dropdown"
                   className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
                 >
-                  <NavDropdown.Item as={Link} to="/Customer/PostJob" className="no-hover">Post Jobs</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/customer/PostJob" className="no-hover">Post Jobs</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/Customer/PostedJobs" className="no-hover">Posted Jobs</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/customer/PostedJobs" className="no-hover">Posted Jobs</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/Customer/ViewVacancy" className="no-hover">Responses</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/customer/ViewVacancy" className="no-hover">Responses</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/Customer/RequestedJobs" className="no-hover">Requested Jobs</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/customer/RequestedJobs" className="no-hover">Requested Jobs</NavDropdown.Item>
 
                 </NavDropdown>
 
@@ -200,10 +200,10 @@ function CustomerSideBar() {
                   data-bs-parent="#parentM"
                 >
                   <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
-                    <Link to="/Customer/PostJobForm" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Post Jobs </Link>
-                    <Link to="/Customer/PostedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Posted Jobs </Link>
-                    <Link to="/Customer/ViewVacancy" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Responses </Link>
-                    <Link to="/Customer/RequestedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Requested Jobs </Link>
+                    <Link to="/customer/PostJobForm" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Post Jobs </Link>
+                    <Link to="/customer/PostedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Posted Jobs </Link>
+                    <Link to="/customer/ViewVacancy" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Responses </Link>
+                    <Link to="/customer/RequestedJobs" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4"> Requested Jobs </Link>
                   </li>
                 </ul>
               </li>
@@ -225,9 +225,9 @@ function CustomerSideBar() {
                   id="quotations-nav-dropdown"
                   className={`dropdown-icon d-md-inline d-xs-inline custom-dropdown ${isOpen ? " d-lg-none" : "d-lg-inline"}`}
                 >
-                  <NavDropdown.Item as={Link} to="/Customer/RequestedQuotation" className="no-hover">Requested</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/customer/RequestedQuotation" className="no-hover">Requested</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/Customer/ReceivedQuotation" className="no-hover">Received</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/customer/ReceivedQuotation" className="no-hover">Received</NavDropdown.Item>
                 </NavDropdown>
 
                 <ul
@@ -236,21 +236,21 @@ function CustomerSideBar() {
                   data-bs-parent="#parentM"
                 >
                   <li className={`nav-item fs-5 ${isOpen ? "d-lg-inline" : "d-none"}`}>
-                    <Link to="/Customer/RequestedQuotation" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4">Requested</Link>
-                    <Link to="/Customer/ReceivedQuotation" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4">Received</Link>
+                    <Link to="/customer/RequestedQuotation" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4">Requested</Link>
+                    <Link to="/customer/ReceivedQuotation" className="nav-link nav-link-sidebar text-white sub-item-nav ms-4">Received</Link>
                   </li>
                 </ul>
               </li>
 
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                <Link to="/Customer/CustomerComplaintPage" className="nav-link nav-link-sidebar text-white" >
+                <Link to="/customer/CustomerComplaintPage" className="nav-link nav-link-sidebar text-white" >
                   <i className="bi bi-file-earmark-text"></i>
                   <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}> Complaints</span>
                 </Link>
               </li>
 
               <li className="nav-item text-white fs-4 my-0 py-2 py-xs-1">
-                <Link to="/Customer/History" className="nav-link nav-link-sidebar text-white" >
+                <Link to="/customer/History" className="nav-link nav-link-sidebar text-white" >
                   <i className="fas fa-history"></i>
                   <span className={`ms-3 d-none ${isOpen ? "d-lg-inline" : "d-none"}`}>View History</span>
                 </Link>
@@ -258,7 +258,7 @@ function CustomerSideBar() {
 
               <li className="nav-item text-white fs-4 my-1 py-2 py-xs-1">
                 <Link
-                  to="/Customer/AdsPage"
+                  to="/customer/AdsPage"
                   className="nav-link nav-link-sidebar text-white"
                 >
                   <i className="bi bi-window-stack"></i>

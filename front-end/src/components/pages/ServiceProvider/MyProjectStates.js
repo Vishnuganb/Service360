@@ -4,22 +4,26 @@ import '../../../style/ServiceProvider/MyProjectStates.css';
 import { Link } from 'react-router-dom';
 
 import Pending from '../../../assets/images/ServiceProvider/pending2.jpg';
+import Invites_img from '../../../assets/images/ServiceProvider/invite.png';
+import Pending_img from '../../../assets/images/ServiceProvider/pending.png';
+import Ongoing_img from '../../../assets/images/ServiceProvider/ongoing.png';
+import Rejected_img from '../../../assets/images/ServiceProvider/rejected.png';
 
 const serviceCategories = {
     jobInvites: {
-        image: Pending,
+        image: Invites_img,
         title: "Job Invites",
     },
     pendingJobs: {
-        image: Pending,
+        image: Pending_img,
         title: "Pending Jobs",
     },
     processingJobs: {
-        image: Pending,
+        image: Ongoing_img,
         title: "On Going Jobs",
     },
     rejectedJobs: {
-        image: Pending,
+        image: Rejected_img,
         title: "Rejected Jobs",
     },
     VacancyInvites: {
@@ -46,9 +50,9 @@ function MyProjectsJobsStates() {
                 <div className='col-lg-3 col-sm-6 col-12'>
                     <Link to="/ServiceProvider/MyProjectsJobs?tab=invite">
                         <Card className="MyProjectsStates-card mb-3" >
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.jobInvites.image} />
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.jobInvites.image} style={{ maxHeight: '150px', objectFit: 'contain', padding: '16px' }}/>
                             <Card.Body>
-                                <span >{serviceCategories.jobInvites.title}</span>
+                                <span style={{fontWeight:"bold"}}>{serviceCategories.jobInvites.title}</span>
                             </Card.Body>
                         </Card>
                     </Link>
@@ -56,9 +60,9 @@ function MyProjectsJobsStates() {
                 <div className='col-lg-3 col-sm-6 col-12'>
                     <Link to="/ServiceProvider/MyProjectsJobs?tab=pending">
                         <Card className="MyProjectsStates-card mb-3" >
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.pendingJobs.image} />
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.pendingJobs.image} style={{ maxHeight: '150px', objectFit: 'contain', padding: '24px' }}/>
                             <Card.Body>
-                                <span >{serviceCategories.pendingJobs.title}</span>
+                                <span style={{fontWeight:"bold"}}>{serviceCategories.pendingJobs.title}</span>
                             </Card.Body>
                         </Card>
                     </Link>
@@ -66,9 +70,9 @@ function MyProjectsJobsStates() {
                 <div className='col-lg-3 col-sm-6 col-12'>
                     <Link to="/ServiceProvider/MyProjectsJobs?tab=ongoing">
                         <Card className="MyProjectsStates-card mb-3">
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.processingJobs.image} />
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.processingJobs.image} style={{ maxHeight: '150px', objectFit: 'contain', padding: '24px'  }}/>
                             <Card.Body>
-                                <span >{serviceCategories.processingJobs.title}</span>
+                                <span style={{fontWeight:"bold"}}>{serviceCategories.processingJobs.title}</span>
                             </Card.Body>
                         </Card>
                     </Link>
@@ -76,9 +80,9 @@ function MyProjectsJobsStates() {
                 <div className='col-lg-3 col-sm-6 col-12'>
                     <Link to="/ServiceProvider/MyProjectsJobs?tab=rejected">
                         <Card className="MyProjectsStates-card">
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.rejectedJobs.image} />
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.rejectedJobs.image} style={{ maxHeight: '150px', objectFit: 'contain', padding: '24px'  }}/>
                             <Card.Body>
-                                <span >{serviceCategories.rejectedJobs.title}</span>
+                                <span style={{fontWeight:"bold"}}>{serviceCategories.rejectedJobs.title}</span>
                             </Card.Body>
                         </Card>
                     </Link>

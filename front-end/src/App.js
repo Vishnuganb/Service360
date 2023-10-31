@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, useLocation } from 'react-router-dom';
 import Home from './components/pages/Home/Index.js';
 
 import Login from './components/loginForm/LoginContextProviderInterface.js';
@@ -11,6 +11,7 @@ import ViewServicesJobs from './components/pages/User/ViewServicesJob.js';
 import ServicePage from './components/pages/User/ServicePage.js';
 import ServicePageJob from './components/pages/User/ServicePageJob.js';
 import ResetPasswordContextProviderInterface from './components/loginForm/ResetPasswordContextProviderInterface.js';
+import Review from './components/pages/User/Admin/ViewReviewandRating.js';
 
 import CreateAd from './components/pages/advertiser/Dashboard/CreateAd.js';
 import AdsPage from './components/pages/advertiser/AdsPage.js';
@@ -87,6 +88,7 @@ import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP
 import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
 import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js';
 import CustomerChat from './components/pages/User/Chat/ChatPage.js';
+import CustomerJob from './components/pages/Customer/ViewAJobCustomer/Index.js';
 
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
@@ -114,59 +116,73 @@ import ActivateCustomer from './ContextFiles/ActivateCustomer.js';
 import ActivateUser from './ContextFiles/ActivateUser.js';
 import ViewPostedJobs1 from './components/pages/Customer/ViewPostedJobs1.js';
 
-import Payment from './components/pages/Payment/Payment.js';
+import PrivateRoute from './PrivateRoute.js';
+import AuthenticationContextProvider from './ContextFiles/Authentication/AuthenticationContextProvider.js';
+import PrivateRouteLayout from './components/layout/PrivateRouteLayout.js';
+import { Navigate } from 'react-router-dom';
+
+let isAuth = localStorage.getItem('authenticated');
+let user = localStorage.getItem('role'); 
+
+if (user) {
+  user = user.toLowerCase();
+}
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<Home />} />
-        <Route path="/services" element={<ViewServices />} />
-        <Route path="/services/:serviceName" element={<ServicePage />} />
-        <Route path="/services/ViewAservice" element={<ViewAservice />} />
+        <Route index element={isAuth ? (<Navigate to={`/${user}`} />) : (<Home />)} />
+        <Route path="/services" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ViewServices />)} />
+        <Route path="/services/:serviceName" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ServicePage />)} />
+        <Route path="/services/ViewAservice" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ViewAservice />)} />
+        <Route path="/review" element={isAuth ? (<Navigate to={`/${user}`} />) : (<Review />)} />
 
-        <Route path="/jobs" element={<ViewServicesJobs />} />
-        <Route path="/jobs/:serviceName" element={<ServicePageJob />} />
+        <Route path="/jobs" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ViewServicesJobs />)} />
+        <Route path="/jobs/:serviceName" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ServicePageJob />)} />
         <Route path="/jobs/ViewAjob" element={<SpViewAserviceJob />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup/customer" element={<CustSignUp />} />
-        <Route path="/signup/serviceProvider" element={<SpSignUp />} />
-        <Route path="/signup/advertiser" element={<AdvertiserSignUp />} />
-        <Route path="/About" element={<About />} />
+        <Route path="/login" element={ isAuth ? ( <Navigate to={`/${user}`} />) : (<Login /> )}/>
+        <Route path="/signup/customer" element={isAuth ? (<Navigate to={`/${user}`} />) : (<CustSignUp />)} />
+        <Route path="/signup/serviceProvider" element={isAuth ? (<Navigate to={`/${user}`} />) : (<SpSignUp />)} />
+        <Route path="/signup/advertiser" element={isAuth ? (<Navigate to={`/${user}`} />) : (<AdvertiserSignUp />)} />
+        <Route path="/About" element={isAuth ? (<Navigate to={`/${user}`} />) : (<About />)} />
         <Route path="/Contactus" element={<ContactpageNR />} />
-        <Route exact path="/ResetPassword" element={<ResetPasswordContextProviderInterface />} />
+        <Route exact path="/ResetPassword" element={isAuth ? (<Navigate to={`/${user}`} />) : (<ResetPasswordContextProviderInterface />)} />
       </Route>
 
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashboard />} />
-        <Route path="services" element={<AdminServices />} />
-        <Route path="serviceProviders" element={<AdminServiceProvider />} />
-        <Route path="customers" element={<AdminCustomers />} />
-        <Route path="advertisers" element={<AdminAdvertisers />} />
-        <Route path="reviews" element={<AdminReviews />} />
-        <Route path="complaints" element={<AdminComplaints />} />
-        <Route path="report" element={<AdminReport />} />
-        <Route path="advertisements" element={<AdminAdvertisements />} />
-        <Route path="invoice" element={<AdminInvoices />} />
-        <Route path="history" element={<AdminViewHistory />} />
-        <Route path="review" element={<ViewReviewandRating />} />
-        <Route path="chat" element={<AdminChat />} />
-        <Route path="sessions" element={<AdminSessions />} />
+      <Route path="/admin" element={<PrivateRouteLayout />}>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="services" element={<AdminServices />} />
+          <Route path="serviceProviders" element={<AdminServiceProvider />} />
+          <Route path="customers" element={<AdminCustomers />} />
+          <Route path="advertisers" element={<AdminAdvertisers />} />
+          <Route path="reviews" element={<AdminReviews />} />
+          <Route path="complaints" element={<AdminComplaints />} />
+          <Route path="report" element={<AdminReport />} />
+          <Route path="advertisements" element={<AdminAdvertisements />} />
+          <Route path="invoice" element={<AdminInvoices />} />
+          <Route path="history" element={<AdminViewHistory />} />
+          <Route path="review" element={<ViewReviewandRating />} />
+          <Route path="chat" element={<AdminChat />} />
+          <Route path="sessions" element={<AdminSessions />} />
+        </Route>
       </Route>
 
-      <Route path="/Advertiser" element={<AdvertiserLayout />}>
-        <Route path="CreateAd" element={<CreateAd />} />
-        <Route path="View" element={<ViewAd />} />
-        <Route index element={<AdDashbord />} />
-        <Route path="Subscribtion" element={<Subscribtion />} />
-        <Route path="Subscription" element={<SubscripetionIndex />} />
-        <Route path="Chat" element={<AdvertiserChat />} />
-        <Route path="Ads" element={<Ads />} />
-        <Route path="EditAd/:id" element={<EditAd />} />
-        <Route path="Subscribed/:subId" element={<Subscriped />} />
-        <Route path="Forum" element={<Forum />} />
-        <Route path="ViewThread" element={<ViewThread />} />
-        <Route path="Payment" element={<Payment />} />
+      <Route path="/Advertiser" element={<PrivateRouteLayout />}>
+        <Route path="/Advertiser" element={<AdvertiserLayout />}>
+          <Route path="CreateAd" element={<CreateAd />} />
+          <Route path="View" element={<ViewAd />} />
+          <Route index element={<AdDashbord />} />
+          <Route path="Subscribtion" element={<Subscribtion />} />
+          <Route path="Subscription" element={<SubscripetionIndex />} />
+          <Route path="Chat" element={<AdvertiserChat />} />
+          <Route path="Ads" element={<Ads />} />
+          <Route path="EditAd/:id" element={<EditAd />} />
+          <Route path="Subscribed/:subId" element={<Subscriped />} />
+          <Route path="Forum" element={<Forum />} />
+          <Route path="ViewThread" element={<ViewThread />} />
+        </Route>
       </Route>
 
       <Route path="/Customer" element={<CustomerLayout />}>
@@ -177,23 +193,14 @@ const router = createBrowserRouter(
         <Route path="ViewVacancy" element={<ViewVacancy />} />
         <Route path="SocialShareSP" element={<SocialShareSP />} />
         <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-        <Route
-          path="ViewServiceProvider/:id"
-          element={<ViewServiceProvider />}
-        />
+        <Route path="ViewServiceProvider/:id" element={<ViewServiceProvider />}/>
         <Route path="ToDoForm" element={<ToDoForm />} />
         <Route path="RatenReview" element={<RatenReview />} />
-        <Route
-          path="Searchserviceprovider"
-          element={<Searchserviceprovider />}
-        />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />}/>
         <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
         <Route path="AddReview" element={<AddReviewandRating />} />
         <Route path="History" element={<CustomerViewHistory />} />
-        <Route
-          path="CustomerComplaintPage"
-          element={<CustomerComplaintPage />}
-        />
+        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage />}/>
         <Route path="ViewAQuotation" element={<ViewAQuotation />} />
         <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
         <Route path="CustomerComplaints" element={<CustomerComplaints />} />
@@ -206,54 +213,51 @@ const router = createBrowserRouter(
         <Route path="PostJobForm" element={<PostJobForm />} />
         <Route path="PostedJobs" element={<PostedJobs />} />
         <Route path="RequestedJobs" element={<RequestedJobs />} />
-        <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} />
+        {/* <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} /> */}
         <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
         <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
+        
+        <Route path="ViewPostedJobs/:id" element={<CustomerJob />} />
       </Route>
 
-      <Route path="/ServiceProvider" element={<SpLayout />}>
-        <Route index element={<SpDashboard />} />
-        <Route path="ViewJobs" element={<SpViewJobs />} />
-        <Route path="ViewVacancies" element={<SpViewVacancies />} />
-        <Route path="ApplyVacancy/:id" element={<SpApplyVacancy />} />
-        <Route path="MyServices" element={<SpServices />} />
-        <Route path="ViewAJob/:id" element={<SpViewAJob />} />
-        <Route path="ViewAVacancy/:id" element={<SpViewAVacancy />} />
-        <Route path="AddNewServices" element={<SpAddNewServices />} />
-        <Route path="CreateBlog" element={<SpCreateBlog />} />
-        <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
-        <Route path="MyProjectsJobs" element={<SpMyProjectsJobs/>} />
-        <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies/>} />
-        <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions/>} />
-        <Route path="ViewATrainingSession/:id" element={<SpViewATrainingSession/>} />
-        <Route path="MyProjectStates" element={<SpMyProjectStates/>} />
-        <Route path="OngoingJob/:id" element={<SpOngoingJob/>} />
-        <Route path="AcceptedVacancy" element={<SpAcceptedVacancy/>} />
-        <Route path="StartJob/:id" element={<SpStartJob/>} />
-        <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar/>} />
-        <Route path="MyTrainingSessions" element={<SpMyTrainingSessions/>} />
-        <Route path="ViewHistory" element={<SpViewHistory/>} />
-        <Route path="PendingJob/:id" element={<SpPendingJob/>} />
-        <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy/>} />
-        {/* <Route path="Forum" element={<Forum />} />
+      <Route path="/ServiceProvider" element={<PrivateRouteLayout />}>
+        <Route path="/ServiceProvider" element={<SpLayout />}>
+          <Route index element={<SpDashboard />} />
+          <Route path="ViewJobs" element={<SpViewJobs />} />
+          <Route path="ViewVacancies" element={<SpViewVacancies />} />
+          <Route path="ApplyVacancy/:id" element={<SpApplyVacancy />} />
+          <Route path="MyServices" element={<SpServices />} />
+          <Route path="ViewAJob/:id" element={<SpViewAJob />} />
+          <Route path="ViewAVacancy/:id" element={<SpViewAVacancy />} />
+          <Route path="AddNewServices" element={<SpAddNewServices />} />
+          <Route path="CreateBlog" element={<SpCreateBlog />} />
+          <Route path="CreateTrainingSession" element={<SpCreateTrainingSession />} />
+          <Route path="MyProjectsJobs" element={<SpMyProjectsJobs />} />
+          <Route path="MyProjectsVacancies" element={<SpMyProjectsVacancies />} />
+          <Route path="ViewTrainingSessions" element={<SpViewTrainingSessions />} />
+          <Route path="ViewATrainingSession/:id" element={<SpViewATrainingSession />} />
+          <Route path="MyProjectStates" element={<SpMyProjectStates />} />
+          <Route path="OngoingJob/:id" element={<SpOngoingJob />} />
+          <Route path="AcceptedVacancy" element={<SpAcceptedVacancy />} />
+          <Route path="StartJob/:id" element={<SpStartJob />} />
+          <Route path="AvailabilityCalendar" element={<SpAvailabilityCalendar />} />
+          <Route path="MyTrainingSessions" element={<SpMyTrainingSessions />} />
+          <Route path="ViewHistory" element={<SpViewHistory />} />
+          <Route path="PendingJob/:id" element={<SpPendingJob />} />
+          <Route path="OngoingVacancy/:id" element={<SpOngoingVacancy />} />
+          {/* <Route path="Forum" element={<Forum />} />
         <Route path="ViewThread" element={<ViewThread />} /> */}
-        <Route path="ToDoList/:id" element={<ToDoList />} />
-        <Route path="Chat" element={<SpChat />} />
-        <Route path="AdsPage" element={<AdsPage />} />
-        <Route path="CreateQuotation/:id" element={<CreateQuotation />} />
-        <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
+          <Route path="ToDoList/:id" element={<ToDoList />} />
+          <Route path="Chat" element={<SpChat />} />
+          <Route path="AdsPage" element={<AdsPage />} />
+          <Route path="CreateQuotation/:id" element={<CreateQuotation />} />
+          <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
+        </Route>
       </Route>
 
-      <Route path="/activateCustomer" element={<ActivateCustomer />} />
-      <Route path="/activateUser" element={<ActivateUser />} />
-      <Route
-        path="*"
-        element={
-          <Layout404>
-            {" "}
-            <PageNotFound />
-          </Layout404>
-        }
+      <Route path='/activateCustomer' element={<ActivateCustomer />} />
+      <Route path='/activateUser' element={<ActivateUser />} />
+      <Route path="*" element={<Layout404> {" "}<PageNotFound /></Layout404>}
       />
     </>
   )

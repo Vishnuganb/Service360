@@ -51,30 +51,37 @@ function ViewSPCard({ spCard }) {
       <div className="SP-card-header">
         <Row>
           <Col>
-            <img src={require(`../../../../assets/images/Customer/ServiceProvider${spCard.serviceproviderid}.jpg`)} alt="avatar" className="SP-card-avatar" />
+            <img src={spCard.profilePic} alt="avatar" className="SP-card-avatar" />
           </Col>
           <Col>
-            <span className="SP-card-title">{spCard.serviceprovidername}</span>
+            <span className="SP-card-title">{spCard.firstname} {" "} {spCard.lastname}</span>
           </Col>
 
-          <Col className='star'>
+          {/* <Col className='star'>
             <div className='rating'>
               {[1, 2, 3, 4, 5].map((index) => (
                 <span key={index} className={`star ${rating >= index ? 'filled' : ''}`}>&#9733;</span>
               ))}
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </div>
       <div className="SP-card-body">
         <div className="SP-card-body-left">
-          <span className="sinlge-SP-sub-info">{spCard.service} | Member since  {spCard.membershipdate}</span>
+          <span className="sinlge-SP-sub-info"> 
+          {spCard.serviceCategories.map((category, index) => (
+                                <span key={index}>
+                                    {category.categoryName}
+                                    {index <spCard.serviceCategories.length - 1 && ', '}
+                                </span>
+                            ))}
+                          | Member since  {spCard.registrationdate}</span>
           <br />
-          <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {spCard.location}
+          <span className="sinlge-SP-sub-info">  <i className="bi bi-geo-alt-fill"></i>&nbsp; Location: {spCard.district} {" "} {spCard.city}
           </span>
           <br />
           <span className="SP-contact-info">
-            Contact number: {spCard.contact}
+            Contact number: {spCard.phonenumber}
           </span>
           <br />
         </div>
@@ -91,7 +98,7 @@ function ViewSPCard({ spCard }) {
             bottom: "1.5px"
           }}>
 
-            <a href={`ViewServiceProvider/${spCard.serviceproviderid}`}
+            <a href={`ViewServiceProvider/${spCard.userid}`}
               style={{ color: 'black' }}>
               View Profile
             </a>

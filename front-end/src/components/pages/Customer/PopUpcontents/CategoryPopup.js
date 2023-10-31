@@ -2,29 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
-import services from './Servicesdata';
 import '../../../../style/Customer/Popup.css';
+import axios from 'axios';
 
 const CategoryPopup = ({ isOpen, onClose, onSelectService }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedService, setSelectedService] = useState(''); // Added this line
+  const [selectedService, setSelectedService] = useState('');
+  const [servicesData, setServicesData] = useState({}); // Store data as an object
 
   const handleSearchChange = (event) => {
-    const service = event.target.value;
-    setSearchQuery(service);
+    const query = event.target.value;
+    setSearchQuery(query);
   };
 
   const handleServiceSelect = (service) => {
-    setSelectedService(service); // Set the selected service
+    setSelectedService(service);
     if (typeof onSelectService === 'function') {
       onSelectService(service);
     }
     onClose();
   };
 
-  const filteredServices = services.filter(
-    (service) => service.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/auth/services");
+        const data = response.data;
+        setServicesData(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Convert the object into an array of categories
+  const categories = Object.keys(servicesData);
 
   return (
     <Modal className show={isOpen} onHide={onClose} backdrop="static" keyboard={false} centered>
@@ -40,17 +54,21 @@ const CategoryPopup = ({ isOpen, onClose, onSelectService }) => {
             onChange={handleSearchChange}
             placeholder='Search Service'
           />
-          <ul className='PlaceList'>
-            {filteredServices.map((service) => (
-              <li
-                key={service.name}
-                onClick={() => handleServiceSelect(service.name)}
-                className={selectedService === service.name ? 'selected' : ''}
-              >
-                {service.name}
-              </li>
-            ))}
-          </ul>
+          {categories.map((category) => (
+            <div key={category}>
+              <ul className='PlaceList'>
+                {servicesData[category].map((service) => (
+                  <li
+                    key={service}
+                    onClick={() => handleServiceSelect(service)}
+                    className={selectedService === service ? 'selected' : ''}
+                  >
+                    {service}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </Modal.Body>
     </Modal>

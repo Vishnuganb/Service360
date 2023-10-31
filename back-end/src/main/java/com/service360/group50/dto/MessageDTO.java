@@ -11,9 +11,8 @@ import lombok.*;
 @Setter
 @ToString
 public class MessageDTO {
-    private String senderName;  // sender Email
-    private String receiverName; // receiver Email
+    private String senderId;  // sender Email
+    private String receiverId; // receiver Email
     private String message;
-    private String date;
     private Status status;
 }

@@ -34,6 +34,8 @@ public class AdvertiserController {
 
 
 
+
+
     @PostMapping("auth/createAd")
     public Ads createAd(
             @RequestParam("adsImages") MultipartFile[] adsImages,
@@ -254,6 +256,14 @@ public class AdvertiserController {
             adDTO.setLastName(user.getLastname());
             adDTO.setDate ( ad.getDate () );
             adDTO.setReason ( ad.getReason () );
+
+            Subscription subscription = subscriptionService.getActiveSubscribtionByUserId(ad.getUser().getUserid());
+            if (subscription != null){
+                adDTO.setPackageName(subscription.getSubscriptionPlan().getName());
+
+            }else{
+                adDTO.setPackageName("Bronze");
+            }
 //            adDTO.setPlan(subStatus);
             if (user.getProfilePic() != null) {
                 adDTO.setProfileImage(user.getProfilePic());
@@ -391,8 +401,10 @@ public SubscriptionDTO getSubscriptionDetails(@PathVariable Long userid) {
         subscriptionDTO.setPlanDescription(subscription.getSubscriptionPlan().getDescription());
         subscriptionDTO.setPlanPrice(subscription.getSubscriptionPlan().getPrice());
         subscriptionDTO.setUserId(userid);
+        return subscriptionDTO;
     }
-    return subscriptionDTO;
+    return null;
+
 }
 
 

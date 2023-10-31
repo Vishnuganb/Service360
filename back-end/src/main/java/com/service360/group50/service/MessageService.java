@@ -1,6 +1,7 @@
 package com.service360.group50.service;
 
 import com.service360.group50.dto.ChatDTO;
+import com.service360.group50.dto.ChatMessageDTO;
 import com.service360.group50.entity.Message;
 import com.service360.group50.entity.Users;
 import com.service360.group50.repo.MessageRepository;
@@ -41,12 +42,14 @@ public class MessageService {
 
         if (usersOptional.isPresent()) {
             Users user = usersOptional.get();
-            List<Users> chatPersons = messageRepository.findChatPersons(user);
+            List<Users> chatPersons = messageRepository.findChatPartnersByUser(user);
 
             // Convert Users to ChatDTO
             return chatPersons.stream().map(chatPerson -> {
                 ChatDTO chatDTO = new ChatDTO();
                 chatDTO.setEmail(chatPerson.getEmail());
+                chatDTO.setName(chatPerson.getFirstname());
+                chatDTO.setUserId(chatPerson.getUserid());
                 chatDTO.setLastMessage("Hello");
                 return chatDTO;
             }).collect(Collectors.toList());
@@ -55,4 +58,21 @@ public class MessageService {
         return Collections.emptyList(); // Return an empty list instead of null
     }
 
+    public List<ChatMessageDTO> getChatMessages(Long userId, Long chatPersonId) {
+        List<Message> messages = messageRepository.findChatMessages(userId, chatPersonId);
+
+        return messages.stream().map(message -> {
+            ChatMessageDTO chatMessageDTO = new ChatMessageDTO();
+            chatMessageDTO.setMessage(message.getMessage());
+            chatMessageDTO.setTimestamp(String.valueOf(message.getTimestamp()));
+            chatMessageDTO.setSenderId(message.getSender().getUserid());
+            chatMessageDTO.setReceiverId(message.getReceiver().getUserid());
+            return chatMessageDTO;
+
+        }).collect(Collectors.toList());
+    }
+
+    public Message sendMessage(Message message) {
+        return messageRepository.save(message);
+    }
 }

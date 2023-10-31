@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -23,7 +25,7 @@ public class Message {
     private Long messageId;
 
     private String message;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "senderId")
@@ -33,5 +35,10 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "receiverId")
     private Users receiver;
+
+    @PrePersist
+    protected void onCreate()  {
+        timestamp =  LocalDateTime.now();
+    }
 
 }

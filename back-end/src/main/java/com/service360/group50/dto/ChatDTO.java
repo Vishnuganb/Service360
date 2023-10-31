@@ -8,15 +8,26 @@ public class ChatDTO {
 
     private Long userId;
 
+    private String profilePic;
+
     public ChatDTO() {
         Name = Name;
         Email = Email;
         LastMessage = LastMessage;
         this.userId = userId;
+        this.profilePic = profilePic;
     }
 
     public String getName() {
         return Name;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
     public void setName(String name) {

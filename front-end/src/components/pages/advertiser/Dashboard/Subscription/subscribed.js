@@ -59,6 +59,16 @@ const Subscriped = ({id,planName, price, startDate, endDate, description,status,
   const { subId } = useParams();
   const subData = plans.find((plan) => plan.id === parseInt(subId));
 
+
+   const endDateObject = new Date(endDate);
+
+   // Calculate the time difference in milliseconds
+   const timeDifference = endDateObject - new Date();
+
+   // Convert the time difference into days
+   const remainingDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+
   return (
     <Container
       style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -74,10 +84,7 @@ const Subscriped = ({id,planName, price, startDate, endDate, description,status,
           History
         </button>
       </div>
-      <HistoryModal
-        show={historyModal}
-        onHide={closeHistoryModal}
-      />
+      <HistoryModal show={historyModal} onHide={closeHistoryModal} />
 
       <div className="d-flex gap-3 justify-content-center">
         {" "}
@@ -133,7 +140,7 @@ const Subscriped = ({id,planName, price, startDate, endDate, description,status,
           </div>
           <div className="d-flex  gap-3">
             <div style={{ height: "fit-content" }}>
-              <h3 className="GreenDate">15 Days</h3>
+              <h3 className="GreenDate">{remainingDays} Days</h3>
             </div>
           </div>
         </div>

@@ -486,7 +486,6 @@ public class UserService {
                 "\n" +
                 "</div></div>";
     }
-<<<<<<< HEAD
 
 
     // get users by email
@@ -494,8 +493,6 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-=======
->>>>>>> main
 }
 
 

@@ -5,12 +5,16 @@ import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.Users;
 import com.service360.group50.request.CjobsRequest;
 import com.service360.group50.service.CJobsService;
+import com.service360.group50.service.ImageService;
 import com.service360.group50.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,19 +28,47 @@ public class CJobsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ImageService imageService;
+
     @PostMapping("/createjobs")
-    public Jobs createjobs(@RequestBody CjobsRequest JobRequest) {
-        Jobs newjobs= new Jobs();
-        newjobs.setJobtitle(JobRequest.getJobtitle());
-        newjobs.setJobdescription(JobRequest.getJobdescription());
-        newjobs.setDuedate(JobRequest.getDuedate());
-        newjobs.setJoblocation(JobRequest.getJoblocation());
-        newjobs.setImages(JobRequest.getImages());
-        newjobs.setServicename(JobRequest.getServicename());
-        newjobs.setPosteddate(JobRequest.getPosteddate());
-        newjobs.setIsquotation(JobRequest.getIsquotation());
-        Users user = userService.getUser(JobRequest.getCustomer());
+    public Jobs createjobs(
+            @RequestParam("jobsImages") MultipartFile[] jobsImages,
+            @RequestParam("jobtitle") String jobtitle,
+            @RequestParam("posteddate") String posteddate,
+            @RequestParam("duedate") String duedate,
+            @RequestParam("joblocation") String joblocation,
+            @RequestParam("servicename") String servicename,
+            @RequestParam("jobdescription") String jobdescription,
+            @RequestParam("userId") Long userId,
+            @RequestParam("isquotation") boolean isquotation) {
+
+        String uploadDirectory = "src/main/resources/static/images/jobImages";
+        String jobImageString = "";
+
+        if (jobsImages != null) {
+            for (MultipartFile imageFile : jobsImages) {
+                try {
+                    jobImageString += imageService.saveImageToStorage(uploadDirectory, imageFile) + ",";
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Jobs newjobs = new Jobs();
+        newjobs.setJobtitle(jobtitle);
+        newjobs.setJobdescription(jobdescription);
+        newjobs.setDuedate(LocalDate.parse(duedate));
+        newjobs.setJoblocation(joblocation);
+        newjobs.setImages(jobImageString);
+        newjobs.setServicename(servicename);
+        newjobs.setPosteddate(LocalDate.parse(posteddate));
+        newjobs.setIsquotation(String.valueOf(isquotation));
+
+        Users user = userService.getUser(userId);
         newjobs.setCustomer(user);
+
         return cJobsService.createjobs(newjobs);
     }
 

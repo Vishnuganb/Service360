@@ -55,6 +55,7 @@ import CreateQuotation from './components/pages/ServiceProvider/CreateQuotation/
 import SpCompletedJobs from './components/pages/ServiceProvider/CompletedJob/Index.js';
 import SpCompletedVacancies from './components/pages/ServiceProvider/CompletedVacancy/Index.js';
 import TrainingSessionVerification from './components/pages/ServiceProvider/TrainingSessionVerification.js';
+import SpComplaints from './components/pages/ServiceProvider/SpComplaints/index.js';
 
 import RootLayout from './components/layout/RootLayout.js';
 import SpLayout from './components/layout/SpLayout.js';
@@ -236,6 +237,7 @@ const router = createBrowserRouter(
         <Route path="CompletedJob/:id" element={<SpCompletedJobs />} />
         <Route path="CompletedVacancy/:id" element={<SpCompletedVacancies />} />
         <Route path="TrainingSessionVerification/:mobilenumber" element={<TrainingSessionVerification />} />
+        <Route path="Complaints" element={<SpComplaints />} />
       </Route>
 
       <Route path='/activateCustomer' element={<ActivateCustomer />} />

@@ -5,8 +5,9 @@ import "leaflet-routing-machine";
 import { useMap } from "react-leaflet";
 import Geocode from "react-geocode";
 import { useState } from "react";
+import "leaflet-realtime";
 
-Geocode.setApiKey("AIzaSyBbGzH8N4wZYI3haxyktwT0G-QqA13fJyg");
+ Geocode.setApiKey("AIzaSyBbGzH8N4wZYI3haxyktwT0G-QqA13fJyg");
 Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
@@ -18,7 +19,7 @@ L.Marker.prototype.options.icon = L.icon({
 export default function Routing(props) {
   const map = useMap();
   const [waypoints, setWaypoints] = useState([]);
-
+  const [currentLocation, setCurrentLocation] = useState(null);
   const { spLocation, cusLocation } = props;
 
   const routeDetails = [

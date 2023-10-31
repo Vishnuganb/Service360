@@ -58,7 +58,7 @@ function ToDoList() {
         const formData = new FormData();
         formData.append('completed', !completed);
         formData.append('hours', hourInputs[todolistdetailsid]); 
-        formData.append('todolistId', todolistid); 
+        // formData.append('todolistId', todolistid); 
 
 
             const response = await axios.put(`http://localhost:8080/auth/viewTodoListDetails/${todolistdetailsid}`, formData, {

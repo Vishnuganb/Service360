@@ -4,6 +4,9 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import BgImage from '../../../assets/images/header/Background.png';
 
+const response = sessionStorage.getItem('authenticatedUser');
+const userData = JSON.parse(response);
+
 export default function PostedJobs() {
     const apiBaseUrl = "http://localhost:8080";
 
@@ -23,6 +26,8 @@ export default function PostedJobs() {
     useEffect(() => {
         axiosInstance
             .get("/auth/viewjobs")
+            // .get(`http://localhost:8080/auth/viewjobsbyuserid/${userData.userid}`)
+
             .then((response) => {
                 setJobs(response.data);
                 console.log(response.data);
@@ -38,6 +43,7 @@ export default function PostedJobs() {
     useEffect(() => {
         axiosInstance
             .get("/auth/viewvacancies") // Adjust the API endpoint as per your backend route
+
             .then((response) => {
                 setVacancies(response.data);
             })
@@ -387,7 +393,9 @@ export default function PostedJobs() {
                                                 <td>{vacancy.servicename}</td>
                                                 <td>
                                                     {/* Your action buttons or components */}
-                                                    {/* Example: */}
+                                                    
+                                                        <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
+                                                    &nbsp; &nbsp;
                                                     <DeleteVacancy vacancyId={vacancy.vacancyid} />
                                                 </td>
                                             </tr>

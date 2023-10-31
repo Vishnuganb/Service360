@@ -16,6 +16,7 @@ public class TodoListDetailsController {
 
     @PostMapping("/createTodoListDetails")
     public TodoListDetails createTodoListDetails(@RequestBody TodoListDetails newTodoListDetails) {
+        System.out.println(newTodoListDetails);
         return todoListDetailsService.createTodoListDetails(newTodoListDetails);
     }
 

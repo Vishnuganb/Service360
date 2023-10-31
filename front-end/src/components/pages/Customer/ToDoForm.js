@@ -120,6 +120,7 @@ function ToDoForm() {
               /> */}
               <p className="task-date">{task.dueDate}</p>
               <span className="task-text">{task.task}</span>
+              <span className="task-text">Amount = Rs.{task.amount}</span>
             </div>
           </Card.Body>
         </Card>
@@ -169,6 +170,7 @@ function ToDoForm() {
                 {task.task}
 
                 <div class="time"> worked hours:  {task.workedHours}</div>
+                <div class="time"> Amount:  Rs.{task.amount}</div>
 
                 {/* <Button
                   className="scanbtn"

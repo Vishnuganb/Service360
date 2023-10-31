@@ -105,10 +105,14 @@ public class CustomerController {
         return serviceProviderDetailsList;
     }
 
-
     @GetMapping("/tododetails")
     @ResponseBody
     public List<TodoListDetails> getAllTodoListDetails() {
         return todoListDetailsService.getAllDetails();
+    }
+
+    @GetMapping("ongoingJobsCustomer/{id}")
+    public List<Jobs> getOngoingJobsCustomer(@PathVariable("id") Long id) {
+        return cServiceProviderService.getOngoingJobsCustomer(id);
     }
 }

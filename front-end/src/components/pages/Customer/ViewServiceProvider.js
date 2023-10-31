@@ -54,25 +54,31 @@ function ViewServiceProvider() {
 
   const [serviceProvider, setServiceProvider] = useState({});
 
-  const getServiceProvider=async()=>{
-    const data=await axios.get("http://localhost:8080/auth/details")
-    const filteredData = data.data.filter(item => item.userid == id);
-    setServiceProvider(filteredData[0])
-
-  }
+  const getServiceProvider = async () => {
+    try {
+      const data = await axios.get("http://localhost:8080/auth/details");
+      const filteredData = data.data.filter(item => item.userid == id);
+      setServiceProvider(filteredData[0]);
+    } catch (error) {
+      console.error("Error fetching service provider data: ", error);
+    }
+  };
+  
 
   useEffect(() => {
     getServiceProvider();
-  });
+  }, []);  
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/viewServiceProviderBlogs',{
-      params:{
-        serviceproviderid:serviceProviderId
+    axios.get('http://localhost:8080/auth/viewServiceProviderBlogs', {
+      params: {
+        serviceproviderid: serviceProviderId
       }
     }).then((res) => {
         console.log(res.data);
         setViewSpBlogs(res.data);
+    }).catch((error) => {
+        console.error("Error fetching data: ", error);
     });
   }, []);
 
@@ -86,20 +92,20 @@ function ViewServiceProvider() {
     setActiveIndex(activeIndex < viewSpBlogs.blogs.length - 1 ? activeIndex + 1 : 0);
   };
 
-  // Get all images from the training sessions
-  const blogImagesArray = viewSpBlogs.blogimages;
+  // // Get all images from the training sessions
+  // const blogImagesArray = viewSpBlogs.blogimages;
 
-  // Initialize an empty array to store all images
-  const allImages = [];
+  // // Initialize an empty array to store all images
+  // const allImages = [];
 
-  // Iterate through trainingSessionImagesArray
-  blogImagesArray.forEach((sessionImages) => {
-  // Check if the current object has an 'images' property
-  if (sessionImages.hasOwnProperty('images') && Array.isArray(sessionImages.images)) {
-      // Concatenate the 'images' array to the 'allImages' array
-      allImages.push(...sessionImages.images);
-  }
-  });
+  // // Iterate through trainingSessionImagesArray
+  // blogImagesArray.forEach((sessionImages) => {
+  // // Check if the current object has an 'images' property
+  // if (sessionImages.hasOwnProperty('images') && Array.isArray(sessionImages.images)) {
+  //     // Concatenate the 'images' array to the 'allImages' array
+  //     allImages.push(...sessionImages.images);
+  // }
+  // });
 
   return (
     <div>
@@ -114,7 +120,7 @@ function ViewServiceProvider() {
             
 
     <div className="SPBox ">
-      <img className='SPImg' src={serviceProvider.profilePic} alt="profile-image" />
+      <img className='SPImg rounded-circle' src={serviceProvider.profilePic} alt="profile-image" />
       <div className='SPProfile'>
         <span className='SPname'>{serviceProvider.firstname} {" "} {serviceProvider.lastname}</span>
         {/* <span className='SPActive'> Last Active 5 days ago </span> */}
@@ -220,12 +226,12 @@ function ViewServiceProvider() {
 
         
         {/* BLOGS SECTION */}
-        <br />
+        {/* <br />
         <div className='SPblogs'>
           <p className='blogstitle fs-5'> Blogs </p>
 
     
-          {viewSpBlogs.blogs.map((Blog, index) => {
+          {viewSpBlogs.blogs && viewSpBlogs.blogs.map((Blog, index) => {
               // Find the matching training session images
               const matchingSessionImages = blogImagesArray.find(sessionImages => sessionImages.id === Blog.blogid);
 
@@ -276,7 +282,7 @@ function ViewServiceProvider() {
             </div>
           </div>
           
-        </div>
+        </div> */}
       {/* </div> */}
     </div>
     </div>

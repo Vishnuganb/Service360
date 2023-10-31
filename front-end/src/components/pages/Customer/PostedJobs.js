@@ -391,11 +391,7 @@ export default function PostedJobs() {
                                             <tr key={index}>
                                                 <td>{vacancy.duedate}</td>
                                                 <td>{vacancy.servicename}</td>
-                                                <td>
-                                                    {/* Your action buttons or components */}
-                                                    
-                                                        <i className="my-customer-table-icon bi bi-eye-fill h7"></i>
-                                                    &nbsp; &nbsp;
+                                                <td>                                                   
                                                     <DeleteVacancy vacancyId={vacancy.vacancyid} />
                                                 </td>
                                             </tr>

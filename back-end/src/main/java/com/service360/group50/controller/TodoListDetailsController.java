@@ -32,7 +32,7 @@ public class TodoListDetailsController {
         // Toggle the completion status
         task.setCompleted(!completed);
         task.setWorkedHours(hours);
-        task.setCustomercompleted(completed);
+//        task.setCustomercompleted(completed);
         // Save the updated task
         return todoListDetailsService.createTodoListDetails(task);
     }

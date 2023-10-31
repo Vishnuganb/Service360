@@ -87,6 +87,7 @@ import SocialShareSP from './components/pages/Customer/SocialShare/SocialShareSP
 import AddReviewandRating from './components/pages/User/Customer/AddReviewandRating.js';
 import CustomerViewHistory from './components/pages/User/Customer/ViewHistory.js';
 import CustomerChat from './components/pages/User/Chat/ChatPage.js';
+import CustomerJob from './components/pages/Customer/ViewAJobCustomer/Index.js';
 
 import Searchserviceprovider from './components/pages/Customer/SearchServiceProvider.js';
 import ViewServiceProvider from './components/pages/Customer/ViewServiceProvider.js';
@@ -196,9 +197,11 @@ const router = createBrowserRouter(
         <Route path="PostJobForm" element={<PostJobForm />} />
         <Route path="PostedJobs" element={<PostedJobs />} />
         <Route path="RequestedJobs" element={<RequestedJobs />} />
-        <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} />
+        {/* <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} /> */}
         <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
         <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
+        
+        <Route path="ViewPostedJobs/:id" element={<CustomerJob />} />
       </Route>
 
       <Route path="/ServiceProvider" element={<SpLayout />}>

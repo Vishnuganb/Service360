@@ -18,7 +18,7 @@ import java.time.LocalDate;
 )
 public class Complaints {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long complaintid;
 

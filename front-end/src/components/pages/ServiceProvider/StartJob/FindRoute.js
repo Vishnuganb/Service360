@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import "../../../../style/ServiceProvider/StartJob.css";
 
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -49,13 +50,6 @@ function FindRoute() {
     const cus_location = viewJobData.jobs.customer.address;
     const sp_location = userDetail.address;
 
-    // const routeDetails = [
-    //     {
-    //         cutomerLocation: "College House, 94 Kumaratunga Munidasa Mawatha, Colombo 00700",
-    //         serviceProviderLocation: "no 11 5/4 Nelson Place, Colombo 06"
-    //     }
-    // ];
-
     return (
         <div className="ms-lg-4 me-lg-4">
             <div className="FindRoute-location-info">
@@ -81,7 +75,7 @@ function FindRoute() {
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Routing />
+                        <Routing spLocation={sp_location} cusLocation={cus_location}/>
                     </MapContainer>
                 </div>
             </div>

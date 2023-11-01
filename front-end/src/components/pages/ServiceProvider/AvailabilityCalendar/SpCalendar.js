@@ -169,6 +169,9 @@ function SpCalendar() {
         axios.post(`http://localhost:8080/auth/createServiceProviderCalendar?serviceproviderid=${userData.userid}`, newScheduleData).then((response) => {
             console.log('Schedule created successfully:', response.data);
             handleClose();
+            const updatedSchedules = [...selectedSchedules, response.data]; // Assuming the response data contains the newly created event
+            setSelectedSchedules(updatedSchedules);
+            
             refreshCalendarData();
         })
             .catch((error) => {

@@ -16,32 +16,36 @@ import java.util.Optional;
 
 public class CJobsService{
     @Autowired
-
     private CJobsRepository cJobsRepository;
 
-    private UserRepository userRepository;
+    private  UserRepository userRepository;
 
     public Jobs createjobs (Jobs newJobs) {
         return this.cJobsRepository.save(newJobs);
     }
 
-//    public Jobs createjobs(Jobs newJobs) {
-//        System.out.println("hihihihihiiiiiiiiiiiiiiii");
-//        System.out.println(newJobs);
-//        Users user = userRepository.findById(newJobs.getCustomer().getUserid()).orElse(null);
-//
-//        System.out.println(user.getUserid());
-//        if (user != null) {
-//            newJobs.setCustomer(user);
-//            return cJobsRepository.save(newJobs);
-//        } else {
-//            return null;
-//        }
-//    }
 
     public List<Jobs> viewjobs() {
         return this.cJobsRepository.findAll();
     }
+
+//    public List<Jobs> viewJobsbyuserid(Long userid) {
+//        return this.cJobsRepository.findByUsersUserid(userid);
+//    }
+//    public Jobs getJobsByUserId(Long userid) {
+//        Optional<Jobs> job = cJobsRepository.findById(userid);
+//        return cJobsRepository.findById(userid).orElse(null);
+//    }
+
+//    public List<Jobs> viewJobsbyuserid(Long userid) {
+//        return this.cJobsRepository.findJobsByCustomer(userid);
+//    }
+
+//    public Jobs getJobsByUserId(Long userid) {
+//        Optional<Jobs> job = cJobsRepository.findById(userid);
+//        return job.orElse(null);
+//    }
+
 
     public Jobs getJobsById(Long id) {
         Optional<Jobs> job = cJobsRepository.findById(id);
@@ -56,4 +60,14 @@ public class CJobsService{
         return this.cJobsRepository.save(job);
     }
 
+    public List<Jobs> getJobsByIsQuotation(String isQuotation) {
+        return cJobsRepository.findByIsquotation(isQuotation);
+    }
+    public List<Jobs> getJobsByQuotationpdf(String quotationpdf) {
+        return cJobsRepository.findByQuotationpdf(quotationpdf);
+    }
+
+    public List<Jobs> getJobsWhereQuotationpdfIsNotNull() {
+        return cJobsRepository.findByQuotationpdfIsNotNull();
+    }
 }

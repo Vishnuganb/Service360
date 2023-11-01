@@ -1,6 +1,8 @@
 package com.service360.group50.repo;
 
+import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.JobsServiceProviders;
+import com.service360.group50.entity.Users;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -28,4 +30,10 @@ public interface JobsServiceProvidersRepository extends CrudRepository<JobsServi
 
     @Query("SELECT jsp.jobs.jobid FROM JobsServiceProviders jsp where jsp.jobstatus = :jobstatus and jsp.serviceproviders.userid = :serviceproviderid")
     List<Long> findAllMyJobsByjobstatus(@Param("jobstatus") String jobstatus, @Param("serviceproviderid") Long serviceproviderid);
+
+    List<JobsServiceProviders> findAllByJobstatus(String ongoing);
+
+//    JobsServiceProviders findByjobidAnduserid(Long jobid, Long id);
+
+    JobsServiceProviders findByJobsAndServiceproviders(Jobs job, Users serviceProvider);
 }

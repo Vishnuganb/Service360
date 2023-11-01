@@ -26,7 +26,6 @@ public interface JobsRepository extends CrudRepository<Jobs,Long> {
     @Query("SELECT j.images FROM Jobs j where j.jobid = :jobId")
     String findJobImagesByJobId(@Param("jobId") Long jobId);
 
-
 //    @Query("SELECT j FROM Jobs j INNER JOIN j.serviceprovider u where u.userid = :id")
 //    List<Jobs> findMyJobsWithCustomerDetails(@Param("id") Long id);
 

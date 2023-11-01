@@ -19,9 +19,10 @@ import java.util.Date;
         name = "todolistdetails"
 )
 public class TodoListDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
+    @Column(name = "todolistdetailsid")
     private Long todolistdetailsid;
 
     @OneToOne
@@ -37,7 +38,13 @@ public class TodoListDetails {
     @Column(columnDefinition = "BOOLEAN")
     private boolean completed;
 
+    @Column(columnDefinition = "REAL")
+    private float amount;
+
     @Column(columnDefinition = "BOOLEAN")
     private boolean customercompleted;
+
+
+
 
 }

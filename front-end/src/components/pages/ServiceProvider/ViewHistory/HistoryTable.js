@@ -184,7 +184,7 @@ function HistoryTable() {
                     <Link   to={
                       project.jobid
                         ? `../CompletedJob/${project.jobid}`
-                        : `../ViewAVacancy/${project.vacancyid}`
+                        : `../CompletedVacancy/${project.vacancyid}`
                     }>
                       <i className="bi bi-eye-fill fs-4" style={{color:"black"}}></i>
                     </Link>

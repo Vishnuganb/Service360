@@ -32,13 +32,16 @@ function CreateSessionForm() {
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const [showAlert, setShowAlert] = useState(false);
-    const [alertMessage, setAlertMessage] = useState('');  
+    const [alertMessage, setAlertMessage] = useState(''); 
+
+    const [alertMessageRed, setAlertMessageRed] = useState(''); 
+    const [showAlertRed, setShowAlertRed] = useState(false);
 
     const handleFileInputChange = (e) => {
         const selectedFilesArray = Array.from(e.target.files);
     
         if (selectedFilesArray.length + selectedFiles.length > 3) {
-            showAlertWithMessage('You can select a maximum of 3 images.');
+            handleShowAlertRed('You can select a maximum of 3 images.');
             return;
         }
 
@@ -113,8 +116,8 @@ function CreateSessionForm() {
             }
           })
           .then((response) => {
-            console.log('Training session created successfully:', response.data);
             window.location.reload();
+            handleShowAlert('Training session created successfully!');
           })
           .catch((error) => {
             console.error('Error creating training session:', error);
@@ -128,14 +131,24 @@ function CreateSessionForm() {
         });
     }, []);
     
-    const showAlertWithMessage = (message) => {
+    const handleShowAlertRed = (message) => {
+        setAlertMessageRed(message);
+        setShowAlertRed(true);
+    
+        // Automatically hide the alert after 5 seconds
+        setTimeout(() => {
+          setShowAlertRed(false);
+        }, 3500); // 3500 milliseconds (5 seconds)
+    };
+
+    const handleShowAlert = (message) => {
         setAlertMessage(message);
         setShowAlert(true);
     
         // Automatically hide the alert after 5 seconds
         setTimeout(() => {
           setShowAlert(false);
-        },3500); // 3500 milliseconds (5 seconds)
+        }, 3500); // 3500 milliseconds (5 seconds)
     };
 
     return (
@@ -250,7 +263,7 @@ function CreateSessionForm() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEntranceFee">
-                    <Form.Label>Entrance Fee</Form.Label>
+                    <Form.Label>Entrance Fee (Rs)</Form.Label>
                     <Form.Control 
                         type="text" 
                         placeholder="Enter the entrance fee or cost for the training session (if applicable)" 
@@ -283,12 +296,11 @@ function CreateSessionForm() {
 
                 <div className="CreateBlog-button-container d-flex flex-row">
                     <Button className="btn-ServiceProvider-1" onClick={handleCreateTrainingSession}>Create</Button>
-                    <Button className="btn-ServiceProvider-2 CreateBlog-cancel ms-auto">Cancel</Button>
                 </div>
             </Form>
 
             <Alert
-                show={showAlert}
+                show={showAlertRed}
                     variant="danger"
                     onClose={() => setShowAlert(false)}
                     dismissible
@@ -299,8 +311,22 @@ function CreateSessionForm() {
                     zIndex: 9999, // Adjust the z-index as needed
                     }}
                 >
+                {alertMessageRed}
+            </Alert>
+            <Alert
+                show={showAlert}
+                    variant="info"
+                    onClose={() => setShowAlert(false)}
+                    dismissible
+                    style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999, // Adjust the z-index as needed
+                    }}
+                >
                 {alertMessage}
-            </Alert>   
+            </Alert>    
         </div>
     );
 }

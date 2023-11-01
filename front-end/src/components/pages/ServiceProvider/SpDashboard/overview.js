@@ -17,6 +17,8 @@ function Overview() {
 
     const [viewPendingJobsData, setViewPendingJobsData] = useState([]);
 
+    const [trainingsessionData, setTrainingsessionData] = useState([]);
+
     useEffect(() => {
         axios.get('http://localhost:8080/auth/viewHistoryJobs',{
           params: {
@@ -62,6 +64,15 @@ function Overview() {
         console.log(res.data);
         setViewPendingJobsData(res.data);
         });
+
+        axios.get('http://localhost:8080/auth/viewMyTrainingSessions',{
+        params: {
+            serviceproviderid: userData.userid
+        }
+        }).then((res) => {
+        console.log(res.data);
+        setTrainingsessionData(res.data);
+        });
     }, []);
     
     const allCompletedCards = [...viewHistoryJobsData, ...viewHistoryVacanciesData];
@@ -72,6 +83,8 @@ function Overview() {
     const ongoingjobs_count = allOngoingCards.length;
 
     const pendingjobs_count = viewPendingJobsData.length;
+
+    const trainingsession_count = trainingsessionData.length;
 
     return (
         <div className="dashboard-top-cards-container d-flex flex-row mt-3 ms-lg-4 me-lg-4">
@@ -104,9 +117,9 @@ function Overview() {
             </Card>
             <Card className="card-sp-dashboard dashboard-button-sp-4 col-3">
                 <Card.Body className="d-flex flex-column">
-                    <Card.Title className="card-sp-dashboard-title">3.5 (28)</Card.Title>
+                    <Card.Title className="card-sp-dashboard-title">{trainingsession_count}</Card.Title>
                     <Card.Text className="card-body-container d-flex flex-row">
-                        <span>Ratings</span>
+                        <span>Training Sessions</span>
                         <i className="bi bi-pass ms-lg-auto"></i>
                     </Card.Text>
                 </Card.Body>

@@ -1,8 +1,6 @@
 import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import UserImg from "../../../../assets/images/header/user.jpg";
-import customerimage from "../../../../assets/images/ServiceProvider/customer1.jpg";
 import Button from "react-bootstrap/Button";
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";

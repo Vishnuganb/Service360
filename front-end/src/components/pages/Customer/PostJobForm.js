@@ -15,35 +15,35 @@ const userData = JSON.parse(response);
 function PostJobForm() {
     const navigate = useNavigate();
     const handleBackClick = () => {
-      navigate(-1);
-  };
-  const [selectedDuration, setSelectedDuration] = useState('');
+        navigate(-1);
+    };
+    const [selectedDuration, setSelectedDuration] = useState('');
 
-  const handleDurationChange = (event) => {
-    setSelectedDuration(event.target.value);
-    
-    // Capture the selected location and update jobData
-    if (event.target.name === "joblocation") {
-        inputJobdata(event.target.name, event.target.value);
-    }
-    if (event.target.name === "servicename") {
-        inputJobdata(event.target.name, event.target.value);
-    }
-};
+    const handleDurationChange = (event) => {
+        setSelectedDuration(event.target.value);
 
-const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the alert
+        // Capture the selected location and update jobData
+        if (event.target.name === "joblocation") {
+            inputJobdata(event.target.name, event.target.value);
+        }
+        if (event.target.name === "servicename") {
+            inputJobdata(event.target.name, event.target.value);
+        }
+    };
+
+    const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the alert
 
     const apiBaseUrl = "http://localhost:8080";
 
-  const axiosInstance = axios.create({
-    baseURL: apiBaseUrl,
-    timeout: 10000,
-  });
+    const axiosInstance = axios.create({
+        baseURL: apiBaseUrl,
+        timeout: 10000,
+    });
 
-  const inputJobdata = (name, value) => {
-    setJobData((prev) => ({ ...prev, [name]: value }));
-    //console.log(hotelData);
-  };
+    const inputJobdata = (name, value) => {
+        setJobData((prev) => ({ ...prev, [name]: value }));
+        //console.log(hotelData);
+    };
 
 
     const [jobData, setJobData] = useState({
@@ -54,57 +54,59 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
         jobstatus: "",
         jobdescription: "",
         joblocation: "",
-        vacancytype:"",
-        qualifications:"",
-        responsibilities:"",
-        // customer: {
-        //     userid: userData.userid
-        // }
-      });
+        vacancytype: "",
+        qualifications: "",
+        responsibilities: "",
+        isquotation: "", 
 
 
-      const handleAddJob = async (e) => {
+    });
+
+
+    const handleAddJob = async (e) => {
         e.preventDefault();
-      
+
         try {
-          let response;
-          if (selectedDuration === 'Long_term') {
-            response = await axiosInstance.post("/auth/createvacancies", {
-            vacancytitle: jobData.jobtitle,
-              posteddate: jobData.posteddate,
-              duedate: jobData.posteddate,
-              vacancylocation: jobData.joblocation,
-              servicename: jobData.servicename,
-              vacancytype: jobData.vacancytype,
-              qualifications: jobData.qualifications,
-              responsibilities: jobData.responsibilities,
+            let response;
+            if (selectedDuration === 'Long_term') {
+                response = await axiosInstance.post("/auth/createvacancies", {
+                    vacancytitle: jobData.jobtitle,
+                    vacancydescription: jobData.jobdescription,
+                    posteddate: jobData.posteddate,
+                    duedate: jobData.posteddate,
+                    vacancylocation: jobData.joblocation,
+                    servicename: jobData.servicename,
+                    vacancytype: jobData.vacancytype,
+                    qualifications: jobData.qualifications,
+                    responsibilities: jobData.responsibilities,
+                    customer: userData.userid
 
-              // Add other properties specific to vacancies here
-            });
-          } else {
-            response = await axiosInstance.post("/auth/createjobs", {
-              jobtitle: jobData.jobtitle,
-              posteddate: jobData.posteddate,
-              duedate: jobData.duedate,
-              joblocation: jobData.joblocation,
-              servicename: jobData.servicename,
-              jobdescription: jobData.jobdescription,
+                    // Add other properties specific to vacancies here
+                });
+            } else {
+                response = await axiosInstance.post("/auth/createjobs", {
+                    jobtitle: jobData.jobtitle,
+                    posteddate: jobData.posteddate,
+                    duedate: jobData.duedate,
+                    joblocation: jobData.joblocation,
+                    servicename: jobData.servicename,
+                    jobdescription: jobData.jobdescription,
+                    customer: userData.userid,
+                    isquotation: jobData.isquotation // Include isquotation when Short Term is selected
 
-              // Add other properties specific to jobs here
-            });
-          }
-      
-          if (response.status === 200) {
-            console.log(jobData);
-            window.location.reload();
-            setIsSubmitted(true);
-            console.log("okkkk");
-          }
+                });
+            }
+            if (response.status === 200) {
+                console.log(jobData);
+                window.location.reload();
+                setIsSubmitted(true);
+                console.log("okkkk");
+            }
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      };
-      
+    };
+
     return (
         <div className='card2' >
             <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
@@ -123,32 +125,32 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                     {/* Display the success alert when isSubmitted is true */}
                     {isSubmitted && (
                         <Alert variant="success">
-                        Form submitted successfully!
+                            Form submitted successfully!
                         </Alert>
-                    )}    
+                    )}
                     <div className="vacancy-form-group">
                         <Row><Col className="col-4">
                             <label for="title">Title <span style={{ color: "red" }}>&nbsp;*</span> </label></Col>
                             <Col className="col-6"><input type="text" name="jobtitle" value={jobData.jobtitle}
-                        onChange={(e) => {
-                          inputJobdata(e.target.name, e.target.value);
-                        }} className="form-control" id="title" placeholder="Enter the title" /></Col>
+                                onChange={(e) => {
+                                    inputJobdata(e.target.name, e.target.value);
+                                }} className="form-control" id="title" placeholder="Enter the title" /></Col>
                         </Row>
                     </div>
                     <div className="vacancy-form-group">
                         <label for="description">Description <span style={{ color: "red" }}>&nbsp;*</span> </label>
                         <input type="text" name="jobdescription" value={jobData.jobdescription}
-                        onChange={(e) => {
-                          inputJobdata(e.target.name, e.target.value);
-                        }} className="form-control" id="description" placeholder="Enter your job details here" />
+                            onChange={(e) => {
+                                inputJobdata(e.target.name, e.target.value);
+                            }} className="form-control" id="description" placeholder="Enter your job details here" />
                     </div>
                     <div className="vacancy-form-group">
                         <Row><Col className="col-4">
                             <label for="duedate">Due Date <span style={{ color: "red" }}>&nbsp;*</span> </label></Col>
                             <Col className="col-6">  <input type="date" name="duedate" value={jobData.duedate}
-                        onChange={(e) => {
-                          inputJobdata(e.target.name, e.target.value);
-                        }} className="form-control" id="duedate" />
+                                onChange={(e) => {
+                                    inputJobdata(e.target.name, e.target.value);
+                                }} className="form-control" id="duedate" />
                             </Col></Row>
 
                     </div>
@@ -159,12 +161,12 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                             </Col>
                             <Col className="col-6">
                                 <Form.Group className="mb-3">
-                                <Form.Select
-                                    id="disabledSelect"
-                                    className="select-small-text"
-                                    name="joblocation" // Add the name attribute here
-                                    value={jobData.joblocation}
-                                    onChange={handleDurationChange}>
+                                    <Form.Select
+                                        id="disabledSelect"
+                                        className="select-small-text"
+                                        name="joblocation" // Add the name attribute here
+                                        value={jobData.joblocation}
+                                        onChange={handleDurationChange}>
                                         <option value="" disabled>Select a location</option>
                                         <option value="Ampara">Ampara</option>
                                         <option value="Anuradhapura">Anuradhapura</option>
@@ -205,11 +207,11 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                             <Col className="col-6">
                                 <Form.Group className="mb-3">
                                     <Form.Select
-                                    id="disabledSelect"
-                                    className="select-small-text"
-                                    name="servicename" // Add the name attribute here
-                                    value={jobData.servicename}
-                                    onChange={handleDurationChange}>
+                                        id="disabledSelect"
+                                        className="select-small-text"
+                                        name="servicename" // Add the name attribute here
+                                        value={jobData.servicename}
+                                        onChange={handleDurationChange}>
                                         <option value="" disabled>Select a service</option>
                                         <option value="Carpentry">Carpentry</option>
                                         <option value="Painting">Painting</option>
@@ -262,25 +264,25 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                                         <label htmlFor="category">Employment Type <span style={{ color: "red" }}>*</span></label>
                                     </Col>
                                     <Col className="col-6">
-                                        <select className="form-control" id="category" name="category">
-                                            <option value="Full_Time">Full Time</option>
-                                            <option value="Hours_based">Hours based</option>
-                                            <option value="none">None</option>
-                                        </select>
+                                        <Form.Group className="mb-3">
+                                            <Form.Select
+                                                id="category"
+                                                className="select-small-text"
+                                                name="vacancytype" // Change this to "vacancytype" to match your data structure
+                                                value={jobData.vacancytype}
+                                                onChange={(e) => {
+                                                    inputJobdata(e.target.name, e.target.value);
+                                                }}
+                                            >
+                                                <option value="Full_Time">Full Time</option>
+                                                <option value="Hours_based">Hours based</option>
+                                                <option value="none">None</option>
+                                            </Form.Select>
+                                        </Form.Group>
                                     </Col>
                                 </Row>
                             </div>
 
-                            <div className="vacancy-form-group">
-                                <Row>
-                                    <Col className="col-4">
-                                        <label htmlFor="title">Salary <span style={{ color: "red" }}>*</span></label>
-                                    </Col>
-                                    <Col className="col-6">
-                                        <input type="text" name="salary" className="form-control" id="salary" placeholder="Enter the salary" />
-                                    </Col>
-                                </Row>
-                            </div>
 
                             <div className="vacancy-form-group">
                                 <Row>
@@ -288,10 +290,10 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                                         <label htmlFor="title">Skill & Qualification Expect <span style={{ color: "red" }}>*</span></label>
                                     </Col>
                                     <Col className="col-6">
-                                    <input type="text" name="qualifications" value={jobData.qualifications}
-                        onChange={(e) => {
-                          inputJobdata(e.target.name, e.target.value);
-                        }} className="form-control" id="qualifications" />
+                                        <input type="text" name="qualifications" value={jobData.qualifications}
+                                            onChange={(e) => {
+                                                inputJobdata(e.target.name, e.target.value);
+                                            }} className="form-control" id="qualifications" />
                                     </Col>
                                 </Row>
                             </div>
@@ -302,13 +304,32 @@ const [isSubmitted, setIsSubmitted] = useState(false); // State to manage the al
                                         <label htmlFor="title">Responsibilities Expect <span style={{ color: "red" }}>*</span></label>
                                     </Col>
                                     <Col className="col-6">
-                                    <input type="text" name="responsibilities" value={jobData.responsibilities}
-                        onChange={(e) => {
-                          inputJobdata(e.target.name, e.target.value);
-                        }} className="form-control" id="responsibilities" />
+                                        <input type="text" name="responsibilities" value={jobData.responsibilities}
+                                            onChange={(e) => {
+                                                inputJobdata(e.target.name, e.target.value);
+                                            }} className="form-control" id="responsibilities" />
                                     </Col>
                                 </Row>
                             </div>
+                        </div>
+                    )}
+                    {selectedDuration === 'Short_term' && (
+                        <div className="vacancy-form-group">
+                            <Row>
+                            <Col className="col-4">
+                            <label htmlFor="isquotation">Quotation Selection <span style={{ color: "red" }}>*</span></label>
+                            </Col><Col className="col-6"><select
+                                name="isquotation"
+                                value={jobData.isquotation}
+                                onChange={(e) => {
+                                    inputJobdata(e.target.name, e.target.value);
+                                }}
+                                className="form-select"
+                            >
+                                <option value="">Select an option</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select></Col></Row>
                         </div>
                     )}
                     <div className="vacancy-form-group">

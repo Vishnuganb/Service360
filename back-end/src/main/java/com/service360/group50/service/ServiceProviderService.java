@@ -316,6 +316,15 @@ public class ServiceProviderService {
         return null;
     }
 
+    public Void DecreaseTrainingSessionIntrestedCount(Long trainingsessionid) {
+        TrainingSession existingTrainingSession = trainingSessionRepository.findById(trainingsessionid).orElse(null);
+        if (existingTrainingSession != null) {
+            existingTrainingSession.setInterestedcount(existingTrainingSession.getInterestedcount() - 1);
+            trainingSessionRepository.save(existingTrainingSession);
+        }
+        return null;
+    }
+
     public List<TrainingSessionRegistration> GetTrainingSessionRegisteredUsers(Long trainingsessionid) {
         List<TrainingSessionRegistration> TrainingSessionRegistrationList = new ArrayList<>();
         trainingSessionRegistrationRepository.findAllByTrainingsessionid(trainingsessionid).forEach(TrainingSessionRegistrationList::add);

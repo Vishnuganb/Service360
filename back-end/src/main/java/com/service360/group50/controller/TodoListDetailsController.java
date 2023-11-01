@@ -2,29 +2,37 @@ package com.service360.group50.controller;
 
 import com.service360.group50.entity.TodoList;
 import com.service360.group50.entity.TodoListDetails;
-import com.service360.group50.entity.Users;
 import com.service360.group50.repo.TodoListRepository;
 import com.service360.group50.service.TodoListDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/auth")
 public class TodoListDetailsController {
-    @Autowired
-    TodoListRepository todoListRepository;
-
     private final TodoListDetailsService todoListDetailsService;
+    private final TodoListRepository todoListRepository;
 
-    @PostMapping("/createTodoListDetails")
-    public TodoListDetails createTodoListDetails(@RequestBody TodoListDetails newTodoListDetails) {
-        return todoListDetailsService.createTodoListDetails(newTodoListDetails);
+    @PostMapping("/createTodoListDetails/{todoListdetailsid}")
+    public TodoListDetails createTodoListDetails(@PathVariable Long todoListdetailsid, @RequestBody TodoListDetails newTodoListDetails) {
+        TodoListDetails task = new TodoListDetails();
+
+        TodoList todolist = todoListRepository.findById(todoListdetailsid).orElse(null);
+
+        task.setTask(newTodoListDetails.getTask());
+        task.setTodolist(todolist);
+        task.setWorkedHours(newTodoListDetails.getWorkedHours());
+        task.setCompleted(newTodoListDetails.isCompleted());
+        task.setAmount(newTodoListDetails.getAmount());
+        task.setCustomercompleted(newTodoListDetails.isCustomercompleted());
+
+        System.out.println(newTodoListDetails);
+        return todoListDetailsService.createTodoListDetails(task);
     }
 
     @GetMapping("/viewTodoListDetails")
@@ -32,23 +40,15 @@ public class TodoListDetailsController {
         return todoListDetailsService.viewTodoListDetails();
     }
     @PutMapping("/viewTodoListDetails/{todoListdetailsid}")
-    public TodoListDetails toggleTaskCompletion(@PathVariable("todoListdetailsid") Long todoListdetailsId,
-                                                @RequestParam("completed") Boolean completed,
-                                                @RequestParam("hours") Double hours, @RequestParam("todolistId") Long todoListId ) {
+    public TodoListDetails toggleTaskCompletion(@PathVariable Long todoListdetailsid, @RequestParam("completed") Boolean completed,@RequestParam("hours") Double hours) {
 
         // Retrieve the task by ID
-        TodoListDetails task = todoListDetailsService.getTodoListDetailsById(todoListdetailsId);
-
-        // Retrieve the todolist by id
-        Optional<TodoList> todolistOptional = todoListRepository.getTodoListByTodolistid(todoListId);
-        TodoList todolist = todolistOptional.orElse(null);
+        TodoListDetails task = todoListDetailsService.getTodoListDetailsById(todoListdetailsid);
 
         // Toggle the completion status
         task.setCompleted(!completed);
         task.setWorkedHours(hours);
-        task.setCustomercompleted(completed);
-                task.setTodolist(todolist);
-
+//        task.setCustomercompleted(completed);
         // Save the updated task
         return todoListDetailsService.createTodoListDetails(task);
     }
@@ -63,5 +63,24 @@ public class TodoListDetailsController {
         return todoListDetailsService.createTodoListDetails(task);
     }
 
+    @PutMapping("updatetoDoListPaymetStatus/{todoListdetailsid}")
+    public TodoList updatePaymentStatus(@PathVariable Long todoListdetailsid) {
+        // Retrieve the task by ID
+        TodoList todolist = todoListRepository.findById(todoListdetailsid).orElse(null);
+        // Toggle the completion status
+        todolist.setStatus("payment pending");
+        // Save the updated task
+        return todoListDetailsService.updatePaymentTodoList(todolist);
+
+    }
+
+    @GetMapping("getTodoListPaymentStatus/{todoListid}")
+    public String getPaymentStatus(@PathVariable Long todoListid) {
+        // Retrieve the task by ID
+        TodoList todolist = todoListRepository.findById(todoListid).orElse(null);
+        // Toggle the completion status
+        return todolist.getStatus();
+
+    }
 
 }

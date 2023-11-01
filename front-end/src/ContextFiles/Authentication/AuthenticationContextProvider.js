@@ -216,11 +216,11 @@ const AuthenticationContextProvider = (props) => {
     const logout = () => {
         localStorage.removeItem('authenticated');
         localStorage.removeItem('role');
-        navigate("/login");
         sessionStorage.removeItem('authenticatedUser');
         // authenticated = false;
         setAuthenticated(false);
-        console.log("Logged out successfully!!!")
+        console.log("Logged out successfully!!!");
+        navigate("/login");
 
     }
 

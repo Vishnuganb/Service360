@@ -101,13 +101,13 @@ import { Row } from 'react-bootstrap';
 
 
 
-/*
-.d-flex{
+
+.dashboardcontent{
     justify-content: center;
     align-items: center;
     padding: 8px;
     
-}*/
+}
 
 .dashboard-button-1{
     justify-content: center;

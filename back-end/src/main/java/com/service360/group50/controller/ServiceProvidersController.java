@@ -51,6 +51,8 @@ public class ServiceProvidersController {
     private ServiceProviderFilesRepository serviceProviderFilesRepository;
     @Autowired
     private TodoListRepository todoListRepository;
+    @Autowired
+    private QuotationRepository quotationRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -773,11 +775,39 @@ public class ServiceProvidersController {
         return imageBytesList;
     }
 
-    @PutMapping("auth/addQuotationPdf/{id}")
-    public Jobs addQuotationPdf(@RequestParam("file") MultipartFile quotationfile, @PathVariable Long id) {
+//    @PutMapping("auth/addQuotationPdf/{id}")
+//    public Jobs addQuotationPdf(@RequestParam("file") MultipartFile quotationfile, @PathVariable Long id) {
+//        // Load the Jobs entity by ID
+//        Optional<Jobs> jobOptional = jobsRepository.findById(id);
+//        Jobs job = jobOptional.orElse(null);
+//
+//        String uploadDirectory = "src/main/resources/static/images/quotation";
+//
+//        String savedquotationfile="";
+//
+//        if (quotationfile != null && !quotationfile.isEmpty()) {
+//            try {
+//                savedquotationfile = imageService.saveImageToStorageServiceProvider(uploadDirectory, quotationfile);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        job.setQuotationpdf(savedquotationfile);
+//
+//        return serviceProviderService.addQuotationPdf(job);
+//    }
+
+    @PostMapping("auth/addQuotationPdf/{id}")
+    public Quotation addQuotationPdf(@RequestParam("file") MultipartFile quotationfile,
+                                @RequestParam("serviceproviderid") Long serviceproviderid,
+                                @PathVariable Long id) {
         // Load the Jobs entity by ID
         Optional<Jobs> jobOptional = jobsRepository.findById(id);
         Jobs job = jobOptional.orElse(null);
+
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
 
         String uploadDirectory = "src/main/resources/static/images/quotation";
 
@@ -791,9 +821,12 @@ public class ServiceProvidersController {
             }
         }
 
-        job.setQuotationpdf(savedquotationfile);
+        Quotation quotation = new Quotation();
+        quotation.setQuotationpdf(savedquotationfile);
+        quotation.setServiceproviders(serviceProvider);
+        quotation.setJobs(job);
 
-        return serviceProviderService.addQuotationPdf(job);
+        return quotationRepository.save(quotation);
     }
 
     @PostMapping("auth/generateTodoList/{jobId}")

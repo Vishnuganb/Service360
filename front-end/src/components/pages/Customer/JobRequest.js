@@ -93,9 +93,7 @@ function Quotation() {
                                         onChange={handleLocationChange}
                                         value={selectedLocation}
                                     >
-                                        <option value="" disabled hidden>
-                                            Select Location
-                                        </option>
+                                        <option value="" disabled hidden>Select Location</option>
                                         {Object.keys(places).map((location, index) => (
                                             <optgroup label={location} key={index}>
                                                 {places[location].cities.map((city, subIndex) => (
@@ -108,6 +106,7 @@ function Quotation() {
                                     </Form.Select>
                                 </Form.Group>
 
+
                             </Col>
                         </Row>
                     </div>
@@ -119,7 +118,7 @@ function Quotation() {
                             </Col>
                             <Col className="col-6">
                                 <Form.Group className="mb-3">
-                                    <Form.Select style={{margin:'0'}}
+                                    <Form.Select style={{ margin: '0' }}
                                         id="serviceSelect"
                                         className="select-small-text"
                                         onChange={handleServiceChange}
@@ -149,11 +148,11 @@ function Quotation() {
                                 <label htmlFor="file">Upload image of need</label>
                             </Col>
                             <Col className="col-6">
-                                <input type="file" name="file" className="form-control" id="file" />                            
+                                <input type="file" name="file" className="form-control" id="file" />
                             </Col>
                         </Row>
                     </div>
-                    
+
                     <Row className="vacancy-form-group-buttons mt-3">
                         <Col>
                             <input type="submit" value="Send" className="btn btn-vacancy-form-k" />

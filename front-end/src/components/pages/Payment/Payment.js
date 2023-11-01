@@ -75,7 +75,8 @@ const Payment = ({
 
   console.log(payment);
 
-  function pay() {
+  function pay(e) {
+    e.preventDefault(); 
     window.payhere.startPayment(payment);
   }
 
@@ -87,7 +88,7 @@ const Payment = ({
   };
 
   return (
-    <button onClick={pay} className="ChooseSubBut py-2 px-4">
+    <button onClick={pay} className="btn-ServiceProvider-1 px-1">
       Pay with Payhere
     </button>
   );

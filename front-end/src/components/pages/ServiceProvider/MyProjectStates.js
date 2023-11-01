@@ -4,7 +4,7 @@ import '../../../style/ServiceProvider/MyProjectStates.css';
 import { Link } from 'react-router-dom';
 
 import Pending from '../../../assets/images/ServiceProvider/pending2.jpg';
-import Invites_img from '../../../assets/images/ServiceProvider/invite.png';
+import Invites_img from '../../../assets/images/ServiceProvider/invite-2.png';
 import Pending_img from '../../../assets/images/ServiceProvider/pending.png';
 import Ongoing_img from '../../../assets/images/ServiceProvider/ongoing.png';
 import Rejected_img from '../../../assets/images/ServiceProvider/rejected.png';
@@ -50,7 +50,7 @@ function MyProjectsJobsStates() {
                 <div className='col-lg-3 col-sm-6 col-12'>
                     <Link to="/ServiceProvider/MyProjectsJobs?tab=invite">
                         <Card className="MyProjectsStates-card mb-3" >
-                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.jobInvites.image} style={{ maxHeight: '150px', objectFit: 'contain', padding: '16px' }}/>
+                            <Card.Img className="MyProjectsStates-card-img" src={serviceCategories.jobInvites.image} style={{ maxHeight: '150px', objectFit: 'contain', padding: '18px' }}/>
                             <Card.Body>
                                 <span style={{fontWeight:"bold"}}>{serviceCategories.jobInvites.title}</span>
                             </Card.Body>

@@ -14,8 +14,8 @@ const userData = JSON.parse(response);
 function ComplaintPopup() {
     const [show, setShow] = useState(false);
     const [complaintData, setComplaintData] = useState({
-        complaintCategory: "",
-        description: "",
+        complainttitle: "",
+        complaintdescription: "",
         users: {
             userid: userData.userid
         }

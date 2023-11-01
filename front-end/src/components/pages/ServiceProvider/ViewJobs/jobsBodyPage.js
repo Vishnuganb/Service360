@@ -15,6 +15,7 @@ import {
     ViberShareButton,
     EmailShareButton,
   } from 'react-share';
+import LocationByCitiesJson from '../../../loginForm/cities-by-district.json';
 
 function JobsBodyPage() {
     const [viewJobsData, setViewJobsData] = useState(null);
@@ -177,33 +178,15 @@ function JobsBodyPage() {
                             ))}
                         </NavDropdown>
                         <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
-                            <NavDropdown.Item eventKey="wellawatte">Wellawatte</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="colombo">Colombo</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Ampara">Ampara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Anuradhapura">Anuradhapura</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Badulla">Badulla</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Batticaloa">Batticaloa</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Colombo">Colombo</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Galle">Galle</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Gampaha">Gampaha</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Hambantota">Hambantota</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Jaffna">Jaffna</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kalutara">Kalutara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kandy">Kandy</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kegalle">Kegalle</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kilinochchi">Kilinochchi</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Kurunegala">Kurunegala</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Mannar">Mannar</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Matale">Matale</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Matara">Matara</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Monaragala">Monaragala</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Mullaitivu">Mullaitivu</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Nuwara Eliya">Nuwara Eliya</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Polonnaruwa">Polonnaruwa</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Puttalam">Puttalam</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Ratnapura">Ratnapura</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Trincomalee">Trincomalee</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="Vavuniya">Vavuniya</NavDropdown.Item>
+                            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {Object.keys(LocationByCitiesJson).map((location, index) => (
+                                    LocationByCitiesJson[location].cities.map((city, subIndex) => (
+                                        <NavDropdown.Item key={`${index}-${subIndex}`} eventKey={city}>
+                                            {city}
+                                        </NavDropdown.Item>
+                                    ))
+                                ))}
+                            </div>
                         </NavDropdown>
                     </Nav>
                 </div>
@@ -276,7 +259,7 @@ function JobsBodyPage() {
                             </Link> 
 
                             <div className='me-lg-5'>
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}} onClick={() => openShareModal(job)}>
+                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(20, 120, 80)"}} onClick={() => openShareModal(job)}>
                                     <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-share"></i>
                                     </span>
@@ -345,7 +328,7 @@ function JobsBodyPage() {
                     <div className='vacancy-card-footer d-flex flex-row justify-content-between mb-sm-2 mx-auto mt-md-0 mt-1 mb-2'>
 
                         <Link to={`../ViewAVacancy/${vacancy.vacancyid}` }>
-                            <button type="button" class="btn view-jobs-page-btn-labeled vacancy-card-footer-btn" id="vacancy-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(13, 100, 69)"}}>
+                            <button type="button" class="btn view-jobs-page-btn-labeled vacancy-card-footer-btn" id="vacancy-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
                                 <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-file-earmark-plus"></i>
                                 </span>

@@ -109,6 +109,22 @@ const VerifiedAdCont = ({
 const AdsPage = () => {
   const [ads, setAds] = useState([]);
 
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredAds, setFilteredAds] = useState([]);
+
+  // Function to handle search input changes
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    // Filter the ads based on the search query
+    const filtered = ads.filter((ad) =>
+      ad.adsName.toLowerCase().includes(query.toLowerCase())
+    );
+    
+  };
+
+
   useEffect(() => {
     const apiUrl = `http://localhost:8080/auth/getAllAds`;
 
@@ -140,9 +156,7 @@ const AdsPage = () => {
   return (
     <Container>
       <div>
-        <SlideShow 
-        ads={ads}
-        />
+        <SlideShow ads={ads} />
 
         <Form>
           <fieldset>
@@ -151,10 +165,14 @@ const AdsPage = () => {
 
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Control id="disabledTextInput" placeholder="Search" />
+                  <Form.Control
+                    id="searchInput"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
                 </Form.Group>
               </Col>
-
               <Col>
                 <Form.Group className="mb-3">
                   <Form.Select>
@@ -205,14 +223,12 @@ const AdsPage = () => {
             <ViewSingleAd
               key={selectedAd.id}
               ad={selectedAd}
-              show={ViewAdmodalVisible} // Make sure this prop is set to ViewAdmodalVisible
+              show={ViewAdmodalVisible}
               onHide={viewColosedModel}
             />
           )}
         </Row>
-        {/* <div className="d-flex justify-content-center mt-3">
-          <PageNumber />
-        </div> */}
+       
       </div>
     </Container>
   );

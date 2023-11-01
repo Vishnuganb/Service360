@@ -105,6 +105,7 @@ function PostJobForm() {
         .then((response) => {
           console.log("created successfully!", response.data);
           setIsSubmitted(true);
+          window.location.reload();
         })
         .catch((error) => {
           // Handle errors, e.g., show an error message
@@ -125,6 +126,7 @@ function PostJobForm() {
         .then((response) => {
           console.log("created successfully!", response.data);
           setIsSubmitted(true);
+          window.location.reload();
         })
         .catch((error) => {
           // Handle errors, e.g., show an error message

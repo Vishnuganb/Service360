@@ -67,7 +67,7 @@ function ViewSPCard({ spCard }) {
       <div className="SP-card-header">
         <Row>
           <Col>
-            <img src={spCard.profilePic} alt="avatar" className="SP-card-avatar" />
+            <img src={spCard.profilePic} alt="avatar" className="SP-card-avatar rounded-circle" style={{borderRadius:'50%'}} />
           </Col>
           <Col>
             <div className="SP-card-title d-flex gap-2">

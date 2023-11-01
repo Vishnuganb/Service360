@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -8,9 +8,11 @@ import BgImage from '../../../assets/images/header/Background.png';
 import { BsCloudUpload } from 'react-icons/bs';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import places from '../../loginForm/cities-by-district.json'; //location import
 
 const response = sessionStorage.getItem('authenticatedUser');
 const userData = JSON.parse(response);
+
 
 function PostJobForm() {
     const navigate = useNavigate();
@@ -42,9 +44,7 @@ function PostJobForm() {
 
     const inputJobdata = (name, value) => {
         setJobData((prev) => ({ ...prev, [name]: value }));
-        //console.log(hotelData);
     };
-
 
     const [jobData, setJobData] = useState({
         jobtitle: "",
@@ -57,7 +57,7 @@ function PostJobForm() {
         vacancytype: "",
         qualifications: "",
         responsibilities: "",
-        isquotation: "", 
+        isquotation: "",
 
 
     });
@@ -107,6 +107,30 @@ function PostJobForm() {
         }
     };
 
+    const [selectedLocation, setSelectedLocation] = useState('');
+    const [selectedService, setSelectedService] = useState('');
+    const [servicesData, setServicesData] = useState({});
+
+    const handleLocationChange = (event) => {
+        setSelectedLocation(event.target.value);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/auth/services");
+                const data = response.data;
+                setServicesData(data);
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const categories = Object.keys(servicesData);
+
     return (
         <div className='card2' >
             <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
@@ -138,12 +162,27 @@ function PostJobForm() {
                         </Row>
                     </div>
                     <div className="vacancy-form-group">
-                        <label for="description">Description <span style={{ color: "red" }}>&nbsp;*</span> </label>
-                        <input type="text" name="jobdescription" value={jobData.jobdescription}
-                            onChange={(e) => {
-                                inputJobdata(e.target.name, e.target.value);
-                            }} className="form-control" id="description" placeholder="Enter your job details here" />
+                        <Row>
+                            <Col className='col 4'>
+                                <label for="description">Description <span style={{ color: "red" }}></span> </label>
+                            </Col>
+
+                            <Col className='col 6' style={{marginRight: '290px', width: '255px'}}>
+                                <textarea
+                                    type="text"
+                                    name="jobdescription"
+                                    value={jobData.jobdescription}
+                                    onChange={(e) => {
+                                        inputJobdata(e.target.name, e.target.value);
+                                    }}
+                                    className="form-control"
+                                    id="description"
+                                    placeholder="Enter your job details here" />
+                            </Col>
+                        </Row>
                     </div>
+
+                    
                     <div className="vacancy-form-group">
                         <Row><Col className="col-4">
                             <label for="duedate">Due Date <span style={{ color: "red" }}>&nbsp;*</span> </label></Col>
@@ -162,39 +201,24 @@ function PostJobForm() {
                             <Col className="col-6">
                                 <Form.Group className="mb-3">
                                     <Form.Select
-                                        id="disabledSelect"
+                                        id="locationSelect"
                                         className="select-small-text"
-                                        name="joblocation" // Add the name attribute here
-                                        value={jobData.joblocation}
-                                        onChange={handleDurationChange}>
-                                        <option value="" disabled>Select a location</option>
-                                        <option value="Ampara">Ampara</option>
-                                        <option value="Anuradhapura">Anuradhapura</option>
-                                        <option value="Badulla">Badulla</option>
-                                        <option value="Batticaloa">Batticaloa</option>
-                                        <option value="Colombo">Colombo</option>
-                                        <option value="Galle">Galle</option>
-                                        <option value="Gampaha">Gampaha</option>
-                                        <option value="Hambantota">Hambantota</option>
-                                        <option value="Jaffna">Jaffna</option>
-                                        <option value="Kalutara">Kalutara</option>
-                                        <option value="Kandy">Kandy</option>
-                                        <option value="Kegalle">Kegalle</option>
-                                        <option value="Kilinochchi">Kilinochchi</option>
-                                        <option value="Kurunegala">Kurunegala</option>
-                                        <option value="Mannar">Mannar</option>
-                                        <option value="Matale">Matale</option>
-                                        <option value="Matara">Matara</option>
-                                        <option value="Monaragala">Monaragala</option>
-                                        <option value="Mullaitivu">Mullaitivu</option>
-                                        <option value="Nuwara Eliya">Nuwara Eliya</option>
-                                        <option value="Polonnaruwa">Polonnaruwa</option>
-                                        <option value="Puttalam">Puttalam</option>
-                                        <option value="Ratnapura">Ratnapura</option>
-                                        <option value="Trincomalee">Trincomalee</option>
-                                        <option value="Vavuniya">Vavuniya</option>
+                                        onChange={handleLocationChange}
+                                        value={selectedLocation}
+                                    >
+                                        <option value="" disabled hidden>Select Location</option>
+                                        {Object.keys(places).map((location, index) => (
+                                            <optgroup label={location} key={index}>
+                                                {places[location].cities.map((city, subIndex) => (
+                                                    <option key={`${index}-${subIndex}`} value={city}>
+                                                        {city}
+                                                    </option>
+                                                ))}
+                                            </optgroup>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
+
                             </Col>
                         </Row>
                     </div>
@@ -212,7 +236,7 @@ function PostJobForm() {
                                         name="servicename" // Add the name attribute here
                                         value={jobData.servicename}
                                         onChange={handleDurationChange}>
-                                        <option value="" disabled>Select a service</option>
+                                        {/* <option value="" disabled>Select a service</option>
                                         <option value="Carpentry">Carpentry</option>
                                         <option value="Painting">Painting</option>
                                         <option value="AC_Repair">AC Repair</option>
@@ -227,7 +251,19 @@ function PostJobForm() {
                                         <option value="Video_Surveillance">Video Surveillance</option>
                                         <option value="Sofa_cleaning">Sofa cleaning</option>
                                         <option value="Carpet_cleaning">Carpet cleaning</option>
-                                        <option value="none">None</option>
+                                        <option value="none">None</option> */}
+                                        <option value="" disabled hidden>
+                                            Select Service
+                                        </option>
+                                        {categories.map((category, categoryIndex) => (
+                                            <optgroup >
+                                                {servicesData[category].map((service, serviceIndex) => (
+                                                    <option key={`${categoryIndex}-${serviceIndex}`} value={service} className='servicedropdown'>
+                                                        {service}
+                                                    </option>
+                                                ))}
+                                            </optgroup>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
@@ -316,20 +352,20 @@ function PostJobForm() {
                     {selectedDuration === 'Short_term' && (
                         <div className="vacancy-form-group">
                             <Row>
-                            <Col className="col-4">
-                            <label htmlFor="isquotation">Quotation Selection <span style={{ color: "red" }}>*</span></label>
-                            </Col><Col className="col-6"><select
-                                name="isquotation"
-                                value={jobData.isquotation}
-                                onChange={(e) => {
-                                    inputJobdata(e.target.name, e.target.value);
-                                }}
-                                className="form-select"
-                            >
-                                <option value="">Select an option</option>
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select></Col></Row>
+                                <Col className="col-4">
+                                    <label htmlFor="isquotation">Quotation Selection <span style={{ color: "red" }}>*</span></label>
+                                </Col><Col className="col-6"><select
+                                    name="isquotation"
+                                    value={jobData.isquotation}
+                                    onChange={(e) => {
+                                        inputJobdata(e.target.name, e.target.value);
+                                    }}
+                                    className="form-select"
+                                >
+                                    <option value="">Select an option</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select></Col></Row>
                         </div>
                     )}
                     <div className="vacancy-form-group">

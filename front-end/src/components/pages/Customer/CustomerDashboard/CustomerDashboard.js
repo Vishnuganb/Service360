@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Card from "react-bootstrap/Card";
 import { Row } from 'react-bootstrap';
 import '../../../../style/Customer/CustomerDashboard.css'
@@ -13,6 +13,7 @@ import ServiceProvider2 from '../../../../assets/images/Customer/ServiceProvider
 import ServiceProvider3 from '../../../../assets/images/Customer/ServiceProvider3.jpg';
 import { AuthenticationContext } from './../../../../ContextFiles/Authentication/AuthenticationContextProvider';
 import { useLocation } from "react-router-dom";
+import axios from 'axios';
 
 function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
     const [show, setShow] = useState(false);
@@ -216,7 +217,23 @@ const Delete = () => {
     );
 };
 
+const response = sessionStorage.getItem('authenticatedUser');
+const userData = JSON.parse(response);
+
 const CustomerDashboard = () => {
+
+    const [ongoingjobs,setOngoingjobs] = useState([]);
+
+    useEffect(() => {
+        const response = axios.get(`http://localhost:8080/auth/ongoingJobsCustomer/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setOngoingjobs(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
     return (
         <div className="row ps-lg-5 pe-lg-5 pt-lg-5" style={{ backgroundImage: `url(${BgImage})` }}>
 
@@ -249,29 +266,12 @@ const CustomerDashboard = () => {
                             </Link>
                         </Card>
                     </div>
-
-                    {/* <div className="d-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-4 responsiveCalendar_cus" >
-                        <ResponsiveCalendar />
-                    </div> */}
-
                 </div>
                 
                 <br></br>
                 <div className='Onpro'> <h3>Ongoing Projects</h3></div>
                 <Row>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Tiles fitting
-                                {/* <p>Due date: 20/08/2023</p> */}
-                                <ProjectPopup title="Tile fitting"
-                                    serviceProvider="Vinoth Kishan"
-                                    dueDate="2023-08-21"
-                                    imageSrc={ServiceProvider1} />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
+                    
                     <Card className="dashboard-pages">
                         <img className="card-img-top" src={profile_img_2} alt="my profile" />
                         <Card.Body>
@@ -284,51 +284,8 @@ const CustomerDashboard = () => {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Ac Repair
-                                <ProjectPopup title=" Ac Repair"
-                                    serviceProvider="Ashwin Kumar"
-                                    dueDate="2023-08-20"
-                                    imageSrc={ServiceProvider3} />
-
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Capentry
-                                <ProjectPopup title="Capentry"
-                                    serviceProvider="Ashwin Kumar"
-                                    dueDate="2023-08-28" />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-
                 </Row>
                 <br></br>
-                {/* <div className='Onpro'> <h3>Hired </h3></div>
-                <Row>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Electrician
-                                <HiredPopup title="Electrician"
-                                    serviceProvider="Alex Kumar"
-                                    durationPeriod="2 years"
-                                    imageSrc={ServiceProvider2} />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-
-
-                </Row>
-                <br></br> */}
                 <div className='Onpro'> <h3>Past Projects</h3></div>
                 <Row>
                     <Card className="dashboard-pages">
@@ -343,19 +300,6 @@ const CustomerDashboard = () => {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Plumbing
-                                <PastPopup title="Plumbing"
-                                    serviceProvider="Alex Kumar"
-                                    dueDate="2023-05-31"
-                                    imageSrc={ServiceProvider2} />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-
                 </Row>
                 <br></br>
 

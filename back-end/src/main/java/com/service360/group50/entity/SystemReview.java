@@ -22,23 +22,22 @@ public class SystemReview {
     @Column(updatable = false)
     private Long ratingid;
 
-    @Column( columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String review;
 
-    @Column( columnDefinition = "INTEGER")
+    @Column(columnDefinition = "INTEGER")
     private int rating;
 
-    @Column( columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE")
     private LocalDate posteddate;
 
-    //user name
-    //profile
+
     @ManyToOne
     @JoinColumn(name = "userid")
     private Users users;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         posteddate = LocalDate.now();
     }
 }

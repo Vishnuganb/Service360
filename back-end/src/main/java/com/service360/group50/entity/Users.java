@@ -134,5 +134,8 @@ public class Users implements UserDetails {
         return enabled;
     }
 
+    public Long getUserid() {
+        return userid;
+    }
 
 }

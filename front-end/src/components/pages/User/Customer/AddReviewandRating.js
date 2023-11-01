@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Container,
   Col,
@@ -13,74 +14,67 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker from "react-datepicker";
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
+
+//import {Authentication } from
 
 
-
-
-const serverLink = "http://localhost:8080"; 
+// Assuming your response object contains user data with a 'userid' property
 
 function AddReviewandRating(props) {
+  // Remove the userId state as it will be determined from the authentication
 
-  const [review, setReview] = useState("");
-  const [rating, setRating] = useState("");
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
-  const [userDetail, setUserDetail] = useState([]); 
+  const [review, setReview] = useState('');
+  const [rating, setRating] = useState(0);
   const response = sessionStorage.getItem('authenticatedUser');
   const userData = JSON.parse(response);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  
- 
   const handleReviewChange = (e) => {
     setReview(e.target.value);
   };
 
-  const handleRatingChange = (newValue) => {
-    setRating(newValue); 
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
 
-    
-    if (userDetail) {
-      
-      const reviewData = {
-        review: review,
-        rating: parseInt(rating), 
-        userId: userDetail.userid, 
+    const formData = new FormData();
+        formData.append('userid', userData.userid);
+        formData.append('review',review);
+        formData.append('rating',rating);
         
-      };
-      console.log(reviewData, "data");
-      
-      fetch("http://localhost:8080/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reviewData),
-      })
-        .then((data) => {
+    // Replace 'userId' with the actual 'userId' obtained from the user's authentication
+
+    axios
+            .post(`http://localhost:8080/auth/addSystemReview`, formData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+  
+            .then((data) => {
+              // Handle success or display an error message
+              console.log("Review added successfully:", data);
+              setShowSuccessMessage(true); // Show success message
+            })
+            .catch((error) => {
+              // Handle errors
+              console.error("Error adding review:", error);
+            })
+            .finally(() => {
+              // Reset showSuccessMessage after 5 seconds
+              setTimeout(() => {
+                setShowSuccessMessage(false);
+              }, 3000); // 3seconds
+              // Refresh the page after 3seconds
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000); // 3seconds
+            });
     
-          console.log("Review added successfully:", data);
-          setShowSuccessMessage(true); 
-        })
-        .catch((error) => {
-          
-          console.error("Error adding review:", error);
-        })
-        .finally(() => {
-          
-          setTimeout(() => {
-            setShowSuccessMessage(false);
-          }, 3000); 
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000); 
-        });
-    }
   };
 
   return (

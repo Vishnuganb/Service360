@@ -3,12 +3,10 @@ package com.service360.group50.service;
 
 import com.service360.group50.dto.UsersDTO;
 import com.service360.group50.entity.Advertiser;
-import com.service360.group50.entity.AdvertiserFiles;
 import com.service360.group50.entity.Role;
 import com.service360.group50.entity.SystemReview;
 import com.service360.group50.entity.Users;
 import com.service360.group50.repo.SystemReviewRepository;
-import com.service360.group50.repo.AdvertiserFileRepository;
 import com.service360.group50.repo.AdvertiserRepository;
 import com.service360.group50.repo.UserRepository;
 import jakarta.transaction.Transactional;
@@ -17,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +23,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private SystemReviewRepository systemReviewRepository;
+
+
+
 
     private final PasswordEncoder passwordEncoder;
     private final AdvertiserRepository advertiserRepository;
@@ -133,18 +135,25 @@ public class UserService {
         return userdata;
     }
     public SystemReview addSystemReview(Long userId, String reviewText, int rating) {
-            Users user = userRepository.findById(userId).orElse(null);
-            if (user == null) {
-                throw new IllegalArgumentException("User not found");
-            }
-            SystemReview systemReview = new SystemReview();
-            systemReview.setUsers(user);
-            systemReview.setReview(reviewText);
-            systemReview.setRating(rating);
-
-            return systemReviewRepository.save(systemReview);
+        Users user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
         }
-    
+        SystemReview systemReview = new SystemReview();
+        systemReview.setUsers(user);
+        systemReview.setReview(reviewText);
+        systemReview.setRating(rating);
+
+        return systemReviewRepository.save(systemReview);
+    }
+
+
+    public List<SystemReview> getSystemReviews(Long userId) {
+        List<SystemReview> reviewList = systemReviewRepository.findByUsers_Userid(userId);
+        return reviewList;
+    }
+
+
 
     public Users getUser(Long userId) {
         return userRepository.findById(userId).orElse(null);

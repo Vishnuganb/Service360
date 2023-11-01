@@ -99,7 +99,7 @@ import { Row } from 'react-bootstrap';
     font-size: 30px;
 }
 
-.d-flex{
+.dashboardcontent{
     justify-content: center;
     align-items: center;
     padding: 8px;

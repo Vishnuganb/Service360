@@ -222,8 +222,8 @@ const CustomerDashboard = () => {
 
             <div className="col-12">
                 <div style={{ padding: '10px'}}><h4>Welcome back !</h4></div>
-                <div className='d-flex flex-column flex-lg-row flex-md-row '>
-                    <div className="d-flex flex-row col-7">
+                <div className='dashboardcontent d-flex flex-column flex-lg-row flex-md-row '>
+                    <div className=" d-flex flex-row col-7">
                         <Card className="card-cus-dashboard dashboard-button-1" style={{ width: "240px",  marginRight: "20px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
                                 <Card.Body classname = "pendingvacancy">

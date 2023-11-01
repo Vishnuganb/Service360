@@ -283,6 +283,11 @@ public class ServiceProviderService {
         return TrainingSessionList;
     }
 
+    public List<TrainingSession> viewTrainingSessionsForAdmin() {
+        return trainingSessionRepository.findAllTrainingSessionsWithSpDetails();
+    }
+
+
     public TrainingSession viewATrainingSession(Long id){
         return trainingSessionRepository.findATrainingSessionWithSpDetails(id);
     }

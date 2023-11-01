@@ -310,11 +310,11 @@ function AdminAdvertisements() {
                                 <p className="card-text d-none d-md-block align-self-start">Category: {ads.category}</p>
                                 <p className="card-text d-none d-md-block align-self-start">Date: {ads.date}</p>
                                 <div className="d-flex flex-column justify-content-center text-center">
-                                    <button onClick={() => handleShowDetails(ads)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
+                                    <button onClick={() => handleShowDetails(ads)} className="btn" style={{ backgroundColor: 'gray' }} > More Details </button>
                                     {data.activeTab === 'Pending' && (
                                         <button
                                             className="btn"
-                                            style={{ backgroundColor: "#0D6445" }}
+                                            style={{ backgroundColor: "#687699" }}
                                             onClick={() => {
                                                 setData({ ...data, showAcceptConfirmation: true, selectedAdvertisement: ads });
                                             }}
@@ -325,7 +325,7 @@ function AdminAdvertisements() {
                                     {data.activeTab === 'Pending' && (
                                         <button
                                             className="btn"
-                                            style={{ backgroundColor: "#B60E0E" }}
+                                            style={{ backgroundColor: "#000" }}
                                             onClick={() => {
                                                 setData({ ...data, showRejectConfirmation: true, selectedAdvertisement: ads });
                                             }}

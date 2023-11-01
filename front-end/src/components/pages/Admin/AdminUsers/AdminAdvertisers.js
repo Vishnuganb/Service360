@@ -336,11 +336,11 @@ function AdminAdvertisers() {
                                 <p className="card-text d-none d-md-block align-self-start" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>Shop Name: {advertiser.shopname}</p>
                                 <p className="card-text d-none d-md-block align-self-start" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>Shop Address: {advertiser.shopaddress}</p>
                                 <div className="d-flex flex-column justify-content-center text-center">
-                                    <button onClick={() => handleShowDetails(advertiser)} className="btn" style={{ backgroundColor: '#0B85A0' }}>More Details</button>
+                                    <button onClick={() => handleShowDetails(advertiser)} className="btn" style={{ backgroundColor: 'gray' }}>More Details</button>
                                     {data.activeTab === 'Pending' && (
                                         <button
                                             className="btn"
-                                            style={{ backgroundColor: "#0D6445" }}
+                                            style={{ backgroundColor: "#687699" }}
                                             onClick={() => {
                                                 setData({ ...data, showAcceptConfirmation: true, selectedAdvertiser: advertiser });
                                             }}
@@ -351,7 +351,7 @@ function AdminAdvertisers() {
                                     {data.activeTab === 'Pending' && (
                                         <button
                                             className="btn"
-                                            style={{ backgroundColor: "#B60E0E" }}
+                                            style={{ backgroundColor: "#000" }}
                                             onClick={() => {
                                                 setData({ ...data, showRejectConfirmation: true, selectedAdvertiser: advertiser });
                                             }}

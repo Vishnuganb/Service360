@@ -143,7 +143,7 @@ export default function PostedJobs() {
         <div className="vacancy-container background-total accordion " >
           <div className="col d-flex flex-row justify-content-between">
             <div className='d-flex flex-row gap-4 p-3 '>
-              <p className="text-dark fs-4 fw-bold vacancytext"> Vacancy Responses</p>
+              <p className="text-dark fs-4 fw-bold vacancytext">Long term Responses</p>
             </div>
           </div>
 

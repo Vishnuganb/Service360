@@ -88,14 +88,7 @@ public class CJobsController {
             return cJobsService.getJobsWhereQuotationpdfIsNotNull();
         }
     }
-//    @GetMapping("/quotationpdf")
-//    public List<Jobs> getQuotationPdfs(@RequestParam(required = false) String quotationpdf) {
-//        if (quotationpdf != null) {
-//            return cJobsService.getJobsByQuotationpdf(quotationpdf);
-//        } else {
-//            return new ArrayList<>(); // Return an empty list
-//        }
-//    }
+
 
 }
 

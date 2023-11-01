@@ -19,7 +19,7 @@ const PDFViewer = () => {
         setNumPages(numPages);
     };
 
-    const pdfUrl = process.env.PUBLIC_URL + '/pdf/Customer.pdf';
+    const pdfUrl = process.env.PUBLIC_URL + '/pdf/quotation (1).pdf';
 
     return (
         <div className="pdf-viewer">

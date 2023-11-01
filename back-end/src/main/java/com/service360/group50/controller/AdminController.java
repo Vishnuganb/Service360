@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static com.service360.group50.entity.Role.CUSTOMER;
 
@@ -267,16 +268,19 @@ public class AdminController {
         return adminService.getTotalAdvertisers();
     }
 
-    // i need the customers count for the last 7 days and also the last 30 days every day count
-
     @GetMapping("/getCustomerCountForLast7Days")
-    public List<Long> getCustomerCountForLast7Days() {
+    public Map<String, Long> getCustomerCountForLast7Days() {
         return adminService.getCustomerCountForLast7Days();
     }
 
     @GetMapping("/getCustomerCountForLast30Days")
-    public List<Long> getCustomerCountForLast30Days() {
-        return adminService.getCustomerCountForLast30Days();
+    public Map<String, Long> getCustomerCountForLast30Days() {
+        return adminService.getCustomerCountForLastMonth();
+    }
+
+    @GetMapping("getAllAdsCategoryAndCount")
+    public Map<String, Long> getAllAdsCategoryAndCount() {
+        return adminService.getAllAdsCategoryAndCount();
     }
 
 }

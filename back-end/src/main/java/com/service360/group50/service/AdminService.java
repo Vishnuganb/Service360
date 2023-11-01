@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminService {
 
-
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final ServiceRepository serviceRepository;
     private final TrainingSessionRepository trainingSessionRepository;
@@ -33,6 +33,7 @@ public class AdminService {
     private final SystemReviewRepository systemReviewRepository;
     private final CComplaintsRepository cComplaintsRepository;
     private final UserRepository userRepository;
+    private final AdsRepository adRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -336,7 +337,9 @@ public class AdminService {
     }
 
     public Long getTotalCustomers () {
-        return userRepository.countByRole(Role.CUSTOMER);
+        long count = userRepository.countByRole(Role.CUSTOMER);
+        System.out.println ( "Total Customers: " + count );
+        return count;
     }
 
     public Long getTotalServiceProviders () {
@@ -347,19 +350,69 @@ public class AdminService {
         return userRepository.countByRole(Role.ADVERTISER);
     }
 
-    public List<Long> getCustomerCountForLast7Days () {
-        return userRepository.findAllByRegistrationdateBetween( LocalDate.now().minusDays(7), LocalDate.now())
+    public Map<String, Long> getCustomerCountForLast7Days() {
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(6); // 7 days ago
+
+        List<Users> customerRegistrations = userRepository.findAllByRegistrationdateBetween(startDate, endDate)
                 .stream()
-                .filter(user -> user.getRole().equals(Role.CUSTOMER))
-                .map(Users::getUserid)
+                .filter(user -> user.getRole() == Role.CUSTOMER) // Use == for enum comparison
                 .collect(Collectors.toList());
+
+        Map<String, Long> dailyCounts = new HashMap<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            final LocalDate currentDate = date; // Create a final variable
+            String formattedDate = date.format(dateFormatter);
+            long count = customerRegistrations.stream()
+                    .filter(user -> user.getRegistrationdate().isEqual(currentDate))
+                    .count();
+            dailyCounts.put(formattedDate, count);
+        }
+
+        return dailyCounts;
     }
 
-    public List<Long> getCustomerCountForLast30Days () {
-        return userRepository.findAllByRegistrationdateBetween( LocalDate.now().minusDays(30), LocalDate.now())
+    public Map<String, Long> getCustomerCountForLastMonth() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate startDate = currentDate.minusMonths(1).withDayOfMonth(1); // Start of the previous month
+        LocalDate endDate = currentDate.minusMonths(1).withDayOfMonth(startDate.lengthOfMonth()); // End of the previous month
+
+        List<Users> customerRegistrations = userRepository.findAllByRegistrationdateBetween(startDate, endDate)
                 .stream()
-                .filter(user -> user.getRole().equals(Role.CUSTOMER))
-                .map(Users::getUserid)
+                .filter(user -> user.getRole() == Role.CUSTOMER)
                 .collect(Collectors.toList());
+
+        Map<String, Long> dailyCounts = new HashMap<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            final LocalDate currentDate2 = date;
+            String formattedDate = date.format(dateFormatter);
+            long count = customerRegistrations.stream()
+                    .filter(user -> user.getRegistrationdate().isEqual(currentDate2 ))
+                    .count();
+            dailyCounts.put(formattedDate, count);
+        }
+
+        return dailyCounts;
+    }
+
+
+    public Map<String, Long> getAllAdsCategoryAndCount () {
+        List<Ads> ads = adRepository.findAll();
+        Map<String, Long> adsCategoryAndCount = new HashMap<> ();
+
+        for (Ads ad : ads) {
+            String category = ad.getCategory();
+            if (adsCategoryAndCount.containsKey(category)) {
+                adsCategoryAndCount.put(category, adsCategoryAndCount.get(category) + 1);
+            } else {
+                adsCategoryAndCount.put(category, 1L);
+            }
+        }
+
+        return adsCategoryAndCount;
     }
 }

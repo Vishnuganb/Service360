@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Navbar from 'react-bootstrap/Navbar';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function HistoryTable() {
@@ -42,13 +43,26 @@ function HistoryTable() {
     setCurrentPage(1); // Reset current page to 1 when end date changes
   };
 
+  // GETTING LOGGED IN SERVICEPROVIDER ID
+
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
+
   useEffect(() => {
-      axios.get('http://localhost:8080/auth/viewHistoryJobs').then((res) => {
+      axios.get('http://localhost:8080/auth/viewHistoryJobs',{
+        params: {
+          serviceproviderid: userData.userid
+        }
+      }).then((res) => {
         console.log(res.data);
         setViewHistoryJobsData(res.data);
       });
 
-      axios.get('http://localhost:8080/auth/viewHistoryVacancies').then((res) => {
+      axios.get('http://localhost:8080/auth/viewHistoryVacancies',{
+        params: {
+          serviceproviderid: userData.userid
+        }
+      }).then((res) => {
         console.log(res.data);
         setViewHistoryVacanciesData(res.data);
       });
@@ -63,14 +77,14 @@ function HistoryTable() {
   // Filter training sessions based on the selected date range
   const filteredProjects = allCards.filter((project) => {
     if (startDate && endDate) {
-      const ProjectDate = new Date(project.date);
+      const ProjectDate = new Date(project.posteddate);
       return ProjectDate >= startDate && ProjectDate <= endDate;
     } else if (startDate) {
-      const ProjectDate = new Date(project.date);
+      const ProjectDate = new Date(project.posteddate);
       return ProjectDate >= startDate;
     }
     else if (endDate) {
-      const ProjectDate = new Date(project.date);
+      const ProjectDate = new Date(project.posteddate);
       return ProjectDate <= endDate;
     }
     return true; // If start date or end date is not selected, return all sessions
@@ -81,7 +95,7 @@ function HistoryTable() {
   const endIndex = startIndex + cardsPerPage;
 
   // Create a subset of training sessions to be displayed on the current page
-  const displayedProjects = allCards.slice(startIndex, endIndex);
+  const displayedProjects = filteredProjects.slice(startIndex, endIndex);
 
   const format12Hour = (time) => {
     const [hours, minutes] = time.split(":");
@@ -141,13 +155,11 @@ function HistoryTable() {
           <Table striped bordered hover size="sm" className="training-session-table">
             <thead className="text-center">
               <tr>
+                <th>Job Type</th>
                 <th>Service Name</th>
-                <th>Customer Name</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
                 <th>Location</th>
-                <th>Payment Status</th>
+                <th>Customer Name</th>
+                <th>jobStatus</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -155,20 +167,27 @@ function HistoryTable() {
               {/* Map through the displayed training sessions and render each row */}
               {displayedProjects.map((project) => (
                 <tr key={project.id}>
-                  <td>{project.servicename}</td>
-                  <td>{project.customer.firstname}</td>
+                  <td className='text-center'>{project.jobid ? "short-term" : "long-term"}</td>
+                  <td className="text-center">{project.servicename}</td>
+                  <td className="text-center">{project.joblocation ? project.joblocation : project.vacancylocation}</td>
+                  <td className="text-center">{project.customer.firstname}</td>
+                  <td className="text-center">completed</td>
 
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                  {/* <td>{project.jobdate}</td>
-                  <td>{format12Hour(project.jobstarttime)}</td>
-                  <td>{format12Hour(project.jobendtime)}</td> */}
+                  {/* 
+                  <td className="text-center">{project.jobdate}</td>
+                  <td className="text-center">{format12Hour(project.jobstarttime)}</td>
+                  <td className="text-center">{format12Hour(project.jobendtime)}</td> 
+                  */}
 
-                  <td>{project.joblocation ? project.joblocation : project.vacancylocation}</td>
-                  <td>{project.paymentstatus || "paid"}</td>
-                  <td className="d-flex justify-content-center">
-                    <i className="bi bi-eye-fill fs-4"></i>
+                  
+                  <td className="text-center">
+                    <Link   to={
+                      project.jobid
+                        ? `../CompletedJob/${project.jobid}`
+                        : `../CompletedVacancy/${project.vacancyid}`
+                    }>
+                      <i className="bi bi-eye-fill fs-4" style={{color:"black"}}></i>
+                    </Link>
                   </td>
                 </tr>
               ))}

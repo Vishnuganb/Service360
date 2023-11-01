@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import BgImage from '../../../assets/images/header/Background.png';
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 
 // Placeholder data for rating
 const rating = 4;
@@ -72,12 +73,9 @@ function JobCard(props) {
             </div>
             <hr />
             <div className="Service-card-footer">
-                {/* <span className="btn btn-default Service-card-footer-btn" id="Service-card-footer-btn-view">
-                    <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span style={{ position: "relative", bottom: "1.5px" }}>View Profile</span>
-                </span>
-                <span className="btn btn-default Service-card-footer-btn" id="Service-card-footer-btn-share">
-                    <Popup />
-                </span> */}
+                <Link to="/login" className="btn btn-default Service-card-footer-btn" id="Service-card-footer-btn-view">
+                    <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span style={{ position: "relative", bottom: "1.5px" }}>View</span>
+                </Link>
             </div>
         </div>
     );

@@ -3,23 +3,34 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { useEffect, useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {
+    FacebookShareButton,
+    TwitterShareButton,
+    LinkedinShareButton,
+    InstapaperShareButton,
+    TelegramShareButton,
+    ViberShareButton,
+    EmailShareButton,
+  } from 'react-share';
+import LocationByCitiesJson from '../../../loginForm/cities-by-district.json';
 
 function JobsBodyPage() {
     const [viewJobsData, setViewJobsData] = useState(null);
     const [viewVacanciesData, setViewVacanciesData] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
+    const [filterLocationTerm, setFilterLocationTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [activeTab, setActiveTab] = useState(''); 
+    const [showShareModal, setShowShareModal] = useState(false);
+    const [selectedJob, setSelectedJob] = useState(null);
+    const [myservicesData, setMyservicesData] = useState([]);
 
-    const MyServices= [
-        "Electrical Wiring",
-        "Masonry",
-        "Cleaning",
-        "Tiles Fitting",
-    ];
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
 
     useEffect(() => {
         axios.get('http://localhost:8080/auth/viewNewJobs').then((res) => {
@@ -34,6 +45,22 @@ function JobsBodyPage() {
     }, []);
 
     useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
+        });
+    }, []);
+
+    const openShareModal = (job) => {
+        setSelectedJob(job);
+        setShowShareModal(true);
+    };
+    
+    const closeShareModal = () => {
+        setShowShareModal(false);
+    };
+
+    useEffect(() => {
         setCurrentPage(1);
     }, [activeTab, searchTerm]);
 
@@ -43,6 +70,9 @@ function JobsBodyPage() {
 
     const filteredCards = allCards.filter((card) => {
         const serviceMatch = !filterCategoryTerm || card.servicename === filterCategoryTerm;
+
+        const locationMatch = !filterLocationTerm || card.joblocation?.toLowerCase() === filterLocationTerm.toLowerCase() || card.vacancylocation?.toLowerCase() === filterLocationTerm.toLowerCase();
+
         const searchTermMatch = (
             card.servicename?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             card.joblocation?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -54,7 +84,7 @@ function JobsBodyPage() {
             card.customername?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         
-        return serviceMatch && searchTermMatch;
+        return serviceMatch && searchTermMatch && locationMatch;
     });
 
     // Calculate the number of cards to display per page based on active tab
@@ -91,6 +121,12 @@ function JobsBodyPage() {
     const handleFilterCategoryChange = (category) => {
         setFilterCategoryTerm(category);
         setCurrentPage(1); // Reset current page to 1 when filter category changes
+    };
+
+    // Function to handle filter by location changes
+    const handleFilterLocationChange = (location) => {
+        setFilterLocationTerm(location);
+        setCurrentPage(1); // Reset current page to 1 when location changes
     };
 
     return (
@@ -137,15 +173,20 @@ function JobsBodyPage() {
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handleFilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (          
-                                <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
+                            {myservicesData.map((service) => (          
+                                <NavDropdown.Item key={service.serviceId} eventKey={service.serviceName}>{service.serviceName}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
-                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4'>
-                            <NavDropdown.Item href="#action3">All Island</NavDropdown.Item>
-                            <NavDropdown.Item >or</NavDropdown.Item>
-                            &nbsp; &nbsp;
-                            <input type="range" name="distance" min="1km" max="50km" />               {/*ADD LOCATION PART IS REMAINING*/}
+                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
+                            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {Object.keys(LocationByCitiesJson).map((location, index) => (
+                                    LocationByCitiesJson[location].cities.map((city, subIndex) => (
+                                        <NavDropdown.Item key={`${index}-${subIndex}`} eventKey={city}>
+                                            {city}
+                                        </NavDropdown.Item>
+                                    ))
+                                ))}
+                            </div>
                         </NavDropdown>
                     </Nav>
                 </div>
@@ -161,9 +202,10 @@ function JobsBodyPage() {
                         <div className="job-card-header">
                             <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                                 <div className='d-flex justify-content-center align-items-center'>
+                                    {console.log(job.customer.profilePic)}
                                     {/* <img src={job.profile} alt="avatar" className="job-card-avatar" /> */}
                                     <img
-                                            src=""
+                                            src={'data:image/jpeg;base64;' + job.customer.profilePic}
                                             alt="avatar"
                                             className="rounded-circle view-jobs-rounded-circle"
                                             style={{ width: "42px", height: "42px" }}
@@ -207,32 +249,23 @@ function JobsBodyPage() {
                         <hr style={{margin:"0.5rem"}} />
                         <div className="view-jobs-card-footer d-flex flex-row justify-content-between mx-sm-2 mb-sm-2 mt-md-0 mt-4">
                             
-                            <Link to={`../ViewAJob/${job.jobid}` }>
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
+                            <Link to={`../ViewAJob/${job.jobid}` } className='ms-lg-5'>
+                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"#50555c"}}>
                                     <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
                                     </span>
                                     View
                                 </button>
-                            </Link>                            
-                                
-                            <Link to="">
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(13, 100, 69)"}}>
-                                    <span class="view-jobs-page-btn-label">
-                                    <i class="bi bi-chat-square-dots"></i>
-                                    </span>
-                                    Comment
-                                </button>
-                            </Link>    
+                            </Link> 
 
-                            <Link to="">
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}>
+                            <div className='me-lg-5'>
+                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"#808080"}} onClick={() => openShareModal(job)}>
                                     <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-share"></i>
                                     </span>
                                     Share
                                 </button>
-                            </Link>  
+                            </div>  
 
                         </div>
                     </div>
@@ -246,7 +279,7 @@ function JobsBodyPage() {
                         <div className='job-card-header-inner-container d-flex flex-row flex-wrap'>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <img
-                                        src=""
+                                        src={'data:image/jpeg;base64;' + vacancy.customer.profilePic}
                                         alt="avatar"
                                         className="rounded-circle"
                                         style={{ width: "42px", height: "42px" }}
@@ -295,7 +328,7 @@ function JobsBodyPage() {
                     <div className='vacancy-card-footer d-flex flex-row justify-content-between mb-sm-2 mx-auto mt-md-0 mt-1 mb-2'>
 
                         <Link to={`../ViewAVacancy/${vacancy.vacancyid}` }>
-                            <button type="button" class="btn view-jobs-page-btn-labeled vacancy-card-footer-btn" id="vacancy-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(13, 100, 69)"}}>
+                            <button type="button" class="btn view-jobs-page-btn-labeled vacancy-card-footer-btn" id="vacancy-card-footer-btn-view" style={{color:"white",backgroundColor:"grey"}}>
                                 <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-file-earmark-plus"></i>
                                 </span>
@@ -325,6 +358,52 @@ function JobsBodyPage() {
                 ))}
             </div>
             )}
+
+            {/* Share Modal */}
+            <Modal show={showShareModal} onHide={closeShareModal} dialogClassName="custom-modal" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title className="text-dark">Share Job</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {selectedJob && (
+                        <div className="text-center">
+                            <h4>Share this job:</h4>
+                            <div className="d-flex justify-content-center mt-3">
+                                <FacebookShareButton url={window.location.href} quote={selectedJob.jobtitle}>
+                                    <Button variant="" className="me-1 border">
+                                        <i className="bi bi-facebook"></i> Facebook
+                                    </Button>
+                                </FacebookShareButton>
+                                <TelegramShareButton url={window.location.href} title={selectedJob.jobtitle}>
+                                    <Button variant="" className="me-1 border">
+                                        <i className="bi bi-telegram"></i> Telegram
+                                    </Button>
+                                </TelegramShareButton>
+                                <TwitterShareButton url={window.location.href} title={selectedJob.jobtitle}>
+                                    <Button variant="" className="me-1 border">
+                                        <i className="bi bi-twitter"></i> Tweet
+                                    </Button>
+                                </TwitterShareButton>
+                                <LinkedinShareButton url={window.location.href} title={selectedJob.jobtitle}>
+                                    <Button variant="" className="me-1 border">
+                                        <i className="bi bi-linkedin"></i> LinkedIn
+                                    </Button>
+                                </LinkedinShareButton>
+                                <EmailShareButton url={window.location.href} title={selectedJob.jobtitle} >
+                                    <Button variant="" className="border">
+                                        <i className="bi bi-envelope"></i> Email
+                                    </Button>
+                                </EmailShareButton>
+                            </div>
+                        </div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={closeShareModal}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </div>
     );

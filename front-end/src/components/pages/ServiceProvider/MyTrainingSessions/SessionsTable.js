@@ -8,6 +8,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import { set } from 'date-fns';
+import Payment from "../../Payment/Payment";
 
 function MyTrainingSessions() {
 
@@ -17,8 +19,21 @@ function MyTrainingSessions() {
   const [selectedRow, setSelectedRow] = useState(null);
 
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');  
+  const [alertMessage, setAlertMessage] = useState(''); 
 
+  const [showAlertBlue, setShowAlertBlue] = useState(false);
+  const [alertMessageBlue, setAlertMessageBlue] = useState(''); 
+
+  const [showAlertRed, setShowAlertRed] = useState(false);
+  const [alertMessageRed, setAlertMessageRed] = useState(''); 
+  
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+
+  // State to control the user registration modal
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [orderID, setOrderID] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = (rowData) => {
@@ -26,11 +41,12 @@ function MyTrainingSessions() {
     setShow(true); // Show the modal
   };
 
-  // State to control the user registration modal
-  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
-
   // Function to open the user registration modal
-  const handleShowRegistrationModal = () => {
+  const handleShowRegistrationModal = (rowData) => {  
+    // Call the getRegisteredUsers function to fetch data
+    getRegisteredUsers(rowData.trainingid);
+
+    console.log(registeredUsers);
     setShowRegistrationModal(true);
   };
 
@@ -39,38 +55,18 @@ function MyTrainingSessions() {
     setShowRegistrationModal(false);
   };
 
-  const registeredUsers = [
-    {
-      email: 'pranavan@gmail.com',
-      phoneNumber: '0771319093',
-      registrationDate: '2023-08-16 10:00 AM',
-      status: 'Confirmed',
-    },
-    {
-      email: 'visnugan@gmail.com',
-      phoneNumber: '070983783',
-      registrationDate: '2023-08-16 11:00 AM',
-      status: 'Confirmed',
-    },
-    {
-      email: 'karthikeyan@gmail.com',
-      phoneNumber: '0773499921',
-      registrationDate: '2023-08-16 12:00 PM',
-      status: 'Pending',
-    },
-    {
-      email: 'mithilan@gmail.com',
-      phoneNumber: '0751209321',
-      registrationDate: '2023-08-16 01:00 PM',
-      status: 'Confirmed',
-    },
-    {
-      email: 'naresh@gmail.com',
-      phoneNumber: '0701912299',
-      registrationDate: '2023-08-16 02:00 PM',
-      status: 'Confirmed',
-    },
-  ];
+  const [showRejectionModal, setShowRejectionModal] = useState(false);
+
+  // Function to open the user registration modal
+  const handleShowRejectionModal = (rowData) => {
+    setSelectedRow(rowData);
+    setShowRejectionModal(true);
+  };
+
+  // Function to close the user registration modal
+  const handleCloseRejectionModal = () => {
+    setShowRejectionModal(false);
+  };
 
   // Number of cards (training sessions) to display per page
   const cardsPerPage = 10;
@@ -83,6 +79,35 @@ function MyTrainingSessions() {
 
   // State to store the selected date
   const [selectedDate, setSelectedDate] = useState(null);
+
+  const [selectedRowId, setSelectedRowId] = useState(null);
+
+  const [selectedRowTitle, setSelectedRowTitle] = useState(null);
+
+  useEffect(() => {
+    if (paymentSuccess && orderID) {
+        if (paymentSuccess) {
+              axios.put(`http://localhost:8080/auth/publishTrainingSession/${selectedRowId}`).then((res) => {
+                console.log(res.data);
+
+                if(!res){
+                  handleShowAlertRed("Payment unsuccessful.");    
+                }
+                else{
+                  handleShowAlertBlue("Payment successful. Your training session has been published.");
+                  setviewTrainingSessionsData((prevData) =>
+                    prevData.map((session) =>
+                      session.trainingid === selectedRowId ? { ...session, status: "Published" } : session
+                    )
+                  );
+                  handleClose();
+                }
+            })
+        } else {
+          handleShowAlertRed("Payment Failed, Please try again!");
+        }
+    }
+}, [paymentSuccess, orderID]);
   
 
   // Function to handle page change when the user clicks on pagination buttons
@@ -103,19 +128,27 @@ function MyTrainingSessions() {
     setCurrentPage(1); // Reset current page to 1 when date changes
   };
 
-  const handlePublish = (id) => {
-      console.log(id);
-      axios
-      .put(`http://localhost:8080/auth/publishTrainingSession/${id}`).then((res) => {
-          console.log(res.data);
+  // GETTING LOGGED IN SERVICEPROVIDER ID
 
-          if(!res){
-            alert("Payment Failed");
-          }
-          else{
-            alert("Payment Successful");
-            window.location.reload();
-          }
+  const response = sessionStorage.getItem('authenticatedUser');
+  const userData = JSON.parse(response);
+
+  const handleSetSelectedData = (session) => {
+    if (session && session.trainingid && session.trainingtitle) {
+      setSelectedRowId(session.trainingid);
+      setSelectedRowTitle(session.trainingtitle);
+    }
+  };
+
+  const getRegisteredUsers = (trainingsessionid) => {
+    axios
+      .get(`http://localhost:8080/auth/GetTrainingSessionRegisteredUsers`,{
+        params: {
+          trainingsessionid: trainingsessionid,
+        },
+      }).then((res) => {
+        console.log(res.data);
+        setRegisteredUsers(res.data);
       })
       .catch((error) => {
         // Handle errors
@@ -123,7 +156,11 @@ function MyTrainingSessions() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/viewMyTrainingSessions').then((res) => {
+    axios.get('http://localhost:8080/auth/viewMyTrainingSessions',{
+      params: {
+        serviceproviderid: userData.userid
+      },
+    }).then((res) => {
         console.log(res.data);
         setviewTrainingSessionsData(res.data);
     });
@@ -168,7 +205,27 @@ function MyTrainingSessions() {
         setShowAlert(false);
       }, 5000); // 5000 milliseconds (5 seconds)
   };
-      
+
+  const handleShowAlertBlue = (message) => {
+      setAlertMessageBlue(message);
+      setShowAlertBlue(true);
+
+      // Automatically hide the alert after 5 seconds
+      setTimeout(() => {
+        setShowAlertBlue(false);
+      }, 5000); // 5000 milliseconds (5 seconds)
+  };
+
+  const handleShowAlertRed = (message) => {
+      setAlertMessageRed(message);
+      setShowAlertRed(true);
+
+      // Automatically hide the alert after 5 seconds
+      setTimeout(() => {
+        setShowAlertRed(false);
+      }, 5000); // 5000 milliseconds (5 seconds)
+  };
+
   return (
     <div>
 
@@ -264,21 +321,33 @@ function MyTrainingSessions() {
                   <td className="text-center">
                     {session.status === 'Pending' ? (
                       <i
-                        className={`bi-info-circle fs-4 mx-2 my-2`}
+                        className={`bi-info-circle-fill fs-5 mx-2 my-2`}
                         onClick={() => handleShowAlert('Your training session is under review by the admin')}
                       ></i>
                     ) : session.status === 'Payment Pending' ? (
                       <i
-                        className={`bi bi-cash fs-4 mx-2 my-2`}
-                        onClick={() => handleShow(session)}
+                        className={`bi bi-cash fs-5 mx-2 my-2`}
+                        onClick={() => {
+                          handleShow(session);
+                          handleSetSelectedData(session);
+                      }}
                       ></i>
                     ) : session.status === 'Published' ? (
                       <i
-                        className={`bi bi-eye fs-4 mx-2 my-2`}
-                        onClick={handleShowRegistrationModal}
+                        className={`bi bi-eye-fill fs-5 mx-2 my-2`}
+                        onClick={() => handleShowRegistrationModal(session)}
                       ></i>
-                    ) : null
-                    }
+                    ) : session.status === 'Rejected' ? (
+                      <i
+                        className={`bi bi-info-circle-fill fs-5 mx-2 my-2`}
+                        onClick={() => handleShowRejectionModal(session)}
+                      ></i>
+                    ) : session.status === 'Completed' ? (
+                      <i
+                      className={`bi bi-eye-fill fs-5 mx-2 my-2`}
+                      onClick={() => handleShowRegistrationModal(session)}
+                      ></i>
+                    ) : null}
                   </td>
                 </tr>
               ))}
@@ -306,22 +375,23 @@ function MyTrainingSessions() {
 
       {/* Modal for Payment Confirmation */}
       <Modal show={show && selectedRow !== null} onHide={handleClose} centered>
+        
         <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
           <Modal.Title>Pay for Training Session</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-        <p>
-            To publish your training session post on Service360, you need to make a payment of 1000.00 LKR.
-            Please confirm your payment below
-        </p>
+          <p>
+            To publish your training session post on Service360, you need to make a payment of 1000.00 LKR. Please
+            confirm your payment below
+          </p>
           <Form>
-              {selectedRow && (
-                <>
+            {selectedRow && (
+              <>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Group className="mb-3" controlId="sessionTitle">
                     <Form.Label>Session Title</Form.Label>
-                    <Form.Control type="text" value={selectedRow ? selectedRow.trainingtitle : ''} readOnly />
+                    <Form.Control type="text" value={selectedRow ? selectedRow.trainingtitle : ''} onreadOnly />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="amount">
@@ -336,23 +406,37 @@ function MyTrainingSessions() {
                     />
                   </Form.Group>
                 </Form.Group>
-                </>
-              )}
+              </>
+            )}
           </Form>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button className='btn-ServiceProvider-2' onClick={handleClose}>
+          <Button className="btn-ServiceProvider-2" onClick={handleClose}>
             Close
           </Button>
-          <Button className='btn-ServiceProvider-1' onClick={() =>{
-              if(selectedRow) {
-                handlePublish(selectedRow.trainingid);
-              } 
-              handleClose(); 
-          }}>
+          <Payment
+            firstname={userData.firstname}
+            lastname={userData.lastname}
+            email={userData.email}
+            paymentTitle={selectedRow ? selectedRow.trainingtitle : ''}
+            amount={1000}
+            sendUserId={userData.userid}
+            reciveUserID={null}
+            setPaymentSuccess={setPaymentSuccess}
+            setOrderID={setOrderID}
+          />
+          {/* <Button
+            className="btn-ServiceProvider-1"
+            onClick={() => {
+              if (selectedRow) {
+                handlePublish(selectedRow.trainingid,selectedRow.trainingtitle);
+              }
+              handleClose();
+            }}
+          >
             Pay & Publish
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
 
@@ -363,30 +447,51 @@ function MyTrainingSessions() {
           <Modal.Title>Registered Users</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* Display the registered users table */}
           <Table striped bordered hover size="sm">
             <thead>
-              <tr>
+              <tr className="text-center">
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th >Registration Date</th>
+                <th>Registration Date</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {registeredUsers.map((user, index) => (
                 <tr key={index}>
-                  <td>{user.email}</td>
-                  <td>{user.phoneNumber}</td>
-                  <td >{user.registrationDate}</td>
-                  <td>{user.status}</td>
+                  <td className="text-center">{user.email}</td>
+                  <td className="text-center">{user.mobilenumber}</td>
+                  <td className="text-center">{user.registrationdate}</td>
+                  <td className="text-center">{user.paymentstatus}</td>
                 </tr>
               ))}
             </tbody>
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <Button className='btn-ServiceProvider-2' onClick={handleCloseRegistrationModal}>
+          <Button className="btn-ServiceProvider-2" onClick={handleCloseRegistrationModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Rejection */}
+      <Modal show={showRejectionModal} onHide={handleCloseRejectionModal} dialogClassName="custom-modal" centered>
+        <Modal.Header closeButton style={{ background: '#282b3d', color: '#fff' }}>
+          <Modal.Title>Training Session Rejection Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            This training session has been rejected by the admin due to the following reason
+          </p>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Control type="text" value={selectedRow ? selectedRow.reason : ''} readOnly />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn-ServiceProvider-2" onClick={handleCloseRejectionModal}>
             Close
           </Button>
         </Modal.Footer>
@@ -405,7 +510,37 @@ function MyTrainingSessions() {
         }}
       >
         {alertMessage}
-      </Alert>     
+      </Alert>   
+      
+      <Alert
+        show={showAlertRed}
+            variant="danger"
+            onClose={() => setShowAlertRed(false)}
+            dismissible
+            style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9999, // Adjust the z-index as needed
+            }}
+        >
+        {alertMessageRed}
+      </Alert>   
+
+      <Alert
+        show={showAlertBlue}
+            variant="info"
+            onClose={() => setShowAlertBlue(false)}
+            dismissible
+            style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9999, // Adjust the z-index as needed
+            }}
+        >
+        {alertMessageBlue}
+      </Alert>       
 
     </div>
 

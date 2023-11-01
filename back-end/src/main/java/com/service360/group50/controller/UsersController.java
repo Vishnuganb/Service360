@@ -1,26 +1,14 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.UsersDTO;
+import com.service360.group50.entity.Contact;
 import com.service360.group50.entity.SystemReview;
-import com.service360.group50.entity.Users;
 import com.service360.group50.message.ResponseMessage;
 import com.service360.group50.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
@@ -61,34 +49,26 @@ public class UsersController {
             @RequestParam("userid") Long userid,
             @RequestParam("review") String review,
             @RequestParam("rating") int rating) {
-        // Retrieve the authentication object
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-//        if (authentication != null && authentication.getPrincipal() instanceof Users) {
-//            Users authenticatedUser = (Users) authentication.getPrincipal();
-//            String profilePicturePath = authenticatedUser.getProfilePic();
-            // Assuming this method retrieves the file path
 
-//            try {
-//                // Load the image file and convert it to a byte array
-//                Path profilePictureFilePath = Paths.get(profilePicturePath);
-//                byte[] profilePictureData = Files.readAllBytes(profilePictureFilePath);
-
-                // Now you can use authenticatedUser.getUserId() to get userId and profilePictureData to create the review
-                return userService.addSystemReview(userid, review, rating);
-
-//            catch (IOException e) {
-//
-//                return null;
-//            }
-//        } else {
-//
-//            return null;
-//        }
+            return userService.addSystemReview(userid, review, rating);
     }
 
-    @GetMapping("/getSystemReviews/{userId}")
-    public List<SystemReview> getSystemReviews(@PathVariable Long userId) {
-        return userService.getSystemReviews(userId);
+  
+
+    @GetMapping("/getAllSystemReview")
+    public Iterable<SystemReview> getAllSystemReview() {
+        return userService.getAllSystemReview();
     }
+
+    @PostMapping("/addContactMessage")
+    public Contact addContactMessage(
+            @RequestParam("email") String email,
+            @RequestParam("fullName") String fullName,
+            @RequestParam("contactNumber") String contactNumber,
+            @RequestParam("message") String message
+    ){
+        return userService.addContactMessage(email,fullName,contactNumber,message);
+    }
+
 }

@@ -58,11 +58,6 @@ function AdminSessions() {
                 const detail = response.data;
                 const trainingsessions = detail.trainingsessions;
                 const trainingSessionImagesArray = detail.trainingsessionimages;
-                const categoriesResponse = await axios.get(serverLink + '/auth/allCategories');
-                const serviceCategoriesData = categoriesResponse.data;
-                // console.log(detail);
-                // console.log(trainingsessions);
-                // console.log(trainingSessionImagesArray);
                 setData({
                     ...data,
                     sessionImages: trainingSessionImagesArray,
@@ -267,7 +262,7 @@ function AdminSessions() {
 
                 <div className="d-flex align-items-center justify-content-center w-100">
 
-                    <div className='col-xs-3 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 me-0 date-picker-container'>
+                    <div className='col-xs-3 col-md-5 col-lg-5 col-xl-4 col-xxl-4 m-3 me-0 date-picker-container'>
                         <div className="input-group m-0">
                             <DatePicker
                                 selected={data.fromDate}
@@ -282,7 +277,7 @@ function AdminSessions() {
                             </span>
                         </div>
                     </div>
-                    <div className='me-xs-2 col-xs-2 col-md-4 col-lg-4 col-xl-4 col-xxl-3 m-3 date-picker-container'>
+                    <div className='me-xs-2 col-xs-2 col-md-5 col-lg-5 col-xl-4 col-xxl-4 m-3 date-picker-container'>
                         <div className="input-group">
                             <DatePicker
                                 selected={data.toDate}
@@ -298,22 +293,20 @@ function AdminSessions() {
                         </div>
                     </div>
 
-                    <div className='col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-2 m-3 me-xs-5'>
+                    <div className='col-xs-2 col-sm-3 col-md-2 col-lg-2 col-xl-2 m-3 me-xs-5'>
                         <div className="input-group">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Search Training sessions"
+                                placeholder="Search"
                                 value={data.searchTerm}
                                 onChange={handleSearchChange}
-                                style={searchInputStyle}
                             />
                             <span className="input-group-text">
                                 <FontAwesomeIcon icon={faSearch} />
                             </span>
                         </div>
                     </div>
-
                 </div>
 
                 <div className="d-flex flex-wrap justify-content-center mt-4">
@@ -463,8 +456,13 @@ function AdminSessions() {
 
                         <div className="row">
                             <div className="col-12">
+                                {data.activeTab === 'Rejected' && (
+                                    <div className="mt-2 bordered-paragraph rounded">
+                                        <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Reason for rejection: </span> {data.selectedSession.reason}
+                                    </div>
+                                )}
                                 <div className="mt-2 bordered-paragraph rounded">
-                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name:</span> {data.selectedSession.serviceprovider.firstname} {data.selectedSession.serviceprovider.lastname}
+                                    <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Full Name: </span> {data.selectedSession.serviceprovider.firstname} {data.selectedSession.serviceprovider.lastname}
                                 </div>
                                 <div className="mt-2 bordered-paragraph rounded">
                                     <span style={{ color: '#9F390D', fontWeight: 'bold' }}>Service Name: </span>{data.selectedSession.servicename}

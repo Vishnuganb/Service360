@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Card, Table, Modal, Form, Button } from "react-bootstrap";
 import BgImage from '../../../../assets/images/header/Background.png';
 import BgImage2 from '../../../../assets/images/header/footer.png';
@@ -10,13 +10,18 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-date-range/dist/theme/default.css';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import person1 from '../../../../assets/images/home/Customer_1.png';
 import person2 from '../../../../assets/images/home/Customer_2.png';
 import person3 from '../../../../assets/images/home/Customer_3.png';
 import person4 from '../../../../assets/images/home/Customer_4.jpg';
+import { set } from 'lodash';
+
+const serverLink = 'http://localhost:8080';
 
 const generateRevenueData = () => {
+
   const data = [];
   const days = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
   for (let i = 0; i < 7; i++) {
@@ -46,24 +51,32 @@ const getLastDayOfMonth = (date) => {
   return nextMonth.getDate();
 };
 
-const generateDailyData = () => {
-  const data = [];
-  const currentDate = new Date();
-  const lastMonth = new Date(currentDate);
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-
-  for (let i = 0; i < getLastDayOfMonth(lastMonth); i++) {
-    data.push({ day: i.toString(), customers: Math.floor(Math.random() * 100) });
-  }
+const generateDailyData = (customerCountForLast7Days) => {
+  const entries = Object.entries(customerCountForLast7Days).slice(-7);
+  entries.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+  const data = entries.map(([date, count], index) => ({
+    day: date,
+    customers: count
+  }));
   return data;
 };
 
-const generateMonthlyData = () => {
-  const data = [];
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  for (let i = 0; i < 12; i++) {
-    data.push({ month: months[i], customers: Math.floor(Math.random() * 1000) });
+const generateMonthlyData = (customerCountForLastMonth) => {
+  if (!customerCountForLastMonth) {
+    return [];
   }
+
+  const entries = Object.entries(customerCountForLastMonth);
+  entries.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+  const today = new Date();
+  const lastMonthDate = new Date(today);
+  lastMonthDate.setMonth(today.getMonth() - 1);
+  const lastMonthEntries = entries.filter(([date, count]) => new Date(date) >= lastMonthDate);
+  const data = lastMonthEntries.map(([date, count], index) => ({
+    month: date,
+    customers: count
+  }));
+
   return data;
 };
 
@@ -72,6 +85,59 @@ const StyledModalFooter = styled(Modal.Footer)`
     `;
 
 const AdminDashboard = () => {
+
+  const [customerCount, setCustomerCount] = useState(0);
+  const [serviceProviderCount, setServiceProviderCount] = useState(0);
+  const [advertiserCount, setAdvertiserCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [customerCountForLast7Days, setCustomerCountForLast7Days] = useState([])
+  const [customerCountForLastMonth, setCustomerCountForLastMonth] = useState([])
+  const [adsData, setAdsData] = useState([])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response1 = await axios.get(serverLink + '/auth/getTotalCustomers');
+        const customerCount = response1.data;
+        setCustomerCount(customerCount);
+        // console.log(customerCount);
+
+        const response2 = await axios.get(serverLink + '/auth/getTotalServiceProviders');
+        const serviceProviderCount = response2.data;
+        setServiceProviderCount(serviceProviderCount);
+        // console.log(serviceProviderCount);
+
+        const response3 = await axios.get(serverLink + '/auth/getTotalAdvertisers');
+        const advertiserCount = response3.data;
+        setAdvertiserCount(advertiserCount);
+        // console.log(advertiserCount);
+
+        const response4 = await axios.get(serverLink + '/auth/getCustomerCountForLast7Days');
+        const customerCountForLast7 = response4.data;
+        setCustomerCountForLast7Days(customerCountForLast7);
+        // console.log(customerCountForLast7);
+
+        const response5 = await axios.get(serverLink + '/auth/getCustomerCountForLast30Days');
+        const customerCountForLast30 = response5.data;
+        setCustomerCountForLastMonth(customerCountForLast30);
+        //console.log(customerCountForLast30);
+
+        const response6 = await axios.get(serverLink + '/auth/getAllAdsCategoryAndCount');
+        const ads = response6.data;
+        setAdsData(ads);
+        console.log(ads);
+
+        const total = customerCount + serviceProviderCount + advertiserCount;
+        setTotalCount(total);
+
+      }
+      catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const TopServiceProvidersData = [
     {
@@ -170,23 +236,7 @@ const AdminDashboard = () => {
     setData({ ...data, selectedProvider: provider, showDetailsModal: true });
   };
 
-  const advertisementDataWeekly = [
-    { category: 'Spare parts', value: 120 },
-    { category: 'Tools', value: 200 },
-    { category: 'Equipment', value: 150 },
-    { category: 'Others', value: 80 },
-  ];
-
-  const advertisementDataMonthly = [
-    { category: 'Spare parts', value: 220 },
-    { category: 'Tools', value: 180 },
-    { category: 'Equipment', value: 250 },
-    { category: 'Others', value: 120 },
-  ];
-
-
-  const chartDataToShow = view === 'daily' ? generateDailyData() : generateMonthlyData();
-  const dataToShow = selectedOption === 'weekly' ? advertisementDataWeekly : advertisementDataMonthly;
+  const chartDataToShow = view === 'daily' ? generateDailyData(customerCountForLast7Days) : generateMonthlyData(customerCountForLastMonth);
   const revenueData = revenueView === 'last7days' ? generateRevenueData() : generateMonthlyRevenueData();
 
   const handleViewChange = (e) => {
@@ -217,7 +267,7 @@ const AdminDashboard = () => {
     );
   };
 
-  const chartData = view === 'daily' ? generateDailyData() : generateMonthlyData();
+  const chartData = view === 'daily' ? generateDailyData(customerCountForLast7Days) : generateMonthlyData(customerCountForLastMonth);
 
   const gradientOffset = () => {
     const dataMax = Math.max(...chartData.map((item) => item.customers));
@@ -250,6 +300,11 @@ const AdminDashboard = () => {
     );
   };
 
+  const transformedAdsData = Object.entries(adsData).map(([category, value]) => ({
+    category,
+    value,
+  }));
+
   return (
     <div>
       <section className="block dashboard-block" style={{ backgroundImage: `url(${BgImage})` }}>
@@ -261,8 +316,8 @@ const AdminDashboard = () => {
             <div className='col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-2 m-3 me-xs-5  align-items-end'>
               <div className="input-group">
                 <select value={view} onChange={handleViewChange} className="form-select">
-                  <option value="daily">Daily</option>
-                  <option value="monthly">Monthly</option>
+                  <option value="daily">Last 7 Days</option>
+                  <option value="monthly">Last Month</option>
                 </select>
               </div>
             </div>
@@ -289,7 +344,7 @@ const AdminDashboard = () => {
                 <i className="bi bi-three-dots-vertical"></i>
               </div>
               <Card.Body className='d-flex justify-content-between'>
-                <h1 className="card-title mt-2">1000</h1>
+                <h1 className="card-title mt-2">{customerCount}</h1>
                 <p className="card-text d-flex justify-content-end align-items-end">
                   <span className="text-success flex-end">↑ 10%</span>
                 </p>
@@ -304,7 +359,7 @@ const AdminDashboard = () => {
                 <i className="bi bi-three-dots-vertical"></i>
               </div>
               <Card.Body className='d-flex justify-content-between'>
-                <h1 className="card-title mt-2">750</h1>
+                <h1 className="card-title mt-2">{serviceProviderCount}</h1>
                 <p className="card-text d-flex justify-content-end align-items-end">
                   <span className="text-danger">↓ 5%</span>
                 </p>
@@ -319,7 +374,7 @@ const AdminDashboard = () => {
                 <i className="bi bi-three-dots-vertical"></i>
               </div>
               <Card.Body className='d-flex justify-content-between'>
-                <h1 className="card-title mt-2">1200</h1>
+                <h1 className="card-title mt-2">{advertiserCount}</h1>
                 <p className="card-text d-flex justify-content-end align-items-end">
                   <span className="text-success">↑ 15%</span>
                 </p>
@@ -334,7 +389,7 @@ const AdminDashboard = () => {
                 <i className="bi bi-three-dots-vertical"></i>
               </div>
               <Card.Body className='d-flex justify-content-between'>
-                <h1 className="card-title mt-2">500</h1>
+                <h1 className="card-title mt-2">{totalCount}</h1>
                 <div className="active-users-profile-pics d-flex justify-content-end align-items-end" >
                   <img src={person1} alt="Person 1" className="rounded-circle profile-pic " style={{ width: '15px', height: '15px' }} />
                   <img src={person2} alt="Person 2" className="rounded-circle profile-pic " style={{ width: '15px', height: '15px' }} />
@@ -392,21 +447,12 @@ const AdminDashboard = () => {
             <Card style={{ backgroundImage: `url(${BgImage})`, flex: 1 }}>
               <div className="d-flex justify-content-between w-100 align-items-center">
                 <h3 className="chart-title ms-3 fs-3 align-items-center mb-0">Advertisements Analytics</h3>
-                <div className="col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-3 m-3 me-xs-5">
-                  <div className="input-group">
-                    <select className="form-select" value={selectedOption} onChange={handleOptionChange}>
-                      <option value="weekly">Last Week</option>
-                      <option value="monthly">Last Month</option>
-                    </select>
-                  </div>
-                </div>
               </div>
-
               <Card.Body className='pieChartContainerClass'>
                 <ResponsiveContainer width="100%" height='100%'>
                   <PieChart>
                     <Pie
-                      data={dataToShow}
+                      data={transformedAdsData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -417,7 +463,7 @@ const AdminDashboard = () => {
                       dataKey="value"
                       isAnimationActive={true}
                     >
-                      {dataToShow.map((entry, index) => (
+                      {Array.isArray(transformedAdsData) && transformedAdsData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>

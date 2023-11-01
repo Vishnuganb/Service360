@@ -62,7 +62,7 @@ import { Row } from 'react-bootstrap';
 
 
 /* customer */
-.card-cus-dashboard{
+/* .card-cus-dashboard{
     transition: transform .3s; 
     border-radius: 2px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -79,10 +79,10 @@ import { Row } from 'react-bootstrap';
 .card-cus-dashboard-body-container{
     font-size: 1.1rem;
     font-family: 'Open Sans', sans-serif;           
-}
+} */
 
 /* < 540px */
-@media only screen and (max-width: 540px){
+/* @media only screen and (max-width: 540px){
     .card-cus-dashboard{
         width: 100%;
         
@@ -94,12 +94,36 @@ import { Row } from 'react-bootstrap';
         left: 60px;
     }
 }
+
+.col-12 h4{
+    font-size: 30px;
+} */
+
+
+
+/*
+.d-flex{
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    
+}*/
+
 .dashboard-button-1{
-    background: linear-gradient(45deg,#b5c4d4,#568eca);
+    justify-content: center;
+    margin-top: -20px;
+    box-shadow: 1px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
+    height: 120px;
 }
 .dashboard-button-2{
-    background: linear-gradient(45deg,#b5c4d4,#568eca);
-}
+    margin-top: -20px;
+    box-shadow: 1px 0px 4px 0px #888888;
+    background-image: url("../../assets/images/header/Background.png");
+    height: 120px;
+} 
+
+
 
 /* 540px - 992px */
 @media only screen and (min-width: 540px) and (max-width: 1282px){
@@ -138,7 +162,7 @@ import { Row } from 'react-bootstrap';
     border-radius: 8px;
     margin-bottom: 10px; 
     /* margin-right: 30px; */
-    gap: 10px;
+    gap: 2px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 

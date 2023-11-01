@@ -73,6 +73,12 @@ public class Users implements UserDetails {
     @Column( columnDefinition = "TEXT")
     private String reason;
 
+    @Column( columnDefinition = "TEXT")
+    private String district;
+
+    @Column( columnDefinition = "TEXT")
+    private String city;
+
 //    @OneToMany(mappedBy = "users")
 //    private List<Complaints> complaints;
 

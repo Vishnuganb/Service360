@@ -7,20 +7,58 @@ import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-
+import { useNavigate } from 'react-router-dom';
+import Payment from "../../Payment/Payment";
 
 function TrainingSession() {
     const [viewTrainingSessionData, setviewTrainingSessionData] = useState(null);
 
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [orderID, setOrderID] = useState(null);
+
     const [registrationData, setRegistrationData] = useState({
         email: "",
         mobilenumber:""
-      });
+    });
 
     const [isChecked, setIsChecked] = useState(false);
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+
+    const [showAlertRed, setShowAlertRed] = useState(false);
+    const [alertMessageRed, setAlertMessageRed] = useState("");
+
+    useEffect(() => {
+        if (paymentSuccess && orderID) {
+            if (paymentSuccess) {
+                    axios.post(`http://localhost:8080/auth/registerTrainingSession/${trainingsessionId}`, registrationData,{
+                            params:{
+                                serviceproviderid:userData.userid,
+                            }
+                        })
+                        .then((response) => {
+                            console.log('Registration successfully:', response.data);
+                            setRegistrationData({
+                                email: "",
+                                mobilenumber: "",
+                            });
+        
+                            showAlertWithMessage("Registration successful!, Check your email for more details.");
+                        })
+                        .catch((error) => {
+                            console.error('Error Registration:', error);    
+                        }); 
+            } else {
+                showAlertWithMessage("Payment Failed, Please try again!");
+            }
+        }
+    }, [paymentSuccess, orderID]);
+
+    const navigate = useNavigate();
+        const handleBackClick = () => {
+        navigate(-1);
+    };
 
     const { id } = useParams();
     const trainingsessionId = parseInt(id, 10);
@@ -34,40 +72,14 @@ function TrainingSession() {
 
     if (!viewTrainingSessionData) return 'No training session found!';
 
-    const handleRegistration = (event) => {
-        event.preventDefault();
+    // GETTING LOGGED IN SERVICEPROVIDER ID
 
-        // Check if the checkbox is checked before proceeding with registration
-        if (!isChecked) {
-          alert("Please verify the event name, venue, and time before proceeding.");
-          return;
-        }
-
-        // Proceed with registration if the checkbox is checked
-        axios
-            .post(`http://localhost:8080/auth/registerTrainingSession/${trainingsessionId}`, registrationData)
-            .then((response) => {
-                console.log('Registration successfully:', response.data);
-                // Clear the input fields by resetting registrationData
-                setRegistrationData({
-                    email: "",
-                    mobilenumber: "",
-                });
-
-                showAlertWithMessage("Registration successful!, Check your email for more details.");
-    
-                // Update singleJobReplies with the newly added comment
-                // setSingleJobReplies([...singleJobReplies, response.data]);
-            })
-            .catch((error) => {
-                console.error('Error Registration:', error);
-        }); 
-    };
-    
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+     
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
-    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -136,8 +148,16 @@ function TrainingSession() {
             setShowAlert(false);
           }, 7000);
       };
-    
 
+    const showAlertWithMessageRed = (message) => {
+    setAlertMessageRed(message);
+    setShowAlertRed(true);
+
+    setTimeout(() => {
+        setShowAlertRed(false);
+        }, 7000);
+    };
+    
     return (
         <div className="ms-lg-4 me-lg-4">
             <div className="ViewATraining-image-container d-flex justify-content-center mt-4 mb-3 vertical-align-middle Sp-image-view-container">
@@ -212,7 +232,7 @@ function TrainingSession() {
             <div>
                 <span className="h5 ViewATraining-title">Registration</span>
             </div>
-            <Form onSubmit={handleRegistration}>
+            <Form>
                 <Form.Group className="mt-2" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control 
@@ -246,8 +266,22 @@ function TrainingSession() {
                     <label class="form-check-label" for="exampleCheck1">I have verified the event name, venue and time before proceeding my payment.</label>
                 </div>
                 <div className="ViewATraining-button-container mt-4 d-flex flex-row">
-                    <Button className="btn-ServiceProvider-1" type="submit">Register</Button>
-                    <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto">Back</Button>
+
+                    <Payment
+                        firstname={userData.firstname}
+                        lastname={userData.lastname}
+                        email={userData.email}
+                        paymentTitle={viewTrainingSessionData.trainingsessions.trainingtitle}
+                        amount={viewTrainingSessionData.trainingsessions.trainingcost}
+                        sendUserId={userData.userid}
+                        reciveUserID={null}
+                        setPaymentSuccess={setPaymentSuccess}
+                        setOrderID={setOrderID}
+                        onClick={(e) => {
+                            e.preventDefault(); // Prevents the default behavior of the button
+                        }}
+                    />
+                    <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto"  onClick={handleBackClick}>Back</Button>
                 </div>
             </Form>
 
@@ -264,7 +298,22 @@ function TrainingSession() {
                     }}
                 >
                 {alertMessage}
-            </Alert>   
+            </Alert>
+
+            <Alert
+                show={showAlertRed}
+                    variant="danger"
+                    onClose={() => setShowAlertRed(false)}
+                    dismissible
+                    style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999, // Adjust the z-index as needed
+                    }}
+                >
+                {alertMessageRed}
+            </Alert>
         </div>
     );
 }

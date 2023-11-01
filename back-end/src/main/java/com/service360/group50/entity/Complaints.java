@@ -18,7 +18,7 @@ import java.time.LocalDate;
 )
 public class Complaints {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long complaintid;
 
@@ -40,8 +40,13 @@ public class Complaints {
     @Column(columnDefinition = "BOOLEAN")
     private boolean disabled;
 
-    //user name
-//    @ManyToOne
-//    @JoinColumn(name = "userid")
-//    private Users users;
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users users;
+
+    @PrePersist
+    protected void onCreate(){
+        posteddate=LocalDate.now();
+        complaintstatus="Pending";
+    }
 }

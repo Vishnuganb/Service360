@@ -16,6 +16,7 @@ public class AdvertiserDTO {
     private String address;
     private LocalDate registrationdate;
     private String status;
+    private String reason;
     private boolean locked;
     private boolean isactive;
     private String profilePic;
@@ -27,7 +28,7 @@ public class AdvertiserDTO {
     }
 
     public AdvertiserDTO(Long userid, String firstname, String lastname, String email, String nic, String phonenumber,
-                         String address, LocalDate registrationdate, String status, boolean locked, boolean isactive,
+                         String address, LocalDate registrationdate, String status,String reason, boolean locked, boolean isactive,
                          String profilePic, String shopname, String shopaddress, List<AdvertiserFilesDTO> files) {
         this.userid = userid;
         this.firstname = firstname;
@@ -44,6 +45,7 @@ public class AdvertiserDTO {
         this.shopname = shopname;
         this.shopaddress = shopaddress;
         this.files = files;
+        this.reason = reason;
     }
 
     public Long getUserid() {
@@ -164,6 +166,14 @@ public class AdvertiserDTO {
 
     public void setFiles(List<AdvertiserFilesDTO> files) {
         this.files = files;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
 }

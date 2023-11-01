@@ -25,12 +25,19 @@ public class FAComments {
     @Column( columnDefinition = "TEXT")
     private String Comment;
 
+    @Column
+    private String type;
+
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime AnsPostedAt;
 
     @ManyToOne
     @JoinColumn(name = "AnsId")
     private ForumAnswer forumAnswer;
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private Users user;
 
     @PrePersist
     public void setPostedAt() {

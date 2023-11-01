@@ -89,4 +89,8 @@ public class SubscriptionService {
     public List<SubscriptionHistory> getSubscriptionHistoryByUserId(Long userid) {
         return subscriptionHistoryRepository.findByUsers_userid(userid);
     }
+
+    public SubscriptionHistory addSubscriptionHistory(SubscriptionHistory subscriptionHistory) {
+        return subscriptionHistoryRepository.save(subscriptionHistory);
+    }
 }

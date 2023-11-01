@@ -8,16 +8,16 @@ import { Link } from "react-router-dom";
 import trainingsessionimage from '../../../../assets/images/ServiceProvider/TrainingSession/default.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import LocationByCitiesJson from '../../../loginForm/cities-by-district.json';
 
 function SessionsBodyPage() {
     const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
+    const [myservicesData, setMyservicesData] = useState([]);
 
-    const MyServices = [
-        "Electrical Wiring",
-        "Masonry",
-        "Cleaning",
-        "Tiles Fitting",
-    ];
+    const [interestedSessions, setInterestedSessions] = useState(() => {
+        const interestedSessionsFromStorage = localStorage.getItem('interestedSessions');
+        return interestedSessionsFromStorage ? JSON.parse(interestedSessionsFromStorage) : [];
+    });
 
     // Number of cards (training sessions) to display per page
     const cardsPerPage = 3;
@@ -30,6 +30,17 @@ function SessionsBodyPage() {
 
     // State to store the filter by category
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
+
+    // State to store the filter by location
+    const [filterLocationTerm, setFilterLocationTerm] = useState('');
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
+    // Function to save interested sessions in localStorage when it changes
+    useEffect(() => {
+        localStorage.setItem('interestedSessions', JSON.stringify(interestedSessions));
+    }, [interestedSessions]);
 
     // Function to handle page change when the user clicks on pagination buttons
     const handlePageChange = (page) => {
@@ -49,6 +60,13 @@ function SessionsBodyPage() {
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
 
+    // Function to handle filter by location changes
+    const handleFilterLocationChange = (location) => {
+        setFilterLocationTerm(location);
+        setCurrentPage(1); // Reset current page to 1 when location changes
+    };
+
+    // (ONLY FETCH PUBLISHED TRAINING SESSIONS)
     useEffect(() => {
         axios.get('http://localhost:8080/auth/viewTrainingSessions').then((res) => {
             console.log(res.data);
@@ -56,9 +74,62 @@ function SessionsBodyPage() {
         });
     }, []);
 
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
+        });
+    }, []);
+
     if (!viewTrainingSessionsData) {
         return <FontAwesomeIcon icon={faSpinner} className='fa-spin-trainingsession-sp'/>;
     }
+
+    const handleIntrested = (trainingsessionid) => {
+        // Check if the user has already clicked "Interested" for this session
+        if (interestedSessions.includes(trainingsessionid)) {
+            axios
+                .put(`http://localhost:8080/auth/TrainingSessionNotIntrested?trainingsessionid=${trainingsessionid}`)
+                .then((response) => {
+                    console.log('Interested Count Updated successfully:', response.data);
+                    // Update the entries without page refresh
+                    setviewTrainingSessionsData((prevData) => ({
+                        ...prevData,
+                        trainingsessions: prevData.trainingsessions.map((session) =>
+                            session.trainingid === trainingsessionid
+                                ? { ...session, interested: session.interested - 1 }
+                                : session
+                        ),
+                    }));
+                    // Remove the session ID from the interestedSessions state
+                    setInterestedSessions(interestedSessions.filter((id) => id !== trainingsessionid));
+                })
+                .catch((error) => {
+                    console.error('Error updating interested count:', error);
+                });
+        } else {
+            axios
+                .put(`http://localhost:8080/auth/TrainingSessionIntrested?trainingsessionid=${trainingsessionid}`)
+                .then((response) => {
+                    console.log('Interested Count Updated successfully:', response.data);
+                    // Update the entries without page refresh
+                    setviewTrainingSessionsData((prevData) => ({
+                        ...prevData,
+                        trainingsessions: prevData.trainingsessions.map((session) =>
+                            session.trainingid === trainingsessionid
+                                ? { ...session, interested: session.interested + 1 }
+                                : session
+                        ),
+                    }));
+                    // Add the session ID to the interestedSessions state
+                    setInterestedSessions([...interestedSessions, trainingsessionid]);
+                })
+                .catch((error) => {
+                    console.error('Error updating interested count:', error);
+                });
+        }
+    };
+    
 
     function convertTo12HourFormat(time24) {
         const [hour, minute] = time24.split(":");
@@ -69,10 +140,11 @@ function SessionsBodyPage() {
         return `${hour12}:${minute} ${amPm}`;
     }
 
-    // Filter training sessions based on search term and selected date
     const filteredCards = viewTrainingSessionsData.trainingsessions.filter((card) => {
+        console.log(filterCategoryTerm, filterLocationTerm)
         return (
-            (!filterCategoryTerm || card.serviceName === filterCategoryTerm) &&
+            (!filterCategoryTerm || card.servicename.toLowerCase() === filterCategoryTerm.toLowerCase()) &&
+            (!filterLocationTerm || card.traininglocation.toLowerCase() === filterLocationTerm.toLowerCase()) &&
             (card.servicename.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 card.trainingtitle.toLowerCase().includes(searchTerm.toLowerCase()))
         );
@@ -131,15 +203,20 @@ function SessionsBodyPage() {
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handlefilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (
-                                <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
+                            {myservicesData.map((service) => (
+                                <NavDropdown.Item key={service.serviceId} eventKey={service.serviceName}>{service.serviceName}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
-                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4'>
-                            <NavDropdown.Item href="#action3">All Island</NavDropdown.Item>
-                            <NavDropdown.Item >or</NavDropdown.Item>
-                            &nbsp; &nbsp;
-                            <input type="range" name="distance" min="1km" max="50km" />               {/*ADD LOCATION PART IS REMAINING*/}
+                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
+                            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {Object.keys(LocationByCitiesJson).map((location, index) => (
+                                    LocationByCitiesJson[location].cities.map((city, subIndex) => (
+                                        <NavDropdown.Item key={`${index}-${subIndex}`} eventKey={city}>
+                                            {city}
+                                        </NavDropdown.Item>
+                                    ))
+                                ))}
+                            </div>
                         </NavDropdown>
                     </Nav>
                 </div>
@@ -192,20 +269,26 @@ function SessionsBodyPage() {
                                 </div>
                                 <hr />
                                 <div className="my-training-card-footer d-flex flex-row">
-                                    <Link to={`/ServiceProvider/ViewATrainingSession/${TrainingSession.trainingid}`}
+                                    <span onClick={() => handleIntrested(TrainingSession.trainingid)}
                                         className="btn btn-default my-training-card-footer-btn"
                                         id="my-training-card-footer-btn-view"
                                     >
-                                        <i className="bi bi-eye h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span style={{ position: "relative", bottom: "1.5px" }}>View</span>
-                                    </Link>
-                                    <span
+                                        <i className={`bi ${
+                                                interestedSessions.includes(TrainingSession.trainingid)
+                                                    ? 'bi-star-fill'
+                                                    : 'bi-star'
+                                            } h5`}
+                                        ></i>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span style={{ position: "relative", bottom: "1.5px" }}>intrested</span>
+                                    </span>
+                                    <Link to={`/ServiceProvider/ViewATrainingSession/${TrainingSession.trainingid}`}
                                         className="btn btn-default my-training-card-footer-btn"
                                         id="my-training-card-footer-btn-view"
                                     >
                                         <i className="bi bi-credit-card h5"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span style={{ position: "relative", bottom: "1.5px" }}>Register</span>
-                                    </span>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

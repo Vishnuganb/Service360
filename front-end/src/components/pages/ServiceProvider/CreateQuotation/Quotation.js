@@ -3,17 +3,12 @@ import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useParams } from 'react-router-dom';
 import service360logo from '../../../../assets/images/header/logo.png';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ActivityReport() {
-
-    const customerdetails = [
-        {
-            name: 'Pranavan',
-            address: 'No 11, Nelson Place Colombo'
-        }
-    ];
-
     const [activityReports, setActivityReports] = useState([]);
     const [quotationData, setQuotationData] = useState({
         customerName: '',
@@ -24,14 +19,33 @@ function ActivityReport() {
         unitPrice: '',
     });
 
+    const [viewJobData, setViewJobData] = useState(null);
+
     const [quoteId, setQuoteId] = useState(null); // Initialize quoteId as null
     const [subtotalAmount, setSubtotalAmount] = useState(0);
+
+    const { id } = useParams();
+    const jobId = parseInt(id, 10);
+
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+      navigate(-1);
+    };
 
     useEffect(() => {
         // Generate the quote ID only once when the component mounts
         const generatedQuoteId = Math.floor(Math.random() * 100000);
         setQuoteId(generatedQuoteId);
     }, []); // Empty dependency array ensures it runs only once on mount
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewNewJobs/${jobId}`).then((res) => {
+            console.log(res.data);
+            setViewJobData(res.data);
+        });
+    }, []);
+
+    if (!viewJobData) return 'No jobs sessions found!';
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -49,6 +63,14 @@ function ActivityReport() {
             unitPrice: '',
         });
     };
+
+    
+    const customerdetails = [
+        {
+            name: 'Pranavan',
+            address: 'No 11, Nelson Place Colombo'
+        }
+    ];
 
     // Handle "Complete and Send" button click event
     const handleCompleteAndSend = () => {
@@ -101,6 +123,10 @@ function ActivityReport() {
                 <span className="ms-lg-2" style={{ fontSize: "28px", fontWeight: "bold" }}>Create Quotation</span>
                 {/* Complete and Send Button */}
             </div>
+            <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-60px', maxWidth: '110px', fontWeight:600, float:'right' }}>
+                <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+            </span>
 
             <div className='quotation-pdf border mb-3 px-4 py-4'>
                 {/*logo*/}
@@ -117,8 +143,8 @@ function ActivityReport() {
                 <div className="row mt-4 mb-3">
                     <div className="col-md-6 d-flex flex-row">
                         <div className='d-flex flex-column ms-1 d-flex flex-column'>       {/* customer details */}
-                            <span>{customerdetails[0].name}</span>
-                            <span>{customerdetails[0].address}</span>
+                            <span>{viewJobData.jobs.customer.firstname}</span>
+                            <span>{viewJobData.jobs.customer.address}</span>
                         </div>
                     </div>
                     <div className="col-md-6 text-md-end d-flex flex-column">
@@ -188,7 +214,7 @@ function ActivityReport() {
                 </div>
                 <div className='d-flex flex-row mt-2'>
                     <Button type="submit" className="btn-ServiceProvider-1">Add Item</Button>
-                    <Button onClick={handleCompleteAndSend} className="btn-ServiceProvider-2 d-flex ms-auto">Complete</Button>
+                    <Button onClick={handleCompleteAndSend} className="btn-ServiceProvider-2 d-flex ms-auto" disabled={activityReports.length === 0}>Complete</Button>
                 </div>
             </form>
         </div>

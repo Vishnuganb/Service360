@@ -195,6 +195,7 @@ const CreateAd = () => {
     formData.append("role", userDetail.role);
     formData.append("userId", userDetail.userid);
 
+    
     // Append each selected image file to the FormData object
     for (const imageFile of selectedAdImages) {
       formData.append("adsImages", imageFile);

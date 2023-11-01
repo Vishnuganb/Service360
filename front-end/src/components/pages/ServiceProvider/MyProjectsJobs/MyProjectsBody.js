@@ -5,15 +5,23 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import LocationByCitiesJson from '../../../loginForm/cities-by-district.json';
 
 function MyProjectsBody(){
     const [MyProjectsJobsData, setMyProjectsJobsData] = useState(null);
     const [MyProjectsVacanciesData, setMyProjectsVacanciesData] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCategoryTerm, setFilterCategoryTerm] = useState('');
+    const [filterLocationTerm, setFilterLocationTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [activeTab, setActiveTab] = useState(''); 
+    const [myservicesData, setMyservicesData] = useState([]);
+
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+      navigate(-1);
+    };
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -29,17 +37,17 @@ function MyProjectsBody(){
         setFilterCategoryTerm('');  // Reset category filter when active tab changes
     }, [activeTab]);
     
-    const MyServices= [
-        "Electrical Wiring",
-        "Masonry",
-        "Sofa Cleaning",
-        "Tiles Fitting",
-    ];
-
     // GETTING LOGGED IN SERVICEPROVIDER ID
 
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setMyservicesData(res.data);
+        });
+    }, []);
 
     const fetchData = () => {
         axios.get('http://localhost:8080/auth/viewMyJobs', {
@@ -76,10 +84,10 @@ function MyProjectsBody(){
     const handleAcceptJob = (jobId, isQuotation) => {
         let apiUrl="";
 
-        if(isQuotation=="true"){
+        if(isQuotation==="true"){
             apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToPending/${jobId}?serviceproviderid=${userData.userid}`;
         }
-        else if(isQuotation=="false"){
+        else if(isQuotation==="false"){
             apiUrl = `http://localhost:8080/auth/updateJobStatusInviteToOngoing/${jobId}?serviceproviderid=${userData.userid}`;
         }
 
@@ -135,11 +143,13 @@ function MyProjectsBody(){
 
     };
 
-
     const allCards = [...MyProjectsJobsData, ...MyProjectsVacanciesData];
 
     const filteredCards = allCards.filter((card) => {
         const serviceMatch = !filterCategoryTerm || card.job?.servicename === filterCategoryTerm || card.vacancy?.servicename === filterCategoryTerm; // Check servicename in job or vacancy
+
+        const locationMatch = !filterLocationTerm || card.job?.joblocation.toLowerCase() === filterLocationTerm.toLowerCase() || card.vacancy?.vacancylocation.toLowerCase() === filterLocationTerm.toLowerCase();
+
         const searchTermMatch = (
             (card.job?.servicename && card.job.servicename.toLowerCase().includes(searchTerm.toLowerCase())) ||
             (card.job?.joblocation && card.job.joblocation.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -151,7 +161,7 @@ function MyProjectsBody(){
             (card.customer?.firstname && card.customer.firstname.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     
-        return serviceMatch && searchTermMatch;
+        return serviceMatch && searchTermMatch && locationMatch;
     });
     
     const filteredAndSortedCards = filteredCards.filter((card) => {
@@ -163,7 +173,6 @@ function MyProjectsBody(){
         return false; // Exclude cards without valid status
     });
     
-
     const cardsPerPage = 3;
     
     // Calculate the total number of pages based on the filtered and sorted cards
@@ -197,12 +206,22 @@ function MyProjectsBody(){
         setCurrentPage(1); // Reset current page to 1 when date changes
     };
 
+    // Function to handle filter by location changes
+    const handleFilterLocationChange = (location) => {
+        setFilterLocationTerm(location);
+        setCurrentPage(1); // Reset current page to 1 when location changes
+    };
+
     console.log(displayedCards);
 
     return(
         <div>
             
             {/* Page Title*/}
+            <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', maxWidth: '120px', fontWeight:600, float:'right' }}>
+              <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+              <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+            </span>
             <span className="ms-4 align-self-start" style={{fontSize:"28px",fontWeight:"600"}}>My Jobs</span>
 
             {/* Nav Bar */}
@@ -211,25 +230,45 @@ function MyProjectsBody(){
                     <Nav className="ms-3">
                         <Nav.Link 
                             active={activeTab === 'invite'} 
-                            onClick={() => setActiveTab('invite')}
+                            onClick={() => {
+                                setActiveTab('invite');
+                                const newUrl = new URL(window.location);
+                                newUrl.searchParams.set('tab', 'invite');
+                                window.history.pushState(null, '', newUrl.toString());
+                            }}
                         >
                             Invites
                         </Nav.Link>
                         <Nav.Link 
                             active={activeTab === 'pending'} 
-                            onClick={() => setActiveTab('pending')} 
+                            onClick={() => {
+                                setActiveTab('pending');
+                                const newUrl = new URL(window.location);
+                                newUrl.searchParams.set('tab', 'pending');
+                                window.history.pushState(null, '', newUrl.toString());
+                            }} 
                         >
                             Pending
                         </Nav.Link>
                         <Nav.Link 
                             active={activeTab === 'ongoing'} 
-                            onClick={() => setActiveTab('ongoing')} 
+                            onClick={() => {
+                                setActiveTab('ongoing');
+                                const newUrl = new URL(window.location);
+                                newUrl.searchParams.set('tab', 'ongoing');
+                                window.history.pushState(null, '', newUrl.toString());
+                            }} 
                         >
                             Ongoing
                         </Nav.Link>
                         <Nav.Link 
                             active={activeTab === 'rejected'} 
-                            onClick={() => setActiveTab('rejected')} 
+                            onClick={() => {
+                                setActiveTab('rejected');
+                                const newUrl = new URL(window.location);
+                                newUrl.searchParams.set('tab', 'rejected');
+                                window.history.pushState(null, '', newUrl.toString());
+                            }} 
                         >
                             Rejected
                         </Nav.Link>
@@ -255,24 +294,29 @@ function MyProjectsBody(){
                     >
                         <NavDropdown title="Select Job Category" id="navbarScrollingDropdown" onSelect={handlefilterCategoryChange}>
                             {/* Loop MyServices */}
-                            {MyServices.map((service) => (          
-                                <NavDropdown.Item key={service} eventKey={service}>{service}</NavDropdown.Item>
+                            {myservicesData.map((service) => (          
+                                <NavDropdown.Item key={service.serviceId} eventKey={service.serviceName}>{service.serviceName}</NavDropdown.Item>
                             ))}
                         </NavDropdown>
-                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4'>
-                            <NavDropdown.Item href="#action3">All Island</NavDropdown.Item>
-                            <NavDropdown.Item >or</NavDropdown.Item>
-                            &nbsp; &nbsp;
-                            <input type="range" name="distance" min="1km" max="50km" />               {/*ADD LOCATION PART IS REMAINING*/}
+                        <NavDropdown title="Filter by Location" id="navbarScrollingDropdown" className='me-lg-4' onSelect={handleFilterLocationChange}>
+                            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {Object.keys(LocationByCitiesJson).map((location, index) => (
+                                    LocationByCitiesJson[location].cities.map((city, subIndex) => (
+                                        <NavDropdown.Item key={`${index}-${subIndex}`} eventKey={city}>
+                                            {city}
+                                        </NavDropdown.Item>
+                                    ))
+                                ))}
+                            </div>
                         </NavDropdown>
                     </Nav>
                 </Navbar>
             </div>
-            
-            {/* only display pending, ongoing, rejected jobs */}
+
             <div className="row my-projects-jobs-row-wrap">
-                {activeTab !== 'invite' && displayedCards.filter((job) => job.jobStatus === 'pending' || job.jobStatus === 'ongoing' || job.jobStatus === 'rejected').map((job) => (
-                    <div className="single-my-job-card mx-auto mt-3">
+                {/* only display pending jobs */}
+                {activeTab === 'pending' && displayedCards.filter((job) => job.jobStatus === 'pending').map((job) => (
+                    <div key={job.job.jobid} className="single-my-job-card mx-auto mt-3">
                         <div className="ms-sm-3">
                             <div className='d-flex flex-column'>
                                 <div>
@@ -303,6 +347,33 @@ function MyProjectsBody(){
                               </button>
                             </Link>  
                             )}
+                        </div>
+                    </div>
+                ))}
+
+                {/* only display ongoing jobs */}
+                {activeTab === 'ongoing' && displayedCards.filter((job) => job.jobStatus === 'ongoing').map((job) => (
+                    <div key={job.job.jobid} className="single-my-job-card mx-auto mt-3">
+                        <div className="ms-sm-3">
+                            <div className='d-flex flex-column'>
+                                <div>
+                                    <span className="job-card-title">{job.job.jobtitle}</span>
+                                </div>
+                                <div className='d-flex'>
+                                    <span className="my-job-card-customer-name">By {job.job.customer.firstname}</span>
+                                </div>
+                                <div>
+                                    <span className="my-job-location-info">
+                                        <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {job.job.joblocation}
+                                    </span>
+                                    <span className="my-job-location-info ms-4">
+                                        <i class="fa-solid fa-hourglass-start"></i>&nbsp;&nbsp; short-term
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style={{margin:"0.5rem"}} />
+                        <div className="my-job-card-footer d-flex flex-row mb-sm-2 mx-auto mt-md-0 mt-1 mb-2">
                             {job.jobStatus === 'ongoing' && (
                             <Link to={`../OngoingJob/${job.job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
@@ -311,9 +382,35 @@ function MyProjectsBody(){
                                     </span>
                                     View
                                 </button>
-                            </Link>
-                                                   
+                            </Link>                     
                             )}
+                        </div>
+                    </div>
+                ))}
+
+                {/* only display rejected jobs */}
+                {activeTab === 'rejected' && displayedCards.filter((job) => job.jobStatus === 'rejected').map((job) => (
+                    <div key={job.job.jobid} className="single-my-job-card mx-auto mt-3">
+                        <div className="ms-sm-3">
+                            <div className='d-flex flex-column'>
+                                <div>
+                                    <span className="job-card-title">{job.job.jobtitle}</span>
+                                </div>
+                                <div className='d-flex'>
+                                    <span className="my-job-card-customer-name">By {job.job.customer.firstname}</span>
+                                </div>
+                                <div>
+                                    <span className="my-job-location-info">
+                                        <i className="bi bi-geo-alt-fill"></i>&nbsp;&nbsp; {job.job.joblocation}
+                                    </span>
+                                    <span className="my-job-location-info ms-4">
+                                        <i class="fa-solid fa-hourglass-start"></i>&nbsp;&nbsp; short-term
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style={{margin:"0.5rem"}} />
+                        <div className="my-job-card-footer d-flex flex-row mb-sm-2 mx-auto mt-md-0 mt-1 mb-2">
                             {job.jobStatus === 'rejected' && (
                             <Link to={`../ViewAJob/${job.job.jobid}`} className="btn btn-default my-job-card-footer-btn-ongoing" id="my-job-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
@@ -328,9 +425,9 @@ function MyProjectsBody(){
                     </div>
                 ))}
 
-                {/* only display ongoing, rejected vacancies */}
-                {activeTab !== 'invite' && displayedCards.filter((vacancy) => vacancy.vacancyStatus === 'ongoing' || vacancy.vacancyStatus === 'rejected').map((vacancy) => (
-                    <div className="single-my-vacancy-card mx-auto mt-3">
+                {/* only display ongoing vacancies */}
+                {activeTab === 'ongoing' && displayedCards.filter((vacancy) => vacancy.vacancyStatus === 'ongoing').map((vacancy) => (
+                    <div key={vacancy.vacancy.jobid} className="single-my-vacancy-card mx-auto mt-3">
                         <div className="ms-sm-3">
                                 <div className='d-flex flex-column'>
                                     <div >
@@ -364,6 +461,36 @@ function MyProjectsBody(){
                                 </button>
                             </Link>
                             )}
+                        </div>
+                    </div>
+                ))}
+
+                {/* only display rejected vacancies */}
+                {activeTab === 'rejected' && displayedCards.filter((vacancy) => vacancy.vacancyStatus === 'rejected').map((vacancy) => (
+                    <div key={vacancy.vacancy.vacancyid} className="single-my-vacancy-card mx-auto mt-3">
+                        <div className="ms-sm-3">
+                                <div className='d-flex flex-column'>
+                                    <div >
+                                        <span className="job-card-title">{vacancy.vacancy.vacancytitle}</span>
+                                    </div>
+                                    <div className='d-flex'>
+                                        <span className="job-card-date">By {vacancy.vacancy.customer.firstname}</span>
+                                    </div>
+                                    <div>
+                                        <span className="my-job-location-info">
+                                            <i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancylocation}
+                                        </span>
+                                        <span className="my-job-location-info ms-4">
+                                            <i class="fa-solid fa-hourglass-start"></i>&nbsp;&nbsp; long-term
+                                        </span><br/>
+                                        <span className="my-job-location-info">
+                                            <i class="fa-solid fa-clock"></i>&nbsp;&nbsp; {vacancy.vacancy.vacancytype}
+                                        </span>
+                                    </div>
+                                </div>
+                        </div>
+                        <hr style={{margin:"0.5rem"}} />
+                        <div className="my-job-card-footer d-flex flex-row mb-sm-2 mx-auto mt-md-0 mt-1 mb-2">
                             {vacancy.vacancyStatus === 'rejected' && (
                             <Link to={`../ViewAVacancy/${vacancy.vacancy.vacancyid}`} className="btn btn-default my-vacancy-card-footer-btn-ongoing" id="my-vacancy-card-footer-btn-view">
                                 <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
@@ -417,14 +544,14 @@ function MyProjectsBody(){
                     </div>
                     <hr style={{margin:"0.5rem"}} />
                     <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
-                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}} onClick={() => handleAcceptJob(job.job.jobid,job.job.isquotation)}>
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id={`my-job-card-footer-btn-view-${job.job.jobid}`} style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}} onClick={() => handleAcceptJob(job.job.jobid,job.job.isquotation)}>
                             <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-check-circle"></i>
                             </span>
                             Accept
                         </button>
 
-                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}  onClick={() => handleRejectJob(job.job.jobid)}>
+                        <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id={`my-job-card-footer-btn-view-${job.job.jobid}`} style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}}  onClick={() => handleRejectJob(job.job.jobid)}>
                             <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-x-circle"></i>
                             </span>
@@ -470,14 +597,14 @@ function MyProjectsBody(){
                 </div>
                 <hr style={{margin:"0.5rem"}} />
                 <div className="my-job-card-footer d-flex flex-row justify-content-between mx-md-4 mb-sm-2 mt-md-0 mt-4">
-                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}} onClick={() => handleAcceptVacancy(vacancy.vacancy.vacancyid)}>
+                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn" id={`my-job-card-footer-btn-view-${vacancy.vacancy.vacancyid}`} style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}} onClick={() => handleAcceptVacancy(vacancy.vacancy.vacancyid)}>
                         <span class="view-jobs-page-btn-label">
                             <i class="bi bi-check-circle"></i>
                         </span>
                         Accept
                     </button>
 
-                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id="my-job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}} onClick={() => handleRejectVacancy(vacancy.vacancy.vacancyid)}>
+                    <button type="button" class="btn view-jobs-page-btn-labeled my-job-card-footer-btn mt-md-0 mt-1" id={`my-job-card-footer-btn-view-${vacancy.vacancy.vacancyid}`} style={{color:"white",backgroundColor:"rgb(182, 14, 14)"}} onClick={() => handleRejectVacancy(vacancy.vacancy.vacancyid)}>
                         <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-x-circle"></i>
                         </span>
@@ -486,7 +613,6 @@ function MyProjectsBody(){
                 </div>
             </div>
             ))}
-
 
             {/* Pagination */}
             <div className="pagination justify-content-center">

@@ -49,6 +49,8 @@ public class ServiceProvidersController {
     private ServiceProviderServicesRepository serviceProviderServicesRepository;
     @Autowired
     private ServiceProviderFilesRepository serviceProviderFilesRepository;
+    @Autowired
+    private TodoListRepository todoListRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -58,23 +60,55 @@ public class ServiceProvidersController {
 
 
     @GetMapping("auth/viewHistoryJobs")
-    public List<Jobs> viewHistoryJobs(){
-        return serviceProviderService.viewHistoryJobs();
+    public List<Jobs> viewHistoryJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewHistoryJobs(serviceproviderid);
+    }
+
+    @GetMapping("auth/viewOngoingJobs")
+    public List<Jobs> viewOngoingJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewOngoingJobs(serviceproviderid);
+    }
+
+    @GetMapping("auth/viewPendingJobs")
+    public List<Jobs> viewPendingJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewPendingJobs(serviceproviderid);
     }
 
 
-    // NEED TO FIND FOR LOGGED IN SP
     @GetMapping("auth/viewMyJobs")
     public List<JobWithStatusDTO> viewMyJobs(@RequestParam("serviceproviderid") Long serviceproviderid) {
         return serviceProviderService.viewMyJobs(serviceproviderid);
     }
 
-
     @GetMapping("auth/viewNewJobs/{id}")
-    public Jobs viewAJob(@PathVariable Long id) {
-        return serviceProviderService.viewAJob(id);
-    }
+    public JobsDTO viewAJob(@PathVariable Long id) {
+        Jobs job = serviceProviderService.viewAJob(id);
 
+        JobsDTO jobsDTO = new JobsDTO();
+        jobsDTO.setJobs(job);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        List<byte[]> jobimages = new ArrayList<>();
+
+        try {
+            List<byte[]> jobImages = getJobImages(id);
+            for (byte[] jobImage : jobImages) {
+                jobimages.add(jobImage);
+            }
+
+            ImagesDTO image = new ImagesDTO();
+            image.setId(id);
+            image.setImages(jobimages);
+            imagesDTO.add(image);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jobsDTO.setJobimages(imagesDTO);
+
+        return jobsDTO;
+    }
 
     @GetMapping("auth/viewJobReplies/{jobid}")
     public List<JobReplies> viewJobReplies(@PathVariable Long jobid) {
@@ -83,10 +117,11 @@ public class ServiceProvidersController {
 
 
     @PostMapping("auth/AddJobReply/{jobid}")
-    public JobReplies addJobReply(@RequestBody JobRepliesRequest jobRepliesRequest, @PathVariable Long jobid){
+    public JobReplies addJobReply( @RequestParam("replymessage") String replymessage,
+                                   @RequestParam("serviceproviderid") Long serviceproviderid,
+                                   @PathVariable Long jobid){
         // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         // Load the Jobs entity by ID
@@ -95,7 +130,7 @@ public class ServiceProvidersController {
 
         // Create a JobReplies entity
         JobReplies jobReply = new JobReplies();
-        jobReply.setReplymessage(jobRepliesRequest.getReplymessage());
+        jobReply.setReplymessage(replymessage);
 
         // Set the dateapplied for the vacancy application
         LocalDate today = LocalDate.now();
@@ -138,8 +173,13 @@ public class ServiceProvidersController {
 
 
     @GetMapping("auth/viewHistoryVacancies")
-    public List<Vacancies> viewHistoryVacancies(){
-        return serviceProviderService.viewHistoryVacancies();
+    public List<Vacancies> viewHistoryVacancies(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewHistoryVacancies(serviceproviderid);
+    }
+
+    @GetMapping("auth/viewOngoingVacancies")
+    public List<Vacancies> viewOngoingVacancies(@RequestParam("serviceproviderid") Long serviceproviderid){
+        return serviceProviderService.viewOngoingVacancies(serviceproviderid);
     }
 
     @GetMapping("auth/viewMyVacancies")
@@ -151,10 +191,17 @@ public class ServiceProvidersController {
     public Vacancies viewAVacancy(@PathVariable Long id) {return serviceProviderService.viewAVacancy(id);}
 
     @PostMapping("auth/applyVacancy/{id}")
-    public VacancyApplications applyvacancy(@RequestBody VacancyApplicationsRequest vacancyApplicationsRequest, @PathVariable Long id) {
+    public VacancyApplications applyvacancy( @RequestParam("firstname") String firstname,
+                                             @RequestParam("lastname") String lastname,
+                                             @RequestParam("contactnumber") String contactnumber,
+                                             @RequestParam("emailaddress") String emailaddress,
+                                             @RequestParam("educationqualification") String educationqualification,
+                                             @RequestParam("yearsofexperience") String yearsofexperience,
+                                             @RequestParam("salaryexpectation") String salaryexpectation,
+                                             @RequestParam("serviceproviderid") Long serviceproviderid,
+                                             @RequestParam("file") MultipartFile cvfile, @PathVariable Long id) {
         // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         // Load the Vacancies entity by ID
@@ -163,14 +210,27 @@ public class ServiceProvidersController {
 
         // Create a VacancyApplications entity
         VacancyApplications vacancyApplication = new VacancyApplications();
-        vacancyApplication.setFirstname(vacancyApplicationsRequest.getFirstname());
-        vacancyApplication.setLastname(vacancyApplicationsRequest.getLastname());
-        vacancyApplication.setContactnumber(vacancyApplicationsRequest.getContactnumber());
-        vacancyApplication.setEmailaddress(vacancyApplicationsRequest.getEmailaddress());
-        vacancyApplication.setEducationqualification(vacancyApplicationsRequest.getEducationqualification());
-        vacancyApplication.setYearsofexperience(vacancyApplicationsRequest.getYearsofexperience());
-        vacancyApplication.setSalaryexpectation(vacancyApplicationsRequest.getSalaryexpectation());
-        vacancyApplication.setCvfile(vacancyApplicationsRequest.getCvfile());
+        vacancyApplication.setFirstname(firstname);
+        vacancyApplication.setLastname(lastname);
+        vacancyApplication.setContactnumber(contactnumber);
+        vacancyApplication.setEmailaddress(emailaddress);
+        vacancyApplication.setEducationqualification(educationqualification);
+        vacancyApplication.setYearsofexperience(yearsofexperience);
+        vacancyApplication.setSalaryexpectation(salaryexpectation);
+
+        String uploadDirectory = "src/main/resources/static/images/vacancy";
+
+        String savedcvfile="";
+
+        if (cvfile != null && !cvfile.isEmpty()) {
+            try {
+                savedcvfile = imageService.saveImageToStorageServiceProvider(uploadDirectory, cvfile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        vacancyApplication.setCvfile(savedcvfile);
 
         // Set the service provider for the vacancy application
         vacancyApplication.setServiceproviders(serviceProvider);
@@ -196,15 +256,25 @@ public class ServiceProvidersController {
         return serviceProviderService.updateVacancyInvitetoRejected(id,serviceproviderid);
     }
 
+    @PutMapping("auth/updateVacancyStatusOngoingToCompleted/{id}")
+    public VacanciesServiceProviders updateVacancyOngoingtoCompleted(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
+        return serviceProviderService.updateVacancyOngoingtoCompleted(id,serviceproviderid);
+    }
+
 
     //SP CALENDAR
     @GetMapping("auth/viewServiceProviderCalendar")
-    public List<ServiceProviderCalendar> viewServiceProviderCalendar() {
-        return serviceProviderService.viewServiceProviderCalendar();
+    public List<ServiceProviderCalendar> viewServiceProviderCalendar(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        return serviceProviderService.viewServiceProviderCalendar(serviceproviderid);
     }
 
     @PostMapping("auth/createServiceProviderCalendar")
-    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar) {
+    public ServiceProviderCalendar createServiceProviderCalendarEvent(@RequestBody ServiceProviderCalendar serviceProviderCalendar, @RequestParam("serviceproviderid") Long serviceproviderid) {
+        // Load the Users (service provider) entity by ID
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
+
+        serviceProviderCalendar.setServiceprovider(serviceProvider);
         return serviceProviderService.createServiceProviderCalendarEvent(serviceProviderCalendar);
     }
 
@@ -213,7 +283,7 @@ public class ServiceProvidersController {
         serviceProviderService.deleteServiceProviderCalendarEvent(id);
     }
 
-//    //TRAINING SESSIONS
+//  TRAINING SESSIONS (ONLY FETCH PUBLISHED TRAINING SESSIONS)
     @GetMapping("auth/viewTrainingSessions")
     public TrainingSessionsDTO viewTrainingSessions() {
         List<TrainingSession> trainingSessions = serviceProviderService.viewTrainingSessions();
@@ -251,8 +321,8 @@ public class ServiceProvidersController {
     // NEED TO FIND FOR LOGGED IN SP
 
     @GetMapping("auth/viewMyTrainingSessions")
-    public List<TrainingSession> viewMyTrainingSessions() {
-        return serviceProviderService.viewMyTrainingSessions();
+    public List<TrainingSession> viewMyTrainingSessions(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        return serviceProviderService.viewMyTrainingSessions(serviceproviderid);
     }
 
     @GetMapping("auth/viewTrainingSessions/{id}")
@@ -287,37 +357,39 @@ public class ServiceProvidersController {
 
 
     @PostMapping("auth/registerTrainingSession/{id}")
-    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest, @PathVariable Long id) throws Exception {
+    public TrainingSessionRegistration registerTrainingSession(@RequestBody TrainingSessionRegistrationRequest trainingSessionRegistrationRequest,
+                                                               @RequestParam("serviceproviderid") Long serviceproviderid,
+                                                               @PathVariable Long id) throws Exception {
         // Load the Users (service provider) entity by ID
-        Long userId = 4L;                                                         // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         // Load the TrainingSession entity by ID
         Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
         TrainingSession trainingSession = trainingSessionOptional.orElse(null);
+        //increase ongoing count by 1
+        trainingSession.setGoingcount(trainingSession.getGoing()+1);
+        trainingSessionRepository.save(trainingSession);
 
         // Create a TrainingSessionRegistration entity
         TrainingSessionRegistration trainingSessionRegistration = new TrainingSessionRegistration();
         trainingSessionRegistration.setMobilenumber(trainingSessionRegistrationRequest.getMobilenumber());
         trainingSessionRegistration.setEmail(trainingSessionRegistrationRequest.getEmail());
 
+        // Set the dateapplied for the vacancy application
+        LocalDate today = LocalDate.now();
+        trainingSessionRegistration.setRegistrationdate(today);
 
-        /*
-        // Payment gateway Api call here
-        boolean isPaymentSuccessful = processPayment(); // This function should return true if payment is successful
-         */
-
-        boolean isPaymentSuccessful= true;         //sample data
+        boolean isPaymentSuccessful= true;
 
         // Generate a unique content for the QR code
         String mobileNumber = trainingSessionRegistrationRequest.getMobilenumber();
-        String verificationUrl = "http://localhost:8080/auth/verifyQR?mobileNumber=" + mobileNumber; // Replace with your actual verification URL
+        String verificationUrl = "http://localhost:3000/ServiceProvider/TrainingSessionVerification/" + mobileNumber; //
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
             trainingSessionRegistration.setPaymentstatus("paid");
-            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail(), verificationUrl);
+            starterMail.TrainingSessionInvitation(trainingSessionRegistrationRequest.getEmail(), verificationUrl, trainingSession);
         } else {
             trainingSessionRegistration.setPaymentstatus("not paid");
         }
@@ -333,15 +405,11 @@ public class ServiceProvidersController {
     }
 
     @GetMapping("auth/verifyQR")
-    public ResponseEntity<String> verifyMobileNumber(@RequestParam("mobileNumber") String mobileNumber) {
+    public Boolean verifyMobileNumber(@RequestParam("mobileNumber") String mobileNumber) {
         // Query the trainingsessionregistration table to check if the mobile number exists
         boolean isMobileNumberValid = trainingSessionRegistrationRepository.existsByMobilenumber(mobileNumber);
 
-        if (isMobileNumberValid) {
-            return ResponseEntity.ok("Mobile number is valid.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid mobile number.");
-        }
+        return isMobileNumberValid;
     }
 
 
@@ -357,11 +425,11 @@ public class ServiceProvidersController {
                                                  @RequestParam("status") String status,
                                                  @RequestParam("going") Integer going,
                                                  @RequestParam("interested") Integer interested,
+                                                 @RequestParam("serviceproviderid") Long serviceproviderid,
                                                  @RequestParam("images") MultipartFile[] imageFiles)
     {
         // Load the Users (service provider) entity by ID
-        Long userId = 4L; // NEED TO FIND FOR LOGGED IN SP
-        Optional<Users> userOptional = userRepository.findById(userId);
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
 
         String uploadDirectory = "src/main/resources/static/images/trainingsessions";
@@ -414,26 +482,32 @@ public class ServiceProvidersController {
         Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
         TrainingSession trainingSession = trainingSessionOptional.orElse(null);
 
-        /*
-            // Payment gateway Api call here
-            boolean isPaymentSuccessful = processPayment(); // This function should return true if payment is successful
-        */
-
-        boolean isPaymentSuccessful= true;         //sample data
+        boolean isPaymentSuccessful= true;
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
-            trainingSession.setStatus("Ready to publish");
+            trainingSession.setStatus("Published");
             return serviceProviderService.publishTrainingSession(trainingSession);
         } else {
             return null;
         }
     }
 
+    @PutMapping("auth/TrainingSessionIntrested")
+    public Void IncreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid){
+        return serviceProviderService.IncreaseTrainingSessionIntrestedCount(trainingsessionid);
+    }
 
+    @PutMapping("auth/TrainingSessionNotIntrested")
+    public Void DecreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid){
+        return serviceProviderService.DecreaseTrainingSessionIntrestedCount(trainingsessionid);
+    }
 
+    @GetMapping("auth/GetTrainingSessionRegisteredUsers")
+    public List<TrainingSessionRegistration> GetTrainingSessionRegisteredUsers(@RequestParam("trainingsessionid") Long trainingsessionid){
+        return serviceProviderService.GetTrainingSessionRegisteredUsers(trainingsessionid);
+    }
 
-    
     //BLOGS
     @PostMapping("auth/createBlog")
     public Blogs createBlog(@RequestParam("blogtitle") String blogtitle,
@@ -480,8 +554,35 @@ public class ServiceProvidersController {
     }
 
     @GetMapping("auth/viewServiceProviderBlogs")
-    public List<Blogs> viewServiceProviderBlogs() {
-        return serviceProviderService.viewServiceProviderBlogs();
+    public BlogsDTO viewServiceProviderBlogs(@RequestParam("serviceproviderid") Long serviceproviderid) {
+        List<Blogs> blogs = serviceProviderService.viewServiceProviderBlogs(serviceproviderid);
+
+        BlogsDTO blogsDTO = new BlogsDTO();
+        blogsDTO.setBlogs(blogs);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        for (Blogs blog : blogs) {
+            List<byte[]> blogimages = new ArrayList<>();
+
+            try {
+                List<byte[]> blogImages = getBlogimages(blog.getBlogid());
+                for (byte[] blogImage : blogImages) {
+                    blogimages.add(blogImage);
+                }
+
+                ImagesDTO image = new ImagesDTO();
+                image.setId(blog.getBlogid());
+                image.setImages(blogimages);
+                imagesDTO.add(image);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        blogsDTO.setBlogimages(imagesDTO);
+
+        return blogsDTO;
     }
 
 
@@ -637,4 +738,101 @@ public class ServiceProvidersController {
         return imageBytesList;
     }
 
+    @GetMapping("auth/getBlogimages/{id}")
+    public List<byte[]> getBlogimages(@PathVariable Long id) throws IOException {
+        String imageDirectory = "src/main/resources/static/images/blogs";
+
+        String[] imageNames = serviceProviderService.getBlogImages(id).split(",");
+//        imageNames = adImages.split(",");
+        List<byte[]> imageBytesList = new ArrayList<>();
+
+        for (String imageName : imageNames) {
+            byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
+            imageBytesList.add(imageBytes);
+        }
+        System.out.println(imageBytesList);
+
+        return imageBytesList;
+    }
+
+    @GetMapping("auth/getJobImages/{id}")
+    public List<byte[]> getJobImages(@PathVariable Long id) throws IOException {
+        String imageDirectory = "src/main/resources/static/images/jobImages";
+
+        String[] imageNames = serviceProviderService.getJobImages(id).split(",");
+
+        List<byte[]> imageBytesList = new ArrayList<>();
+
+        for (String imageName : imageNames) {
+            byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
+            imageBytesList.add(imageBytes);
+        }
+
+        System.out.println(imageBytesList);
+
+        return imageBytesList;
+    }
+
+    @PutMapping("auth/addQuotationPdf/{id}")
+    public Jobs addQuotationPdf(@RequestParam("file") MultipartFile quotationfile, @PathVariable Long id) {
+        // Load the Jobs entity by ID
+        Optional<Jobs> jobOptional = jobsRepository.findById(id);
+        Jobs job = jobOptional.orElse(null);
+
+        String uploadDirectory = "src/main/resources/static/images/quotation";
+
+        String savedquotationfile="";
+
+        if (quotationfile != null && !quotationfile.isEmpty()) {
+            try {
+                savedquotationfile = imageService.saveImageToStorageServiceProvider(uploadDirectory, quotationfile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        job.setQuotationpdf(savedquotationfile);
+
+        return serviceProviderService.addQuotationPdf(job);
+    }
+
+    @PostMapping("auth/generateTodoList/{jobId}")
+    public TodoList generateTodoList(@PathVariable Long jobId,
+                                     @RequestParam("serviceproviderid") Long serviceproviderid,
+                                     @RequestParam("customerid") Long customerid) {
+        // Load the Users (service provider) entity by ID
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
+
+        // Load the Users (customer) entity by ID
+        Optional<Users> customerOptional = userRepository.findById(customerid);
+        Users customer = customerOptional.orElse(null);
+
+        // Load the Jobs entity by ID
+        Optional<Jobs> jobOptional = jobsRepository.findById(jobId);
+        Jobs job = jobOptional.orElse(null);
+
+        // Create a TodoList entity
+        TodoList todoList = new TodoList();
+        todoList.setJob(job);
+        todoList.setCustomer(customer);
+        todoList.setServiceprovider(serviceProvider);
+
+        // Save the TodoList entity
+        return serviceProviderService.generateTodoList(todoList);
+    }
+
+    @GetMapping("auth/isExistTodoList/{jobId}")
+    public boolean isExistTodoList(@PathVariable Long jobId) {
+        // Load the Jobs entity by ID
+        Optional<Jobs> jobOptional = jobsRepository.findById(jobId);
+        Jobs job = jobOptional.orElse(null);
+
+        return serviceProviderService.isExistTodoList(job);
+    }
+
+    @GetMapping("auth/getTodoListIdByJobId/{jobId}")
+    public Long getTodoListIdByJobId(@PathVariable Long jobId) {
+        return todoListRepository.getTodoListIdByJobId(jobId);
+    }
 }

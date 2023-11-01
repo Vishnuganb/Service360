@@ -23,6 +23,10 @@ public class CComplaintsController {
     public List<Complaints> ViewComplaints() {
         return cComplaintsService.viewcomplaints();
     }
+    @GetMapping("/viewcomplaintsbyuserid/{userid}")
+    public List<Complaints> Viewcomplaintsbyuserid(@PathVariable Long userid) {
+        return cComplaintsService.viewcomplaintsbyuserid(userid);
+    }
 
     @GetMapping("/viewcomplaints/{id}") // Updated the URL mapping to include the ID
     public Complaints viewComplaintsById(@PathVariable Long id) {

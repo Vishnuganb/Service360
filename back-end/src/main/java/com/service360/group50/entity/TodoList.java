@@ -19,22 +19,29 @@ import java.util.List;
 
 public class TodoList {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(updatable = false)
     private Long todolistid;
 
-    //customer id
-    //service provider id
-//    @ManyToMany(mappedBy = "todolist")
-//    private List<Users> users;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "userid")
+    private Users customer;
+
+    @ManyToOne
+    @JoinColumn(name = "service_provider_id", referencedColumnName = "userid")
+    private Users serviceprovider;
 
     //job id
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "jobid")
-    private Jobs jobs;
+    private Jobs job;
 
-    //vacancy id
-    @OneToOne
-    @JoinColumn(name = "vacancyid")
-    private Vacancies vacancies;
+    @Column( columnDefinition = "TEXT")
+    private String status;
+
+    @PrePersist
+    public void prePersist() {
+        this.status = "ongoing";
+    }
+
 }

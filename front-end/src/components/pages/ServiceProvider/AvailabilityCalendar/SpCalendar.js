@@ -155,15 +155,23 @@ function SpCalendar() {
         return <>{week}</>;
     };
 
+    // GETTING LOGGED IN SERVICEPROVIDER ID
+
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
+
     const handleSchedule = () => {
         const newScheduleData = {
             ...scheduleFormData,
-            serviceproviderid: 1,         //NEED TO ADD LOGGED IN SP ID
+            serviceproviderid: userData.userid,
         };
 
-        axios.post('http://localhost:8080/auth/createServiceProviderCalendar', newScheduleData).then((response) => {
+        axios.post(`http://localhost:8080/auth/createServiceProviderCalendar?serviceproviderid=${userData.userid}`, newScheduleData).then((response) => {
             console.log('Schedule created successfully:', response.data);
             handleClose();
+            const updatedSchedules = [...selectedSchedules, response.data]; // Assuming the response data contains the newly created event
+            setSelectedSchedules(updatedSchedules);
+            
             refreshCalendarData();
         })
             .catch((error) => {
@@ -203,7 +211,11 @@ function SpCalendar() {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:8080/auth/viewServiceProviderCalendar').then((res) => {
+        axios.get('http://localhost:8080/auth/viewServiceProviderCalendar',{
+            params: {
+                serviceproviderid: userData.userid
+            }
+        }).then((res) => {
             console.log(res.data);
             setViewServiceProviderCalendarData(res.data);
         });

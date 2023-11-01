@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Card from "react-bootstrap/Card";
 import { Row } from 'react-bootstrap';
 import '../../../../style/Customer/CustomerDashboard.css'
@@ -13,6 +13,7 @@ import ServiceProvider2 from '../../../../assets/images/Customer/ServiceProvider
 import ServiceProvider3 from '../../../../assets/images/Customer/ServiceProvider3.jpg';
 import { AuthenticationContext } from './../../../../ContextFiles/Authentication/AuthenticationContextProvider';
 import { useLocation } from "react-router-dom";
+import axios from 'axios';
 
 function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
     const [show, setShow] = useState(false);
@@ -46,7 +47,7 @@ function ProjectPopup({ title, serviceProvider, dueDate, imageSrc, }) {
                     </center>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Link to={`/Customer/ViewServiceProvider`}>
+                    <Link to={`/customer/ViewServiceProvider`}>
                         <Button variant='secondary' style={{ background: "#292d32" }}>
                             View Profile
                         </Button></Link>
@@ -88,7 +89,7 @@ function HiredPopup({ title, serviceProvider, durationPeriod, imageSrc, }) {
                 </Modal.Body>
                 <Modal.Footer>
 
-                    <Link to={`/Customer/ViewServiceProvider`}>
+                    <Link to={`/customer/ViewServiceProvider`}>
                         <Button variant='secondary' style={{ background: "#292d32" }}>
                             View Profile
                         </Button></Link>
@@ -132,7 +133,7 @@ function PastPopup({ title, serviceProvider, dueDate, imageSrc }) {
                 </Modal.Body>
                 <Modal.Footer>
 
-                    <Link to={`/Customer/ViewServiceProvider`}>
+                    <Link to={`/customer/ViewServiceProvider`}>
                         <Button variant='secondary' style={{ background: "#292d32" }}>
                             View Profile
                         </Button></Link>
@@ -141,7 +142,6 @@ function PastPopup({ title, serviceProvider, dueDate, imageSrc }) {
         </>
     );
 }
-
 
 const Delete = () => {
     const [show, setShow] = useState(false);
@@ -217,60 +217,61 @@ const Delete = () => {
     );
 };
 
+const response = sessionStorage.getItem('authenticatedUser');
+const userData = JSON.parse(response);
+
 const CustomerDashboard = () => {
+
+    const [ongoingjobs,setOngoingjobs] = useState([]);
+
+    useEffect(() => {
+        const response = axios.get(`http://localhost:8080/auth/ongoingJobsCustomer/${userData.userid}`).then((res) => {
+            console.log(res.data);
+            setOngoingjobs(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
     return (
         <div className="row ps-lg-5 pe-lg-5 pt-lg-5" style={{ backgroundImage: `url(${BgImage})` }}>
 
             <div className="col-12">
-                <div style={{ padding: '10px' }}><h4>Welcome back !</h4></div>
+                <div style={{ padding: '10px'}}><h4>Welcome back !</h4></div>
                 <div className='d-flex flex-column flex-lg-row flex-md-row '>
                     <div className="d-flex flex-row col-7">
-                        <Card className="card-cus-dashboard dashboard-button-1" style={{ width: "255px" }}>
+                        <Card className="card-cus-dashboard dashboard-button-1" style={{ width: "240px",  marginRight: "20px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ViewVacancy`}>
-                                <Card.Body >
-                                    <Card.Title>8</Card.Title>
-                                    <Card.Text className="card-body-container">
+                                <Card.Body classname = "pendingvacancy">
+                                    <Card.Title style={{ fontSize: '30px', paddingTop: '5px', fontWeight: "bold", marginLeft: '85px'}}>8</Card.Title>
+                                    <Card.Text className="card-body-container" style={{ fontSize: '20px', marginTop: '-10px', marginLeft: '10px' }}>
                                         Pending vacancy
-                                        <i className="bi bi-rocket-takeoff"></i>
+                                        <i className="bi bi-rocket-takeoff" style={{fontSize:'30px', marginLeft:'-50px', padding: '5px'}} ></i>
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
                         </Card>
-                        &nbsp; &nbsp; &nbsp;
-                        <Card className="card-cus-dashboard dashboard-button-2" style={{ width: "255px" }}>
+                        {/* &nbsp; &nbsp; &nbsp; */}
+                        <Card className="card-cus-dashboard dashboard-button-2" style={{ width: "240px" }}>
                             <Link style={{ color: 'Black' }} to={`/customer/ReceivedQuotation`}>
                                 <Card.Body>
-                                    <Card.Title>3</Card.Title>
-                                    <Card.Text className="card-body-container">
+                                    <Card.Title style = {{fontSize: '30px', paddingTop: '5px', fontWeight: "bold", margin: '0', marginLeft: '85px'}}>3</Card.Title>
+                                    <Card.Text className="card-body-container" style={{fontSize: '20px', marginTop: '-10px', marginLeft: '10px' }}>
                                         New Quotation
-                                        <i className="bi bi-file-post-fill"></i>
+                                            <i className="bi bi-file-post-fill" style={{fontSize:'30px', marginLeft:'-50px', padding: '5px'}} ></i>
+                                    
                                     </Card.Text>
                                 </Card.Body>
                             </Link>
                         </Card>
                     </div>
-
-                    <div className="d-flex d-md-flex d-lg-flex col-2 col-md-2 col-lg-4 responsiveCalendar_cus" >
-                        <ResponsiveCalendar />
-                    </div>
-
                 </div>
-
+                
+                <br></br>
                 <div className='Onpro'> <h3>Ongoing Projects</h3></div>
                 <Row>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Tiles fitting
-                                {/* <p>Due date: 20/08/2023</p> */}
-                                <ProjectPopup title="Tile fitting"
-                                    serviceProvider="Vinoth Kishan"
-                                    dueDate="2023-08-21"
-                                    imageSrc={ServiceProvider1} />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
+                    
                     <Card className="dashboard-pages">
                         <img className="card-img-top" src={profile_img_2} alt="my profile" />
                         <Card.Body>
@@ -283,51 +284,8 @@ const CustomerDashboard = () => {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Ac Repair
-                                <ProjectPopup title=" Ac Repair"
-                                    serviceProvider="Ashwin Kumar"
-                                    dueDate="2023-08-20"
-                                    imageSrc={ServiceProvider3} />
-
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Capentry
-                                <ProjectPopup title="Capentry"
-                                    serviceProvider="Ashwin Kumar"
-                                    dueDate="2023-08-28" />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-
                 </Row>
                 <br></br>
-                {/* <div className='Onpro'> <h3>Hired </h3></div>
-                <Row>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Electrician
-                                <HiredPopup title="Electrician"
-                                    serviceProvider="Alex Kumar"
-                                    durationPeriod="2 years"
-                                    imageSrc={ServiceProvider2} />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-
-
-                </Row>
-                <br></br> */}
                 <div className='Onpro'> <h3>Past Projects</h3></div>
                 <Row>
                     <Card className="dashboard-pages">
@@ -342,19 +300,6 @@ const CustomerDashboard = () => {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card className="dashboard-pages">
-                        <img className="card-img-top" src={profile_img_2} alt="my profile" />
-                        <Card.Body>
-                            <Card.Text>
-                                Plumbing
-                                <PastPopup title="Plumbing"
-                                    serviceProvider="Alex Kumar"
-                                    dueDate="2023-05-31"
-                                    imageSrc={ServiceProvider2} />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-
                 </Row>
                 <br></br>
 

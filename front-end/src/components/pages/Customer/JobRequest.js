@@ -1,19 +1,53 @@
-import React from 'react';
-import { Col } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import '../../../style/Customer/JobRequestform.css';
 import BgImage from '../../../assets/images/header/Background.png';
-import { BsCloudUpload } from 'react-icons/bs';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import places from '../../loginForm/cities-by-district.json';
+import axios from 'axios';
 
 function Quotation() {
     const navigate = useNavigate();
     const handleBackClick = () => {
         navigate(-1);
     };
+
+    const [selectedLocation, setSelectedLocation] = useState('');
+    const [selectedService, setSelectedService] = useState('');
+    const [servicesData, setServicesData] = useState({});
+
+    const handleLocationChange = (event) => {
+        setSelectedLocation(event.target.value);
+    };
+
+    const handleServiceChange = (event) => {
+        setSelectedService(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // You can access selectedLocation and selectedService here and submit your data
+    };
+
+    //for service
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/auth/services");
+                const data = response.data;
+                setServicesData(data);
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const categories = Object.keys(servicesData);
     return (
-        <div className='card2' >
+        <div className="card2">
             <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
                 <div className="back-icon">
                     <i className="bi bi-arrow-left-circle-fill fs-3"></i>
@@ -23,21 +57,29 @@ function Quotation() {
                 </div>
             </div>
             <div className="VacancyForm-container" style={{ backgroundImage: `url(${BgImage})` }}>
-
                 <h3>Request for Job</h3>
                 <br></br>
-                <form className="vacancy-form">
+                <form className="vacancy-form" onSubmit={handleSubmit}>
                     <div className="vacancy-form-group">
-                        <Row><Col className="col-4">
-                            <label for="title">Title <span style={{ color: "red" }}>&nbsp;*</span> </label></Col>
-                            <Col className="col-6"><input type="text" name="title" className="form-control" id="title" placeholder="Enter the title" /></Col>
+                        <Row>
+                            <Col className="col-4">
+                                <label htmlFor="title">Title <span style={{ color: "red" }}>*</span></label>
+                            </Col>
+                            <Col className="col-6">
+                                <input type="text" name="title" className="form-control" id="title" placeholder="Enter the title" />
+                            </Col>
                         </Row>
                     </div>
                     <div className="vacancy-form-group">
-                        <label for="description">Description <span style={{ color: "red" }}>&nbsp;*</span> </label>
-                        <input type="text" name="description" className="form-control" id="description" placeholder="Enter your job details here" />
+                        <Row>
+                            <Col className="col-4">
+                                <label htmlFor="description">Description <span style={{ color: "red" }}>*</span></label>
+                            </Col>
+                            <Col className="col-6">
+                                <textarea type="text" name="description" className="form-control" id="description" placeholder="Enter your job details here" />
+                            </Col>
+                        </Row>
                     </div>
-
                     <div className="vacancy-form-group">
                         <Row>
                             <Col className="col-4">
@@ -45,35 +87,27 @@ function Quotation() {
                             </Col>
                             <Col className="col-6">
                                 <Form.Group className="mb-3">
-                                    <Form.Select id="disabledSelect" className="select-small-text" defaultValue="">
-                                        <option value="" disabled>Select a location</option>
-                                        <option value="Ampara">Ampara</option>
-                                        <option value="Anuradhapura">Anuradhapura</option>
-                                        <option value="Badulla">Badulla</option>
-                                        <option value="Batticaloa">Batticaloa</option>
-                                        <option value="Colombo">Colombo</option>
-                                        <option value="Galle">Galle</option>
-                                        <option value="Gampaha">Gampaha</option>
-                                        <option value="Hambantota">Hambantota</option>
-                                        <option value="Jaffna">Jaffna</option>
-                                        <option value="Kalutara">Kalutara</option>
-                                        <option value="Kandy">Kandy</option>
-                                        <option value="Kegalle">Kegalle</option>
-                                        <option value="Kilinochchi">Kilinochchi</option>
-                                        <option value="Kurunegala">Kurunegala</option>
-                                        <option value="Mannar">Mannar</option>
-                                        <option value="Matale">Matale</option>
-                                        <option value="Matara">Matara</option>
-                                        <option value="Monaragala">Monaragala</option>
-                                        <option value="Mullaitivu">Mullaitivu</option>
-                                        <option value="Nuwara Eliya">Nuwara Eliya</option>
-                                        <option value="Polonnaruwa">Polonnaruwa</option>
-                                        <option value="Puttalam">Puttalam</option>
-                                        <option value="Ratnapura">Ratnapura</option>
-                                        <option value="Trincomalee">Trincomalee</option>
-                                        <option value="Vavuniya">Vavuniya</option>
+                                    <Form.Select
+                                        id="locationSelect"
+                                        className="select-small-text"
+                                        onChange={handleLocationChange}
+                                        value={selectedLocation}
+                                    >
+                                        <option value="" disabled hidden>
+                                            Select Location
+                                        </option>
+                                        {Object.keys(places).map((location, index) => (
+                                            <optgroup label={location} key={index}>
+                                                {places[location].cities.map((city, subIndex) => (
+                                                    <option key={`${index}-${subIndex}`} value={city}>
+                                                        {city}
+                                                    </option>
+                                                ))}
+                                            </optgroup>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
+
                             </Col>
                         </Row>
                     </div>
@@ -85,23 +119,24 @@ function Quotation() {
                             </Col>
                             <Col className="col-6">
                                 <Form.Group className="mb-3">
-                                    <Form.Select id="disabledSelect" className="select-small-text" defaultValue="">
-                                        <option value="" disabled>Select a service</option>
-                                        <option value="Carpentry">Carpentry</option>
-                                        <option value="Painting">Painting</option>
-                                        <option value="AC_Repair">AC Repair</option>
-                                        <option value="Electrical_Wiring">Electrical Wiring</option>
-                                        <option value="Plumbing">Plumbing</option>
-                                        <option value="Masonry">Masonry</option>
-                                        <option value="Tiles_Fitting">Tiles Fitting</option>
-                                        <option value="Iron_Works">Iron Works</option>
-                                        <option value="Glass_Aluminum">Glass Aluminum</option>
-                                        <option value="CCTV_Repair">CCTV Repair</option>
-                                        <option value="Fire_Alarm">Fire Alarm</option>
-                                        <option value="Video_Surveillance">Video Surveillance</option>
-                                        <option value="Sofa_cleaning">Sofa cleaning</option>
-                                        <option value="Carpet_cleaning">Carpet cleaning</option>
-                                        <option value="none">None</option>
+                                    <Form.Select style={{margin:'0'}}
+                                        id="serviceSelect"
+                                        className="select-small-text"
+                                        onChange={handleServiceChange}
+                                        value={selectedService}
+                                    >
+                                        <option value="" disabled hidden>
+                                            Select Service
+                                        </option>
+                                        {categories.map((category, categoryIndex) => (
+                                            <optgroup >
+                                                {servicesData[category].map((service, serviceIndex) => (
+                                                    <option key={`${categoryIndex}-${serviceIndex}`} value={service}>
+                                                        {service}
+                                                    </option>
+                                                ))}
+                                            </optgroup>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
@@ -109,25 +144,30 @@ function Quotation() {
                     </div>
 
                     <div className="vacancy-form-group">
-                        <label for="file" >Upload image of need</label>
-                        <input type="file" name="file" className="form-control" id="file" />
+                        <Row>
+                            <Col className="col-4">
+                                <label htmlFor="file">Upload image of need</label>
+                            </Col>
+                            <Col className="col-6">
+                                <input type="file" name="file" className="form-control" id="file" />                            
+                            </Col>
+                        </Row>
                     </div>
-
+                    
                     <Row className="vacancy-form-group-buttons mt-3">
                         <Col>
-                            <input type="Submit" value="Send" className="btn btn-vacancy-form-k" />
+                            <input type="submit" value="Send" className="btn btn-vacancy-form-k" />
                         </Col>
                         <Col>
-                            <a id="cancel-link" href="#"><button>Cancel</button></a>
+                            <a id="cancel-link" href="#">
+                                <button>Cancel</button>
+                            </a>
                         </Col>
                     </Row>
                 </form>
-            </div></div>
+            </div>
+        </div>
     );
-
-
-
-};
+}
 
 export default Quotation;
-

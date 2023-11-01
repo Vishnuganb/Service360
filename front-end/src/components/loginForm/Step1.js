@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import cityData from './cities-by-district.json';
 
 const StyledButton = styled.button`
     background-color: #292D32; 
@@ -24,12 +25,16 @@ const Step1 = ({
     nicNumber,
     contactNumber,
     address,
+    district,
+    city,
     emailErrorMessage,
     firstNameErrorMessage,
     lastNameErrorMessage,
     nicNumberErrorMessage,
     contactNumberErrorMessage,
-    addressErrorMessage
+    addressErrorMessage,
+    districtErrorMessage,
+    cityErrorMessage,
   },
   handleChange,
   handleNextClick,
@@ -128,6 +133,44 @@ const Step1 = ({
             required
           />
           {addressErrorMessage && <p className="text-danger p-0 m-0">{addressErrorMessage}</p>}
+        </div>
+      </div>
+
+      <div className="justify-content-between mb-3 d-flex">
+        <div className='me-0 col-xs-6'>
+          <p className="mb-0">Select the District<span style={{ color: 'red' }}>*</span></p>
+          <select 
+            className="form-select"
+            value={district}
+            onChange={(e) => handleChange('district', e.target.value)}
+            required
+          >
+            <option value="">Select District</option>
+            {Object.keys(cityData).map((district) => (
+              <option key={district} value={district}>
+                {district}
+              </option>
+            ))}
+          </select>
+          {districtErrorMessage && <p className="text-danger p-0 m-0">{districtErrorMessage}</p>}
+        </div>
+
+        <div className='col-xs-5'>
+          <p className="mb-0">Select the city<span style={{ color: 'red' }}>*</span></p>
+          <select
+            className="form-select"
+            value={city}
+            onChange={(e) => handleChange('city', e.target.value)}
+            required
+          >
+            <option value="">Select the corresponding City</option>
+            {district && cityData[district].cities.map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+          {cityErrorMessage && <p className="text-danger p-0 m-0">{cityErrorMessage}</p>}
         </div>
       </div>
 

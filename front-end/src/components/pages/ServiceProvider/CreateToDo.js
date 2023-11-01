@@ -1,231 +1,218 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import '../../../style/Customer/ToDoForm.css';
-import { Row, Col } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
-
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState, useEffect } from 'react';
+import { Modal,Button } from 'react-bootstrap';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function ToDoList() {
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
-    const [dueDate, setDueDate] = useState(null);
-    const [reminderDate, setReminderDate] = useState(null);
-    const [editingTaskId, setEditingTaskId] = useState(null);
-    const [editingText, setEditingText] = useState('');
+    const [taskAmount, setTaskAmount] = useState('');
+    const [hourInputs, setHourInputs] = useState({});
+    const [paymentStatus, setPaymentStatus] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
-    const handleAddTask = () => {
+    const navigate = useNavigate();
+    const handleBackClick = () => {
+      navigate(-1);
+    };
+
+    const { id } = useParams();
+    const todolistid = parseInt(id, 10);
+
+    useEffect(() => {
+        fetchTasks(); // Load tasks when the component mounts
+    }, []);
+
+    // useEffect = (() =>{
+    //     console.log('"taskAmount"')
+    // }, [])
+
+    const fetchTasks = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/auth/viewTodoListDetails');
+            if (response.status === 200) {
+                setTasks(response.data);
+                console.log(tasks);
+            } else {
+                console.error('Failed to fetch tasks.');
+            }
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    };
+
+    useEffect(() => {
+        const response = axios.get(`http://localhost:8080/auth/getTodoListPaymentStatus/${todolistid}`).then((res) => {
+            console.log(res.data);
+            setPaymentStatus(res.data);
+        });        
+    }, []);
+
+    const handleAddTask = async () => {
         if (taskInput.trim() === '') {
-            alert("Please enter a task before adding.");
-            return; // Return early if no task is entered
+            alert('Please enter a task before adding.');
+            return;
         }
 
-        if (dueDate === null) {
-            alert("Please select a due date before adding.");
-            return; // Return early if no due date is selected
-        }
-
-        if (reminderDate === null) {
-            alert("Please select a reminder date and time before adding.");
-            return; // Return early if no reminder date is selected
-        }
-
-        setTasks([
-            ...tasks,
-            {
-                id: Date.now(),
-                text: taskInput,
+        try {
+            const response = await axios.post(`http://localhost:8080/auth/createTodoListDetails/${todolistid}`, {
+                task: taskInput,
+                amount: taskAmount,
                 completed: false,
-                dueDate: dueDate,
-                reminderDate: reminderDate,
-            },
-        ]);
-        setTaskInput('');
-        setDueDate(null);
-        setReminderDate(null);
+            });
+
+            if (response.status === 200) {
+                fetchTasks(); // Reload tasks
+                setTaskInput('');
+                setTaskAmount(0);
+            } else {
+                alert('Failed to add the task. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error adding task:', error);
+            alert('An error occurred while adding the task. Please try again.');
+        }
     };
 
+    const handleCompletedTask = async () => {
 
-    const isWithintwohrs = (task) => {
-        // const ONE_DAY_IN_MS = 4; 
-        const ONE_DAY_IN_MS = 2 * 60 * 60 * 1000;
-        const taskCreationDate = new Date(task.id);
-        const currentDate = new Date();
-        return currentDate - taskCreationDate <= ONE_DAY_IN_MS;
+        try {
+                const response = await axios.put(`http://localhost:8080/auth/updatetoDoListPaymetStatus/${todolistid}`);
+                window.location.reload();
+        } catch (error) {
+                console.error('Error completing task:', error);
+                alert('Failed to complete the task. Please try again.');
+        }
+        
     };
+    
 
-    const handleToggleComplete = (taskId) => {
-        setTasks(tasks.map((task) =>
-            task.id === taskId ? { ...task, completed: !task.completed } : task
-        ));
-    };
-
-    const handleDeleteTask = (taskId) => {
-        setTasks(tasks.filter((task) => task.id !== taskId));
-    };
-
-    const handleEditTask = (taskId, newText) => {
-        setTasks(tasks.map((task) =>
-            task.id === taskId ? { ...task, text: newText } : task
-        ));
-        setEditingTaskId(null);
-        setEditingText('');
-    };
-
-    const handleEditDueDate = (taskId, newDueDate) => {
-        setTasks(tasks.map((task) =>
-            task.id === taskId ? { ...task, dueDate: newDueDate } : task
-        ));
-    };
-
-    const handleEditReminderDate = (taskId, newReminderDate) => {
-        setTasks(tasks.map((task) =>
-            task.id === taskId ? { ...task, reminderDate: newReminderDate } : task
-        ));
-    };
-
+    const handleToggleComplete = async (todolistdetailsid, completed) => {
+        const formData = new FormData();
+        formData.append('completed', !completed);
+        formData.append('hours', hourInputs[todolistdetailsid]);
+    
+        try {
+            const response = await axios.put(`http://localhost:8080/auth/viewTodoListDetails/${todolistdetailsid}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+    
+            if (response.status === 200) {
+                // Update the task's completion status on the frontend without modifying it
+                const updatedTasks = tasks.map((task) => {
+                    if (task.todolistdetailsid === todolistdetailsid) {
+                        return { ...task, completed: !completed };
+                    } else {
+                        return task;
+                    }
+                });
+                setTasks(updatedTasks);
+            } else {
+                alert('Failed to update the task. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error updating task:', error);
+            alert('An error occurred while updating the task. Please try again.');
+        }
+    };    
+    
     return (
+
         <div className="custodo">
-            <h3>To-Do List</h3>
-            <h4>Project Name : Tile Fitting</h4>
-            <div>
-                <div style={{ display: "flex" }}>
-                    <input
-                        type="text"
-                        placeholder="Enter a task..."
-                        value={taskInput}
-                        onChange={(e) => setTaskInput(e.target.value)}
-                        style={{ marginBottom: "10px", width: "600px" }}
-                    />
-                    <DatePicker
-                        selected={dueDate}
-                        onChange={(date) => setDueDate(date)}
-                        placeholderText="Select due date "
-                        dateFormat="yyyy-MM-dd"
-                        style={{ width: "80px" }} // Adjust the width as needed
-                        minDate={new Date()} // Set minimum selectable date to today
+            
+            {showModal && (
+                <Modal show={showModal} onHide={() => setShowModal(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Confirmation</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to mark this project as completed?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowModal(false)}>
+                            No
+                        </Button>
+                        <Button variant="primary" onClick={handleCompletedTask}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            )}
 
-                    />
-                    <DatePicker
-                        selected={reminderDate}
-                        onChange={(date) => setReminderDate(date)}
-                        placeholderText="Select reminder"
-                        dateFormat="yyyy-MM-dd HH:mm" // Display both date and time
-                        showTimeSelect // Enable time selection
-                        timeFormat="HH:mm" // Time format
-                        timeIntervals={15} // Set time intervals in minutes
-                        style={{ width: "200px" }} // Adjust the width as needed
-                        minDate={new Date()} // Set minimum selectable date to today
-
-                    />
-
+            <h2>To-Do List</h2>
+            <div >
+            <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-65px', maxWidth: '110px', fontWeight:600, float:'right' }}>
+                <i className="bi bi-arrow-left-circle-fill fs-3"></i>
+                <p className="m-0 p-0 fs-5" style={{color:"black"}}>&nbsp; Back</p>
+            </span>
+            {paymentStatus == 'ongoing' && (
+                <div className='border border-2 rounded p-3'>
+                        <div style={{ display: "flex"}}>
+                            <input
+                                type="text"
+                                placeholder="Enter a task..."
+                                value={taskInput}
+                                onChange={(e) => setTaskInput(e.target.value)}
+                                style={{ marginBottom: "10px", borderRadius:'10px'}}
+                            />
+                        </div>
+                        <div style={{ display: "flex" }}>
+                            <input
+                                type="text"
+                                placeholder="Enter an Amount..."
+                                value={taskAmount}
+                                onChange={(e) => setTaskAmount(e.target.value)}
+                                style={{ marginBottom: "10px", width: "250px", borderRadius:'10px' }} 
+                            />
+                        </div>
+                        <Button variant="secondary" style={{ background: "#292d32" }} onClick={handleAddTask}>Add Task</Button>
+                        {tasks.every(task => task.completed) && (
+                            <Button variant="secondary" style={{ background: "#292d32", float:"right"}} onClick={() => setShowModal(true)}>Project Completed</Button>
+                        )}
                 </div>
+            )}
 
-
-                <Button variant="secondary" style={{ background: "#292d32" }} onClick={handleAddTask}>Add Task</Button>
+                <ul>
+                {tasks.map((task, index) => (
+    <li key={index} className="castodolist card" style={{ padding: '10px'}}>
+       <div>
+            <input
+                    type="checkbox"
+                    onChange={() => {
+                        if (!task.completed) {
+                            handleToggleComplete(task.todolistdetailsid, !task.completed);
+                            // Reload the page
+                             window.location.reload();
+                        }
+                        
+                    }}
+                    checked={task.completed}
+                    
+            />
+            <span className={task.completed ? 'completed' : ''}>
+                &nbsp;&nbsp;
+                {task.task}
+            </span>
+            <br></br>
+            <br></br>
+            <span className={task.completed ? 'completed' : ''}>
+                &nbsp;&nbsp;Amount: Rs.
+                {task.amount}
+            </span>
+            &nbsp;&nbsp;
+            <input
+    type="text"
+    placeholder="Enter hours..."
+    value={task.completed ? task.workedHours.toString() : (hourInputs[task.todolistdetailsid] || '')}
+    onChange={(e) => setHourInputs({ ...hourInputs, [task.todolistdetailsid]: e.target.value })}
+    style={{ margin: "8px", width: "150px", marginRight: "1000px", height: "35px", borderRadius:'5px' }}
+/>
+        </div>
+    </li>
+))}
+                </ul>
             </div>
-            <ul>
-                {tasks.map((task) => (
-                    <li key={task.id} className="castodolist card" style={{ padding: '10px' }}>
-                        <Row>
-                            <Col>
-                                <input
-                                    type="checkbox"
-                                    checked={task.completed}
-                                    onChange={() => handleToggleComplete(task.id)}
-                                    disabled
-                                />
-                                &nbsp;&nbsp;
-                                {editingTaskId === task.id ? (
-                                    <input
-                                        type="text"
-                                        value={editingText}
-                                        onChange={(e) => setEditingText(e.target.value)}
-                                    />
-                                ) : (
-                                    <span
-                                        className={task.completed ? 'completed' : ''}
-                                    >
-                                        {task.text}
-                                    </span>
-                                )}
-                            </Col>
-
-                        </Row>
-
-
-                        <Row>
-                            <Col>
-                                {editingTaskId === task.id ? (
-                                    <DatePicker
-                                        selected={task.dueDate}
-                                        onChange={(date) => handleEditDueDate(task.id, date)}
-                                        placeholderText="Select due date"
-                                        dateFormat="yyyy-MM-dd"
-                                    />
-                                ) : (
-                                    <span>Due Date: {task.dueDate ? task.dueDate.toDateString() : 'Not set'}</span>
-                                )}
-                            </Col>
-                            <Col>
-                                {editingTaskId === task.id ? (
-                                    <DatePicker
-                                        selected={task.reminderDate}
-                                        onChange={(date) => handleEditReminderDate(task.id, date)}
-                                        placeholderText="Select reminder date"
-                                        dateFormat="yyyy-MM-dd"
-                                    />
-                                ) : (
-                                    <span>Reminder Date: {task.reminderDate ? task.reminderDate.toDateString() : 'Not set'}</span>
-                                )}
-                                &nbsp; &nbsp;
-                                {editingTaskId === task.id ? (
-                                    <Button variant="secondary" style={{ background: "#292d32" }} onClick={() => handleEditTask(task.id, editingText)}>Save</Button>
-                                ) : (
-                                    isWithintwohrs(task) && (
-                                        <>
-                                            <Button variant="btn btn-viewvacancy-form-t" style={{
-                                                width: '5%',
-                                                height: '20px',
-                                                border: '1px solid #ced4da',
-                                                fontSize: '14px',
-                                                padding: '0 3px',
-                                                backgroundColor: '#007bff',
-                                                color: '#fff',
-                                                fontWeight: '500',
-                                                textTransform: 'none',
-                                                background: 'black',
-                                                '@media (max-width: 768px)': {
-                                                    width: '100%',
-                                                }
-                                            }} onClick={() => setEditingTaskId(task.id)} >
-                                                <i className="my-customer-table-icon bi bi-pen h7"></i>
-                                            </Button>
-                                            &nbsp;&nbsp;<Button variant="btn btn-viewvacancy-form-t" style={{
-                                                width: '5%',
-                                                height: '20px',
-                                                border: '1px solid #ced4da',
-                                                fontSize: '14px',
-                                                padding: '0 3px',
-                                                backgroundColor: '#007bff',
-                                                color: '#fff',
-                                                fontWeight: '500',
-                                                textTransform: 'none',
-                                                background: 'black',
-                                                '@media (max-width: 768px)': {
-                                                    width: '100%',
-                                                }
-                                            }} onClick={() => handleDeleteTask(task.id)} >
-                                                <i className="my-customer-table-icon bi bi-trash h7"></i>
-                                            </Button>
-                                        </>
-                                    )
-                                )}
-                            </Col>
-                        </Row>
-                    </li>
-                ))}
-            </ul>
         </div>
     );
 }

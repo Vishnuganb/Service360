@@ -3,13 +3,8 @@ package com.service360.group50.service;
 import com.service360.group50.dto.CategoryDTO;
 import com.service360.group50.dto.ServiceCategoryDTO;
 import com.service360.group50.dto.ServiceWithCategoryDTO;
-import com.service360.group50.entity.ServiceCategory;
-import com.service360.group50.entity.Services;
-import com.service360.group50.entity.TrainingSession;
-import com.service360.group50.entity.Users;
-import com.service360.group50.repo.ServiceCategoryRepository;
-import com.service360.group50.repo.ServiceRepository;
-import com.service360.group50.repo.TrainingSessionRepository;
+import com.service360.group50.entity.*;
+import com.service360.group50.repo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -19,6 +14,8 @@ import org.springframework.util.StreamUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +26,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminService {
 
-
     private final ServiceCategoryRepository serviceCategoryRepository;
     private final ServiceRepository serviceRepository;
     private final TrainingSessionRepository trainingSessionRepository;
+    private final AdsRepository adsRepository;
+    private final SystemReviewRepository systemReviewRepository;
+    private final CComplaintsRepository cComplaintsRepository;
+    private final UserRepository userRepository;
+    private final AdsRepository adRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -259,5 +260,159 @@ public class AdminService {
         existingTrainingSession = trainingSessionRepository.save(existingTrainingSession);
 
         return existingTrainingSession;
+    }
+
+    public Ads updateAdvertisementAcceptStatus ( Long adsId, String status ) {
+        Optional<Ads> existingAdsOptional = adsRepository.findById ( adsId );
+
+        if (existingAdsOptional.isEmpty()) {
+            System.out.println("Ads not found");
+            return null;
+        }
+
+        Ads existingAds = existingAdsOptional.get();
+
+        existingAds.setVerificationStatus (status);
+
+        existingAds = adsRepository.save(existingAds);
+
+        return existingAds;
+    }
+
+    public Ads updateAdvertisementRejectStatus ( Long adsId, String status, String reason ) {
+        Optional<Ads> existingAdsOptional = adsRepository.findById ( adsId );
+
+        if (existingAdsOptional.isEmpty()) {
+            System.out.println("Ads not found");
+            return null;
+        }
+
+        Ads existingAds = existingAdsOptional.get();
+
+        existingAds.setVerificationStatus(status);
+        existingAds.setReason(reason);
+
+        existingAds = adsRepository.save(existingAds);
+
+        return existingAds;
+    }
+
+    public SystemReview updateSelectSystemReview ( Long ratingid, String status ) {
+
+        Optional<SystemReview> existingSystemReviewOptional = systemReviewRepository.findById ( ratingid );
+
+        if (existingSystemReviewOptional.isEmpty()) {
+            System.out.println("System Review not found");
+            return null;
+        }
+
+        SystemReview existingSystemReview = existingSystemReviewOptional.get();
+
+        existingSystemReview.setStatus(status);
+
+        existingSystemReview = systemReviewRepository.save(existingSystemReview);
+
+        return existingSystemReview;
+
+    }
+
+    public Complaints updateComplaintStatus ( Long complaintid, String reply, String status ) {
+
+        Optional<Complaints> existingComplaint =  cComplaintsRepository.findById(complaintid);
+
+        if (existingComplaint.isEmpty()) {
+            System.out.println("Complaint not found");
+            return null;
+        }
+
+        Complaints complaint = existingComplaint.get();
+
+        complaint.setReply(reply);
+        complaint.setComplaintstatus(status);
+
+        complaint = cComplaintsRepository.save(complaint);
+
+        return complaint;
+
+    }
+
+    public Long getTotalCustomers () {
+        long count = userRepository.countByRole(Role.CUSTOMER);
+        System.out.println ( "Total Customers: " + count );
+        return count;
+    }
+
+    public Long getTotalServiceProviders () {
+        return userRepository.countByRole(Role.SERVICEPROVIDER);
+    }
+
+    public Long getTotalAdvertisers () {
+        return userRepository.countByRole(Role.ADVERTISER);
+    }
+
+    public Map<String, Long> getCustomerCountForLast7Days() {
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(6); // 7 days ago
+
+        List<Users> customerRegistrations = userRepository.findAllByRegistrationdateBetween(startDate, endDate)
+                .stream()
+                .filter(user -> user.getRole() == Role.CUSTOMER) // Use == for enum comparison
+                .collect(Collectors.toList());
+
+        Map<String, Long> dailyCounts = new HashMap<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            final LocalDate currentDate = date; // Create a final variable
+            String formattedDate = date.format(dateFormatter);
+            long count = customerRegistrations.stream()
+                    .filter(user -> user.getRegistrationdate().isEqual(currentDate))
+                    .count();
+            dailyCounts.put(formattedDate, count);
+        }
+
+        return dailyCounts;
+    }
+
+    public Map<String, Long> getCustomerCountForLastMonth() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate startDate = currentDate.minusMonths(1).withDayOfMonth(1); // Start of the previous month
+        LocalDate endDate = currentDate.minusMonths(1).withDayOfMonth(startDate.lengthOfMonth()); // End of the previous month
+
+        List<Users> customerRegistrations = userRepository.findAllByRegistrationdateBetween(startDate, endDate)
+                .stream()
+                .filter(user -> user.getRole() == Role.CUSTOMER)
+                .collect(Collectors.toList());
+
+        Map<String, Long> dailyCounts = new HashMap<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            final LocalDate currentDate2 = date;
+            String formattedDate = date.format(dateFormatter);
+            long count = customerRegistrations.stream()
+                    .filter(user -> user.getRegistrationdate().isEqual(currentDate2 ))
+                    .count();
+            dailyCounts.put(formattedDate, count);
+        }
+
+        return dailyCounts;
+    }
+
+
+    public Map<String, Long> getAllAdsCategoryAndCount () {
+        List<Ads> ads = adRepository.findAll();
+        Map<String, Long> adsCategoryAndCount = new HashMap<> ();
+
+        for (Ads ad : ads) {
+            String category = ad.getCategory();
+            if (adsCategoryAndCount.containsKey(category)) {
+                adsCategoryAndCount.put(category, adsCategoryAndCount.get(category) + 1);
+            } else {
+                adsCategoryAndCount.put(category, 1L);
+            }
+        }
+
+        return adsCategoryAndCount;
     }
 }

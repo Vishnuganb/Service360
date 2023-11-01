@@ -20,7 +20,7 @@ import java.time.LocalDate;
 
 public class ServiceProviderCalendar {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column
     private Long eventid;
 

@@ -1,22 +1,16 @@
 import '../../../style/User/ViewAjob.css';
 import Container from 'react-bootstrap/Container';
-import ServiceProvideimg1 from '../../../assets/images/Customer/ServiceProvider1.png';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import UserImg from '../../../assets/images/header/user.jpg';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import JobCard from './JobCard';
-import Customer1 from '../../../assets/images/ServiceProvider/customer1.jpg';
-import Customer2 from '../../../assets/images/ServiceProvider/customer2.jpg';
-import Customer3 from '../../../assets/images/ServiceProvider/customer3.jpg';
-import Customer4 from '../../../assets/images/ServiceProvider/customer4.jpg';
-import Customer5 from '../../../assets/images/ServiceProvider/customer5.jpg';
-
+import axios from 'axios';
 
 function ViewAjob() {
 
@@ -24,67 +18,26 @@ function ViewAjob() {
   const [activePage, setActivePage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
+  const [jobsCardData, setJobsCardData] = useState([]);
+
   const navigate = useNavigate();
   const handleBackClick = () => {
     navigate(-1);
   };
 
-  const jobsCardData = [
-    {
-      avatarImage: Customer1,
-      customername: 'Pranavan',
-      title: 'Tv Repair',
-      subInfo: 'Need to fix Tv and wiring',
-      location: 'Wellawatte',
-      dateposted: '2 days ago',
-      duedate: '2021-08-19',
-    },
-
-    {
-      avatarImage: Customer2,
-      customername: 'Visnugan',
-      title: 'Tiles fitting at House',
-      subInfo: 'Fit tiles for full house',
-      location: 'Dehiwala',
-      dateposted: '6 days ago',
-      duedate: '2021-08-01',
-    },
-    {
-      avatarImage: Customer3,
-      customername: 'Karthikeyan',
-      title: 'Build Wall',
-      subInfo: 'Build a Congrete wall around house',
-      location: 'Colombo',
-      dateposted: '12 day ago',
-      duedateposted: '8 days ago'
-    },
-    {
-      avatarImage: Customer4,
-      customername: 'Mithilan',
-      title: 'House Cleaning',
-      subInfo: 'Fix electrical outlets in the kitchen',
-      location: 'Galle',
-      dateposted: '1 day ago',
-      duedate: '2021-08-02',
-    },
-    {
-      avatarImage: Customer5,
-      customername: 'Naresh',
-      title: 'Build House',
-      subInfo: 'Build a House with five rooms within two month',
-      location: 'Colombo',
-      dateposted: '5 days ago',
-      duedate: '2021-08-12',
-    },
-  ];
-
+  useEffect(() => {
+    axios.get('http://localhost:8080/auth/viewNewJobs').then((res) => {
+        console.log(res.data);
+        setJobsCardData(res.data);
+    });
+  }, []);
 
   const startIndex = (activePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
   const filteredServiceCardData = jobsCardData.filter((cardData) =>
-    cardData.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-    (locationFilter === '' || cardData.location.toLowerCase() === locationFilter.toLowerCase())
+    cardData.jobtitle.toLowerCase().includes(searchQuery.toLowerCase()) &&
+    (locationFilter === '' || cardData.joblocation.toLowerCase() === locationFilter.toLowerCase())
   );
 
   const displayedServiceCards = filteredServiceCardData.slice(startIndex, endIndex);
@@ -111,14 +64,10 @@ function ViewAjob() {
       <div className="bodyPageContainer-SP">
 
         <Row id="bodyPageRow1">
-          <div className="back-button" onClick={handleBackClick} style={{ marginLeft: '120px' }}>
-            <div className="back-icon">
+          <span className="back-button" onClick={handleBackClick} style={{ marginLeft: '120px',maxWidth: '110px' }}>
               <i className="bi bi-arrow-left-circle-fill fs-3"></i>
-            </div>
-            <div className="back-text">
-              <p className="m-0 p-0">Back</p>
-            </div>
-          </div>
+              <p className="m-0 p-0 fs-5">&nbsp; Back</p>
+          </span>
           <div className="ServiceCardContainer col-lg-12 col-md-12 col-sm-12" style={{ overflow: 'auto', height: '50%' }}>
             <div className="search-container">
 
@@ -178,17 +127,17 @@ function ViewAjob() {
             </div>
             <br />
             {displayedServiceCards.map((cardData, index) => (
-              <JobCard
-                key={index}
-                avatarImage={cardData.avatarImage}
-                title={cardData.title}
-                subInfo={cardData.subInfo}
-                location={cardData.location}
-                dateposted={cardData.dateposted}
-                contactNumber={cardData.contactNumber}
-                customername={cardData.customername}
-                duedate={cardData.duedate}
-              />
+                <JobCard
+                  key={index}
+                  avatarImage={cardData.customer.profilePic}
+                  title={cardData.jobtitle}
+                  subInfo={cardData.jobdescription}
+                  location={cardData.joblocation}
+                  dateposted={cardData.posteddate}
+                  contactNumber={cardData.customer.phonenumber}
+                  customername={cardData.customer.firstname}
+                  duedate={cardData.duedate}
+                />
             ))}
           </div>
         </Row>

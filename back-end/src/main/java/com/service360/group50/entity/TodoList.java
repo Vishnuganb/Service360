@@ -35,4 +35,13 @@ public class TodoList {
     @ManyToOne
     @JoinColumn(name = "jobid")
     private Jobs job;
+
+    @Column( columnDefinition = "TEXT")
+    private String status;
+
+    @PrePersist
+    public void prePersist() {
+        this.status = "ongoing";
+    }
+
 }

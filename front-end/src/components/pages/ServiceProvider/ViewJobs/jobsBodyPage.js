@@ -250,7 +250,7 @@ function JobsBodyPage() {
                         <div className="view-jobs-card-footer d-flex flex-row justify-content-between mx-sm-2 mb-sm-2 mt-md-0 mt-4">
                             
                             <Link to={`../ViewAJob/${job.jobid}` } className='ms-lg-5'>
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
+                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"#50555c"}}>
                                     <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-eye"></i>
                                     </span>
@@ -259,7 +259,7 @@ function JobsBodyPage() {
                             </Link> 
 
                             <div className='me-lg-5'>
-                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(20, 120, 80)"}} onClick={() => openShareModal(job)}>
+                                <button type="button" class="btn view-jobs-page-btn-labeled job-card-footer-btn" id="job-card-footer-btn-view" style={{color:"white",backgroundColor:"#808080"}} onClick={() => openShareModal(job)}>
                                     <span class="view-jobs-page-btn-label">
                                     <i class="bi bi-share"></i>
                                     </span>
@@ -328,7 +328,7 @@ function JobsBodyPage() {
                     <div className='vacancy-card-footer d-flex flex-row justify-content-between mb-sm-2 mx-auto mt-md-0 mt-1 mb-2'>
 
                         <Link to={`../ViewAVacancy/${vacancy.vacancyid}` }>
-                            <button type="button" class="btn view-jobs-page-btn-labeled vacancy-card-footer-btn" id="vacancy-card-footer-btn-view" style={{color:"white",backgroundColor:"rgb(11, 133, 160)"}}>
+                            <button type="button" class="btn view-jobs-page-btn-labeled vacancy-card-footer-btn" id="vacancy-card-footer-btn-view" style={{color:"white",backgroundColor:"grey"}}>
                                 <span class="view-jobs-page-btn-label">
                                 <i class="bi bi-file-earmark-plus"></i>
                                 </span>

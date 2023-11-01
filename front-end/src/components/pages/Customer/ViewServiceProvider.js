@@ -54,29 +54,35 @@ function ViewServiceProvider() {
 
   const [serviceProvider, setServiceProvider] = useState({});
 
-  const getServiceProvider=async()=>{
-    const data=await axios.get("http://localhost:8080/auth/details")
-    const filteredData = data.data.filter(item => item.userid == id);
-    setServiceProvider(filteredData[0])
-
-  }
+  const getServiceProvider = async () => {
+    try {
+      const data = await axios.get("http://localhost:8080/auth/details");
+      const filteredData = data.data.filter(item => item.userid == id);
+      setServiceProvider(filteredData[0]);
+    } catch (error) {
+      console.error("Error fetching service provider data: ", error);
+    }
+  };
+  
 
   useEffect(() => {
     getServiceProvider();
-  });
+  }, []);  
 
   useEffect(() => {
-    axios.get('http://localhost:8080/auth/viewServiceProviderBlogs',{
-      params:{
-        serviceproviderid:serviceProviderId
+    axios.get('http://localhost:8080/auth/viewServiceProviderBlogs', {
+      params: {
+        serviceproviderid: serviceProviderId
       }
     }).then((res) => {
         console.log(res.data);
         setViewSpBlogs(res.data);
+    }).catch((error) => {
+        console.error("Error fetching data: ", error);
     });
   }, []);
 
-  if (!viewSpBlogs) return 'No jobs found!';
+  if (!viewSpBlogs) return 'Blogs Loading ...';
 
   const handlePrev = () => {
     setActiveIndex(activeIndex > 0 ? activeIndex - 1 : viewSpBlogs.blogs.length - 1);
@@ -114,24 +120,28 @@ function ViewServiceProvider() {
             
 
     <div className="SPBox ">
-      <img className='SPImg' src={serviceProvider.profilePic} alt="profile-image" />
+      <img className='SPImg rounded-circle' src={serviceProvider.profilePic} alt="profile-image" />
       <div className='SPProfile'>
         <span className='SPname'>{serviceProvider.firstname} {" "} {serviceProvider.lastname}</span>
         {/* <span className='SPActive'> Last Active 5 days ago </span> */}
         <div class="SPDetail">
           <p className='p1'> Member Since {serviceProvider.registrationdate} </p>
+          {serviceProvider && serviceProvider.serviceCategories ? (
           <p className='p1'> Service : {serviceProvider.serviceCategories.map((category, categoryIndex) => (
-              <span key={categoryIndex}>
-                {category.services.map((service, serviceIndex) => (
-                  <span key={serviceIndex}>
-                    {service}
-                    {serviceIndex < category.services.length - 1 && ', '}
-                  </span>
-                ))}
-                {categoryIndex < serviceProvider.serviceCategories.length - 1 && ', '}
-              </span>
-            ))}  &nbsp; 
+            <span key={categoryIndex}>
+              {category.services.map((service, serviceIndex) => (
+                <span key={serviceIndex}>
+                  {service}
+                  {serviceIndex < category.services.length - 1 && ', '}
+                </span>
+              ))}
+              {categoryIndex < serviceProvider.serviceCategories.length - 1 && ', '}
+            </span>
+          ))}  &nbsp; 
           | &nbsp; Location : {serviceProvider.district}</p>
+        ) : (
+          <p>Loading...</p>
+        )}
           <p className='p1'> </p>
           {/* <p className='Des border p-3' >{serviceProvider.description}</p> */}
         </div>
@@ -225,22 +235,27 @@ function ViewServiceProvider() {
           <p className='blogstitle fs-5'> Blogs </p>
 
     
-          {viewSpBlogs.blogs.map((Blog, index) => {
+          {viewSpBlogs && viewSpBlogs.blogs  && viewSpBlogs.blogs.length > 0 ? (
+            viewSpBlogs.blogs.map((Blog, index) => {
               // Find the matching training session images
-              const matchingSessionImages = blogImagesArray.find(sessionImages => sessionImages.id === Blog.blogid);
+              const matchingSessionImages = blogImagesArray.find(
+                (sessionImages) => sessionImages.id === Blog.blogid
+              );
 
               // Extract the images array if found, or provide an empty array as a default value
               const imagesArray = matchingSessionImages ? matchingSessionImages.images : [];
 
-              return(
+              return (
                 <div
                   key={index}
-                  className={`blogs-container border border-secondary p-4 ${index !== activeIndex ? 'd-none' : ''}`}
-                  style={{ borderRadius: "5px" }}
+                  className={`blogs-container border border-secondary p-4 ${
+                    index !== activeIndex ? 'd-none' : ''
+                  }`}
+                  style={{ borderRadius: '5px' }}
                 >
-                    <div className='SPImageCarousel'>
-
-                    <Carousel interval={null}>
+                  <div className='SPImageCarousel'>
+                    {imagesArray.length > 0 ? (
+                      <Carousel interval={null}>
                         {imagesArray.map((image, imgIndex) => (
                           <Carousel.Item key={imgIndex}>
                             <img
@@ -251,36 +266,68 @@ function ViewServiceProvider() {
                             />
                           </Carousel.Item>
                         ))}
-                    </Carousel>
-                    </div><br/>
+                      </Carousel>
+                    ) : (
+                      <p>No images available for this blog.</p>
+                    )}
+                  </div>
+                  <br />
 
-                    <div className="d-flex flex-row">
-                      <div>
-                        <p className='blogtitle' style={{ fontWeight: "600" }}> {Blog.blogtitle} </p>
+                  <div className='d-flex flex-row'>
+                    <div>
+                      <p className='blogtitle' style={{ fontWeight: '600' }}>
+                        {' '}
+                        {Blog.blogtitle}{' '}
+                      </p>
+                    </div>
+                    <div className='ms-auto'>
+                      <span className='blog-service'>{Blog.servicename}</span>
+                    </div>
+                  </div>
+                  <p className='blogdescription'> {Blog.blogdescription} </p>
+
+                  {/* Left and right buttons within the map */}
+                  {index === activeIndex && (
+                    <div className='d-flex blog-bt-container justify-content-center'>
+                      <div className='blog-bt-left me-3'>
+                        <Button className='btn-ServiceProvider-2' onClick={handlePrev}>
+                          &lt;
+                        </Button>
                       </div>
-                      <div className='ms-auto'>
-                        <span className='blog-service'>{Blog.servicename}</span>
+                      <div className='blog-bt-right ms-3'>
+                        <Button className='btn-ServiceProvider-2' onClick={handleNext}>
+                          &gt;
+                        </Button>
                       </div>
                     </div>
-                    <p className='blogdescription'> {Blog.blogdescription} </p>
+                  )}
                 </div>
-            );
-         })}
+              );
+            })
+          ) : (
+            <div
+                  className="mt-3 p-3 d-flex justify-content-center align-items-center"
+                  style={{ border: "1px solid black", borderRadius: "10px" }}
+              >
+            This service provider has not posted any blogs yet. Please check again later for updates.
+            </div>
+          )}
 
-          <div className="d-flex blog-bt-container justify-content-center">
+
+          {/* <div className="d-flex blog-bt-container justify-content-center">
             <div className="blog-bt-left me-3">
               <Button className='btn-ServiceProvider-2' onClick={handlePrev}>&lt;</Button>
             </div>
             <div className="blog-bt-right ms-3">
               <Button className='btn-ServiceProvider-2' onClick={handleNext}>&gt;</Button>
             </div>
-          </div>
+          </div> */}
           
         </div>
-      {/* </div> */}
+        
+      </div>
     </div>
     </div>
-  </div>
     
 
   );

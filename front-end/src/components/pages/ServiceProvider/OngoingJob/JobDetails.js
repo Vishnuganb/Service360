@@ -73,6 +73,8 @@ function AcceptedJobDetails() {
 
     // Update the generateTodoListClicked state
     setIsTodoListExist(true);
+
+    window.location.reload();
   };
 
 

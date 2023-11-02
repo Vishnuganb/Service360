@@ -31,6 +31,7 @@ function SpCalendar() {
     const handleClose = () => setShow(false);
 
     const handleShow = (date) => {
+        
         setSelectedModalDate(date); // Set the selected date for the modal
         resetScheduleForm();
         setShow(true);
@@ -270,7 +271,7 @@ function SpCalendar() {
                         {getDates()}
 
                     </div>
-                    <Button className="mt-3 d-flex ms-auto btn-ServiceProvider-1" onClick={() => handleShow(activeDate)}>Add Schedule</Button>
+                    <Button className="mt-3 d-flex ms-auto btn-ServiceProvider-1" onClick={() => handleShow(activeDate)} >Add Schedule</Button>
                 </div>
 
                 <div className="div-schedules w-xl-50 w-100">

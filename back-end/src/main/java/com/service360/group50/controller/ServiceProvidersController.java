@@ -51,6 +51,8 @@ public class ServiceProvidersController {
     private ServiceProviderFilesRepository serviceProviderFilesRepository;
     @Autowired
     private TodoListRepository todoListRepository;
+    @Autowired
+    private QuotationRepository quotationRepository;
 
     //JOBS
     @GetMapping("auth/viewNewJobs")
@@ -60,17 +62,17 @@ public class ServiceProvidersController {
 
 
     @GetMapping("auth/viewHistoryJobs")
-    public List<Jobs> viewHistoryJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+    public List<Jobs> viewHistoryJobs(@RequestParam("serviceproviderid") Long serviceproviderid) {
         return serviceProviderService.viewHistoryJobs(serviceproviderid);
     }
 
     @GetMapping("auth/viewOngoingJobs")
-    public List<Jobs> viewOngoingJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+    public List<Jobs> viewOngoingJobs(@RequestParam("serviceproviderid") Long serviceproviderid) {
         return serviceProviderService.viewOngoingJobs(serviceproviderid);
     }
 
     @GetMapping("auth/viewPendingJobs")
-    public List<Jobs> viewPendingJobs(@RequestParam("serviceproviderid") Long serviceproviderid){
+    public List<Jobs> viewPendingJobs(@RequestParam("serviceproviderid") Long serviceproviderid) {
         return serviceProviderService.viewPendingJobs(serviceproviderid);
     }
 
@@ -117,9 +119,9 @@ public class ServiceProvidersController {
 
 
     @PostMapping("auth/AddJobReply/{jobid}")
-    public JobReplies addJobReply( @RequestParam("replymessage") String replymessage,
-                                   @RequestParam("serviceproviderid") Long serviceproviderid,
-                                   @PathVariable Long jobid){
+    public JobReplies addJobReply(@RequestParam("replymessage") String replymessage,
+                                  @RequestParam("serviceproviderid") Long serviceproviderid,
+                                  @PathVariable Long jobid) {
         // Load the Users (service provider) entity by ID
         Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
@@ -148,20 +150,20 @@ public class ServiceProvidersController {
 
 
     @PutMapping("auth/updateJobStatusInviteToPending/{id}")
-    public JobsServiceProviders updateJobInvitetoPending(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoPending(id,serviceproviderid);
+    public JobsServiceProviders updateJobInvitetoPending(@RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoPending(id, serviceproviderid);
     }
 
 
     @PutMapping("auth/updateJobStatusInviteToOngoing/{id}")
-    public JobsServiceProviders updateJobInvitetoOngoing(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoOngoing(id,serviceproviderid);
+    public JobsServiceProviders updateJobInvitetoOngoing(@RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoOngoing(id, serviceproviderid);
     }
 
 
     @PutMapping("auth/updateJobStatusInviteToRejected/{id}")
-    public JobsServiceProviders updateJobInvitetoRejected(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
-        return serviceProviderService.updateJobInvitetoRejected(id,serviceproviderid);
+    public JobsServiceProviders updateJobInvitetoRejected(@RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) {
+        return serviceProviderService.updateJobInvitetoRejected(id, serviceproviderid);
     }
 
 
@@ -173,12 +175,12 @@ public class ServiceProvidersController {
 
 
     @GetMapping("auth/viewHistoryVacancies")
-    public List<Vacancies> viewHistoryVacancies(@RequestParam("serviceproviderid") Long serviceproviderid){
+    public List<Vacancies> viewHistoryVacancies(@RequestParam("serviceproviderid") Long serviceproviderid) {
         return serviceProviderService.viewHistoryVacancies(serviceproviderid);
     }
 
     @GetMapping("auth/viewOngoingVacancies")
-    public List<Vacancies> viewOngoingVacancies(@RequestParam("serviceproviderid") Long serviceproviderid){
+    public List<Vacancies> viewOngoingVacancies(@RequestParam("serviceproviderid") Long serviceproviderid) {
         return serviceProviderService.viewOngoingVacancies(serviceproviderid);
     }
 
@@ -188,18 +190,20 @@ public class ServiceProvidersController {
     }
 
     @GetMapping("auth/viewNewVacancies/{id}")
-    public Vacancies viewAVacancy(@PathVariable Long id) {return serviceProviderService.viewAVacancy(id);}
+    public Vacancies viewAVacancy(@PathVariable Long id) {
+        return serviceProviderService.viewAVacancy(id);
+    }
 
     @PostMapping("auth/applyVacancy/{id}")
-    public VacancyApplications applyvacancy( @RequestParam("firstname") String firstname,
-                                             @RequestParam("lastname") String lastname,
-                                             @RequestParam("contactnumber") String contactnumber,
-                                             @RequestParam("emailaddress") String emailaddress,
-                                             @RequestParam("educationqualification") String educationqualification,
-                                             @RequestParam("yearsofexperience") String yearsofexperience,
-                                             @RequestParam("salaryexpectation") String salaryexpectation,
-                                             @RequestParam("serviceproviderid") Long serviceproviderid,
-                                             @RequestParam("file") MultipartFile cvfile, @PathVariable Long id) {
+    public VacancyApplications applyvacancy(@RequestParam("firstname") String firstname,
+                                            @RequestParam("lastname") String lastname,
+                                            @RequestParam("contactnumber") String contactnumber,
+                                            @RequestParam("emailaddress") String emailaddress,
+                                            @RequestParam("educationqualification") String educationqualification,
+                                            @RequestParam("yearsofexperience") String yearsofexperience,
+                                            @RequestParam("salaryexpectation") String salaryexpectation,
+                                            @RequestParam("serviceproviderid") Long serviceproviderid,
+                                            @RequestParam("file") MultipartFile cvfile, @PathVariable Long id) {
         // Load the Users (service provider) entity by ID
         Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
@@ -220,7 +224,7 @@ public class ServiceProvidersController {
 
         String uploadDirectory = "src/main/resources/static/images/vacancy";
 
-        String savedcvfile="";
+        String savedcvfile = "";
 
         if (cvfile != null && !cvfile.isEmpty()) {
             try {
@@ -247,18 +251,18 @@ public class ServiceProvidersController {
     }
 
     @PutMapping("auth/updateVacancyStatusInviteToOngoing/{id}")
-    public VacanciesServiceProviders updateVacancyInvitetoOngoing(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
-        return serviceProviderService.updateVacancyInvitetoOngoing(id,serviceproviderid);
+    public VacanciesServiceProviders updateVacancyInvitetoOngoing(@RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) {
+        return serviceProviderService.updateVacancyInvitetoOngoing(id, serviceproviderid);
     }
 
     @PutMapping("auth/updateVacancyStatusInviteToRejected/{id}")
-    public VacanciesServiceProviders updateVacancyInvitetoRejected(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
-        return serviceProviderService.updateVacancyInvitetoRejected(id,serviceproviderid);
+    public VacanciesServiceProviders updateVacancyInvitetoRejected(@RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) {
+        return serviceProviderService.updateVacancyInvitetoRejected(id, serviceproviderid);
     }
 
     @PutMapping("auth/updateVacancyStatusOngoingToCompleted/{id}")
-    public VacanciesServiceProviders updateVacancyOngoingtoCompleted(@RequestParam("serviceproviderid") Long serviceproviderid,@PathVariable Long id) {
-        return serviceProviderService.updateVacancyOngoingtoCompleted(id,serviceproviderid);
+    public VacanciesServiceProviders updateVacancyOngoingtoCompleted(@RequestParam("serviceproviderid") Long serviceproviderid, @PathVariable Long id) {
+        return serviceProviderService.updateVacancyOngoingtoCompleted(id, serviceproviderid);
     }
 
 
@@ -283,7 +287,7 @@ public class ServiceProvidersController {
         serviceProviderService.deleteServiceProviderCalendarEvent(id);
     }
 
-//  TRAINING SESSIONS (ONLY FETCH PUBLISHED TRAINING SESSIONS)
+    //  TRAINING SESSIONS (ONLY FETCH PUBLISHED TRAINING SESSIONS)
     @GetMapping("auth/viewTrainingSessions")
     public TrainingSessionsDTO viewTrainingSessions() {
         List<TrainingSession> trainingSessions = serviceProviderService.viewTrainingSessions();
@@ -366,7 +370,7 @@ public class ServiceProvidersController {
         Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
         TrainingSession trainingSession = trainingSessionOptional.orElse(null);
         //increase ongoing count by 1
-        trainingSession.setGoingcount(trainingSession.getGoing()+1);
+        trainingSession.setGoingcount(trainingSession.getGoing() + 1);
         trainingSessionRepository.save(trainingSession);
 
         // Create a TrainingSessionRegistration entity
@@ -378,7 +382,7 @@ public class ServiceProvidersController {
         LocalDate today = LocalDate.now();
         trainingSessionRegistration.setRegistrationdate(today);
 
-        boolean isPaymentSuccessful= true;
+        boolean isPaymentSuccessful = true;
 
         // Generate a unique content for the QR code
         String mobileNumber = trainingSessionRegistrationRequest.getMobilenumber();
@@ -424,8 +428,7 @@ public class ServiceProvidersController {
                                                  @RequestParam("going") Integer going,
                                                  @RequestParam("interested") Integer interested,
                                                  @RequestParam("serviceproviderid") Long serviceproviderid,
-                                                 @RequestParam("images") MultipartFile[] imageFiles)
-    {
+                                                 @RequestParam("images") MultipartFile[] imageFiles) {
         // Load the Users (service provider) entity by ID
         Optional<Users> userOptional = userRepository.findById(serviceproviderid);
         Users serviceProvider = userOptional.orElse(null);
@@ -473,14 +476,13 @@ public class ServiceProvidersController {
     }
 
 
-
     @PutMapping("auth/publishTrainingSession/{id}")
     public TrainingSession publishTrainingSession(@PathVariable Long id) {
         // Load the TrainingSession entity by ID
         Optional<TrainingSession> trainingSessionOptional = trainingSessionRepository.findById(id);
         TrainingSession trainingSession = trainingSessionOptional.orElse(null);
 
-        boolean isPaymentSuccessful= true;
+        boolean isPaymentSuccessful = true;
 
         // Set the payment status based on the result of the payment gateway
         if (isPaymentSuccessful) {
@@ -492,17 +494,17 @@ public class ServiceProvidersController {
     }
 
     @PutMapping("auth/TrainingSessionIntrested")
-    public Void IncreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid){
+    public Void IncreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid) {
         return serviceProviderService.IncreaseTrainingSessionIntrestedCount(trainingsessionid);
     }
 
     @PutMapping("auth/TrainingSessionNotIntrested")
-    public Void DecreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid){
+    public Void DecreaseTrainingSessionIntrestedCount(@RequestParam("trainingsessionid") Long trainingsessionid) {
         return serviceProviderService.DecreaseTrainingSessionIntrestedCount(trainingsessionid);
     }
 
     @GetMapping("auth/GetTrainingSessionRegisteredUsers")
-    public List<TrainingSessionRegistration> GetTrainingSessionRegisteredUsers(@RequestParam("trainingsessionid") Long trainingsessionid){
+    public List<TrainingSessionRegistration> GetTrainingSessionRegisteredUsers(@RequestParam("trainingsessionid") Long trainingsessionid) {
         return serviceProviderService.GetTrainingSessionRegisteredUsers(trainingsessionid);
     }
 
@@ -512,7 +514,7 @@ public class ServiceProvidersController {
                             @RequestParam("serviceproviderid") Long serviceproviderid,
                             @RequestParam("blogdescription") String blogdescription,
                             @RequestParam("servicename") String servicename,
-                            @RequestParam("images") MultipartFile[] imageFiles){
+                            @RequestParam("images") MultipartFile[] imageFiles) {
 
         //FIND FOR LOGGED IN SP
         Optional<Users> userOptional = userRepository.findById(serviceproviderid);
@@ -649,7 +651,6 @@ public class ServiceProvidersController {
         }
 
 
-
         // Handle qualification files
         List<String> qualificationFileNames = new ArrayList<>();
 
@@ -680,7 +681,7 @@ public class ServiceProvidersController {
 
     @PostMapping("auth/addQualifcationCertificates")
     public ServiceProviderFiles AddQualificationCertificates(@RequestParam("files") MultipartFile[] qualificationFiles,
-                                                          @RequestParam("serviceproviderid") Long serviceproviderid) {
+                                                             @RequestParam("serviceproviderid") Long serviceproviderid) {
         String uploadDirectory = "src/main/resources/static/images/serviceproviderfiles";
 
         //ADD USER
@@ -715,7 +716,6 @@ public class ServiceProvidersController {
         return savedServiceProviderFiles;
 
     }
-
 
 
     //IMAGES
@@ -771,15 +771,43 @@ public class ServiceProvidersController {
         return imageBytesList;
     }
 
-    @PutMapping("auth/addQuotationPdf/{id}")
-    public Jobs addQuotationPdf(@RequestParam("file") MultipartFile quotationfile, @PathVariable Long id) {
+//    @PutMapping("auth/addQuotationPdf/{id}")
+//    public Jobs addQuotationPdf(@RequestParam("file") MultipartFile quotationfile, @PathVariable Long id) {
+//        // Load the Jobs entity by ID
+//        Optional<Jobs> jobOptional = jobsRepository.findById(id);
+//        Jobs job = jobOptional.orElse(null);
+//
+//        String uploadDirectory = "src/main/resources/static/images/quotation";
+//
+//        String savedquotationfile="";
+//
+//        if (quotationfile != null && !quotationfile.isEmpty()) {
+//            try {
+//                savedquotationfile = imageService.saveImageToStorageServiceProvider(uploadDirectory, quotationfile);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        job.setQuotationpdf(savedquotationfile);
+//
+//        return serviceProviderService.addQuotationPdf(job);
+//    }
+
+    @PostMapping("auth/addQuotationPdf/{id}")
+    public Quotation addQuotationPdf(@RequestParam("file") MultipartFile quotationfile,
+                                     @RequestParam("serviceproviderid") Long serviceproviderid,
+                                     @PathVariable Long id) {
         // Load the Jobs entity by ID
         Optional<Jobs> jobOptional = jobsRepository.findById(id);
         Jobs job = jobOptional.orElse(null);
 
+        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+        Users serviceProvider = userOptional.orElse(null);
+
         String uploadDirectory = "src/main/resources/static/images/quotation";
 
-        String savedquotationfile="";
+        String savedquotationfile = "";
 
         if (quotationfile != null && !quotationfile.isEmpty()) {
             try {
@@ -789,9 +817,12 @@ public class ServiceProvidersController {
             }
         }
 
-        job.setQuotationpdf(savedquotationfile);
+        Quotation quotation = new Quotation();
+        quotation.setQuotationpdf(savedquotationfile);
+        quotation.setServiceproviders(serviceProvider);
+        quotation.setJobs(job);
 
-        return serviceProviderService.addQuotationPdf(job);
+        return quotationRepository.save(quotation);
     }
 
     @PostMapping("auth/generateTodoList/{jobId}")
@@ -833,4 +864,9 @@ public class ServiceProvidersController {
     public Long getTodoListIdByJobId(@PathVariable Long jobId) {
         return todoListRepository.getTodoListIdByJobId(jobId);
     }
+
+//    @GetMapping("auth/viewAllTodolistofAServicProvider/{serviceproviderid}")
+//    public List<TodoListDetails> viewAllTodolistofAServicProvider(@PathVariable Long serviceproviderid) {
+//        return serviceProviderService.viewAllTodolistofAServicProvider(serviceproviderid);
+//    }
 }

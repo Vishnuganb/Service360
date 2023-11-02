@@ -2,11 +2,13 @@ package com.service360.group50.repo;
 
 import com.service360.group50.entity.Jobs;
 import com.service360.group50.entity.TodoList;
+import com.service360.group50.entity.Users;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,4 +19,6 @@ public interface TodoListRepository extends CrudRepository<TodoList,Long> {
     Long getTodoListIdByJobId(@Param("jobid") Long jobid);
     @Query("SELECT t FROM TodoList t where t.todolistid = :todolistid")
     Optional<TodoList> getTodoListByTodolistid(@Param ("todolistid") Long todolistid);
+
+//    List<TodoList> findAllByServiceprovider(Users serviceProvider);
 }

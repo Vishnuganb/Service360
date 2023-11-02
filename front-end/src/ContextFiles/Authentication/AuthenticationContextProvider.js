@@ -219,9 +219,12 @@ const AuthenticationContextProvider = (props) => {
         localStorage.removeItem('role');
         sessionStorage.removeItem('authenticatedUser');
         setAuthenticated(false);
+        console.log("Logged out successfully!!!");
+        window.location.href = "http://localhost:3000/login";
+        // Clear the local storage immediately
+        localStorage.clear();
+    
         navigate("/login");
-        console.log("Logged out successfully!!!")
-
     }
 
     return (

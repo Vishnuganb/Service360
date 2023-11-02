@@ -265,9 +265,24 @@ function TrainingSession() {
                     <input type="checkbox" class="form-check-input" id="exampleCheck1" checked={isChecked} onChange={handleCheckboxChange}/>
                     <label class="form-check-label" for="exampleCheck1">I have verified the event name, venue and time before proceeding my payment.</label>
                 </div>
-                <div className="ViewATraining-button-container mt-4 d-flex flex-row">
-
-                    <Payment
+                <div className="ViewATraining-button-container mt-4 d-flex flex-row" >
+                    {isChecked && registrationData.email && registrationData.mobilenumber ? (
+                        <Payment
+                            firstname={userData.firstname}
+                            lastname={userData.lastname}
+                            email={userData.email}
+                            paymentTitle={viewTrainingSessionData.trainingsessions.trainingtitle}
+                            amount={viewTrainingSessionData.trainingsessions.trainingcost}
+                            sendUserId={userData.userid}
+                            reciveUserID={null}
+                            setPaymentSuccess={setPaymentSuccess}
+                            setOrderID={setOrderID}
+                            onClick={(e) => {
+                                e.preventDefault(); // Prevents the default behavior of the button
+                            }}
+                        />
+                    ) : null}
+                    {/* <Payment
                         firstname={userData.firstname}
                         lastname={userData.lastname}
                         email={userData.email}
@@ -277,10 +292,11 @@ function TrainingSession() {
                         reciveUserID={null}
                         setPaymentSuccess={setPaymentSuccess}
                         setOrderID={setOrderID}
+
                         onClick={(e) => {
                             e.preventDefault(); // Prevents the default behavior of the button
                         }}
-                    />
+                    /> */}
                     <Button className="btn-ServiceProvider-2 ViewATraining-cancel ms-auto"  onClick={handleBackClick}>Back</Button>
                 </div>
             </Form>

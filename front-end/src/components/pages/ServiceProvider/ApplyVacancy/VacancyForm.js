@@ -15,6 +15,15 @@ function ApplyVacancy() {
     const [alertMessage, setAlertMessage] = useState("");
     const [showAlert, setShowAlert] = useState(false);
 
+    const [firstnameError, setFirstnameError] = useState(false);
+    const [lastnameError, setLastnameError] = useState(false);
+    const [contactnumberError, setContactnumberError] = useState(false);
+    const [emailaddressError, setEmailaddressError] = useState(false);
+    const [educationqualificationError, setEducationqualificationError] = useState(false);
+    const [hasWorkExperienceError, setHasWorkExperienceError] = useState(false);
+    const [yearsofexperienceError, setYearsofexperienceError] = useState(false);
+    const [salaryexpectationError, setSalaryexpectationError] = useState(false);
+
     const fileInputRef = useRef(null);
 
     const educationQualificationArray = ["Ordinary Level","Advanced Level","Undergraduate","Postgraduate","None"];
@@ -24,7 +33,7 @@ function ApplyVacancy() {
         lastname: "",
         contactnumber: "",
         emailaddress: "",        
-        educationqualification: "",  
+        educationqualification: "0",  
         hasWorkExperience: '1',
         yearsofexperience: "0",      
         salaryexpectation: "",
@@ -69,6 +78,46 @@ function ApplyVacancy() {
 
     const handleApplyVacancy = (e) => {
         e.preventDefault();
+
+        //Reset error states
+        setFirstnameError(false);
+        setLastnameError(false);
+        setContactnumberError(false);
+        setEmailaddressError(false);
+        setEducationqualificationError(false);
+        setHasWorkExperienceError(false);
+        setYearsofexperienceError(false);
+        setSalaryexpectationError(false);
+
+        // Check for empty fields and show error messages if necessary
+        if (!vacancyFormData.firstname) {
+            setFirstnameError(true);
+        }
+        if (!vacancyFormData.lastname) {
+            setLastnameError(true);
+        }
+        if (!vacancyFormData.contactnumber) {
+            setContactnumberError(true);
+        }
+        if (!vacancyFormData.emailaddress) {
+            setEmailaddressError(true);
+        }
+        if (!vacancyFormData.educationqualification) {
+            setEducationqualificationError(true);
+        }
+        if (!vacancyFormData.hasWorkExperience) {
+            setHasWorkExperienceError(true);
+        }
+        if (!vacancyFormData.yearsofexperience) {
+            setYearsofexperienceError(true);
+        }
+        if (!vacancyFormData.salaryexpectation) {
+            setSalaryexpectationError(true);
+        }
+
+        if(!vacancyFormData.firstname || !vacancyFormData.lastname || !vacancyFormData.contactnumber || !vacancyFormData.emailaddress || !vacancyFormData.educationqualification || !vacancyFormData.hasWorkExperience || !vacancyFormData.yearsofexperience || !vacancyFormData.salaryexpectation) {
+            return;
+        }
 
         const formData = new FormData();
         formData.append('firstname', vacancyFormData.firstname);
@@ -165,7 +214,7 @@ function ApplyVacancy() {
                 <div className="fs-5 fw-bold mb-3" style={{textAlign:'center'}}>Apply Now</div>
                 <Form className="mt-2" onSubmit={handleApplyVacancy} method='post'>
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>First Name</Form.Label>
+                        <Form.Label>First Name <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter your first name" 
@@ -174,10 +223,11 @@ function ApplyVacancy() {
                             onChange={handleInputChange}
                             required
                         />
+                        {firstnameError && <p style={{ color: 'red' }}>Please enter your first name</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Last Name</Form.Label>
+                        <Form.Label>Last Name <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter your Last name" 
@@ -186,10 +236,11 @@ function ApplyVacancy() {
                             onChange={handleInputChange}
                             required
                         />
+                        {lastnameError && <p style={{ color: 'red' }}>Please enter your last name</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Contact Number</Form.Label>
+                        <Form.Label>Contact Number <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter your contact number" 
@@ -198,10 +249,11 @@ function ApplyVacancy() {
                             onChange={handleInputChange}
                             required
                         />
+                        {contactnumberError && <p style={{ color: 'red' }}>Please enter your contact number</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Email Address</Form.Label>
+                        <Form.Label>Email Address <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter your email address" 
@@ -210,10 +262,11 @@ function ApplyVacancy() {
                             onChange={handleInputChange}
                             required
                         />
+                        {emailaddressError && <p style={{ color: 'red' }}>Please enter your email address</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicJobCategory">
-                        <Form.Label>Education Qualification</Form.Label>
+                        <Form.Label>Education Qualification <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Select 
                             aria-label="Education Qualification" 
                             name="educationqualification"
@@ -227,10 +280,11 @@ function ApplyVacancy() {
                             <option value="3">Postgraduate</option>
                             <option value="4">None</option>
                         </Form.Select>
+                        {educationqualificationError && <p style={{ color: 'red' }}>Please select your education qualification</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicJobCategory">
-                        <Form.Label>Do you have work experience</Form.Label>
+                        <Form.Label>Do you have work experience <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Select 
                             aria-label="Education Qualification" 
                             name="hasWorkExperience"
@@ -241,11 +295,12 @@ function ApplyVacancy() {
                             <option value="1">Yes</option>
                             <option value="2">No</option>
                         </Form.Select>
+                        {hasWorkExperienceError && <p style={{ color: 'red' }}>Please select whether you have work experience</p>}
                     </Form.Group>
 
 
                     <Form.Group className="mb-3" controlId="formBasicJobCategory">
-                        <Form.Label>How Many Years of Work Experience Do You Possess</Form.Label>
+                        <Form.Label>How Many Years of Work Experience Do You Possess <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter years of work experience" 
@@ -254,10 +309,11 @@ function ApplyVacancy() {
                             onChange={handleInputChange}
                             required
                         />
+                        {yearsofexperienceError && <p style={{ color: 'red' }}>Please enter your years of work experience</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Your Salary Expectations</Form.Label>
+                        <Form.Label>Your Salary Expectations <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter your email address" 
@@ -265,10 +321,11 @@ function ApplyVacancy() {
                             value={vacancyFormData.salaryexpectation}
                             onChange={handleInputChange}
                         />
+                        {salaryexpectationError && <p style={{ color: 'red' }}>Please enter your salary expectation</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicFiles">
-                        <Form.Label>Upload your CV</Form.Label>
+                        <Form.Label>Upload your CV <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             ref={fileInputRef}
                             type="file" 

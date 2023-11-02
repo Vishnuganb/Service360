@@ -89,10 +89,13 @@ const SearchServiceProvider = () => {
   }, [])
 
   const filteredSPCards = serviceProviderCards.filter(card => {
-    const locationMatch = !selectedLocation || card.location === selectedLocation;
-    const serviceMatch = !selectedService || card.service === selectedService;
-    const ratingMatch = !sortByReview || card.review >= 4.0;
-    return locationMatch && serviceMatch && ratingMatch;
+    const locationMatch = !selectedLocation || card.district === selectedLocation;
+    // const serviceMatch = !selectedService || card.service === selectedService;
+    // const ratingMatch = !sortByReview || card.review >= 4.0;
+    const serviceMatch = !selectedService || card.serviceCategories.some(category => {
+      return category.services.includes(selectedService);
+    });
+    return locationMatch && serviceMatch;
   });
 
   const sortedSPCards = [...filteredSPCards].sort((a, b) => {

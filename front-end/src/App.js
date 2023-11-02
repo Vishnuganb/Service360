@@ -196,42 +196,42 @@ const router = createBrowserRouter(
         </Route>
       </Route>
 
-      <Route path="/customer" element={<PrivateRouteLayout />}>
-        <Route path="/customer" element={<CustomerLayout />}>
-          <Route index element={<CustomerDashboard />} />
-          <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
-          <Route path="OngoingProject" element={<OngoingProject />} />
-          <Route path="Quotation" element={<Quotation />} />
-          <Route path="ViewVacancy" element={<ViewVacancy />} />
-          <Route path="SocialShareSP" element={<SocialShareSP />} />
-          <Route path="PostVacancyForm" element={<PostVacancyForm />} />
-          <Route path="ViewServiceProvider/:id" element={<ViewServiceProvider />} />
-          <Route path="ToDoForm" element={<ToDoForm />} />
-          <Route path="RatenReview" element={<RatenReview />} />
-          <Route path="Searchserviceprovider" element={<Searchserviceprovider />} />
-          <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
-          <Route path="AddReview" element={<AddReviewandRating />} />
-          <Route path="History" element={<CustomerViewHistory />} />
-          <Route path="CustomerComplaintPage" element={<CustomerComplaintPage />} />
-          <Route path="ViewAQuotation" element={<ViewAQuotation />} />
-          <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
-          <Route path="CustomerComplaints" element={<CustomerComplaints />} />
-          <Route path="AdsPage" element={<AdsPage />} />
-          <Route path="Chat" element={<CustomerChat />} />
-          <Route path="ToDoList" element={<ToDoList />} />
-          <Route path="RequestedQuotation" element={<RequestedQuotation />} />
-          <Route path="PostedVacancies" element={<PostedVacancies />} />
-          <Route path="JobRequest" element={<JobRequest />} />
-          <Route path="PostJobForm" element={<PostJobForm />} />
-          <Route path="PostedJobs" element={<PostedJobs />} />
-          <Route path="RequestedJobs" element={<RequestedJobs />} />
-          {/* <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} /> */}
-          <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
-          <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
-
-          <Route path="ViewPostedJobs/:id" element={<CustomerJob />} />
-        </Route>
+    <Route path="/customer" element={<PrivateRouteLayout />}>
+      <Route path="/customer" element={<CustomerLayout />}>
+        <Route index element={<CustomerDashboard />} />
+        <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
+        <Route path="OngoingProject" element={<OngoingProject />} />
+        <Route path="Quotation" element={<Quotation />} />
+        <Route path="ViewVacancy" element={<ViewVacancy />} />
+        <Route path="SocialShareSP" element={<SocialShareSP />} />
+        <Route path="PostVacancyForm" element={<PostVacancyForm />} />
+        <Route path="ViewServiceProvider/:id" element={<ViewServiceProvider />}/>
+        <Route path="ToDoForm" element={<ToDoForm />} />
+        <Route path="RatenReview" element={<RatenReview />} />
+        <Route path="Searchserviceprovider" element={<Searchserviceprovider />}/>
+        <Route path="ReceivedQuotation" element={<ReceivedQuotation />} />
+        <Route path="AddReview" element={<AddReviewandRating />} />
+        <Route path="History" element={<CustomerViewHistory />} />
+        <Route path="CustomerComplaintPage" element={<CustomerComplaintPage />}/>
+        <Route path="ViewAQuotation" element={<ViewAQuotation />} />
+        <Route path="ViewVacancyResponse" element={<ViewVacancyResponse />} />
+        <Route path="CustomerComplaints" element={<CustomerComplaints />} />
+        <Route path="AdsPage" element={<AdsPage />} />
+        <Route path="Chat" element={<CustomerChat />} />
+        <Route path="ToDoList" element={<ToDoList />} />
+        <Route path="RequestedQuotation" element={<RequestedQuotation />} />
+        <Route path="PostedVacancies" element={<PostedVacancies />} />
+        <Route path="JobRequest" element={<JobRequest />} />
+        <Route path="PostJobForm" element={<PostJobForm />} />
+        <Route path="PostedJobs" element={<PostedJobs />} />
+        <Route path="RequestedJobs" element={<RequestedJobs />} />
+        {/* <Route path="ViewPostedJobs/:id" element={<ViewPostedJobs />} /> */}
+        <Route path="ViewPostedJobs1/:id" element={<ViewPostedJobs1 />} />
+        <Route path="ViewVacancyReply" element={<ViewVacancyReply />} />
+        
+        <Route path="ViewPostedJobs/:id" element={<CustomerJob />} />
       </Route>
+    </Route>
 
       <Route path="/ServiceProvider" element={<PrivateRouteLayout />}>
         <Route path="/ServiceProvider" element={<SpLayout />}>

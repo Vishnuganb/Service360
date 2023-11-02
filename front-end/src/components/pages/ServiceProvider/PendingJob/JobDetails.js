@@ -22,6 +22,9 @@ function PendingJobDetails() {
     const handleBackClick = () => {
       navigate(-1);
     };
+    
+    const response = sessionStorage.getItem('authenticatedUser');
+    const userData = JSON.parse(response);
 
     const { id } = useParams();
     const jobId = parseInt(id, 10);
@@ -35,11 +38,29 @@ function PendingJobDetails() {
 
     if (!viewJobData) return 'No jobs found!';
 
+    // const handleAddQuotation = () => {
+    //     const formData = new FormData();
+    //     formData.append('file', selectedFile);
+        
+    //     axios.put(`http://localhost:8080/auth/addQuotationPdf/${jobId}`, formData, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data'
+    //         }
+    //     }).then((res) => {
+    //         console.log(res.data);
+    //         document.getElementById('fileInput').value = '';
+    //         showAlertWithMessage('The quotation has been successfully sent to the customer!');
+    //     });
+    // };
+
     const handleAddQuotation = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
+        formData.append('jobid', jobId);
+        formData.append('serviceproviderid', userData.userid);
+
         
-        axios.put(`http://localhost:8080/auth/addQuotationPdf/${jobId}`, formData, {
+        axios.post(`http://localhost:8080/auth/addQuotationPdf/${jobId}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -49,6 +70,7 @@ function PendingJobDetails() {
             showAlertWithMessage('The quotation has been successfully sent to the customer!');
         });
     };
+
 
     // Get all images from the job
     const jobImagesArray = viewJobData.jobimages;

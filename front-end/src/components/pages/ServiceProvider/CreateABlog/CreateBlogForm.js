@@ -24,6 +24,10 @@ function CreateBlogForm() {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
 
+    const [titleError, setTitleError] = useState(false);
+    const [descriptionError, setDescriptionError] = useState(false);
+    const [serviceError, setServiceError] = useState(false);
+
     const response = sessionStorage.getItem('authenticatedUser');
     const userData = JSON.parse(response);
     console.log(userData.userid);
@@ -65,6 +69,26 @@ function CreateBlogForm() {
 
     const handleCreateBlog = (event) => {
         event.preventDefault();
+
+        // Reset error states
+        setTitleError(false);
+        setDescriptionError(false);
+        setServiceError(false);
+
+        // Check for empty fields and show error messages if necessary
+        if (!blogFormData.servicename) {
+            setServiceError(true);
+        }
+        if (!blogFormData.blogtitle) {
+            setTitleError(true);
+        }
+        if (!blogFormData.blogdescription) {
+            setDescriptionError(true);
+        }
+
+        if(!blogFormData.servicename || !blogFormData.blogtitle || !blogFormData.blogdescription) {
+            return;
+        }
 
         // Create a FormData object to send the data
         const formData = new FormData();
@@ -148,10 +172,11 @@ function CreateBlogForm() {
                             </option>
                         ))}
                     </Form.Control>
+                    {serviceError && <p style={{ color: 'red' }}>Please select a service category</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicTitle">
-                    <Form.Label>Title</Form.Label>
+                    <Form.Label>Title <span style={{ color: 'red' }}>*</span></Form.Label>
                     <Form.Control 
                         type="text" 
                         placeholder="Enter the Title" 
@@ -159,10 +184,11 @@ function CreateBlogForm() {
                         value={blogFormData.blogtitle}
                         onChange={handleInputChange}
                     />
+                    {titleError && <p style={{ color: 'red' }}>Please enter a title</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicDescription">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label>Description <span style={{ color: 'red' }}>*</span></Form.Label>
                     <Form.Control 
                         as="textarea" 
                         rows={5} 
@@ -171,6 +197,7 @@ function CreateBlogForm() {
                         value={blogFormData.blogdescription}
                         onChange={handleInputChange}
                     />
+                    {descriptionError && <p style={{ color: 'red' }}>Please enter a description</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicFiles">

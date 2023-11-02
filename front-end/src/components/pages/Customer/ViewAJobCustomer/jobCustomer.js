@@ -112,9 +112,9 @@ function JobDetails() {
       </Col>
       <Col className="jobDetails-details-container col-12 col-lg-10 d-flex flex-column">
         <div className="jobDetails-status-container mb-2">
-          <span className="jobDetails-status" id="job-status" style={{fontSize:"16px",fontWeight:"400",padding:"4px 6px",border:"2px solid rgb(37, 199, 37)",borderRadius:"8px"}}>
+          {/* <span className="jobDetails-status" id="job-status" style={{fontSize:"16px",fontWeight:"400",padding:"4px 6px",border:"2px solid rgb(37, 199, 37)",borderRadius:"8px"}}>
             new
-          </span>
+          </span> */}
         </div>
         <div className="jobDetails-title-container mb-2">
           <span className="back-button-service-provider" onClick={handleBackClick} style={{ marginRight:'50px', marginTop:'-40px', maxWidth: '110px', fontWeight:600, float:'right' }}>
@@ -169,7 +169,7 @@ function JobDetails() {
     <div className="d-flex flex-column col-12  justify-content-center align-items-center comment-section-start-div">
             <Col className="commentSection-col-container col-12 col-lg-10 col-md-10 col-sm-11 mt-3">
                 <Row className="my-3 me-lg-1 ms-lg-1">
-                  <Form className="mt-4" onSubmit={(e) => {
+                  {/* <Form className="mt-4" onSubmit={(e) => {
                       e.preventDefault(); 
                       handleAddReply(); 
                   }}>
@@ -188,7 +188,7 @@ function JobDetails() {
                       <div className="d-flex">
                           <Button className="commentSection-comment-btn btn-ServiceProvider-2 ms-auto" type="submit">Post</Button>
                       </div>
-                  </Form>
+                  </Form> */}
                 </Row>
                 
                 <Row>
@@ -206,7 +206,7 @@ function JobDetails() {
                         <div className="commentSection-comment-container mt-3 p-3" style={{border:"1px solid black",borderRadius:"15px"}}>
                             <div className="commentSection-comment-header d-flex flex-row">
                                 <div className="commentSection-avatar-container">
-                                    <Link to={`../ViewServiceProvider/+${viewJobData.jobs.jobid}`}>
+                                    <Link to={`../ViewServiceProvider/${comment.serviceproviders.userid}`}>
                                       <img
                                       src={'data:image/jpeg;base64;' + comment.serviceproviders.profilePic}
                                       className="commentSection-avatar rounded-circle"

@@ -36,6 +36,7 @@ const generateMonthlyData = () => {
 function AnalysisSp() {
   const [viewTrainingSessionsData, setviewTrainingSessionsData] = useState(null);
   const [earningsData, setEarningsData] = useState([]);
+  // const [viewTodolistData, setviewTodolistData] = useState(null);
 
     // GETTING LOGGED IN SERVICEPROVIDER ID
 
@@ -65,8 +66,14 @@ function AnalysisSp() {
   }, []);
 
   console.log(viewTrainingSessionsData)
-
-
+  
+  // useEffect(() => {
+  //   axios.get(`http://localhost:8080/auth/viewAllTodolistofAServicProvider/+${userData.userid}`,{
+  //   }).then((res) => {
+  //       console.log(res.data);
+  //       setviewTodolistData(res.data);
+  //   });
+  // }, []);
 
   // const earningsData = [
   //   { session: "Advanced Electrical Wiring", earnings: 14000, date: "2023-07-01" },

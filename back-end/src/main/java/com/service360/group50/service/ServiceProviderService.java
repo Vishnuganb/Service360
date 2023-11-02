@@ -398,4 +398,20 @@ public class ServiceProviderService {
     }
 
 
+//    public List<TodoListDetails> viewAllTodolistofAServicProvider(Long serviceproviderid) {
+//        Optional<Users> userOptional = userRepository.findById(serviceproviderid);
+//        Users serviceProvider = userOptional.orElse(null);
+//
+//        //find todolist ids of a service provider
+//        List<TodoList> todolists = TodoListRepository.findAllByServiceprovider(serviceProvider);
+//
+//        //find todolist details of a service provider by todolistids
+//        List<TodoListDetails> todolistdetails = new ArrayList<>();
+//        for (TodoList todolist : todolists) {
+//            List<TodoListDetails> details = todolist.getTodolistdetails();
+//            todolistdetails.addAll(details);
+//        }
+//
+//        return todolistdetails;
+//    }
 }

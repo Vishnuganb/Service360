@@ -4,8 +4,10 @@ import com.service360.group50.entity.Users;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CjobsRequest {
     private String jobtitle;
@@ -20,8 +22,6 @@ public class CjobsRequest {
 
     private String joblocation;
 
-    private String images;
-
     private String paymentstatus;
 
     private String isquotation;
@@ -31,6 +31,17 @@ public class CjobsRequest {
     private Boolean disabled;
 
     private Long customer;
+
+    private List<MultipartFile> jobsImages;
+
+    // Getter and Setter methods for the images field
+    public List<MultipartFile> getImages() {
+        return jobsImages;
+    }
+
+    public void setImages(List<MultipartFile> jobsImages) {
+        this.jobsImages = jobsImages;
+    }
 
     public String getJobtitle() {
         return jobtitle;
@@ -56,9 +67,6 @@ public class CjobsRequest {
         return joblocation;
     }
 
-    public String getImages() {
-        return images;
-    }
 
     public String getPaymentstatus() {
         return paymentstatus;

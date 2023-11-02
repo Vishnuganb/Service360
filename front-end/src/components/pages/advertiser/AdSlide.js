@@ -17,19 +17,43 @@ import AdG1_1 from "../../../assets/images/advertiser/Ads/AdG1.png";
 import AdG1_2 from "../../../assets/images/advertiser/Ads/AdG2.png";
 import AdG1_3 from "../../../assets/images/advertiser/Ads/AdG3.png";
 
-import AdP_1 from "../../../assets/images/advertiser/Ads/AdP1.png";
-import AdP_2 from "../../../assets/images/advertiser/Ads/AdP2.png";
-import AdP_3 from "../../../assets/images/advertiser/Ads/AdP3.png";
-
 import f1 from "../../../assets/images/advertiser/Ads/F1.png";
 import f2 from "../../../assets/images/advertiser/Ads/F2.png";
 import f3 from "../../../assets/images/advertiser/Ads/F3.png";
 
 import profileIcon from "./../../../assets/images/advertiser/Adam.jpg";
 
-const AdSlide = () => {
+const AdSlide = ({ads}) => {
   const [ViewSlideAdmodalVisible, setSlideViewAdModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null);
+
+
+  // Filter ads with Platinum package
+  const platinumAds = ads.filter((ad) => ad.packageName === "Platinum");
+
+  // Shuffle the platinumAds array
+  for (let i = platinumAds.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [platinumAds[i], platinumAds[j]] = [platinumAds[j], platinumAds[i]];
+  }
+
+  // Select the first 10 ads (or all if there are less than 10)
+  const selectedAds = platinumAds.slice(0, 10);
+
+  // // Extract the required data and format it
+  // const slideData = selectedAds.map((ad) => ({
+  //   id: ad.id,
+  //   proName: ad.firstName,
+  //   profileIcon: ad.profileImage,
+  //   adImages: ad.adsImages[0],
+  //   adName: ad.adName,
+  //   delivery: ad.delivery,
+  //   price: ad.price,
+  //   location: ad.area,
+  // }));
+
+  // console.log(slideData);
+
   const OpenSlideViewAdModal = (ad) => {
     setSelectedAd(ad);
     setSlideViewAdModalVisible(true);
@@ -38,63 +62,26 @@ const AdSlide = () => {
     setSlideViewAdModalVisible(false);
   };
 
-  const adsData = [
-    {
-      id: 1,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [AdImg1, AdImg2, AdImg3],
-      adName: "Power Driller",
-      price: 22000,
-      location: "Colombo",
-    },
-    {
-      id: 2,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [adImage],
-      adName: "Ideal Driller",
-      price: 16000,
-      location: "Colombo",
-    },
-
-    {
-      id: 4,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [AdG1_1, AdG1_2, AdG1_3],
-      adName: "Grinder",
-      price: 22000,
-      location: "Colombo",
-    },
-
-    {
-      id: 5,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [f1, f2, f3],
-      adName: "Usha Fan",
-      price: 12500,
-      location: "Colombo",
-    },
-  ];
-
   return (
     <div>
       <div className="AdSlideDiv">
         <Carousel>
-          {adsData.map((ad, index) => (
+          {selectedAds.map((ad, index) => (
             <Carousel.Item key={index}>
               <div
                 className="AdSlide"
                 style={{ backgroundImage: `url(${backgroundImage})` }}
               >
                 <div className="AdLeftCol">
-                  <Image src={ad.adImages[0]} alt="Item" className="rounded" />
+                  <Image
+                    src={`data:image/png;base64,${ad.adsImages[0]}`}
+                    alt="Item"
+                    className="rounded"
+                  />
                 </div>
                 <div className="AdRightCol">
                   <div>
-                    <h1 className="AdSlideHeading">{ad.adName}</h1>
+                    <h1 className="AdSlideHeading">{ad.adsName}</h1>
                   </div>
 
                   <br />
@@ -114,7 +101,7 @@ const AdSlide = () => {
                     <div>
                       <i className="fa-solid fa-truck-front"></i>
                     </div>
-                    <h4>Free Delivery</h4>
+                    <h4>{ad.delivery}</h4>
                   </div>
                 </div>
               </div>
@@ -124,7 +111,7 @@ const AdSlide = () => {
                   <i className="fa-solid fa-location-dot"></i>
                 </div>
                 <div className="d-flex align-items-center">
-                  <h4>{ad.location}</h4>
+                  <h4>{ad.area}</h4>
                 </div>
               </div>
             </Carousel.Item>
@@ -135,12 +122,6 @@ const AdSlide = () => {
         <ViewSingleAd
           key={selectedAd.id}
           id={selectedAd.id}
-          adName={selectedAd.adName}
-          proName={selectedAd.proName}
-          price={selectedAd.price}
-          profileIcon={selectedAd.profileIcon}
-          adImages={selectedAd.adImages}
-          location={selectedAd.location}
           modalVisible={ViewSlideAdmodalVisible}
           closeModal={viewSlideColosedModel}
         />

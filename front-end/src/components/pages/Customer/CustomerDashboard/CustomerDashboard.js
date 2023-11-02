@@ -246,7 +246,7 @@ const CustomerDashboard = () => {
                                 <Card.Body classname = "pendingvacancy">
                                     <Card.Title style={{ fontSize: '30px', paddingTop: '5px', fontWeight: "bold", marginLeft: '85px'}}>8</Card.Title>
                                     <Card.Text className="card-body-container" style={{ fontSize: '20px', marginTop: '-10px', marginLeft: '10px' }}>
-                                        Pending vacancy
+                                        Pending Response
                                         <i className="bi bi-rocket-takeoff" style={{fontSize:'30px', marginLeft:'-50px', padding: '5px'}} ></i>
                                     </Card.Text>
                                 </Card.Body>

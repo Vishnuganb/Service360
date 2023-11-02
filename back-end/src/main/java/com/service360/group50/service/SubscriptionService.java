@@ -33,7 +33,7 @@ public class SubscriptionService {
     public Subscription getActiveSubscribtionByUserId(Long userId) {
         Subscription activeSubscription = subscriptionRepository.findByUsers_userid(userId);
         Date currentDate = new Date();
-        if (activeSubscription.getEndDate().before(currentDate)) {
+        if (activeSubscription != null  && activeSubscription.getEndDate().before(currentDate)) {
             // Subscription has expired, move it to subscription history
             SubscriptionHistory subscriptionHistory = SubscriptionHistory.builder()
                     .startDate(activeSubscription.getStartDate())

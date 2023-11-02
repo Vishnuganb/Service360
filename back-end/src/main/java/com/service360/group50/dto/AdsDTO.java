@@ -37,6 +37,9 @@ public class AdsDTO {
 
     private LocalDate date;
 
+    private String PackageName;
+
+
       public AdsDTO() {
             this.id = id;
             this.adsName = adsName;
@@ -60,6 +63,7 @@ public class AdsDTO {
             this.adsImages = new ArrayList<>();
             this.plan = plan;
             this.date = date;
+            this.PackageName=PackageName;
         }
 
     public Long getId() {
@@ -236,5 +240,13 @@ public class AdsDTO {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getPackageName() {
+        return PackageName;
+    }
+
+    public void setPackageName(String packageName) {
+        PackageName = packageName;
     }
 }

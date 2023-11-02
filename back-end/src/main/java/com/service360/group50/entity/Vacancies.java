@@ -54,6 +54,9 @@ public class Vacancies {
     @Column(columnDefinition = "BOOLEAN")
     private boolean disabled;
 
+    @Column( columnDefinition = "TEXT")
+    private String images;
+
     //customerid
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")

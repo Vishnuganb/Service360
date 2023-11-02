@@ -83,7 +83,7 @@ const Subscribtion = () => {
       .put(`http://localhost:8080/auth/subscription/${userDetail.userid}/${id}`)
       .then((res) => {
         console.log(res.data);
-        navigate(`/Advertiser/Subscription`);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

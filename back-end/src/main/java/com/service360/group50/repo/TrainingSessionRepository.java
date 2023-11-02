@@ -28,4 +28,8 @@ public interface TrainingSessionRepository extends CrudRepository<TrainingSessio
 
     @Query("SELECT t FROM TrainingSession t WHERE t.trainingdate < :currentDate OR (t.trainingdate = :currentDate AND t.trainingendtime < :currentTime)")
     List<TrainingSession> findByDateTimeBefore(@Param("currentDate") Date currentDate, @Param("currentTime") Time currentTime);
+
+    @Query("SELECT t FROM TrainingSession t INNER JOIN t.serviceprovider u")
+    List<TrainingSession> findAllTrainingSessionsWithSpDetails();
+
 }

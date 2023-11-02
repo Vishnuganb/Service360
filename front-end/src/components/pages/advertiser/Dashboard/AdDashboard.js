@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from 'recharts';
 import "../../../../style/advertiser/AdIndex.css";
+
+
 
 
 import backgroundImage from "../../../../assets/images/header/Background.png";
@@ -41,11 +43,25 @@ const generateMonthlyData = () => {
 
 const AdDashbord = () => {
 
-
-
-
-
   const [view, setView] = useState('daily');
+  const response = sessionStorage.getItem("authenticatedUser");
+  const userDetail = JSON.parse(response);
+
+  const [data, setData] = useState([]);
+
+    useEffect(() => {
+      // Fetch data when the component mounts
+      axios
+        .get(`http://localhost:8080/auth/getAdsDash/${userDetail.userid}`)
+        .then((res) => {
+          // console.log(res.data);
+          setData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, []);
+
 
 
 
@@ -100,7 +116,7 @@ const AdDashbord = () => {
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <p className="AdTotal">Total</p>
-          <p className="adNo">20</p>
+          <p className="adNo">{data.totalAds}</p>
         </div>
 
         <div
@@ -108,7 +124,7 @@ const AdDashbord = () => {
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <p className="AdTotal">Verified</p>
-          <p className="adNo">9</p>
+          <p className="adNo">{data.verifiedAds}</p>
         </div>
 
         <div
@@ -116,21 +132,21 @@ const AdDashbord = () => {
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <p className="AdTotal">Pending</p>
-          <p className="adNo">6</p>
+          <p className="adNo">{data.pendingAds}</p>
         </div>
         <div
           className="AdCountCol shadow  bg-white rounded"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <p className="AdTotal">Rejected</p>
-          <p className="adNo">1</p>
+          <p className="adNo">{data.rejectedAds}</p>
         </div>
         <div
           className="AdCountCol shadow  bg-white rounded"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <p className="AdTotal">Disabled</p>
-          <p className="adNo">4</p>
+          <p className="adNo">{data.disabledAds}</p>
         </div>
       </div>
 
@@ -162,7 +178,7 @@ const AdDashbord = () => {
           </div>
 
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartDataToShow} >
+            <BarChart data={chartDataToShow}>
               <defs>{colorGradient()}</defs>
               <CartesianGrid vertical={false} />
               <XAxis
@@ -184,58 +200,89 @@ const AdDashbord = () => {
         <div>
           <h2>Subscribtion Details</h2>
         </div>
-
-        <div className="d-flex gap-3 justify-content-center">
-          {" "}
-          <div
-            style={{ width: "fit-content" }}
-            className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
-          >
-            <div>
-              <h4 className="text-center">Your Plan</h4>
-            </div>
-            <div className="d-flex align-items-center ">
-              <i className="fa-solid fa-chess-king fa-2xl"> Gold</i>
-            </div>
-          </div>
-          <div
-            style={{ width: "fit-content" }}
-            className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
-          >
-            <div>
-              <h4 className="text-center">Start Date</h4>
-            </div>
-            <div className="d-flex  gap-3">
-              <div style={{ height: "fit-content" }}>
-                <h3 className="GreenDate">Thu Aug 10 2023</h3>
+        {data.planName ? (
+          <div className="d-flex gap-3 justify-content-center">
+            {" "}
+            <div
+              style={{ width: "fit-content" }}
+              className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
+            >
+              {/* <div>
+                <h4 className="text-center">Your Plan</h4>
+              </div> */}
+              <div className="d-flex gap-3 justify-content-center">
+                {" "}
+                <div
+                  style={{ width: "fit-content" }}
+                  className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
+                >
+                  <div className="text-center">
+                    <h4 className="text-center">Your Plan</h4>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    {data.planName === "Bronze" && (
+                      <i className="fa-solid fa-chess-knight fa-2xl">
+                        {data.planName}
+                      </i>
+                    )}
+                    {data.PlanName === "Gold" && (
+                      <i className="fa-solid fa-chess-king fa-2xl">
+                        {data.planName}
+                      </i>
+                    )}
+                    {data.planName === "Platinum" && (
+                      <i className="fa-solid fa-chess-queen fa-2xl">
+                        {data.planName}
+                      </i>
+                    )}
+                  </div>
+                </div>
+                <div
+                  style={{ width: "fit-content" }}
+                  className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
+                >
+                  <div>
+                    <h4 className="text-center">Start Date</h4>
+                  </div>
+                  <div className="d-flex  gap-3">
+                    <div style={{ height: "fit-content" }}>
+                      <h3 className="GreenDate">{data.startDate}</h3>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{ width: "fit-content" }}
+                  className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
+                >
+                  <div>
+                    <h4 className="text-center">End Date</h4>
+                  </div>
+                  <div className="d-flex align-items-center gap-3">
+                    <h3 className="redDate"> {data.endDate}</h3>
+                  </div>
+                </div>
+                <div
+                  style={{ width: "fit-content" }}
+                  className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
+                >
+                  <div>
+                    <h4 className="text-center">Remaining Days</h4>
+                  </div>
+                  <div className="d-flex  gap-3">
+                    <div style={{ height: "fit-content" }}>
+                      <h3 className="GreenDate">{data.remainingDays} Days</h3>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div
-            style={{ width: "fit-content" }}
-            className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
-          >
-            <div>
-              <h4 className="text-center">End Date</h4>
-            </div>
-            <div className="d-flex align-items-center gap-3">
-              <h3 className="redDate"> Sun Sep 10 2023</h3>
-            </div>
+        ) : (
+          <div className="d-flex justify-content-center">
+            <h3> No Subscribtion Details</h3>
           </div>
-          <div
-            style={{ width: "fit-content" }}
-            className="shadow p-5 bg-white rounded border d-flex flex-column align-items-center gap-3"
-          >
-            <div>
-              <h4 className="text-center">Remaining Days</h4>
-            </div>
-            <div className="d-flex  gap-3">
-              <div style={{ height: "fit-content" }}>
-                <h3 className="GreenDate">15 Days</h3>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
+        ;
       </div>
     </div>
   );

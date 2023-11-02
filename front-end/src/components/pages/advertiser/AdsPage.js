@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+
+import axios from "axios";
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -33,14 +36,14 @@ import Ad5_2 from "../../../assets/images/admin/ads/handsaw_2.jpeg";
 import Ad5_3 from "../../../assets/images/admin/ads/handsaw_3.jpeg";
 
 
-const AdSampleCont = ({
-  proName,
+const VerifiedAdCont = ({
+  ad,
   profileIcon,
+  proName,
   adImage,
   adName,
   price,
   location,
-  status,
   openModal,
 }) => {
   return (
@@ -52,7 +55,6 @@ const AdSampleCont = ({
               <img
                 src={profileIcon}
                 alt="Profile of Advertiser"
-                roundedCircle
                 className="AdProfilePic"
               />
             </div>
@@ -60,13 +62,11 @@ const AdSampleCont = ({
               <p>{proName}</p>
             </div>
           </Col>
-          {status === 1 && (
-            <Col className="d-flex align-items-center justify-content-end">
-              <div className="namediv float-right">
-                <p className="AdVrifiedP  "> Verified</p>
-              </div>
-            </Col>
-          )}
+          {/* <Col className="d-flex align-items-center justify-content-end">
+            <div className="namediv float-right">
+              <p className="AdVrifiedP  "> Verified</p>
+            </div>
+          </Col> */}
         </Row>
 
         <Row>
@@ -107,79 +107,45 @@ const AdSampleCont = ({
 };
 
 const AdsPage = () => {
-  const adsData = [
-    {
-      id: 1,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [AdImg1, AdImg2, AdImg3],
-      adName: "Power Driller",
-      price: 22000,
-      location: "Colombo",
-      status: 1,
-    },
-    {
-      id: 2,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [adImage],
-      adName: "Ideal Driller",
-      price: 16000,
-      location: "Colombo",
-      status: 1,
-    },
+  const [ads, setAds] = useState([]);
 
-    {
-      id: 3,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [Ad2_1, Ad2_2, Ad2_3],
-      adName: "Screw Driver",
-      price: 600,
-      location: "Colombo",
-      status: 1,
-    },
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredAds, setFilteredAds] = useState([]);
 
-    {
-      id: 4,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [Ad3_1, Ad3_2, Ad3_3],
-      adName: "Grinder",
-      price: 22000,
-      location: "Colombo",
-      status: 0,
-    },
+  // Function to handle search input changes
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
 
-    {
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [Ad4_1, Ad4_2, Ad4_3],
-      adName: "Drills",
-      price: 200,
-      location: "Colombo",
-      status: 1,
-    },
-
-    {
-      id: 5,
-      proName: "Adam",
-      profileIcon: profileIcon,
-      adImages: [Ad5_1, Ad5_2, Ad5_3],
-      adName: "Handsaw",
-      price: 4500,
-      location: "Colombo",
-      status: 0,
-    },
-  ];
+    // Filter the ads based on the search query
+    const filtered = ads.filter((ad) =>
+      ad.adsName.toLowerCase().includes(query.toLowerCase())
+    );
+    
+  };
 
 
+  useEffect(() => {
+    const apiUrl = `http://localhost:8080/auth/getAllAds`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log(response.data);
+        setAds(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  
 
   const [ViewAdmodalVisible, setViewAdModalVisible] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null); // To store the selected ad
 
   const ViewAdopenModal = (ad) => {
-    setSelectedAd(ad); // Set the selected ad
+    setSelectedAd(ad);
     setViewAdModalVisible(true);
   };
 
@@ -190,19 +156,23 @@ const AdsPage = () => {
   return (
     <Container>
       <div>
-        <SlideShow />
+        <SlideShow ads={ads} />
 
-        <Form>
+        {/* <Form>
           <fieldset>
             <Row className="AdsSearchRow">
               <h1>Search</h1>
 
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Control id="disabledTextInput" placeholder="Search" />
+                  <Form.Control
+                    id="searchInput"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
                 </Form.Group>
               </Col>
-
               <Col>
                 <Form.Group className="mb-3">
                   <Form.Select>
@@ -225,44 +195,40 @@ const AdsPage = () => {
               </Col>
             </Row>
           </fieldset>
-        </Form>
+        </Form> */}
 
         <hr className="AdHr" />
 
         <Row>
           <div className="AdsRow mt-3">
-            {adsData.map((ad, index) => (
-              <AdSampleCont
-                key={index}
-                proName={ad.proName}
-                profileIcon={ad.profileIcon}
-                adImage={ad.adImages[0]}
-                adName={ad.adName}
-                price={ad.price}
-                location={ad.location}
-                status={ad.status}
-                openModal={() => ViewAdopenModal(ad)}
-              />
-            ))}
+            {ads.map((ad, index) => {
+              return (
+                <VerifiedAdCont
+                  key={ad.adsId}
+                  ad={ad}
+                  profileIcon={ad.profileImage}
+                  proName={ad.firstName}
+                  adImage={`data:image/png;base64,${ad.adsImages[0]}`}
+                  adName={ad.adsName}
+                  price={ad.price}
+                  location={ad.area}
+                  status={ad.status}
+                  openModal={() => ViewAdopenModal(ad)}
+                />
+              );
+            })}
           </div>
+
           {selectedAd && (
             <ViewSingleAd
               key={selectedAd.id}
-              id={selectedAd.id}
-              adName={selectedAd.adName}
-              proName={selectedAd.proName}
-              price={selectedAd.price}
-              profileIcon={selectedAd.profileIcon}
-              adImages={selectedAd.adImages}
-              location={selectedAd.location}
-              modalVisible={ViewAdmodalVisible}
-              closeModal={viewColosedModel}
+              ad={selectedAd}
+              show={ViewAdmodalVisible}
+              onHide={viewColosedModel}
             />
           )}
         </Row>
-        <div className="d-flex justify-content-center mt-3">
-          <PageNumber />
-        </div>
+       
       </div>
     </Container>
   );

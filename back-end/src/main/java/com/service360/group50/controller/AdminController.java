@@ -5,13 +5,13 @@ import com.service360.group50.entity.*;
 import com.service360.group50.repo.AdvertiserFileRepository;
 import com.service360.group50.repo.ServiceProviderFilesRepository;
 import com.service360.group50.repo.ServiceProviderServicesRepository;
-import com.service360.group50.service.AdminService;
-import com.service360.group50.service.CustomerService;
-import com.service360.group50.service.UserService;
+import com.service360.group50.service.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +31,11 @@ public class AdminController {
     private final ServiceProviderFilesRepository serviceProviderFilesRepository;
     private final AdvertiserFileRepository advertiserFileRepository;
     private final AdminService adminService;
+    @Autowired
+    private final ServiceProviderService serviceProviderService;
+    @Autowired
+    private final ImageService imageService;
+
 
     @GetMapping("/getAllCustomers")
     public List<Users> getAllCustomers() {
@@ -281,6 +286,59 @@ public class AdminController {
     @GetMapping("getAllAdsCategoryAndCount")
     public Map<String, Long> getAllAdsCategoryAndCount() {
         return adminService.getAllAdsCategoryAndCount();
+    }
+
+    public List<byte[]> getTrainingImages(@PathVariable Long id) throws IOException {
+        String imageDirectory = "src/main/resources/static/images/trainingsessions";
+
+        String[] imageNames = serviceProviderService.getTrainingImages(id).split(",");
+//        imageNames = adImages.split(",");
+        List<byte[]> imageBytesList = new ArrayList<>();
+
+        for (String imageName : imageNames) {
+            byte[] imageBytes = imageService.getImage(imageDirectory, imageName);
+            imageBytesList.add(imageBytes);
+        }
+        System.out.println(imageBytesList);
+
+        return imageBytesList;
+    }
+
+    @GetMapping("getAllDetailsOfTrainingSessions")
+    public TrainingSessionsDTO viewTrainingSessions() {
+        List<TrainingSession> trainingSessions = serviceProviderService.viewTrainingSessionsForAdmin();
+
+        TrainingSessionsDTO trainingSessionsDTO = new TrainingSessionsDTO();
+        trainingSessionsDTO.setTrainingsessions(trainingSessions);
+
+        List<ImagesDTO> imagesDTO = new ArrayList<>();
+        for (TrainingSession trainingSession : trainingSessions) {
+            List<byte[]> trainingsessionimages = new ArrayList<>();
+
+            try {
+                List<byte[]> trainingsessionImages = getTrainingImages(trainingSession.getTrainingid());
+                for (byte[] trainingsessionImage : trainingsessionImages) {
+                    trainingsessionimages.add(trainingsessionImage);
+                }
+
+                ImagesDTO image = new ImagesDTO();
+                image.setId(trainingSession.getTrainingid());
+                image.setImages(trainingsessionimages);
+                imagesDTO.add(image);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        trainingSessionsDTO.setTrainingsessionimages(imagesDTO);
+
+        return trainingSessionsDTO;
+    }
+
+    @GetMapping("viewHistoryJobsforAdmin")
+    public List<Jobs> viewHistoryJobsForAdmin() {
+        return adminService.viewHistoryJobs();
     }
 
 }

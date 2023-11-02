@@ -1,6 +1,7 @@
 package com.service360.group50.controller;
 
 import com.service360.group50.dto.AdsDTO;
+import com.service360.group50.dto.AdsDashDTO;
 import com.service360.group50.dto.SubscriptionDTO;
 import com.service360.group50.entity.*;
 import com.service360.group50.service.*;
@@ -31,6 +32,8 @@ public class AdvertiserController {
 
     @Autowired
     private NotificationService notificationService;
+
+
 
 
 
@@ -254,6 +257,14 @@ public class AdvertiserController {
             adDTO.setLastName(user.getLastname());
             adDTO.setDate ( ad.getDate () );
             adDTO.setReason ( ad.getReason () );
+
+            Subscription subscription = subscriptionService.getActiveSubscribtionByUserId(ad.getUser().getUserid());
+            if (subscription != null){
+                adDTO.setPackageName(subscription.getSubscriptionPlan().getName());
+
+            }else{
+                adDTO.setPackageName("Bronze");
+            }
 //            adDTO.setPlan(subStatus);
             if (user.getProfilePic() != null) {
                 adDTO.setProfileImage(user.getProfilePic());
@@ -391,8 +402,10 @@ public SubscriptionDTO getSubscriptionDetails(@PathVariable Long userid) {
         subscriptionDTO.setPlanDescription(subscription.getSubscriptionPlan().getDescription());
         subscriptionDTO.setPlanPrice(subscription.getSubscriptionPlan().getPrice());
         subscriptionDTO.setUserId(userid);
+        return subscriptionDTO;
     }
-    return subscriptionDTO;
+    return null;
+
 }
 
 
@@ -475,6 +488,72 @@ public SubscriptionDTO getSubscriptionDetails(@PathVariable Long userid) {
         return null;
 
     }
+
+
+
+    @GetMapping("auth/getAdsDash/{userId}")
+    public AdsDashDTO getAdvertiserDash(@PathVariable Long userId){
+        Subscription subscription = subscriptionService.getActiveSubscribtionByUserId(userId);
+        AdsDashDTO adsDashDTO = new AdsDashDTO();
+        List<Ads> ads = advertiserService.getAdsByUserId(userId);
+
+        Long totalAds = 0L;
+        Long verifiedAds = 0L;
+        Long pendingAds =0L;
+        Long rejectedAds = 0L;
+        Long disabledAds = 0L;
+
+        String remainingDays = null;
+
+        if(subscription != null){
+
+            // calculate remaining days
+            long diff = subscription.getEndDate().getTime() - subscription.getStartDate().getTime();
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+            remainingDays = String.valueOf(diffDays);
+
+            adsDashDTO.setPlanName(subscription.getSubscriptionPlan().getName());
+            adsDashDTO.setStartDate(subscription.getStartDate().toString());
+            adsDashDTO.setEndDate(subscription.getEndDate().toString());
+            adsDashDTO.setRemainingDays(remainingDays);
+        }
+
+        if (ads != null){
+
+            totalAds = Long.valueOf(ads.size());
+
+//            Rejected
+            rejectedAds = ads.stream()
+                    .filter(ad -> ad.getVerificationStatus().equals("Rejected"))
+                    .count();
+
+            // Pending
+            pendingAds = ads.stream()
+                    .filter(ad -> ad.getVerificationStatus().equals("Pending"))
+                    .count();
+
+            // Verified
+            verifiedAds = ads.stream()
+                    .filter(ad -> ad.getVerificationStatus().equals("Verified"))
+                    .count();
+
+            // Disabled
+            disabledAds = ads.stream()
+                    .filter(ad -> ad.getStatus().equals("Disabled"))
+                    .count();
+
+            adsDashDTO.setTotalAds(totalAds);
+            adsDashDTO.setVerifiedAds(verifiedAds);
+            adsDashDTO.setPendingAds(pendingAds);
+            adsDashDTO.setRejectedAds(rejectedAds);
+            adsDashDTO.setDisabledAds(disabledAds);
+        }
+
+
+        return adsDashDTO;
+    }
+
+
 
 
 }

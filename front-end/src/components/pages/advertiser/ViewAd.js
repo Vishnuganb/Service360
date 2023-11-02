@@ -39,7 +39,7 @@ const ShopDetailsModal = ({ show, onHide, shopData }) => {
           <Col className="col-4 align-self-center">Address</Col>
           <Col className="col-6">{shopData.address}</Col>
         </Row>
-        <br />
+        {/* <br />
 
         {hasServiceProvider ? (
           <Link
@@ -52,26 +52,13 @@ const ShopDetailsModal = ({ show, onHide, shopData }) => {
           <Link to="/Customer/Chat" className="d-flex justify-content-center">
             <button className="AdSlideButton">Chat</button>
           </Link>
-        )}
+        )} */}
       </Modal.Body>
     </Modal>
   );
 };
 
-const ViewSingleAd = ({
-  id,
-  profileIcon,
-  proName,
-  adName,
-  adImages,
-  price,
-  location,
-  Reason,
-  modalVisible,
-  closeModal,
-}) => {
-  //Show Shop details
-
+const ViewSingleAd = ({ id, ad, show, onHide }) => {
   const [showShopDetails, setShowShopDetails] = useState(false);
   const [selectedShop, setSelectedShop] = useState(null);
 
@@ -86,7 +73,9 @@ const ViewSingleAd = ({
   };
 
   const [, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(adImages[0]);
+  const [selectedImage, setSelectedImage] = useState(
+    `data:image/png;base64,${ad.adsImages[0]}`
+  );
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -94,17 +83,17 @@ const ViewSingleAd = ({
   };
 
   const shopData = {
-    shopName: "Emereld Electrical",
-    ownerName: "Adam Robert",
-    mobileNo: "0778964983",
-    address: "No 132, Marain Drive, Bambalapittiya, Colombo",
+    shopName: ad.shopName,
+    ownerName: ad.firstName,
+    mobileNo: ad.shopPhone,
+    address: ad.shopAddress,
   };
 
   return (
     <div className="p-5">
       <Modal
-        show={modalVisible}
-        onHide={closeModal}
+        show={show}
+        onHide={onHide}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -121,14 +110,13 @@ const ViewSingleAd = ({
               <div md="auto" className="d-flex align-items-center ">
                 <div>
                   <img
-                    src={profileIcon}
+                    src={ad.profileImage}
                     alt="Profile of Advertiser"
-                    roundedCircle
                     className="AdProfilePic"
                   />
                 </div>
                 <div className="namediv">
-                  <p>Adam</p>
+                  <p>{ad.firstName}</p>
                 </div>
               </div>
             </div>
@@ -140,19 +128,25 @@ const ViewSingleAd = ({
                     src={selectedImage}
                     alt="Main image"
                     fluid
-                    onClick={() => handleImageClick(adImages[0])}
+                    onClick={() =>
+                      handleImageClick(
+                        `data:image/png;base64,${ad.adsImages[0]}`
+                      )
+                    }
                   />
 
                   <div className="py-3 ">
                     <div className="d-flex justify-content-center AdsRowImg">
-                      {adImages.map((image, index) => (
+                      {ad.adsImages.map((image, index) => (
                         <div key={index} className="m-3 AdsColImg">
                           <Image
-                            src={image}
+                            src={`data:image/png;base64,${image}`}
                             alt={`Gallery image ${index + 1}`}
                             thumbnail
                             fluid
-                            onClick={() => handleImageClick(image)}
+                            onClick={() =>
+                              handleImageClick(`data:image/png;base64,${image}`)
+                            }
                           />
                         </div>
                       ))}
@@ -163,18 +157,18 @@ const ViewSingleAd = ({
 
               <div>
                 <div className="d-flex justify-content-center">
-                  <h1 className="AdSlideHeading">{adName}</h1>
+                  <h1 className="AdSlideHeading">{ad.adsName}</h1>
                 </div>
                 <div>
-                  <p>
-                    The New Listing Digital Drill Angle Machine Cordless Hammer
-                    Set Electric Specification 24V Cordless Power Drills
-                  </p>
+                  <p>{ad.description}</p>
                   <hr />
-                  <p> category: Electrical</p>
-                  <p> Warranty: 12 Months</p>
-                  <p> Delivery: Free Delivery</p>
-                  <h1 className="AdPrice text-center">{price} LKR</h1>
+                  <p> category: {ad.category}</p>
+                  <p>
+                    Warranty: {ad.warrantyMonths ? ad.warrantyMonths : "N/A"}
+                  </p>
+
+                  <p> Delivery: {ad.delivery}</p>
+                  <h1 className="AdPrice text-center">{ad.price} LKR</h1>
                 </div>
 
                 <div className="d-flex justify-content-center mb-3">
@@ -196,7 +190,6 @@ const ViewSingleAd = ({
             shopData={shopData}
           />
         </Container>
-        <div> {Reason && <h3 className="AdrejectP p-4">{Reason}</h3>}</div>
       </Modal>
     </div>
   );

@@ -10,6 +10,8 @@ import BgImage from "../../../../assets/images/header/Background.png";
 import { FaSearch } from "react-icons/fa";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { useEffect } from "react";
+import axios from "axios";
 
 library.add(faCalendarAlt);
 const AdminHistory = () => {
@@ -34,6 +36,13 @@ const AdminHistory = () => {
       searchTerm: value,
     }));
   };
+  useEffect(() => {
+    axios.get('http://localhost:8080/auth/viewHistoryJobsforAdmin').then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
 
   return (
     <Container>
@@ -55,7 +64,7 @@ const AdminHistory = () => {
                     dateFormat="dd/MM/yyyy"
                   />
                   <span className="input-group-text">
-                    <i class="bi bi-calendar2-week"></i>
+                    <i className="bi bi-calendar2-week"></i>
                   </span>
                 </div>
               </Col>
@@ -70,7 +79,7 @@ const AdminHistory = () => {
                     minDate={startDate}
                   />
                   <span className="input-group-text">
-                    <i class="bi bi-calendar2-week"></i>
+                    <i className="bi bi-calendar2-week"></i>
                   </span>
                 </div>
               </Col>

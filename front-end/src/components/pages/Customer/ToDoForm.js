@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import '../../../style/Customer/ToDoForm.css';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import React, { useState, useEffect } from "react";
+import "../../../style/Customer/ToDoForm.css";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faCircle } from "@fortawesome/free-solid-svg-icons";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import Payment from "../Payment/Payment";
 // import { QrReader } from 'react-qr-reader'; // Import the QR code reader
@@ -23,21 +23,25 @@ function ToDoForm() {
   const response = sessionStorage.getItem("authenticatedUser");
   const userDetail = JSON.parse(response);
 
+
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/auth/tododetails'); // Replace with your Spring Boot API endpoint
+      const response = await axios.get(
+        "http://localhost:8080/auth/tododetails"
+      ); // Replace with your Spring Boot API endpoint
       setTasks(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    const allTasksCompleted = tasks.every(task => task.completed);
+    const allTasksCompleted = tasks.every((task) => task.completed);
     if (allTasksCompleted) {
       setShowPaymentModal(true);
     }
@@ -104,12 +108,12 @@ function ToDoForm() {
   };
 
   return (
-    <div className='custodo'>
+    <div className="custodo">
       <h4>Project Name : Assigned by Alex</h4>
-      {nonCompletedTasks.map(task => (
+      {nonCompletedTasks.map((task) => (
         <Card
           key={task.todolistdetailsid}
-          className={`castodolist ${task.completed ? 'completed' : ''}`}
+          className={`castodolist ${task.completed ? "completed" : ""}`}
         >
           <Card.Body className="d-flex justify-content-between align-items-center">
             <div>

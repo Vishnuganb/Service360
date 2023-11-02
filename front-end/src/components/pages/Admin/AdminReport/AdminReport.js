@@ -5,6 +5,7 @@ import '../../../../style/Admin/AdminDashboard.css';
 import { BarChart, Bar, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import axios from 'axios';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,6 +21,8 @@ import person6 from '../../../../assets/images/home/Customer_6.jpg';
 import person7 from '../../../../assets/images/home/Customer_7.jpg';
 import person8 from '../../../../assets/images/home/Customer_8.jpg';
 import person9 from '../../../../assets/images/home/Customer_9.jpg';
+
+const serverLink = 'http://localhost:8080';
 
 const generateRevenueData = () => {
     const data = [];
@@ -50,24 +53,32 @@ const getLastDayOfMonth = (date) => {
     return nextMonth.getDate();
 };
 
-const generateDailyData = () => {
-    const data = [];
-    const currentDate = new Date();
-    const lastMonth = new Date(currentDate);
-    lastMonth.setMonth(lastMonth.getMonth() - 1);
-
-    for (let i = 0; i < getLastDayOfMonth(lastMonth); i++) {
-        data.push({ day: i.toString(), customers: Math.floor(Math.random() * 100) });
-    }
+const generateDailyData = (customerCountForLast7Days) => {
+    const entries = Object.entries(customerCountForLast7Days).slice(-7);
+    entries.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+    const data = entries.map(([date, count], index) => ({
+        day: date,
+        customers: count
+    }));
     return data;
 };
 
-const generateMonthlyData = () => {
-    const data = [];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    for (let i = 0; i < 12; i++) {
-        data.push({ month: months[i], customers: Math.floor(Math.random() * 1000) });
+const generateMonthlyData = (customerCountForLastMonth) => {
+    if (!customerCountForLastMonth) {
+        return [];
     }
+
+    const entries = Object.entries(customerCountForLastMonth);
+    entries.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+    const today = new Date();
+    const lastMonthDate = new Date(today);
+    lastMonthDate.setMonth(today.getMonth() - 1);
+    const lastMonthEntries = entries.filter(([date, count]) => new Date(date) >= lastMonthDate);
+    const data = lastMonthEntries.map(([date, count], index) => ({
+        month: date,
+        customers: count
+    }));
+
     return data;
 };
 
@@ -507,12 +518,12 @@ const AdminReport = () => {
             startY: table1StartY,
         });
 
-        const advertisementDataMonthly = [
-            { category: 'Spare parts', value: 220 },
-            { category: 'Tools', value: 180 },
-            { category: 'Sessions', value: 250 },
-            { category: 'Others', value: 120 },
-        ];
+        // const advertisementDataMonthly = [
+        //     { category: 'Spare parts', value: 220 },
+        //     { category: 'Tools', value: 180 },
+        //     { category: 'Sessions', value: 250 },
+        //     { category: 'Others', value: 120 },
+        // ];
 
         const table2StartY = table1StartY + 10 + doc.autoTable.previous.finalY;
 
@@ -520,7 +531,9 @@ const AdminReport = () => {
         const headingText2 = 'Advertisement Data for this month';
         doc.text(headingText2, 10, table2StartY);
 
-        const table2Data = advertisementDataMonthly.map(item => [item.category, item.value]);
+        const adsDataArray = Object.entries(adsData).map(([key, value]) => ({ category: key, value }));
+
+        const table2Data = adsDataArray.map(item => [item.category, item.value]);
 
         doc.autoTable({
             head: [['Category', 'Value']],
@@ -595,20 +608,49 @@ const AdminReport = () => {
     const [selectedComplaintOption, setSelectedComplaintOption] = useState('weekly');
     const [filteredComplaintData, setFilteredComplaintData] = useState([]);
     const [dataToShow, setDataToShow] = useState([]);
+    const [customerCountForLast7Days, setCustomerCountForLast7Days] = useState([])
+    const [customerCountForLastMonth, setCustomerCountForLastMonth] = useState([])
+    const [adsData, setAdsData] = useState([])
 
-    const advertisementDataWeekly = [
-        { category: 'Spare parts', value: 120 },
-        { category: 'Tools', value: 200 },
-        { category: 'Sessions', value: 150 },
-        { category: 'Others', value: 80 },
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
 
-    const advertisementDataMonthly = [
-        { category: 'Spare parts', value: 220 },
-        { category: 'Tools', value: 180 },
-        { category: 'Sessions', value: 250 },
-        { category: 'Others', value: 120 },
-    ];
+                const response4 = await axios.get(serverLink + '/auth/getCustomerCountForLast7Days');
+                const customerCountForLast7 = response4.data;
+                setCustomerCountForLast7Days(customerCountForLast7);
+
+                const response5 = await axios.get(serverLink + '/auth/getCustomerCountForLast30Days');
+                const customerCountForLast30 = response5.data;
+                setCustomerCountForLastMonth(customerCountForLast30);
+                // console.log(customerCountForLast30);
+
+                const response6 = await axios.get(serverLink + '/auth/getAllAdsCategoryAndCount');
+                const ads = response6.data;
+                setAdsData(ads);
+                console.log(ads);
+
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // const advertisementDataWeekly = [
+    //     { category: 'Spare parts', value: 120 },
+    //     { category: 'Tools', value: 200 },
+    //     { category: 'Sessions', value: 150 },
+    //     { category: 'Others', value: 80 },
+    // ];
+
+    // const advertisementDataMonthly = [
+    //     { category: 'Spare parts', value: 220 },
+    //     { category: 'Tools', value: 180 },
+    //     { category: 'Sessions', value: 250 },
+    //     { category: 'Others', value: 120 },
+    // ];
 
     const revenueData = revenueView === 'last7days' ? generateRevenueData() : generateMonthlyRevenueData();
 
@@ -652,7 +694,7 @@ const AdminReport = () => {
         );
     };
 
-    const filteredData = view === 'daily' ? generateDailyData() : generateMonthlyData();
+    const filteredData = view === 'daily' ? generateDailyData(customerCountForLast7Days) : generateMonthlyData(customerCountForLastMonth);
     const startDate = dateRange[0].startDate;
     const endDate = dateRange[0].endDate;
 
@@ -682,7 +724,7 @@ const AdminReport = () => {
         </linearGradient>
     );
 
-    const chartDataToShow = view === 'daily' ? generateDailyData() : generateMonthlyData();
+    const chartDataToShow = view === 'daily' ? generateDailyData(customerCountForLast7Days) : generateMonthlyData(customerCountForLastMonth);
 
     const renderActiveDot = (props) => {
         const { cx, cy, stroke, key } = props;
@@ -710,7 +752,6 @@ const AdminReport = () => {
             return false;
         });
         setFilteredComplaintData(filteredData);
-
 
         const pendingCount = filteredData.filter((complaint) => complaint.status === 'Pending').length;
         const resolvedCount = filteredData.filter((complaint) => complaint.status === 'Resolved').length;
@@ -782,8 +823,8 @@ const AdminReport = () => {
                         <div className='col-xs-2 col-sm-3 col-md-2 col-lg-3 col-xl-2 m-3 me-xs-5  align-items-end'>
                             <div className="input-group">
                                 <select value={view} onChange={handleViewChange} className="form-select">
-                                    <option value="daily">Daily</option>
-                                    <option value="monthly">Monthly</option>
+                                    <option value="daily">Last 7 Days</option>
+                                    <option value="monthly">Last Month</option>
                                 </select>
                             </div>
                         </div>

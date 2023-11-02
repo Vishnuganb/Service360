@@ -214,12 +214,12 @@ const AuthenticationContextProvider = (props) => {
     }
 
     const logout = () => {
-        navigate("/login");
-        sessionStorage.removeItem('authenticatedUser');
+        window.location.href = "http://localhost:3000/login";
         localStorage.removeItem('authenticated');
         localStorage.removeItem('role');
-        // authenticated = false;
+        sessionStorage.removeItem('authenticatedUser');
         setAuthenticated(false);
+        navigate("/login");
         console.log("Logged out successfully!!!")
 
     }

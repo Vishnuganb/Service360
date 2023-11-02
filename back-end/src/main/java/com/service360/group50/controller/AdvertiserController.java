@@ -497,11 +497,11 @@ public SubscriptionDTO getSubscriptionDetails(@PathVariable Long userid) {
         AdsDashDTO adsDashDTO = new AdsDashDTO();
         List<Ads> ads = advertiserService.getAdsByUserId(userId);
 
-        Long totalAds = null;
-        Long verifiedAds = null;
-        Long pendingAds = null;
-        Long rejectedAds = null;
-        Long disabledAds = null;
+        Long totalAds = 0L;
+        Long verifiedAds = 0L;
+        Long pendingAds =0L;
+        Long rejectedAds = 0L;
+        Long disabledAds = 0L;
 
         String remainingDays = null;
 

@@ -153,11 +153,11 @@ const SearchServiceProvider = () => {
           />
         )}
 
-        <button className="custom-button2" onClick={handleSortByReviewToggle}>
+        {/* <button className="custom-button2" onClick={handleSortByReviewToggle}>
           <div className="icon">
             Sort by Review &nbsp; &nbsp; {sortByReview ? <FontAwesomeIcon icon={faSortAmountUp} /> : <FontAwesomeIcon icon={faSortAmountDown} />}
           </div>
-        </button>
+        </button> */}
 
       </div>
 

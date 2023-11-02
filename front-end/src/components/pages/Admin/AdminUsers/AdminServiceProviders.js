@@ -405,11 +405,11 @@ function AdminServiceProvider() {
                                 ))}
 
                                 <div className="d-flex flex-column justify-content-center text-center">
-                                    <button onClick={() => handleShowDetails(provider)} className="btn" style={{ backgroundColor: '#0B85A0' }} > More Details </button>
+                                    <button onClick={() => handleShowDetails(provider)} className="btn" style={{ backgroundColor: 'gray' }} > More Details </button>
                                     {data.activeTab === 'Pending' && (
                                         <button
                                             className="btn"
-                                            style={{ backgroundColor: "#0D6445" }}
+                                            style={{ backgroundColor: "#687699" }}
                                             onClick={() => {
                                                 setData({ ...data, showAcceptConfirmation: true, selectedProvider: provider });
                                             }}
@@ -420,7 +420,7 @@ function AdminServiceProvider() {
                                     {data.activeTab === 'Pending' && (
                                         <button
                                             className="btn"
-                                            style={{ backgroundColor: "#B60E0E" }}
+                                            style={{ backgroundColor: "#000" }}
                                             onClick={() => {
                                                 setData({ ...data, showRejectConfirmation: true, selectedProvider: provider });
                                             }}

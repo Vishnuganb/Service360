@@ -62,7 +62,7 @@ import { Row } from 'react-bootstrap';
 
 
 /* customer */
-.card-cus-dashboard{
+/* .card-cus-dashboard{
     transition: transform .3s; 
     border-radius: 2px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -79,10 +79,10 @@ import { Row } from 'react-bootstrap';
 .card-cus-dashboard-body-container{
     font-size: 1.1rem;
     font-family: 'Open Sans', sans-serif;           
-}
+} */
 
 /* < 540px */
-@media only screen and (max-width: 540px){
+/* @media only screen and (max-width: 540px){
     .card-cus-dashboard{
         width: 100%;
         
@@ -97,31 +97,30 @@ import { Row } from 'react-bootstrap';
 
 .col-12 h4{
     font-size: 30px;
-}
+} */
 
-/* .d-flex{
+.dashboardcontent{
     justify-content: center;
     align-items: center;
     padding: 8px;
     
-} */
+}
+
 .dashboard-button-1{
     justify-content: center;
     margin-top: -20px;
     box-shadow: 1px 0px 4px 0px #888888;
     background-image: url("../../assets/images/header/Background.png");
     height: 120px;
-
-    
-    /* width: 255px; */
 }
 .dashboard-button-2{
     margin-top: -20px;
     box-shadow: 1px 0px 4px 0px #888888;
     background-image: url("../../assets/images/header/Background.png");
     height: 120px;
-    /* width: 255px; */
-}
+} 
+
+
 
 /* 540px - 992px */
 @media only screen and (min-width: 540px) and (max-width: 1282px){

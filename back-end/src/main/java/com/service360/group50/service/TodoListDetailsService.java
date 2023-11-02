@@ -3,6 +3,7 @@ package com.service360.group50.service;
 import com.service360.group50.entity.*;
 import com.service360.group50.repo.CServiceProviderRepo;
 import com.service360.group50.repo.TodoListDetailsRepo;
+import com.service360.group50.repo.TodoListRepository;
 import com.service360.group50.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class TodoListDetailsService {
     private final TodoListDetailsRepo todoListDetailsRepo;
 
     @Autowired
+    private TodoListRepository todoListRepository;
+
+    @Autowired
 
     public TodoListDetailsService(TodoListDetailsRepo todoListDetailsRepo) {
         this.todoListDetailsRepo = todoListDetailsRepo;
@@ -23,6 +27,11 @@ public class TodoListDetailsService {
     public TodoListDetails createTodoListDetails (TodoListDetails newTodoListDetails) {
 
         return this.todoListDetailsRepo.save(newTodoListDetails);
+    }
+
+    public TodoList updatePaymentTodoList (TodoList newTodoListDetails) {
+
+        return this.todoListRepository.save(newTodoListDetails);
     }
 
     public List<TodoListDetails> viewTodoListDetails() {

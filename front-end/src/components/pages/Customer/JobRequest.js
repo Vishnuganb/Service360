@@ -71,8 +71,14 @@ function Quotation() {
                         </Row>
                     </div>
                     <div className="vacancy-form-group">
-                        <label htmlFor="description">Description <span style={{ color: "red" }}>*</span></label>
-                        <input type="text" name="description" className="form-control" id="description" placeholder="Enter your job details here" />
+                        <Row>
+                            <Col className="col-4">
+                                <label htmlFor="description">Description <span style={{ color: "red" }}>*</span></label>
+                            </Col>
+                            <Col className="col-6">
+                                <textarea type="text" name="description" className="form-control" id="description" placeholder="Enter your job details here" />
+                            </Col>
+                        </Row>
                     </div>
                     <div className="vacancy-form-group">
                         <Row>
@@ -87,6 +93,7 @@ function Quotation() {
                                         onChange={handleLocationChange}
                                         value={selectedLocation}
                                     >
+                                        <option value="" disabled hidden>Select Location</option>
                                         {Object.keys(places).map((location, index) => (
                                             <optgroup label={location} key={index}>
                                                 {places[location].cities.map((city, subIndex) => (
@@ -99,9 +106,11 @@ function Quotation() {
                                     </Form.Select>
                                 </Form.Group>
 
+
                             </Col>
                         </Row>
                     </div>
+
                     <div className="vacancy-form-group">
                         <Row>
                             <Col className="col-4">
@@ -109,12 +118,15 @@ function Quotation() {
                             </Col>
                             <Col className="col-6">
                                 <Form.Group className="mb-3">
-                                    <Form.Select style={{margin:'0'}}
+                                    <Form.Select style={{ margin: '0' }}
                                         id="serviceSelect"
                                         className="select-small-text"
                                         onChange={handleServiceChange}
                                         value={selectedService}
                                     >
+                                        <option value="" disabled hidden>
+                                            Select Service
+                                        </option>
                                         {categories.map((category, categoryIndex) => (
                                             <optgroup >
                                                 {servicesData[category].map((service, serviceIndex) => (
@@ -129,10 +141,18 @@ function Quotation() {
                             </Col>
                         </Row>
                     </div>
+
                     <div className="vacancy-form-group">
-                        <label htmlFor="file">Upload image of need</label>
-                        <input type="file" name="file" className="form-control" id="file" />
+                        <Row>
+                            <Col className="col-4">
+                                <label htmlFor="file">Upload image of need</label>
+                            </Col>
+                            <Col className="col-6">
+                                <input type="file" name="file" className="form-control" id="file" />
+                            </Col>
+                        </Row>
                     </div>
+
                     <Row className="vacancy-form-group-buttons mt-3">
                         <Col>
                             <input type="submit" value="Send" className="btn btn-vacancy-form-k" />

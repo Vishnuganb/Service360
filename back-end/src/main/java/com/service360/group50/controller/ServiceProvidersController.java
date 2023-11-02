@@ -316,8 +316,6 @@ public class ServiceProvidersController {
         return trainingSessionsDTO;
     }
 
-
-
     // NEED TO FIND FOR LOGGED IN SP
 
     @GetMapping("auth/viewMyTrainingSessions")

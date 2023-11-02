@@ -158,7 +158,7 @@ const AdsPage = () => {
       <div>
         <SlideShow ads={ads} />
 
-        <Form>
+        {/* <Form>
           <fieldset>
             <Row className="AdsSearchRow">
               <h1>Search</h1>
@@ -195,7 +195,7 @@ const AdsPage = () => {
               </Col>
             </Row>
           </fieldset>
-        </Form>
+        </Form> */}
 
         <hr className="AdHr" />
 

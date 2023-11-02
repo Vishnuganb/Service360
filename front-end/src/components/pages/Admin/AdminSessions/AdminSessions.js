@@ -54,8 +54,9 @@ function AdminSessions() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(serverLink + '/auth/viewTrainingSessions');
+                const response = await axios.get(serverLink + '/auth/getAllDetailsOfTrainingSessions');
                 const detail = response.data;
+                console.log(detail);
                 const trainingsessions = detail.trainingsessions;
                 const trainingSessionImagesArray = detail.trainingsessionimages;
                 setData({
@@ -322,13 +323,13 @@ function AdminSessions() {
                                         <p className="card-text d-none d-md-block align-self-start">Date: {session.trainingdate}</p>
                                         <p className="card-text d-none d-md-block align-self-start">Location: {session.traininglocation}</p>
                                         <div className="d-flex flex-column justify-content-center text-center">
-                                            <button onClick={() => handleShowDetails(session, imagesArray)} className="btn" style={{ backgroundColor: '#0B85A0' }}>
+                                            <button onClick={() => handleShowDetails(session, imagesArray)} className="btn" style={{ backgroundColor: 'gray' }}>
                                                 More Details
                                             </button>
                                             {data.activeTab === 'Pending' && (
                                                 <button
                                                     className="btn"
-                                                    style={{ backgroundColor: "#0D6445" }}
+                                                    style={{ backgroundColor: "#687699" }}
                                                     onClick={() => {
                                                         setData({ ...data, showAcceptConfirmation: true, selectedSession: session, selectedImages: imagesArray });
                                                     }}
@@ -339,7 +340,7 @@ function AdminSessions() {
                                             {data.activeTab === 'Pending' && (
                                                 <button
                                                     className="btn"
-                                                    style={{ backgroundColor: "#B60E0E" }}
+                                                    style={{ backgroundColor: "#000" }}
                                                     onClick={() => {
                                                         setData({ ...data, showRejectConfirmation: true, selectedSession: session, selectedImages: imagesArray });
                                                     }}

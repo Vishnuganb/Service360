@@ -224,15 +224,15 @@ const CustomerDashboard = () => {
 
     const [ongoingjobs,setOngoingjobs] = useState([]);
 
-    useEffect(() => {
-        const response = axios.get(`http://localhost:8080/auth/ongoingJobsCustomer/${userData.userid}`).then((res) => {
-            console.log(res.data);
-            setOngoingjobs(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    }, []);
+    // useEffect(() => {
+    //     const response = axios.get(`http://localhost:8080/auth/ongoingJobsCustomer/${userData.userid}`).then((res) => {
+    //         console.log(res.data);
+    //         setOngoingjobs(res.data);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+    // }, []);
 
     return (
         <div className="row ps-lg-5 pe-lg-5 pt-lg-5" style={{ backgroundImage: `url(${BgImage})` }}>

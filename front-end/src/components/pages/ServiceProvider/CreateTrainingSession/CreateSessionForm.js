@@ -37,6 +37,15 @@ function CreateSessionForm() {
     const [alertMessageRed, setAlertMessageRed] = useState(''); 
     const [showAlertRed, setShowAlertRed] = useState(false);
 
+    const [serviceError, setServiceError] = useState(false);
+    const [titleError, setTitleError] = useState(false);
+    const [descriptionError, setDescriptionError] = useState(false);
+    const [dateError, setDateError] = useState(false);
+    const [starttimeError, setStartTimeError] = useState(false);
+    const [endtimeError, setEndTimeError] = useState(false);
+    const [locationError, setLocationError] = useState(false);
+    const [costError, setCostError] = useState(false);
+
     const handleFileInputChange = (e) => {
         const selectedFilesArray = Array.from(e.target.files);
     
@@ -88,6 +97,46 @@ function CreateSessionForm() {
 
     const handleCreateTrainingSession = (event) => {
         event.preventDefault();
+
+        // Reset error states
+        setTitleError(false);
+        setDescriptionError(false);
+        setServiceError(false);
+        setDateError(false);
+        setStartTimeError(false);
+        setEndTimeError(false);
+        setLocationError(false);
+        setCostError(false);
+
+        // Check for empty fields and show error messages if necessary
+        if (!trainingSessionFormData.servicename) {
+            setServiceError(true);
+        }
+        if (!trainingSessionFormData.trainingtitle) {
+            setTitleError(true);
+        }
+        if (!trainingSessionFormData.trainingdescription) { 
+            setDescriptionError(true);
+        }
+        if (!trainingSessionFormData.trainingdate) {
+            setDateError(true);
+        }
+        if (!trainingSessionFormData.trainingstarttime) {
+            setStartTimeError(true);
+        }
+        if (!trainingSessionFormData.trainingendtime) {
+            setEndTimeError(true);
+        }
+        if (!trainingSessionFormData.traininglocation) {
+            setLocationError(true);
+        }
+        if (!trainingSessionFormData.trainingcost) {
+            setCostError(true);
+        }
+
+        if(!trainingSessionFormData.servicename || !trainingSessionFormData.trainingtitle || !trainingSessionFormData.trainingdescription || !trainingSessionFormData.trainingdate || !trainingSessionFormData.trainingstarttime || !trainingSessionFormData.trainingendtime || !trainingSessionFormData.traininglocation || !trainingSessionFormData.trainingcost) {
+            return;
+        }
 
         // Create a FormData object to send the data
         const formData = new FormData();
@@ -170,10 +219,11 @@ function CreateSessionForm() {
                             </option>
                         ))}
                     </Form.Control>
+                    {serviceError && <p style={{ color: 'red' }}>Please select a service category</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicTitle">
-                    <Form.Label>Title</Form.Label>
+                    <Form.Label>Title <span style={{ color: 'red' }}>*</span></Form.Label>
                     <Form.Control 
                         type="text" 
                         placeholder="Enter the Title" 
@@ -181,10 +231,11 @@ function CreateSessionForm() {
                         value={trainingSessionFormData.trainingtitle}
                         onChange={handleInputChange}
                     />
+                    {titleError && <p style={{ color: 'red' }}>Please enter a title</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicDescription">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label>Description <span style={{ color: 'red' }}>*</span></Form.Label>
                     <Form.Control 
                         as="textarea" 
                         rows={5} 
@@ -193,11 +244,12 @@ function CreateSessionForm() {
                         value={trainingSessionFormData.trainingdescription}
                         onChange={handleInputChange}
                     />
+                    {descriptionError && <p style={{ color: 'red' }}>Please enter a description</p>}
                 </Form.Group>
 
                 <div className="CreateSession-Time d-flex flex-row">
                     <Form.Group className="mb-3 col-md-2" controlId="formBasicDate">
-                        <Form.Label>Date</Form.Label>
+                        <Form.Label>Date <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="date" 
                             placeholder="Select the date of the training session" 
@@ -205,10 +257,11 @@ function CreateSessionForm() {
                             value={trainingSessionFormData.trainingdate}
                             onChange={handleInputChange}
                         />
+                        {dateError && <p style={{ color: 'red' }}>Please select a date</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3 ms-md-4 col-md-2" controlId="formBasicTime">
-                        <Form.Label>Start Time</Form.Label>
+                        <Form.Label>Start Time <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="time" 
                             placeholder="Select the starting time of the training session" 
@@ -227,10 +280,11 @@ function CreateSessionForm() {
                               }}
                           
                         />
+                        {starttimeError && <p style={{ color: 'red' }}>Please select a start time</p>}
                     </Form.Group>
 
                     <Form.Group className="mb-3 ms-md-4 col-md-2" controlId="formBasicDuration">
-                        <Form.Label>End Time</Form.Label>
+                        <Form.Label>End Time <span style={{ color: 'red' }}>*</span></Form.Label>
                         <Form.Control 
                             type="time" 
                             placeholder="Select the ending time of the training session" 
@@ -248,11 +302,12 @@ function CreateSessionForm() {
                                 });
                               }}
                         />
+                        {endtimeError && <p style={{ color: 'red' }}>Please select an end time</p>}
                     </Form.Group>
                 </div>
 
                 <Form.Group className="mb-3" controlId="formBasicLocation">
-                    <Form.Label>Location</Form.Label>
+                    <Form.Label>Location <span style={{ color: 'red' }}>*</span></Form.Label>
                     <Form.Control 
                         type="text" 
                         placeholder="Enter the location of the training session" 
@@ -260,10 +315,11 @@ function CreateSessionForm() {
                         value={trainingSessionFormData.traininglocation}
                         onChange={handleInputChange}
                     />
+                    {locationError && <p style={{ color: 'red' }}>Please enter a location</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEntranceFee">
-                    <Form.Label>Entrance Fee (Rs)</Form.Label>
+                    <Form.Label>Entrance Fee (Rs) <span style={{ color: 'red' }}>*</span></Form.Label>
                     <Form.Control 
                         type="text" 
                         placeholder="Enter the entrance fee or cost for the training session (if applicable)" 
@@ -271,6 +327,7 @@ function CreateSessionForm() {
                         value={trainingSessionFormData.trainingcost}
                         onChange={handleInputChange}
                     />
+                    {costError && <p style={{ color: 'red' }}>Please enter the entrance fee</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicFiles">

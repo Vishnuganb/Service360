@@ -188,7 +188,8 @@ const router = createBrowserRouter(
         </Route>
       </Route>
 
-      <Route path="/Customer" element={<CustomerLayout />}>
+    <Route path="/customer" element={<PrivateRouteLayout />}>
+      <Route path="/customer" element={<CustomerLayout />}>
         <Route index element={<CustomerDashboard />} />
         <Route path="PostVacancyFormIndex" element={<PostVacancyFormIndex />} />
         <Route path="OngoingProject" element={<OngoingProject />} />
@@ -222,6 +223,7 @@ const router = createBrowserRouter(
         
         <Route path="ViewPostedJobs/:id" element={<CustomerJob />} />
       </Route>
+    </Route>
 
       <Route path="/ServiceProvider" element={<PrivateRouteLayout />}>
         <Route path="/ServiceProvider" element={<SpLayout />}>

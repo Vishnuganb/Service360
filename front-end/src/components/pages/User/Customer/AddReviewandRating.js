@@ -53,14 +53,16 @@ function AddReviewandRating(props) {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-  
-      // if (response.ok) {
-      //   console.log('Review added successfully.');
+      window.location.reload();
+
+      if (response.ok) {
+        console.log('Review added successfully.');
+     
         
-      // } else {
-      //   console.error('Error adding review.');
+      } else {
+        console.error('Error adding review.');
        
-      // }
+      }
     
   };
 

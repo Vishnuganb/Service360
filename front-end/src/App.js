@@ -128,7 +128,15 @@ let isAuth = localStorage.getItem('authenticated');
 let user = localStorage.getItem('role');
 
 if (user) {
-  user = user.toLowerCase();
+  if (user === 'SERVICEPROVIDER') {
+    user = 'ServiceProvider';
+  } else if (user === 'CUSTOMER') {
+    user = 'customer';
+  } else if (user === 'ADVERTISER') {
+    user = 'Advertiser';
+  } else if (user === 'ADMIN') {
+    user = 'admin';
+  }
 }
 
 const router = createBrowserRouter(

@@ -518,12 +518,12 @@ const AdminReport = () => {
             startY: table1StartY,
         });
 
-        const advertisementDataMonthly = [
-            { category: 'Spare parts', value: 220 },
-            { category: 'Tools', value: 180 },
-            { category: 'Sessions', value: 250 },
-            { category: 'Others', value: 120 },
-        ];
+        // const advertisementDataMonthly = [
+        //     { category: 'Spare parts', value: 220 },
+        //     { category: 'Tools', value: 180 },
+        //     { category: 'Sessions', value: 250 },
+        //     { category: 'Others', value: 120 },
+        // ];
 
         const table2StartY = table1StartY + 10 + doc.autoTable.previous.finalY;
 
@@ -531,7 +531,9 @@ const AdminReport = () => {
         const headingText2 = 'Advertisement Data for this month';
         doc.text(headingText2, 10, table2StartY);
 
-        const table2Data = advertisementDataMonthly.map(item => [item.category, item.value]);
+        const adsDataArray = Object.entries(adsData).map(([key, value]) => ({ category: key, value }));
+
+        const table2Data = adsDataArray.map(item => [item.category, item.value]);
 
         doc.autoTable({
             head: [['Category', 'Value']],
@@ -608,6 +610,7 @@ const AdminReport = () => {
     const [dataToShow, setDataToShow] = useState([]);
     const [customerCountForLast7Days, setCustomerCountForLast7Days] = useState([])
     const [customerCountForLastMonth, setCustomerCountForLastMonth] = useState([])
+    const [adsData, setAdsData] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -620,7 +623,12 @@ const AdminReport = () => {
                 const response5 = await axios.get(serverLink + '/auth/getCustomerCountForLast30Days');
                 const customerCountForLast30 = response5.data;
                 setCustomerCountForLastMonth(customerCountForLast30);
-                console.log(customerCountForLast30);
+                // console.log(customerCountForLast30);
+
+                const response6 = await axios.get(serverLink + '/auth/getAllAdsCategoryAndCount');
+                const ads = response6.data;
+                setAdsData(ads);
+                console.log(ads);
 
             }
             catch (error) {
@@ -630,19 +638,19 @@ const AdminReport = () => {
         fetchData();
     }, []);
 
-    const advertisementDataWeekly = [
-        { category: 'Spare parts', value: 120 },
-        { category: 'Tools', value: 200 },
-        { category: 'Sessions', value: 150 },
-        { category: 'Others', value: 80 },
-    ];
+    // const advertisementDataWeekly = [
+    //     { category: 'Spare parts', value: 120 },
+    //     { category: 'Tools', value: 200 },
+    //     { category: 'Sessions', value: 150 },
+    //     { category: 'Others', value: 80 },
+    // ];
 
-    const advertisementDataMonthly = [
-        { category: 'Spare parts', value: 220 },
-        { category: 'Tools', value: 180 },
-        { category: 'Sessions', value: 250 },
-        { category: 'Others', value: 120 },
-    ];
+    // const advertisementDataMonthly = [
+    //     { category: 'Spare parts', value: 220 },
+    //     { category: 'Tools', value: 180 },
+    //     { category: 'Sessions', value: 250 },
+    //     { category: 'Others', value: 120 },
+    // ];
 
     const revenueData = revenueView === 'last7days' ? generateRevenueData() : generateMonthlyRevenueData();
 

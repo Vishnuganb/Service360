@@ -336,4 +336,9 @@ public class AdminController {
         return trainingSessionsDTO;
     }
 
+    @GetMapping("viewHistoryJobsforAdmin")
+    public List<Jobs> viewHistoryJobsForAdmin() {
+        return adminService.viewHistoryJobs();
+    }
+
 }

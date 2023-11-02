@@ -6,6 +6,7 @@ import com.service360.group50.dto.ServiceWithCategoryDTO;
 import com.service360.group50.entity.*;
 import com.service360.group50.repo.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,10 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +32,9 @@ public class AdminService {
     private final CComplaintsRepository cComplaintsRepository;
     private final UserRepository userRepository;
     private final AdsRepository adRepository;
+    @Autowired
+    private JobsServiceProvidersRepository jobsServiceProvidersRepository;
+    private final JobsRepository jobsRepository;
 
     public Services addNewService(String serviceCategoryName, String serviceName, MultipartFile serviceImage) {
         try {
@@ -414,5 +415,10 @@ public class AdminService {
         }
 
         return adsCategoryAndCount;
+    }
+
+    public List<Jobs> viewHistoryJobs () {
+        List<Jobs> jobs = (List<Jobs>) jobsRepository.findAll();
+        return jobs;
     }
 }
